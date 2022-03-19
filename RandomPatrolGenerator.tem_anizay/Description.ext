@@ -1,0 +1,90 @@
+class Params
+{
+	class EnableArmored
+	{
+		title = "Enable armored enemies (WIP)";
+		values[] = {0,1};
+		texts[] = {"No","Yes"};
+		default = 0;
+	};
+	class EnablePlane
+	{
+		title = "Enable planes enemies (WIP)";
+		values[] = {0,1};
+		texts[] = {"No","Yes"};
+		default = 1;
+	};
+	class MaxPhase
+	{
+		title = "Maximum mission phase (WIP)";
+		values[] = {1};
+		texts[] = {"Attack City"};
+		default = 1;
+	};
+	class Difficulty
+	{
+		title = "Mission's difficulty";
+		values[] = {0,1,2,3,4};
+		texts[] = {"Easy","Medium","Hard","Very Hard","Insane"};
+		default = 1;
+	};
+	class MissionLength
+	{
+		title = "Mission's length";
+		values[] = {1,2,3,4};
+		texts[] = {"Short","Medium","Long","Very Long"};
+		default = 2;
+	};
+};
+
+class CfgDebriefing
+{  
+   class BLUFOR_DEAD
+   {
+		title = "Mission Failed";
+		subtitle = "TOO MANY BLUFOR DEAD";
+		description = "";
+		picture = "";
+		pictureColor[] = {0.5,0.4,0.4,1};
+   };
+   class IND_DEAD
+   {
+		title = "Mission Failed";
+		subtitle = "THE WARLORD IS DEAD";
+		description = "";
+		picture = "";
+		pictureColor[] = {0.5,0.4,0.4,1};
+   };
+   class VEHICLE_DEAD
+   {
+		title = "Mission Failed";
+		subtitle = "THE CIVILIAN TRUCK IS DESTROYED";
+		description = "";
+		picture = "";
+		pictureColor[] = {0.5,0.4,0.4,1};
+   };
+   class CIV_DEAD
+   {
+		title = "Mission Failed";
+		subtitle = "TOO MANY CIVILIAN DEAD";
+		description = "";
+		picture = "";
+		pictureColor[] = {0.5,0.4,0.4,1};
+   };
+   class OBJ_DEAD
+   {
+		title = "Mission Failed";
+		subtitle = "ONE OF THE REQUIRED OBJECTIVE IS DEAD OR DESTROYED";
+		description = "";
+		picture = "";
+		pictureColor[] = {0.5,0.4,0.4,1};
+   };
+   class OBJ_OK
+   {
+		title = "Mission Completed";
+		subtitle = "ALL OBJECTIVES COMPLETED";
+		description = "";
+		picture = "";
+		pictureColor[] = {0.5,0.4,0.4,1};
+   };
+};
