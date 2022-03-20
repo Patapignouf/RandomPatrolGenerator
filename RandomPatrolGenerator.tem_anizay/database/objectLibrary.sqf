@@ -1,15 +1,33 @@
-civilianTruck = ["CUP_I_V3S_Open_TKG"];
+_Taki = 0;
+_USA = 1;
+_Syndikat = 2;
+_Ru = 3;
 
-bluforUnarmedVehicle = ["CUP_B_M1151_USA"];
+//////////////////////////////
+//Define friendly group data//
+//////////////////////////////
+//USA
+bluforUnarmedVehicle_USA = ["CUP_B_M1151_USA"];
 
-bluforArmedVehicle = ["CUP_B_M1151_Deploy_USA"];
+bluforArmedVehicle_USA = ["CUP_B_M1151_Deploy_USA"];
 
-//CivilianGroupDefinition
-civilian_group = ["CUP_C_TK_Man_06_Coat", 
+bluforUnarmedVehicleChopper_USA = [];
+
+bluforDrone_USA = [];
+
+//Join
+bluforUnarmedVehicle_db = [[bluforUnarmedVehicle_USA,_USA]];
+bluforArmedVehicle_db = [[bluforArmedVehicle_USA,_USA]];
+
+//////////////////////////////
+////Define civ group data/////
+//////////////////////////////
+//Taki
+civilian_group_taki = ["CUP_C_TK_Man_06_Coat", 
 "CUP_C_TK_Man_05_Coat", 
 "CUP_C_TK_Man_08"];
 
-civilian_big_group = ["CUP_C_TK_Man_06_Coat", 
+civilian_big_group_taki = ["CUP_C_TK_Man_06_Coat", 
 "CUP_C_TK_Man_05_Coat", 
 "CUP_C_TK_Man_08", 
 "CUP_C_TK_Man_04", 
@@ -17,8 +35,32 @@ civilian_big_group = ["CUP_C_TK_Man_06_Coat",
 "CUP_C_TK_Man_02"
 ];
 
-//EnemyGroupDefinition
-baseEnemyGroup = ["CUP_O_TK_INS_Soldier_TL", 
+civilianTruck_taki = ["CUP_I_V3S_Open_TKG"];
+
+//Syndikat
+civilian_group_Syndikat = ["C_Man_casual_8_F_tanoan", 
+"C_Man_casual_6_v2_F_tanoan", 
+"C_Man_casual_2_F_tanoan"];
+
+civilian_big_group_Syndikat = ["C_man_sport_2_F_tanoan", 
+"C_Man_casual_1_F_tanoan", 
+"C_Man_casual_3_F_tanoan", 
+"C_Man_casual_6_v2_F_tanoan", 
+"C_Man_formal_4_F_tanoan", 
+"C_Man_casual_5_F_tanoan" ];
+
+civilianTruck_Syndikat = ["C_Truck_02_transport_F"];
+
+//Join
+civilian_group_db = [[civilian_group_taki,_Taki],[civilian_group_Syndikat,_Syndikat]];
+civilian_big_group_db = [[civilian_big_group_taki,_Taki],[civilian_big_group_Syndikat,_Syndikat]];
+civilianTruck_db = [[civilianTruck_taki,_Taki],[civilianTruck_Syndikat,_Syndikat]];
+
+//////////////////////////////
+///Define enemy group data////
+//////////////////////////////
+//Taki
+baseEnemyGroup_taki = ["CUP_O_TK_INS_Soldier_TL", 
 "CUP_O_TK_INS_Soldier_MG", 
 "CUP_O_TK_INS_Soldier_GL", 
 "CUP_O_TK_INS_Soldier_AT",  
@@ -28,21 +70,59 @@ baseEnemyGroup = ["CUP_O_TK_INS_Soldier_TL",
 "CUP_O_TK_INS_Soldier_Enfield", 
 "CUP_O_TK_INS_Soldier_FNFAL"];
 
-baseEnemyATGroup = ["CUP_O_TK_INS_Soldier_TL", 
+baseEnemyATGroup_taki = ["CUP_O_TK_INS_Soldier_TL", 
 "CUP_O_TK_INS_Soldier_AT", 
 "CUP_O_TK_INS_Soldier_AT",
 "CUP_O_TK_INS_Soldier_AT",
 "CUP_O_TK_INS_Soldier"];
 
-baseEnemyDemoGroup = ["CUP_O_TK_INS_Mechanic", 
+baseEnemyDemoGroup_taki = ["CUP_O_TK_INS_Mechanic", 
 "CUP_O_TK_INS_Mechanic",
 "CUP_O_TK_INS_Bomber",
 "CUP_O_TK_INS_Bomber"];
 
-baseEnemyMortarGroup = ["CUP_O_TK_INS_Mechanic", 
+baseEnemyMortarGroup_taki = ["CUP_O_TK_INS_Mechanic", 
 "CUP_O_2b14_82mm_TK_INS",
 "CUP_O_TK_INS_Bomber"];
 
+baseEnemyVehicle_taki = [];
+
+//Syndikat
+baseEnemyGroup_Syndikat = ["I_C_Soldier_Bandit_4_F", 
+"I_C_Soldier_Bandit_3_F", 
+"I_C_Soldier_Bandit_7_F", 
+"I_C_Soldier_Bandit_5_F", 
+"I_C_Soldier_Bandit_6_F", 
+"I_C_Soldier_Bandit_2_F", 
+"I_C_Soldier_Bandit_8_F", 
+"I_C_Soldier_Bandit_1_F"];
+
+baseEnemyATGroup_Syndikat = ["I_C_Soldier_Bandit_6_F", 
+"I_C_Soldier_Bandit_2_F", 
+"I_C_Soldier_Bandit_2_F",
+"I_C_Soldier_Bandit_7_F", 
+"I_C_Soldier_Bandit_8_F"];
+
+baseEnemyDemoGroup_Syndikat = ["I_C_Soldier_Bandit_2_F", 
+"I_C_Soldier_Bandit_8_F",
+"I_C_Soldier_Bandit_8_F", 
+"I_C_Soldier_Bandit_6_F"];
+
+baseEnemyMortarGroup_Syndikat = ["I_G_Mortar_01_F", 
+"I_C_Soldier_Bandit_8_F", 
+"I_C_Soldier_Bandit_6_F"];
+
+baseEnemyVehicle_Syndikat = ["I_C_Soldier_Para_1_F"];
+
+//Join
+baseEnemyGroup_db = [[baseEnemyGroup_taki,_Taki],[baseEnemyGroup_Syndikat,_Syndikat]];
+baseEnemyATGroup_db = [[baseEnemyATGroup_taki,_Taki],[baseEnemyATGroup_Syndikat,_Syndikat]];
+baseEnemyDemoGroup_db = [[baseEnemyDemoGroup_taki,_Taki],[baseEnemyDemoGroup_Syndikat,_Syndikat]];
+baseEnemyMortarGroup_db = [[baseEnemyMortarGroup_taki,_Taki],[baseEnemyMortarGroup_Syndikat,_Syndikat]];
+
+//////////////////////////////
+////Define objectives data////
+//////////////////////////////
 avalaibleAmmoBox = ["CUP_BOX_TK_MILITIA_Wps_F", 
 "CUP_BOX_TK_MILITIA_Ammo_F"
 ];

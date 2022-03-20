@@ -14,12 +14,33 @@ class Params
 		texts[] = {"No","Yes"};
 		default = 1;
 	};
-	class MaxPhase
+	class CivFaction
 	{
-		title = "Maximum mission phase (WIP)";
+		title = "Civilian Faction";
+		values[] = {0,2};
+		texts[] = {"Takistani","Syndikat"};
+		default = 0;
+	};
+	class IndFaction
+	{
+		title = "Independent Faction";
+		values[] = {0};
+		texts[] = {"Takistani"};
+		default = 0;
+	};
+	class BluFaction
+	{
+		title = "Blufor Faction";
 		values[] = {1};
-		texts[] = {"Attack City"};
+		texts[] = {"US Army"};
 		default = 1;
+	};
+	class OpFaction
+	{
+		title = "Opfor Faction";
+		values[] = {0,2};
+		texts[] = {"Takistani","Syndikat"};
+		default = 0;
 	};
 	class Difficulty
 	{

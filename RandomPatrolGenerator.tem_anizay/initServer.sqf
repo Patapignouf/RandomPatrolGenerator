@@ -8,12 +8,45 @@
 //Init base mission parameters 
 difficultyParameter = "Difficulty" call BIS_fnc_getParamValue;
 lengthParameter = "MissionLength" call BIS_fnc_getParamValue;
+civFaction = "CivFaction" call BIS_fnc_getParamValue;
+opFaction = "OpFaction" call BIS_fnc_getParamValue;
+bluFaction = "BluFaction" call BIS_fnc_getParamValue;
+indFaction = "IndFaction" call BIS_fnc_getParamValue;
 
 /////////////////////////
 //////Find Assets////////
 /////////////////////////
 
-//Enemy Wave Composition
+//FriendlyGroupDefinition
+bluforUnarmedVehicle = bluforUnarmedVehicle_db select {_x select 1  == bluFaction} select 0 select 0;
+
+bluforArmedVehicle = bluforArmedVehicle_db select {_x select 1  == bluFaction} select 0 select 0;
+
+//CivilianGroupDefinition
+civilian_group = civilian_group_db select {_x select 1  == civFaction} select 0 select 0;
+
+civilian_big_group = civilian_big_group_db select {_x select 1  == civFaction} select 0 select 0;
+
+civilianTruck = civilianTruck_db select {_x select 1  == civFaction} select 0 select 0;
+
+//EnemyGroupDefinition
+baseEnemyGroup = baseEnemyGroup_db select {_x select 1  == opFaction} select 0 select 0;
+
+baseEnemyATGroup = baseEnemyATGroup_db select {_x select 1  == opFaction} select 0 select 0;
+
+baseEnemyDemoGroup = baseEnemyDemoGroup_db select {_x select 1  == opFaction} select 0 select 0;
+
+baseEnemyMortarGroup = baseEnemyMortarGroup_db select {_x select 1  == opFaction} select 0 select 0;
+
+//avalaibleAmmoBox = [];
+
+//avalaibleSupplyBox = [];
+
+//avalaibleHVT = [];
+
+
+
+//Enemy Wave Composition, needs to be completely rework
 EnemyWaveLevel_1 = [baseEnemyGroup,baseEnemyATGroup];
 EnemyWaveLevel_2 = [baseEnemyGroup,baseEnemyATGroup];
 EnemyWaveLevel_3 = [baseEnemyGroup,baseEnemyATGroup];
