@@ -44,7 +44,7 @@ dangerAreaList = [];
 
 if ( count possiblePOILocation < lengthParameter + 1) then 
 {
-	possiblePOILocation = ([initCityLocation, 3500] call getLocationsAround) - [initCityLocation];
+	possiblePOILocation = ([initCityLocation, 4000] call getLocationsAround) - [initCityLocation];
 	
 };
 
@@ -200,10 +200,10 @@ if (1 <= (count EnemyWaveSpawnPositions)) then
 selectedBluforVehicle =[];
 aoSize = 1500;
 
-
 // Get smallest distance to an AO
-initBlueforLocation = [getPos initCityLocation, (aoSize+500), (aoSize+1500), 8, 0, 0.25, 0, [possiblePOILocation], [[0,0,0],[0,0,0]]] call BIS_fnc_findSafePos;
-initBlueforLocation = [selectMax [selectMin [initBlueforLocation select 0, worldSize ],0],selectMax [selectMin [initBlueforLocation select 1, worldSize],0]]; 
+areaOfOperation = [possiblePOILocation] call getAreaOfMission;
+initBlueforLocation = [getPos initCityLocation, (aoSize+500), (aoSize+1500), 8, 0, 0.25, 0, [areaOfOperation], [[0,0,0],[0,0,0]]] call BIS_fnc_findSafePos;
+//initBlueforLocation = [selectMax [selectMin [initBlueforLocation select 0, worldSize ],0],selectMax [selectMin [initBlueforLocation select 1, worldSize],0]]; 
 
 //Generate FOB
 spawnFOBObjects = [([initBlueforLocation, 1, 25, 30, 0, 20, 0] call BIS_fnc_findSafePos), (random 360), selectRandom avalaibleFOB] call BIS_fnc_ObjectsMapper;					

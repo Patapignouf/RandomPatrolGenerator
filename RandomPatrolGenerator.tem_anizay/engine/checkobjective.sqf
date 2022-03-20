@@ -48,14 +48,16 @@ objectReturnedToCity = [];
 	obj_list_items pushBack (_x select 0);
 } foreach _objectivesToTest;
 
-diag_log format ["Objective to test :  %1", obj_list_items];
+diag_log format ["Objective to test :  %1 in complete list %2", obj_list_items, _objectivesToTest];
 
 while {!missionComplete} do
 {
+	diag_log format ["Loop to test objective : %1", _objectivesToTest];
 	objectReturnedToCity = obj_list_items inAreaArray mytrigger; //vehicles (all vehicles) inAreaArray (Returns list of Objects or Positions that are in the area _mytrigger.)  
     sleep 10;
 	{
 		current_obj = _x;
+		diag_log format ["Currently test objective : %1", current_obj];
 		switch (current_obj select 1) do
 		{
 			case "supply":
@@ -68,6 +70,7 @@ while {!missionComplete} do
 						_objectivesToTest = _objectivesToTest - [current_obj];
 						CompletedObjectives pushBack current_obj;
 						publicVariable "CompletedObjectives";
+						[[format ["L'objectif %1 est terminé", getText (configFile >> "cfgVehicles" >> typeOf (current_obj select 0) >> "displayName")],independent], 'engine\doGenerateMessage.sqf'] remoteExec ['BIS_fnc_execVM', 0];
 					};
 				};
 			case "ammo":
@@ -80,6 +83,7 @@ while {!missionComplete} do
 						_objectivesToTest = _objectivesToTest - [current_obj];
 						CompletedObjectives pushBack current_obj;
 						publicVariable "CompletedObjectives";
+						[[format ["L'objectif %1 est terminé", getText (configFile >> "cfgVehicles" >> typeOf (current_obj select 0) >> "displayName")],independent], 'engine\doGenerateMessage.sqf'] remoteExec ['BIS_fnc_execVM', 0];
 					} else 
 					{
 						if (current_obj select 0 in objectReturnedToCity) then
@@ -90,6 +94,7 @@ while {!missionComplete} do
 							_objectivesToTest = _objectivesToTest - [current_obj];
 							CompletedObjectives pushBack current_obj;
 							publicVariable "CompletedObjectives";
+							[[format ["L'objectif %1 est terminé", getText (configFile >> "cfgVehicles" >> typeOf (current_obj select 0) >> "displayName")],independent], 'engine\doGenerateMessage.sqf'] remoteExec ['BIS_fnc_execVM', 0];
 						};
 					};
 				};
@@ -103,6 +108,7 @@ while {!missionComplete} do
 						_objectivesToTest = _objectivesToTest - [current_obj];
 						CompletedObjectives pushBack current_obj;
 						publicVariable "CompletedObjectives";
+						[[format ["L'objectif %1 est terminé", getText (configFile >> "cfgVehicles" >> typeOf (current_obj select 0) >> "displayName")],independent], 'engine\doGenerateMessage.sqf'] remoteExec ['BIS_fnc_execVM', 0];
 					};
 				};
 			case "vip":
@@ -115,6 +121,7 @@ while {!missionComplete} do
 						_objectivesToTest = _objectivesToTest - [current_obj];
 						CompletedObjectives pushBack current_obj;
 						publicVariable "CompletedObjectives";
+						[[format ["L'objectif %1 est terminé", getText (configFile >> "cfgVehicles" >> typeOf (current_obj select 0) >> "displayName")],independent], 'engine\doGenerateMessage.sqf'] remoteExec ['BIS_fnc_execVM', 0];
 					};
 				};
 			default { hint "default" };
