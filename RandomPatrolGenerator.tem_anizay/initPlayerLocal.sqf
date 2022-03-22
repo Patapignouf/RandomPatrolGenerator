@@ -12,6 +12,7 @@
 
 if (hasInterface) then
 {
+	waituntil {!isNil "isBluforAttacked"};
 	if (side player == independent) then 
 	{
 		player setPos ([getPos initCityLocation, 1, 5, 3, 0, 20, 0] call BIS_fnc_findSafePos);
@@ -33,6 +34,10 @@ if (hasInterface) then
 	if (side player == blufor) then
 	{
 		player setPos ([initBlueforLocation, 1, 5, 3, 0, 20, 0] call BIS_fnc_findSafePos);
+		if (isBluforAttacked) then
+		{
+				[["Le QG vous informe qu'une attaque est possiblement en cours sur vos positions dans quelques de minutes, quittez les lieux avant leur arrivée.",blufor], 'engine\doGenerateMessage.sqf'] remoteExec ['BIS_fnc_execVM', 0];
+		};
 	};
 };
 

@@ -13,6 +13,8 @@ opFaction = "OpFaction" call BIS_fnc_getParamValue;
 bluFaction = "BluFaction" call BIS_fnc_getParamValue;
 indFaction = "IndFaction" call BIS_fnc_getParamValue;
 enableInitAttack = "EnableInitAttack" call BIS_fnc_getParamValue;
+enableInitBluAttack = "EnableInitBluAttack" call BIS_fnc_getParamValue;
+
 
 /////////////////////////
 //////Find Assets////////
@@ -69,7 +71,7 @@ EnemyWaveLevel_10 = [baseEnemyGroup,baseEnemyATGroup,baseEnemyDemoGroup,baseEnem
 //EnemyWaveGroups = [EnemyWaveLevel_1,EnemyWaveLevel_2,EnemyWaveLevel_3,EnemyWaveLevel_4,EnemyWaveLevel_5,EnemyWaveLevel_6,EnemyWaveLevel_7,EnemyWaveLevel_8,EnemyWaveLevel_9,EnemyWaveLevel_10];
 EnemyWaveGroups = [EnemyWaveLevel_1,EnemyWaveLevel_6,EnemyWaveLevel_8];
 
-publicVariable "EnemyWaveGroups";
+publicvariable "EnemyWaveGroups";
 
 /////////////////////////
 /////Find locations//////
@@ -78,7 +80,7 @@ publicVariable "EnemyWaveGroups";
 //InitLogicDefinition 
 possibleInitLocation = [] call getRandomCenterLocations;
 initCityLocation = selectRandom possibleInitLocation;
-publicVariable "initCityLocation";
+publicvariable "initCityLocation";
 possiblePOILocation = ([initCityLocation, 2500] call getLocationsAround) - [initCityLocation];
 dangerAreaList = [];
 
@@ -161,11 +163,11 @@ for [{_i = 0}, {_i <= lengthParameter}, {_i = _i + 1}] do //Peut être optimisé
 	SupplyObjects pushBack [currentObj,currentObjType];
 };
 
-publicVariable "SupplyObjects";
+publicvariable "SupplyObjects";
 SelectedObjectives = [];
-publicVariable "SelectedObjectives";
+publicvariable "SelectedObjectives";
 CompletedObjectives = [];
-publicVariable "CompletedObjectives";
+publicvariable "CompletedObjectives";
 
 tempSupplyObjects = SupplyObjects;
 for [{_i = 0}, {_i <= lengthParameter}, {_i = _i + 1}] do //Peut être optimisé en fusionnant cette boucle avec la boucle précédente
@@ -223,23 +225,19 @@ for [{_i = 0}, {_i <= 2}, {_i = _i + 1}] do
 } foreach allUnits;
 
 
+/////////////////////////
+////Generate Ind/////////
+/////////////////////////
+
 //Init attack management on ind
 AvalaibleInitAttackPositions = [];
-aoSize = 500;
-for [{_i = 0}, {_i <= difficultyParameter+1}, {_i = _i + 1}] do
-{ 
-	AvalaibleInitAttackPositions pushBack ([getPos initCityLocation, (aoSize+300), (aoSize+600), 8, 0, 0.25, 0, [], [[0,0,0],[0,0,0]]] call BIS_fnc_findSafePos);
-};
-
-if (enableInitAttack == 1 || ((enableInitAttack == 2) && (round (random 1))==0)) then
+AvalaibleInitAttackPositions = [getPos initCityLocation, 800,1000,difficultyParameter+1 ] call getListOfPositionsAroundTarget;
+if ( count AvalaibleInitAttackPositions != 0 && (enableInitAttack == 1 || ((enableInitAttack == 2) && (round (random 1))==0))) then
 {
 	diag_log "Init attack on independent city";
 	[AvalaibleInitAttackPositions,getPos initCityLocation,[baseEnemyGroup,baseEnemyATGroup,[selectRandom baseEnemyVehicleGroup]],difficultyParameter] execVM 'enemyManagement\doAmbush.sqf'; 
 };
 
-/////////////////////////
-////Generate Ind/////////
-/////////////////////////
 
 //Define independent stuff
 {
@@ -283,6 +281,7 @@ selectedBluforVehicle =[];
 
 // Get smallest distance to an AO
 areaOfOperation = [possiblePOILocation] call getAreaOfMission;
+aoSize = 1500;
 initBlueforLocation = [getPos initCityLocation, (aoSize+500), (aoSize+1500), 8, 0, 0.25, 0, [areaOfOperation], [[0,0,0],[0,0,0]]] call BIS_fnc_findSafePos;
 //Safe position
 initBlueforLocation = [selectMax [selectMin [initBlueforLocation select 0, worldSize-50 ],50],selectMax [selectMin [initBlueforLocation select 1, worldSize-50],50]]; 
@@ -312,11 +311,15 @@ for [{_i = 0}, {_i < 1}, {_i = _i + 1}] do
 foreach selectedBluforVehicle;
 
 //Setup random attack on blufor at the beginning
-if (round (random 4) == 0) then
+isBluforAttacked = false;
+publicvariable "isBluforAttacked";
+
+AvalaibleInitAttackPositions = [];
+AvalaibleInitAttackPositions = [initBlueforLocation, 800,1000,difficultyParameter] call getListOfPositionsAroundTarget;
+if ( count AvalaibleInitAttackPositions != 0 && (enableInitBluAttack == 1 || ((enableInitBluAttack == 2) && (round (random 4))==0))) then
 {
-	[EnemyWaveSpawnPositions,initBlueforLocation,EnemyWaveLevel_1,difficultyParameter] execVM 'enemyManagement\doAmbush.sqf'; 
-	if (round (random 1) == 0) then
-	{
-		[["Le QG vous informe qu'une attaque est possiblement en cours sur vos positions dans une quizaine de minutes, quittez les lieux avant leur arrivée.",blufor], 'engine\doGenerateMessage.sqf'] remoteExec ['BIS_fnc_execVM', 0];
-	};
+	diag_log "Init attack on blufor FOB";
+	[AvalaibleInitAttackPositions,initBlueforLocation,[baseEnemyGroup,baseEnemyATGroup,[selectRandom baseEnemyVehicleGroup]],difficultyParameter] execVM 'enemyManagement\doAmbush.sqf'; 
+	isBluforAttacked = true;
+	publicvariable "isBluforAttacked";
 };

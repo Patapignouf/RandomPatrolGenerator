@@ -43,3 +43,22 @@ getAreaOfMission =
 	trgAOC setTriggerArea [_xDist/1.5, _yDist/1.5, 0, true];
 	trgAOC
 };
+
+
+getListOfPositionsAroundTarget = 
+{
+	//Define parameters
+	_targetPosition = _this select 0;
+	_minDistance = _this select 1;
+	_maxDistance = _this select 2;
+	_numberOfPosition = _this select 3;
+	
+	AvalaiblePositions = [];
+	
+	for [{_i = 0}, {_i <= _numberOfPosition}, {_i = _i + 1}] do
+	{ 
+		AvalaiblePositions pushBack ([_targetPosition, (_minDistance), (_maxDistance), 8, 0, 0.25, 0, [], [[0,0,0],[0,0,0]]] call BIS_fnc_findSafePos);
+	};
+	AvalaiblePositions
+};
+
