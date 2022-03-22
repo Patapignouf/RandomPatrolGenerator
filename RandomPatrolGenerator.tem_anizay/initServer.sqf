@@ -234,7 +234,7 @@ for [{_i = 0}, {_i <= difficultyParameter+1}, {_i = _i + 1}] do
 if (enableInitAttack == 1 || ((enableInitAttack == 2) && (round (random 1))==0)) then
 {
 	diag_log "Init attack on independent city";
-	[AvalaibleInitAttackPositions,getPos initCityLocation,EnemyWaveLevel_5,difficultyParameter] execVM 'enemyManagement\doAmbush.sqf'; 
+	[AvalaibleInitAttackPositions,getPos initCityLocation,[baseEnemyGroup,baseEnemyATGroup,[selectRandom baseEnemyVehicleGroup]],difficultyParameter] execVM 'enemyManagement\doAmbush.sqf'; 
 };
 
 /////////////////////////
