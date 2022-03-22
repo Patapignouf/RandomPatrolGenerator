@@ -24,8 +24,8 @@ class Params
 	class IndFaction
 	{
 		title = "Independent Faction";
-		values[] = {0};
-		texts[] = {"Takistani"};
+		values[] = {0,1,2};
+		texts[] = {"Takistani","USA","Syndikat"};
 		default = 0;
 	};
 	class BluFaction
@@ -54,6 +54,13 @@ class Params
 		title = "Mission's length";
 		values[] = {1,2,3,4};
 		texts[] = {"Short","Medium","Long","Very Long"};
+		default = 2;
+	};
+	class EnableInitAttack
+	{
+		title = "Init an attack on independent position on start";
+		values[] = {0,1,2};
+		texts[] = {"No","Yes","Random"};
 		default = 2;
 	};
 };

@@ -20,6 +20,31 @@ bluforUnarmedVehicle_db = [[bluforUnarmedVehicle_USA,_USA]];
 bluforArmedVehicle_db = [[bluforArmedVehicle_USA,_USA]];
 
 //////////////////////////////
+////Define ind group data/////
+//////////////////////////////
+
+ind_group_taki = ["CUP_I_TK_GUE_Commander", 
+"CUP_I_TK_GUE_Soldier_AK_47S", 
+"CUP_I_TK_GUE_Soldier_AT", 
+"CUP_I_TK_GUE_Soldier_LAT"
+];
+
+ind_group_syndikat = ["I_C_Soldier_Bandit_7_F", 
+"I_C_Soldier_Bandit_3_F", 
+"I_C_Soldier_Bandit_6_F", 
+"I_C_Soldier_Bandit_4_F"
+];
+
+ind_group_USA = ["CUP_B_FR_Story_Miles", 
+"CUP_B_FR_Story_Cooper", 
+"CUP_B_FR_Story_Sykes", 
+"CUP_B_FR_Story_Rodriguez", 
+"CUP_B_FR_Story_OHara"
+];
+
+ind_group_db = [[ind_group_taki,_Taki],[ind_group_syndikat,_Syndikat],[ind_group_USA,_USA]];
+
+//////////////////////////////
 ////Define civ group data/////
 //////////////////////////////
 //Taki
@@ -85,7 +110,8 @@ baseEnemyMortarGroup_taki = ["CUP_O_TK_INS_Mechanic",
 "CUP_O_2b14_82mm_TK_INS",
 "CUP_O_TK_INS_Bomber"];
 
-baseEnemyVehicle_taki = [];
+baseEnemyVehicle_taki = ["CUP_I_Datsun_PK_TK",
+"CUP_I_Hilux_M2_TK"];
 
 //Syndikat
 baseEnemyGroup_Syndikat = ["I_C_Soldier_Bandit_4_F", 
@@ -112,14 +138,15 @@ baseEnemyMortarGroup_Syndikat = ["I_G_Mortar_01_F",
 "I_C_Soldier_Bandit_8_F", 
 "I_C_Soldier_Bandit_6_F"];
 
-baseEnemyVehicle_Syndikat = ["I_C_Soldier_Para_1_F"];
+baseEnemyVehicle_Syndikat = ["I_C_Offroad_02_LMG_F", 
+"I_C_Offroad_02_AT_F"];
 
 //Join
 baseEnemyGroup_db = [[baseEnemyGroup_taki,_Taki],[baseEnemyGroup_Syndikat,_Syndikat]];
 baseEnemyATGroup_db = [[baseEnemyATGroup_taki,_Taki],[baseEnemyATGroup_Syndikat,_Syndikat]];
 baseEnemyDemoGroup_db = [[baseEnemyDemoGroup_taki,_Taki],[baseEnemyDemoGroup_Syndikat,_Syndikat]];
 baseEnemyMortarGroup_db = [[baseEnemyMortarGroup_taki,_Taki],[baseEnemyMortarGroup_Syndikat,_Syndikat]];
-
+baseEnemyVehicleGroup_db = [[baseEnemyVehicle_taki,_Taki],[baseEnemyVehicle_Syndikat,_Syndikat]];
 //////////////////////////////
 ////Define objectives data////
 //////////////////////////////

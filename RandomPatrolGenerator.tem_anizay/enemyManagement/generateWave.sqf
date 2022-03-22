@@ -21,9 +21,10 @@ if (isServer) then
 	CompletedObjectivesWave = 1;
 	while {true or waveCounter < (count _thisAvailableWaveGroups)} do 
 	{
+		sleep 20;
 		while {count CompletedObjectives == CompletedObjectivesWave} do
 		{
-			sleep 60;
+			sleep 20;
 			diag_log format ["Wave start : %1", waveCounter ];
 			
 			if (  waveCounter < count _thisAvailableWaveGroups) then
@@ -34,25 +35,12 @@ if (isServer) then
 				_thisAvailableGroups = _thisAvailableWaveGroups select ((count _thisAvailableWaveGroups)-1);
 			};
 			
+			[EnemyWaveSpawnPositions,getPos initCityLocation,_thisAvailableGroups,difficultyParameter] execVM 'enemyManagement\doAmbush.sqf'; 
 			
-			for [{_k = 0}, {_k < (count _thisAvailablePosition)}, {_k = _k + 1}] do 
-			{
-				for [{_j = 0}, {_j < 1 + _thisDifficulty}, {_j = _j + 1}] do 
-				{
-					
-					currentRandomAttack = selectRandom _thisAvailableGroups;
-					currentGroupAttack = [getPos selectRandom _thisAvailablePosition, east, currentRandomAttack,[],[],[],[],[],0] call BIS_fnc_spawnGroup;
-					diag_log format ["Create group : %1 at position %2 and assault to position %3", currentGroupAttack, getPos (leader currentGroupAttack), getPos _thisTargerPosition];
-					[currentGroupAttack, getPos _thisTargerPosition] spawn lambs_wp_fnc_taskAssault;
-					
-					diag_log format ["Group %1 ready to assault", _j ];
-				};
-			};
-
 			diag_log format ["Wave end : %1", waveCounter ];
 			
-			sleep 20;
-			[["Vos informateurs vous signalent qu'une attaque est en cours sur Qalandar",independent], 'engine\doGenerateMessage.sqf'] remoteExec ['BIS_fnc_execVM', 0];
+			sleep 120;
+			[["Vos informateurs vous signalent qu'une attaque est en cours sur votre ville",independent], 'engine\doGenerateMessage.sqf'] remoteExec ['BIS_fnc_execVM', 0];
 			CompletedObjectivesWave = CompletedObjectivesWave + 1;
 			waveCounter = waveCounter + 1;
 		};

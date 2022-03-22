@@ -15,6 +15,20 @@ if (hasInterface) then
 	if (side player == independent) then 
 	{
 		player setPos ([getPos initCityLocation, 1, 5, 3, 0, 20, 0] call BIS_fnc_findSafePos);
+		if (player == (leader (group player))) then
+		{
+			diag_log format ["Warlord is set to player : %1", name player];
+			player addEventHandler ["Killed", {
+				params ["_unit", "_killer", "_instigator", "_useEffects"];
+				diag_log format ["Warlord has been killed by : %1", _killer];
+				diag_log format ["Mission end !"];
+				if (isMultiplayer) then {
+					'IND_DEAD' call BIS_fnc_endMissionServer;
+				} else {
+					'IND_DEAD' call BIS_fnc_endMission;
+				};
+			}];
+		};
 	};
 	if (side player == blufor) then
 	{

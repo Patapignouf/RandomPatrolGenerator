@@ -12,6 +12,7 @@ civFaction = "CivFaction" call BIS_fnc_getParamValue;
 opFaction = "OpFaction" call BIS_fnc_getParamValue;
 bluFaction = "BluFaction" call BIS_fnc_getParamValue;
 indFaction = "IndFaction" call BIS_fnc_getParamValue;
+enableInitAttack = "EnableInitAttack" call BIS_fnc_getParamValue;
 
 /////////////////////////
 //////Find Assets////////
@@ -21,6 +22,10 @@ indFaction = "IndFaction" call BIS_fnc_getParamValue;
 bluforUnarmedVehicle = bluforUnarmedVehicle_db select {_x select 1  == bluFaction} select 0 select 0;
 
 bluforArmedVehicle = bluforArmedVehicle_db select {_x select 1  == bluFaction} select 0 select 0;
+
+//IndGroupDefinition
+
+ind_group = ind_group_db select {_x select 1  == indFaction} select 0 select 0;
 
 //CivilianGroupDefinition
 civilian_group = civilian_group_db select {_x select 1  == civFaction} select 0 select 0;
@@ -37,6 +42,8 @@ baseEnemyATGroup = baseEnemyATGroup_db select {_x select 1  == opFaction} select
 baseEnemyDemoGroup = baseEnemyDemoGroup_db select {_x select 1  == opFaction} select 0 select 0;
 
 baseEnemyMortarGroup = baseEnemyMortarGroup_db select {_x select 1  == opFaction} select 0 select 0;
+
+baseEnemyVehicleGroup = baseEnemyVehicleGroup_db select {_x select 1  == opFaction} select 0 select 0;
 
 //avalaibleAmmoBox = [];
 
@@ -174,11 +181,11 @@ for [{_i = 0}, {_i <= lengthParameter}, {_i = _i + 1}] do //Peut être optimisé
 //check wave spawn 
 EnemyWaveSpawnPositions = [];
 numberOfSpawnWave = 4;
-possibleEnemyWaveSpawnPositions = ([initCityLocation, 1500] call getLocationsAround) - ([initCityLocation]+[SelectedObjectivePosition]);
+possibleEnemyWaveSpawnPositions = (([initCityLocation, 2000] call getLocationsAround) - [initCityLocation]) - SupplyPositions;
 
 for [{_i = 0}, {_i < numberOfSpawnWave}, {_i = _i + 1}] do
 {
-	EnemyWaveSpawnPositions pushBack (selectRandom possibleEnemyWaveSpawnPositions);
+	EnemyWaveSpawnPositions pushBack (getPos (selectRandom possibleEnemyWaveSpawnPositions));
 };
 
 
@@ -191,16 +198,57 @@ for [{_i = 0}, {_i < numberOfSpawnWave}, {_i = _i + 1}] do
 /////////////////////////
 
 //IA civilian taskGarrison
+diag_log format ["Begin generation of civilian AO : %1 on position %2", civilian_big_group, initCityLocation];
 currentCivGroup = objNull;
 civsGroup = [];
 for [{_i = 0}, {_i <= 2}, {_i = _i + 1}] do
 { 
-
-	currentCivGroup = [((getPos initCityLocation) findEmptyPosition [10, 60]), civilian, civilian_big_group,[],[],[],[],[],180] call BIS_fnc_spawnGroup;
-	civsGroup pushBack currentCivGroup;
 	
+	currentCivGroup = [((getPos initCityLocation) findEmptyPosition [5, 60]), civilian, civilian_big_group,[],[],[],[],[],180] call BIS_fnc_spawnGroup;
+	civsGroup pushBack currentCivGroup;
+	diag_log format ["Generation of civilian group : %1 on position %2 has been completed", currentCivGroup, initCityLocation];
 };
+
 [civsGroup, false] execVM 'enemyManagement\doGarrison.sqf';
+
+{
+	if (side _x == civilian) then
+	{
+		_x addEventHandler ["Killed", {
+			params ["_unit", "_killer", "_instigator", "_useEffects"];
+			diag_log format ["Civilian has been killed by : %1", name _killer];
+			[[format ["Civilian has been killed by : %1", name _killer],independent], 'engine\doGenerateMessage.sqf'] remoteExec ['BIS_fnc_execVM', 0];
+		}];
+	};
+} foreach allUnits;
+
+
+//Init attack management on ind
+AvalaibleInitAttackPositions = [];
+aoSize = 500;
+for [{_i = 0}, {_i <= difficultyParameter+1}, {_i = _i + 1}] do
+{ 
+	AvalaibleInitAttackPositions pushBack ([getPos initCityLocation, (aoSize+300), (aoSize+600), 8, 0, 0.25, 0, [], [[0,0,0],[0,0,0]]] call BIS_fnc_findSafePos);
+};
+
+if (enableInitAttack == 1 || ((enableInitAttack == 2) && (round (random 1))==0)) then
+{
+	diag_log "Init attack on independent city";
+	[AvalaibleInitAttackPositions,getPos initCityLocation,EnemyWaveLevel_5,difficultyParameter] execVM 'enemyManagement\doAmbush.sqf'; 
+};
+
+/////////////////////////
+////Generate Ind/////////
+/////////////////////////
+
+//Define independent stuff
+{
+	if (side _x == independent) then 
+	{
+		_x setUnitLoadout (getUnitLoadout (configFile >> "CfgVehicles" >> (selectRandom ind_group)));
+	};
+} foreach allPlayers;
+
 
 /////////////////////////
 ///////Generate AO///////
@@ -231,12 +279,13 @@ if (1 <= (count EnemyWaveSpawnPositions)) then
 ////Generate Blufor//////
 /////////////////////////
 selectedBluforVehicle =[];
-aoSize = 1500;
+
 
 // Get smallest distance to an AO
 areaOfOperation = [possiblePOILocation] call getAreaOfMission;
 initBlueforLocation = [getPos initCityLocation, (aoSize+500), (aoSize+1500), 8, 0, 0.25, 0, [areaOfOperation], [[0,0,0],[0,0,0]]] call BIS_fnc_findSafePos;
-//initBlueforLocation = [selectMax [selectMin [initBlueforLocation select 0, worldSize ],0],selectMax [selectMin [initBlueforLocation select 1, worldSize],0]]; 
+//Safe position
+initBlueforLocation = [selectMax [selectMin [initBlueforLocation select 0, worldSize-50 ],50],selectMax [selectMin [initBlueforLocation select 1, worldSize-50],50]]; 
 
 //Generate FOB
 spawnFOBObjects = [([initBlueforLocation, 1, 25, 30, 0, 20, 0] call BIS_fnc_findSafePos), (random 360), selectRandom avalaibleFOB] call BIS_fnc_ObjectsMapper;					
@@ -245,7 +294,7 @@ publicvariable "initBlueforLocation";
 
 VA setPos ([initBlueforLocation, 1, 5, 3, 0, 20, 0] call BIS_fnc_findSafePos);
 
-
+	
 //Generate vehicle
 for [{_i = 0}, {_i < 2}, {_i = _i + 1}] do
 {
@@ -261,3 +310,13 @@ for [{_i = 0}, {_i < 1}, {_i = _i + 1}] do
 	createVehicle [_x, (initBlueforLocation findEmptyPosition [10, 60, _x]), [], 0, "NONE"];
 }
 foreach selectedBluforVehicle;
+
+//Setup random attack on blufor at the beginning
+if (round (random 4) == 0) then
+{
+	[EnemyWaveSpawnPositions,initBlueforLocation,EnemyWaveLevel_1,difficultyParameter] execVM 'enemyManagement\doAmbush.sqf'; 
+	if (round (random 1) == 0) then
+	{
+		[["Le QG vous informe qu'une attaque est possiblement en cours sur vos positions dans une quizaine de minutes, quittez les lieux avant leur arrivée.",blufor], 'engine\doGenerateMessage.sqf'] remoteExec ['BIS_fnc_execVM', 0];
+	};
+};

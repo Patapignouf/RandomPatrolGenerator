@@ -18,7 +18,7 @@ numberOfCompletedObj = 0;
 numberOfObjectives = count _objectivesToTest;
 
 mytrigger = createTrigger ["EmptyDetector", getPos _objectivesDestinationArea]; //create a trigger area created at object with variable name my_object
-mytrigger setTriggerArea [25, 25, 0, false]; // trigger area with a radius of 100m.
+mytrigger setTriggerArea [60, 60, 0, false]; // trigger area with a radius of 100m.
 objectReturnedToCity = []; 
 
 

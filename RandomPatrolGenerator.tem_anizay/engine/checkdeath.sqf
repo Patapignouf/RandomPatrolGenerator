@@ -3,8 +3,9 @@ nb_blu_alive = {isPlayer _x && side _x == blufor} count allUnits;
 nb_blu_init = nb_blu_alive;
 nb_civ_alive = {side _x == civilian} count allUnits;
 nb_civ_init =  nb_civ_alive;
-
 missionOver = false;
+initWarlord = objNull;
+publicvariable "initWarlord";
 
 //Obj management
 obj_supply_or_ammo = [];
@@ -41,11 +42,12 @@ obj_must_be_alive = [];
 } foreach SupplyObjects;
 
 
-
+//TODO Remplacer la plupart de ces tests par des eventHandler
 while {!missionOver} do
 {
 	sleep 10;
 	
+	//Obsolète
 	if (nb_ind_alive == 0) then 
 	{
 		missionOver = true;
@@ -59,6 +61,17 @@ while {!missionOver} do
 	{
 		nb_ind_alive = {isPlayer _x && side _x == independent} count allUnits;
 		publicvariable "nb_ind_alive";
+	};
+	
+	if (!isNull initWarlord && !alive initWarlord) then 
+	{
+		missionOver = true;
+		diag_log format ["Mission end !"];
+		if (isMultiplayer) then {
+			'IND_DEAD' call BIS_fnc_endMissionServer;
+		} else {
+			'IND_DEAD' call BIS_fnc_endMission;
+		};
 	};
 	
 	if (!alive logiTruck) then
