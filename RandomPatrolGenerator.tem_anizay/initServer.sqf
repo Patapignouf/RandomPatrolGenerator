@@ -230,12 +230,16 @@ for [{_i = 0}, {_i <= 2}, {_i = _i + 1}] do
 /////////////////////////
 
 //Init attack management on ind
+isIndAttacked = false;
+publicvariable "isIndAttacked";
 AvalaibleInitAttackPositions = [];
 AvalaibleInitAttackPositions = [getPos initCityLocation, 800,1000,difficultyParameter+1 ] call getListOfPositionsAroundTarget;
 if ( count AvalaibleInitAttackPositions != 0 && (enableInitAttack == 1 || ((enableInitAttack == 2) && (round (random 1))==0))) then
 {
 	diag_log "Init attack on independent city";
 	[AvalaibleInitAttackPositions,getPos initCityLocation,[baseEnemyGroup,baseEnemyATGroup,[selectRandom baseEnemyVehicleGroup]],difficultyParameter] execVM 'enemyManagement\doAmbush.sqf'; 
+	isIndAttacked = true;
+	publicvariable "isIndAttacked";
 };
 
 

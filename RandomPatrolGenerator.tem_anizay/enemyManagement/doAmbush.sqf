@@ -16,12 +16,14 @@ if (isServer) then
 			
 			currentAttackGroup = selectRandom _thisAvailableGroups;
 			currentPosition = selectRandom _thisAvailablePosition;
-			currentGroup = [(currentPosition findEmptyPosition [10, 60]), east, currentAttackGroup,[],[],[],[],[],0] call BIS_fnc_spawnGroup;
+			currentGroup = [(currentPosition findEmptyPosition [10, 60, selectRandom currentAttackGroup]), east, currentAttackGroup,[],[],[],[],[],0] call BIS_fnc_spawnGroup;
 			diag_log format ["Create group : %1 at position %2 and assault to position %3", currentGroup, getPos (leader currentGroup), _thisTargetPosition];
 			//Assault for vehicle
 			currentGroup move (_thisTargetPosition);
 			//Assault for infantry
 			[currentGroup, _thisTargetPosition] spawn lambs_wp_fnc_taskAssault;
+			
+			//[currentGroup, currentPosition distance _thisTargetPosition] spawn lambs_wp_fnc_taskHunt;
 			currentGroup setFormation "DIAMOND";
 			diag_log format ["Group %1 ready to assault", _j ];
 		};

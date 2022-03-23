@@ -12,10 +12,15 @@
 
 if (hasInterface) then
 {
-	waituntil {!isNil "isBluforAttacked"};
+	waituntil {!isNil "isBluforAttacked" && !isNil "isIndAttacked"};
 	if (side player == independent) then 
 	{
 		player setPos ([getPos initCityLocation, 1, 5, 3, 0, 20, 0] call BIS_fnc_findSafePos);
+		if (isIndAttacked) then
+		{
+				[["Vos informateurs vous informent qu'une attaque est en cours sur votre position.",independent], 'engine\doGenerateMessage.sqf'] remoteExec ['BIS_fnc_execVM', 0];
+				[["Le QG vous informe qu'une attaque est probablement en cours sur la ville alliée.",blufor], 'engine\doGenerateMessage.sqf'] remoteExec ['BIS_fnc_execVM', 0];
+		};
 		if (player == (leader (group player))) then
 		{
 			diag_log format ["Warlord is set to player : %1", name player];
@@ -36,6 +41,7 @@ if (hasInterface) then
 		player setPos ([initBlueforLocation, 1, 5, 3, 0, 20, 0] call BIS_fnc_findSafePos);
 		if (isBluforAttacked) then
 		{
+				//There's an issue : this message will erase the first one for Blufor
 				[["Le QG vous informe qu'une attaque est possiblement en cours sur vos positions dans quelques de minutes, quittez les lieux avant leur arrivée.",blufor], 'engine\doGenerateMessage.sqf'] remoteExec ['BIS_fnc_execVM', 0];
 		};
 	};
