@@ -28,6 +28,7 @@ bluforArmedVehicle = bluforArmedVehicle_db select {_x select 1  == bluFaction} s
 //IndGroupDefinition
 
 ind_group = ind_group_db select {_x select 1  == indFaction} select 0 select 0;
+publicvariable "ind_group";
 
 //CivilianGroupDefinition
 civilian_group = civilian_group_db select {_x select 1  == civFaction} select 0 select 0;
@@ -233,7 +234,7 @@ for [{_i = 0}, {_i <= 2}, {_i = _i + 1}] do
 isIndAttacked = false;
 publicvariable "isIndAttacked";
 AvalaibleInitAttackPositions = [];
-AvalaibleInitAttackPositions = [getPos initCityLocation, 800,1000,difficultyParameter+1 ] call getListOfPositionsAroundTarget;
+AvalaibleInitAttackPositions = [getPos initCityLocation, 1200,1400,difficultyParameter] call getListOfPositionsAroundTarget;
 if ( count AvalaibleInitAttackPositions != 0 && (enableInitAttack == 1 || ((enableInitAttack == 2) && (round (random 1))==0))) then
 {
 	diag_log "Init attack on independent city";
@@ -241,15 +242,6 @@ if ( count AvalaibleInitAttackPositions != 0 && (enableInitAttack == 1 || ((enab
 	isIndAttacked = true;
 	publicvariable "isIndAttacked";
 };
-
-
-//Define independent stuff
-{
-	if (side _x == independent) then 
-	{
-		_x setUnitLoadout (getUnitLoadout (configFile >> "CfgVehicles" >> (selectRandom ind_group)));
-	};
-} foreach allPlayers;
 
 
 /////////////////////////
@@ -295,8 +287,25 @@ spawnFOBObjects = [([initBlueforLocation, 1, 25, 30, 0, 20, 0] call BIS_fnc_find
 initBlueforLocation = getPos (spawnFOBObjects select 0);
 publicvariable "initBlueforLocation";
 
-VA setPos ([initBlueforLocation, 1, 5, 3, 0, 20, 0] call BIS_fnc_findSafePos);
+//Init VA
+//VA setPos ([initBlueforLocation, 1, 5, 3, 0, 20, 0] call BIS_fnc_findSafePos);
+VA2 = createVehicle ["B_supplyCrate_F", [initBlueforLocation, 1, 5, 3, 0, 20, 0] call BIS_fnc_findSafePos, [], 0, "NONE"];
+clearWeaponCargoGlobal VA2;
+clearMagazineCargoGlobal VA2;
+clearItemCargoGlobal VA2;
 
+["AmmoboxExit", VA2] call BIS_fnc_arsenal;
+[VA2,((weaponCargo VA2) + weaponList )] call BIS_fnc_addVirtualWeaponCargo;
+[VA2,((backpackCargo VA2) + backpacksList)] call BIS_fnc_addVirtualBackpackCargo;
+//[VA2,((itemCargo VA2) + _availableHeadgear + _availableUniforms + _availableVests)] call BIS_fnc_addVirtualItemCargo;
+//[VA2,((magazineCargo VA2) + _availablemagazinecargoindependent )] call BIS_fnc_addVirtualMagazineCargo;
+[VA2,((weaponCargo VA2) + attachmentList )] call BIS_fnc_addVirtualItemCargo;
+
+
+
+//["AmmoboxInit",[VA2,false,{(_target getVariable "role" == "leader")||true}]] call BIS_fnc_arsenal;
+["AmmoboxInit",[VA2,false,{true}]] call BIS_fnc_arsenal;
+publicvariable "VA2";
 	
 //Generate vehicle
 for [{_i = 0}, {_i < 2}, {_i = _i + 1}] do

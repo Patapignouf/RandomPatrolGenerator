@@ -1,3 +1,5 @@
+#include "database\arsenalLibrary.sqf"
+
 //Arsenal without save/load
 [missionNamespace, "arsenalOpened", {
 	disableSerialization;
@@ -12,24 +14,25 @@
 
 if (hasInterface) then
 {
-	waituntil {!isNil "isBluforAttacked" && !isNil "isIndAttacked"};
+	waituntil {!isNil "isBluforAttacked" && !isNil "isIndAttacked" && !isNil "ind_group"};
 	if (side player == independent) then 
 	{
 		player setPos ([getPos initCityLocation, 1, 5, 3, 0, 20, 0] call BIS_fnc_findSafePos);
+	    player setUnitLoadout (getUnitLoadout (configFile >> "CfgVehicles" >> (selectRandom ind_group)));
 		if (isIndAttacked) then
 		{
 				[["Vos informateurs vous informent qu'une attaque est en cours sur votre position.",independent], 'engine\doGenerateMessage.sqf'] remoteExec ['BIS_fnc_execVM', 0];
 				[["Le QG vous informe qu'une attaque est probablement en cours sur la ville alliée.",blufor], 'engine\doGenerateMessage.sqf'] remoteExec ['BIS_fnc_execVM', 0];
 		};
 		if (player == (leader (group player))) then
-		{
+		{	
 			diag_log format ["Warlord is set to player : %1", name player];
 			player addEventHandler ["Killed", {
 				params ["_unit", "_killer", "_instigator", "_useEffects"];
 				diag_log format ["Warlord has been killed by : %1", _killer];
 				diag_log format ["Mission end !"];
 				if (isMultiplayer) then {
-					'IND_DEAD' call BIS_fnc_endMissionServer;
+					['IND_DEAD'] remoteExec ["BIS_fnc_endMission"];
 				} else {
 					'IND_DEAD' call BIS_fnc_endMission;
 				};
@@ -84,4 +87,13 @@ if (hasInterface) then
 	player addItem "TFAR_anprc152";
 	player assignItem "TFAR_anprc152";
 	player setSpeaker "noVoice";
+		
+	//Manage arsenal		
+	[VA2,((weaponCargo VA2) + weaponList )] call BIS_fnc_addVirtualWeaponCargo;
+	[VA2,((backpackCargo VA2) + backpacksList)] call BIS_fnc_addVirtualBackpackCargo;
+	//[VA2,((itemCargo VA2) + _availableHeadgear + _availableUniforms + _availableVests)] call BIS_fnc_addVirtualItemCargo;
+	//[VA2,((magazineCargo VA2) + _availablemagazinecargoindependent )] call BIS_fnc_addVirtualMagazineCargo;
+	[VA2,((weaponCargo VA2) + attachmentList )] call BIS_fnc_addVirtualItemCargo;
+	//["AmmoboxInit",[VA2,false,{_this getVariable "role" == "leader"}]] call BIS_fnc_arsenal;
+	["AmmoboxInit",[VA2,false,{true}]] call BIS_fnc_arsenal;
 };

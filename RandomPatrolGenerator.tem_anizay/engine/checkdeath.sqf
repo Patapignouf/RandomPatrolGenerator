@@ -50,13 +50,13 @@ while {!missionOver} do
 	//Obsolète
 	if (nb_ind_alive == 0) then 
 	{
-		missionOver = true;
-		diag_log format ["Mission end !"];
-		if (isMultiplayer) then {
-			'IND_DEAD' call BIS_fnc_endMissionServer;
-		} else {
-			'IND_DEAD' call BIS_fnc_endMission;
-		};
+		// missionOver = true;
+		// diag_log format ["Mission end !"];
+		// if (isMultiplayer) then {
+			// 'IND_DEAD' call BIS_fnc_endMissionServer;
+		// } else {
+			// 'IND_DEAD' call BIS_fnc_endMission;
+		// };
 	} else 
 	{
 		nb_ind_alive = {isPlayer _x && side _x == independent} count allUnits;

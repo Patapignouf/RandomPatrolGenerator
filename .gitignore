@@ -1,2 +1,21 @@
 
 RandomPatrolGeneratorAltis.Altis/Description.ext
+RandomPatrolGeneratorAltis.Altis/database/objectLibrary.sqf
+RandomPatrolGeneratorAltis.Altis/enemyManagement/doAmbush.sqf
+RandomPatrolGeneratorAltis.Altis/engine/checkdeath.sqf
+RandomPatrolGeneratorAltis.Altis/engine/checkobjective.sqf
+RandomPatrolGeneratorAltis.Altis/engine/searchLocation.sqf
+RandomPatrolGeneratorAltis.Altis/initPlayerLocal.sqf
+RandomPatrolGeneratorAltis.Altis/initServer.sqf
+RandomPatrolGeneratorAltis.Altis/mission.sqm
+RandomPatrolGeneratorAltis.Altis/objectGenerator/doGeneratePOIMarker.sqf
+RandomPatrolGeneratorTanoa.Tanoa/database/objectLibrary.sqf
+RandomPatrolGeneratorTanoa.Tanoa/Description.ext
+RandomPatrolGeneratorTanoa.Tanoa/enemyManagement/doAmbush.sqf
+RandomPatrolGeneratorTanoa.Tanoa/engine/checkdeath.sqf
+RandomPatrolGeneratorTanoa.Tanoa/engine/checkobjective.sqf
+RandomPatrolGeneratorTanoa.Tanoa/engine/searchLocation.sqf
+RandomPatrolGeneratorTanoa.Tanoa/initPlayerLocal.sqf
+RandomPatrolGeneratorTanoa.Tanoa/initServer.sqf
+RandomPatrolGeneratorTanoa.Tanoa/mission.sqm
+RandomPatrolGeneratorTanoa.Tanoa/objectGenerator/doGeneratePOIMarker.sqf
