@@ -24,6 +24,7 @@ if (isServer) then
 			//currentGroup limitSpeed 20;
 			//Assault for infantry
 			[currentGroup, _thisTargetPosition] spawn lambs_wp_fnc_taskAssault;
+			[currentGroup, (currentPosition distance _thisTargetPosition) + 500] spawn lambs_wp_fnc_taskHunt;
 			
 			//[currentGroup, currentPosition distance _thisTargetPosition] spawn lambs_wp_fnc_taskHunt;
 			currentGroup setFormation "DIAMOND";

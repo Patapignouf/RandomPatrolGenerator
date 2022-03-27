@@ -68,7 +68,14 @@ class Params
 		title = "Init an attack on blufor position on start";
 		values[] = {0,1,2};
 		texts[] = {"No","Yes","Random"};
-		default = 2;
+		default = 0;
+	};
+	class InitBluforBase
+	{
+		title = "Start position of blufor";
+		values[] = {0,1,2};
+		texts[] = {"Close to AO","Base","Random"};
+		default = 0;
 	};
 };
 

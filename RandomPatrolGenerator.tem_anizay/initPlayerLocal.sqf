@@ -1,5 +1,8 @@
 #include "database\arsenalLibrary.sqf"
 
+bluFaction = "BluFaction" call BIS_fnc_getParamValue;
+indFaction = "IndFaction" call BIS_fnc_getParamValue;
+
 //Arsenal without save/load
 [missionNamespace, "arsenalOpened", {
 	disableSerialization;
@@ -42,6 +45,17 @@ if (hasInterface) then
 	if (side player == blufor) then
 	{
 		player setPos ([initBlueforLocation, 1, 5, 3, 0, 20, 0] call BIS_fnc_findSafePos);
+		
+		//Manage arsenal	
+		["AmmoboxExit", VA2] call BIS_fnc_arsenal;	
+		[VA2,([player,bluFaction] call getVirtualWeaponList )] call BIS_fnc_addVirtualWeaponCargo;
+		[VA2,backpacksList] call BIS_fnc_addVirtualBackpackCargo;
+		//[VA2,((itemCargo VA2) + _availableHeadgear + _availableUniforms + _availableVests)] call BIS_fnc_addVirtualItemCargo;
+		//[VA2,((magazineCargo VA2) + _availablemagazinecargoindependent )] call BIS_fnc_addVirtualMagazineCargo;
+		[VA2,attachmentList + ([player,bluFaction] call getVirtualItemList ) ] call BIS_fnc_addVirtualItemCargo;
+		//["AmmoboxInit",[VA2,false,{_this getVariable "role" == "leader"}]] call BIS_fnc_arsenal;
+		["AmmoboxInit",[VA2,false,{true}]] call BIS_fnc_arsenal;
+
 		if (isBluforAttacked) then
 		{
 				//There's an issue : this message will erase the first one for Blufor
@@ -87,13 +101,4 @@ if (hasInterface) then
 	player addItem "TFAR_anprc152";
 	player assignItem "TFAR_anprc152";
 	player setSpeaker "noVoice";
-		
-	//Manage arsenal		
-	[VA2,((weaponCargo VA2) + weaponList )] call BIS_fnc_addVirtualWeaponCargo;
-	[VA2,((backpackCargo VA2) + backpacksList)] call BIS_fnc_addVirtualBackpackCargo;
-	//[VA2,((itemCargo VA2) + _availableHeadgear + _availableUniforms + _availableVests)] call BIS_fnc_addVirtualItemCargo;
-	//[VA2,((magazineCargo VA2) + _availablemagazinecargoindependent )] call BIS_fnc_addVirtualMagazineCargo;
-	[VA2,((weaponCargo VA2) + attachmentList )] call BIS_fnc_addVirtualItemCargo;
-	//["AmmoboxInit",[VA2,false,{_this getVariable "role" == "leader"}]] call BIS_fnc_arsenal;
-	["AmmoboxInit",[VA2,false,{true}]] call BIS_fnc_arsenal;
 };

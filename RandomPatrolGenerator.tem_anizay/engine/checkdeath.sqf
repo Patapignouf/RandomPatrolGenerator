@@ -1,3 +1,6 @@
+//Wait mission generation to init deatch check
+waituntil {count allPlayers != 0};
+
 nb_ind_alive = {isPlayer _x && side _x == independent} count allUnits;
 nb_blu_alive = {isPlayer _x && side _x == blufor} count allUnits;
 nb_blu_init = nb_blu_alive;

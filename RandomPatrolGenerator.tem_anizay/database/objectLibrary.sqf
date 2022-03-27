@@ -9,15 +9,19 @@ _Ru = 3;
 //USA
 bluforUnarmedVehicle_USA = ["CUP_B_M1151_USA"];
 
-bluforArmedVehicle_USA = ["CUP_B_M1151_Deploy_USA"];
+bluforArmedVehicle_USA = ["CUP_B_M1151_Deploy_USA","CUP_B_nM1025_SOV_M2_USA_DES","CUP_B_nM1025_M240_USA_DES","CUP_B_M113A1_desert_USA"];
 
-bluforUnarmedVehicleChopper_USA = [];
+bluforUnarmedVehicleChopper_USA = ["CUP_B_MH6J_USA","CUP_B_UH60M_Unarmed_US"];
 
-bluforDrone_USA = [];
+
+bluforDrone_USA = ["B_UAV_02_dynamicLoadout_F"
+];
 
 //Join
 bluforUnarmedVehicle_db = [[bluforUnarmedVehicle_USA,_USA]];
 bluforArmedVehicle_db = [[bluforArmedVehicle_USA,_USA]];
+bluforUnarmedVehicleChopper_db = [[bluforUnarmedVehicleChopper_USA,_USA]];
+bluforDrone_db = [[bluforDrone_USA,_USA]];
 
 //////////////////////////////
 ////Define ind group data/////
