@@ -9,7 +9,7 @@ _Ru = 3;
 //USA
 bluforUnarmedVehicle_USA = ["CUP_B_M1151_USA"];
 
-bluforArmedVehicle_USA = ["CUP_B_M1151_Deploy_USA","CUP_B_nM1025_SOV_M2_USA_DES","CUP_B_nM1025_M240_USA_DES","CUP_B_M113A1_desert_USA"];
+bluforArmedVehicle_USA = ["CUP_B_M1151_Deploy_USA","CUP_B_nM1025_SOV_M2_USA_DES","CUP_B_nM1025_M240_USA_DES"];
 
 bluforUnarmedVehicleChopper_USA = ["CUP_B_MH6J_USA","CUP_B_UH60M_Unarmed_US"];
 

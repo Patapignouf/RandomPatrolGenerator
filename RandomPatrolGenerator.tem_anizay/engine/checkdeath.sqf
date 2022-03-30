@@ -10,6 +10,8 @@ missionOver = false;
 initWarlord = objNull;
 publicvariable "initWarlord";
 
+diag_log format ["Init calculated values : nb_blu_alive %1", nb_blu_alive];
+
 //Obj management
 obj_supply_or_ammo = [];
 obj_supply = [];
@@ -101,6 +103,7 @@ while {!missionOver} do
 	if ( nb_blu_alive < round(nb_blu_init/2)) then
 	{ 
 		missionOver = true;
+		diag_log format ["Counter blufor alive %1 vs blufor min count %2",nb_blu_alive,round(nb_blu_init/2)];
 		diag_log format ["Mission end !"];
 		if (isMultiplayer) then {
 			'BLUFOR_DEAD' call BIS_fnc_endMissionServer;

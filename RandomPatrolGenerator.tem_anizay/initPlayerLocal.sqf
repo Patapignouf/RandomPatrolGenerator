@@ -11,9 +11,24 @@ indFaction = "IndFaction" call BIS_fnc_getParamValue;
 	{(_display displayCtrl _x) ctrlShow false} forEach [44151, 44150, 44146, 44147, 44148, 44149, 44346];
 }] call BIS_fnc_addScriptedEventHandler;
 
+initBlueforLocation = [];
 
 //Init disableThermal
 [] execVM 'engine\disableThermal.sqf';
+
+//Wait player load
+waitUntil {!isNull player};
+if (!hasInterface || isDedicated) exitWith {};
+
+//FOB Generated
+waitUntil {count initBlueforLocation != 0};
+diag_log format ["initBlueforLocation %1",initBlueforLocation];
+[initBlueforLocation,50] execVM 'objectGenerator\doCleanArea.sqf'; 
+
+
+//Init basic variable
+missionGenerated = false;
+waitUntil {missionGenerated == true};
 
 if (hasInterface) then
 {
@@ -52,7 +67,7 @@ if (hasInterface) then
 		[VA2,backpacksList] call BIS_fnc_addVirtualBackpackCargo;
 		//[VA2,((itemCargo VA2) + _availableHeadgear + _availableUniforms + _availableVests)] call BIS_fnc_addVirtualItemCargo;
 		//[VA2,((magazineCargo VA2) + _availablemagazinecargoindependent )] call BIS_fnc_addVirtualMagazineCargo;
-		[VA2,attachmentList + ([player,bluFaction] call getVirtualItemList ) ] call BIS_fnc_addVirtualItemCargo;
+		[VA2,([player,bluFaction] call getVirtualAttachement ) + ([player,bluFaction] call getVirtualItemList ) ] call BIS_fnc_addVirtualItemCargo;
 		//["AmmoboxInit",[VA2,false,{_this getVariable "role" == "leader"}]] call BIS_fnc_arsenal;
 		["AmmoboxInit",[VA2,false,{true}]] call BIS_fnc_arsenal;
 
@@ -61,6 +76,7 @@ if (hasInterface) then
 				//There's an issue : this message will erase the first one for Blufor
 				[["Le QG vous informe qu'une attaque est possiblement en cours sur vos positions dans quelques de minutes, quittez les lieux avant leur arrivée.",blufor], 'engine\doGenerateMessage.sqf'] remoteExec ['BIS_fnc_execVM', 0];
 		};
+		//[initBlueforLocation,50] execVM 'objectGenerator\doCleanArea.sqf'; 
 	};
 };
 
