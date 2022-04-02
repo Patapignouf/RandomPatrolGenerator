@@ -1,5 +1,20 @@
+
+respawnDialog = 0;
+respawnOnStart = 0;
+respawnDelay = 20; 
+
+respawnTemplates[] = {"MenuPosition", "Tickets", "Spectator"};
+
+
 class Params
 {
+	class Respawn
+	{
+		title = "Respawn management (WIP)";
+		values[] = {0,1};
+		texts[] = {"No respawn","Respawn on objective success"};
+		default = 0;
+	};
 	class EnableArmored
 	{
 		title = "Enable armored enemies (WIP)";
@@ -77,6 +92,7 @@ class Params
 		texts[] = {"Close to AO","Base","Random"};
 		default = 0;
 	};
+	
 };
 
 class CfgDebriefing

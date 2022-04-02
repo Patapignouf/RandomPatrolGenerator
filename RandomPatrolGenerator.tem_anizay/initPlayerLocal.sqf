@@ -11,30 +11,36 @@ indFaction = "IndFaction" call BIS_fnc_getParamValue;
 	{(_display displayCtrl _x) ctrlShow false} forEach [44151, 44150, 44146, 44147, 44148, 44149, 44346];
 }] call BIS_fnc_addScriptedEventHandler;
 
-initBlueforLocation = [];
+diag_log format ["Player %1 at position 0", name player];
+
+//init tp to be able to spawn on the ground on each map
+player setPos [0,0];
+titleCut ["Please wait while mission is generating", "BLACK FADED", 5];
 
 //Init disableThermal
 [] execVM 'engine\disableThermal.sqf';
+[player, -1, true] call BIS_fnc_respawnTickets;
+
 
 //Wait player load
 waitUntil {!isNull player};
 if (!hasInterface || isDedicated) exitWith {};
 
 //FOB Generated
-waitUntil {count initBlueforLocation != 0};
-diag_log format ["initBlueforLocation %1",initBlueforLocation];
-[initBlueforLocation,50] execVM 'objectGenerator\doCleanArea.sqf'; 
-
-
+waitUntil {!isNil "initBlueforLocation"};
+titleCut ["", "BLACK IN", 5];
+ 
 //Init basic variable
-missionGenerated = false;
-waitUntil {missionGenerated == true};
+//missionGenerated = false;
+//waitUntil {missionGenerated == true};
 
 if (hasInterface) then
 {
+	diag_log format ["Player %1 at position 3", name player];
 	waituntil {!isNil "isBluforAttacked" && !isNil "isIndAttacked" && !isNil "ind_group"};
 	if (side player == independent) then 
 	{
+		player setVariable ["sideBeforeDeath","independent"];
 		player setPos ([getPos initCityLocation, 1, 5, 3, 0, 20, 0] call BIS_fnc_findSafePos);
 	    player setUnitLoadout (getUnitLoadout (configFile >> "CfgVehicles" >> (selectRandom ind_group)));
 		if (isIndAttacked) then
@@ -59,8 +65,11 @@ if (hasInterface) then
 	};
 	if (side player == blufor) then
 	{
+		player setVariable ["sideBeforeDeath","blufor"];
 		player setPos ([initBlueforLocation, 1, 5, 3, 0, 20, 0] call BIS_fnc_findSafePos);
-		
+		player setVariable ["spawnLoadout",[player,bluFaction] call getLoadoutByRole];
+		player setUnitLoadout (player getVariable "spawnLoadout");
+
 		//Manage arsenal	
 		["AmmoboxExit", VA2] call BIS_fnc_arsenal;	
 		[VA2,([player,bluFaction] call getVirtualWeaponList )] call BIS_fnc_addVirtualWeaponCargo;
@@ -76,7 +85,6 @@ if (hasInterface) then
 				//There's an issue : this message will erase the first one for Blufor
 				[["Le QG vous informe qu'une attaque est possiblement en cours sur vos positions dans quelques de minutes, quittez les lieux avant leur arrivée.",blufor], 'engine\doGenerateMessage.sqf'] remoteExec ['BIS_fnc_execVM', 0];
 		};
-		//[initBlueforLocation,50] execVM 'objectGenerator\doCleanArea.sqf'; 
 	};
 };
 

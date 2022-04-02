@@ -2,6 +2,7 @@ _Taki = 0;
 _USA = 1;
 _Syndikat = 2;
 _Ru = 3;
+_French = 4;
 
 //////////////////////////////
 //Define friendly group data//

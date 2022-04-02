@@ -136,7 +136,6 @@ logiTruck = createVehicle [currentTruck, ((getPos initCityLocation) findEmptyPos
 //Define 3 objectives
 SupplyPositions = [];
 SelectedObjectivePosition = objNull;
-//SupplyObjects = [[o1,"supply"],[o2,"ammo"],[o3,"ammo"],[o4,"vip"],[o5,"hvt"]];
 SupplyObjects = [];
 currentObjType = nil;
 currentRandomPos = [];
@@ -297,7 +296,12 @@ aoSize = 1500;
 //TODO create the random option
 if (initBluforBase == 0 || (initBluforBase == 2 && (round random 1 == 0))) then
 {
-	initBlueforLocation = [getPos initCityLocation, (aoSize+500), (aoSize+1500), 50, 0, 0.25, 0, [areaOfOperation], [[0,0,0],[0,0,0]]] call BIS_fnc_findSafePos;
+	initBlueforLocation = [getPos initCityLocation, (aoSize+400), (aoSize+700), 3, 0, 0.25, 0, [areaOfOperation], [[0,0,0],[0,0,0]]] call BIS_fnc_findSafePos;
+	if ([initBlueforLocation , [0,0,0]] call BIS_fnc_areEqual) then
+	{
+		initBlueforLocation = [getPos initCityLocation, (aoSize+400), (aoSize+1500), 3, 0, 0.25, 0, [areaOfOperation], [[0,0,0],[0,0,0]]] call BIS_fnc_findSafePos;
+	};
+	
 	//Safe position
 	initBlueforLocation = [selectMax [selectMin [initBlueforLocation select 0, worldSize-50 ],50],selectMax [selectMin [initBlueforLocation select 1, worldSize-50],50]]; 
 	
@@ -311,7 +315,7 @@ if (initBluforBase == 0 || (initBluforBase == 2 && (round random 1 == 0))) then
 	publicvariable "initBlueforLocation";
 } else 
 {
-	initBlueforLocation = [getPos initCityLocation, (aoSize+1500), (aoSize+3500), 50, 0, 0.25, 0, [areaOfOperation], [[0,0,0],[0,0,0]]] call BIS_fnc_findSafePos;
+	initBlueforLocation = [getPos initCityLocation, (aoSize+1500), (aoSize+3500), 3, 0, 0.25, 0, [areaOfOperation], [[0,0,0],[0,0,0]]] call BIS_fnc_findSafePos;
 	//Safe position
 	initBlueforLocation = [selectMax [selectMin [initBlueforLocation select 0, worldSize-50 ],50],selectMax [selectMin [initBlueforLocation select 1, worldSize-50],50]]; 
 	
@@ -332,13 +336,9 @@ if (initBluforBase == 0 || (initBluforBase == 2 && (round random 1 == 0))) then
 	
 	{	
 		spawnAttempts = 0;
-		//vehicleGoodPosition = (initBlueforLocation findEmptyPosition [10, 60, "Land_HelipadCircle_F"]);
-		//vehicleGoodPosition = initBlueforLocation isFlatEmpty [10,-1,10,50];
 		vehicleGoodPosition = [initBlueforLocation, 15, 150, 25, 0, 0.25, 0] call BIS_fnc_findSafePos;
 		while {(isNil "vehicleGoodPosition" || count vehicleGoodPosition==0) && spawnAttempts <10} do 
 		{
-			//vehicleGoodPosition = (initBlueforLocation findEmptyPosition [10, 60, "Land_HelipadCircle_F"]);
-			//vehicleGoodPosition = initBlueforLocation isFlatEmpty [10,-1,10,50];
 			vehicleGoodPosition = [initBlueforLocation, 15, 150, 25, 0, 0.25, 0] call BIS_fnc_findSafePos;
 			spawnAttempts = spawnAttempts +1;
 		};
@@ -365,23 +365,10 @@ if (initBluforBase == 0 || (initBluforBase == 2 && (round random 1 == 0))) then
 
 
 //Init VA
-//VA setPos ([initBlueforLocation, 1, 5, 3, 0, 20, 0] call BIS_fnc_findSafePos);
 VA2 = createVehicle ["B_supplyCrate_F", [initBlueforLocation, 1, 5, 3, 0, 20, 0] call BIS_fnc_findSafePos, [], 0, "NONE"];
 clearWeaponCargoGlobal VA2;
 clearMagazineCargoGlobal VA2;
 clearItemCargoGlobal VA2;
-
-// ["AmmoboxExit", VA2] call BIS_fnc_arsenal;
-// [VA2,((weaponCargo VA2) + weaponList )] call BIS_fnc_addVirtualWeaponCargo;
-// [VA2,((backpackCargo VA2) + backpacksList)] call BIS_fnc_addVirtualBackpackCargo;
-// //[VA2,((itemCargo VA2) + _availableHeadgear + _availableUniforms + _availableVests)] call BIS_fnc_addVirtualItemCargo;
-// //[VA2,((magazineCargo VA2) + _availablemagazinecargoindependent )] call BIS_fnc_addVirtualMagazineCargo;
-// [VA2,((weaponCargo VA2) + attachmentList )] call BIS_fnc_addVirtualItemCargo;
-
-
-
-// //["AmmoboxInit",[VA2,false,{(_target getVariable "role" == "leader")||true}]] call BIS_fnc_arsenal;
-// ["AmmoboxInit",[VA2,false,{true}]] call BIS_fnc_arsenal;
 publicvariable "VA2";
 	
 //Generate vehicle
@@ -398,10 +385,10 @@ for [{_i = 0}, {_i < 1}, {_i = _i + 1}] do
 
 {
 		spawnAttempts = 0;
-		vehicleGoodPosition = (initBlueforLocation findEmptyPosition [10, 60, _x]);
+		vehicleGoodPosition = [initBlueforLocation, 15, 100, 10, 0, 0.25, 0] call BIS_fnc_findSafePos;
 		while {(isNil "vehicleGoodPosition" || count vehicleGoodPosition==0) && spawnAttempts <10} do 
 		{
-			vehicleGoodPosition = (initBlueforLocation findEmptyPosition [10, 60, _x]);
+			vehicleGoodPosition = [initBlueforLocation, 15, 100, 10, 0, 0.25, 0] call BIS_fnc_findSafePos;
 			spawnAttempts = spawnAttempts +1;
 		};
 		if (!isNil "vehicleGoodPosition" && count vehicleGoodPosition>0) then 

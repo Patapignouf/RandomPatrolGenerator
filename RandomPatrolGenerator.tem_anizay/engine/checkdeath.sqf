@@ -9,6 +9,7 @@ nb_civ_init =  nb_civ_alive;
 missionOver = false;
 initWarlord = objNull;
 publicvariable "initWarlord";
+respawnSettings = ["Respawn",1] call BIS_fnc_getParamValue;
 
 diag_log format ["Init calculated values : nb_blu_alive %1", nb_blu_alive];
 
@@ -19,6 +20,10 @@ obj_ammo = [];
 obj_hvt = [];
 obj_vip = [];
 obj_must_be_alive = [];
+
+
+waitUntil {!isNil "SupplyObjects" && count SupplyObjects != 0};
+
 {
 	switch (_x select 1) do
 	{
@@ -100,7 +105,7 @@ while {!missionOver} do
 			'OBJ_DEAD' call BIS_fnc_endMission;
 		};
 	};
-	if ( nb_blu_alive < round(nb_blu_init/2)) then
+	if ((nb_blu_alive < round(nb_blu_init/2) && respawnSettings == 0) || ((nb_blu_alive == 0)&&(nb_blu_init!=0))) then
 	{ 
 		missionOver = true;
 		diag_log format ["Counter blufor alive %1 vs blufor min count %2",nb_blu_alive,round(nb_blu_init/2)];

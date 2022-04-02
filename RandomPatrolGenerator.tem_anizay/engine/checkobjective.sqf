@@ -9,6 +9,7 @@ obj_ammo = [];
 obj_hvt = [];
 obj_vip = [];
 obj_list_items = [];
+respawnSettings = ["Respawn",1] call BIS_fnc_getParamValue;
 
 //Define current test
 current_obj = objNull;
@@ -20,6 +21,11 @@ numberOfObjectives = count _objectivesToTest;
 mytrigger = createTrigger ["EmptyDetector", getPos _objectivesDestinationArea]; //create a trigger area created at object with variable name my_object
 mytrigger setTriggerArea [60, 60, 0, false]; // trigger area with a radius of 100m.
 objectReturnedToCity = []; 
+
+if (respawnSettings == 1) then 
+{
+	[] execVM "engine\respawnSetup.sqf";
+};
 
 
 {
@@ -58,6 +64,7 @@ while {!missionComplete} do
 	{
 		current_obj = _x;
 		diag_log format ["Currently test objective : %1", current_obj];
+		
 		switch (current_obj select 1) do
 		{
 			case "supply":
@@ -71,6 +78,10 @@ while {!missionComplete} do
 						CompletedObjectives pushBack current_obj;
 						publicVariable "CompletedObjectives";
 						[[format ["L'objectif %1 est terminé", getText (configFile >> "cfgVehicles" >> typeOf (current_obj select 0) >> "displayName")],independent], 'engine\doGenerateMessage.sqf'] remoteExec ['BIS_fnc_execVM', 0];
+						if (respawnSettings == 1) then 
+						{
+							[[], "engine\respawnManager.sqf"] remoteExec ['BIS_fnc_execVM', 0];
+						};
 					};
 				};
 			case "ammo":
@@ -84,6 +95,10 @@ while {!missionComplete} do
 						CompletedObjectives pushBack current_obj;
 						publicVariable "CompletedObjectives";
 						[[format ["L'objectif %1 est terminé", getText (configFile >> "cfgVehicles" >> typeOf (current_obj select 0) >> "displayName")],independent], 'engine\doGenerateMessage.sqf'] remoteExec ['BIS_fnc_execVM', 0];
+						if (respawnSettings == 1) then 
+						{
+							[[], "engine\respawnManager.sqf"] remoteExec ['BIS_fnc_execVM', 0];
+						};
 					} else 
 					{
 						if (current_obj select 0 in objectReturnedToCity) then
@@ -95,6 +110,10 @@ while {!missionComplete} do
 							CompletedObjectives pushBack current_obj;
 							publicVariable "CompletedObjectives";
 							[[format ["L'objectif %1 est terminé", getText (configFile >> "cfgVehicles" >> typeOf (current_obj select 0) >> "displayName")],independent], 'engine\doGenerateMessage.sqf'] remoteExec ['BIS_fnc_execVM', 0];
+							if (respawnSettings == 1) then 
+							{
+								[[], "engine\respawnManager.sqf"] remoteExec ['BIS_fnc_execVM', 0];
+							};
 						};
 					};
 				};
@@ -109,6 +128,10 @@ while {!missionComplete} do
 						CompletedObjectives pushBack current_obj;
 						publicVariable "CompletedObjectives";
 						[[format ["L'objectif %1 est terminé", getText (configFile >> "cfgVehicles" >> typeOf (current_obj select 0) >> "displayName")],independent], 'engine\doGenerateMessage.sqf'] remoteExec ['BIS_fnc_execVM', 0];
+						if (respawnSettings == 1) then 
+						{
+							[[], "engine\respawnManager.sqf"] remoteExec ['BIS_fnc_execVM', 0];
+						};
 					};
 				};
 			case "vip":
@@ -122,6 +145,10 @@ while {!missionComplete} do
 						CompletedObjectives pushBack current_obj;
 						publicVariable "CompletedObjectives";
 						[[format ["L'objectif %1 est terminé", getText (configFile >> "cfgVehicles" >> typeOf (current_obj select 0) >> "displayName")],independent], 'engine\doGenerateMessage.sqf'] remoteExec ['BIS_fnc_execVM', 0];
+						if (respawnSettings == 1) then 
+						{
+							[[], "engine\respawnManager.sqf"] remoteExec ['BIS_fnc_execVM', 0];
+						};
 					};
 				};
 			default { hint "default" };
