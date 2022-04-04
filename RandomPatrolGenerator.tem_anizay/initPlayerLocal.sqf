@@ -3,6 +3,11 @@
 bluFaction = "BluFaction" call BIS_fnc_getParamValue;
 indFaction = "IndFaction" call BIS_fnc_getParamValue;
 
+
+//////////////////////////
+////Event Handler/////////
+//////////////////////////
+
 //Arsenal without save/load
 [missionNamespace, "arsenalOpened", {
 	disableSerialization;
@@ -10,6 +15,14 @@ indFaction = "IndFaction" call BIS_fnc_getParamValue;
 	_display displayAddEventHandler ["keydown", "_this select 3"];
 	{(_display displayCtrl _x) ctrlShow false} forEach [44151, 44150, 44146, 44147, 44148, 44149, 44346];
 }] call BIS_fnc_addScriptedEventHandler;
+
+//Remove Body on respawn 
+player addEventHandler ["Respawn",{ 
+
+	params ["_newObject","_oldObject"];
+	deleteVehicle _oldObject; 
+
+}];
 
 diag_log format ["Player %1 at position 0", name player];
 
@@ -21,18 +34,12 @@ titleCut ["Please wait while mission is generating", "BLACK FADED", 5];
 [] execVM 'engine\disableThermal.sqf';
 [player, -1, true] call BIS_fnc_respawnTickets;
 
-
 //Wait player load
 waitUntil {!isNull player};
 if (!hasInterface || isDedicated) exitWith {};
 
-//FOB Generated
+//Wait for FOB Generated
 waitUntil {!isNil "initBlueforLocation"};
-titleCut ["", "BLACK IN", 5];
- 
-//Init basic variable
-//missionGenerated = false;
-//waitUntil {missionGenerated == true};
 
 if (hasInterface) then
 {
@@ -71,14 +78,8 @@ if (hasInterface) then
 		player setUnitLoadout (player getVariable "spawnLoadout");
 
 		//Manage arsenal	
-		["AmmoboxExit", VA2] call BIS_fnc_arsenal;	
-		[VA2,([player,bluFaction] call getVirtualWeaponList )] call BIS_fnc_addVirtualWeaponCargo;
-		[VA2,backpacksList] call BIS_fnc_addVirtualBackpackCargo;
-		//[VA2,((itemCargo VA2) + _availableHeadgear + _availableUniforms + _availableVests)] call BIS_fnc_addVirtualItemCargo;
-		//[VA2,((magazineCargo VA2) + _availablemagazinecargoindependent )] call BIS_fnc_addVirtualMagazineCargo;
-		[VA2,([player,bluFaction] call getVirtualAttachement ) + ([player,bluFaction] call getVirtualItemList ) ] call BIS_fnc_addVirtualItemCargo;
-		//["AmmoboxInit",[VA2,false,{_this getVariable "role" == "leader"}]] call BIS_fnc_arsenal;
-		["AmmoboxInit",[VA2,false,{true}]] call BIS_fnc_arsenal;
+		[VA2, player, bluFaction] call setupArsenalToItem;
+		[VA2, player, bluFaction] call setupRoleSwitchToItem;
 
 		if (isBluforAttacked) then
 		{
@@ -88,41 +89,18 @@ if (hasInterface) then
 	};
 };
 
-
-
-if (didJIP) exitWith {};
-
+[] execVM 'enemyManagement\generateCivDialogs.sqf'; 
+//Init player's stuff according to the init role
 if (hasInterface) then
 {	
-	if (player getUnitTrait "Medic" == false) then 
-	{
-		for "_i" from 0 to 7 do { player addItem "ACE_elasticBandage" };	
-		for "_i" from 0 to 1 do { player addItem "ACE_tourniquet" };
-		for "_i" from 0 to 1 do { player addItem "ACE_splint" };
-	}
-	else 
-	{
-		player addItem "ACE_surgicalKit";
-		for "_i" from 0 to 7 do { player addItem "ACE_epinephrine" };
-		for "_i" from 0 to 7 do { player addItem "ACE_splint" };
-		for "_i" from 0 to 29 do { player addItem "ACE_elasticBandage" };
-		for "_i" from 0 to 29 do { player addItem "ACE_quikclot" };
-		for "_i" from 0 to 9 do { player addItem "ACE_morphine" };
-		for "_i" from 0 to 5 do { player addItem "ACE_bloodIV_500" };
-		for "_i" from 0 to 2 do { player addItem "ACE_bloodIV" };
-		for "_i" from 0 to 5 do { player addItem "ACE_tourniquet" };	
-	};
-	for "_i" from 0 to 1 do { player addItem "ACE_CableTie" };
-	player addItem "ACE_MapTools";	
-	player addItem "ACE_morphine";	
-	player addItem "ACE_WaterBottle";
-	player addItem "ACE_EarPlugs";
-	player addItem "ACE_microDAGR";
-	player unassignItem "itemRadio";
-	player removeItem "itemRadio";
-	//player addItem "TFAR_anprc148jem";
-	//player assignItem "TFAR_anprc148jem";
-	player addItem "TFAR_anprc152";
-	player assignItem "TFAR_anprc152";
-	player setSpeaker "noVoice";
+	[player] call adjustLoadout;
 };
+
+//If a player join in progress he will be teleported to his teamleader (WIP feature)
+if (didJIP) then 
+{
+	player setPos (getPos (leader (group player)));
+};
+
+//Let's get it started !
+titleCut ["", "BLACK IN", 5];

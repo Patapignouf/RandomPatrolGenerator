@@ -8,3 +8,12 @@ if (isMultiplayer) then {
 	};
 };
 
+
+if ((["Respawn",1] call BIS_fnc_getParamValue) == 0 ) then
+{
+	["Initialize", [player, [], true ]] call BIS_fnc_EGSpectator;	
+} else 
+{
+	["Initialize", [player, [] , false, false ]] call BIS_fnc_EGSpectator;
+};
+	

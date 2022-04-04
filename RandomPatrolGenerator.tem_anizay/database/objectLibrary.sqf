@@ -166,7 +166,7 @@ avalaibleSupplyBox = ["ACE_medicalSupplyCrate_advanced",
 avalaibleHVT = ["CUP_O_TK_Officer"
 ];
 
-avalaibleVIP = ["CUP_C_TK_Man_03_Waist"
+avalaibleVIP = ["CUP_C_TK_Man_03_Waist","C_Driver_1_F","CUP_C_R_Functionary_jacket_02"
 ];
 
 avalaibleTypeOfObj = ["supply","ammo","vip","hvt"];

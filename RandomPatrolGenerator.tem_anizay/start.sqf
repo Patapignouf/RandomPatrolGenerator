@@ -242,9 +242,10 @@ AvalaibleInitAttackPositions = [getPos initCityLocation, 1200,1400,difficultyPar
 if ( count AvalaibleInitAttackPositions != 0 && (enableInitAttack == 1 || ((enableInitAttack == 2) && (round (random 1))==0))) then
 {
 	diag_log "Init attack on independent city";
-	[AvalaibleInitAttackPositions,getPos initCityLocation,[baseEnemyGroup,baseEnemyATGroup,[selectRandom baseEnemyVehicleGroup]],difficultyParameter] execVM 'enemyManagement\doAmbush.sqf'; 
+	_handleCivGeneration = [AvalaibleInitAttackPositions,getPos initCityLocation,[baseEnemyGroup,baseEnemyATGroup,[selectRandom baseEnemyVehicleGroup]],difficultyParameter] execVM 'enemyManagement\doAmbush.sqf'; 
 	isIndAttacked = true;
 	publicvariable "isIndAttacked";
+	waitUntil {isNull _handleCivGeneration};
 };
 
 //Init prema harass on player
@@ -259,7 +260,8 @@ currentObject = objNull;
 	currentObject = selectRandom tempSupplyObjects;
 	tempSupplyObjects = tempSupplyObjects - [currentObject];
 	diag_log format ["Objective generation started : %1 on position %2", currentObject, _x];
-	[EnemyWaveLevel_1, civilian_group ,_x,difficultyParameter,currentObject] execVM 'enemyManagement\generatePOI.sqf'; 
+	_handlePOIGeneration = [EnemyWaveLevel_1, civilian_group ,_x,difficultyParameter,currentObject] execVM 'enemyManagement\generatePOI.sqf'; 
+	waitUntil {isNull _handlePOIGeneration};
 
 } forEach SupplyPositions;
 
@@ -273,7 +275,9 @@ if (1 <= (count EnemyWaveSpawnPositions)) then
 	[EnemyWaveGroups,EnemyWaveSpawnPositions,initCityLocation,difficultyParameter] execVM 'enemyManagement\generateWave.sqf'; 
 };
 
-
+//Generate Civs dialogs
+//[] execVM 'enemyManagement\generateCivDialogs.sqf'; 
+//[] remoteExec ['enemyManagement\generateCivDialogs.sqf',0];
 
 /////////////////////////
 ////Generate Blufor//////
@@ -292,6 +296,8 @@ spawnAttempts = 0;
 areaOfOperation = [possiblePOILocation] call getAreaOfMission;
 initBlueforLocation = [];
 aoSize = 1500;
+bluforShortFrequencyTFAR = (((round random 400)+400)/10);
+publicvariable "bluforShortFrequencyTFAR";
 
 //TODO create the random option
 if (initBluforBase == 0 || (initBluforBase == 2 && (round random 1 == 0))) then
@@ -373,7 +379,7 @@ publicvariable "VA2";
 	
 //Generate vehicle
 vehicleGoodPosition = [];
-for [{_i = 0}, {_i < 2}, {_i = _i + 1}] do
+for [{_i = 0}, {_i < 3}, {_i = _i + 1}] do
 {
 	selectedBluforVehicle pushBack (selectRandom bluforUnarmedVehicle);
 };
@@ -385,10 +391,10 @@ for [{_i = 0}, {_i < 1}, {_i = _i + 1}] do
 
 {
 		spawnAttempts = 0;
-		vehicleGoodPosition = [initBlueforLocation, 15, 100, 10, 0, 0.25, 0] call BIS_fnc_findSafePos;
+		vehicleGoodPosition = [initBlueforLocation, 15, 80, 10, 0, 0.25, 0] call BIS_fnc_findSafePos;
 		while {(isNil "vehicleGoodPosition" || count vehicleGoodPosition==0) && spawnAttempts <10} do 
 		{
-			vehicleGoodPosition = [initBlueforLocation, 15, 100, 10, 0, 0.25, 0] call BIS_fnc_findSafePos;
+			vehicleGoodPosition = [initBlueforLocation, 15, 80, 10, 0, 0.25, 0] call BIS_fnc_findSafePos;
 			spawnAttempts = spawnAttempts +1;
 		};
 		if (!isNil "vehicleGoodPosition" && count vehicleGoodPosition>0) then 
@@ -420,6 +426,18 @@ if ( count AvalaibleInitAttackPositions != 0 && (enableInitBluAttack == 1 || ((e
 //Init garbage collector
 [] execVM 'engine\garbageCollector.sqf'; 
 
+//Disable respawn for IA Unit
+{
+	_x addMPEventHandler ["MPRespawn", {
+		_unit = _this select 0;
+		if (!isPlayer _unit) exitWith {
+			deleteVehicle _unit;
+		};
+	}
+];
+} forEach playableUnits;
 
 missionGenerated = true;
 publicvariable "missionGenerated";
+
+

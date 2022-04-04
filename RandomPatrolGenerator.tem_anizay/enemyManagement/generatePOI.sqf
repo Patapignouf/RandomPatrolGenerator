@@ -76,7 +76,8 @@ if (count _thisObjective > 0) then
 				};
 			default { hint "default" };
 		};
-	
-	
-	[[_thisObjective,_thisAvailablePosition,independent], 'objectGenerator\doGeneratePOIMarker.sqf'] remoteExec ['BIS_fnc_execVM', 0];
+	currentMissionObjectives = missionNamespace getVariable ["MissionObjectives",[]];
+	currentMissionObjectives pushBack [objectiveObject,objectiveType];
+    missionNamespace setVariable ["MissionObjectives",currentMissionObjectives,true];
+	[[_thisObjective,getPos _thisAvailablePosition,independent], 'objectGenerator\doGeneratePOIMarker.sqf'] remoteExec ['BIS_fnc_execVM', 0];
 };

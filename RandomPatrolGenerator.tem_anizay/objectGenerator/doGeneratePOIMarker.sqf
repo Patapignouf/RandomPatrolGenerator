@@ -12,8 +12,8 @@ if (!isDedicated) then
 	{
 		if (side player == _thisSide) then
 		{
-			diag_log format ["Create marker : %1 at position %2 %3 with name %4 for player %5 in side %6", _thisObject, _thisPosition, getPos _thisPosition, getText (configFile >> "cfgVehicles" >> typeOf _thisObject >> "displayName"), name player, _thisSide];
-			_markerstr = createMarkerLocal [format["%1 %2", getText (configFile >> "cfgVehicles" >> typeOf _thisObject >> "displayName"), random 100], getPos _thisPosition];
+			diag_log format ["Create marker : %1 at position %2 with name %3 for player %4 in side %5", _thisObject, _thisPosition, getText (configFile >> "cfgVehicles" >> typeOf _thisObject >> "displayName"), name player, _thisSide];
+			_markerstr = createMarkerLocal [format["%1 %2", getText (configFile >> "cfgVehicles" >> typeOf _thisObject >> "displayName"), random 100], _thisPosition];
 			_markerstr setMarkerShapeLocal "ICON";
 			_markerstr setMarkerTypeLocal "hd_objective";
 			switch (_thisGlobalObject select 1) do

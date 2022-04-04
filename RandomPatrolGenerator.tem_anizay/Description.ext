@@ -3,7 +3,7 @@ respawnDialog = 0;
 respawnOnStart = 0;
 respawnDelay = 20; 
 
-respawnTemplates[] = {"MenuPosition", "Tickets", "Spectator"};
+respawnTemplates[] = {"Tickets"};
 
 
 class Params
