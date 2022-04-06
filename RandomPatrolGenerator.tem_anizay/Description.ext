@@ -46,15 +46,15 @@ class Params
 	class BluFaction
 	{
 		title = "Blufor Faction";
-		values[] = {1};
-		texts[] = {"US Army"};
+		values[] = {1,4};
+		texts[] = {"US Army","French"};
 		default = 1;
 	};
 	class OpFaction
 	{
 		title = "Opfor Faction";
-		values[] = {0,2};
-		texts[] = {"Takistani","Syndikat"};
+		values[] = {0,2,3};
+		texts[] = {"Takistani","Syndikat","Russian"};
 		default = 0;
 	};
 	class Difficulty
@@ -76,7 +76,7 @@ class Params
 		title = "Init an attack on independent position on start";
 		values[] = {0,1,2};
 		texts[] = {"No","Yes","Random"};
-		default = 2;
+		default = 0;
 	};
 	class EnableInitBluAttack
 	{
