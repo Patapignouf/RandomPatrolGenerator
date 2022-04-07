@@ -22,7 +22,7 @@ if (isServer) then
 	while {true or waveCounter < (count _thisAvailableWaveGroups)} do 
 	{
 		sleep 20;
-		while {count CompletedObjectives == CompletedObjectivesWave} do
+		while {count (missionNamespace getVariable ["completedObjectives",[]]) == CompletedObjectivesWave} do
 		{
 			sleep 20;
 			diag_log format ["Wave start : %1", waveCounter ];

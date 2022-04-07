@@ -4,25 +4,19 @@ _Syndikat = 2;
 _Ru = 3;
 _French = 4;
 
+#include "object_db\USA.sqf"
+#include "object_db\French.sqf"
+
 //////////////////////////////
 //Define friendly group data//
 //////////////////////////////
-//USA
-bluforUnarmedVehicle_USA = ["CUP_B_M1151_USA"];
-
-bluforArmedVehicle_USA = ["CUP_B_M1151_Deploy_USA","CUP_B_nM1025_SOV_M2_USA_DES","CUP_B_nM1025_M240_USA_DES"];
-
-bluforUnarmedVehicleChopper_USA = ["CUP_B_MH6J_USA","CUP_B_UH60M_Unarmed_US"];
-
-
-bluforDrone_USA = ["B_UAV_02_dynamicLoadout_F"
-];
-
 //Join
-bluforUnarmedVehicle_db = [[bluforUnarmedVehicle_USA,_USA]];
-bluforArmedVehicle_db = [[bluforArmedVehicle_USA,_USA]];
-bluforUnarmedVehicleChopper_db = [[bluforUnarmedVehicleChopper_USA,_USA]];
-bluforDrone_db = [[bluforDrone_USA,_USA]];
+bluforUnarmedVehicle_db = [[bluforUnarmedVehicle_USA,_USA],[bluforUnarmedVehicle_French,_French]];
+bluforArmedVehicle_db = [[bluforArmedVehicle_USA,_USA],[bluforArmedVehicle_French,_French]];
+bluforUnarmedVehicleChopper_db = [[bluforUnarmedVehicleChopper_USA,_USA],[bluforUnarmedVehicleChopper_French,_French]];
+bluforDrone_db = [[bluforDrone_USA,_USA],[bluforDrone_French,_French]];
+bluforBoat_db = [[bluforBoat_USA,_USA],[bluforBoat_French,_French]];
+
 
 //////////////////////////////
 ////Define ind group data/////
@@ -38,13 +32,6 @@ ind_group_syndikat = ["I_C_Soldier_Bandit_7_F",
 "I_C_Soldier_Bandit_3_F", 
 "I_C_Soldier_Bandit_6_F", 
 "I_C_Soldier_Bandit_4_F"
-];
-
-ind_group_USA = ["CUP_B_FR_Story_Miles", 
-"CUP_B_FR_Story_Cooper", 
-"CUP_B_FR_Story_Sykes", 
-"CUP_B_FR_Story_Rodriguez", 
-"CUP_B_FR_Story_OHara"
 ];
 
 ind_group_db = [[ind_group_taki,_Taki],[ind_group_syndikat,_Syndikat],[ind_group_USA,_USA]];
@@ -146,12 +133,40 @@ baseEnemyMortarGroup_Syndikat = ["I_G_Mortar_01_F",
 baseEnemyVehicle_Syndikat = ["I_C_Offroad_02_LMG_F", 
 "I_C_Offroad_02_AT_F"];
 
+//Russian
+baseEnemyGroup_Ru = ["CUP_O_RU_Soldier_SL_M_EMR_V2", 
+"CUP_O_RU_Soldier_M_EMR_V2", 
+"CUP_O_RU_Soldier_LAT_M_EMR_V2", 
+"CUP_O_RU_Soldier_MG_M_EMR_V2", 
+"CUP_O_RU_Soldier_TL_M_EMR_V2", 
+"CUP_O_RU_Soldier_AR_M_EMR_V2", 
+"CUP_O_RU_Soldier_A_M_EMR_V2", 
+"CUP_O_RU_Soldier_Medic_M_EMR_V2"];
+
+baseEnemyATGroup_Ru = ["CUP_O_RU_Soldier_TL_M_EMR_V2", 
+"CUP_O_RU_Soldier_AT_M_EMR_V2", 
+"CUP_O_RU_Soldier_AAT_M_EMR_V2",
+"CUP_O_RU_Soldier_AT_M_EMR_V2"];
+
+baseEnemyDemoGroup_Ru = ["CUP_O_RU_Soldier_TL_M_EMR_V2", 
+"CUP_O_RU_Soldier_HAT_M_EMR_V2", 
+"CUP_O_RU_Soldier_AHAT_M_EMR_V2",
+"CUP_O_RU_Soldier_AHAT_M_EMR_V2"];
+
+baseEnemyMortarGroup_Ru = ["CUP_O_2b14_82mm_RU_M_MSV",
+"CUP_O_RU_Soldier_MG_M_EMR_V2", 
+"CUP_O_RU_Soldier_TL_M_EMR_V2"];
+
+baseEnemyVehicle_Ru = ["CUP_O_UAZ_MG_RU",
+"CUP_O_UAZ_SPG9_RU"
+];
+
 //Join
-baseEnemyGroup_db = [[baseEnemyGroup_taki,_Taki],[baseEnemyGroup_Syndikat,_Syndikat]];
-baseEnemyATGroup_db = [[baseEnemyATGroup_taki,_Taki],[baseEnemyATGroup_Syndikat,_Syndikat]];
-baseEnemyDemoGroup_db = [[baseEnemyDemoGroup_taki,_Taki],[baseEnemyDemoGroup_Syndikat,_Syndikat]];
-baseEnemyMortarGroup_db = [[baseEnemyMortarGroup_taki,_Taki],[baseEnemyMortarGroup_Syndikat,_Syndikat]];
-baseEnemyVehicleGroup_db = [[baseEnemyVehicle_taki,_Taki],[baseEnemyVehicle_Syndikat,_Syndikat]];
+baseEnemyGroup_db = [[baseEnemyGroup_taki,_Taki],[baseEnemyGroup_Syndikat,_Syndikat],[baseEnemyGroup_Ru,_Ru]];
+baseEnemyATGroup_db = [[baseEnemyATGroup_taki,_Taki],[baseEnemyATGroup_Syndikat,_Syndikat],[baseEnemyATGroup_Ru,_Ru]];
+baseEnemyDemoGroup_db = [[baseEnemyDemoGroup_taki,_Taki],[baseEnemyDemoGroup_Syndikat,_Syndikat],[baseEnemyDemoGroup_Ru,_Ru]];
+baseEnemyMortarGroup_db = [[baseEnemyMortarGroup_taki,_Taki],[baseEnemyMortarGroup_Syndikat,_Syndikat],[baseEnemyMortarGroup_Ru,_Ru]];
+baseEnemyVehicleGroup_db = [[baseEnemyVehicle_taki,_Taki],[baseEnemyVehicle_Syndikat,_Syndikat],[baseEnemyVehicle_Ru,_Ru]];
 //////////////////////////////
 ////Define objectives data////
 //////////////////////////////

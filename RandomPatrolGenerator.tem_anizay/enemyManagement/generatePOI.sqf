@@ -28,7 +28,7 @@ for [{_i = 0}, {_i < _thisDifficulty+2}, {_i = _i + 1}] do
 	
 	
 	//Add chance to spawn civilian
-	if (round (random 3) != 0) then 
+	if (round (random 4) != 0) then 
 	{
 		currentGroup = [getPos _thisAvailablePosition, civilian, _thisAvailableRareGroup,[],[],[],[],[],180] call BIS_fnc_spawnGroup;
 		if (round (random 2) != 0) then 

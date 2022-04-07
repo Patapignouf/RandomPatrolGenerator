@@ -58,6 +58,8 @@ diag_log format ["Objective to test :  %1 in complete list %2", obj_list_items, 
 
 while {!missionComplete} do
 {
+	_completedObjectives = missionNamespace getVariable ["completedObjectives",[]];
+	_missionObjectives = missionNamespace getVariable ["MissionObjectives",[]];
 	diag_log format ["Loop to test objective : %1", _objectivesToTest];
 	objectReturnedToCity = obj_list_items inAreaArray mytrigger; //vehicles (all vehicles) inAreaArray (Returns list of Objects or Positions that are in the area _mytrigger.)  
     sleep 10;
@@ -75,8 +77,8 @@ while {!missionComplete} do
 						numberOfCompletedObj = numberOfCompletedObj +1;
 						obj_list_items = obj_list_items - [current_obj select 0];
 						_objectivesToTest = _objectivesToTest - [current_obj];
-						CompletedObjectives pushBack current_obj;
-						publicVariable "CompletedObjectives";
+						_completedObjectives pushBack current_obj;
+						missionNamespace setVariable ["completedObjectives",_completedObjectives,true];
 						[[format ["L'objectif %1 est terminé", getText (configFile >> "cfgVehicles" >> typeOf (current_obj select 0) >> "displayName")],independent], 'engine\doGenerateMessage.sqf'] remoteExec ['BIS_fnc_execVM', 0];
 						if (respawnSettings == 1) then 
 						{
@@ -92,8 +94,8 @@ while {!missionComplete} do
 						numberOfCompletedObj = numberOfCompletedObj +1;					
 						obj_list_items = obj_list_items - [current_obj select 0];
 						_objectivesToTest = _objectivesToTest - [current_obj];
-						CompletedObjectives pushBack current_obj;
-						publicVariable "CompletedObjectives";
+						_completedObjectives pushBack current_obj;
+						missionNamespace setVariable ["completedObjectives",_completedObjectives,true];
 						[[format ["L'objectif %1 est terminé", getText (configFile >> "cfgVehicles" >> typeOf (current_obj select 0) >> "displayName")],independent], 'engine\doGenerateMessage.sqf'] remoteExec ['BIS_fnc_execVM', 0];
 						if (respawnSettings == 1) then 
 						{
@@ -107,8 +109,8 @@ while {!missionComplete} do
 							numberOfCompletedObj = numberOfCompletedObj +1;
 							obj_list_items = obj_list_items - [current_obj select 0];
 							_objectivesToTest = _objectivesToTest - [current_obj];
-							CompletedObjectives pushBack current_obj;
-							publicVariable "CompletedObjectives";
+							_completedObjectives pushBack current_obj;
+							missionNamespace setVariable ["completedObjectives",_completedObjectives,true];
 							[[format ["L'objectif %1 est terminé", getText (configFile >> "cfgVehicles" >> typeOf (current_obj select 0) >> "displayName")],independent], 'engine\doGenerateMessage.sqf'] remoteExec ['BIS_fnc_execVM', 0];
 							if (respawnSettings == 1) then 
 							{
@@ -125,8 +127,8 @@ while {!missionComplete} do
 						numberOfCompletedObj = numberOfCompletedObj +1;
 						obj_list_items = obj_list_items - [current_obj select 0];
 						_objectivesToTest = _objectivesToTest - [current_obj];
-						CompletedObjectives pushBack current_obj;
-						publicVariable "CompletedObjectives";
+						_completedObjectives pushBack current_obj;
+						missionNamespace setVariable ["completedObjectives",_completedObjectives,true];
 						[[format ["L'objectif %1 est terminé", getText (configFile >> "cfgVehicles" >> typeOf (current_obj select 0) >> "displayName")],independent], 'engine\doGenerateMessage.sqf'] remoteExec ['BIS_fnc_execVM', 0];
 						if (respawnSettings == 1) then 
 						{
@@ -142,8 +144,8 @@ while {!missionComplete} do
 						numberOfCompletedObj = numberOfCompletedObj +1;
 						obj_list_items = obj_list_items - [current_obj select 0];
 						_objectivesToTest = _objectivesToTest - [current_obj];
-						CompletedObjectives pushBack current_obj;
-						publicVariable "CompletedObjectives";
+						_completedObjectives pushBack current_obj;
+						missionNamespace setVariable ["completedObjectives",_completedObjectives,true];
 						[[format ["L'objectif %1 est terminé", getText (configFile >> "cfgVehicles" >> typeOf (current_obj select 0) >> "displayName")],independent], 'engine\doGenerateMessage.sqf'] remoteExec ['BIS_fnc_execVM', 0];
 						if (respawnSettings == 1) then 
 						{
