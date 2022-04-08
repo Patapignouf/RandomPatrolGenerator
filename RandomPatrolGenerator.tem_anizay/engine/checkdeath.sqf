@@ -84,17 +84,6 @@ while {!missionOver} do
 		};
 	};
 	
-	if (!alive logiTruck) then
-	{
-		missionOver = true;
-		diag_log format ["Mission end !"];
-		if (isMultiplayer) then {
-			'VEHICLE_DEAD' call BIS_fnc_endMissionServer;
-			
-		} else {
-			'VEHICLE_DEAD' call BIS_fnc_endMission;
-		};
-	};
 	if (count (obj_must_be_alive select {alive _x}) != count obj_must_be_alive) then
 	{
 		missionOver = true;

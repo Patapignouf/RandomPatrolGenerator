@@ -6,85 +6,114 @@ c_autorifleman = "autorifleman";
 c_marksman = "marksman"; 
 c_medic = "medic";
 
+
+
+//////////////////////////////
+///Define enemy group data////
+//////////////////////////////
+//Russian
+baseEnemyGroup_Russian  = ["CUP_O_RU_Soldier_SL_M_EMR_V2", 
+"CUP_O_RU_Soldier_M_EMR_V2", 
+"CUP_O_RU_Soldier_LAT_M_EMR_V2", 
+"CUP_O_RU_Soldier_MG_M_EMR_V2", 
+"CUP_O_RU_Soldier_TL_M_EMR_V2", 
+"CUP_O_RU_Soldier_AR_M_EMR_V2", 
+"CUP_O_RU_Soldier_A_M_EMR_V2", 
+"CUP_O_RU_Soldier_Medic_M_EMR_V2"];
+
+baseEnemyATGroup_Russian  = ["CUP_O_RU_Soldier_TL_M_EMR_V2", 
+"CUP_O_RU_Soldier_AT_M_EMR_V2", 
+"CUP_O_RU_Soldier_AAT_M_EMR_V2",
+"CUP_O_RU_Soldier_AT_M_EMR_V2"];
+
+baseEnemyDemoGroup_Russian  = ["CUP_O_RU_Soldier_TL_M_EMR_V2", 
+"CUP_O_RU_Soldier_HAT_M_EMR_V2", 
+"CUP_O_RU_Soldier_AHAT_M_EMR_V2",
+"CUP_O_RU_Soldier_AHAT_M_EMR_V2"];
+
+baseEnemyMortarGroup_Russian  = ["CUP_O_2b14_82mm_RU_M_MSV",
+"CUP_O_RU_Soldier_MG_M_EMR_V2", 
+"CUP_O_RU_Soldier_TL_M_EMR_V2"];
+
+baseEnemyVehicle_Russian  = ["CUP_O_UAZ_MG_RU",
+"CUP_O_UAZ_SPG9_RU"];
+
 ////////////////////////
 //Vehicle management////
 ////////////////////////
-//USA
-bluforUnarmedVehicle_USA = ["CUP_B_M1151_USA"];
+//Russian
+bluforUnarmedVehicle_Russian = ["CUP_O_UAZ_Unarmed_RU", 
+"CUP_O_GAZ_Vodnik_Unarmed_RU"];
 
-bluforArmedVehicle_USA = ["CUP_B_M1151_Deploy_USA","CUP_B_nM1025_SOV_M2_USA_DES","CUP_B_nM1025_M240_USA_DES"];
+bluforArmedVehicle_Russian = ["CUP_O_GAZ_Vodnik_PK_RU", 
+"CUP_O_UAZ_MG_RU"];
 
-bluforUnarmedVehicleChopper_USA = ["CUP_B_MH6J_USA","CUP_B_UH60M_Unarmed_US"];
+bluforUnarmedVehicleChopper_Russian = ["CUP_O_Mi8AMT_RU"];
 
 
-bluforDrone_USA = ["B_UAV_02_dynamicLoadout_F"
+bluforDrone_Russian = [
 ];
 
-bluforBoat_USA = ["CUP_B_RHIB_HIL",
-"CUP_B_Zodiac_USMC"
+bluforBoat_Russian = ["CUP_O_PBX_RU"
 ];
-
-
-//////////////////////////////
-////Define ind group data/////
-//////////////////////////////
-ind_group_USA = ["CUP_B_FR_Story_Miles", 
-"CUP_B_FR_Story_Cooper", 
-"CUP_B_FR_Story_Sykes", 
-"CUP_B_FR_Story_Rodriguez", 
-"CUP_B_FR_Story_OHara"
-];
-
 
 ////////////////////////
 //Loadout management////
 ////////////////////////
 
-//USA
-loadout_USA = [		
-	[c_leader,[["CUP_arifle_mk18_m203_tan_holo_laserflash","","CUP_acc_ANPEQ_15_Top_Flashlight_Tan_L","optic_Holosight",["CUP_30Rnd_556x45_Stanag",30],["CUP_1Rnd_HEDP_M203",1],""],[],["CUP_hgun_M9_snds","CUP_muzzle_snds_M9","","",["CUP_15Rnd_9x19_M9",15],[],""],["CUP_U_CRYE_G3C_RGR_MC_US",[["FirstAidKit",1],["CUP_30Rnd_556x45_Stanag",3,30],["SmokeShellGreen",1,1]]],["CUP_V_CPC_weaponsbelt_mc",[["CUP_30Rnd_556x45_Stanag",2,30],["CUP_HandGrenade_M67",1,1],["B_IR_Grenade",1,1],["SmokeShellRed",1,1],["CUP_1Rnd_HEDP_M203",1,1],["CUP_1Rnd_SmokeGreen_M203",1,1],["CUP_1Rnd_SmokeRed_M203",1,1],["CUP_15Rnd_9x19_M9",1,15]]],["CUP_B_USPack_Coyote_Specops_TL",[["CUP_20Rnd_762x51_B_SCAR",2,20],["CUP_1Rnd_HEDP_M203",4,1],["CUP_1Rnd_SmokeRed_M203",2,1],["CUP_1Rnd_SmokeGreen_M203",2,1],["CUP_PipeBomb_M",1,1],["CUP_HandGrenade_M67",2,1],["SmokeShellRed",2,1],["SmokeShellGreen",2,1],["CUP_15Rnd_9x19_M9",2,15]]],"CUP_H_OpsCore_Covered_MCAM_US","",["CUP_Vector21Nite","","","",[],[],""],["ItemMap","ItemGPS","ItemRadio","ItemCompass","ItemWatch","CUP_NVG_PVS15_Hide"]]],
-	[c_at,[["CUP_arifle_mk18_m203_tan_holo_laserflash","","CUP_acc_ANPEQ_15_Top_Flashlight_Tan_L","optic_Holosight",["CUP_30Rnd_556x45_Stanag",30],["CUP_1Rnd_HEDP_M203",1],""],["CUP_launch_M136","","","",[],[],""],["CUP_hgun_M9","","","",["CUP_15Rnd_9x19_M9",15],[],""],["CUP_U_CRYE_G3C_MC_US",[["FirstAidKit",1],["CUP_30Rnd_556x45_Stanag",3,30]]],["CUP_V_CPC_weaponsbelt_mc",[["CUP_30Rnd_556x45_Stanag",2,30],["CUP_1Rnd_HEDP_M203",3,1],["CUP_15Rnd_9x19_M9",1,15],["B_IR_Grenade",1,1],["CUP_HandGrenade_M67",1,1],["SmokeShellRed",1,1],["SmokeShellGreen",1,1]]],["CUP_B_AssaultPack_Coyote_Specops_GL",[["CUP_20Rnd_762x51_B_SCAR",4,20],["CUP_1Rnd_HEDP_M203",6,1],["CUP_1Rnd_SmokeRed_M203",2,1],["CUP_1Rnd_SmokeGreen_M203",2,1],["CUP_HandGrenade_M67",1,1],["CUP_15Rnd_9x19_M9",2,15]]],"CUP_H_OpsCore_Covered_MCAM_US","",["CUP_Vector21Nite","","","",[],[],""],["ItemMap","ItemGPS","ItemRadio","ItemCompass","ItemWatch","CUP_NVG_PVS15_Hide"]]],
-	[c_rifleman,[["CUP_arifle_mk18_tan_holo_laserflash","","CUP_acc_ANPEQ_15_Top_Flashlight_Tan_L","optic_Holosight",["CUP_30Rnd_556x45_Stanag",30],[],""],[],["CUP_hgun_M9","","","",["CUP_15Rnd_9x19_M9",15],[],""],["CUP_U_CRYE_G3C_MC_US",[["FirstAidKit",1],["CUP_30Rnd_556x45_Stanag",3,30],["SmokeShellRed",1,1]]],["CUP_V_CPC_Fastbelt_mc",[["CUP_30Rnd_556x45_Stanag",4,30],["CUP_HandGrenade_M67",1,1],["B_IR_Grenade",1,1],["SmokeShellGreen",1,1],["CUP_15Rnd_9x19_M9",1,15]]],["CUP_B_USPack_Coyote_Specops",[["CUP_20Rnd_762x51_B_SCAR",4,20],["CUP_PipeBomb_M",1,1],["CUP_HandGrenade_M67",2,1],["SmokeShellRed",1,1],["SmokeShellGreen",1,1],["CUP_15Rnd_9x19_M9",2,15]]],"CUP_H_OpsCore_Covered_MCAM_US_SF","CUP_G_WatchGPSCombo",["CUP_Vector21Nite","","","",[],[],""],["ItemMap","ItemGPS","ItemRadio","ItemCompass","ItemWatch","CUP_NVG_PVS15_Hide"]]],//Default stuff
-	[c_engineer,[["CUP_arifle_mk18_tan_holo_laserflash","","CUP_acc_ANPEQ_15_Top_Flashlight_Tan_L","optic_Holosight",["CUP_30Rnd_556x45_Stanag",30],[],""],[],["CUP_hgun_M9","","","",["CUP_15Rnd_9x19_M9",15],[],""],["CUP_U_CRYE_G3C_MC_US",[["FirstAidKit",1],["CUP_30Rnd_556x45_Stanag",3,30],["SmokeShellRed",1,1]]],["CUP_V_CPC_Fastbelt_mc",[["CUP_30Rnd_556x45_Stanag",4,30],["CUP_HandGrenade_M67",1,1],["B_IR_Grenade",1,1],["SmokeShellGreen",1,1],["CUP_15Rnd_9x19_M9",1,15]]],["B_Carryall_mcamo",[["ToolKit",1],["MineDetector",1],["ACE_EntrenchingTool",1],["ACE_DefusalKit",1]]],"CUP_H_OpsCore_Covered_MCAM_US_SF","CUP_G_WatchGPSCombo",["CUP_Vector21Nite","","","",[],[],""],["ItemMap","ItemGPS","ItemRadio","ItemCompass","ItemWatch","CUP_NVG_PVS15_Hide"]]],
-	[c_autorifleman,[["CUP_lmg_M249_ElcanM145_Laser","","CUP_acc_ANPEQ_15_Black","CUP_optic_ElcanM145",["CUP_100Rnd_TE4_Green_Tracer_556x45_M249",100],[],""],[],["CUP_hgun_M9","","","",["CUP_15Rnd_9x19_M9",15],[],""],["CUP_U_CRYE_G3C_RGR_MC_US",[["FirstAidKit",1]]],["CUP_V_CPC_tlbelt_mc",[["CUP_100Rnd_TE4_Green_Tracer_556x45_M249",1,100],["CUP_HandGrenade_M67",2,1],["B_IR_Grenade",1,1],["SmokeShellGreen",1,1],["CUP_15Rnd_9x19_M9",3,15]]],["CUP_B_USArmy_AR_SpecOp",[["CUP_100Rnd_TE4_Green_Tracer_556x45_M249",2,100]]],"CUP_H_OpsCore_Grey_SF","CUP_G_Grn_Scarf_GPS_Beard",["CUP_Vector21Nite","","","",[],[],""],["ItemMap","ItemGPS","ItemRadio","ItemCompass","ItemWatch","CUP_NVG_PVS15_Hide"]]],
-	[c_marksman,[["CUP_arifle_Mk20_LeupoldMk4MRT","","","CUP_optic_LeupoldMk4_MRT_tan",["CUP_20Rnd_762x51_B_SCAR",20],[],"CUP_bipod_VLTOR_Modpod"],[],["CUP_hgun_M9_snds","CUP_muzzle_snds_M9","","",["CUP_15Rnd_9x19_M9",15],[],""],["CUP_U_CRYE_G3C_Tan_MC_US",[["FirstAidKit",1],["CUP_20Rnd_762x51_B_SCAR",2,20]]],["CUP_V_CPC_Fastbelt_mc",[["CUP_20Rnd_762x51_B_SCAR",5,20],["CUP_HandGrenade_M67",1,1],["B_IR_Grenade",1,1],["SmokeShellGreen",1,1],["SmokeShellRed",1,1],["CUP_15Rnd_9x19_M9",1,15]]],["CUP_B_AssaultPack_Coyote_Specops_M",[["CUP_20Rnd_TE1_Red_Tracer_762x51_SCAR",4,20],["CUP_HandGrenade_M67",1,1],["SmokeShellRed",1,1],["SmokeShellGreen",1,1],["CUP_15Rnd_9x19_M9",2,15]]],"CUP_H_OpsCore_Covered_MCAM_US_SF","CUP_G_WatchGPSCombo",["CUP_Vector21Nite","","","",[],[],""],["ItemMap","ItemGPS","ItemRadio","ItemCompass","ItemWatch","CUP_NVG_PVS15_Hide"]]],
-	[c_medic,[["CUP_arifle_mk18_tan_holo_laserflash","","CUP_acc_ANPEQ_15_Top_Flashlight_Tan_L","optic_Holosight",["CUP_30Rnd_556x45_Stanag",30],[],""],[],["CUP_hgun_M9_snds","CUP_muzzle_snds_M9","","",["CUP_15Rnd_9x19_M9",15],[],""],["CUP_U_CRYE_G3C_MC_US",[["FirstAidKit",1],["CUP_30Rnd_556x45_Stanag",3,30],["SmokeShell",1,1]]],["CUP_V_CPC_medicalbelt_mc",[["CUP_30Rnd_556x45_Stanag",3,30],["CUP_15Rnd_9x19_M9",1,15],["CUP_HandGrenade_M67",1,1],["B_IR_Grenade",1,1],["SmokeShell",1,1],["SmokeShellGreen",2,1]]],["CUP_B_USArmy_Medic2",[["Medikit",1],["FirstAidKit",10]]],"CUP_H_OpsCore_Spray_US","CUP_G_Tan_Scarf_GPS_Beard_Blonde",["CUP_Vector21Nite","","","",[],[],""],["ItemMap","ItemGPS","ItemRadio","ItemCompass","ItemWatch","CUP_NVG_PVS15_Hide"]]]
+//Russian
+loadout_Russian = [		
+	[c_leader,"CUP_O_RU_Soldier_TL_Ratnik_Summer"],
+	[c_at,"CUP_O_RU_Soldier_HAT_Ratnik_Summer" ],
+	[c_rifleman,"CUP_O_RU_Soldier_Ratnik_Summer"],//Default stuff
+	[c_engineer,"CUP_O_RU_Soldier_Engineer_Ratnik_Summer"],
+	[c_autorifleman,"CUP_O_RU_Soldier_MG_Ratnik_Summer"],
+	[c_marksman,"CUP_O_RU_Soldier_Marksman_Ratnik_Summer"],
+	[c_medic,"CUP_O_RU_Soldier_Medic_Ratnik_Summer"]
 ];
+
+
+//Sample stuff
+// [["CUP_srifle_SVD_pso","","","CUP_optic_PSO_1",["CUP_10Rnd_762x54_SVD_M",10],[],""],[],[],["CUP_U_O_RUS_Ratnik_Summer",[["FirstAidKit",1],["CUP_10Rnd_762x54_SVD_M",3,10],["SmokeShell",1,1]]],["CUP_Vest_RUS_6B45_Sh117",[["CUP_10Rnd_762x54_SVD_M",6,10],["CUP_HandGrenade_RGD5",2,1],["SmokeShellRed",1,1],["Chemlight_red",2,1]]],[],"CUP_H_RUS_6B47_v2_Summer","CUP_G_RUS_Balaclava_Ratnik",[],["ItemMap","","ItemRadio","ItemCompass","ItemWatch","CUP_NVG_1PN138"]]
+// [["CUP_arifle_RPK74M_1p78","","","CUP_optic_PechenegScope",["CUP_45Rnd_TE4_LRT4_Green_Tracer_545x39_RPK74M_M",45],[],""],[],["hgun_Rook40_F","","","",["16Rnd_9x21_Mag",17],[],""],["CUP_U_O_RUS_Ratnik_Summer",[["FirstAidKit",1],["CUP_45Rnd_TE4_LRT4_Green_Tracer_545x39_RPK74M_M",2,45]]],["CUP_Vest_RUS_6B45_Sh117",[["CUP_45Rnd_TE4_LRT4_Green_Tracer_545x39_RPK74M_M",7,45],["16Rnd_9x21_Mag",2,17],["CUP_HandGrenade_RGD5",2,1],["SmokeShell",1,1],["SmokeShellRed",1,1],["Chemlight_red",2,1]]],[],"CUP_H_RUS_6B47_v2_GogglesUp_Summer","CUP_G_RUS_Balaclava_Ratnik",["Binocular","","","",[],[],""],["ItemMap","","ItemRadio","ItemCompass","ItemWatch","CUP_NVG_1PN138"]]
+// [["CUP_arifle_AK12_black_1P87","","","CUP_optic_1P87_RIS",["CUP_30Rnd_545x39_AK12_M",30],[],""],["CUP_launch_Metis","","","",["CUP_AT13_M",1],[],""],["hgun_Rook40_F","","","",["16Rnd_9x21_Mag",17],[],""],["CUP_U_O_RUS_Ratnik_Summer",[["FirstAidKit",1],["CUP_30Rnd_545x39_AK12_M",3,30],["SmokeShell",1,1]]],["CUP_Vest_RUS_6B45_Sh117",[["CUP_30Rnd_545x39_AK12_M",4,30],["16Rnd_9x21_Mag",2,17],["CUP_HandGrenade_RGD5",2,1],["SmokeShellRed",1,1],["Chemlight_red",2,1]]],[],"CUP_H_RUS_6B47_v2_GogglesDown_Summer","CUP_G_RUS_Balaclava_Ratnik_v2",["Binocular","","","",[],[],""],["ItemMap","","ItemRadio","ItemCompass","ItemWatch","CUP_NVG_1PN138"]]
+// [["CUP_lmg_Pecheneg_PScope","","","CUP_optic_PechenegScope",["CUP_100Rnd_TE4_LRT4_762x54_PK_Tracer_Green_M",100],[],""],[],["hgun_Rook40_F","","","",["16Rnd_9x21_Mag",17],[],""],["CUP_U_O_RUS_Ratnik_Summer",[["FirstAidKit",1],["16Rnd_9x21_Mag",2,17],["CUP_HandGrenade_RGD5",1,1],["SmokeShell",1,1],["SmokeShellRed",1,1]]],["CUP_Vest_RUS_6B45_Sh117_PKP",[["CUP_100Rnd_TE4_LRT4_762x54_PK_Tracer_Green_M",2,100],["CUP_HandGrenade_RGD5",1,1],["Chemlight_red",2,1]]],[],"CUP_H_RUS_6B47_v2_GogglesUp_Summer","CUP_G_RUS_Balaclava_Ratnik",["Binocular","","","",[],[],""],["ItemMap","","ItemRadio","ItemCompass","ItemWatch","CUP_NVG_1PN138"]]
+// [["CUP_arifle_AS_VAL_VFG_pso_open","","","CUP_optic_PSO_1_1_open",["CUP_20Rnd_9x39_SP5_VSS_M",20],[],""],[],["CUP_hgun_PB6P9_snds","CUP_muzzle_PB6P9","","",["CUP_8Rnd_9x18_MakarovSD_M",8],[],""],["CUP_U_O_RUS_Ratnik_Summer",[["FirstAidKit",1],["CUP_20Rnd_9x39_SP5_VSS_M",2,20]]],["CUP_Vest_RUS_6B45_Sh117",[["CUP_20Rnd_9x39_SP5_VSS_M",5,20],["CUP_8Rnd_9x18_MakarovSD_M",2,8],["CUP_HandGrenade_RGD5",2,1],["SmokeShell",1,1],["SmokeShellRed",1,1],["SmokeShellOrange",1,1],["SmokeShellYellow",1,1],["Chemlight_red",2,1]]],[],"CUP_H_RUS_6B47_v2_Summer","CUP_G_RUS_Balaclava_Ratnik",["Rangefinder","","","",[],[],""],["ItemMap","ItemGPS","ItemRadio","ItemCompass","ItemWatch","CUP_NVG_1PN138"]]
+// [["CUP_srifle_VSSVintorez_pso","","","CUP_optic_PSO_1_1",["CUP_10Rnd_9x39_SP5_VSS_M",10],[],""],[],["CUP_hgun_PB6P9_snds","CUP_muzzle_PB6P9","","",["CUP_8Rnd_9x18_MakarovSD_M",8],[],""],["CUP_U_O_RUS_Ratnik_Summer",[["FirstAidKit",1],["CUP_10Rnd_9x39_SP5_VSS_M",5,10]]],["CUP_Vest_RUS_6B45_Sh117",[["CUP_10Rnd_9x39_SP5_VSS_M",4,10],["CUP_8Rnd_9x18_MakarovSD_M",2,8],["CUP_HandGrenade_RGD5",2,1],["SmokeShell",1,1],["SmokeShellRed",1,1],["SmokeShellOrange",1,1],["SmokeShellYellow",1,1],["Chemlight_red",2,1]]],[],"CUP_H_RUS_6B47_v2_Summer","CUP_G_RUS_Balaclava_Ratnik",["Rangefinder","","","",[],[],""],["ItemMap","ItemGPS","ItemRadio","ItemCompass","ItemWatch","CUP_NVG_1PN138"]]
 
 ////////////////////////
 ///Weapon management////
 ////////////////////////
-//USA
-rifleList_USA = [		
-	"CUP_arifle_mk18_black",
-	"CUP_arifle_mk18_m203_black"
+//Russian
+rifleList_Russian = [		
+	"CUP_arifle_AK12_black_1P87"
 ];	
 
-launcherList_USA = [		
-	"CUP_launch_Javelin",
-	"CUP_launch_FIM92Stinger",
-	"CUP_launch_MAAWS",
-	"CUP_launch_MAAWS_Scope"
+launcherList_Russian = [		
+	"CUP_launch_Metis"
+
 ];	
 
-autorifleList_USA = [			
-	"CUP_lmg_Mk48"
+autorifleList_Russian = [			
+	"CUP_arifle_RPK74M_1p78",
+	"CUP_lmg_Pecheneg_PScope"
 ];	
 
 
-marksmanrifleList_USA = [		
-	"CUP_srifle_Mk12SPR"
+marksmanrifleList_Russian = [		
+	"CUP_srifle_SVD_pso",
+	"CUP_srifle_VSSVintorez_pso",
+	"CUP_arifle_AS_VAL_VFG_pso_open"
 ];
 
-smgList_USA = [		
-	"CUP_smg_MP7"
+smgList_Russian = [		
 ];
 
 
 //////////////////////////
 //Attachement management//
 //////////////////////////
-attachmentShortList_USA	= [
+attachmentShortList_Russian	= [
 	"CUP_optic_AC11704_Black",
 	"CUP_optic_VortexRazor_UH1_Black",		
 	"CUP_optic_artel_m14",
@@ -143,7 +172,7 @@ attachmentShortList_USA	= [
 	"CUP_muzzle_snds_KZRZP_PK"
 ];
 
-attachmentLongList_USA	= [
+attachmentLongList_Russian	= [
 	"CUP_optic_SB_11_4x20_PM",
 	"CUP_optic_SB_11_4x20_PM_pip",
 	"CUP_optic_SB_3_12x50_PMII",
@@ -157,12 +186,12 @@ attachmentLongList_USA	= [
 ////////////////////////
 ////Items management////
 ////////////////////////
-itemList_USA = [
+itemList_Russian = [
 	"ItemMap",
 	"ItemCompass",
 	"ItemWatch",
 	"NVGoggles",
-	"B_UavTerminal",
+	//"B_UavTerminal",
 	"Binocular",
 	"Rangefinder",
 	"ACE_MapTools",
@@ -182,13 +211,13 @@ itemList_USA = [
 	"ACE_EntrenchingTool"
 	];
 
-itemEngineerList_USA = [
+itemEngineerList_Russian = [
 	"ToolKit",
 	"MineDetector",
 	"ACE_wirecutter"
 	];
 	
-itemMedicList_USA = [
+itemMedicList_Russian = [
 	"ACE_epinephrine",
 	"ACE_bloodIV",
 	"ACE_bloodIV_500",

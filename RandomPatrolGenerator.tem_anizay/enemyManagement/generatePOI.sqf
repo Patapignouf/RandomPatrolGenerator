@@ -17,7 +17,7 @@ for [{_i = 0}, {_i < _thisDifficulty+2}, {_i = _i + 1}] do
 	if (round (random 2) != 0) then 
 	{
 		diag_log "Task_Garrison !";
-		[currentGroup, currentGroup, 75, [], true, false, -2, true] call lambs_wp_fnc_taskGarrison;
+		[currentGroup, currentGroup, 75, [], true, (round random 1 == 1), -2, true] call lambs_wp_fnc_taskGarrison;
 		
 	} 
 	else 

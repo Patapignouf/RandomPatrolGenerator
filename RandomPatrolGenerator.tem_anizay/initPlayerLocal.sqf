@@ -24,10 +24,11 @@ player addEventHandler ["Respawn",{
 
 }];
 
-diag_log format ["Player %1 at position 0", name player];
+diag_log format ["Setup Player %1 at position 0", name player];
 
 //init tp to be able to spawn on the ground on each map
 player setPos [0,0];
+//player setCaptive true;
 titleCut ["Please wait while mission is generating", "BLACK FADED", 5];
 
 //Init disableThermal
@@ -43,13 +44,22 @@ waitUntil {!isNil "initBlueforLocation"};
 
 if (hasInterface) then
 {
-	diag_log format ["Player %1 at position 3", name player];
-	waituntil {!isNil "isBluforAttacked" && !isNil "isIndAttacked" && !isNil "ind_group"};
+	diag_log format ["Setup Player %1 at position 3", name player];
+	waituntil {!isNil "isBluforAttacked" && !isNil "isIndAttacked"};
 	if (side player == independent) then 
 	{
 		player setVariable ["sideBeforeDeath","independent"];
 		player setPos ([getPos initCityLocation, 1, 5, 3, 0, 20, 0] call BIS_fnc_findSafePos);
-	    player setUnitLoadout (getUnitLoadout (configFile >> "CfgVehicles" >> (selectRandom ind_group)));
+
+		//Manage loadout
+		player setVariable ["spawnLoadout",[player,indFaction] call getLoadoutByRole];
+		player setUnitLoadout (player getVariable "spawnLoadout");
+
+		//Manage arsenal	
+		[VA1, player, indFaction] call setupArsenalToItem;
+		[VA1, player, indFaction] call setupRoleSwitchToItem;
+
+
 		if (isIndAttacked) then
 		{
 				[["Vos informateurs vous informent qu'une attaque est en cours sur votre position.",independent], 'engine\doGenerateMessage.sqf'] remoteExec ['BIS_fnc_execVM', 0];
@@ -103,4 +113,5 @@ if (didJIP) then
 };
 
 //Let's get it started !
+player setCaptive false;
 titleCut ["", "BLACK IN", 5];

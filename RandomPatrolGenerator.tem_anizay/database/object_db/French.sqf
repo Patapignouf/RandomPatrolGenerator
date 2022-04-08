@@ -131,6 +131,16 @@ attachmentShortList_French	= [
 	"CUP_muzzle_snds_KZRZP_PK"
 ];
 
+attachmentLongList_French	= [
+	"CUP_optic_SB_11_4x20_PM",
+	"CUP_optic_SB_11_4x20_PM_pip",
+	"CUP_optic_SB_3_12x50_PMII",
+	"CUP_optic_SB_3_12x50_PMII_PIP",
+	"CUP_optic_LeupoldMk4",
+	"CUP_optic_CWS",
+	"CUP_optic_CWS_NV",
+	"CUP_optic_CWS_NV_RDS"
+];
 
 ////////////////////////
 ////Items management////

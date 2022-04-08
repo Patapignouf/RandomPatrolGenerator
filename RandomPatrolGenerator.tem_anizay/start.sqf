@@ -2,9 +2,8 @@
 #include "engine\searchLocation.sqf"
 #include "database\objectLibrary.sqf"
 #include "objectGenerator\vehicleManagement.sqf"
+#include "enemyManagement\groupGenerator.sqf"
 
-//Init checkdeath
-[] execVM 'engine\checkdeath.sqf';
 
 //Init base mission parameters 
 difficultyParameter = "Difficulty" call BIS_fnc_getParamValue;
@@ -15,6 +14,7 @@ bluFaction = "BluFaction" call BIS_fnc_getParamValue;
 indFaction = "IndFaction" call BIS_fnc_getParamValue;
 enableInitAttack = "EnableInitAttack" call BIS_fnc_getParamValue;
 enableInitBluAttack = "EnableInitBluAttack" call BIS_fnc_getParamValue;
+enableOpforMortar = "EnableOpforMortar" call BIS_fnc_getParamValue;
 initBluforBase = "InitBluforBase" call BIS_fnc_getParamValue;
 
 /////////////////////////
@@ -31,11 +31,6 @@ bluforUnarmedVehicleChopper = bluforUnarmedVehicleChopper_db select {_x select 1
 bluforDrone = bluforDrone_db select {_x select 1  == bluFaction} select 0 select 0;
 
 bluforBoat = bluforBoat_db select {_x select 1  == bluFaction} select 0 select 0;
-
-//IndGroupDefinition
-
-ind_group = ind_group_db select {_x select 1  == indFaction} select 0 select 0;
-publicvariable "ind_group";
 
 //CivilianGroupDefinition
 civilian_group = civilian_group_db select {_x select 1  == civFaction} select 0 select 0;
@@ -127,9 +122,15 @@ PossibleObjectivePosition = possiblePOILocation;
 
 //Setup init Civ city
 [[text initCityLocation,"ColorBlue","loc_help",getPos initCityLocation, "All"], 'objectGenerator\doGenerateMarker.sqf'] remoteExec ['BIS_fnc_execVM', 0];
-currentTruck = selectRandom civilianTruck;
-logiTruck = createVehicle [currentTruck, ((getPos initCityLocation) findEmptyPosition [5, 70, currentTruck]), [], 0, "NONE"];
-
+for [{_i = 0}, {_i <= 2}, {_i = _i + 1}] do //Peut être optimisé
+{
+	_currentTruckType = selectRandom civilianTruck;
+	_currentTruckPosition = [getPos initCityLocation, 2, 100, 30, 10, 0.25, 0, [], [[0,0,0],[0,0,0]]] call BIS_fnc_findSafePos;
+	if !([_currentTruckPosition , [0,0,0]] call BIS_fnc_areEqual) then 
+	{
+		_currentTruck = createVehicle [_currentTruckType, _currentTruckPosition, [], 0, "NONE"];
+	};
+};
 
 /////////////////////////
 ///Generate Objectives///
@@ -229,6 +230,13 @@ for [{_i = 0}, {_i <= 2}, {_i = _i + 1}] do
 	};
 } foreach allUnits;
 
+//Init VA
+VA1 = createVehicle ["Box_IND_Wps_F", [getPos initCityLocation, 1, 5, 3, 0, 20, 0] call BIS_fnc_findSafePos, [], 0, "NONE"];
+clearWeaponCargoGlobal VA1;
+clearMagazineCargoGlobal VA1;
+clearItemCargoGlobal VA1;
+publicvariable "VA1";
+
 
 /////////////////////////
 ////Generate Ind/////////
@@ -256,6 +264,10 @@ if ( count AvalaibleInitAttackPositions != 0 && (enableInitAttack == 1 || ((enab
 /////////////////////////
 tempSupplyObjects = SelectedObjectives;
 currentObject = objNull;
+// Get smallest distance to an AO
+areaOfOperation = [possiblePOILocation] call getAreaOfMission;
+aoSize = 1500;
+
 {
 	currentObject = selectRandom tempSupplyObjects;
 	tempSupplyObjects = tempSupplyObjects - [currentObject];
@@ -275,6 +287,20 @@ if (1 <= (count EnemyWaveSpawnPositions)) then
 	[EnemyWaveGroups,EnemyWaveSpawnPositions,initCityLocation,difficultyParameter] execVM 'enemyManagement\generateWave.sqf'; 
 };
 
+//Generate mortar
+if (enableOpforMortar == 1 || (enableOpforMortar == 2 && round random 1 == 0)) then 
+{
+	for [{_i = 0}, {_i < 2}, {_i = _i + 1}] do
+	{ 
+		_mortarSpawnPosition = [getPos initCityLocation, (800), (aoSize+700), 3, 10, 0.25, 0, [], [[0,0,0],[0,0,0]]] call BIS_fnc_findSafePos;
+		if !([_mortarSpawnPosition , [0,0,0]] call BIS_fnc_areEqual) then 
+		{
+			_mortarGroup = [baseEnemyMortarGroup, _mortarSpawnPosition, east, "Mortar"] call doGenerateEnemyGroup;
+		};
+	};
+};
+
+
 //Generate Civs dialogs
 //[] execVM 'enemyManagement\generateCivDialogs.sqf'; 
 //[] remoteExec ['enemyManagement\generateCivDialogs.sqf',0];
@@ -290,11 +316,7 @@ if (1 <= (count EnemyWaveSpawnPositions)) then
 selectedBluforVehicle =[];
 selectedBluforAirDroneVehicle = [];
 vehicleGoodPosition = [];
-
-// Get smallest distance to an AO
-areaOfOperation = [possiblePOILocation] call getAreaOfMission;
 initBlueforLocation = [];
-aoSize = 1500;
 bluforShortFrequencyTFAR = (((round random 400)+400)/10);
 publicvariable "bluforShortFrequencyTFAR";
 
@@ -335,17 +357,23 @@ if (initBluforBase == 0 || (initBluforBase == 2 && (round random 1 == 0))) then
 	waitUntil {!isNil "spawnFOBObjects"};
 	
 	//Generate air vehicle
-	for [{_i = 0}, {_i < 2}, {_i = _i + 1}] do
+	if (0 < count bluforUnarmedVehicleChopper ) then 
 	{
-		selectedBluforVehicle pushBack (selectRandom bluforUnarmedVehicleChopper);
+		for [{_i = 0}, {_i < 2}, {_i = _i + 1}] do
+		{
+			selectedBluforVehicle pushBack (selectRandom bluforUnarmedVehicleChopper);
+		};
 	};
 		
     //Generate air drone vehicle
-	selectedBluforAirDroneVehicle pushBack (selectRandom bluforDrone);
+	if (0 < count bluforDrone ) then 
 	{
-		currentGroup = [([[initBlueforLocation select 0, initBlueforLocation select 1, (initBlueforLocation select 2)+400],1,60,10,0] call BIS_fnc_findSafePos), blufor, [_x],[],[],[],[],[],0] call BIS_fnc_spawnGroup;
-	}
-	foreach selectedBluforAirDroneVehicle;
+		selectedBluforAirDroneVehicle pushBack (selectRandom bluforDrone);
+		{
+			currentGroup = [([[initBlueforLocation select 0, initBlueforLocation select 1, (initBlueforLocation select 2)+400],1,60,10,0] call BIS_fnc_findSafePos), blufor, [_x],[],[],[],[],[],0] call BIS_fnc_spawnGroup;
+		}
+		foreach selectedBluforAirDroneVehicle;
+	};
 	
 	
 };
@@ -354,21 +382,31 @@ if (initBluforBase == 0 || (initBluforBase == 2 && (round random 1 == 0))) then
 //Generate ground vehicle
 selectedBluforVehicle = [];
 vehicleGoodPosition = [];
-for [{_i = 0}, {_i < 3}, {_i = _i + 1}] do
+if (0 < count bluforUnarmedVehicle ) then 
 {
-	selectedBluforVehicle pushBack (selectRandom bluforUnarmedVehicle);
+	for [{_i = 0}, {_i < 3}, {_i = _i + 1}] do
+	{
+		selectedBluforVehicle pushBack (selectRandom bluforUnarmedVehicle);
+	};
 };
 
-for [{_i = 0}, {_i < 1}, {_i = _i + 1}] do
+if (0 < count bluforArmedVehicle ) then 
 {
-	selectedBluforVehicle pushBack (selectRandom bluforArmedVehicle);
+	for [{_i = 0}, {_i < 1}, {_i = _i + 1}] do
+	{
+		selectedBluforVehicle pushBack (selectRandom bluforArmedVehicle);
+	};
 };
 
 //Generate Boat
-for [{_i = 0}, {_i < 3}, {_i = _i + 1}] do
+if (0 < count bluforBoat ) then 
 {
-	selectedBluforVehicle pushBack (selectRandom bluforBoat);
+	for [{_i = 0}, {_i < 3}, {_i = _i + 1}] do
+	{
+		selectedBluforVehicle pushBack (selectRandom bluforBoat);
+	};
 };
+
 
 //Generate all vehicles
 [initBlueforLocation,selectedBluforVehicle, 30, 100] call doGenerateVehicleForFOB;	
@@ -408,7 +446,9 @@ if ( count AvalaibleInitAttackPositions != 0 && (enableInitBluAttack == 1 || ((e
 ];
 } forEach playableUnits;
 
-//missionNamespace setVariable ["MissionObjectives",missionNamespace getVariable "MissionObjectives"];
+
+//Init checkdeath
+[] execVM 'engine\checkdeath.sqf';
 
 missionGenerated = true;
 publicvariable "missionGenerated";

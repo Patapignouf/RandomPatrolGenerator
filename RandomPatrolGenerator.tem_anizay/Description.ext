@@ -13,7 +13,7 @@ class Params
 		title = "Respawn management (WIP)";
 		values[] = {0,1};
 		texts[] = {"No respawn","Respawn on objective success"};
-		default = 0;
+		default = 1;
 	};
 	class EnableArmored
 	{
@@ -32,29 +32,29 @@ class Params
 	class CivFaction
 	{
 		title = "Civilian Faction";
-		values[] = {0,2};
-		texts[] = {"Takistani","Syndikat"};
+		values[] = {0,1,2,3,4};
+		texts[] = {"Takistani","US Army","Syndikat","Russian","French"};
 		default = 2;
 	};
 	class IndFaction
 	{
 		title = "Independent Faction";
-		values[] = {0,1,2};
-		texts[] = {"Takistani","USA","Syndikat"};
+		values[] = {0,1,2,3,4};
+		texts[] = {"Takistani","US Army","Syndikat","Russian","French"};
 		default = 2;
 	};
 	class BluFaction
 	{
 		title = "Blufor Faction";
-		values[] = {1,4};
-		texts[] = {"US Army","French"};
+		values[] = {0,1,2,3,4};
+		texts[] = {"Takistani","US Army","Syndikat","Russian","French"};
 		default = 1;
 	};
 	class OpFaction
 	{
 		title = "Opfor Faction";
-		values[] = {0,2,3};
-		texts[] = {"Takistani","Syndikat","Russian"};
+		values[] = {0,1,2,3,4};
+		texts[] = {"Takistani","US Army","Syndikat","Russian","French"};
 		default = 2;
 	};
 	class Difficulty
@@ -69,6 +69,13 @@ class Params
 		title = "Mission's length";
 		values[] = {1,2,3,4};
 		texts[] = {"Short","Medium","Long","Very Long"};
+		default = 2;
+	};
+	class EnableOpforMortar
+	{
+		title = "Setup enemy mortar positions";
+		values[] = {0,1,2};
+		texts[] = {"No","Yes","Random"};
 		default = 2;
 	};
 	class EnableInitAttack
