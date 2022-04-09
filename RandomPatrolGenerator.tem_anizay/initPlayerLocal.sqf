@@ -2,7 +2,7 @@
 
 bluFaction = "BluFaction" call BIS_fnc_getParamValue;
 indFaction = "IndFaction" call BIS_fnc_getParamValue;
-
+enableThermal = "EnableThermal" call BIS_fnc_getParamValue;
 
 //////////////////////////
 ////Event Handler/////////
@@ -32,7 +32,12 @@ player setPos [0,0];
 titleCut ["Please wait while mission is generating", "BLACK FADED", 5];
 
 //Init disableThermal
-[] execVM 'engine\disableThermal.sqf';
+if (enableThermal==0) then 
+{
+	[] execVM 'engine\disableThermal.sqf';
+};
+
+//Init player respawn ticket
 [player, -1, true] call BIS_fnc_respawnTickets;
 
 //Wait player load
