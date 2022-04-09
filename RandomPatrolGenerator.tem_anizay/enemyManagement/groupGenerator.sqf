@@ -9,6 +9,10 @@ doGenerateEnemyGroup =
 	//Group spawn
 	_currentGroupPatrol = [_thisSpawnPosition, _thisFaction, _thisGroupToSpawn,[],[],[],[],[],180] call BIS_fnc_spawnGroup;
 
+	//Optimize IA 
+	_currentGroupPatrol enableDynamicSimulation true;
+	
+
 	//Intel Synchronization
 	_missionEnemyInfo = missionNamespace getVariable ["MissionEnemyInfo",[]];
 	_missionEnemyInfo pushBack [_thisGroupType,_thisSpawnPosition];
