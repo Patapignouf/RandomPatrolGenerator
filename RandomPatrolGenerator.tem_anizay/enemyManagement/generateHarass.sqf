@@ -14,11 +14,11 @@ sleep 1000;
 
 if (isServer) then
 {
-	while {true} do 
+	while {sleep 20; true} do 
 	{
 		nb_ind_player_alive = {isPlayer _x && side _x == independent} count allUnits;
 		nb_blu_player_alive = {isPlayer _x && side _x == blufor} count allUnits;
-		sleep 20;
+		
 		diag_log format ["Harass start on position %1", positionToAttack];
 		if (({alive _x && side _x == opfor} count allUnits) <=175) then
 		{

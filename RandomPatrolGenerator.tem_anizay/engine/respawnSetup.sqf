@@ -1,7 +1,7 @@
 bluforLeader = Nil;
 bluforRespawn = [west, initBlueforLocation, "Blufor respawn"] call  BIS_fnc_addRespawnPosition;
 
-while {true} do 
+while {sleep 20; true} do 
 {
 	bluforRespawn call BIS_fnc_removeRespawnPosition;
 	{
@@ -15,5 +15,5 @@ while {true} do
 	{
 		bluforRespawn = [west, getPos bluforLeader, "Blufor respawn"] call  BIS_fnc_addRespawnPosition;
 	};
-	sleep 20;
+	
 };

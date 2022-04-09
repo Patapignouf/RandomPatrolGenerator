@@ -53,9 +53,8 @@ waitUntil {!isNil "SupplyObjects" && count SupplyObjects != 0};
 
 
 //TODO Remplacer la plupart de ces tests par des eventHandler
-while {!missionOver} do
+while {sleep 10; !missionOver} do
 {
-	sleep 10;
 	
 	//Obsolète
 	if (nb_ind_alive == 0) then 

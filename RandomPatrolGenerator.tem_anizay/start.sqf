@@ -18,6 +18,16 @@ enableOpforMortar = "EnableOpforMortar" call BIS_fnc_getParamValue;
 initBluforBase = "InitBluforBase" call BIS_fnc_getParamValue;
 
 /////////////////////////
+////Setup IA Opti////////
+/////////////////////////
+enableDynamicSimulationSystem true; 
+"Group" setDynamicSimulationDistance 1500;
+"Vehicle" setDynamicSimulationDistance 2500;
+"EmptyVehicle" setDynamicSimulationDistance 1000;
+
+
+
+/////////////////////////
 //////Find Assets////////
 /////////////////////////
 
@@ -49,12 +59,6 @@ baseEnemyDemoGroup = baseEnemyDemoGroup_db select {_x select 1  == opFaction} se
 baseEnemyMortarGroup = baseEnemyMortarGroup_db select {_x select 1  == opFaction} select 0 select 0;
 
 baseEnemyVehicleGroup = baseEnemyVehicleGroup_db select {_x select 1  == opFaction} select 0 select 0;
-
-//avalaibleAmmoBox = [];
-
-//avalaibleSupplyBox = [];
-
-//avalaibleHVT = [];
 
 
 

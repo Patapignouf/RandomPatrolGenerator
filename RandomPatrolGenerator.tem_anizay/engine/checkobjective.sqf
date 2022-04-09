@@ -56,13 +56,12 @@ if (respawnSettings == 1) then
 
 diag_log format ["Objective to test :  %1 in complete list %2", obj_list_items, _objectivesToTest];
 
-while {!missionComplete} do
+while {sleep 10; !missionComplete} do
 {
 	_completedObjectives = missionNamespace getVariable ["completedObjectives",[]];
 	_missionObjectives = missionNamespace getVariable ["MissionObjectives",[]];
 	diag_log format ["Loop to test objective : %1", _objectivesToTest];
 	objectReturnedToCity = obj_list_items inAreaArray mytrigger; //vehicles (all vehicles) inAreaArray (Returns list of Objects or Positions that are in the area _mytrigger.)  
-    sleep 10;
 	{
 		current_obj = _x;
 		diag_log format ["Currently test objective : %1", current_obj];

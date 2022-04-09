@@ -4,6 +4,10 @@ bluFaction = "BluFaction" call BIS_fnc_getParamValue;
 indFaction = "IndFaction" call BIS_fnc_getParamValue;
 enableThermal = "EnableThermal" call BIS_fnc_getParamValue;
 
+//Optimize scripts
+private _disableThermal = compile preprocessFileLineNumbers "engine\disableThermal.sqf";
+private _generateCivDialogs = compile preprocessFileLineNumbers "enemyManagement\generateCivDialogs.sqf";
+
 //////////////////////////
 ////Event Handler/////////
 //////////////////////////
@@ -28,13 +32,13 @@ diag_log format ["Setup Player %1 at position 0", name player];
 
 //init tp to be able to spawn on the ground on each map
 player setPos [0,0];
-//player setCaptive true;
+player allowdamage false;
 titleCut ["Please wait while mission is generating", "BLACK FADED", 5];
 
 //Init disableThermal
 if (enableThermal==0) then 
 {
-	[] execVM 'engine\disableThermal.sqf';
+	[] spawn _disableThermal;
 };
 
 //Init player respawn ticket
@@ -104,19 +108,20 @@ if (hasInterface) then
 	};
 };
 
-[] execVM 'enemyManagement\generateCivDialogs.sqf'; 
+[] spawn _generateCivDialogs;
 //Init player's stuff according to the init role
 if (hasInterface) then
 {	
 	[player] call adjustLoadout;
 };
 
+//Let's get it started !
+player allowdamage true;
+titleCut ["", "BLACK IN", 5];
+
+
 //If a player join in progress he will be teleported to his teamleader (WIP feature)
 if (didJIP) then 
 {
 	player setPos (getPos (leader (group player)));
 };
-
-//Let's get it started !
-player setCaptive false;
-titleCut ["", "BLACK IN", 5];
