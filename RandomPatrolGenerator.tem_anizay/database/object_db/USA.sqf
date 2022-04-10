@@ -12,9 +12,12 @@ c_medic = "medic";
 //USA
 bluforUnarmedVehicle_USA = ["CUP_B_M1151_USA"];
 
-bluforArmedVehicle_USA = ["CUP_B_M1151_Deploy_USA","CUP_B_nM1025_SOV_M2_USA_DES","CUP_B_nM1025_M240_USA_DES"];
+bluforArmedVehicle_USA = ["CUP_B_M1151_Deploy_USA","CUP_B_nM1025_SOV_M2_USA_DES","CUP_B_nM1025_M240_USA_DES","CUP_B_M1165_GMV_DSRT_USMC"];
 
-bluforUnarmedVehicleChopper_USA = ["CUP_B_MH6J_USA","CUP_B_UH60M_Unarmed_US"];
+bluforUnarmedVehicleChopper_USA = ["CUP_B_MH6J_USA",
+"CUP_B_UH60M_Unarmed_US",
+"B_Heli_Transport_03_unarmed_F",
+"CUP_B_CH53E_USMC"];
 
 
 bluforDrone_USA = ["B_UAV_02_dynamicLoadout_F"

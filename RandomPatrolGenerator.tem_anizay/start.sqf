@@ -276,7 +276,13 @@ aoSize = 1500;
 	currentObject = selectRandom tempSupplyObjects;
 	tempSupplyObjects = tempSupplyObjects - [currentObject];
 	diag_log format ["Objective generation started : %1 on position %2", currentObject, _x];
-	_handlePOIGeneration = [EnemyWaveLevel_1, civilian_group ,_x,difficultyParameter,currentObject] execVM 'enemyManagement\generatePOI.sqf'; 
+	
+	//Generate mission environement
+	_handlePOIGeneration = [EnemyWaveLevel_1, civilian_group ,_x,difficultyParameter] execVM 'enemyManagement\generatePOI.sqf'; 
+	waitUntil {isNull _handlePOIGeneration};
+
+	//Generate mission objectives
+	_handlePOIGeneration = [currentObject, _x] execVM 'engine\doGenerateObjective.sqf'; 
 	waitUntil {isNull _handlePOIGeneration};
 
 } forEach SupplyPositions;
@@ -347,7 +353,7 @@ if (initBluforBase == 0 || (initBluforBase == 2 && (round random 1 == 0))) then
 	waitUntil {!isNil "spawnFOBObjects"};
 } else 
 {
-	initBlueforLocation = [getPos initCityLocation, (aoSize+1500), (aoSize+3500), 3, 0, 0.25, 0, [areaOfOperation], [[0,0,0],[0,0,0]]] call BIS_fnc_findSafePos;
+	initBlueforLocation = [getPos initCityLocation, (aoSize+2000), (aoSize+4000), 3, 0, 0.25, 0, [areaOfOperation], [[0,0,0],[0,0,0]]] call BIS_fnc_findSafePos;
 	//Safe position
 	initBlueforLocation = [selectMax [selectMin [initBlueforLocation select 0, worldSize-50 ],50],selectMax [selectMin [initBlueforLocation select 1, worldSize-50],50]]; 
 	
