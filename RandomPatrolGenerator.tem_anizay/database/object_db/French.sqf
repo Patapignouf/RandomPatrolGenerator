@@ -6,6 +6,58 @@ c_autorifleman = "autorifleman";
 c_marksman = "marksman"; 
 c_medic = "medic";
 
+//////////////////////////////
+////Define civ group data/////
+//////////////////////////////
+
+//French
+civilian_group_French = ["C_Man_casual_7_F_euro", 
+"C_Man_smart_casual_1_F_euro", 
+"C_Man_smart_casual_2_F_euro"];
+
+civilian_big_group_French = ["C_man_p_beggar_F_euro", 
+"C_man_polo_4_F_euro", 
+"C_man_shorts_1_F_euro", 
+"C_man_shorts_2_F_euro", 
+"C_scientist_02_formal_F", 
+"C_scientist_01_formal_F", 
+"C_scientist_02_informal_F"];
+
+civilianTruck_French = ["C_SUV_01_F","C_Offroad_01_repair_F"];
+
+//////////////////////////////
+///Define enemy group data////
+//////////////////////////////
+//French
+baseEnemyGroup_French = ["I_C_Soldier_Bandit_4_F", 
+"I_C_Soldier_Bandit_3_F", 
+"I_C_Soldier_Bandit_7_F", 
+"I_C_Soldier_Bandit_5_F", 
+"I_C_Soldier_Bandit_6_F", 
+"I_C_Soldier_Bandit_2_F", 
+"I_C_Soldier_Bandit_8_F", 
+"I_C_Soldier_Bandit_1_F"];
+
+baseEnemyATGroup_French = ["I_C_Soldier_Bandit_6_F", 
+"I_C_Soldier_Bandit_2_F", 
+"I_C_Soldier_Bandit_2_F",
+"I_C_Soldier_Bandit_7_F", 
+"I_C_Soldier_Bandit_8_F"];
+
+baseEnemyDemoGroup_French = ["I_C_Soldier_Bandit_2_F", 
+"I_C_Soldier_Bandit_8_F",
+"I_C_Soldier_Bandit_8_F", 
+"I_C_Soldier_Bandit_6_F"];
+
+baseEnemyMortarGroup_French = ["I_G_Mortar_01_F", 
+"I_C_Soldier_Bandit_8_F", 
+"I_C_Soldier_Bandit_6_F"];
+
+baseEnemyVehicleGroup_French = ["I_C_Offroad_02_LMG_F", 
+"I_C_Offroad_02_AT_F"];
+
+
+
 ////////////////////////
 //Vehicle management////
 ////////////////////////

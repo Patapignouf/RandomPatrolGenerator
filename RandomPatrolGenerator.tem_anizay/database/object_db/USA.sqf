@@ -6,6 +6,62 @@ c_autorifleman = "autorifleman";
 c_marksman = "marksman"; 
 c_medic = "medic";
 
+//////////////////////////////
+////Define civ group data/////
+//////////////////////////////
+
+//USA
+civilian_group_USA = ["C_Man_4_enoch_F", 
+"C_Man_5_enoch_F", 
+"C_Man_6_enoch_F"];
+
+civilian_big_group_USA = ["C_Man_1_enoch_F", 
+"C_Man_2_enoch_F", 
+"C_Man_3_enoch_F", 
+"C_Man_4_enoch_F", 
+"C_Man_5_enoch_F", 
+"C_Man_6_enoch_F", 
+"C_Farmer_01_enoch_F" ];
+
+civilianTruck_USA = ["CUP_C_Octavia_CIV", 
+"C_Offroad_01_comms_F", 
+"C_Hatchback_01_sport_F"];
+
+//////////////////////////////
+///Define enemy group data////
+//////////////////////////////
+//USA
+baseEnemyGroup_USA = ["CUP_B_US_Soldier_SL_OCP", 
+"CUP_B_US_Soldier_MG_OCP", 
+"CUP_B_US_Soldier_MG_OCP",
+"CUP_B_US_Soldier_GL_OCP",
+"CUP_B_US_Soldier_GL_OCP",  
+"CUP_B_US_Soldier_AMG_OCP", 
+"CUP_B_US_Soldier_LAT_OCP",
+"CUP_B_US_Soldier_LAT_OCP"];
+
+baseEnemyATGroup_USA = ["CUP_B_US_Soldier_TL_OCP", 
+"CUP_B_US_Soldier_AT_OCP", 
+"CUP_B_US_Soldier_AT_OCP", 
+"CUP_B_US_Soldier_AT_OCP", 
+"CUP_B_US_Soldier_AAT_OCP"];
+
+baseEnemyDemoGroup_USA = ["CUP_B_US_Soldier_TL_OCP", 
+"CUP_B_US_Soldier_MG_OCP", 
+"CUP_B_US_Soldier_GL_OCP", 
+"CUP_B_US_Soldier_AMG_OCP"];
+
+baseEnemyMortarGroup_USA = ["B_Mortar_01_F",
+"CUP_B_US_Soldier_GL_OCP", 
+"CUP_B_US_Soldier_AMG_OCP"];
+
+baseEnemyVehicleGroup_USA = ["CUP_B_M1151_Deploy_USA",
+"CUP_B_nM1025_SOV_M2_USA_DES",
+"CUP_B_nM1025_M240_USA_DES",
+"CUP_B_M1165_GMV_DSRT_USMC"];
+
+
+
 ////////////////////////
 //Vehicle management////
 ////////////////////////

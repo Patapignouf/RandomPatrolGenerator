@@ -56,7 +56,7 @@ baseEnemyMortarGroup_taki = ["CUP_O_TK_INS_Mechanic",
 "CUP_O_2b14_82mm_TK_INS",
 "CUP_O_TK_INS_Bomber"];
 
-baseEnemyVehicle_taki = ["CUP_I_Datsun_PK_TK",
+baseEnemyVehicleGroup_taki = ["CUP_I_Datsun_PK_TK",
 "CUP_I_Hilux_M2_TK"];
 
 

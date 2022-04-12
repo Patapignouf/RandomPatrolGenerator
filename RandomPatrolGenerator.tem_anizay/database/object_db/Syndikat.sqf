@@ -52,7 +52,7 @@ baseEnemyMortarGroup_Syndikat = ["I_G_Mortar_01_F",
 "I_C_Soldier_Bandit_8_F", 
 "I_C_Soldier_Bandit_6_F"];
 
-baseEnemyVehicle_Syndikat = ["I_C_Offroad_02_LMG_F", 
+baseEnemyVehicleGroup_Syndikat = ["I_C_Offroad_02_LMG_F", 
 "I_C_Offroad_02_AT_F"];
 
 ////////////////////////

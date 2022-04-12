@@ -6,7 +6,24 @@ c_autorifleman = "autorifleman";
 c_marksman = "marksman"; 
 c_medic = "medic";
 
+//////////////////////////////
+////Define civ group data/////
+//////////////////////////////
 
+//Russian
+civilian_group_Russian = ["CUP_C_R_Rocker_03", 
+"CUP_C_R_Villager_01", 
+"CUP_C_R_Woodlander_02"];
+
+civilian_big_group_Russian = ["CUP_C_R_Assistant_01", 
+"CUP_C_R_Bully_02", 
+"CUP_C_R_Bully_03", 
+"CUP_C_R_Citizen_04", 
+"CUP_C_R_Worker_05", 
+"CUP_C_R_Rescuer_01", 
+"CUP_C_R_Policeman_01" ];
+
+civilianTruck_Russian = ["C_Truck_02_transport_F"];
 
 //////////////////////////////
 ///Define enemy group data////
@@ -35,7 +52,7 @@ baseEnemyMortarGroup_Russian  = ["CUP_O_2b14_82mm_RU_M_MSV",
 "CUP_O_RU_Soldier_MG_M_EMR_V2", 
 "CUP_O_RU_Soldier_TL_M_EMR_V2"];
 
-baseEnemyVehicle_Russian  = ["CUP_O_UAZ_MG_RU",
+baseEnemyVehicleGroup_Russian  = ["CUP_O_UAZ_MG_RU",
 "CUP_O_UAZ_SPG9_RU"];
 
 ////////////////////////
