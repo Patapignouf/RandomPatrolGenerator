@@ -344,7 +344,6 @@ if (initBluforBase == 0 || (initBluforBase == 2 && (round random 1 == 0))) then
 	
 	//Clean area WIP
 	waitUntil {count allPlayers != 0};
-	[initBlueforLocation,150] execVM 'objectGenerator\doCleanArea.sqf'; 
 	
 	//Generate FOB
 	spawnFOBObjects = [initBlueforLocation, (random 360), selectRandom avalaibleFOB] call BIS_fnc_ObjectsMapper;	
@@ -356,9 +355,6 @@ if (initBluforBase == 0 || (initBluforBase == 2 && (round random 1 == 0))) then
 	initBlueforLocation = [getPos initCityLocation, (aoSize+2000), (aoSize+4000), 3, 0, 0.25, 0, [areaOfOperation], [[0,0,0],[0,0,0]]] call BIS_fnc_findSafePos;
 	//Safe position
 	initBlueforLocation = [selectMax [selectMin [initBlueforLocation select 0, worldSize-50 ],50],selectMax [selectMin [initBlueforLocation select 1, worldSize-50],50]]; 
-	
-	//Clean area WIP
-	[initBlueforLocation,150] execVM 'objectGenerator\doCleanArea.sqf'; 
 	
 	//Generate FOB
 	spawnFOBObjects = [initBlueforLocation, (random 360), selectRandom avalaibleFOB] call BIS_fnc_ObjectsMapper;	
@@ -384,10 +380,11 @@ if (initBluforBase == 0 || (initBluforBase == 2 && (round random 1 == 0))) then
 		}
 		foreach selectedBluforAirDroneVehicle;
 	};
-	
-	
 };
-[["FOB","ColorBlue","loc_Fortress",initBlueforLocation, blufor], 'objectGenerator\doGenerateMarker.sqf'] remoteExec ['BIS_fnc_execVM', 0];				
+[["FOB","ColorBlue","loc_Fortress",initBlueforLocation, blufor], 'objectGenerator\doGenerateMarker.sqf'] remoteExec ['BIS_fnc_execVM', 0];
+	
+//Clean area WIP
+[initBlueforLocation, 150] execVM 'objectGenerator\doCleanArea.sqf'; 				
 
 //Generate ground vehicle
 selectedBluforVehicle = [];
@@ -462,5 +459,3 @@ if ( count AvalaibleInitAttackPositions != 0 && (enableInitBluAttack == 1 || ((e
 
 missionGenerated = true;
 publicvariable "missionGenerated";
-
-
