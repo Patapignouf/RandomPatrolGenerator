@@ -29,6 +29,13 @@ class Params
 		texts[] = {"No","Yes"};
 		default = 0;
 	};
+	class RealismMode
+	{
+		title = "Enable realism mode (WIP)";
+		values[] = {0,1};
+		texts[] = {"No","Yes"};
+		default = 0;
+	};
 	class EnableThermal
 	{
 		title = "Enable thermal vision";
