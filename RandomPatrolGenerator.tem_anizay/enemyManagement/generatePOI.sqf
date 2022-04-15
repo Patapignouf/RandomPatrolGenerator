@@ -7,7 +7,7 @@ currentRandomGroup = objNull;
 currentGroup = objNull;
 
 //Generate camp and AO
-for [{_i = 0}, {_i < _thisDifficulty+3}, {_i = _i + 1}] do 
+for [{_i = 0}, {_i < _thisDifficulty+2}, {_i = _i + 1}] do 
 {
 	currentRandomGroup = selectRandom _thisAvailableGroup;
 	currentGroup = [currentRandomGroup, getPos _thisAvailablePosition, east, "Defense"] call doGenerateEnemyGroup;
