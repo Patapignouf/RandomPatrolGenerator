@@ -73,7 +73,6 @@ while {sleep 10; !missionComplete} do
 					if (current_obj select 0 in objectReturnedToCity) then
 					{
 						diag_log format ["Objective %1 completed !", current_obj select 0 ];
-						numberOfCompletedObj = numberOfCompletedObj +1;
 						obj_list_items = obj_list_items - [current_obj select 0];
 						_objectivesToTest = _objectivesToTest - [current_obj];
 						_completedObjectives pushBack current_obj;
@@ -89,8 +88,7 @@ while {sleep 10; !missionComplete} do
 				{
 					if (!alive (current_obj select 0)) then 
 					{	
-						diag_log format ["Objective %1 completed !", current_obj select 0 ];
-						numberOfCompletedObj = numberOfCompletedObj +1;					
+						diag_log format ["Objective %1 completed !", current_obj select 0 ];			
 						obj_list_items = obj_list_items - [current_obj select 0];
 						_objectivesToTest = _objectivesToTest - [current_obj];
 						_completedObjectives pushBack current_obj;
@@ -105,7 +103,6 @@ while {sleep 10; !missionComplete} do
 						if (current_obj select 0 in objectReturnedToCity) then
 						{
 							diag_log format ["Objective %1 completed !", current_obj select 0 ];
-							numberOfCompletedObj = numberOfCompletedObj +1;
 							obj_list_items = obj_list_items - [current_obj select 0];
 							_objectivesToTest = _objectivesToTest - [current_obj];
 							_completedObjectives pushBack current_obj;
@@ -123,7 +120,6 @@ while {sleep 10; !missionComplete} do
 					if (!alive (current_obj select 0)) then 
 					{	
 						diag_log format ["Objective %1 completed !", current_obj select 0 ];
-						numberOfCompletedObj = numberOfCompletedObj +1;
 						obj_list_items = obj_list_items - [current_obj select 0];
 						_objectivesToTest = _objectivesToTest - [current_obj];
 						_completedObjectives pushBack current_obj;
@@ -140,7 +136,6 @@ while {sleep 10; !missionComplete} do
 					if (current_obj select 0 in objectReturnedToCity) then
 					{
 						diag_log format ["Objective %1 completed !", current_obj select 0 ];
-						numberOfCompletedObj = numberOfCompletedObj +1;
 						obj_list_items = obj_list_items - [current_obj select 0];
 						_objectivesToTest = _objectivesToTest - [current_obj];
 						_completedObjectives pushBack current_obj;
@@ -156,7 +151,7 @@ while {sleep 10; !missionComplete} do
 		};
 	} foreach _objectivesToTest;
 
-	missionComplete = numberOfCompletedObj + 1 >= numberOfObjectives;
+	missionComplete = count _completedObjectives + 1 >= count _missionObjectives;
 };
 
 diag_log format ["All objectives completed !"];

@@ -191,11 +191,14 @@ setupArsenalToItem = {
 	currentFaction = _this select 2;
 
 	//Process
+	//Clean arsenal
 	//["AmmoboxExit", itemToAttachArsenal] call BIS_fnc_arsenal;	
-	[itemToAttachArsenal,[itemToAttachArsenal call BIS_fnc_getVirtualWeaponCargo],false] call BIS_fnc_removeVirtualWeaponCargo;
-	[itemToAttachArsenal,[itemToAttachArsenal call BIS_fnc_getVirtualItemCargo],false] call BIS_fnc_removeVirtualItemCargo;
-	[itemToAttachArsenal,[itemToAttachArsenal call BIS_fnc_getVirtualMagazineCargo],false] call BIS_fnc_removeVirtualMagazineCargo;
-	[itemToAttachArsenal,[itemToAttachArsenal call BIS_fnc_getVirtualBackpackCargo],false] call BIS_fnc_removeVirtualBackpackCargo;
+	[itemToAttachArsenal,itemToAttachArsenal call BIS_fnc_getVirtualWeaponCargo,false] call BIS_fnc_removeVirtualWeaponCargo;
+	[itemToAttachArsenal,itemToAttachArsenal call BIS_fnc_getVirtualItemCargo,false] call BIS_fnc_removeVirtualItemCargo;
+	[itemToAttachArsenal,itemToAttachArsenal call BIS_fnc_getVirtualMagazineCargo,false] call BIS_fnc_removeVirtualMagazineCargo;
+	[itemToAttachArsenal,itemToAttachArsenal call BIS_fnc_getVirtualBackpackCargo,false] call BIS_fnc_removeVirtualBackpackCargo;
+
+
 	[itemToAttachArsenal,([currentPlayer,currentFaction] call getVirtualWeaponList )] call BIS_fnc_addVirtualWeaponCargo;
 	[itemToAttachArsenal,backpacksList] call BIS_fnc_addVirtualBackpackCargo;
 	//[VA2,((itemCargo VA2) + _availableHeadgear + _availableUniforms + _availableVests)] call BIS_fnc_addVirtualItemCargo;

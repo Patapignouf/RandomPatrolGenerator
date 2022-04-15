@@ -387,7 +387,6 @@ if (initBluforBase == 0 || (initBluforBase == 2 && (round random 1 == 0))) then
 [initBlueforLocation, 150] execVM 'objectGenerator\doCleanArea.sqf'; 				
 
 //Generate ground vehicle
-selectedBluforVehicle = [];
 vehicleGoodPosition = [];
 if (0 < count bluforUnarmedVehicle ) then 
 {
