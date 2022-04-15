@@ -68,7 +68,7 @@ bluforArmedVehicle_Russian = ["CUP_O_GAZ_Vodnik_PK_RU",
 bluforUnarmedVehicleChopper_Russian = ["CUP_O_Mi8AMT_RU"];
 
 
-bluforDrone_Russian = [
+bluforDrone_Russian = ["CUP_O_Pchela1T_RU"
 ];
 
 bluforBoat_Russian = ["CUP_O_PBX_RU"
