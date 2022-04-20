@@ -7,7 +7,7 @@ doGenerateEnemyGroup =
 	_thisGroupType = _this select 3;
 
 	//Group spawn
-	_currentGroupPatrol = [_thisSpawnPosition, _thisFaction, _thisGroupToSpawn,[],[],[],[],[],180] call BIS_fnc_spawnGroup;
+	_currentGroupPatrol = [_thisSpawnPosition, _thisFaction, _thisGroupToSpawn,[],[],[],[],[], random 360] call BIS_fnc_spawnGroup;
 
 	//Optimize IA 
 	_currentGroupPatrol enableDynamicSimulation true;

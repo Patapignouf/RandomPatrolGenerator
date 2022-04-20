@@ -8,7 +8,7 @@ _civs = allUnits select {alive _x AND side _x isEqualTo civilian};
 	_ID = _x addAction ["Talk to civilian",{
 
 		params ["_object","_caller","_ID","_civs"];
-		_reveal = (missionNamespace getVariable ["TAG_fnc_civsAsked",0]) >= 2;//will return true on the third unit
+		_reveal = (missionNamespace getVariable ["TAG_fnc_civsAsked",0]) >= 1;//will return true on the third unit
 		if (_reveal) exitWith {
 			//Case intel given to player
 			_revealedObjectives = missionNamespace getVariable ["revealedObjectives",[]];
@@ -88,7 +88,7 @@ _civs = allUnits select {alive _x AND side _x isEqualTo civilian};
 							{
 								[1,[format ["I've heard there's soldiers patrolling around %1.",text _nearestCity], "PLAIN", 0.5]] remoteExec ["cutText", _caller];
 							};
-							case "Cars":
+							case "Car":
 							{
 								[1,[format ["I saw an unknown car leaving here for %1 this morning...",text _nearestCity], "PLAIN", 0.5]] remoteExec ["cutText", _caller];
 							};

@@ -7,6 +7,8 @@
 
 //Init base mission parameters 
 difficultyParameter = "Difficulty" call BIS_fnc_getParamValue;
+enableArmored = "EnableArmored" call BIS_fnc_getParamValue;
+enablePlane = "EnablePlane" call BIS_fnc_getParamValue;
 lengthParameter = "MissionLength" call BIS_fnc_getParamValue;
 civFaction = "CivFaction" call BIS_fnc_getParamValue;
 opFaction = "OpFaction" call BIS_fnc_getParamValue;
@@ -60,7 +62,9 @@ baseEnemyMortarGroup = baseEnemyMortarGroup_db select {_x select 1  == opFaction
 
 baseEnemyVehicleGroup = baseEnemyVehicleGroup_db select {_x select 1  == opFaction} select 0 select 0;
 
+baseEnemyLightArmoredVehicleGroup = baseEnemyLightArmoredVehicleGroup_db select {_x select 1  == opFaction} select 0 select 0;
 
+baseEnemyHeavyArmoredVehicleGroup = baseEnemyHeavyArmoredVehicleGroup_db select {_x select 1  == opFaction} select 0 select 0;
 
 //Enemy Wave Composition, needs to be completely rework
 EnemyWaveLevel_1 = [baseEnemyGroup,baseEnemyATGroup];
@@ -74,10 +78,7 @@ EnemyWaveLevel_8 = [baseEnemyGroup,baseEnemyATGroup,baseEnemyDemoGroup,baseEnemy
 EnemyWaveLevel_9 = [baseEnemyGroup,baseEnemyATGroup,baseEnemyDemoGroup,baseEnemyMortarGroup];
 EnemyWaveLevel_10 = [baseEnemyGroup,baseEnemyATGroup,baseEnemyDemoGroup,baseEnemyMortarGroup];
 
-
-//EnemyWaveGroups = [EnemyWaveLevel_1,EnemyWaveLevel_2,EnemyWaveLevel_3,EnemyWaveLevel_4,EnemyWaveLevel_5,EnemyWaveLevel_6,EnemyWaveLevel_7,EnemyWaveLevel_8,EnemyWaveLevel_9,EnemyWaveLevel_10];
 EnemyWaveGroups = [EnemyWaveLevel_1,EnemyWaveLevel_6,EnemyWaveLevel_8];
-
 publicvariable "EnemyWaveGroups";
 
 /////////////////////////
@@ -261,7 +262,7 @@ if ( count AvalaibleInitAttackPositions != 0 && (enableInitAttack == 1 || ((enab
 };
 
 //Init prema harass on player
-[[baseEnemyGroup,baseEnemyATGroup,[selectRandom baseEnemyVehicleGroup]],difficultyParameter] execVM 'enemyManagement\generateHarass.sqf'; 
+[[baseEnemyGroup,baseEnemyATGroup,baseEnemyDemoGroup],baseEnemyVehicleGroup, baseEnemyLightArmoredVehicleGroup, baseEnemyHeavyArmoredVehicleGroup] execVM 'enemyManagement\generateHarass.sqf'; 
 
 /////////////////////////
 ///////Generate AO///////
@@ -278,7 +279,7 @@ aoSize = 1500;
 	diag_log format ["Objective generation started : %1 on position %2", currentObject, _x];
 	
 	//Generate mission environement
-	_handlePOIGeneration = [EnemyWaveLevel_1, civilian_group ,_x,difficultyParameter] execVM 'enemyManagement\generatePOI.sqf'; 
+	_handlePOIGeneration = [EnemyWaveLevel_1, baseEnemyVehicleGroup, baseEnemyLightArmoredVehicleGroup, baseEnemyHeavyArmoredVehicleGroup, civilian_group ,_x,difficultyParameter] execVM 'enemyManagement\generatePOI.sqf'; 
 	waitUntil {isNull _handlePOIGeneration};
 
 	//Generate mission objectives

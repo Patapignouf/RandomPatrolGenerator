@@ -55,7 +55,8 @@ baseEnemyMortarGroup_Syndikat = ["I_G_Mortar_01_F",
 baseEnemyVehicleGroup_Syndikat = ["I_C_Offroad_02_LMG_F", 
 "I_C_Offroad_02_AT_F"];
 
-baseEnemyLightArmoredVehicleGroup_Syndikat = ["CUP_I_MTLB_pk_SYNDIKAT"];
+baseEnemyLightArmoredVehicleGroup_Syndikat = ["CUP_I_Hilux_zu23_IND_G_F", 
+"CUP_I_Hilux_armored_DSHKM_IND_G_F"];
 
 baseEnemyHeavyArmoredVehicleGroup_Syndikat = ["CUP_I_MTLB_pk_SYNDIKAT"];
 
