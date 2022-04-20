@@ -89,21 +89,13 @@ _civs = allUnits select {alive _x AND side _x isEqualTo civilian};
 					};	
 			};
 			missionNamespace setVariable ["TAG_fnc_civsAsked",(round random 1),true];
-			//remove all actions from the remaining civs | Not necessary for the moment
-			// {
-			// 	_x removeAction (_x getVariable ["TAG_fnc_revealActionID",-1]);
-			// } forEach _civs;
-			_object removeAction _ID;
 		};
-	_randomAnswers = ["No idea what you're talking about!","Go bother someone else?","Oh please leave me alone !","Get out of this area !","Get out of this area !"];
-	[1,[selectRandom _randomAnswers, "PLAIN", 0.5]] remoteExec ["cutText", _caller];
-	_counter = missionNamespace getVariable ["TAG_fnc_civsAsked",0];
-	_counter = _counter + 1;
-	missionNamespace setVariable ["TAG_fnc_civsAsked",_counter,true];
-	//_object removeAction _ID;
-	[_object] remoteExec [ "RemoveAllActions", 0, true ];
+		_randomAnswers = ["No idea what you're talking about!","Go bother someone else?","Oh please leave me alone !","Get out of this area !","Get out of this area !"];
+		[1,[selectRandom _randomAnswers, "PLAIN", 0.5]] remoteExec ["cutText", _caller];
+		_counter = missionNamespace getVariable ["TAG_fnc_civsAsked",0];
+		_counter = _counter + 1;
+		missionNamespace setVariable ["TAG_fnc_civsAsked",_counter,true];
+		[_object,_ID] remoteExec [ "removeAction", 0, true ];
 	},_civs,1.5,true,true,"","_target distance _this <5"];
-
-	_x setVariable ["TAG_fnc_revealActionID",_ID];
-
+	_x setVariable ["TAG_fnc_revealActionID",_ID]; //Can be used to remove all talk actions
 } forEach _civs;
