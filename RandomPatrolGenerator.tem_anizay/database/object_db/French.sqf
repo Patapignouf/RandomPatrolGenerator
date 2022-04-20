@@ -56,7 +56,11 @@ baseEnemyMortarGroup_French = ["I_G_Mortar_01_F",
 baseEnemyVehicleGroup_French = ["I_C_Offroad_02_LMG_F", 
 "I_C_Offroad_02_AT_F"];
 
+baseEnemyLightArmoredVehicleGroup_French = ["I_C_Offroad_02_LMG_F", 
+"I_C_Offroad_02_AT_F"];
 
+baseEnemyHeavyArmoredVehicleGroup_French = ["I_C_Offroad_02_LMG_F", 
+"I_C_Offroad_02_AT_F"];
 
 ////////////////////////
 //Vehicle management////

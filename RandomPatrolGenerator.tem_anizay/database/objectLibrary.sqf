@@ -39,6 +39,9 @@ baseEnemyATGroup_db = [[baseEnemyATGroup_USA,_USA],[baseEnemyATGroup_Russian,_Ru
 baseEnemyDemoGroup_db = [[baseEnemyDemoGroup_USA,_USA],[baseEnemyDemoGroup_Russian,_Ru],[baseEnemyDemoGroup_Taki,_Taki],[baseEnemyDemoGroup_Syndikat,_Syndikat],[baseEnemyDemoGroup_French,_French]];
 baseEnemyMortarGroup_db = [[baseEnemyMortarGroup_USA,_USA],[baseEnemyMortarGroup_Russian,_Ru],[baseEnemyMortarGroup_Taki,_Taki],[baseEnemyMortarGroup_Syndikat,_Syndikat],[baseEnemyMortarGroup_French,_French]];
 baseEnemyVehicleGroup_db = [[baseEnemyVehicleGroup_USA,_USA],[baseEnemyVehicleGroup_Russian,_Ru],[baseEnemyVehicleGroup_Taki,_Taki],[baseEnemyVehicleGroup_Syndikat,_Syndikat],[baseEnemyVehicleGroup_French,_French]];
+baseEnemyLightArmoredVehicleGroup_db = [[baseEnemyLightArmoredVehicleGroup_USA,_USA],[baseEnemyLightArmoredVehicleGroup_Russian,_Ru],[baseEnemyLightArmoredVehicleGroup_Taki,_Taki],[baseEnemyLightArmoredVehicleGroup_Syndikat,_Syndikat],[baseEnemyLightArmoredVehicleGroup_French,_French]];
+baseEnemyHeavyArmoredVehicleGroup_db = [[baseEnemyHeavyArmoredVehicleGroup_USA,_USA],[baseEnemyHeavyArmoredVehicleGroup_Russian,_Ru],[baseEnemyHeavyArmoredVehicleGroup_Taki,_Taki],[baseEnemyHeavyArmoredVehicleGroup_Syndikat,_Syndikat],[baseEnemyHeavyArmoredVehicleGroup_French,_French]];
+
 
 //////////////////////////////
 ////Define objectives data////
