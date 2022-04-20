@@ -67,6 +67,7 @@ if (hasInterface) then
 		//Manage arsenal	
 		[VA1, player, indFaction] call setupArsenalToItem;
 		[VA1, player, indFaction] call setupRoleSwitchToItem;
+		[player] call adjustLoadout;
 
 
 		if (isIndAttacked) then
@@ -99,6 +100,7 @@ if (hasInterface) then
 		//Manage arsenal	
 		[VA2, player, bluFaction] call setupArsenalToItem;
 		[VA2, player, bluFaction] call setupRoleSwitchToItem;
+		[player] call adjustLoadout;
 
 		if (isBluforAttacked) then
 		{
