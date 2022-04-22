@@ -9,7 +9,7 @@ positionToAttack = [];
 
 //Init sleep before spawn
 diag_log "Init harass !";
-sleep 1000;
+sleep 0;
 
 if (isServer) then
 {
@@ -43,11 +43,12 @@ if (isServer) then
 
 			//Define harass group 
 			_tempGroup = _thisAvailableOpforGroup; //Init group with basic infantry
+			_tempVehicleGroup = [];
 
 			//Generate light vehicle 50% chance to spawn
-			if (count _thisAvailableOpforCars != 0 && round random 1 == 0) then 
+			if (count _thisAvailableOpforCars != 0 &&	 round random 1 == 0) then 
 			{
-				_tempGroup pushBack [selectRandom _thisAvailableOpforCars];
+				_tempVehicleGroup pushBack [selectRandom _thisAvailableOpforCars];
 			};
 
 			//Generate heavy vehicle
@@ -56,22 +57,22 @@ if (isServer) then
 				//Light armored vehicle spawn chance 33%
 				if (round random 2 == 0) then 
 				{
-					_tempGroup pushBack [selectRandom _thisAvailableOpforLightArmoredVehicle];
+					_tempVehicleGroup pushBack [selectRandom _thisAvailableOpforLightArmoredVehicle];
 				};
 
 				//Heavy armored vehicle spawn chance 17%
 				if (count _thisAvailableOpforHeavyArmoredVehicle != 0 && round random 1 == 0) then 
 				{
-					_tempGroup pushBack [selectRandom _thisAvailableOpforHeavyArmoredVehicle];
+					_tempVehicleGroup pushBack [selectRandom _thisAvailableOpforHeavyArmoredVehicle];
 				};
 			};
 
 
 			AvalaibleInitAttackPositions = [];
 			AvalaibleInitAttackPositions = [ positionToAttack, 1200, 1600, difficultyParameter] call getListOfPositionsAroundTarget;
-			[ AvalaibleInitAttackPositions, positionToAttack, _tempGroup, difficultyParameter] execVM 'enemyManagement\doAmbush.sqf'; 
+			[ AvalaibleInitAttackPositions, positionToAttack, _tempGroup,_tempVehicleGroup, difficultyParameter] execVM 'enemyManagement\doAmbush.sqf'; 
 			diag_log format ["Harass start on position %1", positionToAttack];
 		};
-		sleep (1000+round (random 300));
+		sleep (1100+round (random 300));
 	};
 };

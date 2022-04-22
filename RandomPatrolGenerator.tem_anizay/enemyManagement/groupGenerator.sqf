@@ -1,10 +1,7 @@
 doGenerateEnemyGroup = 
 {
 	//Get parameters
-	_thisGroupToSpawn = _this select 0;
-	_thisSpawnPosition = _this select 1;
-	_thisFaction = _this select 2;
-	_thisGroupType = _this select 3;
+	params ["_thisGroupToSpawn","_thisSpawnPosition","_thisFaction","_thisGroupType"];
 
 	//Group spawn
 	_currentGroupPatrol = [_thisSpawnPosition, _thisFaction, _thisGroupToSpawn,[],[],[],[],[], random 360] call BIS_fnc_spawnGroup;
