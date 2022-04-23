@@ -47,7 +47,9 @@ backpacksList = [
 	"B_Kitbag_cbr",
 	"B_Kitbag_rgr",
 	"CUP_B_US_Assault_OCP",
-	"CUP_B_US_IIID_OCP"
+	"CUP_B_US_IIID_OCP",
+	"B_Mortar_01_weapon_F",
+	"B_Mortar_01_support_F"
 ];
 
 //New line to manage backpack in a future update
@@ -63,7 +65,6 @@ getLoadoutByRole = {
 	diag_log format ["Player %1 with role %2 has loadout %3", name currentPlayer, currentPlayerClass,thisloadout ];
 	thisloadout
 };
-
 
 getVirtualWeaponList = {
 	currentPlayer = _this select 0;
@@ -153,8 +154,6 @@ getVirtualItemList = {
 	virtualItemList
 };
 
-
-
 getVirtualAttachement = {
 	currentPlayer = _this select 0;
 	currentFaction = _this select 1;
@@ -183,7 +182,6 @@ getVirtualAttachement = {
 	virtualAttachementList
 };
 
-
 setupArsenalToItem = {
 	//InitParam
 	itemToAttachArsenal = _this select 0;
@@ -198,13 +196,12 @@ setupArsenalToItem = {
 	[itemToAttachArsenal,itemToAttachArsenal call BIS_fnc_getVirtualMagazineCargo,false] call BIS_fnc_removeVirtualMagazineCargo;
 	[itemToAttachArsenal,itemToAttachArsenal call BIS_fnc_getVirtualBackpackCargo,false] call BIS_fnc_removeVirtualBackpackCargo;
 
-
+	//AddItems to arsenal
 	[itemToAttachArsenal,([currentPlayer,currentFaction] call getVirtualWeaponList )] call BIS_fnc_addVirtualWeaponCargo;
 	[itemToAttachArsenal,backpacksList] call BIS_fnc_addVirtualBackpackCargo;
 	//[VA2,((itemCargo VA2) + _availableHeadgear + _availableUniforms + _availableVests)] call BIS_fnc_addVirtualItemCargo;
-	//[VA2,((magazineCargo VA2) + _availablemagazinecargoindependent )] call BIS_fnc_addVirtualMagazineCargo;
+	[VA2,true] call BIS_fnc_addVirtualMagazineCargo;
 	[itemToAttachArsenal,([currentPlayer,currentFaction] call getVirtualAttachement ) + ([currentPlayer,currentFaction] call getVirtualItemList ) ] call BIS_fnc_addVirtualItemCargo;
-	//["AmmoboxInit",[VA2,false,{_this getVariable "role" == c_leader}]] call BIS_fnc_arsenal;
 	["AmmoboxInit",[itemToAttachArsenal,false,{true}]] call BIS_fnc_arsenal;
 };
 
