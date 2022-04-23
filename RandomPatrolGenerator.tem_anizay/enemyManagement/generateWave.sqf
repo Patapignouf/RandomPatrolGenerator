@@ -43,9 +43,7 @@ if (isServer) then
 			CompletedObjectivesWave = CompletedObjectivesWave + 1;
 			waveCounter = waveCounter + 1;
 		};
-		sleep 20;
-		//sleep (700+round (random 240));
-		
+		sleep 20;	
 	};
 	diag_log format ["All wave completed"];
 };
