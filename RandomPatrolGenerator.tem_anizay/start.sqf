@@ -85,6 +85,13 @@ publicvariable "EnemyWaveGroups";
 /////Find locations//////
 /////////////////////////
 
+//Define IHM
+// openMap true;
+// sleep 1;
+// hint "Click on map to teleport.";
+// onMapSingleClick "player setPos _pos; onMapSingleClick ''; openMap false; true;";
+// waitUntil{!(visibleMap)};  
+
 //InitLogicDefinition 
 possibleInitLocation = [] call getRandomCenterLocations;
 initCityLocation = selectRandom possibleInitLocation;
@@ -95,7 +102,6 @@ dangerAreaList = [];
 if ( count possiblePOILocation < lengthParameter + 1) then 
 {
 	possiblePOILocation = ([initCityLocation, 4000] call getLocationsAround) - [initCityLocation];
-	
 };
 
 //Search road around AO
@@ -152,7 +158,7 @@ currentRandObj = objNull;
 for [{_i = 0}, {_i <= lengthParameter}, {_i = _i + 1}] do //Peut être optimisé
 {
 	currentObjType = selectRandom avalaibleTypeOfObj;
-	currentRandomPos = [nil, ["ground"]] call BIS_fnc_randomPos;
+	currentRandomPos = [] call BIS_fnc_randomPos;
 	switch (currentObjType) do
 	{
 		case "supply":
@@ -165,15 +171,34 @@ for [{_i = 0}, {_i <= lengthParameter}, {_i = _i + 1}] do //Peut être optimisé
 			};
 		case "hvt":
 			{
-				currentObj = leader ([currentRandomPos, east, [selectRandom avalaibleHVT],[],[],[],[],[],180] call BIS_fnc_spawnGroup);
+				currentObj = leader ([currentRandomPos, east, [selectRandom avalaibleHVT],[],[],[],[],[], random 360] call BIS_fnc_spawnGroup);
 			};
 		case "vip":
 			{
-				currentObj = leader ([currentRandomPos, civilian, [selectRandom avalaibleVIP],[],[],[],[],[],180] call BIS_fnc_spawnGroup);
+				currentObj = leader ([currentRandomPos, civilian, [selectRandom avalaibleVIP],[],[],[],[],[], random 360] call BIS_fnc_spawnGroup);
+			};
+		case "steal":
+			{
+				currentObj = [currentRandomPos, east, [selectRandom avalaibleStealVehicle],[],[],[],[],[], random 360] call BIS_fnc_spawnGroup;
+			};
+		case "clearArea":
+			{
+				//Add trigger to detect cleared area
+				currentObj = createTrigger ["EmptyDetector", currentRandomPos]; //create a trigger area created at object with variable name my_object
+			};
+		case "collectIntel":
+			{
+				//Add intel action to the intel case
+				currentObj = createVehicle [selectRandom avalaibleCollectIntel, currentRandomPos, [], 0, "NONE"];
+			};
+		case "informant":
+			{
+				//Add dialog to the informant
+				currentObj = leader ([currentRandomPos, civilian, [selectRandom avalaibleVIP],[],[],[],[],[], random 360] call BIS_fnc_spawnGroup);
 			};
 		default { hint "default" };
 	};
-	SupplyObjects pushBack [currentObj,currentObjType];
+	SupplyObjects pushBack [currentObj, currentObjType];
 };
 
 publicvariable "SupplyObjects";

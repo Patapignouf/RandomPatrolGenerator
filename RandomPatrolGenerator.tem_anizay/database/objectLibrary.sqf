@@ -65,7 +65,15 @@ avalaibleVIP = ["CUP_C_TK_Man_03_Waist",
 "CUP_C_R_Functionary_jacket_02"
 ];
 
-avalaibleTypeOfObj = ["supply","ammo","vip","hvt"];
+avalaibleStealVehicle = ["O_G_Van_01_transport_F", 
+"O_G_Van_02_transport_F", 
+"O_G_Van_01_fuel_F"
+];
+
+avalaibleCollectIntel = ["Land_Suitcase_F"];
+
+avalaibleTypeOfObj = ["supply","ammo","vip","hvt","collectIntel","informant","steal"];
+
 
 //FOB description from DRO
 //Waiting for a PANY FOB

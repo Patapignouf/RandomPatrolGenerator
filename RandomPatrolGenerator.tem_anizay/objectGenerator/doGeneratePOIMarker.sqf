@@ -38,6 +38,26 @@ if (!isDedicated) then
 					_markerstr setMarkerColorLocal "ColorBlue";
 					_markerstr setMarkerTextLocal format ["Ramenez en ville le VIP %1", getText (configFile >> "cfgVehicles" >> typeOf _thisObject >> "displayName")];
 					};
+				case "steal":
+					{
+					_markerstr setMarkerColorLocal "ColorYellow";
+					_markerstr setMarkerTextLocal format ["Ramenez en ville le véhicule %1 intact", getText (configFile >> "cfgVehicles" >> typeOf _thisObject >> "displayName")];
+					};
+				case "clearArea":
+					{
+					_markerstr setMarkerColorLocal "ColorEAST";
+					_markerstr setMarkerTextLocal format ["Pacifiez %1 en nous débarassant des ennemis", getText (configFile >> "cfgVehicles" >> typeOf _thisObject >> "displayName")];
+					};
+				case "collectIntel":
+					{
+					_markerstr setMarkerColorLocal "ColorWhite";
+					_markerstr setMarkerTextLocal format ["Récupérez l'intel à %1", getText (configFile >> "cfgVehicles" >> typeOf _thisObject >> "displayName")];
+					};
+				case "informant":
+					{
+					_markerstr setMarkerColorLocal "ColorPink";
+					_markerstr setMarkerTextLocal format ["Récupérez l'information cruciale auprès de %1", getText (configFile >> "cfgVehicles" >> typeOf _thisObject >> "displayName")];
+					};
 				default { hint "default" };
 			};
 			
