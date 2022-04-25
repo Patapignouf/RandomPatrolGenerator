@@ -12,8 +12,9 @@ if (!isDedicated) then
 	{
 		if (side player == _thisSide) then
 		{
-			diag_log format ["Create marker : %1 at position %2 with name %3 for player %4 in side %5", _thisObject, _thisPosition, getText (configFile >> "cfgVehicles" >> typeOf _thisObject >> "displayName"), name player, _thisSide];
-			_markerstr = createMarkerLocal [format["%1 %2", getText (configFile >> "cfgVehicles" >> typeOf _thisObject >> "displayName"), random 100], _thisPosition];
+			//TEMP HOTFIX : specific case of Steal vehicle
+			//diag_log format ["Create marker : %1 at position %2 with name %3 for player %4 in side %5", _thisObject, _thisPosition, getText (configFile >> "cfgVehicles" >> typeOf  (vehicle leader _thisObject) >> "displayName"), name player, _thisSide];
+			_markerstr = createMarkerLocal [format ["%1%2","Marker",_thisGlobalObject select 2], _thisPosition];
 			_markerstr setMarkerShapeLocal "ICON";
 			_markerstr setMarkerTypeLocal "hd_objective";
 			switch (_thisGlobalObject select 1) do
@@ -41,7 +42,7 @@ if (!isDedicated) then
 				case "steal":
 					{
 					_markerstr setMarkerColorLocal "ColorYellow";
-					_markerstr setMarkerTextLocal format ["Ramenez en ville le véhicule %1 intact", getText (configFile >> "cfgVehicles" >> typeOf _thisObject >> "displayName")];
+					_markerstr setMarkerTextLocal format ["Ramenez en ville le véhicule %1 intact", getText (configFile >> "cfgVehicles" >> typeOf (vehicle leader _thisObject) >> "displayName")];
 					};
 				case "clearArea":
 					{

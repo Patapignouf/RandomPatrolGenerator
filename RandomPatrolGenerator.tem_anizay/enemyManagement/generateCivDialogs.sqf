@@ -38,49 +38,49 @@ _civs = allUnits select {alive _x AND side _x isEqualTo civilian};
 								{	
 									_currentObjectiveDescription = format ["There's %1 near %2. Can you bring it to %3...", getText (configFile >> "cfgVehicles" >> typeOf _thisObject >> "displayName"),text _nearestLoc, text initCityLocation];
 									[1,[_currentObjectiveDescription, "PLAIN", 0.5]] remoteExec ["cutText", _caller];
-									[blufor, format ["task%1",random 1000], [_currentObjectiveDescription, "Supply case", "cookiemarker2"], objNull, 1, 3, true] call BIS_fnc_taskCreate;
+									[blufor, _objectiveToReveal select 2, [_currentObjectiveDescription, "Supply case", "cookiemarker2"], objNull, 1, 3, true] call BIS_fnc_taskCreate;
 								};
 							case "ammo":
 								{
 									_currentObjectiveDescription = format ["There's %1 near %2. Can you bring it to %3 or destroy it...", getText (configFile >> "cfgVehicles" >> typeOf _thisObject >> "displayName"),text _nearestLoc, text initCityLocation];
 									[1,[_currentObjectiveDescription, "PLAIN", 0.5]] remoteExec ["cutText", _caller];
-									[blufor, format ["task%1",random 1000], [_currentObjectiveDescription, "Ammo cache", "cookiemarker2"], objNull, 1, 3, true] call BIS_fnc_taskCreate;
+									[blufor, _objectiveToReveal select 2, [_currentObjectiveDescription, "Ammo cache", "cookiemarker2"], objNull, 1, 3, true] call BIS_fnc_taskCreate;
 								};
 							case "hvt":
 								{
 									_currentObjectiveDescription = format ["There's an enemy %1 near %2. You have to kill him...", getText (configFile >> "cfgVehicles" >> typeOf _thisObject >> "displayName"),text _nearestLoc];
 									[1,[_currentObjectiveDescription, "PLAIN", 0.5]] remoteExec ["cutText", _caller];
-									[blufor, format ["task%1",random 1000], [_currentObjectiveDescription, "HVT", "cookiemarker2"], objNull, 1, 3, true] call BIS_fnc_taskCreate;
+									[blufor, _objectiveToReveal select 2, [_currentObjectiveDescription, "HVT", "cookiemarker2"], objNull, 1, 3, true] call BIS_fnc_taskCreate;
 								};
 							case "vip":
 								{
 									_currentObjectiveDescription = format ["I have a friend who's captured near %2. He looks like %1. Can you bring it to %3...", getText (configFile >> "cfgVehicles" >> typeOf _thisObject >> "displayName"),text _nearestLoc, text initCityLocation];
 									[1,[_currentObjectiveDescription, "PLAIN", 0.5]] remoteExec ["cutText", _caller];
-									[blufor, format ["task%1",random 1000], [_currentObjectiveDescription, "VIP", "cookiemarker2"], objNull, 1, 3, true] call BIS_fnc_taskCreate;
+									[blufor, _objectiveToReveal select 2, [_currentObjectiveDescription, "VIP", "cookiemarker2"], objNull, 1, 3, true] call BIS_fnc_taskCreate;
 								};
 							case "steal":
 								{
 									_currentObjectiveDescription = format ["Some people stole our vehicle %1. I think it's located in %2. Can you bring it to %3...", getText (configFile >> "cfgVehicles" >> typeOf (vehicle _thisObject) >> "displayName"),text _nearestLoc, text initCityLocation];
 									[1,[_currentObjectiveDescription, "PLAIN", 0.5]] remoteExec ["cutText", _caller];
-									[blufor, format ["task%1",random 1000], [_currentObjectiveDescription, "Steal vehicle", "cookiemarker2"], objNull, 1, 3, true] call BIS_fnc_taskCreate;
+									[blufor, _objectiveToReveal select 2, [_currentObjectiveDescription, "Steal vehicle", "cookiemarker2"], objNull, 1, 3, true] call BIS_fnc_taskCreate;
 								};
 							case "informant":
 								{
 									_currentObjectiveDescription = format ["I have a friend who lives near %2. He looks like %1. Can you talk to him...", getText (configFile >> "cfgVehicles" >> typeOf _thisObject >> "displayName"),text _nearestLoc];
 									[1,[_currentObjectiveDescription, "PLAIN", 0.5]] remoteExec ["cutText", _caller];
-									[blufor, format ["task%1",random 1000], [_currentObjectiveDescription, "Talk to the informant", "cookiemarker2"], objNull, 1, 3, true] call BIS_fnc_taskCreate;
+									[blufor, _objectiveToReveal select 2, [_currentObjectiveDescription, "Talk to the informant", "cookiemarker2"], objNull, 1, 3, true] call BIS_fnc_taskCreate;
 								};
 							case "clearArea":
 								{
 									_currentObjectiveDescription = format ["There is a lot of enemies in %1, you have to clear the location...", text _nearestLoc];
 									[1,[_currentObjectiveDescription, "PLAIN", 0.5]] remoteExec ["cutText", _caller];
-									[blufor, format ["task%1",random 1000], [_currentObjectiveDescription, "Clear area", "cookiemarker2"], objNull, 1, 3, true] call BIS_fnc_taskCreate;
+									[blufor, _objectiveToReveal select 2, [_currentObjectiveDescription, "Clear area", "cookiemarker2"], objNull, 1, 3, true] call BIS_fnc_taskCreate;
 								};
 							case "collectIntel":
 								{
 									_currentObjectiveDescription = format ["I drop my %1 with a lot of intel about enemy's location in %2. Can you pick it up ?", getText (configFile >> "cfgVehicles" >> typeOf _thisObject >> "displayName"),text _nearestLoc];
 									[1,[_currentObjectiveDescription, "PLAIN", 0.5]] remoteExec ["cutText", _caller];
-									[blufor, format ["task%1",random 1000], [_currentObjectiveDescription, "Collect intel", "cookiemarker2"], objNull, 1, 3, true] call BIS_fnc_taskCreate;
+									[blufor, _objectiveToReveal select 2, [_currentObjectiveDescription, "Collect intel", "cookiemarker2"], objNull, 1, 3, true] call BIS_fnc_taskCreate;
 								};
 							default { hint "default" };
 						};

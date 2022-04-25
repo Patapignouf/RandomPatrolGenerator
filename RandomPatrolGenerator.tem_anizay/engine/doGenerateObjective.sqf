@@ -6,6 +6,8 @@ if (count _thisObjective > 0) then
 {	
 	objectiveObject = _thisObjective select 0;
 	objectiveType = _thisObjective select 1;
+	_objectiveUniqueID = format ["%1%2",objectiveType, random 10000];
+	_thisObjective pushBack _objectiveUniqueID;
 
 	switch (objectiveType) do
 	{
@@ -47,10 +49,25 @@ if (count _thisObjective > 0) then
 				(objectiveObject) setPos ([(getPos _thisObjectivePosition), 1, 25, 5, 0, 20, 0] call BIS_fnc_findSafePos);
 				objectiveObject addAction ["Collect intel",{
 					params ["_object","_caller","_ID","_thisObjective"];
-					deleteVehicle _object;
+					//Manage Completed Objective
 					_completedObjectives = missionNamespace getVariable ["completedObjectives",[]];
 					_completedObjectives pushBack _thisObjective;
 					missionNamespace setVariable ["completedObjectives",_completedObjectives,true];	
+					//Manage UncompletedObjective
+					_missionUncompletedObjectives = missionNamespace getVariable ["missionUncompletedObjectives",[]];
+					_missionUncompletedObjectives = _missionUncompletedObjectives - [_thisObjective];
+					missionNamespace setVariable ["missionUncompletedObjectives",_missionUncompletedObjectives,true];
+					//Manage player's feedback
+					if ("RealismMode" call BIS_fnc_getParamValue == 1) then 
+					{
+						[_thisObjective select 2,"SUCCEEDED"] call BIS_fnc_taskSetState;
+					};
+					//Manage respawn and delete object
+					deleteVehicle _object;
+					if (["Respawn",1] call BIS_fnc_getParamValue == 1) then 
+					{
+						[[], "engine\respawnManager.sqf"] remoteExec ['BIS_fnc_execVM', 0];
+					};
 				},_thisObjective,1.5,true,true,"","_target distance _this <3"];
 			};
 		case "informant":
@@ -61,16 +78,31 @@ if (count _thisObjective > 0) then
 				[objectiveObject, objectiveObject, 75, [], true] call lambs_wp_fnc_taskGarrison;
 				objectiveObject addAction ["Talk to the informant",{
 					params ["_object","_caller","_ID","_thisObjective"];
+					//Manage Completed Objective
 					_completedObjectives = missionNamespace getVariable ["completedObjectives",[]];
 					_completedObjectives pushBack _thisObjective;
 					missionNamespace setVariable ["completedObjectives",_completedObjectives,true];	
+					//Manage UncompletedObjective
+					_missionUncompletedObjectives = missionNamespace getVariable ["missionUncompletedObjectives",[]];
+					_missionUncompletedObjectives = _missionUncompletedObjectives - [_thisObjective];
+					missionNamespace setVariable ["missionUncompletedObjectives",_missionUncompletedObjectives,true];
+					//Manage player's feedback
+					if ("RealismMode" call BIS_fnc_getParamValue == 1) then 
+					{
+						[_thisObjective select 2,"SUCCEEDED"] call BIS_fnc_taskSetState;
+					};
+					//Manage respawn and remove actions from NPC
 					removeAllActions objectiveObject;
+					if (["Respawn",1] call BIS_fnc_getParamValue == 1) then 
+					{
+						[[], "engine\respawnManager.sqf"] remoteExec ['BIS_fnc_execVM', 0];
+					};
 				},_thisObjective,1.5,true,true,"","_target distance _this <3"];
 			};
 		default { hint "default" };
 	};
 	currentMissionObjectives = missionNamespace getVariable ["MissionObjectives",[]];
-	currentMissionObjectives pushBack [objectiveObject,objectiveType];
+	currentMissionObjectives pushBack _thisObjective;
     missionNamespace setVariable ["MissionObjectives",currentMissionObjectives,true];
 	diag_log format ["MissionObjectives setup ! : %1", currentMissionObjectives];
 	[[_thisObjective,getPos _thisObjectivePosition,independent], 'objectGenerator\doGeneratePOIMarker.sqf'] remoteExec ['BIS_fnc_execVM', 0];
