@@ -47,7 +47,7 @@ if (count _thisObjective > 0) then
 			{
 				//Add intel action to the intel case
 				(objectiveObject) setPos ([(getPos _thisObjectivePosition), 1, 25, 5, 0, 20, 0] call BIS_fnc_findSafePos);
-				objectiveObject addAction ["Collect intel",{
+				[objectiveObject, ["Collect intel",{
 					params ["_object","_caller","_ID","_thisObjective"];
 					//Manage Completed Objective
 					_completedObjectives = missionNamespace getVariable ["completedObjectives",[]];
@@ -68,7 +68,7 @@ if (count _thisObjective > 0) then
 					{
 						[[], "engine\respawnManager.sqf"] remoteExec ['BIS_fnc_execVM', 0];
 					};
-				},_thisObjective,1.5,true,true,"","_target distance _this <3"];
+				},_thisObjective,1.5,true,true,"","_target distance _this <3"]] remoteExec ["addAction"];
 			};
 		case "informant":
 			{
@@ -76,7 +76,8 @@ if (count _thisObjective > 0) then
 				diag_log format ["VIP task setup ! : %1", objectiveObject];
 				(objectiveObject) setPos (getPos _thisObjectivePosition);
 				[objectiveObject, objectiveObject, 75, [], true] call lambs_wp_fnc_taskGarrison;
-				objectiveObject addAction ["Talk to the informant",{
+				
+				[objectiveObject, ["Talk to the informant",{
 					params ["_object","_caller","_ID","_thisObjective"];
 					//Manage Completed Objective
 					_completedObjectives = missionNamespace getVariable ["completedObjectives",[]];
@@ -97,7 +98,7 @@ if (count _thisObjective > 0) then
 					{
 						[[], "engine\respawnManager.sqf"] remoteExec ['BIS_fnc_execVM', 0];
 					};
-				},_thisObjective,1.5,true,true,"","_target distance _this <3"];
+				},_thisObjective,1.5,true,true,"","_target distance _this <3"]] remoteExec ["addAction"];
 			};
 		default { hint "default" };
 	};
