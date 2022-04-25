@@ -58,7 +58,7 @@ if (count _thisObjective > 0) then
 					_missionUncompletedObjectives = _missionUncompletedObjectives - [_thisObjective];
 					missionNamespace setVariable ["missionUncompletedObjectives",_missionUncompletedObjectives,true];
 					//Manage player's feedback
-					if ("RealismMode" call BIS_fnc_getParamValue == 1) then 
+					if ("RealismMode" call BIS_fnc_getParamValue == 1 && {alive _x && side _x == independent} count allPlayers == 0) then 
 					{
 						[_thisObjective select 2,"SUCCEEDED"] call BIS_fnc_taskSetState;
 					};
@@ -87,7 +87,7 @@ if (count _thisObjective > 0) then
 					_missionUncompletedObjectives = _missionUncompletedObjectives - [_thisObjective];
 					missionNamespace setVariable ["missionUncompletedObjectives",_missionUncompletedObjectives,true];
 					//Manage player's feedback
-					if ("RealismMode" call BIS_fnc_getParamValue == 1) then 
+					if ("RealismMode" call BIS_fnc_getParamValue == 1 && {alive _x && side _x == independent} count allPlayers == 0) then 
 					{
 						[_thisObjective select 2,"SUCCEEDED"] call BIS_fnc_taskSetState;
 					};

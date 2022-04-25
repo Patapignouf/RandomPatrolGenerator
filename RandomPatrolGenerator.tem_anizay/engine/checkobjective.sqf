@@ -58,7 +58,7 @@ while {sleep 10; !missionComplete} do
 						missionNamespace setVariable ["completedObjectives",_completedObjectives,true];
 						[[format ["L'objectif %1 est terminé", getText (configFile >> "cfgVehicles" >> typeOf (current_obj select 0) >> "displayName")],independent], 'engine\doGenerateMessage.sqf'] remoteExec ['BIS_fnc_execVM', 0];
 						//Manage player's feedback
-						if ("RealismMode" call BIS_fnc_getParamValue == 1) then 
+						if ("RealismMode" call BIS_fnc_getParamValue == 1 && {alive _x && side _x == independent} count allPlayers == 0) then 
 						{
 							[current_obj select 2,"SUCCEEDED"] call BIS_fnc_taskSetState;
 						};
@@ -80,7 +80,7 @@ while {sleep 10; !missionComplete} do
 						missionNamespace setVariable ["completedObjectives",_completedObjectives,true];
 						[[format ["L'objectif %1 est terminé", getText (configFile >> "cfgVehicles" >> typeOf (current_obj select 0) >> "displayName")],independent], 'engine\doGenerateMessage.sqf'] remoteExec ['BIS_fnc_execVM', 0];
 						//Manage player's feedback
-						if ("RealismMode" call BIS_fnc_getParamValue == 1) then 
+						if ("RealismMode" call BIS_fnc_getParamValue == 1 && {alive _x && side _x == independent} count allPlayers == 0) then 
 						{
 							[current_obj select 2,"SUCCEEDED"] call BIS_fnc_taskSetState;
 						};
@@ -102,7 +102,7 @@ while {sleep 10; !missionComplete} do
 						missionNamespace setVariable ["completedObjectives",_completedObjectives,true];
 						[[format ["L'objectif %1 est terminé", getText (configFile >> "cfgVehicles" >> typeOf (current_obj select 0) >> "displayName")],independent], 'engine\doGenerateMessage.sqf'] remoteExec ['BIS_fnc_execVM', 0];
 						//Manage player's feedback
-						if ("RealismMode" call BIS_fnc_getParamValue == 1) then 
+						if ("RealismMode" call BIS_fnc_getParamValue == 1 && {alive _x && side _x == independent} count allPlayers == 0) then 
 						{
 							[current_obj select 2,"SUCCEEDED"] call BIS_fnc_taskSetState;
 						};
@@ -122,7 +122,7 @@ while {sleep 10; !missionComplete} do
 							missionNamespace setVariable ["completedObjectives",_completedObjectives,true];
 							[[format ["L'objectif %1 est terminé", getText (configFile >> "cfgVehicles" >> typeOf (current_obj select 0) >> "displayName")],independent], 'engine\doGenerateMessage.sqf'] remoteExec ['BIS_fnc_execVM', 0];
 							//Manage player's feedback
-							if ("RealismMode" call BIS_fnc_getParamValue == 1) then 
+							if ("RealismMode" call BIS_fnc_getParamValue == 1 && {alive _x && side _x == independent} count allPlayers == 0) then 
 							{
 								[current_obj select 2,"SUCCEEDED"] call BIS_fnc_taskSetState;
 							};
@@ -145,7 +145,7 @@ while {sleep 10; !missionComplete} do
 						missionNamespace setVariable ["completedObjectives",_completedObjectives,true];
 						[[format ["L'objectif %1 est terminé", getText (configFile >> "cfgVehicles" >> typeOf (current_obj select 0) >> "displayName")],independent], 'engine\doGenerateMessage.sqf'] remoteExec ['BIS_fnc_execVM', 0];
 						//Manage player's feedback
-						if ("RealismMode" call BIS_fnc_getParamValue == 1) then 
+						if ("RealismMode" call BIS_fnc_getParamValue == 1 && {alive _x && side _x == independent} count allPlayers == 0) then 
 						{
 							[current_obj select 2,"SUCCEEDED"] call BIS_fnc_taskSetState;
 						};
@@ -166,7 +166,7 @@ while {sleep 10; !missionComplete} do
 						_completedObjectives pushBack current_obj;
 						missionNamespace setVariable ["completedObjectives",_completedObjectives,true];
 						//Manage player's feedback
-						if ("RealismMode" call BIS_fnc_getParamValue == 1) then 
+						if ("RealismMode" call BIS_fnc_getParamValue == 1 && {alive _x && side _x == independent} count allPlayers == 0) then 
 						{
 							[current_obj select 2,"SUCCEEDED"] call BIS_fnc_taskSetState;
 						};
