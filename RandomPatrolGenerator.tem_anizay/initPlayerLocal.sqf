@@ -61,14 +61,13 @@ if (hasInterface) then
 		player setPos ([getPos initCityLocation, 1, 5, 3, 0, 20, 0] call BIS_fnc_findSafePos);
 
 		//Manage loadout
-		player setVariable ["spawnLoadout",[player,indFaction] call getLoadoutByRole];
-		player setUnitLoadout (player getVariable "spawnLoadout");
+		player setUnitLoadout ([player,indFaction] call getLoadoutByRole);
+		[player] call adjustLoadout;
+		player setVariable ["spawnLoadout", getUnitLoadout player];
 
 		//Manage arsenal	
 		[VA1, player, indFaction] call setupArsenalToItem;
 		[VA1, player, indFaction] call setupRoleSwitchToItem;
-		[player] call adjustLoadout;
-
 
 		if (isIndAttacked) then
 		{
@@ -94,8 +93,9 @@ if (hasInterface) then
 	{
 		player setVariable ["sideBeforeDeath","blufor"];
 		player setPos ([initBlueforLocation, 1, 5, 3, 0, 20, 0] call BIS_fnc_findSafePos);
-		player setVariable ["spawnLoadout",[player,bluFaction] call getLoadoutByRole];
-		player setUnitLoadout (player getVariable "spawnLoadout");
+		player setUnitLoadout ([player, bluFaction] call getLoadoutByRole);
+		[player] call adjustLoadout;
+		player setVariable ["spawnLoadout", getUnitLoadout player];
 
 		//Manage arsenal	
 		[VA2, player, bluFaction] call setupArsenalToItem;

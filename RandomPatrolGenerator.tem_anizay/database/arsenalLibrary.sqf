@@ -238,12 +238,13 @@ setupRoleSwitchToItem = {
 				_caller setVariable ["role", (_params select 0)];
 
 				//Manage default stuff
-				_caller setVariable ["spawnLoadout",[_caller,(_params select 1)] call getLoadoutByRole];
-				_caller setUnitLoadout (_caller getVariable "spawnLoadout");
+				_caller setUnitLoadout ([_caller,(_params select 1)] call getLoadoutByRole);
+				[_caller] call adjustLoadout;
+				_caller setVariable ["spawnLoadout", getUnitLoadout _caller];
 
 				//Manage arsenal stuff
 				[_target, _caller, (_params select 1)] call setupArsenalToItem;
-				[_caller] call adjustLoadout;
+
 				titleCut ["", "BLACK IN", 5];
 			},[_x,currentFaction]];
 	} foreach c_listOfRoles;
