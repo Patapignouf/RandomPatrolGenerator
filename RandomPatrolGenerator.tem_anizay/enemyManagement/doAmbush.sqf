@@ -7,6 +7,7 @@ currentPosition = [];
 if (isServer) then
 {
 	_numberOfVehicleSpawned = 0;
+	_waveHaveVehicle = round random 1 == 0;
 	diag_log format ["Avalaible spawn position %1", _thisAvailablePosition ];
 	for [{_k = 0}, {_k < (count _thisAvailablePosition)}, {_k = _k + 1}] do 
 	{
@@ -26,7 +27,7 @@ if (isServer) then
 
 
 			//Case vehicle
-			if (count _thisAvailableVehicleGroups != 0 && _numberOfVehicleSpawned<=_thisDifficulty) then 
+			if (_waveHaveVehicle && count _thisAvailableVehicleGroups != 0 && _numberOfVehicleSpawned<=_thisDifficulty) then 
 			{
 				currentAttackVehicleGroup = selectRandom _thisAvailableVehicleGroups;
 				currentPosition = selectRandom _thisAvailablePosition;
@@ -37,7 +38,7 @@ if (isServer) then
 				currentVehicleGroup move (_thisTargetPosition);
 				currentVehicleGroup setBehaviour "SAFE";
 				_numberOfVehicleSpawned = _numberOfVehicleSpawned + 1;
-				//currentGroup limitSpeed 20;
+				(leader currentGroup) limitSpeed 20; //limit speed of vehicle
 			};
 		};
 	};
