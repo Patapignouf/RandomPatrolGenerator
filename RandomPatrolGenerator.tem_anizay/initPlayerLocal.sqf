@@ -3,6 +3,7 @@
 bluFaction = "BluFaction" call BIS_fnc_getParamValue;
 indFaction = "IndFaction" call BIS_fnc_getParamValue;
 enableThermal = "EnableThermal" call BIS_fnc_getParamValue;
+enablePlane = "EnablePlane" call BIS_fnc_getParamValue;
 
 //Optimize scripts
 private _disableThermal = compile preprocessFileLineNumbers "engine\disableThermal.sqf";
@@ -100,7 +101,34 @@ if (hasInterface) then
 		//Manage arsenal	
 		[VA2, player, bluFaction] call setupArsenalToItem;
 		[VA2, player, bluFaction] call setupRoleSwitchToItem;
-		[player] call adjustLoadout;
+
+
+		_avalaibleAicraft = "CUP_B_A10_DYN_USA"; //temp aircraft list 
+		//Manage vehicle spawn options 
+		if (enablePlane == 1) then 
+		{	
+			_IDVehicleSpawn = VA2 addAction ["Spawn an aircraft",{
+			params ["_object","_caller","_ID","_avalaibleAicraft"];
+			//Click on map to spawn
+			selectedLoc = [0,0,0];
+			openMap true;
+			sleep 1;
+			hint "Click on map to sapwn an aircraft and teleport.\n The aircraft will spawn oriented on the north";
+			onMapSingleClick "selectedLoc = _pos; onMapSingleClick ''; openMap false; true;";
+			waitUntil{!(visibleMap)};  
+			if (!([selectedLoc, [0,0,0]] call BIS_fnc_areEqual)) then 
+			{
+				_caller setPos selectedLoc;
+				createVehicle [_avalaibleAicraft, selectedLoc, [], 0, "NONE"];
+				[_object,_ID] remoteExec [ "removeAction", 0, true ];
+			}
+			else 
+			{
+				//hint format ["fail with selectedLoc : %1", selectedLoc];
+			};
+		},_avalaibleAicraft,1.5,true,true,"","_target distance _this <5"];
+		};
+
 
 		if (isBluforAttacked) then
 		{

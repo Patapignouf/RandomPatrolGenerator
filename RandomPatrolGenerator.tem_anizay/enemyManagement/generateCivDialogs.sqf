@@ -99,6 +99,7 @@ _civs = allUnits select {alive _x AND side _x isEqualTo civilian};
 					missionNamespace setVariable ["revealedMissionEnemyInfo",_revealedMissionEnemyInfo,true];
 					_infoName = _infoToReveal select 0;
 					_infoPos = _infoToReveal select 1;
+					_infoGroup = _infoToReveal select 2;
 					_nearestCity = nearestLocations [_infoPos, ["NameLocal","NameVillage","NameCity","NameCityCapital"], 1500] select 0;
 					if (_realismMode == 1) then 
 					{
@@ -110,7 +111,7 @@ _civs = allUnits select {alive _x AND side _x isEqualTo civilian};
 							};
 							case "Patrol":
 							{
-								[1,[format ["I've heard there's soldiers patrolling around %1.",text _nearestCity], "PLAIN", 0.5]] remoteExec ["cutText", _caller];
+								[1,[format ["I've heard there's soldiers patrolling around %1. About %2 men.",text _nearestCity, count units _infoGroup], "PLAIN", 0.5]] remoteExec ["cutText", _caller];
 							};
 							case "Car":
 							{
@@ -124,7 +125,7 @@ _civs = allUnits select {alive _x AND side _x isEqualTo civilian};
 
 							case "DefenseInfantry":
 							{
-								[1,[format ["I know there's'soldiers defending %1, this location seems dangerous",text _nearestCity], "PLAIN", 0.5]] remoteExec ["cutText", _caller];
+								[1,[format ["I know there is a group of %2 soldiers defending %1, this location seems dangerous",text _nearestCity, count units _infoGroup], "PLAIN", 0.5]] remoteExec ["cutText", _caller];
 							};
 							case "Civilian":
 							{
@@ -148,6 +149,7 @@ _civs = allUnits select {alive _x AND side _x isEqualTo civilian};
 					missionNamespace setVariable ["revealedMissionEnemyInfo",_revealedMissionEnemyInfo,true];
 					_infoName = _infoToReveal select 0;
 					_infoPos = _infoToReveal select 1;
+					_infoGroup = _infoToReveal select 2;
 					_nearestCity = nearestLocations [_infoPos, ["NameLocal","NameVillage","NameCity","NameCityCapital"], 1500] select 0;
 					if (_realismMode == 1) then 
 					{
@@ -159,9 +161,9 @@ _civs = allUnits select {alive _x AND side _x isEqualTo civilian};
 							};
 							case "Patrol":
 							{
-								[1,[format ["I've heard there's soldiers patrolling around %1.",text _nearestCity], "PLAIN", 0.5]] remoteExec ["cutText", _caller];
+								[1,[format ["I've heard there's soldiers patrolling around %1. About %2 men.",text _nearestCity, count units _infoGroup], "PLAIN", 0.5]] remoteExec ["cutText", _caller];
 							};
-							case "Cars":
+							case "Car":
 							{
 								[1,[format ["I saw an unknown car leaving here for %1 this morning...",text _nearestCity], "PLAIN", 0.5]] remoteExec ["cutText", _caller];
 							};
@@ -173,7 +175,7 @@ _civs = allUnits select {alive _x AND side _x isEqualTo civilian};
 
 							case "DefenseInfantry":
 							{
-								[1,[format ["I know there's'soldiers defending %1, this location seems dangerous",text _nearestCity], "PLAIN", 0.5]] remoteExec ["cutText", _caller];
+								[1,[format ["I know there is a group of %2 soldiers defending %1, this location seems dangerous",text _nearestCity, count units _infoGroup], "PLAIN", 0.5]] remoteExec ["cutText", _caller];
 							};
 							case "Civilian":
 							{

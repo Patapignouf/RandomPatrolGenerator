@@ -12,7 +12,7 @@ doGenerateEnemyGroup =
 
 	//Intel Synchronization
 	_missionEnemyInfo = missionNamespace getVariable ["MissionEnemyInfo",[]];
-	_missionEnemyInfo pushBack [_thisGroupType,_thisSpawnPosition];
+	_missionEnemyInfo pushBack [_thisGroupType,_thisSpawnPosition, _currentGroupPatrol];
 	missionNamespace setVariable ["MissionEnemyInfo", _missionEnemyInfo, true];
 
 	//Return spawned group

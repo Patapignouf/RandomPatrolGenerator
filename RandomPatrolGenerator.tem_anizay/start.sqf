@@ -85,12 +85,7 @@ publicvariable "EnemyWaveGroups";
 /////Find locations//////
 /////////////////////////
 
-//Define IHM
-// openMap true;
-// sleep 1;
-// hint "Click on map to teleport.";
-// onMapSingleClick "player setPos _pos; onMapSingleClick ''; openMap false; true;";
-// waitUntil{!(visibleMap)};  
+
 
 //InitLogicDefinition 
 possibleInitLocation = [] call getRandomCenterLocations;
