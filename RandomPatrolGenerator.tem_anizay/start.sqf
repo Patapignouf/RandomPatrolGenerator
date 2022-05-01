@@ -445,6 +445,9 @@ clearMagazineCargoGlobal VA2;
 clearItemCargoGlobal VA2;
 publicvariable "VA2";
 
+TPFlag1 = createVehicle ["Flag_Blue_F", [initBlueforLocation, 1, 5, 3, 0, 20, 0] call BIS_fnc_findSafePos, [], 0, "NONE"];
+publicvariable "TPFlag1";
+
 //Setup random attack on blufor at the beginning
 isBluforAttacked = false;
 publicvariable "isBluforAttacked";
