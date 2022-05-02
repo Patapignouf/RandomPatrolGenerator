@@ -28,8 +28,16 @@ _civs = allUnits select {alive _x AND side _x isEqualTo civilian};
 					if (_realismMode == 1) then 
 					{
 						//Search the nearestLocation from the intel
-						_nearestLoc = nearestLocations [getPos (_objectiveToReveal select 0), ["NameLocal","NameVillage","NameCity","NameCityCapital"], 1500] select 0;
 						_thisObject = _objectiveToReveal select 0;
+						_nearestLoc = objNull;
+						if (_objectiveToReveal select 1 != "steal") then //temp hotfix steal vehicle objective location
+						{
+							_nearestLoc = nearestLocations [getPos (_thisObject), ["NameLocal","NameVillage","NameCity","NameCityCapital"], 1500] select 0;
+						} else 
+						{
+							_nearestLoc = nearestLocations [getPos (leader _thisObject), ["NameLocal","NameVillage","NameCity","NameCityCapital"], 1500] select 0;
+						};
+						
 
 						//Display custom dialogs according to the enemy position
 						switch (_objectiveToReveal select 1) do
@@ -60,7 +68,7 @@ _civs = allUnits select {alive _x AND side _x isEqualTo civilian};
 								};
 							case "steal":
 								{
-									_currentObjectiveDescription = format ["Some people stole our vehicle %1. I think it's located in %2. Can you bring it to %3...", getText (configFile >> "cfgVehicles" >> typeOf (vehicle _thisObject) >> "displayName"),text _nearestLoc, text initCityLocation];
+									_currentObjectiveDescription = format ["Some people stole our vehicle %1. I think it's located in %2. Can you bring it to %3...", getText (configFile >> "cfgVehicles" >> typeOf (vehicle leader _thisObject) >> "displayName"),text _nearestLoc, text initCityLocation];
 									[1,[_currentObjectiveDescription, "PLAIN", 0.5]] remoteExec ["cutText", _caller];
 									[blufor, _objectiveToReveal select 2, [_currentObjectiveDescription, "Steal vehicle", "cookiemarker2"], objNull, 1, 3, true] call BIS_fnc_taskCreate;
 								};
