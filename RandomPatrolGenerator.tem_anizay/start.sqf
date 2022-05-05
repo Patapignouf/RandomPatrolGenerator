@@ -131,7 +131,7 @@ PossibleObjectivePosition = possiblePOILocation;
 for [{_i = 0}, {_i <= 2}, {_i = _i + 1}] do //Peut être optimisé
 {
 	_currentTruckType = selectRandom civilianTruck;
-	_currentTruckPosition = [getPos initCityLocation, 2, 100, 30, 10, 0.25, 0, [], [[0,0,0],[0,0,0]]] call BIS_fnc_findSafePos;
+	_currentTruckPosition = [getPos initCityLocation, 2, 100, 10, 10, 0.25, 0, [], [[0,0,0],[0,0,0]]] call BIS_fnc_findSafePos;
 	if !([_currentTruckPosition , [0,0,0]] call BIS_fnc_areEqual) then 
 	{
 		_currentTruck = createVehicle [_currentTruckType, _currentTruckPosition, [], 0, "NONE"];
