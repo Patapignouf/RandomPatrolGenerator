@@ -9,6 +9,6 @@ while {sleep 20; true} do
 
 	if (_nbBluforAliveTeam >0) then 
 	{
-		bluforRespawn = [west, getPos (leader (group (_bluforAliveTeam select 0))), "Blufor respawn"] call  BIS_fnc_addRespawnPosition;
+		bluforRespawn = [west, getPos (_bluforAliveTeam select 0), "Blufor respawn"] call  BIS_fnc_addRespawnPosition;
 	};
 };
