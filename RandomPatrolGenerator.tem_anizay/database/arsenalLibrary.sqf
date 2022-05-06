@@ -19,23 +19,22 @@ c_autorifleman = "autorifleman";
 c_marksman = "marksman"; 
 c_medic = "medic";
 
+//Define faction prefix
+c_db = "_db";
+c_USA = "_USA";
+c_Russian = "_Russian";
+c_Taki = "_Taki";
+c_Syndikat = "_Syndikat";
+c_French = "_French";
+
+factionInfos = [[c_USA,_USA],[c_Russian,_Ru],[c_Taki,_Taki],[c_Syndikat,_Syndikat],[c_French,_French]];
+
 c_listOfRoles = [c_leader,c_at,c_rifleman,c_engineer,c_autorifleman,c_marksman,c_medic];
+
+c_variableToInit = ["loadout","rifleList","attachmentLongList","attachmentShortList","smgList","marksmanrifleList","autorifleList","launcherList","itemList","itemEngineerList","itemMedicList"];
 
 
 //Join
-loadout_db = [[loadout_USA,_USA],[loadout_Russian,_Ru],[loadout_Taki,_Taki],[loadout_Syndikat,_Syndikat],[loadout_French,_French]];
-rifleList_db = [[rifleList_USA,_USA],[rifleList_Russian,_Ru],[rifleList_Taki,_Taki],[rifleList_Syndikat,_Syndikat],[rifleList_French,_French]];
-attachmentLongList_db = [[attachmentLongList_USA,_USA],[attachmentLongList_Russian,_Ru],[attachmentLongList_Taki,_Taki],[attachmentLongList_Syndikat,_Syndikat],[attachmentLongList_French,_French]];
-attachmentShortList_db = [[attachmentShortList_USA,_USA],[attachmentShortList_Russian,_Ru],[attachmentShortList_Taki,_Taki],[attachmentShortList_Syndikat,_Syndikat],[attachmentShortList_French,_French]];
-smgList_db = [[smgList_USA,_USA],[smgList_Russian,_Ru],[smgList_Taki,_Taki],[smgList_Syndikat,_Syndikat],[smgList_French,_French]];
-marksmanrifleList_db = [[marksmanrifleList_USA,_USA],[marksmanrifleList_Russian,_Ru],[marksmanrifleList_Taki,_Taki],[marksmanrifleList_Syndikat,_Syndikat],[marksmanrifleList_French,_French]];
-autorifleList_db = [[autorifleList_USA,_USA],[autorifleList_Russian,_Ru],[autorifleList_Taki,_Taki],[autorifleList_Syndikat,_Syndikat],[autorifleList_French,_French]];
-launcherList_db = [[launcherList_USA,_USA],[launcherList_Russian,_Ru],[launcherList_Taki,_Taki],[launcherList_Syndikat,_Syndikat],[launcherList_French,_French]];
-
-
-itemList_db = [[itemList_USA,_USA],[itemList_Russian,_Ru],[itemList_Taki,_Taki],[itemList_Syndikat,_Syndikat],[itemList_French,_French]];
-itemEngineerList_db = [[itemEngineerList_USA,_USA],[itemEngineerList_Russian,_Ru],[itemEngineerList_Taki,_Taki],[itemEngineerList_Syndikat,_Syndikat],[itemEngineerList_French,_French]];
-itemMedicList_db = [[itemMedicList_USA,_USA],[itemMedicList_Russian,_Ru],[itemMedicList_Taki,_Taki],[itemMedicList_Syndikat,_Syndikat],[itemMedicList_French,_French]];
 
 ////////////////////////
 //Backpack management///
@@ -54,6 +53,20 @@ backpacksList = [
 
 //New line to manage backpack in a future update
 //backpacksList_db = [[backpacksList_USA,_USA],[backpacksList_Russian,_Ru],[backpacksList_Taki,_Taki],[backpacksList_Syndikat,_Syndikat],[backpacksList_French,_French]];
+
+
+initFactionDb = {
+	params ["_currentVariable"];
+	_currentTempVariable = [];
+	{
+		_currentFactionName = _x select 0;
+		_currentFactionParameters = _x select 1;
+		_currentFactionBuild = format ["%1%2", _currentVariable, _currentFactionName];
+		_currentTempVariable pushBack [missionNamespace getVariable [_currentFactionBuild,[]], _currentFactionParameters];
+	} foreach factionInfos;
+	_currentVariableName = format ["%1%2", _currentVariable, c_db];
+	missionNamespace setVariable [_currentVariableName, _currentTempVariable, true];
+};
 
 getLoadoutByRole = {
 	currentPlayer = _this select 0;
@@ -314,3 +327,15 @@ adjustLoadout = {
 		};
 	};
 };
+
+
+
+
+//////////
+//InitDB//
+//////////
+
+{
+	[_x] call initFactionDb;
+}
+foreach c_variableToInit;

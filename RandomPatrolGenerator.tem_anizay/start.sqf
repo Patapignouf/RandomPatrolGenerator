@@ -367,7 +367,9 @@ if (initBluforBase == 0 || (initBluforBase == 2 && (round random 1 == 0))) then
 	waitUntil {count allPlayers != 0};
 	
 	//Generate FOB
-	spawnFOBObjects = [initBlueforLocation, (random 360), selectRandom avalaibleFOB] call BIS_fnc_ObjectsMapper;	
+	spawnFOBObjects = [initBlueforLocation, (random 360), selectRandom avalaibleFOB] call BIS_fnc_ObjectsMapper;
+	sleep 3;
+
 	initBlueforLocation = getPos (spawnFOBObjects select 0);	
 	publicvariable "initBlueforLocation";
 	waitUntil {!isNil "spawnFOBObjects"};
@@ -378,7 +380,9 @@ if (initBluforBase == 0 || (initBluforBase == 2 && (round random 1 == 0))) then
 	initBlueforLocation = [selectMax [selectMin [initBlueforLocation select 0, worldSize-50 ],50],selectMax [selectMin [initBlueforLocation select 1, worldSize-50],50]]; 
 	
 	//Generate FOB
-	spawnFOBObjects = [initBlueforLocation, (random 360), selectRandom avalaibleFOB] call BIS_fnc_ObjectsMapper;	
+	spawnFOBObjects = [initBlueforLocation, (random 360), selectRandom avalaibleFOB] call BIS_fnc_ObjectsMapper;
+	sleep 3;
+		
 	initBlueforLocation = getPos (spawnFOBObjects select 0);
 	publicvariable "initBlueforLocation";
 	waitUntil {!isNil "spawnFOBObjects"};

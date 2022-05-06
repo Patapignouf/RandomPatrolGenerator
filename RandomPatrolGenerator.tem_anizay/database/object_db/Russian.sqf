@@ -234,7 +234,8 @@ itemList_Russian = [
 	"ACE_splint",
 	"ACE_morphine",
 	"ACE_quikclot",
-	"ACE_EntrenchingTool"
+	"ACE_EntrenchingTool",
+	"ACE_RangeTable_82mm"
 	];
 
 itemEngineerList_Russian = [
