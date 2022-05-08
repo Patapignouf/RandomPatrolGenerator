@@ -12,15 +12,22 @@ c_medic = "medic";
 //newFaction
 bluforUnarmedVehicle_newFaction = ["B_AMF_VAB_ULTIMA_X8_F"];
 
-bluforArmedVehicle_newFaction = ["amf_pvp_01_CE_f","B_AMF_VAB_ULTIMA_TOP_X8_F","AMF_VBMR_L_CE_01"];
+bluforArmedVehicle_newFaction = [
+	"amf_pvp_01_CE_f",
+	"B_AMF_VAB_ULTIMA_TOP_X8_F",
+	"AMF_VBMR_L_CE_01"];
 
-bluforUnarmedVehicleChopper_newFaction = ["ffaa_nh90_tth_transport","AMF_gazelle_afte_f","ffaa_famet_cougar"];
+bluforUnarmedVehicleChopper_newFaction = ["ffaa_nh90_tth_transport",
+"AMF_gazelle_afte_f",
+"ffaa_famet_cougar"];
 
 
-bluforDrone_newFaction = ["B_UAV_02_dynamicLoadout_F"
+bluforDrone_newFaction = [
+"B_UAV_02_dynamicLoadout_F"
 ];
 
-bluforBoat_newFaction = ["CUP_B_RHIB_HIL",
+bluforBoat_newFaction = [
+"CUP_B_RHIB_HIL",
 "CUP_B_Zodiac_USMC"
 ];
 
