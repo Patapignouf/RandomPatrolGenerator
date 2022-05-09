@@ -68,11 +68,11 @@ if (count _thisObjective > 0) then
 		case "steal":
 			{
 				diag_log format ["Steal task setup ! : %1", objectiveObject];
-				(vehicle leader objectiveObject) setPos ([(getPos _thisObjectivePosition), 1, 60, 7, 0, 20, 0] call BIS_fnc_findSafePos);
+				objectiveObject setPos ([(getPos _thisObjectivePosition), 1, 60, 7, 0, 20, 0] call BIS_fnc_findSafePos);
 
 				//Objective failed
-				(vehicle leader objectiveObject) setVariable ["thisTask", _objectiveUniqueID, true];
-				(vehicle leader objectiveObject) addEventHandler ["Killed", {
+				objectiveObject setVariable ["thisTask", _objectiveUniqueID, true];
+				objectiveObject addEventHandler ["Killed", {
 					params ["_unit", "_killer", "_instigator", "_useEffects"];
 					//get task associated to the object
 					_thisTaskID = _unit getVariable "thisTask";
@@ -97,7 +97,7 @@ if (count _thisObjective > 0) then
 		case "collectIntel":
 			{
 				//Add intel action to the intel case
-				(objectiveObject) setPos ([(getPos _thisObjectivePosition), 1, 25, 5, 0, 20, 0] call BIS_fnc_findSafePos);
+				objectiveObject setPos ([(getPos _thisObjectivePosition), 1, 25, 5, 0, 20, 0] call BIS_fnc_findSafePos);
 				[objectiveObject, ["Collect intel",{
 					params ["_object","_caller","_ID","_thisObjective"];
 					//Manage Completed Objective

@@ -42,7 +42,7 @@ if (!isDedicated) then
 				case "steal":
 					{
 					_markerstr setMarkerColorLocal "ColorYellow";
-					_markerstr setMarkerTextLocal format ["Ramenez en ville le véhicule %1 intact", getText (configFile >> "cfgVehicles" >> typeOf (vehicle leader _thisObject) >> "displayName")];
+					_markerstr setMarkerTextLocal format ["Ramenez en ville le véhicule %1 intact", getText (configFile >> "cfgVehicles" >> typeOf _thisObject >> "displayName")];
 					};
 				case "clearArea":
 					{

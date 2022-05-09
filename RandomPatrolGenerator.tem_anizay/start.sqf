@@ -174,7 +174,7 @@ for [{_i = 0}, {_i <= lengthParameter}, {_i = _i + 1}] do //Peut être optimisé
 			};
 		case "steal":
 			{
-				currentObj = [currentRandomPos, east, [selectRandom avalaibleStealVehicle],[],[],[],[],[], random 360] call BIS_fnc_spawnGroup;
+				currentObj = createVehicle [selectRandom avalaibleStealVehicle, currentRandomPos, [], 0, "NONE"];
 			};
 		case "clearArea":
 			{
