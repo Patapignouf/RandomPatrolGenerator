@@ -3,8 +3,6 @@
 bluFaction = "BluFaction" call BIS_fnc_getParamValue;
 indFaction = "IndFaction" call BIS_fnc_getParamValue;
 enableThermal = "EnableThermal" call BIS_fnc_getParamValue;
-enablePlane = "EnablePlane" call BIS_fnc_getParamValue;
-enableHalo = "EnableHALO" call BIS_fnc_getParamValue;
 
 //Optimize scripts
 private _disableThermal = compile preprocessFileLineNumbers "engine\disableThermal.sqf";
@@ -63,13 +61,13 @@ if (hasInterface) then
 		player setPos ([getPos initCityLocation, 1, 5, 3, 0, 20, 0] call BIS_fnc_findSafePos);
 
 		//Manage loadout
-		player setUnitLoadout ([player,indFaction] call getLoadoutByRole);
-		[player] call adjustLoadout;
-		player setVariable ["spawnLoadout", getUnitLoadout player];
+		player setVariable ["spawnLoadout",[player,indFaction] call getLoadoutByRole];
+		player setUnitLoadout (player getVariable "spawnLoadout");
 
 		//Manage arsenal	
 		[VA1, player, indFaction] call setupArsenalToItem;
 		[VA1, player, indFaction] call setupRoleSwitchToItem;
+
 
 		if (isIndAttacked) then
 		{
@@ -95,61 +93,12 @@ if (hasInterface) then
 	{
 		player setVariable ["sideBeforeDeath","blufor"];
 		player setPos ([initBlueforLocation, 1, 5, 3, 0, 20, 0] call BIS_fnc_findSafePos);
-		player setUnitLoadout ([player, bluFaction] call getLoadoutByRole);
-		[player] call adjustLoadout;
-		player setVariable ["spawnLoadout", getUnitLoadout player];
+		player setVariable ["spawnLoadout",[player,bluFaction] call getLoadoutByRole];
+		player setUnitLoadout (player getVariable "spawnLoadout");
 
 		//Manage arsenal	
 		[VA2, player, bluFaction] call setupArsenalToItem;
 		[VA2, player, bluFaction] call setupRoleSwitchToItem;
-
-
-		_avalaibleAicraft = "CUP_B_A10_DYN_USA"; //temp aircraft list 
-		//Manage vehicle spawn options 
-		if (enablePlane == 1) then 
-		{	
-			_IDVehicleSpawn = TPFlag1 addAction ["Spawn an aircraft",{
-				params ["_object","_caller","_ID","_avalaibleAicraft"];
-				//Click on map to spawn
-				selectedLoc = [0,0,0];
-				openMap true;
-				sleep 1;
-				hint "Click on map to sapwn an aircraft and teleport\n The aircraft will spawn oriented on the north";
-				onMapSingleClick "selectedLoc = _pos; onMapSingleClick ''; openMap false; true;";
-				waitUntil{!(visibleMap)};  
-				if (!([selectedLoc, [0,0,0]] call BIS_fnc_areEqual)) then 
-				{
-					_caller setPos selectedLoc;
-					createVehicle [_avalaibleAicraft, selectedLoc, [], 0, "NONE"];
-					[_object,_ID] remoteExec [ "removeAction", 0, true ];
-				}
-				else 
-				{
-					//hint format ["fail with selectedLoc : %1", selectedLoc];
-				};
-			},_avalaibleAicraft,1.5,true,true,"","_target distance _this <5"];
-		};
-
-		//Add HaloJump function
-		if (enableHalo == 1) then 
-		{	
-			_IDHalo = TPFlag1 addAction ["Go in HALO JUMP",{
-				params ["_object","_caller","_ID"];
-				//Click on map to Halo spawn
-				selectedHaloLoc = [0,0,0];
-				openMap true;
-				sleep 1;
-				hint "Click on map to sapwn Halo jump\n Your backpack will be saved";
-				onMapSingleClick "selectedHaloLoc = _pos; onMapSingleClick ''; openMap false; true;";
-				waitUntil{!(visibleMap)};  
-				if (!([selectedHaloLoc, [0,0,0]] call BIS_fnc_areEqual)) then 
-				{
-					_caller setPos selectedHaloLoc;
-					[_caller,1500] call BIS_fnc_halo;
-				};
-			},o,1.5,true,false,"","_target distance _this <5"];
-		};
-
 
 		if (isBluforAttacked) then
 		{

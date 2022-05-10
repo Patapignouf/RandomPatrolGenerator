@@ -34,7 +34,7 @@ if (isServer) then
 				_thisAvailableGroups = _thisAvailableWaveGroups select ((count _thisAvailableWaveGroups)-1);
 			};
 			
-			[EnemyWaveSpawnPositions,getPos initCityLocation,_thisAvailableGroups,[],difficultyParameter] execVM 'enemyManagement\doAmbush.sqf'; 
+			[EnemyWaveSpawnPositions,getPos initCityLocation,_thisAvailableGroups,difficultyParameter] execVM 'enemyManagement\doAmbush.sqf'; 
 			
 			diag_log format ["Wave end : %1", waveCounter ];
 			
@@ -43,7 +43,9 @@ if (isServer) then
 			CompletedObjectivesWave = CompletedObjectivesWave + 1;
 			waveCounter = waveCounter + 1;
 		};
-		sleep 20;	
+		sleep 20;
+		//sleep (700+round (random 240));
+		
 	};
 	diag_log format ["All wave completed"];
 };

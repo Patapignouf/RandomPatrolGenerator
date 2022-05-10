@@ -55,10 +55,6 @@ waitUntil {!isNil "SupplyObjects" && count SupplyObjects != 0};
 //TODO Remplacer la plupart de ces tests par des eventHandler
 while {sleep 10; !missionOver} do
 {
-	//Define objective temp variable
-	_completedObjectives = missionNamespace getVariable ["completedObjectives",[]];
-	_missionFailedObjectives = missionNamespace getVariable ["missionFailedObjectives", []];
-	_missionUncompletedObjectives = missionNamespace getVariable ["missionUncompletedObjectives",[]];
 	
 	//Obsolète
 	if (nb_ind_alive == 0) then 
@@ -86,8 +82,8 @@ while {sleep 10; !missionOver} do
 			'IND_DEAD' call BIS_fnc_endMission;
 		};
 	};
-	//TODO : Improve failed condition to match with the future campaign feature
-	if (count _missionFailedObjectives > 1 ) then 
+	
+	if (count (obj_must_be_alive select {alive _x}) != count obj_must_be_alive) then
 	{
 		missionOver = true;
 		diag_log format ["Mission end !"];

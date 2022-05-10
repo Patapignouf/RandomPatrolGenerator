@@ -24,24 +24,10 @@ class Params
 	};
 	class EnablePlane
 	{
-		title = "Enable planes (WIP)";
+		title = "Enable planes enemies (WIP)";
 		values[] = {0,1};
 		texts[] = {"No","Yes"};
 		default = 0;
-	};
-	class EnableHalo
-	{
-		title = "Enable HALO JUMP (WIP)";
-		values[] = {0,1};
-		texts[] = {"No","Yes"};
-		default = 1;
-	};
-	class RealismMode
-	{
-		title = "Enable realism mode (WIP)";
-		values[] = {0,1};
-		texts[] = {"No","Yes"};
-		default = 1;
 	};
 	class EnableThermal
 	{
@@ -97,7 +83,7 @@ class Params
 		title = "Setup enemy mortar positions";
 		values[] = {0,1,2};
 		texts[] = {"No","Yes","Random"};
-		default = 1;
+		default = 2;
 	};
 	class EnableInitAttack
 	{
