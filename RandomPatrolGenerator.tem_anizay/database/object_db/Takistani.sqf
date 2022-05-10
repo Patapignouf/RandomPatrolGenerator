@@ -59,10 +59,6 @@ baseEnemyMortarGroup_taki = ["CUP_O_TK_INS_Mechanic",
 baseEnemyVehicleGroup_taki = ["CUP_I_Datsun_PK_TK",
 "CUP_I_Hilux_M2_TK"];
 
-baseEnemyLightArmoredVehicleGroup_taki = ["CUP_O_Ural_ZU23_TKM", 
-"CUP_O_BTR40_MG_TKM","CUP_O_Hilux_armored_DSHKM_TK_INS"];
-
-baseEnemyHeavyArmoredVehicleGroup_taki = ["CUP_O_MTLB_pk_TK_MILITIA"];
 
 ////////////////////////
 //Vehicle management////
@@ -228,8 +224,7 @@ itemList_Taki = [
 	"ACE_splint",
 	"ACE_morphine",
 	"ACE_quikclot",
-	"ACE_EntrenchingTool",
-	"ACE_RangeTable_82mm"
+	"ACE_EntrenchingTool"
 	];
 
 itemEngineerList_Taki = [
