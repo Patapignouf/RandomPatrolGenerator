@@ -55,6 +55,15 @@ baseEnemyMortarGroup_Russian  = ["CUP_O_2b14_82mm_RU_M_MSV",
 baseEnemyVehicleGroup_Russian  = ["CUP_O_UAZ_MG_RU",
 "CUP_O_UAZ_SPG9_RU"];
 
+baseEnemyLightArmoredVehicleGroup_Russian = ["CUP_O_GAZ_Vodnik_KPVT_RU", 
+"CUP_O_GAZ_Vodnik_PK_RU","CUP_O_Ural_ZU23_RU"];
+
+baseEnemyHeavyArmoredVehicleGroup_Russian = ["CUP_O_BMP2_RU", 
+"CUP_O_BTR60_Green_RU", 
+"CUP_O_2S6_RU", 
+"CUP_O_T72_RU", 
+"CUP_O_T90_RU"];
+
 ////////////////////////
 //Vehicle management////
 ////////////////////////
@@ -68,7 +77,7 @@ bluforArmedVehicle_Russian = ["CUP_O_GAZ_Vodnik_PK_RU",
 bluforUnarmedVehicleChopper_Russian = ["CUP_O_Mi8AMT_RU"];
 
 
-bluforDrone_Russian = [
+bluforDrone_Russian = ["CUP_O_Pchela1T_RU"
 ];
 
 bluforBoat_Russian = ["CUP_O_PBX_RU"
@@ -225,7 +234,8 @@ itemList_Russian = [
 	"ACE_splint",
 	"ACE_morphine",
 	"ACE_quikclot",
-	"ACE_EntrenchingTool"
+	"ACE_EntrenchingTool",
+	"ACE_RangeTable_82mm"
 	];
 
 itemEngineerList_Russian = [
