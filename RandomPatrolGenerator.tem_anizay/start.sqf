@@ -7,6 +7,8 @@
 
 //Init base mission parameters 
 difficultyParameter = "Difficulty" call BIS_fnc_getParamValue;
+enableArmored = "EnableArmored" call BIS_fnc_getParamValue;
+enablePlane = "EnablePlane" call BIS_fnc_getParamValue;
 lengthParameter = "MissionLength" call BIS_fnc_getParamValue;
 civFaction = "CivFaction" call BIS_fnc_getParamValue;
 opFaction = "OpFaction" call BIS_fnc_getParamValue;
@@ -60,7 +62,9 @@ baseEnemyMortarGroup = baseEnemyMortarGroup_db select {_x select 1  == opFaction
 
 baseEnemyVehicleGroup = baseEnemyVehicleGroup_db select {_x select 1  == opFaction} select 0 select 0;
 
+baseEnemyLightArmoredVehicleGroup = baseEnemyLightArmoredVehicleGroup_db select {_x select 1  == opFaction} select 0 select 0;
 
+baseEnemyHeavyArmoredVehicleGroup = baseEnemyHeavyArmoredVehicleGroup_db select {_x select 1  == opFaction} select 0 select 0;
 
 //Enemy Wave Composition, needs to be completely rework
 EnemyWaveLevel_1 = [baseEnemyGroup,baseEnemyATGroup];
@@ -74,15 +78,14 @@ EnemyWaveLevel_8 = [baseEnemyGroup,baseEnemyATGroup,baseEnemyDemoGroup,baseEnemy
 EnemyWaveLevel_9 = [baseEnemyGroup,baseEnemyATGroup,baseEnemyDemoGroup,baseEnemyMortarGroup];
 EnemyWaveLevel_10 = [baseEnemyGroup,baseEnemyATGroup,baseEnemyDemoGroup,baseEnemyMortarGroup];
 
-
-//EnemyWaveGroups = [EnemyWaveLevel_1,EnemyWaveLevel_2,EnemyWaveLevel_3,EnemyWaveLevel_4,EnemyWaveLevel_5,EnemyWaveLevel_6,EnemyWaveLevel_7,EnemyWaveLevel_8,EnemyWaveLevel_9,EnemyWaveLevel_10];
 EnemyWaveGroups = [EnemyWaveLevel_1,EnemyWaveLevel_6,EnemyWaveLevel_8];
-
 publicvariable "EnemyWaveGroups";
 
 /////////////////////////
 /////Find locations//////
 /////////////////////////
+
+
 
 //InitLogicDefinition 
 possibleInitLocation = [] call getRandomCenterLocations;
@@ -94,7 +97,6 @@ dangerAreaList = [];
 if ( count possiblePOILocation < lengthParameter + 1) then 
 {
 	possiblePOILocation = ([initCityLocation, 4000] call getLocationsAround) - [initCityLocation];
-	
 };
 
 //Search road around AO
@@ -129,7 +131,7 @@ PossibleObjectivePosition = possiblePOILocation;
 for [{_i = 0}, {_i <= 2}, {_i = _i + 1}] do //Peut être optimisé
 {
 	_currentTruckType = selectRandom civilianTruck;
-	_currentTruckPosition = [getPos initCityLocation, 2, 100, 30, 10, 0.25, 0, [], [[0,0,0],[0,0,0]]] call BIS_fnc_findSafePos;
+	_currentTruckPosition = [getPos initCityLocation, 2, 100, 10, 10, 0.25, 0, [], [[0,0,0],[0,0,0]]] call BIS_fnc_findSafePos;
 	if !([_currentTruckPosition , [0,0,0]] call BIS_fnc_areEqual) then 
 	{
 		_currentTruck = createVehicle [_currentTruckType, _currentTruckPosition, [], 0, "NONE"];
@@ -151,7 +153,7 @@ currentRandObj = objNull;
 for [{_i = 0}, {_i <= lengthParameter}, {_i = _i + 1}] do //Peut être optimisé
 {
 	currentObjType = selectRandom avalaibleTypeOfObj;
-	currentRandomPos = [nil, ["ground"]] call BIS_fnc_randomPos;
+	currentRandomPos = [] call BIS_fnc_randomPos;
 	switch (currentObjType) do
 	{
 		case "supply":
@@ -164,15 +166,34 @@ for [{_i = 0}, {_i <= lengthParameter}, {_i = _i + 1}] do //Peut être optimisé
 			};
 		case "hvt":
 			{
-				currentObj = leader ([currentRandomPos, east, [selectRandom avalaibleHVT],[],[],[],[],[],180] call BIS_fnc_spawnGroup);
+				currentObj = leader ([currentRandomPos, east, [selectRandom avalaibleHVT],[],[],[],[],[], random 360] call BIS_fnc_spawnGroup);
 			};
 		case "vip":
 			{
-				currentObj = leader ([currentRandomPos, civilian, [selectRandom avalaibleVIP],[],[],[],[],[],180] call BIS_fnc_spawnGroup);
+				currentObj = leader ([currentRandomPos, civilian, [selectRandom avalaibleVIP],[],[],[],[],[], random 360] call BIS_fnc_spawnGroup);
+			};
+		case "steal":
+			{
+				currentObj = createVehicle [selectRandom avalaibleStealVehicle, currentRandomPos, [], 0, "NONE"];
+			};
+		case "clearArea":
+			{
+				//Add trigger to detect cleared area
+				currentObj = createTrigger ["EmptyDetector", currentRandomPos]; //create a trigger area created at object with variable name my_object
+			};
+		case "collectIntel":
+			{
+				//Add intel action to the intel case
+				currentObj = createVehicle [selectRandom avalaibleCollectIntel, currentRandomPos, [], 0, "NONE"];
+			};
+		case "informant":
+			{
+				//Add dialog to the informant
+				currentObj = leader ([currentRandomPos, civilian, [selectRandom avalaibleVIP],[],[],[],[],[], random 360] call BIS_fnc_spawnGroup);
 			};
 		default { hint "default" };
 	};
-	SupplyObjects pushBack [currentObj,currentObjType];
+	SupplyObjects pushBack [currentObj, currentObjType];
 };
 
 publicvariable "SupplyObjects";
@@ -254,14 +275,14 @@ AvalaibleInitAttackPositions = [getPos initCityLocation, 1200,1400,difficultyPar
 if ( count AvalaibleInitAttackPositions != 0 && (enableInitAttack == 1 || ((enableInitAttack == 2) && (round (random 1))==0))) then
 {
 	diag_log "Init attack on independent city";
-	_handleCivGeneration = [AvalaibleInitAttackPositions,getPos initCityLocation,[baseEnemyGroup,baseEnemyATGroup,[selectRandom baseEnemyVehicleGroup]],difficultyParameter] execVM 'enemyManagement\doAmbush.sqf'; 
+	_handleCivGeneration = [AvalaibleInitAttackPositions,getPos initCityLocation,[baseEnemyGroup,baseEnemyATGroup],baseEnemyVehicleGroup,difficultyParameter] execVM 'enemyManagement\doAmbush.sqf'; 
 	isIndAttacked = true;
 	publicvariable "isIndAttacked";
 	waitUntil {isNull _handleCivGeneration};
 };
 
 //Init prema harass on player
-[[baseEnemyGroup,baseEnemyATGroup,[selectRandom baseEnemyVehicleGroup]],difficultyParameter] execVM 'enemyManagement\generateHarass.sqf'; 
+[[baseEnemyGroup,baseEnemyATGroup,baseEnemyDemoGroup],baseEnemyVehicleGroup, baseEnemyLightArmoredVehicleGroup, baseEnemyHeavyArmoredVehicleGroup] execVM 'enemyManagement\generateHarass.sqf'; 
 
 /////////////////////////
 ///////Generate AO///////
@@ -278,7 +299,7 @@ aoSize = 1500;
 	diag_log format ["Objective generation started : %1 on position %2", currentObject, _x];
 	
 	//Generate mission environement
-	_handlePOIGeneration = [EnemyWaveLevel_1, civilian_group ,_x,difficultyParameter] execVM 'enemyManagement\generatePOI.sqf'; 
+	_handlePOIGeneration = [EnemyWaveLevel_1, baseEnemyVehicleGroup, baseEnemyLightArmoredVehicleGroup, baseEnemyHeavyArmoredVehicleGroup, civilian_group ,_x,difficultyParameter] execVM 'enemyManagement\generatePOI.sqf'; 
 	waitUntil {isNull _handlePOIGeneration};
 
 	//Generate mission objectives
@@ -346,7 +367,9 @@ if (initBluforBase == 0 || (initBluforBase == 2 && (round random 1 == 0))) then
 	waitUntil {count allPlayers != 0};
 	
 	//Generate FOB
-	spawnFOBObjects = [initBlueforLocation, (random 360), selectRandom avalaibleFOB] call BIS_fnc_ObjectsMapper;	
+	spawnFOBObjects = [initBlueforLocation, (random 360), selectRandom avalaibleFOB] call BIS_fnc_ObjectsMapper;
+	sleep 3;
+
 	initBlueforLocation = getPos (spawnFOBObjects select 0);	
 	publicvariable "initBlueforLocation";
 	waitUntil {!isNil "spawnFOBObjects"};
@@ -357,7 +380,9 @@ if (initBluforBase == 0 || (initBluforBase == 2 && (round random 1 == 0))) then
 	initBlueforLocation = [selectMax [selectMin [initBlueforLocation select 0, worldSize-50 ],50],selectMax [selectMin [initBlueforLocation select 1, worldSize-50],50]]; 
 	
 	//Generate FOB
-	spawnFOBObjects = [initBlueforLocation, (random 360), selectRandom avalaibleFOB] call BIS_fnc_ObjectsMapper;	
+	spawnFOBObjects = [initBlueforLocation, (random 360), selectRandom avalaibleFOB] call BIS_fnc_ObjectsMapper;
+	sleep 3;
+		
 	initBlueforLocation = getPos (spawnFOBObjects select 0);
 	publicvariable "initBlueforLocation";
 	waitUntil {!isNil "spawnFOBObjects"};
@@ -387,7 +412,6 @@ if (initBluforBase == 0 || (initBluforBase == 2 && (round random 1 == 0))) then
 [initBlueforLocation, 150] execVM 'objectGenerator\doCleanArea.sqf'; 				
 
 //Generate ground vehicle
-selectedBluforVehicle = [];
 vehicleGoodPosition = [];
 if (0 < count bluforUnarmedVehicle ) then 
 {
@@ -425,6 +449,9 @@ clearMagazineCargoGlobal VA2;
 clearItemCargoGlobal VA2;
 publicvariable "VA2";
 
+TPFlag1 = createVehicle ["Flag_Blue_F", [initBlueforLocation, 1, 5, 3, 0, 20, 0] call BIS_fnc_findSafePos, [], 0, "NONE"];
+publicvariable "TPFlag1";
+
 //Setup random attack on blufor at the beginning
 isBluforAttacked = false;
 publicvariable "isBluforAttacked";
@@ -434,7 +461,7 @@ AvalaibleInitAttackPositions = [initBlueforLocation, 800,1000,difficultyParamete
 if ( count AvalaibleInitAttackPositions != 0 && (enableInitBluAttack == 1 || ((enableInitBluAttack == 2) && (round (random 4))==0))) then
 {
 	diag_log "Init attack on blufor FOB";
-	[AvalaibleInitAttackPositions,initBlueforLocation,[baseEnemyGroup,baseEnemyATGroup,[selectRandom baseEnemyVehicleGroup]],difficultyParameter] execVM 'enemyManagement\doAmbush.sqf'; 
+	[AvalaibleInitAttackPositions,initBlueforLocation,[baseEnemyGroup,baseEnemyATGroup],baseEnemyVehicleGroup,difficultyParameter] execVM 'enemyManagement\doAmbush.sqf'; 
 	isBluforAttacked = true;
 	publicvariable "isBluforAttacked";
 };

@@ -1,4 +1,4 @@
 //Start the mission
-missionNamespace setVariable ["revealedObjectives",[]];
-missionNamespace setVariable ["MissionObjectives",[]];
+missionNamespace setVariable ["revealedObjectives",[],true];
+missionNamespace setVariable ["MissionObjectives",[]],true;
 [] execVM 'start.sqf'; 

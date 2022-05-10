@@ -10,35 +10,19 @@ _French = 4;
 #include "object_db\Syndikat.sqf"
 #include "object_db\Takistani.sqf"
 
-//////////////////////////////
-//Define friendly group data//
-//////////////////////////////
-bluforUnarmedVehicle_db = [[bluforUnarmedVehicle_USA,_USA],[bluforUnarmedVehicle_Russian,_Ru],[bluforUnarmedVehicle_Taki,_Taki],[bluforUnarmedVehicle_Syndikat,_Syndikat],[bluforUnarmedVehicle_French,_French]];
-bluforArmedVehicle_db = [[bluforArmedVehicle_USA,_USA],[bluforArmedVehicle_Russian,_Ru],[bluforArmedVehicle_Taki,_Taki],[bluforArmedVehicle_Syndikat,_Syndikat],[bluforArmedVehicle_French,_French]];
-bluforUnarmedVehicleChopper_db = [[bluforUnarmedVehicleChopper_USA,_USA],[bluforUnarmedVehicleChopper_Russian,_Ru],[bluforUnarmedVehicleChopper_Taki,_Taki],[bluforUnarmedVehicleChopper_Syndikat,_Syndikat],[bluforUnarmedVehicleChopper_French,_French]];
-bluforDrone_db = [[bluforDrone_USA,_USA],[bluforDrone_Russian,_Ru],[bluforDrone_Taki,_Taki],[bluforDrone_Syndikat,_Syndikat],[bluforDrone_French,_French]];
-bluforBoat_db = [[bluforBoat_USA,_USA],[bluforBoat_Russian,_Ru],[bluforBoat_Taki,_Taki],[bluforBoat_Syndikat,_Syndikat],[bluforBoat_French,_French]];
+//Define faction prefix
+c_db = "_db";
+c_USA = "_USA";
+c_Russian = "_Russian";
+c_Taki = "_Taki";
+c_Syndikat = "_Syndikat";
+c_French = "_French";
 
+factionInfos = [[c_USA,_USA],[c_Russian,_Ru],[c_Taki,_Taki],[c_Syndikat,_Syndikat],[c_French,_French]];
 
-//////////////////////////////
-////Define civ group data/////
-//////////////////////////////
-
-//Join
-civilian_group_db = [[civilian_group_USA,_USA],[civilian_group_Russian,_Ru],[civilian_group_Taki,_Taki],[civilian_group_Syndikat,_Syndikat],[civilian_group_French,_French]];
-civilian_big_group_db = [[civilian_big_group_USA,_USA],[civilian_big_group_Russian,_Ru],[civilian_big_group_Taki,_Taki],[civilian_big_group_Syndikat,_Syndikat],[civilian_big_group_French,_French]];
-civilianTruck_db = [[civilianTruck_USA,_USA],[civilianTruck_Russian,_Ru],[civilianTruck_Taki,_Taki],[civilianTruck_Syndikat,_Syndikat],[civilianTruck_French,_French]];
-
-//////////////////////////////
-///Define enemy group data////
-//////////////////////////////
-
-//Join
-baseEnemyGroup_db = [[baseEnemyGroup_USA,_USA],[baseEnemyGroup_Russian,_Ru],[baseEnemyGroup_Taki,_Taki],[baseEnemyGroup_Syndikat,_Syndikat],[baseEnemyGroup_French,_French]];
-baseEnemyATGroup_db = [[baseEnemyATGroup_USA,_USA],[baseEnemyATGroup_Russian,_Ru],[baseEnemyATGroup_Taki,_Taki],[baseEnemyATGroup_Syndikat,_Syndikat],[baseEnemyATGroup_French,_French]];
-baseEnemyDemoGroup_db = [[baseEnemyDemoGroup_USA,_USA],[baseEnemyDemoGroup_Russian,_Ru],[baseEnemyDemoGroup_Taki,_Taki],[baseEnemyDemoGroup_Syndikat,_Syndikat],[baseEnemyDemoGroup_French,_French]];
-baseEnemyMortarGroup_db = [[baseEnemyMortarGroup_USA,_USA],[baseEnemyMortarGroup_Russian,_Ru],[baseEnemyMortarGroup_Taki,_Taki],[baseEnemyMortarGroup_Syndikat,_Syndikat],[baseEnemyMortarGroup_French,_French]];
-baseEnemyVehicleGroup_db = [[baseEnemyVehicleGroup_USA,_USA],[baseEnemyVehicleGroup_Russian,_Ru],[baseEnemyVehicleGroup_Taki,_Taki],[baseEnemyVehicleGroup_Syndikat,_Syndikat],[baseEnemyVehicleGroup_French,_French]];
+c_variableToInit = ["bluforUnarmedVehicle","bluforArmedVehicle","bluforUnarmedVehicleChopper","bluforDrone","bluforBoat","civilian_group",
+"civilian_big_group","civilianTruck","baseEnemyGroup","baseEnemyATGroup","baseEnemyDemoGroup","baseEnemyMortarGroup","baseEnemyVehicleGroup",
+"baseEnemyLightArmoredVehicleGroup","baseEnemyHeavyArmoredVehicleGroup"];
 
 //////////////////////////////
 ////Define objectives data////
@@ -62,7 +46,15 @@ avalaibleVIP = ["CUP_C_TK_Man_03_Waist",
 "CUP_C_R_Functionary_jacket_02"
 ];
 
-avalaibleTypeOfObj = ["supply","ammo","vip","hvt"];
+avalaibleStealVehicle = ["O_G_Van_01_transport_F", 
+"O_G_Van_02_transport_F", 
+"O_G_Van_01_fuel_F"
+];
+
+avalaibleCollectIntel = ["Land_Suitcase_F"];
+
+avalaibleTypeOfObj = ["supply","ammo","vip","hvt","collectIntel","informant","steal"];
+avalaibleTypeOfObj = ["steal"]; //Line use to debug a specific objective
 
 //FOB description from DRO
 //Waiting for a PANY FOB
@@ -119,3 +111,25 @@ fob1 = [
 
 avalaibleFOB = [ fob1
 ];
+
+initFactionDb = {
+	params ["_currentVariable"];
+	_currentTempVariable = [];
+	{
+		_currentFactionName = _x select 0;
+		_currentFactionParameters = _x select 1;
+		_currentFactionBuild = format ["%1%2", _currentVariable, _currentFactionName];
+		_currentTempVariable pushBack [missionNamespace getVariable [_currentFactionBuild,[]], _currentFactionParameters];
+	} foreach factionInfos;
+	_currentVariableName = format ["%1%2", _currentVariable, c_db];
+	missionNamespace setVariable [_currentVariableName, _currentTempVariable, true];
+};
+
+//////////
+//InitDB//
+//////////
+
+{
+	[_x] call initFactionDb;
+}
+foreach c_variableToInit;

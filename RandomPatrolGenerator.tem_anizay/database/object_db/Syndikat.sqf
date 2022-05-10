@@ -55,6 +55,11 @@ baseEnemyMortarGroup_Syndikat = ["I_G_Mortar_01_F",
 baseEnemyVehicleGroup_Syndikat = ["I_C_Offroad_02_LMG_F", 
 "I_C_Offroad_02_AT_F"];
 
+baseEnemyLightArmoredVehicleGroup_Syndikat = ["CUP_I_Hilux_zu23_IND_G_F", 
+"CUP_I_Hilux_armored_DSHKM_IND_G_F"];
+
+baseEnemyHeavyArmoredVehicleGroup_Syndikat = ["CUP_I_MTLB_pk_SYNDIKAT"];
+
 ////////////////////////
 //Vehicle management////
 ////////////////////////
@@ -127,62 +132,7 @@ smgList_Syndikat = [
 //Attachement management//
 //////////////////////////
 attachmentShortList_Syndikat	= [
-	"CUP_optic_AC11704_Black",
-	"CUP_optic_VortexRazor_UH1_Black",		
-	"CUP_optic_artel_m14",
-	"CUP_optic_artel_m14_pip",
-	"CUP_optic_Aimpoint_5000",
-	"CUP_optic_HoloBlack",
-	"CUP_optic_Eotech553_Black",		
-	"CUP_optic_CompM2_Black",			
-	"CUP_optic_CompM2_low",			
-	"CUP_optic_CompM4",
-	"CUP_optic_MicroT1",			
-	"CUP_optic_MicroT1_low",			
-	"CUP_optic_MARS",
-	"CUP_optic_MEPRO",
-	"CUP_optic_MEPRO_openx_orange",
-	"CUP_optic_MEPRO_moa_clear",
-	"CUP_optic_MEPRO_tri_clear",
-	"CUP_optic_SUSAT",
-	"CUP_optic_SUSAT_PIP",
-	"CUP_optic_SUSAT_3D",
-	//"CUP_optic_ACOG",  //Remove too versatile optics to test players new choice
-	"CUP_optic_ACOG_PIP",
-	"CUP_optic_ACOG_3D",
-	"CUP_optic_ACOG2",
-	"CUP_optic_ACOG2_PIP",
-	"CUP_optic_ACOG2_3D",
-	"CUP_optic_RCO",
-	"CUP_optic_ACOG_TA01NSN_Black_PIP",
-	"CUP_optic_ACOG_TA01NSN_Black_3D",
-	"CUP_optic_ACOG_TA01B_Black",
-	"CUP_optic_ACOG_TA01B_Black_PIP",
-	"CUP_optic_ACOG_TA01B_Black_3D",
-	"CUP_optic_ZDDot",
-	"CUP_optic_MRad",
-	"CUP_optic_TrijiconRx01_black",
-	"CUP_optic_TrijiconRx01_kf_black",
-	"CUP_optic_ZeissZPoint",
-	"CUP_optic_HensoldtZO",
-	"CUP_acc_ANPEQ_15",
-	"CUP_acc_ANPEQ_15_Black",
-	"CUP_acc_ANPEQ_15_Top_Flashlight_Tan_L",
-	"CUP_acc_ANPEQ_2",
-	"CUP_acc_ANPEQ_2_Black_Top",
-	"CUP_acc_ANPEQ_2_desert",
-	"CUP_acc_ANPEQ_2_grey",
-	"CUP_bipod_Harris_1A2_L_BLK",
-	"CUP_bipod_VLTOR_Modpod",
-	"CUP_muzzle_PB6P9",
-	"CUP_muzzle_Bizon",
-	"CUP_muzzle_PBS4",
-	"CUP_muzzle_TGPA",
-	"CUP_muzzle_snds_KZRZP_Base",
-	"CUP_muzzle_snds_KZRZP_SVD",
-	"CUP_muzzle_snds_KZRZP_AK762",
-	"CUP_muzzle_snds_KZRZP_AK545",
-	"CUP_muzzle_snds_KZRZP_PK"
+	
 ];
 
 attachmentLongList_Syndikat	= [
@@ -220,7 +170,8 @@ itemList_Syndikat = [
 	"ACE_splint",
 	"ACE_morphine",
 	"ACE_quikclot",
-	"ACE_EntrenchingTool"
+	"ACE_EntrenchingTool",
+	"ACE_RangeTable_82mm"
 	];
 
 itemEngineerList_Syndikat = [

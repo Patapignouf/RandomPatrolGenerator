@@ -1,13 +1,10 @@
 doGenerateEnemyGroup = 
 {
 	//Get parameters
-	_thisGroupToSpawn = _this select 0;
-	_thisSpawnPosition = _this select 1;
-	_thisFaction = _this select 2;
-	_thisGroupType = _this select 3;
+	params ["_thisGroupToSpawn","_thisSpawnPosition","_thisFaction","_thisGroupType"];
 
 	//Group spawn
-	_currentGroupPatrol = [_thisSpawnPosition, _thisFaction, _thisGroupToSpawn,[],[],[],[],[],180] call BIS_fnc_spawnGroup;
+	_currentGroupPatrol = [_thisSpawnPosition, _thisFaction, _thisGroupToSpawn,[],[],[],[],[], random 360] call BIS_fnc_spawnGroup;
 
 	//Optimize IA 
 	_currentGroupPatrol enableDynamicSimulation true;
@@ -15,7 +12,7 @@ doGenerateEnemyGroup =
 
 	//Intel Synchronization
 	_missionEnemyInfo = missionNamespace getVariable ["MissionEnemyInfo",[]];
-	_missionEnemyInfo pushBack [_thisGroupType,_thisSpawnPosition];
+	_missionEnemyInfo pushBack [_thisGroupType,_thisSpawnPosition, _currentGroupPatrol];
 	missionNamespace setVariable ["MissionEnemyInfo", _missionEnemyInfo, true];
 
 	//Return spawned group
