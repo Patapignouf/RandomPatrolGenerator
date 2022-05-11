@@ -6,44 +6,103 @@ c_autorifleman = "autorifleman";
 c_marksman = "marksman"; 
 c_medic = "medic";
 
+//////////////////////////////
+////Define civ group data/////
+//////////////////////////////
+
+//newFaction
+civilian_group_newFaction = ["C_Man_casual_7_F_euro", 
+"C_Man_smart_casual_1_F_euro", 
+"C_Man_smart_casual_2_F_euro"];
+
+civilian_big_group_newFaction = ["C_man_p_beggar_F_euro", 
+"C_man_polo_4_F_euro", 
+"C_man_shorts_1_F_euro", 
+"C_man_shorts_2_F_euro", 
+"C_scientist_02_formal_F", 
+"C_scientist_01_formal_F", 
+"C_scientist_02_informal_F"];
+
+civilianTruck_newFaction = ["C_SUV_01_F","C_Offroad_01_repair_F"];
+
+//////////////////////////////
+///Define enemy group data////
+//////////////////////////////
+//newFaction
+baseEnemyGroup_newFaction = ["I_C_Soldier_Bandit_4_F", 
+"I_C_Soldier_Bandit_3_F", 
+"I_C_Soldier_Bandit_7_F", 
+"I_C_Soldier_Bandit_5_F", 
+"I_C_Soldier_Bandit_6_F", 
+"I_C_Soldier_Bandit_2_F", 
+"I_C_Soldier_Bandit_8_F", 
+"I_C_Soldier_Bandit_1_F"];
+
+baseEnemyATGroup_newFaction = ["I_C_Soldier_Bandit_6_F", 
+"I_C_Soldier_Bandit_2_F", 
+"I_C_Soldier_Bandit_2_F",
+"I_C_Soldier_Bandit_7_F", 
+"I_C_Soldier_Bandit_8_F"];
+
+baseEnemyDemoGroup_newFaction = ["I_C_Soldier_Bandit_2_F", 
+"I_C_Soldier_Bandit_8_F",
+"I_C_Soldier_Bandit_8_F", 
+"I_C_Soldier_Bandit_6_F"];
+
+baseEnemyMortarGroup_newFaction = ["I_G_Mortar_01_F", 
+"I_C_Soldier_Bandit_8_F", 
+"I_C_Soldier_Bandit_6_F"];
+
+baseEnemyVehicleGroup_newFaction = ["I_C_Offroad_02_LMG_F", 
+"I_C_Offroad_02_AT_F"];
+
+baseEnemyLightArmoredVehicleGroup_newFaction = ["I_C_Offroad_02_LMG_F", 
+"I_C_Offroad_02_AT_F"];
+
+baseEnemyHeavyArmoredVehicleGroup_newFaction = ["I_C_Offroad_02_LMG_F", 
+"I_C_Offroad_02_AT_F"];
+
+baseChopperGroup_newFaction = ["I_C_Offroad_02_LMG_F", 
+"I_C_Offroad_02_AT_F"];
+
+baseFixedWingGroup_newFaction = ["I_C_Offroad_02_LMG_F", 
+"I_C_Offroad_02_AT_F"];
+
 ////////////////////////
 //Vehicle management////
 ////////////////////////
 //newFaction
 bluforUnarmedVehicle_newFaction = ["B_AMF_VAB_ULTIMA_X8_F"];
 
-bluforArmedVehicle_newFaction = [
-	"amf_pvp_01_CE_f",
-	"B_AMF_VAB_ULTIMA_TOP_X8_F",
-	"AMF_VBMR_L_CE_01"];
+bluforArmedVehicle_newFaction = ["amf_pvp_01_CE_f","B_AMF_VAB_ULTIMA_TOP_X8_F","AMF_VBMR_L_CE_01"];
 
-bluforUnarmedVehicleChopper_newFaction = ["ffaa_nh90_tth_transport",
-"AMF_gazelle_afte_f",
-"ffaa_famet_cougar"];
+bluforUnarmedVehicleChopper_newFaction = ["ffaa_nh90_tth_transport","AMF_gazelle_afte_f","ffaa_famet_cougar"];
 
+bluforArmoredVehicle_newFaction = ["B_AMF_VAB_ULTIMA_TOP_X8_F","AMF_VBMR_L_CE_01"];
 
-bluforDrone_newFaction = [
-"B_UAV_02_dynamicLoadout_F"
+bluforDrone_newFaction = ["B_UAV_02_dynamicLoadout_F"
 ];
 
-bluforBoat_newFaction = [
-"CUP_B_RHIB_HIL",
+bluforBoat_newFaction = ["CUP_B_RHIB_HIL",
 "CUP_B_Zodiac_USMC"
 ];
+
+bluforFixedWing_newFaction = ["I_C_Offroad_02_LMG_F", 
+"I_C_Offroad_02_AT_F"];
 
 ////////////////////////
 //Loadout management////
 ////////////////////////
 
 //newFaction
-loadout_newFaction = [				
-	[c_leader,""],
-	[c_at,""],
-	[c_rifleman,""],//Default stuff
-	[c_engineer,""],
-	[c_autorifleman,""],
-	[c_marksman,""],
-	[c_medic,""]
+loadout_newFaction = [		
+	[c_leader,],
+	[c_at,],
+	[c_rifleman,],//Default stuff
+	[c_engineer,],
+	[c_autorifleman,],
+	[c_marksman,],
+	[c_medic,]
 ];
 
 ////////////////////////
@@ -51,28 +110,35 @@ loadout_newFaction = [
 ////////////////////////
 //newFaction
 rifleList_newFaction = [		
-	"CUP_arifle_mk18_black",
-	"CUP_arifle_mk18_m203_black"
+	"AMF_614_short_01_F",
+	"AMF_614_long_01_F",
+	"AMF_Samas_F1_01_F",
+	"AMF_Samas_FELIN_01_F",
+	"AMF_Samas_G2_01_F",
+	"AMF_Samas_VALO_01_F"
 ];	
 
 launcherList_newFaction = [		
-	"CUP_launch_Javelin",
-	"CUP_launch_FIM92Stinger",
-	"CUP_launch_MAAWS",
-	"CUP_launch_MAAWS_Scope"
+	"CUP_launch_Metis",
+	"CUP_launch_M136_Loaded"
 ];	
 
 autorifleList_newFaction = [			
-	"CUP_lmg_Mk48"
+	"amf_mini_mg_01_f"
 ];	
 
 
 marksmanrifleList_newFaction = [		
-	"CUP_srifle_Mk12SPR"
+	"CUP_arifle_Mk17_STD",
+	"AMF_PGM_ULTIMA_RATIO_01_F",
+	"AMF_Perseis_II_01_F",
+	"AMF_Perseis_II_02_F",
+	"AMF_RFF2_01_F",
+	"AMF_714_long_tan_f"
 ];
 
 smgList_newFaction = [		
-	"CUP_smg_MP7"
+	"amf_hk_mp5_01_f"
 ];
 
 
@@ -80,64 +146,28 @@ smgList_newFaction = [
 //Attachement management//
 //////////////////////////
 attachmentShortList_newFaction	= [
-	"CUP_optic_AC11704_Black",
-	"CUP_optic_VortexRazor_UH1_Black",		
-	"CUP_optic_artel_m14",
-	"CUP_optic_artel_m14_pip",
-	"CUP_optic_Aimpoint_5000",
-	"CUP_optic_HoloBlack",
-	"CUP_optic_Eotech553_Black",		
-	"CUP_optic_CompM2_Black",			
-	"CUP_optic_CompM2_low",			
-	"CUP_optic_CompM4",
-	"CUP_optic_MicroT1",			
-	"CUP_optic_MicroT1_low",			
-	"CUP_optic_MARS",
-	"CUP_optic_MEPRO",
-	"CUP_optic_MEPRO_openx_orange",
-	"CUP_optic_MEPRO_moa_clear",
-	"CUP_optic_MEPRO_tri_clear",
-	"CUP_optic_SUSAT",
-	"CUP_optic_SUSAT_PIP",
-	"CUP_optic_SUSAT_3D",
-	//"CUP_optic_ACOG",  //Remove too versatile optics to test players new choice
-	"CUP_optic_ACOG_PIP",
-	"CUP_optic_ACOG_3D",
-	"CUP_optic_ACOG2",
-	"CUP_optic_ACOG2_PIP",
-	"CUP_optic_ACOG2_3D",
-	"CUP_optic_RCO",
-	"CUP_optic_ACOG_TA01NSN_Black_PIP",
-	"CUP_optic_ACOG_TA01NSN_Black_3D",
-	"CUP_optic_ACOG_TA01B_Black",
-	"CUP_optic_ACOG_TA01B_Black_PIP",
-	"CUP_optic_ACOG_TA01B_Black_3D",
-	"CUP_optic_ZDDot",
-	"CUP_optic_MRad",
-	"CUP_optic_TrijiconRx01_black",
-	"CUP_optic_TrijiconRx01_kf_black",
-	"CUP_optic_ZeissZPoint",
-	"CUP_optic_HensoldtZO",
-	"CUP_acc_ANPEQ_15",
-	"CUP_acc_ANPEQ_15_Black",
-	"CUP_acc_ANPEQ_15_Top_Flashlight_Tan_L",
-	"CUP_acc_ANPEQ_2",
-	"CUP_acc_ANPEQ_2_Black_Top",
-	"CUP_acc_ANPEQ_2_desert",
-	"CUP_acc_ANPEQ_2_grey",
-	"CUP_bipod_Harris_1A2_L_BLK",
-	"CUP_bipod_VLTOR_Modpod",
-	"CUP_muzzle_PB6P9",
-	"CUP_muzzle_Bizon",
-	"CUP_muzzle_PBS4",
-	"CUP_muzzle_TGPA",
-	"CUP_muzzle_snds_KZRZP_Base",
-	"CUP_muzzle_snds_KZRZP_SVD",
-	"CUP_muzzle_snds_KZRZP_AK762",
-	"CUP_muzzle_snds_KZRZP_AK545",
-	"CUP_muzzle_snds_KZRZP_PK"
+	"AMF_Aimpoint_CompM5",
+	"AMF_AIMPOINT_MICRO_T1",
+	"AMF_AIMPOINT_MICRO_T2",
+	"AMF_Aimpoint_Pro_Patrol",
+	"AMF_ALPHA900",
+	"AMF_AN_PEQ_15_black",
+	"AMF_AN_PEQ_15_green",
+	"AMF_AN_PEQ_15_painted",
+	"AMF_AN_PEQ_15_tan",
+	"amf_red_dot_sight",
+	"amf_xps3_magnifier_side",
+	"amf_specter",
+	"AMF_EOTECH_553"
+
 ];
 
+attachmentLongList_newFaction	= [
+	"amf_scrome_j4",
+	"amf_scrome_j8",
+	"amf_schmidt_benderx4",
+	"optic_lrps"
+];
 
 ////////////////////////
 ////Items management////
@@ -181,4 +211,16 @@ itemMedicList_newFaction = [
 	"ACE_bloodIV_250",
 	"ACE_personalAidKit",
 	"ACE_surgicalKit"
+	];
+
+backPackList_newFaction = [
+
+	];
+
+uniformList_newFaction = [
+
+	];
+
+magazineList_newFaction = [
+
 	];
