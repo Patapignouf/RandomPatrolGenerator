@@ -45,8 +45,8 @@ if (isServer) then
 			_tempGroup = _thisAvailableOpforGroup; //Init group with basic infantry
 			_tempVehicleGroup = [];
 
-			//Generate light vehicle 50% chance to spawn
-			if (count _thisAvailableOpforCars != 0 &&	 round random 1 == 0) then 
+			//Generate light vehicle 33% chance to spawn
+			if (count _thisAvailableOpforCars != 0 &&	 round random 2 == 0) then 
 			{
 				_tempVehicleGroup pushBack [selectRandom _thisAvailableOpforCars];
 			};
@@ -55,10 +55,7 @@ if (isServer) then
 			if (count _thisAvailableOpforLightArmoredVehicle != 0 && enableArmored == 1) then 
 			{
 				//Light armored vehicle spawn chance 33%
-				if (round random 2 == 0) then 
-				{
-					_tempVehicleGroup pushBack [selectRandom _thisAvailableOpforLightArmoredVehicle];
-				};
+				_tempVehicleGroup pushBack [selectRandom _thisAvailableOpforLightArmoredVehicle];
 
 				//Heavy armored vehicle spawn chance 17%
 				if (count _thisAvailableOpforHeavyArmoredVehicle != 0 && round random 1 == 0) then 

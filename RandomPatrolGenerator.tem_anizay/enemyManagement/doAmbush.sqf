@@ -38,7 +38,7 @@ if (isServer) then
 				currentVehicleGroup move (_thisTargetPosition);
 				currentVehicleGroup setBehaviour "SAFE";
 				_numberOfVehicleSpawned = _numberOfVehicleSpawned + 1;
-				(leader currentGroup) limitSpeed 20; //limit speed of vehicle
+				(vehicle leader currentGroup) limitSpeed 15; //limit speed of vehicle
 			};
 		};
 	};

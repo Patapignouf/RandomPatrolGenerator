@@ -52,8 +52,9 @@ baseEnemyMortarGroup_Russian  = ["CUP_O_2b14_82mm_RU_M_MSV",
 "CUP_O_RU_Soldier_MG_M_EMR_V2", 
 "CUP_O_RU_Soldier_TL_M_EMR_V2"];
 
-baseEnemyVehicleGroup_Russian  = ["CUP_O_UAZ_MG_RU",
-"CUP_O_UAZ_SPG9_RU"];
+baseEnemyVehicleGroup_Russian  = ["CUP_O_UAZ_AGS30_RU", 
+"CUP_O_UAZ_MG_RU", 
+"CUP_O_UAZ_Open_RU"];
 
 baseEnemyLightArmoredVehicleGroup_Russian = ["CUP_O_GAZ_Vodnik_KPVT_RU", 
 "CUP_O_GAZ_Vodnik_PK_RU","CUP_O_Ural_ZU23_RU"];
