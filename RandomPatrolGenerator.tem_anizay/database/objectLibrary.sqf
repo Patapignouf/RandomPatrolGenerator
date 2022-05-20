@@ -3,6 +3,7 @@ _USA = 1;
 _Syndikat = 2;
 _Ru = 3;
 _French = 4;
+_USA_2000 = 5;
 
 #include "object_db\USA.sqf"
 #include "object_db\French.sqf"
@@ -17,8 +18,9 @@ c_Russian = "_Russian";
 c_Taki = "_Taki";
 c_Syndikat = "_Syndikat";
 c_French = "_French";
+c_USA_2000 = "_USA_2000";
 
-factionInfos = [[c_USA,_USA],[c_Russian,_Ru],[c_Taki,_Taki],[c_Syndikat,_Syndikat],[c_French,_French]];
+factionInfos = [[c_USA,_USA],[c_Russian,_Ru],[c_Taki,_Taki],[c_Syndikat,_Syndikat],[c_French,_French],[c_USA_2000,_USA_2000]];;
 
 c_variableToInit = ["bluforUnarmedVehicle","bluforArmedVehicle","bluforUnarmedVehicleChopper","bluforDrone","bluforBoat","civilian_group",
 "civilian_big_group","civilianTruck","baseEnemyGroup","baseEnemyATGroup","baseEnemyDemoGroup","baseEnemyMortarGroup","baseEnemyVehicleGroup",

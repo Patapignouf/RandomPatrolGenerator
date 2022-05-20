@@ -29,6 +29,7 @@ civilianTruck_newFaction = ["C_SUV_01_F","C_Offroad_01_repair_F"];
 ///Define enemy group data////
 //////////////////////////////
 //newFaction
+//Basic enemy group | 8 men (Leader, Medic, MG, Sniper, Rifleman)
 baseEnemyGroup_newFaction = ["I_C_Soldier_Bandit_4_F", 
 "I_C_Soldier_Bandit_3_F", 
 "I_C_Soldier_Bandit_7_F", 
@@ -38,33 +39,41 @@ baseEnemyGroup_newFaction = ["I_C_Soldier_Bandit_4_F",
 "I_C_Soldier_Bandit_8_F", 
 "I_C_Soldier_Bandit_1_F"];
 
+//Basic anti tank enemy group | 5 men (Leader, MG, AT)
 baseEnemyATGroup_newFaction = ["I_C_Soldier_Bandit_6_F", 
 "I_C_Soldier_Bandit_2_F", 
 "I_C_Soldier_Bandit_2_F",
 "I_C_Soldier_Bandit_7_F", 
 "I_C_Soldier_Bandit_8_F"];
 
+//Basic demolition enemy group | 8 men (Leader, Explosive)
 baseEnemyDemoGroup_newFaction = ["I_C_Soldier_Bandit_2_F", 
 "I_C_Soldier_Bandit_8_F",
 "I_C_Soldier_Bandit_8_F", 
 "I_C_Soldier_Bandit_6_F"];
 
+//Basic Mortar enemy group | 8 men (Mortar, Rifleman)
 baseEnemyMortarGroup_newFaction = ["I_G_Mortar_01_F", 
 "I_C_Soldier_Bandit_8_F", 
 "I_C_Soldier_Bandit_6_F"];
 
+//Basic enemy vehicle avalaible (light) must be destroyed without AT (ex : jeep)
 baseEnemyVehicleGroup_newFaction = ["I_C_Offroad_02_LMG_F", 
 "I_C_Offroad_02_AT_F"];
 
+//Basic enemy light armored vehicle avalaible must be destroyed without heavy AT (ex : BMP)
 baseEnemyLightArmoredVehicleGroup_newFaction = ["I_C_Offroad_02_LMG_F", 
 "I_C_Offroad_02_AT_F"];
 
+//Basic enemy heavy armored vehicle avalaible must be destroyed with other vehicle or heavy AT (ex : tank)
 baseEnemyHeavyArmoredVehicleGroup_newFaction = ["I_C_Offroad_02_LMG_F", 
 "I_C_Offroad_02_AT_F"];
 
+//Basic enemy chopper avalaible
 baseChopperGroup_newFaction = ["I_C_Offroad_02_LMG_F", 
 "I_C_Offroad_02_AT_F"];
 
+//Basic enemy aircraft avalaible
 baseFixedWingGroup_newFaction = ["I_C_Offroad_02_LMG_F", 
 "I_C_Offroad_02_AT_F"];
 

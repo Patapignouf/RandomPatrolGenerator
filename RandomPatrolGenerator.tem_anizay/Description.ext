@@ -67,8 +67,8 @@ class Params
 	class BluFaction
 	{
 		title = "Blufor Faction";
-		values[] = {0,1,2,3,4};
-		texts[] = {"Takistani","US Army","Syndikat","Russian","French"};
+		values[] = {0,1,2,3,4,5};
+		texts[] = {"Takistani","US Army","Syndikat","Russian","French","USA_2000"};
 		default = 1;
 	};
 	class OpFaction

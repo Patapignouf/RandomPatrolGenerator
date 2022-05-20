@@ -3,12 +3,14 @@ _USA = 1;
 _Syndikat = 2;
 _Ru = 3;
 _French = 4;
+_USA_2000 = 5;
 
 #include "object_db\USA.sqf"
 #include "object_db\French.sqf"
 #include "object_db\Russian.sqf"
 #include "object_db\Syndikat.sqf"
 #include "object_db\Takistani.sqf"
+#include "object_db\USA_2000.sqf"
 
 //Define global constant
 c_leader = "leader";
@@ -22,12 +24,13 @@ c_medic = "medic";
 //Define faction prefix
 c_db = "_db";
 c_USA = "_USA";
+c_USA_2000 = "_USA_2000";
 c_Russian = "_Russian";
 c_Taki = "_Taki";
 c_Syndikat = "_Syndikat";
 c_French = "_French";
 
-factionInfos = [[c_USA,_USA],[c_Russian,_Ru],[c_Taki,_Taki],[c_Syndikat,_Syndikat],[c_French,_French]];
+factionInfos = [[c_USA,_USA],[c_Russian,_Ru],[c_Taki,_Taki],[c_Syndikat,_Syndikat],[c_French,_French],[c_USA_2000,_USA_2000]];
 
 c_listOfRoles = [c_leader,c_at,c_rifleman,c_engineer,c_autorifleman,c_marksman,c_medic];
 
