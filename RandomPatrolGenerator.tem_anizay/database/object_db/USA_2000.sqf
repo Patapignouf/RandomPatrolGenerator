@@ -85,8 +85,7 @@ bluforUnarmedVehicleChopper_USA_2000 = ["CUP_B_UH60M_Unarmed_US",
 "CUP_B_CH53E_VIV_USMC"];
 
 
-bluforDrone_USA_2000 = ["B_UAV_02_dynamicLoadout_F"
-];
+bluforDrone_USA_2000 = [];
 
 bluforBoat_USA_2000 = ["CUP_B_RHIB_HIL",
 "CUP_B_Zodiac_USMC"
@@ -189,11 +188,10 @@ itemList_USA_2000 = [
 	"ItemCompass",
 	"ItemWatch",
 	"NVGoggles",
-	"B_UavTerminal",
 	"Binocular",
 	"Rangefinder",
 	"ACE_MapTools",
-	"ACE_microDAGR",
+	"ACE_DAGR",
 	"ACE_SpraypaintRed",
 	"ACE_CableTie",
 	"ACE_WaterBottle",
