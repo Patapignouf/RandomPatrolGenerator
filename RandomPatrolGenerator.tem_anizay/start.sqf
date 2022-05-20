@@ -260,6 +260,7 @@ VA1 = createVehicle ["Box_IND_Wps_F", [getPos initCityLocation, 1, 5, 3, 0, 20, 
 clearWeaponCargoGlobal VA1;
 clearMagazineCargoGlobal VA1;
 clearItemCargoGlobal VA1;
+clearBackpackCargoGlobal VA1;
 publicvariable "VA1";
 
 
@@ -447,7 +448,17 @@ VA2 = createVehicle ["B_supplyCrate_F", [initBlueforLocation, 1, 5, 3, 0, 20, 0]
 clearWeaponCargoGlobal VA2;
 clearMagazineCargoGlobal VA2;
 clearItemCargoGlobal VA2;
+clearBackpackCargoGlobal VA2;
 publicvariable "VA2";
+
+//Place empty box to blufor camp
+{
+	_tempBox = createVehicle [_x, [ initBlueforLocation, 1, 15, 2, 0, 20, 0] call BIS_fnc_findSafePos, [], 0, "NONE"];
+	clearWeaponCargoGlobal _tempBox;
+	clearMagazineCargoGlobal _tempBox;
+	clearItemCargoGlobal _tempBox;
+	clearBackpackCargoGlobal _tempBox;
+} foreach ["Box_NATO_Uniforms_F", "ACE_Box_82mm_Mo_Combo", "Box_NATO_Equip_F"];
 
 TPFlag1 = createVehicle ["Flag_Blue_F", [initBlueforLocation, 1, 5, 3, 0, 20, 0] call BIS_fnc_findSafePos, [], 0, "NONE"];
 publicvariable "TPFlag1";
