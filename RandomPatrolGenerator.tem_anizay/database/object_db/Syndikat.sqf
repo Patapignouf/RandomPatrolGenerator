@@ -160,7 +160,6 @@ itemList_Syndikat = [
 	"Rangefinder",
 	"ACE_MapTools",
 	"ACE_microDAGR",
-	"ACE_SpraypaintRed",
 	"ACE_CableTie",
 	"ACE_DAGR",
 	"ACE_WaterBottle",
@@ -173,7 +172,12 @@ itemList_Syndikat = [
 	"ACE_morphine",
 	"ACE_quikclot",
 	"ACE_EntrenchingTool",
-	"ACE_RangeTable_82mm"
+	"ACE_RangeTable_82mm",
+	"ACE_SpraypaintBlack",
+	"ACE_SpraypaintBlue",
+	"ACE_SpraypaintGreen",
+	"ACE_SpraypaintRed",
+	"ACE_IR_Strobe_Item"
 	];
 
 itemEngineerList_Syndikat = [
