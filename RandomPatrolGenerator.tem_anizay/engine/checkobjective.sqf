@@ -181,9 +181,30 @@ while {sleep 10; !missionComplete} do
 			default { hint "default" };
 		};
 	} foreach _missionUncompletedObjectives;
-
 	missionComplete = count _completedObjectives + 1 >= count _missionObjectives;
+
+
 };
+
+
+
+//Generate RTB task
+RTBComplete = false;
+[true, "taskRTB", ["Return to your initial base", "RTB", ""], objNull, 1, 3, true] call BIS_fnc_taskCreate;
+while {sleep 5; !RTBComplete} do
+{
+	nbBluePlayer = {alive _x && side _x == blufor} count allPlayers;
+    nbIndPlayer = {alive _x && side _x == independent} count allPlayers;
+	nbBluePlayerBack = count ((allPlayers select {alive _x && side _x == blufor} ) inAreaArray bluforTrigger); //vehicles (all vehicles) inAreaArray (Returns list of Objects or Positions that are in the area _independantTrigger.)  
+	nbIndPlayerBack = count ((allPlayers select {alive _x && side _x == independent} ) inAreaArray independantTrigger);
+	if (nbBluePlayer == nbBluePlayerBack && nbIndPlayer == nbIndPlayerBack) then 
+	{
+		["taskRTB","SUCCEEDED"] call BIS_fnc_taskSetState;
+		RTBComplete = true;
+	};
+};
+
+
 
 diag_log format ["All objectives completed !"];
 if (isMultiplayer) then {
