@@ -179,6 +179,7 @@ attachmentShortList_USA	= [
 	"CUP_optic_TrijiconRx01_kf_black",
 	"CUP_optic_ZeissZPoint",
 	"CUP_optic_HensoldtZO",
+	"CUP_optic_ElcanM145",
 	"CUP_acc_ANPEQ_15",
 	"CUP_acc_ANPEQ_15_Black",
 	"CUP_acc_ANPEQ_15_Top_Flashlight_Tan_L",
