@@ -441,6 +441,7 @@ if (0 < count bluforBoat ) then
 
 
 //Generate all vehicles
+diag_log format ["Generating blufor vehicle : %1",selectedBluforVehicle];
 [initBlueforLocation, selectedBluforVehicle, 30, 100] call doGenerateVehicleForFOB;	
 
 //Init VA

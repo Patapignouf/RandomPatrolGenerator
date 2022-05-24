@@ -93,9 +93,9 @@ while {sleep 10; !missionComplete} do
 				};
 			case "ammo":
 				{
-					if (!alive (current_obj select 0)) then 
-					{	
-						diag_log format ["Objective %1 completed !", current_obj select 0 ];			
+					if (current_obj select 0 in objectReturnedToCity || current_obj select 0 in objectReturnedToFOB) then
+					{
+						diag_log format ["Objective %1 completed !", current_obj select 0 ];
 						obj_list_items = obj_list_items - [current_obj select 0];
 						_missionUncompletedObjectives = _missionUncompletedObjectives - [current_obj];
 						missionNamespace setVariable ["missionUncompletedObjectives",_missionUncompletedObjectives,true];
@@ -110,27 +110,6 @@ while {sleep 10; !missionComplete} do
 						if (respawnSettings == 1) then 
 						{
 							[[], "engine\respawnManager.sqf"] remoteExec ['BIS_fnc_execVM', 0];
-						};
-					} else 
-					{
-						if (current_obj select 0 in objectReturnedToCity || current_obj select 0 in objectReturnedToFOB) then
-						{
-							diag_log format ["Objective %1 completed !", current_obj select 0 ];
-							obj_list_items = obj_list_items - [current_obj select 0];
-							_missionUncompletedObjectives = _missionUncompletedObjectives - [current_obj];
-							missionNamespace setVariable ["missionUncompletedObjectives",_missionUncompletedObjectives,true];
-							_completedObjectives pushBack current_obj;
-							missionNamespace setVariable ["completedObjectives",_completedObjectives,true];
-							[[format ["L'objectif %1 est terminé", getText (configFile >> "cfgVehicles" >> typeOf (current_obj select 0) >> "displayName")],independent], 'engine\doGenerateMessage.sqf'] remoteExec ['BIS_fnc_execVM', 0];
-							//Manage player's feedback
-							if ("RealismMode" call BIS_fnc_getParamValue == 1 && {alive _x && side _x == independent} count allPlayers == 0) then 
-							{
-								[current_obj select 2,"SUCCEEDED"] call BIS_fnc_taskSetState;
-							};
-							if (respawnSettings == 1) then 
-							{
-								[[], "engine\respawnManager.sqf"] remoteExec ['BIS_fnc_execVM', 0];
-							};
 						};
 					};
 				};

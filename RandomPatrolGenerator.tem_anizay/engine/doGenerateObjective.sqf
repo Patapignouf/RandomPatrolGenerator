@@ -35,6 +35,35 @@ if (count _thisObjective > 0) then
 		case "ammo":
 			{
 				(objectiveObject) setPos ([(getPos _thisObjectivePosition), 1, 25, 5, 0, 20, 0] call BIS_fnc_findSafePos);
+				objectiveObject setVariable ["thisTask", _objectiveUniqueID, true];
+				objectiveObject addEventHandler ["Dammaged", {
+					params ["_object", "_selection", "_damage", "_hitIndex", "_hitPoint", "_shooter", "_projectile"];
+					if (damage _object > 0.5) then 
+					{
+						_object setDamage 1;
+						//Define parameters and mission objectives states
+						_thisTaskID = _object getVariable "thisTask";
+						_missionUncompletedObjectives = missionNamespace getVariable ["missionUncompletedObjectives",[]];
+						_completedObjectives = missionNamespace getVariable ["completedObjectives",[]];
+						_thisObjective = (_missionUncompletedObjectives select {_x select 2 == _thisTaskID});
+
+						//Manage Completed Objective
+						_completedObjectives pushBack (_thisObjective select 0);
+						missionNamespace setVariable ["completedObjectives", _completedObjectives, true];	
+						//Manage UncompletedObjective
+						_missionUncompletedObjectives = _missionUncompletedObjectives - _thisObjective;
+						missionNamespace setVariable ["missionUncompletedObjectives", _missionUncompletedObjectives, true];
+						//Manage player's feedback
+						if ("RealismMode" call BIS_fnc_getParamValue == 1 && {alive _x && side _x == independent} count allPlayers == 0) then 
+						{
+							[_thisTaskID, "SUCCEEDED"] call BIS_fnc_taskSetState;
+						};
+						if (["Respawn",1] call BIS_fnc_getParamValue == 1) then 
+						{
+							[[], "engine\respawnManager.sqf"] remoteExec ['BIS_fnc_execVM', 0];
+						};
+					};
+				}];
 			};
 		case "hvt":
 			{
