@@ -127,6 +127,13 @@ class Params
 		texts[] = {"Close to AO","Base","Random"};
 		default = 0;
 	};
+	class WarEra
+	{
+		title = "Set the era of the game";
+		values[] = {0,1,2,3,4};
+		texts[] = {"2nd War", "Cold War", "Modern Warfare","Actual Warfare","Future Warfare"};
+		default = 3;               
+	};
 	
 };
 

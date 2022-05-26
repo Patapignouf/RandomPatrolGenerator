@@ -203,11 +203,6 @@ if (hasInterface) then
 };
 
 [] spawn _generateCivDialogs;
-//Init player's stuff according to the init role
-if (hasInterface) then
-{	
-	[player] call adjustLoadout;
-};
 
 //Let's get it started !
 player allowdamage true;

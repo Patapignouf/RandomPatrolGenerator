@@ -19,6 +19,8 @@ enableInitBluAttack = "EnableInitBluAttack" call BIS_fnc_getParamValue;
 enableOpforMortar = "EnableOpforMortar" call BIS_fnc_getParamValue;
 initBluforBase = "InitBluforBase" call BIS_fnc_getParamValue;
 missionInitSetup = "MissionInitSetup" call BIS_fnc_getParamValue;
+warEra = "WarEra" call BIS_fnc_getParamValue;
+
 
 
 
