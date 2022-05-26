@@ -143,45 +143,45 @@ getVirtualBackPack = {
 
 getItembyWarEra = {
 	params ["_warEra"];
-	itemList = [];
+	_itemList = [];
 
 	switch (_warEra) do
 	{
 		//2nd War
 		case 0:
 		{
-			itemList = ["ACE_EntrenchingTool","ACE_WaterBottle","ACE_CableTie","ACE_MapTools","ItemCompass","ItemMap","ItemWatch","ACE_RangeTable_82mm","Binocular","ACE_EarPlugs"];
+			_itemList = ["ACE_EntrenchingTool","ACE_WaterBottle","ACE_CableTie","ACE_MapTools","ItemCompass","ItemMap","ItemWatch","ACE_RangeTable_82mm","Binocular","ACE_EarPlugs"];
 		};
 		//Cold War
 		case 1:
 		{
-			itemList = ["ACE_EntrenchingTool","ACE_WaterBottle","ACE_CableTie","ACE_MapTools","ItemCompass","ItemMap","ItemWatch","ACE_RangeTable_82mm","Binocular","ACE_SpraypaintRed","ACE_EarPlugs"];
+			_itemList = ["ACE_EntrenchingTool","ACE_WaterBottle","ACE_CableTie","ACE_MapTools","ItemCompass","ItemMap","ItemWatch","ACE_RangeTable_82mm","Binocular","ACE_SpraypaintRed","ACE_EarPlugs"];
 			if (isClass (configFile >> "CfgPatches" >> "task_force_radio")) then {
-				itemList = itemList pushBack "TFAR_anprc152";
+				_itemList pushBack "TFAR_anprc152";
 			} ;
 		};
 		//Modern Warfare
 		case 2:
 		{
-			itemList = ["ACE_DAGR","ACE_EntrenchingTool","ACE_WaterBottle","ACE_CableTie","ACE_MapTools","ItemCompass","ItemMap","ItemWatch","ACE_RangeTable_82mm","Binocular","ACE_SpraypaintRed","ACE_EarPlugs"];
+			_itemList = ["ACE_DAGR","ACE_EntrenchingTool","ACE_WaterBottle","ACE_CableTie","ACE_MapTools","ItemCompass","ItemMap","ItemWatch","ACE_RangeTable_82mm","Binocular","ACE_SpraypaintRed","ACE_EarPlugs"];
 			if (isClass (configFile >> "CfgPatches" >> "task_force_radio")) then {
-				itemList = itemList pushBack "TFAR_anprc152";
+				_itemList pushBack "TFAR_anprc152";
 			} ;
 		};
 		//Actual Warfare
 		case 3:
 		{
-			itemList = ["ACE_DAGR", "ACE_microDAGR","B_UavTerminal","ACE_EntrenchingTool","ACE_WaterBottle","ACE_CableTie","ACE_MapTools","ItemCompass","ItemMap","ItemWatch","ACE_RangeTable_82mm","Binocular","ACE_SpraypaintRed","ACE_EarPlugs"];
+			_itemList = ["ACE_DAGR", "ACE_microDAGR","B_UavTerminal","ACE_EntrenchingTool","ACE_WaterBottle","ACE_CableTie","ACE_MapTools","ItemCompass","ItemMap","ItemWatch","ACE_RangeTable_82mm","Binocular","ACE_SpraypaintRed","ACE_EarPlugs"];
 			if (isClass (configFile >> "CfgPatches" >> "task_force_radio")) then {
-				itemList = itemList pushBack "TFAR_anprc152";
+				_itemList pushBack "TFAR_anprc152";
 			} ;
 		};
 		//Future Warfare
 		case 4:
 		{
-			itemList = ["ACE_DAGR", "ACE_microDAGR","ACE_EntrenchingTool","ACE_WaterBottle","ACE_CableTie","ACE_MapTools","ItemCompass","ItemMap","ItemWatch","ACE_RangeTable_82mm","Binocular","ACE_SpraypaintRed","ACE_EarPlugs"];
+			_itemList = ["ACE_DAGR", "ACE_microDAGR","ACE_EntrenchingTool","ACE_WaterBottle","ACE_CableTie","ACE_MapTools","ItemCompass","ItemMap","ItemWatch","ACE_RangeTable_82mm","Binocular","ACE_SpraypaintRed","ACE_EarPlugs"];
 			if (isClass (configFile >> "CfgPatches" >> "task_force_radio")) then {
-				itemList = itemList pushBack "TFAR_anprc152";
+				_itemList pushBack "TFAR_anprc152";
 			} ;
 		};
 		default
@@ -189,9 +189,8 @@ getItembyWarEra = {
 			
 		};
 	};
-
-
-	itemList
+	diag_log format ["itemList : %1", _itemList];
+	_itemList
 };
 
 getVirtualItemList = {
@@ -199,7 +198,7 @@ getVirtualItemList = {
 	currentFaction = _this select 1;
 	currentPlayerClass = currentPlayer getVariable "role";
 	virtualItemList = [warEra] call getItembyWarEra;
-
+	diag_log format ["virtualItemList : %1", virtualItemList];
 	switch (currentPlayerClass) do
 	{
 		case c_leader;
@@ -350,6 +349,7 @@ adjustTFARRadio = {
 		_currentPlayer addItem "TFAR_anprc152";
 		_currentPlayer assignItem "TFAR_anprc152";
 
+		//Seems not working
 		if (side _currentPlayer == blufor) then
 		{
 			[(call TFAR_fnc_activeSwRadio), 1, format ["%1",bluforShortFrequencyTFAR]] call TFAR_fnc_setChannelFrequency;
