@@ -9,7 +9,7 @@ doGenerateVehicleForFOB =
 	_thisMaxRadius = _this select 3;
 
 	//Define process 
-	_shipGoodPosition = [];
+	_shipGoodPosition = [0,0,0];
 	{
 		switch (true) do {   
 			case (_x isKindOf "Tank");

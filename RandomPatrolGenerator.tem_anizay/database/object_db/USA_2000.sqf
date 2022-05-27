@@ -114,7 +114,8 @@ loadout_USA_2000 = [
 rifleList_USA_2000 = [		
 	"CUP_arifle_M16A4_Aim_Laser",
 	"CUP_arifle_M4A1_Aim",
-	"CUP_sgun_M1014"
+	"CUP_sgun_M1014",
+	"CUP_hgun_M9"
 ];	
 
 launcherList_USA_2000 = [		
@@ -149,6 +150,7 @@ attachmentShortList_USA_2000	= [
 	"CUP_optic_ACOG2_PIP",
 	"CUP_optic_ACOG2_3D",
 	"CUP_optic_HensoldtZO",
+	"CUP_optic_ElcanM145",
 	"CUP_acc_ANPEQ_15",
 	"CUP_acc_ANPEQ_15_Black",
 	"CUP_acc_ANPEQ_15_Top_Flashlight_Tan_L",

@@ -30,6 +30,9 @@ c_Taki = "_Taki";
 c_Syndikat = "_Syndikat";
 c_French = "_French";
 
+//Import mission params
+warEra = "WarEra" call BIS_fnc_getParamValue;
+
 factionInfos = [[c_USA,_USA],[c_Russian,_Ru],[c_Taki,_Taki],[c_Syndikat,_Syndikat],[c_French,_French],[c_USA_2000,_USA_2000]];
 
 c_listOfRoles = [c_leader,c_at,c_rifleman,c_engineer,c_autorifleman,c_marksman,c_medic];
@@ -138,12 +141,64 @@ getVirtualBackPack = {
 	currentPlayerClass = _this select 0;
 };
 
+getItembyWarEra = {
+	params ["_warEra"];
+	_itemList = [];
+
+	switch (_warEra) do
+	{
+		//2nd War
+		case 0:
+		{
+			_itemList = ["ACE_EntrenchingTool","ACE_WaterBottle","ACE_CableTie","ACE_MapTools","ItemCompass","ItemMap","ItemWatch","ACE_RangeTable_82mm","Binocular","ACE_EarPlugs"];
+		};
+		//Cold War
+		case 1:
+		{
+			_itemList = ["ACE_EntrenchingTool","ACE_WaterBottle","ACE_CableTie","ACE_MapTools","ItemCompass","ItemMap","ItemWatch","ACE_RangeTable_82mm","Binocular","ACE_SpraypaintRed","ACE_EarPlugs"];
+			if (isClass (configFile >> "CfgPatches" >> "task_force_radio")) then {
+				_itemList pushBack "TFAR_anprc152";
+			} ;
+		};
+		//Modern Warfare
+		case 2:
+		{
+			_itemList = ["ACE_DAGR","ACE_EntrenchingTool","ACE_WaterBottle","ACE_CableTie","ACE_MapTools","ItemCompass","ItemMap","ItemWatch","ACE_RangeTable_82mm","Binocular","ACE_SpraypaintRed","ACE_EarPlugs"];
+			if (isClass (configFile >> "CfgPatches" >> "task_force_radio")) then {
+				_itemList pushBack "TFAR_anprc152";
+			} ;
+		};
+		//Actual Warfare
+		case 3:
+		{
+			_itemList = ["ACE_DAGR", "ACE_microDAGR","B_UavTerminal","ACE_EntrenchingTool","ACE_WaterBottle","ACE_CableTie","ACE_MapTools","ItemCompass","ItemMap","ItemWatch","ACE_RangeTable_82mm","Binocular","ACE_SpraypaintRed","ACE_EarPlugs"];
+			if (isClass (configFile >> "CfgPatches" >> "task_force_radio")) then {
+				_itemList pushBack "TFAR_anprc152";
+			} ;
+		};
+		//Future Warfare
+		case 4:
+		{
+			_itemList = ["ACE_DAGR", "ACE_microDAGR","ACE_EntrenchingTool","ACE_WaterBottle","ACE_CableTie","ACE_MapTools","ItemCompass","ItemMap","ItemWatch","ACE_RangeTable_82mm","Binocular","ACE_SpraypaintRed","ACE_EarPlugs"];
+			if (isClass (configFile >> "CfgPatches" >> "task_force_radio")) then {
+				_itemList pushBack "TFAR_anprc152";
+			} ;
+		};
+		default
+		{
+			
+		};
+	};
+	diag_log format ["itemList : %1", _itemList];
+	_itemList
+};
+
 getVirtualItemList = {
 	currentPlayer = _this select 0;
 	currentFaction = _this select 1;
 	currentPlayerClass = currentPlayer getVariable "role";
-	virtualItemList = [];
-
+	virtualItemList = [warEra] call getItembyWarEra;
+	diag_log format ["virtualItemList : %1", virtualItemList];
 	switch (currentPlayerClass) do
 	{
 		case c_leader;
@@ -285,9 +340,27 @@ setupRoleSwitchToItem = {
 		},[currentFaction]];
 };
 
+//	//Define's TFAR Radio frequencie
+adjustTFARRadio = {
+	params ["_currentPlayer"];
+	if (isClass (configFile >> "CfgPatches" >> "task_force_radio")) then {
+		//player addItem "TFAR_anprc148jem";
+		//player assignItem "TFAR_anprc148jem";
+		_currentPlayer addItem "TFAR_anprc152";
+		_currentPlayer assignItem "TFAR_anprc152";
+
+		//Seems not working
+		if (side _currentPlayer == blufor) then
+		{
+			[(call TFAR_fnc_activeSwRadio), 1, format ["%1",bluforShortFrequencyTFAR]] call TFAR_fnc_setChannelFrequency;
+			[(call TFAR_fnc_activeLrRadio), 1, format ["%1",bluforShortFrequencyTFAR]] call TFAR_fnc_SetChannelFrequency;
+		};
+	};
+};
 
 adjustLoadout = {
 	currentPlayer = _this select 0;
+
 	if (currentPlayer getUnitTrait "Medic" == false) then 
 	{
 		for "_i" from 0 to 7 do { currentPlayer addItem "ACE_elasticBandage" };	
@@ -311,24 +384,47 @@ adjustLoadout = {
 	currentPlayer addItem "ACE_morphine";	
 	currentPlayer addItem "ACE_WaterBottle";
 	currentPlayer addItem "ACE_EarPlugs";
-	currentPlayer addItem "ACE_microDAGR";
 	currentPlayer unassignItem "itemRadio";
 	currentPlayer removeItem "itemRadio";
 	currentPlayer setSpeaker "noVoice";
 
-	//Define's TFAR Radio frequencie
-	if (isClass (configFile >> "CfgPatches" >> "task_force_radio")) then {
-		//player addItem "TFAR_anprc148jem";
-		//player assignItem "TFAR_anprc148jem";
-		currentPlayer addItem "TFAR_anprc152";
-		currentPlayer assignItem "TFAR_anprc152";
-
-		if (side currentPlayer == blufor) then
+	//Adapt loadout to a specific Era
+	switch (warEra) do
+	{
+		//2nd War
+		case 0:
 		{
-			[(call TFAR_fnc_activeSwRadio), 1, format ["%1",bluforShortFrequencyTFAR]] call TFAR_fnc_setChannelFrequency;
-			[(call TFAR_fnc_activeLrRadio), 1, format ["%1",bluforShortFrequencyTFAR]] call TFAR_fnc_SetChannelFrequency;
+			
+		};
+		//Cold War
+		case 1:
+		{
+			[currentPlayer] call adjustTFARRadio;
+		};
+		//Modern Warfare
+		case 2:
+		{
+			currentPlayer addItem "ACE_DAGR";
+			[currentPlayer] call adjustTFARRadio;
+		};
+		//Actual Warfare
+		case 3:
+		{
+			currentPlayer addItem "ACE_microDAGR";
+			[currentPlayer] call adjustTFARRadio;
+		};
+		//Future Warfare
+		case 4:
+		{
+			currentPlayer addItem "ACE_microDAGR";
+			[currentPlayer] call adjustTFARRadio;
+		};
+		default
+		{
+			
 		};
 	};
+	diag_log format ["Player %1 loadout adjust", name currentPlayer];
 };
 
 

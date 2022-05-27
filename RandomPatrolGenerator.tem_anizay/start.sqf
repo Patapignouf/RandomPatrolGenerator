@@ -18,6 +18,11 @@ enableInitAttack = "EnableInitAttack" call BIS_fnc_getParamValue;
 enableInitBluAttack = "EnableInitBluAttack" call BIS_fnc_getParamValue;
 enableOpforMortar = "EnableOpforMortar" call BIS_fnc_getParamValue;
 initBluforBase = "InitBluforBase" call BIS_fnc_getParamValue;
+missionInitSetup = "MissionInitSetup" call BIS_fnc_getParamValue;
+warEra = "WarEra" call BIS_fnc_getParamValue;
+
+
+
 
 /////////////////////////
 ////Setup IA Opti////////
@@ -35,10 +40,13 @@ enableDynamicSimulationSystem true;
 
 //FriendlyGroupDefinition
 bluforUnarmedVehicle = bluforUnarmedVehicle_db select {_x select 1  == bluFaction} select 0 select 0;
+missionNamespace setVariable ["bluforUnarmedVehicle", bluforUnarmedVehicle, true];
 
 bluforArmedVehicle = bluforArmedVehicle_db select {_x select 1  == bluFaction} select 0 select 0;
+missionNamespace setVariable ["bluforArmedVehicle", bluforArmedVehicle, true];
 
 bluforUnarmedVehicleChopper = bluforUnarmedVehicleChopper_db select {_x select 1  == bluFaction} select 0 select 0;
+missionNamespace setVariable ["bluforUnarmedVehicleChopper", bluforUnarmedVehicleChopper, true];
 
 bluforDrone = bluforDrone_db select {_x select 1  == bluFaction} select 0 select 0;
 
@@ -126,8 +134,6 @@ for [{_i = 0}, {_i < numberOfAmbush}, {_i = _i + 1}] do
 };
 PossibleObjectivePosition = possiblePOILocation;
 
-//Setup init Civ city
-[[text initCityLocation,"ColorBlue","loc_help",getPos initCityLocation, "All"], 'objectGenerator\doGenerateMarker.sqf'] remoteExec ['BIS_fnc_execVM', 0];
 for [{_i = 0}, {_i <= 2}, {_i = _i + 1}] do //Peut être optimisé
 {
 	_currentTruckType = selectRandom civilianTruck;
@@ -320,18 +326,14 @@ if (1 <= (count EnemyWaveSpawnPositions)) then
 };
 
 //Generate mortar
-if (enableOpforMortar == 1 || (enableOpforMortar == 2 && round random 1 == 0)) then 
-{
-	for [{_i = 0}, {_i < 2}, {_i = _i + 1}] do
-	{ 
-		_mortarSpawnPosition = [getPos initCityLocation, (800), (aoSize+700), 3, 10, 0.25, 0, [], [[0,0,0],[0,0,0]]] call BIS_fnc_findSafePos;
-		if !([_mortarSpawnPosition , [0,0,0]] call BIS_fnc_areEqual) then 
-		{
-			_mortarGroup = [baseEnemyMortarGroup, _mortarSpawnPosition, east, "Mortar"] call doGenerateEnemyGroup;
-		};
+for [{_i = 0}, {_i < 2}, {_i = _i + 1}] do
+{ 
+	_mortarSpawnPosition = [getPos initCityLocation, (800), (aoSize+700), 3, 10, 0.25, 0, [], [[0,0,0],[0,0,0]]] call BIS_fnc_findSafePos;
+	if !([_mortarSpawnPosition , [0,0,0]] call BIS_fnc_areEqual) then 
+	{
+		_mortarGroup = [baseEnemyMortarGroup, _mortarSpawnPosition, east, "Mortar"] call doGenerateEnemyGroup;
 	};
 };
-
 
 //Generate Civs dialogs
 //[] execVM 'enemyManagement\generateCivDialogs.sqf'; 
@@ -441,7 +443,8 @@ if (0 < count bluforBoat ) then
 
 
 //Generate all vehicles
-[initBlueforLocation,selectedBluforVehicle, 30, 100] call doGenerateVehicleForFOB;	
+diag_log format ["Generating blufor vehicle : %1",selectedBluforVehicle];
+[initBlueforLocation, selectedBluforVehicle, 30, 100] call doGenerateVehicleForFOB;	
 
 //Init VA
 VA2 = createVehicle ["B_supplyCrate_F", [initBlueforLocation, 1, 5, 3, 0, 20, 0] call BIS_fnc_findSafePos, [], 0, "NONE"];
@@ -460,6 +463,17 @@ publicvariable "VA2";
 	clearBackpackCargoGlobal _tempBox;
 } foreach ["Box_NATO_Uniforms_F", "ACE_Box_82mm_Mo_Combo", "Box_NATO_Equip_F"];
 
+
+//Setup view distance changer
+SettingsComputer =  createVehicle ["Land_MultiScreenComputer_01_olive_F", [initBlueforLocation, 1, 5, 3, 0, 20, 0] call BIS_fnc_findSafePos, [], 0, "NONE"];
+{
+	[SettingsComputer, [format ["Set view distance to %1",_x],{
+				params ["_object","_caller","_ID","_viewDistance"];
+				//Select ViewDistance
+				setViewDistance _viewDistance;
+			},_x,1.5,true,true,"","_target distance _this <5"]] remoteExec ["addAction"];
+} foreach [-1,300,500,1000,1500,2000,2500];
+
 TPFlag1 = createVehicle ["Flag_Blue_F", [initBlueforLocation, 1, 5, 3, 0, 20, 0] call BIS_fnc_findSafePos, [], 0, "NONE"];
 publicvariable "TPFlag1";
 
@@ -475,6 +489,32 @@ if ( count AvalaibleInitAttackPositions != 0 && (enableInitBluAttack == 1 || ((e
 	[AvalaibleInitAttackPositions,initBlueforLocation,[baseEnemyGroup,baseEnemyATGroup],baseEnemyVehicleGroup,difficultyParameter] execVM 'enemyManagement\doAmbush.sqf'; 
 	isBluforAttacked = true;
 	publicvariable "isBluforAttacked";
+};
+
+////////////////////////////
+///// MissionInitSetup /////
+////////////////////////////
+
+//Case where blufor has objective on start
+
+switch (missionInitSetup) do
+{
+	case 1:
+		{
+			//Setup init Civ city
+			[[text initCityLocation,"ColorBlue","loc_help",getPos initCityLocation, "All"], 'objectGenerator\doGenerateMarker.sqf'] remoteExec ['BIS_fnc_execVM', 0];
+		};
+	case 2:
+		{
+			for [{_i = 0}, {_i <= lengthParameter}, {_i = _i + 1}] do //Peut être optimisé
+			{
+				[] execVM 'engine\revealObjective.sqf';
+			};
+		};
+	default
+		{
+			//
+		};
 };
 
 //Init garbage collector

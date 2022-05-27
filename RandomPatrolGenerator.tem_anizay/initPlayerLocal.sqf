@@ -1,10 +1,13 @@
 #include "database\arsenalLibrary.sqf"
+#include "objectGenerator\vehicleManagement.sqf"
 
 bluFaction = "BluFaction" call BIS_fnc_getParamValue;
 indFaction = "IndFaction" call BIS_fnc_getParamValue;
 enableThermal = "EnableThermal" call BIS_fnc_getParamValue;
 enablePlane = "EnablePlane" call BIS_fnc_getParamValue;
 enableHalo = "EnableHALO" call BIS_fnc_getParamValue;
+enableArmored = "EnableArmored" call BIS_fnc_getParamValue;
+initBluforBase = "InitBluforBase" call BIS_fnc_getParamValue;
 
 //Optimize scripts
 private _disableThermal = compile preprocessFileLineNumbers "engine\disableThermal.sqf";
@@ -91,6 +94,7 @@ if (hasInterface) then
 			}];
 		};
 	};
+
 	if (side player == blufor) then
 	{
 		player setVariable ["sideBeforeDeath","blufor"];
@@ -103,8 +107,47 @@ if (hasInterface) then
 		[VA2, player, bluFaction] call setupArsenalToItem;
 		[VA2, player, bluFaction] call setupRoleSwitchToItem;
 
+		//Manage vehicle spawn options 
+		if (enableArmored == 1) then 
+		{	
+		};
+
+		//Add vehicle spawn option 
+		//Unarmed vehicle
+		{
+			_IDVehicleSpawn = TPFlag1 addAction [format ["Spawn an %1", getText (configFile >> "cfgVehicles" >> _x >> "displayName")],{
+				params ["_object","_caller","_ID","_avalaibleVehicle"];
+				//Click on map to spawn
+				[initBlueforLocation, [_avalaibleVehicle], 30, 100] call doGenerateVehicleForFOB;	
+				[_object,_ID] remoteExec [ "removeAction", 0, true ];
+			},_x,1.5,true,true,"","_target distance _this <5"];
+		} foreach (missionNamespace getVariable ["bluforUnarmedVehicle",[]]); 
+
+		//Armed vehicle
+		{
+			_IDVehicleSpawn = TPFlag1 addAction [format ["Spawn an %1", getText (configFile >> "cfgVehicles" >> _x >> "displayName")],{
+				params ["_object","_caller","_ID","_avalaibleVehicle"];
+				//Click on map to spawn
+				[initBlueforLocation, [_avalaibleVehicle], 30, 100] call doGenerateVehicleForFOB;	
+				[_object,_ID] remoteExec [ "removeAction", 0, true ];
+			},_x,1.5,true,true,"","_target distance _this <5"];
+		} foreach (missionNamespace getVariable ["bluforArmedVehicle",[]]); 
+
+		//Unarmed Chopper
+		if (initBluforBase == 1) then 
+		{
+			{
+				_IDVehicleSpawn = TPFlag1 addAction [format ["Spawn an %1", getText (configFile >> "cfgVehicles" >> _x >> "displayName")],{
+					params ["_object","_caller","_ID","_avalaibleVehicle"];
+					//Click on map to spawn
+					[initBlueforLocation, [_avalaibleVehicle], 30, 100] call doGenerateVehicleForFOB;	
+					[_object,_ID] remoteExec [ "removeAction", 0, true ];
+				},_x,1.5,true,true,"","_target distance _this <5"];
+			} foreach (missionNamespace getVariable ["bluforUnarmedVehicleChopper",[]]); 
+		};
 
 		_avalaibleAicraft = "CUP_B_A10_DYN_USA"; //temp aircraft list 
+
 		//Manage vehicle spawn options 
 		if (enablePlane == 1) then 
 		{	
@@ -160,11 +203,6 @@ if (hasInterface) then
 };
 
 [] spawn _generateCivDialogs;
-//Init player's stuff according to the init role
-if (hasInterface) then
-{	
-	[player] call adjustLoadout;
-};
 
 //Let's get it started !
 player allowdamage true;
