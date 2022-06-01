@@ -114,6 +114,7 @@ if (hasInterface) then
 
 		//Add vehicle spawn option 
 		//Unarmed vehicle
+		waitUntil {!isNil "bluforUnarmedVehicle"};
 		{
 			_IDVehicleSpawn = TPFlag1 addAction [format ["Spawn an %1", getText (configFile >> "cfgVehicles" >> _x >> "displayName")],{
 				params ["_object","_caller","_ID","_avalaibleVehicle"];
@@ -121,9 +122,10 @@ if (hasInterface) then
 				[initBlueforLocation, [_avalaibleVehicle], 30, 100] call doGenerateVehicleForFOB;	
 				[_object,_ID] remoteExec [ "removeAction", 0, true ];
 			},_x,1.5,true,true,"","_target distance _this <5"];
-		} foreach (missionNamespace getVariable ["bluforUnarmedVehicle",[]]); 
+		} foreach bluforUnarmedVehicle; 
 
 		//Armed vehicle
+		waitUntil {!isNil "bluforArmedVehicle"};
 		{
 			_IDVehicleSpawn = TPFlag1 addAction [format ["Spawn an %1", getText (configFile >> "cfgVehicles" >> _x >> "displayName")],{
 				params ["_object","_caller","_ID","_avalaibleVehicle"];
@@ -131,9 +133,10 @@ if (hasInterface) then
 				[initBlueforLocation, [_avalaibleVehicle], 30, 100] call doGenerateVehicleForFOB;	
 				[_object,_ID] remoteExec [ "removeAction", 0, true ];
 			},_x,1.5,true,true,"","_target distance _this <5"];
-		} foreach (missionNamespace getVariable ["bluforArmedVehicle",[]]); 
+		} foreach bluforArmedVehicle; 
 
 		//Unarmed Chopper
+		waitUntil {!isNil "bluforUnarmedVehicleChopper"};
 		if (initBluforBase == 1) then 
 		{
 			{
@@ -143,7 +146,7 @@ if (hasInterface) then
 					[initBlueforLocation, [_avalaibleVehicle], 30, 100] call doGenerateVehicleForFOB;	
 					[_object,_ID] remoteExec [ "removeAction", 0, true ];
 				},_x,1.5,true,true,"","_target distance _this <5"];
-			} foreach (missionNamespace getVariable ["bluforUnarmedVehicleChopper",[]]); 
+			} foreach bluforUnarmedVehicleChopper; 
 		};
 
 		_avalaibleAicraft = "CUP_B_A10_DYN_USA"; //temp aircraft list 

@@ -40,13 +40,13 @@ enableDynamicSimulationSystem true;
 
 //FriendlyGroupDefinition
 bluforUnarmedVehicle = bluforUnarmedVehicle_db select {_x select 1  == bluFaction} select 0 select 0;
-missionNamespace setVariable ["bluforUnarmedVehicle", bluforUnarmedVehicle, true];
+publicVariable "bluforUnarmedVehicle";
 
 bluforArmedVehicle = bluforArmedVehicle_db select {_x select 1  == bluFaction} select 0 select 0;
-missionNamespace setVariable ["bluforArmedVehicle", bluforArmedVehicle, true];
+publicVariable "bluforArmedVehicle";
 
 bluforUnarmedVehicleChopper = bluforUnarmedVehicleChopper_db select {_x select 1  == bluFaction} select 0 select 0;
-missionNamespace setVariable ["bluforUnarmedVehicleChopper", bluforUnarmedVehicleChopper, true];
+publicVariable "bluforUnarmedVehicleChopper";
 
 bluforDrone = bluforDrone_db select {_x select 1  == bluFaction} select 0 select 0;
 
