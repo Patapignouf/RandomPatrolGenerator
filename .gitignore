@@ -15,3 +15,7 @@ RandomPatrolGeneratorChernarus.chernarus/
 RandomPatrolGeneratorRuha.ruha/
 RandomPatrolGeneratorFallujah.fallujah/
 *.code-workspace
+armake
+armake_w32.exe
+armake_w64.exe
+copyMissionToAllMaps.bat
