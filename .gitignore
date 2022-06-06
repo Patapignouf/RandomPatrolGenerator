@@ -25,7 +25,3 @@ RandomPatrolGeneratorHyde_Sark.Hyde_Sark/
 RandomPatrolGeneratorSWU_Greece_Pella_Region.SWU_Greece_Pella_Region/
 RandomPatrolGeneratorMCN_Neaville.MCN_Neaville/
 *.code-workspace
-armake
-armake_w32.exe
-armake_w64.exe
-copyMissionToAllMaps.bat

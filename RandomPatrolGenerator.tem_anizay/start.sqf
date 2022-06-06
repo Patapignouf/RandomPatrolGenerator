@@ -229,7 +229,7 @@ for [{_i = 0}, {_i < numberOfSpawnWave}, {_i = _i + 1}] do
 
 
 //Init checkobjective
-[SelectedObjectives,initCityLocation] execVM 'engine\checkobjective.sqf';
+[SelectedObjectives, initCityLocation] execVM 'engine\checkobjective.sqf';
 
 
 /////////////////////////

@@ -4,6 +4,10 @@ _Syndikat = 2;
 _Ru = 3;
 _French = 4;
 _USA_2000 = 5;
+_WWII_UK = 6;
+_WWII_Wehrmacht = 7;
+_WWII_URSS = 8;
+_WWII_USA = 9;
 
 #include "object_db\USA.sqf"
 #include "object_db\French.sqf"
@@ -11,6 +15,39 @@ _USA_2000 = 5;
 #include "object_db\Syndikat.sqf"
 #include "object_db\Takistani.sqf"
 #include "object_db\USA_2000.sqf"
+#include "object_db\WWII_Wehrmacht.sqf"
+#include "object_db\WWII_URSS.sqf"
+#include "object_db\WWII_UK.sqf"
+#include "object_db\WWII_USA.sqf"
+
+//Define faction prefix
+c_db = "_db";
+c_USA = "_USA";
+c_USA_2000 = "_USA_2000";
+c_Russian = "_Russian";
+c_Taki = "_Taki";
+c_Syndikat = "_Syndikat";
+c_French = "_French";
+c_WWII_UK = "_WWII_UK";
+c_WWII_URSS = "_WWII_URSS";
+c_WWII_Wehrmacht = "_WWII_Wehrmacht";
+c_WWII_USA = "_WWII_USA";
+
+
+//Import mission params
+warEra = "WarEra" call BIS_fnc_getParamValue;
+
+factionInfos = [[c_USA,_USA],
+[c_Russian,_Ru],
+[c_Taki,_Taki],
+[c_Syndikat,_Syndikat],
+[c_French,_French],
+[c_USA_2000,_USA_2000],
+[c_WWII_UK,_WWII_UK],
+[c_WWII_URSS,_WWII_URSS],
+[c_WWII_Wehrmacht,_WWII_Wehrmacht],
+[c_WWII_USA,_WWII_USA]
+];
 
 //Define global constant
 c_leader = "leader";
@@ -21,19 +58,6 @@ c_autorifleman = "autorifleman";
 c_marksman = "marksman"; 
 c_medic = "medic";
 
-//Define faction prefix
-c_db = "_db";
-c_USA = "_USA";
-c_USA_2000 = "_USA_2000";
-c_Russian = "_Russian";
-c_Taki = "_Taki";
-c_Syndikat = "_Syndikat";
-c_French = "_French";
-
-//Import mission params
-warEra = "WarEra" call BIS_fnc_getParamValue;
-
-factionInfos = [[c_USA,_USA],[c_Russian,_Ru],[c_Taki,_Taki],[c_Syndikat,_Syndikat],[c_French,_French],[c_USA_2000,_USA_2000]];
 
 c_listOfRoles = [c_leader,c_at,c_rifleman,c_engineer,c_autorifleman,c_marksman,c_medic];
 
@@ -269,6 +293,13 @@ setupArsenalToItem = {
 
 	//AddItems to arsenal
 	[itemToAttachArsenal,([currentPlayer,currentFaction] call getVirtualWeaponList )] call BIS_fnc_addVirtualWeaponCargo;
+
+	//TEMP HOTFIX for WWII event
+	if (warEra == 0) then 
+	{
+		backpacksList = ["B_LIB_US_Radio"];
+	};
+
 	[itemToAttachArsenal,backpacksList] call BIS_fnc_addVirtualBackpackCargo;
 	//[VA2,((itemCargo VA2) + _availableHeadgear + _availableUniforms + _availableVests)] call BIS_fnc_addVirtualItemCargo;
 	[VA2,true] call BIS_fnc_addVirtualMagazineCargo;

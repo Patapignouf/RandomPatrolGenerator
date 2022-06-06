@@ -4,23 +4,50 @@ _Syndikat = 2;
 _Ru = 3;
 _French = 4;
 _USA_2000 = 5;
+_WWII_UK = 6;
+_WWII_Wehrmacht = 7;
+_WWII_URSS = 8;
+_WWII_USA = 9;
 
 #include "object_db\USA.sqf"
 #include "object_db\French.sqf"
 #include "object_db\Russian.sqf"
 #include "object_db\Syndikat.sqf"
 #include "object_db\Takistani.sqf"
+#include "object_db\USA_2000.sqf"
+#include "object_db\WWII_Wehrmacht.sqf"
+#include "object_db\WWII_URSS.sqf"
+#include "object_db\WWII_UK.sqf"
+#include "object_db\WWII_USA.sqf"
 
 //Define faction prefix
 c_db = "_db";
 c_USA = "_USA";
+c_USA_2000 = "_USA_2000";
 c_Russian = "_Russian";
 c_Taki = "_Taki";
 c_Syndikat = "_Syndikat";
 c_French = "_French";
-c_USA_2000 = "_USA_2000";
+c_WWII_UK = "_WWII_UK";
+c_WWII_URSS = "_WWII_URSS";
+c_WWII_Wehrmacht = "_WWII_Wehrmacht";
+c_WWII_USA = "_WWII_USA";
 
-factionInfos = [[c_USA,_USA],[c_Russian,_Ru],[c_Taki,_Taki],[c_Syndikat,_Syndikat],[c_French,_French],[c_USA_2000,_USA_2000]];;
+
+//Import mission params
+warEra = "WarEra" call BIS_fnc_getParamValue;
+
+factionInfos = [[c_USA,_USA],
+[c_Russian,_Ru],
+[c_Taki,_Taki],
+[c_Syndikat,_Syndikat],
+[c_French,_French],
+[c_USA_2000,_USA_2000],
+[c_WWII_UK,_WWII_UK],
+[c_WWII_URSS,_WWII_URSS],
+[c_WWII_Wehrmacht,_WWII_Wehrmacht],
+[c_WWII_USA,_WWII_USA]
+];
 
 c_variableToInit = ["bluforUnarmedVehicle","bluforArmedVehicle","bluforUnarmedVehicleChopper","bluforDrone","bluforBoat","civilian_group",
 "civilian_big_group","civilianTruck","baseEnemyGroup","baseEnemyATGroup","baseEnemyDemoGroup","baseEnemyMortarGroup","baseEnemyVehicleGroup",
