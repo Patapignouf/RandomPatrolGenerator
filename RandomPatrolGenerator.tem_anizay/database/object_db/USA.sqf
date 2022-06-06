@@ -60,7 +60,15 @@ baseEnemyVehicleGroup_USA = ["CUP_B_M1151_Deploy_USA",
 "CUP_B_nM1025_M240_USA_DES",
 "CUP_B_M1165_GMV_DSRT_USMC"];
 
+baseEnemyLightArmoredVehicleGroup_USA = ["CUP_B_M113A3_desert_USA", 
+"CUP_B_RG31E_M2_USA", 
+"CUP_B_RG31_Mk19_USA"];
 
+baseEnemyHeavyArmoredVehicleGroup_USA = ["CUP_B_M1126_ICV_M2_Desert", 
+"CUP_B_M1128_MGS_Desert", 
+"CUP_B_M2A3Bradley_USA_D", 
+"CUP_B_M1A2SEP_TUSK_II_Desert_US_Army", 
+"CUP_B_M1A1SA_Desert_US_Army"];
 
 ////////////////////////
 //Vehicle management////
@@ -227,7 +235,8 @@ itemList_USA = [
 	"ACE_splint",
 	"ACE_morphine",
 	"ACE_quikclot",
-	"ACE_EntrenchingTool"
+	"ACE_EntrenchingTool",
+	"ACE_RangeTable_82mm"
 	];
 
 itemEngineerList_USA = [
