@@ -99,7 +99,7 @@ class Params
 		texts[] = {"Blufor must contact civilian to take objectives","Blufor has objective on spawn"};
 		default = 1;
 	};
-	class CampaginMode
+	class CampaignMode
 	{
 		title = "Enable Campaign mode (WIP)";
 		values[] = {0,1};
