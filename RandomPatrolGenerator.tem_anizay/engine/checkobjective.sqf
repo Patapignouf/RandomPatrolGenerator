@@ -26,12 +26,6 @@ if (respawnSettings == 1) then
 	[] execVM "engine\respawnSetup.sqf";
 };
 
-{
-	obj_list_items pushBack (_x select 0);
-} foreach _objectivesToTest;
-
-diag_log format ["Objective to test :  %1 in complete list %2", obj_list_items, _objectivesToTest];
-
 while {sleep 10; !missionComplete} do
 {
 	_completedObjectives = missionNamespace getVariable ["completedObjectives",[]];
@@ -39,6 +33,11 @@ while {sleep 10; !missionComplete} do
 	_missionUncompletedObjectives = missionNamespace getVariable ["missionUncompletedObjectives",_missionObjectives];
 	missionNamespace setVariable ["missionUncompletedObjectives",_missionUncompletedObjectives,true];
 	diag_log format ["Loop to test objective : %1", _objectivesToTest];
+
+	{
+		obj_list_items pushBack (_x select 0);
+	} foreach _missionUncompletedObjectives;
+
 	objectReturnedToCity = obj_list_items inAreaArray independantTrigger; //vehicles (all vehicles) inAreaArray (Returns list of Objects or Positions that are in the area _independantTrigger.)  
 	objectReturnedToFOB = obj_list_items inAreaArray bluforTrigger;
 	{

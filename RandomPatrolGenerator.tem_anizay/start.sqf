@@ -490,6 +490,7 @@ if (campaignMode == 1) then
 		{
 			//Do nothing
 			sleep 30;
+
 		} else 
 		{
 			//Generate the new objective
@@ -497,7 +498,12 @@ if (campaignMode == 1) then
 
 			//Reveal objective to the player
 			[] execVM 'engine\revealObjective.sqf';
+
+			//Update objective complete counter
+			_completedObjectives = missionNamespace getVariable ["completedObjectives",[]];
+			_objectiveCompletedCounter = count _completedObjectives;
 		};
+
 
 		//Check if there is always avalaible position for new objective
 		_maxObjectivesGenerated = (count PossibleObjectivePosition) == 0;
