@@ -30,8 +30,8 @@ civilian_big_group_WWII_URSS = [
 
 civilianTruck_WWII_URSS = [
 	// Nothing to see here, Kamarad. The trucks were all taken for our glorious army.
-"LIB_GazM1", 
-"LIB_GazM1_dirty"
+	"LIB_GazM1",
+	"LIB_GazM1_dirty"
 ];
 
 //////////////////////////////
@@ -209,7 +209,8 @@ rifleList_WWII_URSS = [
 	"LIB_SVT_40",
 	"LIB_M38",
 	"LIB_M44",
-	"LIB_M9130"
+	"LIB_M9130",
+	"LIB_PTRD" // anti-material rifle, should maybe be in another list ?
 ];	
 
 launcherList_WWII_URSS = [		
@@ -336,7 +337,11 @@ uniformList_WWII_URSS = [
 	"U_LIB_SOV_Tank_sergeant",
 	"U_LIB_SOV_Tank_private_field",
 	"U_LIB_SOV_Stleutenant",
-	"U_LIB_SOV_Pilot"
+	"U_LIB_SOV_Pilot",
+// Winter uniforms start here
+	"U_LIB_SOV_Strelok_2_w",
+	"U_LIB_SOV_Strelok_w",
+	"U_LIB_SOV_Sniper_w"
 ];
 
 magazineList_WWII_URSS = [
@@ -364,5 +369,6 @@ magazineList_WWII_URSS = [
 	"LIB_47Rnd_762x54d",
 	"LIB_8Rnd_762x54",
 	"LIB_7Rnd_762x38",
-	"LIB_1Rnd_G_DYAKONOV"
+	"LIB_1Rnd_G_DYAKONOV",
+	"LIB_1Rnd_145x114" // PTRD ammo
 ];
