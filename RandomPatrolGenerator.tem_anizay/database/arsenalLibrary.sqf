@@ -61,7 +61,7 @@ c_medic = "medic";
 
 c_listOfRoles = [c_leader,c_at,c_rifleman,c_engineer,c_autorifleman,c_marksman,c_medic];
 
-c_variableToInit = ["loadout","rifleList","attachmentLongList","attachmentShortList","smgList","marksmanrifleList","autorifleList","launcherList","itemList","itemEngineerList","itemMedicList"];
+c_variableToInit = ["loadout","rifleList","attachmentLongList","attachmentShortList","smgList","marksmanrifleList","autorifleList","launcherList","itemList","itemEngineerList","itemMedicList",'backPackList','uniformList'];
 
 
 //Join
@@ -69,20 +69,17 @@ c_variableToInit = ["loadout","rifleList","attachmentLongList","attachmentShortL
 ////////////////////////
 //Backpack management///
 ////////////////////////
-backpacksList = [
+// backpacksList = [
 
-	"CUP_B_USPack_Coyote",
-	"CUP_B_USPack_Black",
-	"B_Kitbag_cbr",
-	"B_Kitbag_rgr",
-	"CUP_B_US_Assault_OCP",
-	"CUP_B_US_IIID_OCP",
-	"B_Mortar_01_weapon_F",
-	"B_Mortar_01_support_F"
-];
-
-//New line to manage backpack in a future update
-//backpacksList_db = [[backpacksList_USA,_USA],[backpacksList_Russian,_Ru],[backpacksList_Taki,_Taki],[backpacksList_Syndikat,_Syndikat],[backpacksList_French,_French]];
+// 	"CUP_B_USPack_Coyote",
+// 	"CUP_B_USPack_Black",
+// 	"B_Kitbag_cbr",
+// 	"B_Kitbag_rgr",
+// 	"CUP_B_US_Assault_OCP",
+// 	"CUP_B_US_IIID_OCP",
+// 	"B_Mortar_01_weapon_F",
+// 	"B_Mortar_01_support_F"
+// ];
 
 
 initFactionDb = {
@@ -161,9 +158,9 @@ getVirtualWeaponList = {
 	virtualWeaponList
 };
 
-getVirtualBackPack = {
-	currentPlayerClass = _this select 0;
-};
+// getVirtualBackPack = {
+// 	currentPlayerClass = _this select 0;
+// };
 
 getItembyWarEra = {
 	params ["_warEra"];
@@ -249,6 +246,41 @@ getVirtualItemList = {
 	virtualItemList
 };
 
+
+getVirtualUniform = {
+	currentPlayer = _this select 0;
+	currentFaction = _this select 1;
+	currentPlayerClass = currentPlayer getVariable "role";
+	virtualUniformList = [warEra] call getItembyWarEra;
+	diag_log format ["virtualUniformList : %1", virtualUniformList];
+	switch (currentPlayerClass) do
+	{
+		case c_medic;
+		case c_at;
+		case c_rifleman;
+		case c_autorifleman;
+		case c_engineer:
+			{
+				virtualUniformList = virtualUniformList + (uniformList_db select {_x select 1  == currentFaction} select 0 select 0);
+			};
+		case c_leader:
+			{
+				//add leader uniform
+				virtualUniformList = virtualUniformList + (uniformList_db select {_x select 1  == currentFaction} select 0 select 0);
+			};			
+		case c_marksman:	
+			{
+				//add ghilie to the uniform list
+				virtualUniformList = virtualUniformList + (uniformList_db select {_x select 1  == currentFaction} select 0 select 0);
+			};		
+		default { hint "default" };
+	};
+	diag_log format ["Player %1 with role %2 has access to items %3", name currentPlayer, currentPlayerClass,virtualUniformList ];
+	virtualUniformList
+};
+
+
+
 getVirtualAttachement = {
 	currentPlayer = _this select 0;
 	currentFaction = _this select 1;
@@ -273,9 +305,35 @@ getVirtualAttachement = {
 			};		
 		default { hint "default" };
 	};
-	diag_log format ["Player %1 with role %2 has access to items %3", name currentPlayer, currentPlayerClass,virtualAttachementList ];
+	diag_log format ["Player %1 with role %2 has access to items %3", name currentPlayer, currentPlayerClass, virtualAttachementList ];
 	virtualAttachementList
 };
+
+
+getVirtualBackPack = {
+	currentPlayer = _this select 0;
+	currentFaction = _this select 1;
+	currentPlayerClass = currentPlayer getVariable "role";
+	virtualBackpackList = [];
+
+	switch (currentPlayerClass) do
+	{
+		case c_leader;
+		case c_at;
+		case c_rifleman;
+		case c_autorifleman;
+		case c_medic;
+		case c_engineer;
+		case c_marksman:
+			{
+				virtualBackpackList = virtualBackpackList + (backPackList_db select {_x select 1  == currentFaction} select 0 select 0);
+			};	
+		default { hint "default" };
+	};
+	diag_log format ["Player %1 with role %2 has access to items %3", name currentPlayer, currentPlayerClass, virtualBackpackList ];
+	virtualBackpackList
+};
+
 
 setupArsenalToItem = {
 	//InitParam
@@ -291,19 +349,21 @@ setupArsenalToItem = {
 	[itemToAttachArsenal,itemToAttachArsenal call BIS_fnc_getVirtualMagazineCargo,false] call BIS_fnc_removeVirtualMagazineCargo;
 	[itemToAttachArsenal,itemToAttachArsenal call BIS_fnc_getVirtualBackpackCargo,false] call BIS_fnc_removeVirtualBackpackCargo;
 
-	//AddItems to arsenal
-	[itemToAttachArsenal,([currentPlayer,currentFaction] call getVirtualWeaponList )] call BIS_fnc_addVirtualWeaponCargo;
+	//Add Weapon to to arsenal
+	[itemToAttachArsenal, ([currentPlayer, currentFaction] call getVirtualWeaponList )] call BIS_fnc_addVirtualWeaponCargo;
 
 	//TEMP HOTFIX for WWII event
-	if (warEra == 0) then 
-	{
-		backpacksList = ["B_LIB_US_Radio"];
-	};
+	// if (warEra == 0) then 
+	// {
+	// 	backpacksList = ["B_LIB_US_Radio"];
+	// };
 
-	[itemToAttachArsenal,backpacksList] call BIS_fnc_addVirtualBackpackCargo;
+	//[itemToAttachArsenal,backpacksList] call BIS_fnc_addVirtualBackpackCargo;
+	[itemToAttachArsenal, ([currentPlayer, currentFaction] call getVirtualBackPack )] call BIS_fnc_addVirtualBackpackCargo;
+
 	//[VA2,((itemCargo VA2) + _availableHeadgear + _availableUniforms + _availableVests)] call BIS_fnc_addVirtualItemCargo;
 	[VA2,true] call BIS_fnc_addVirtualMagazineCargo;
-	[itemToAttachArsenal,([currentPlayer,currentFaction] call getVirtualAttachement ) + ([currentPlayer,currentFaction] call getVirtualItemList ) ] call BIS_fnc_addVirtualItemCargo;
+	[itemToAttachArsenal,([currentPlayer,currentFaction] call getVirtualAttachement ) + ([currentPlayer,currentFaction] call getVirtualItemList ) + ([currentPlayer,currentFaction] call getVirtualUniform ) ] call BIS_fnc_addVirtualItemCargo;
 	["AmmoboxInit",[itemToAttachArsenal,false,{true}]] call BIS_fnc_arsenal;
 };
 
