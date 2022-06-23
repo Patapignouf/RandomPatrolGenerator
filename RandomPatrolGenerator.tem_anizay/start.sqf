@@ -1,8 +1,10 @@
 //Init Location functions
 #include "engine\searchLocation.sqf"
+#include "engine\doGenerateObjective.sqf"
 #include "database\objectLibrary.sqf"
 #include "objectGenerator\vehicleManagement.sqf"
 #include "enemyManagement\groupGenerator.sqf"
+
 
 
 //Init base mission parameters 
@@ -20,6 +22,7 @@ enableOpforMortar = "EnableOpforMortar" call BIS_fnc_getParamValue;
 initBluforBase = "InitBluforBase" call BIS_fnc_getParamValue;
 missionInitSetup = "MissionInitSetup" call BIS_fnc_getParamValue;
 warEra = "WarEra" call BIS_fnc_getParamValue;
+campaignMode = "CampaignMode" call BIS_fnc_getParamValue;
 
 
 
@@ -156,66 +159,12 @@ currentObjType = nil;
 currentRandomPos = [];
 currentObj = objNull;
 currentRandObj = objNull;
+
+//Generate objectives according to the mission's length parameter
 for [{_i = 0}, {_i <= lengthParameter}, {_i = _i + 1}] do //Peut être optimisé
 {
-	currentObjType = selectRandom avalaibleTypeOfObj;
-	currentRandomPos = [] call BIS_fnc_randomPos;
-	switch (currentObjType) do
-	{
-		case "supply":
-			{
-				currentObj = createVehicle [selectRandom avalaibleSupplyBox, currentRandomPos, [], 0, "NONE"];
-			};
-		case "ammo":
-			{
-				currentObj = createVehicle [selectRandom avalaibleAmmoBox, currentRandomPos, [], 0, "NONE"];
-			};
-		case "hvt":
-			{
-				currentObj = leader ([currentRandomPos, east, [selectRandom avalaibleHVT],[],[],[],[],[], random 360] call BIS_fnc_spawnGroup);
-			};
-		case "vip":
-			{
-				currentObj = leader ([currentRandomPos, civilian, [selectRandom avalaibleVIP],[],[],[],[],[], random 360] call BIS_fnc_spawnGroup);
-			};
-		case "steal":
-			{
-				currentObj = createVehicle [selectRandom avalaibleStealVehicle, currentRandomPos, [], 0, "NONE"];
-			};
-		case "clearArea":
-			{
-				//Add trigger to detect cleared area
-				currentObj = createTrigger ["EmptyDetector", currentRandomPos]; //create a trigger area created at object with variable name my_object
-			};
-		case "collectIntel":
-			{
-				//Add intel action to the intel case
-				currentObj = createVehicle [selectRandom avalaibleCollectIntel, currentRandomPos, [], 0, "NONE"];
-			};
-		case "informant":
-			{
-				//Add dialog to the informant
-				currentObj = leader ([currentRandomPos, civilian, [selectRandom avalaibleVIP],[],[],[],[],[], random 360] call BIS_fnc_spawnGroup);
-			};
-		default { hint "default" };
-	};
-	SupplyObjects pushBack [currentObj, currentObjType];
+	PossibleObjectivePosition = [avalaibleTypeOfObj, PossibleObjectivePosition] call generateObjective;
 };
-
-publicvariable "SupplyObjects";
-SelectedObjectives = [];
-publicvariable "SelectedObjectives";
-
-tempSupplyObjects = SupplyObjects;
-for [{_i = 0}, {_i <= lengthParameter}, {_i = _i + 1}] do //Peut être optimisé en fusionnant cette boucle avec la boucle précédente
-{
-	SelectedObjectives pushBack (selectRandom tempSupplyObjects);
-	tempSupplyObjects = tempSupplyObjects - [SelectedObjectives select (count SelectedObjectives - 1)];
-	SelectedObjectivePosition = selectRandom PossibleObjectivePosition;
-	SupplyPositions pushBack SelectedObjectivePosition;
-	PossibleObjectivePosition = PossibleObjectivePosition - [SelectedObjectivePosition];
-};
-
 
 //check wave spawn 
 EnemyWaveSpawnPositions = [];
@@ -294,27 +243,9 @@ if ( count AvalaibleInitAttackPositions != 0 && (enableInitAttack == 1 || ((enab
 /////////////////////////
 ///////Generate AO///////
 /////////////////////////
-tempSupplyObjects = SelectedObjectives;
-currentObject = objNull;
 // Get smallest distance to an AO
 areaOfOperation = [possiblePOILocation] call getAreaOfMission;
 aoSize = 1500;
-
-{
-	currentObject = selectRandom tempSupplyObjects;
-	tempSupplyObjects = tempSupplyObjects - [currentObject];
-	diag_log format ["Objective generation started : %1 on position %2", currentObject, _x];
-	
-	//Generate mission environement
-	_handlePOIGeneration = [EnemyWaveLevel_1, baseEnemyVehicleGroup, baseEnemyLightArmoredVehicleGroup, baseEnemyHeavyArmoredVehicleGroup, civilian_group ,_x,difficultyParameter] execVM 'enemyManagement\generatePOI.sqf'; 
-	waitUntil {isNull _handlePOIGeneration};
-
-	//Generate mission objectives
-	_handlePOIGeneration = [currentObject, _x] execVM 'engine\doGenerateObjective.sqf'; 
-	waitUntil {isNull _handlePOIGeneration};
-
-} forEach SupplyPositions;
-
 
 //IA taskPatrol with level 1 enemy
 [EnemyWaveLevel_1,AmbushPositions,difficultyParameter] execVM 'enemyManagement\generatePatrol.sqf'; 
@@ -537,3 +468,44 @@ switch (missionInitSetup) do
 
 missionGenerated = true;
 publicvariable "missionGenerated";
+
+
+
+/////////////////////////
+///Init Campaign mode////
+/////////////////////////
+
+if (campaignMode == 1) then 
+{
+	//Init mission objective status
+	_completedObjectives = missionNamespace getVariable ["completedObjectives",[]];
+	_objectiveCompletedCounter = count _completedObjectives;
+	_maxObjectivesGenerated = false;
+
+	//Loop until maximum number of possible objective are generated
+	while {sleep 10; (!_maxObjectivesGenerated)} do 
+	{
+		//Is an objective been completed ?
+		if (_objectiveCompletedCounter == (count (missionNamespace getVariable ["completedObjectives",[]]))) then 
+		{
+			//Do nothing
+			sleep 30;
+
+		} else 
+		{
+			//Generate the new objective
+			PossibleObjectivePosition = [avalaibleTypeOfObj, PossibleObjectivePosition] call generateObjective;
+
+			//Reveal objective to the player
+			[] execVM 'engine\revealObjective.sqf';
+
+			//Update objective complete counter
+			_completedObjectives = missionNamespace getVariable ["completedObjectives",[]];
+			_objectiveCompletedCounter = count _completedObjectives;
+		};
+
+
+		//Check if there is always avalaible position for new objective
+		_maxObjectivesGenerated = (count PossibleObjectivePosition) == 0;
+	};
+};

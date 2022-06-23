@@ -24,4 +24,10 @@ RandomPatrolGeneratorSWU_Egypt_El_Alamein.SWU_Egypt_El_Alamein/
 RandomPatrolGeneratorHyde_Sark.Hyde_Sark/
 RandomPatrolGeneratorSWU_Greece_Pella_Region.SWU_Greece_Pella_Region/
 RandomPatrolGeneratorMCN_Neaville.MCN_Neaville/
+RandomPatrolGeneratorStaszow.Staszow/
+RandomPatrolGeneratorBaranow.Baranow/
+RandomPatrolGeneratorStaszowWinter.StaszowWinter/
+RandomPatrolGeneratorBaranowWinter.BaranowWinter/
+RandomPatrolGeneratorPanovoWinter.PanovoWinter/
+RandomPatrolGeneratorMCN_Neaville_Winter.MCN_Neaville_Winter/
 *.code-workspace
