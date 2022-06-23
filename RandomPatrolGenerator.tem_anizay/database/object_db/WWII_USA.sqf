@@ -180,8 +180,9 @@ loadout_WWII_USA = [
 //WWII_USA
 rifleList_WWII_USA = [		
 	"LIB_M1_Carbine",
-	"LIB_M1_Garand_M7"
-
+	"LIB_M1_Garand_M7",
+	"LIB_M1903A3_Springfield",
+	"LIB_M1903A4_Springfield"
 ];	
 
 launcherList_WWII_USA = [		
@@ -189,7 +190,9 @@ launcherList_WWII_USA = [
 ];	
 
 autorifleList_WWII_USA = [	
-	"LIB_M1918A2_BAR"
+	"LIB_M1918A2_BAR",
+	"LIB_M1919A4",
+	"LIB_M1919A6"
 ];	
 
 marksmanrifleList_WWII_USA = [		
@@ -324,5 +327,10 @@ magazineList_WWII_USA = [
 	"LIB_1Rnd_89m_PIAT",
 	"LIB_1Rnd_89m_G_PIAT",
 	"LIB_32Rnd_9x19_Sten",
-	"LIB_1Rnd_G_MillsBomb"
+	"LIB_1Rnd_G_MillsBomb",
+	"LIB_50Rnd_762x63",
+	"LIB_50Rnd_762x63_M1",
+	"LIB_5Rnd_762x63",
+	"LIB_5Rnd_762x63_M1",
+	"LIB_5Rnd_762x63_t"
 ];
