@@ -3,6 +3,8 @@ respawnDialog = 0;
 respawnOnStart = 0;
 respawnDelay = 20; 
 
+enableDebugConsole = 1;
+
 respawnTemplates[] = {"Tickets"};
 
 
