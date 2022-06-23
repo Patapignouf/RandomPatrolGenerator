@@ -349,7 +349,12 @@ uniformList_WWII_Wehrmacht = [
 	"U_LIB_GER_Tank_crew_unterofficer",
 	"U_LIB_GER_Spg_crew_leutnant",
 	"U_LIB_GER_Spg_crew_private",
-	"U_LIB_GER_Spg_crew_unterofficer"
+	"U_LIB_GER_Spg_crew_unterofficer",
+// Winter uniforms
+	"U_LIB_GER_Soldier3_w",
+	"U_LIB_GER_Soldier_camo_w",
+	"U_LIB_GER_Scharfschutze_w",
+	"U_LIB_GER_Scharfschutze_2_w"
 ];
 
 magazineList_WWII_Wehrmacht = [

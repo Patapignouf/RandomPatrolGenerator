@@ -180,8 +180,9 @@ loadout_WWII_USA = [
 //WWII_USA
 rifleList_WWII_USA = [		
 	"LIB_M1_Carbine",
-	"LIB_M1_Garand_M7"
-
+	"LIB_M1_Garand_M7",
+	"LIB_M1903A3_Springfield",
+	"LIB_M1903A4_Springfield"
 ];	
 
 launcherList_WWII_USA = [		
@@ -189,7 +190,9 @@ launcherList_WWII_USA = [
 ];	
 
 autorifleList_WWII_USA = [	
-	"LIB_M1918A2_BAR"
+	"LIB_M1918A2_BAR",
+	"LIB_M1919A4",
+	"LIB_M1919A6"
 ];	
 
 marksmanrifleList_WWII_USA = [		
@@ -266,16 +269,49 @@ backPackList_WWII_USA = [
 ];
 
 uniformList_WWII_USA = [
-	"U_LIB_UK_KhakiDrills",
-	"U_LIB_UK_DenisonSmock",
-	"U_LIB_UK_P37Jerkins",
-	"U_LIB_UK_P37Jerkins_Corporal",
-	"U_LIB_UK_P37Jerkins_LanceCorporal",
-	"U_LIB_UK_P37Jerkins_Sergeant",
-	"U_LIB_UK_P37",
-	"U_LIB_UK_P37_Corporal",
-	"U_LIB_UK_P37_LanceCorporal",
-	"U_LIB_UK_P37_Sergeant"
+	"U_LIB_US_Corp",
+	"U_LIB_US_Private_1st",
+	"U_LIB_US_Private",
+	"U_LIB_US_Sergeant",
+	"U_LIB_US_Eng",
+	"U_LIB_US_Med",
+// Rangers
+	"U_LIB_US_Rangers_Uniform",
+	"U_LIB_US_Rangers_Corp",
+	"U_LIB_US_Rangers_Private_1st",
+	"U_LIB_US_Rangers_Sergeant",
+	"U_LIB_US_Rangers_Eng",
+	"U_LIB_US_Rangers_Med",
+// North Arfican Corps
+	"U_LIB_US_NAC_Uniform",
+	"U_LIB_US_NAC_Uniform_2",
+	"U_LIB_US_NAC_Med",
+// Airborne
+	"U_LIB_US_AB_Uniform_M42",
+	"U_LIB_US_AB_Uniform_M42_506",
+	"U_LIB_US_AB_Uniform_M42_corporal",
+	"U_LIB_US_AB_Uniform_M42_FC",
+	"U_LIB_US_AB_Uniform_M42_Gas",
+	"U_LIB_US_AB_Uniform_M42_Medic",
+	"U_LIB_US_AB_Uniform_M42_NCO",
+	"U_LIB_US_AB_Uniform_M43",
+	"U_LIB_US_AB_Uniform_M43_corporal",
+	"U_LIB_US_AB_Uniform_M43_FC",
+	"U_LIB_US_AB_Uniform_M43_Flag",
+	"U_LIB_US_AB_Uniform_M43_Medic",
+	"U_LIB_US_AB_Uniform_M43_NCO",
+// Pilots
+	"U_LIB_US_Bomber_Crew",
+	"U_LIB_US_Bomber_Pilot",
+	"U_LIB_US_Pilot",
+	"U_LIB_US_Pilot_2",
+// Tank crews
+	"U_LIB_US_Tank_Crew",
+	"U_LIB_US_Tank_Crew2",
+// Winter uniforms
+	"U_LIB_US_Private_w",
+	"U_LIB_US_AB_Uniform_M42_w",
+	"U_LIB_US_AB_Uniform_M43_w"
 ];
 
 magazineList_WWII_USA = [
@@ -291,5 +327,10 @@ magazineList_WWII_USA = [
 	"LIB_1Rnd_89m_PIAT",
 	"LIB_1Rnd_89m_G_PIAT",
 	"LIB_32Rnd_9x19_Sten",
-	"LIB_1Rnd_G_MillsBomb"
+	"LIB_1Rnd_G_MillsBomb",
+	"LIB_50Rnd_762x63",
+	"LIB_50Rnd_762x63_M1",
+	"LIB_5Rnd_762x63",
+	"LIB_5Rnd_762x63_M1",
+	"LIB_5Rnd_762x63_t"
 ];
