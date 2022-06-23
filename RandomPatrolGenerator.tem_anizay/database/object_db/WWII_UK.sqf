@@ -276,7 +276,11 @@ uniformList_WWII_UK = [
 	"U_LIB_UK_P37",
 	"U_LIB_UK_P37_Corporal",
 	"U_LIB_UK_P37_LanceCorporal",
-	"U_LIB_UK_P37_Sergeant"
+	"U_LIB_UK_P37_Sergeant",
+// Winter uniforms
+	"U_LIB_UK_DenisonSmock_w",
+	"U_LIB_UK_P37Jerkins_w",
+	"U_LIB_UK_P37_w"
 ];
 
 magazineList_WWII_UK = [
