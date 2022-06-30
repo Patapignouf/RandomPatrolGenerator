@@ -311,7 +311,7 @@ backPackList_WWII_URSS = [
 
 uniformList_WWII_URSS = [
 	"U_LIB_SOV_Tank_kapitan",
-	"U_LIB_SOV_Leutenant",
+	// "U_LIB_SOV_Leutenant",
 	"U_LIB_SOV_Starshina",
 	"U_LIB_SOV_Stsergeant",
 	"U_LIB_SOV_Artleutenant",
@@ -320,8 +320,8 @@ uniformList_WWII_URSS = [
 	"U_LIB_SOV_Razvedchik_autumn",
 	"U_LIB_SOV_Razvedchik_lis",
 	"U_LIB_SOV_Razvedchik_mix",
-	"U_LIB_SOV_Leutenant_inset_pocket",
-	"U_LIB_SOV_Sergeant_inset_pocket",
+	// "U_LIB_SOV_Leutenant_inset_pocket",
+	// "U_LIB_SOV_Sergeant_inset_pocket",
 	"U_LIB_SOV_Sniper_autumn",
 	"U_LIB_SOV_Sniper_spring",
 	"U_LIB_SOV_Sniper",
