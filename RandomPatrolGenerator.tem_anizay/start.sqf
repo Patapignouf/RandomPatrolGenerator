@@ -237,7 +237,7 @@ if ( count AvalaibleInitAttackPositions != 0 && (enableInitAttack == 1 || ((enab
 	waitUntil {isNull _handleCivGeneration};
 };
 
-//Init prema harass on player
+//Init perma harass on player
 [[baseEnemyGroup,baseEnemyATGroup,baseEnemyDemoGroup],baseEnemyVehicleGroup, baseEnemyLightArmoredVehicleGroup, baseEnemyHeavyArmoredVehicleGroup] execVM 'enemyManagement\generateHarass.sqf'; 
 
 /////////////////////////
