@@ -30,4 +30,7 @@ RandomPatrolGeneratorStaszowWinter.StaszowWinter/
 RandomPatrolGeneratorBaranowWinter.BaranowWinter/
 RandomPatrolGeneratorPanovoWinter.PanovoWinter/
 RandomPatrolGeneratorMCN_Neaville_Winter.MCN_Neaville_Winter/
+RandomPatrolGeneratorRockwall.Rockwall/
+RandomPatrolGeneratorsong_bin_tanh.song_bin_tanh/
+RandomPatrolGeneratorpsyfx_pht.psyfx_pht/
 *.code-workspace
