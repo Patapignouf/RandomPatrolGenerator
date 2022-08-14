@@ -18,7 +18,6 @@ bluFaction = "BluFaction" call BIS_fnc_getParamValue;
 indFaction = "IndFaction" call BIS_fnc_getParamValue;
 enableInitAttack = "EnableInitAttack" call BIS_fnc_getParamValue;
 enableInitBluAttack = "EnableInitBluAttack" call BIS_fnc_getParamValue;
-enableOpforMortar = "EnableOpforMortar" call BIS_fnc_getParamValue;
 initBluforBase = "InitBluforBase" call BIS_fnc_getParamValue;
 missionInitSetup = "MissionInitSetup" call BIS_fnc_getParamValue;
 warEra = "WarEra" call BIS_fnc_getParamValue;
@@ -256,15 +255,19 @@ if (1 <= (count EnemyWaveSpawnPositions)) then
 	[EnemyWaveGroups,EnemyWaveSpawnPositions,initCityLocation,difficultyParameter] execVM 'enemyManagement\generateWave.sqf'; 
 };
 
-//Generate mortar
-for [{_i = 0}, {_i < 2}, {_i = _i + 1}] do
-{ 
-	_mortarSpawnPosition = [getPos initCityLocation, (800), (aoSize+700), 3, 10, 0.25, 0, [], [[0,0,0],[0,0,0]]] call BIS_fnc_findSafePos;
-	if !([_mortarSpawnPosition , [0,0,0]] call BIS_fnc_areEqual) then 
-	{
-		_mortarGroup = [baseEnemyMortarGroup, _mortarSpawnPosition, east, "Mortar"] call doGenerateEnemyGroup;
+//Generate mortar | 50% chance to spawn
+if ((round (random 1))==0 ) then 
+{
+	for [{_i = 0}, {_i < 2}, {_i = _i + 1}] do
+	{ 
+		_mortarSpawnPosition = [getPos initCityLocation, (800), (aoSize+700), 3, 10, 0.25, 0, [], [[0,0,0],[0,0,0]]] call BIS_fnc_findSafePos;
+		if !([_mortarSpawnPosition , [0,0,0]] call BIS_fnc_areEqual) then 
+		{
+			_mortarGroup = [baseEnemyMortarGroup, _mortarSpawnPosition, east, "Mortar"] call doGenerateEnemyGroup;
+		};
 	};
 };
+
 
 //Generate Civs dialogs
 //[] execVM 'enemyManagement\generateCivDialogs.sqf'; 
