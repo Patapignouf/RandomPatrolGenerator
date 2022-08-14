@@ -248,9 +248,9 @@ if (1 <= (count EnemyWaveSpawnPositions)) then
 	[EnemyWaveGroups,EnemyWaveSpawnPositions,initCityLocation,difficultyParameter] execVM 'enemyManagement\generateWave.sqf'; 
 };
 
-//Generate mortar | 50% chance to spawn
-if ((round (random 1))==0 ) then 
-{
+//Generate mortar | 50% chance to spawn 
+if ((round (random 1))==0 ) then  
+{ 
 	for [{_i = 0}, {_i < 2}, {_i = _i + 1}] do
 	{ 
 		_mortarSpawnPosition = [getPos initCityLocation, (800), (aoSize+700), 3, 10, 0.25, 0, [], [[0,0,0],[0,0,0]]] call BIS_fnc_findSafePos;
@@ -259,7 +259,7 @@ if ((round (random 1))==0 ) then
 			_mortarGroup = [baseEnemyMortarGroup, _mortarSpawnPosition, east, "Mortar"] call doGenerateEnemyGroup;
 		};
 	};
-};
+}; 
 
 
 //Generate Civs dialogs
