@@ -442,7 +442,24 @@ setupRoleSwitchToItem = {
 		},[currentFaction]];
 };
 
-//	//Define's TFAR Radio frequencie
+
+setupSaveRole = {
+	//InitParam
+	params ["_itemToAttachArsenal", "_currentPlayer" ];
+
+	//Add action where player can save his loadout
+	itemToAttachArsenal addAction 
+		["Save loadout", 
+		{
+			//Define params
+			params ["_target","_caller","_ID","_params"];
+
+			//Save loadout
+			_caller setVariable ["spawnLoadout", getUnitLoadout _caller];
+		},[]];
+};
+
+//Define's TFAR Radio frequencie
 adjustTFARRadio = {
 	params ["_currentPlayer"];
 	if (isClass (configFile >> "CfgPatches" >> "task_force_radio")) then {
