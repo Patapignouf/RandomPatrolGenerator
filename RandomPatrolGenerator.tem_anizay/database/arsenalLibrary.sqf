@@ -80,18 +80,6 @@ c_variableToInit = ["loadout","rifleList","attachmentLongList","attachmentShortL
 ////////////////////////
 //Backpack management///
 ////////////////////////
-// backpacksList = [
-
-// 	"CUP_B_USPack_Coyote",
-// 	"CUP_B_USPack_Black",
-// 	"B_Kitbag_cbr",
-// 	"B_Kitbag_rgr",
-// 	"CUP_B_US_Assault_OCP",
-// 	"CUP_B_US_IIID_OCP",
-// 	"B_Mortar_01_weapon_F",
-// 	"B_Mortar_01_support_F"
-// ];
-
 
 initFactionDb = {
 	params ["_currentVariable"];
@@ -169,9 +157,6 @@ getVirtualWeaponList = {
 	virtualWeaponList
 };
 
-// getVirtualBackPack = {
-// 	currentPlayerClass = _this select 0;
-// };
 
 getItembyWarEra = {
 	params ["_warEra"];
@@ -363,12 +348,6 @@ setupArsenalToItem = {
 	//Add Weapon to to arsenal
 	[itemToAttachArsenal, ([currentPlayer, currentFaction] call getVirtualWeaponList )] call BIS_fnc_addVirtualWeaponCargo;
 
-	//TEMP HOTFIX for WWII event
-	// if (warEra == 0) then 
-	// {
-	// 	backpacksList = ["B_LIB_US_Radio"];
-	// };
-
 	//[itemToAttachArsenal,backpacksList] call BIS_fnc_addVirtualBackpackCargo;
 	[itemToAttachArsenal, ([currentPlayer, currentFaction] call getVirtualBackPack )] call BIS_fnc_addVirtualBackpackCargo;
 
@@ -463,8 +442,6 @@ setupSaveRole = {
 adjustTFARRadio = {
 	params ["_currentPlayer"];
 	if (isClass (configFile >> "CfgPatches" >> "task_force_radio")) then {
-		//player addItem "TFAR_anprc148jem";
-		//player assignItem "TFAR_anprc148jem";
 		_currentPlayer addItem "TFAR_anprc152";
 		_currentPlayer assignItem "TFAR_anprc152";
 
