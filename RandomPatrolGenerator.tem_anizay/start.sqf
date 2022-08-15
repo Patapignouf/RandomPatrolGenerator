@@ -476,6 +476,10 @@ publicvariable "deployableFOBItem";
 	clearBackpackCargoGlobal _tempBox;
 } foreach ["Box_NATO_Uniforms_F", "ACE_Box_82mm_Mo_Combo", "Box_NATO_Equip_F"];
 
+//Setup fortification ACE mod
+[blufor, 150, [["Land_BagFence_Long_F", 5], ["Land_BagBunker_Small_F", 50]]] call ace_fortify_fnc_registerObjects;
+
+
 
 //Setup view distance changer
 SettingsComputer =  createVehicle ["Land_MultiScreenComputer_01_olive_F", [initBlueforLocation, 1, 5, 3, 0, 20, 0] call BIS_fnc_findSafePos, [], 0, "NONE"];
