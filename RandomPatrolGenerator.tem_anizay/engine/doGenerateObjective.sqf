@@ -253,6 +253,5 @@ generateObjectiveObject =
 		currentMissionObjectives pushBack _thisObjective;
 		missionNamespace setVariable ["MissionObjectives",currentMissionObjectives,true];
 		diag_log format ["MissionObjectives setup ! : %1", currentMissionObjectives];
-		[[_thisObjective,getPos _thisObjectivePosition,independent], 'objectGenerator\doGeneratePOIMarker.sqf'] remoteExec ['BIS_fnc_execVM', 0];
 	};
 };
