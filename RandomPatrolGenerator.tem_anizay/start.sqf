@@ -444,6 +444,29 @@ clearItemCargoGlobal VA2;
 clearBackpackCargoGlobal VA2;
 publicvariable "VA2";
 
+//Create portable FOB 
+deployableFOBItem = createVehicle [deployableFOB, [initBlueforLocation, 1, 5, 3, 0, 20, 0] call BIS_fnc_findSafePos, [], 0, "NONE"];
+clearWeaponCargoGlobal deployableFOBItem;
+clearMagazineCargoGlobal deployableFOBItem;
+clearItemCargoGlobal deployableFOBItem;
+clearBackpackCargoGlobal deployableFOBItem;
+publicvariable "deployableFOBItem";
+
+//Add action to deploy advanced outpost
+[deployableFOBItem, ["Deploy advanced outpost",{
+			params ["_object","_caller","_ID","_avalaibleOutpost"];
+			
+			//[TODO] Check distance from blufor spawn
+
+			//Spawn outpost
+			_spawnFOBObjects = [getPos _object, (random 360), selectRandom _avalaibleOutpost] call BIS_fnc_ObjectsMapper;
+
+			//Remove Box
+			deleteVehicle _object;
+
+		},avalaibleFOB,1.5,true,true,"","_target distance _this <5"]] remoteExec ["addAction", 0, true];
+
+
 //Place empty box to blufor camp
 {
 	_tempBox = createVehicle [_x, [ initBlueforLocation, 1, 15, 2, 0, 20, 0] call BIS_fnc_findSafePos, [], 0, "NONE"];
