@@ -136,6 +136,20 @@ class Params
 		texts[] = {"2nd War", "Cold War", "Modern Warfare","Actual Warfare","Future Warfare"};
 		default = 3;               
 	};
+	class CivJoinableFaction
+	{
+		title = "Allow player to recruit civilian";
+		values[] = {0,1,2,3};
+		texts[] = {"Nobody can recruit civilian","Only indepedent can recruit civilian","Only blufor can recruit civilian", "Both independent and blufor can recruit civilian"};
+		default = 1;             
+	};
+	class ChooseStartPos
+	{
+		title = "Choose initial bases positions";
+		values[] = {0,1};
+		texts[] = {"Random positions","Leaders can choose start positions"};
+		default = 0;             
+	};
 	
 };
 

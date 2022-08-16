@@ -53,8 +53,6 @@ if (enableThermal==0) then
 waitUntil {!isNull player};
 if (!hasInterface || isDedicated) exitWith {};
 
-//Wait for FOB Generated
-waitUntil {!isNil "initBlueforLocation"};
 
 if (hasInterface) then
 {
@@ -62,25 +60,21 @@ if (hasInterface) then
 	waituntil {!isNil "isBluforAttacked" && !isNil "isIndAttacked"};
 	if (side player == independent) then 
 	{
-		player setVariable ["sideBeforeDeath","independent"];
-		player setPos ([getPos initCityLocation, 1, 5, 3, 0, 20, 0] call BIS_fnc_findSafePos);
-
-		//Manage loadout
-		player setUnitLoadout ([player,indFaction] call getLoadoutByRole);
-		[player] call adjustLoadout;
-		player setVariable ["spawnLoadout", getUnitLoadout player];
-
-		//Manage arsenal	
-		[VA1, player, indFaction] call setupArsenalToItem;
-		[VA1, player, indFaction] call setupRoleSwitchToItem;
-
-		if (isIndAttacked) then
-		{
-				[["Vos informateurs vous informent qu'une attaque est en cours sur votre position.",independent], 'engine\doGenerateMessage.sqf'] remoteExec ['BIS_fnc_execVM', 0];
-				[["Le QG vous informe qu'une attaque est probablement en cours sur la ville alliée.",blufor], 'engine\doGenerateMessage.sqf'] remoteExec ['BIS_fnc_execVM', 0];
-		};
 		if (player == (leader (group player))) then
 		{	
+			if (!didJIP) then 
+			{
+				titleCut ["", "BLACK IN", 5];
+				initCityLocationPosition = [0,0,0];
+				openMap true;
+				sleep 1;
+				hint "Click on map to select a starting area";
+				onMapSingleClick "initCityLocationPosition = _pos; onMapSingleClick ''; openMap false; true;";
+				waitUntil{!(visibleMap)}; 
+				publicVariable = "initCityLocationPosition";
+				titleCut ["Please wait while mission is generating", "BLACK FADED", 5];
+			};
+
 			diag_log format ["Warlord is set to player : %1", name player];
 			player addEventHandler ["Killed", {
 				params ["_unit", "_killer", "_instigator", "_useEffects"];
@@ -93,10 +87,49 @@ if (hasInterface) then
 				};
 			}];
 		};
+
+		//Wait for the player to choose position
+		waitUntil {!isNil "initCityLocation"};
+
+		player setVariable ["sideBeforeDeath","independent"];
+		player setPos ([getPos initCityLocation, 1, 5, 3, 0, 20, 0] call BIS_fnc_findSafePos);
+
+		//Manage loadout
+		player setUnitLoadout ([player,indFaction] call getLoadoutByRole);
+		[player] call adjustLoadout;
+		player setVariable ["spawnLoadout", getUnitLoadout player];
+
+		//Manage arsenal	
+		[VA1, player, indFaction] call setupArsenalToItem;
+		[VA1, player, indFaction] call setupRoleSwitchToItem;
+		[VA1, player] call setupSaveRole;
+
+		if (isIndAttacked) then
+		{
+				[["Vos informateurs vous informent qu'une attaque est en cours sur votre position.",independent], 'engine\doGenerateMessage.sqf'] remoteExec ['BIS_fnc_execVM', 0];
+				[["Le QG vous informe qu'une attaque est probablement en cours sur la ville alliée.",blufor], 'engine\doGenerateMessage.sqf'] remoteExec ['BIS_fnc_execVM', 0];
+		};
 	};
 
 	if (side player == blufor) then
 	{
+		if (player == (leader (group player))) then
+		{	
+			if (!didJIP) then 
+			{
+				titleCut ["", "BLACK IN", 5];
+				initBlueforLocationPosition = [0,0,0];
+				openMap true;
+				sleep 1;
+				hint "Click on map to select a starting area";
+				onMapSingleClick "initBlueforLocationPosition = _pos; onMapSingleClick ''; openMap false; true;";
+				waitUntil{!(visibleMap)}; 
+				publicVariable = "initBlueforLocationPosition";
+				titleCut ["Please wait while mission is generating", "BLACK FADED", 5];
+			};
+		};
+
+
 		player setVariable ["sideBeforeDeath","blufor"];
 		player setPos ([initBlueforLocation, 1, 5, 3, 0, 20, 0] call BIS_fnc_findSafePos);
 		player setUnitLoadout ([player, bluFaction] call getLoadoutByRole);
@@ -106,6 +139,7 @@ if (hasInterface) then
 		//Manage arsenal	
 		[VA2, player, bluFaction] call setupArsenalToItem;
 		[VA2, player, bluFaction] call setupRoleSwitchToItem;
+		[VA2, player] call setupSaveRole;
 
 		//Manage vehicle spawn options 
 		if (enableArmored == 1) then 

@@ -149,6 +149,9 @@ fob1 = [
 	["Land_HBarrierBig_F",[-16.2528,-26.7327,0],45.8939,1,0,[0,0],"","",true,false]
 ];
 
+
+deployableFOB = "Land_Cargo10_military_green_F";
+
 avalaibleFOB = [ fob1
 ];
 
