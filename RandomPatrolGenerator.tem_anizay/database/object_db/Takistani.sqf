@@ -246,7 +246,7 @@ itemList_Taki = [
 itemEngineerList_Taki = [
 	"ToolKit",
 	"MineDetector",
-	"ACE_wirecutter"
+	"ACE_wirecutter", "ACE_Fortify"
 	];
 	
 itemMedicList_Taki = [

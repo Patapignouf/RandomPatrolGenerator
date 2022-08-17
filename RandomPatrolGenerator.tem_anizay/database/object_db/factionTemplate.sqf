@@ -210,7 +210,7 @@ itemList_newFaction = [
 itemEngineerList_newFaction = [
 	"ToolKit",
 	"MineDetector",
-	"ACE_wirecutter"
+	"ACE_wirecutter", "ACE_Fortify"
 	];
 	
 itemMedicList_newFaction = [

@@ -274,7 +274,7 @@ itemList_WWII_URSS = [
 itemEngineerList_WWII_URSS = [
 	"ToolKit",
 	"MineDetector",
-	"ACE_wirecutter"
+	"ACE_wirecutter", "ACE_Fortify"
 ];
 	
 itemMedicList_WWII_URSS = [

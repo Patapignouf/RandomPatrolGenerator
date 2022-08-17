@@ -203,7 +203,7 @@ itemList_ColdWar_NVA = [
 itemEngineerList_ColdWar_NVA = [
 	"ToolKit",
 	"MineDetector",
-	"ACE_wirecutter"
+	"ACE_wirecutter", "ACE_Fortify"
 	];
 	
 itemMedicList_ColdWar_NVA = [

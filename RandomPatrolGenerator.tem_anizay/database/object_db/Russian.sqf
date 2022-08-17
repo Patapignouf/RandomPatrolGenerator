@@ -247,7 +247,7 @@ itemList_Russian = [
 itemEngineerList_Russian = [
 	"ToolKit",
 	"MineDetector",
-	"ACE_wirecutter"
+	"ACE_wirecutter", "ACE_Fortify"
 	];
 	
 itemMedicList_Russian = [

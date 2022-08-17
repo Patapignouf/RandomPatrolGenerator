@@ -183,7 +183,7 @@ itemList_Syndikat = [
 itemEngineerList_Syndikat = [
 	"ToolKit",
 	"MineDetector",
-	"ACE_wirecutter"
+	"ACE_wirecutter", "ACE_Fortify"
 	];
 	
 itemMedicList_Syndikat = [

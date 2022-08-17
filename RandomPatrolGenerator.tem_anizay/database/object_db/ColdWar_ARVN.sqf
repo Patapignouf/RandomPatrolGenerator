@@ -199,7 +199,8 @@ itemList_ColdWar_ARVN = [
 itemEngineerList_ColdWar_ARVN = [
 	"ToolKit",
 	"MineDetector",
-	"ACE_wirecutter"
+	"ACE_wirecutter", "ACE_Fortify"
+
 	];
 	
 itemMedicList_ColdWar_ARVN = [
