@@ -18,14 +18,13 @@ if (isServer) then
 		nb_ind_player_alive = {isPlayer _x && side _x == independent} count allUnits;
 		nb_blu_player_alive = {isPlayer _x && side _x == blufor} count allUnits;
 		
-		diag_log format ["Harass start on position %1", positionToAttack];
 		if (({alive _x && side _x == opfor} count allUnits) <=175) then
 		{
 			//Prioritize attack on independent 
 			if (nb_blu_player_alive != 0) then
 			{
 				{
-					if (isPlayer _x && side _x == blufor) exitWith
+					if (isPlayer _x && alive _x && side _x == blufor) exitWith
 					{
 						positionToAttack = getPos _x;
 					};
@@ -34,7 +33,7 @@ if (isServer) then
 			if (nb_ind_player_alive != 0) then
 			{
 				{
-					if (isPlayer _x && side _x == independent) exitWith
+					if (isPlayer _x && alive _x && side _x == independent) exitWith
 					{
 						positionToAttack = getPos _x;
 					};
@@ -66,7 +65,7 @@ if (isServer) then
 
 
 			AvalaibleInitAttackPositions = [];
-			AvalaibleInitAttackPositions = [ positionToAttack, 1200, 1600, difficultyParameter] call getListOfPositionsAroundTarget;
+			AvalaibleInitAttackPositions = [positionToAttack, 1200, 2000, difficultyParameter] call getListOfPositionsAroundTarget;
 			[ AvalaibleInitAttackPositions, positionToAttack, _tempGroup,_tempVehicleGroup, difficultyParameter] execVM 'enemyManagement\doAmbush.sqf'; 
 			diag_log format ["Harass start on position %1", positionToAttack];
 		};
