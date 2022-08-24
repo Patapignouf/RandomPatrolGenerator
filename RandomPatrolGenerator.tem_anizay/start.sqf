@@ -463,13 +463,32 @@ publicvariable "deployableFOBItem";
 				_spawnFOBObjects = [getPos _object, (random 360), _avalaibleOutpost] call BIS_fnc_ObjectsMapper;
 
 				TPFlag2 = createVehicle ["Flag_Blue_F", [getPos _object, 1, 5, 3, 0, 20, 0] call BIS_fnc_findSafePos, [], 0, "NONE"];
-
+				
+				//Add action to rest and skip 6 hours
 				[TPFlag2, ["Take a nap",{
 					params ["_object","_caller","_ID","_param"];
 					
 					if (!(missionNamespace getVariable ["usedFewTimeAgo",false])) then 
 					{
+						//Skip 6 hour
 						6 remoteExec ["skipTime", 2, false]; 
+						[format ["%1 needs to rest", name _caller]] remoteExec ["hint",0,true];
+						missionNamespace setVariable ["usedFewTimeAgo",true,true];
+						sleep 300;
+						missionNamespace setVariable ["usedFewTimeAgo",false,true];
+					} else {
+						hint "No need to rest";
+					};
+				},objNull,1.5,true,false,"","_target distance _this <5"]] remoteExec [ "addAction", 0, true ];
+
+				//Add action to rest until morning
+				[TPFlag2, ["Sleep until next morning",{
+					params ["_object","_caller","_ID","_param"];
+					
+					if (!(missionNamespace getVariable ["usedFewTimeAgo",false])) then 
+					{
+						//set morning
+						skipTime ((06 - dayTime + 24) % 24);
 						[format ["%1 needs to rest", name _caller]] remoteExec ["hint",0,true];
 						missionNamespace setVariable ["usedFewTimeAgo",true,true];
 						sleep 300;
