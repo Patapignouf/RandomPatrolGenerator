@@ -150,7 +150,9 @@ fob1 = [
 ];
 
 
-deployableFOB = "Land_Cargo10_military_green_F";
+deployableFOB = "B_supplyCrate_F";
+deployableFOBMounted = [["Land_DeconTent_01_NATO_tropic_F",[-7.33789,7.19934,0],270.094,1,0,[0,0],"","",true,false]]; 
+
 
 avalaibleFOB = [ fob1
 ];
