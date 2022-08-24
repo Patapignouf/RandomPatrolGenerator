@@ -46,18 +46,18 @@ c_ColdWar_USA = "_ColdWar_USA";
 warEra = "WarEra" call BIS_fnc_getParamValue;
 
 factionInfos = [[c_USA,_USA],
-[c_Russian,_Ru],
-[c_Taki,_Taki],
-[c_Syndikat,_Syndikat],
-[c_French,_French],
-[c_USA_2000,_USA_2000],
-[c_WWII_UK,_WWII_UK],
-[c_WWII_URSS,_WWII_URSS],
-[c_WWII_Wehrmacht,_WWII_Wehrmacht],
-[c_WWII_USA,_WWII_USA],
-[c_ColdWar_ARVN,_ColdWar_ARVN],
-[c_ColdWar_NVA,_ColdWar_NVA],
-[c_ColdWar_USA,_ColdWar_USA]
+	[c_Russian,_Ru],
+	[c_Taki,_Taki],
+	[c_Syndikat,_Syndikat],
+	[c_French,_French],
+	[c_USA_2000,_USA_2000],
+	[c_WWII_UK,_WWII_UK],
+	[c_WWII_URSS,_WWII_URSS],
+	[c_WWII_Wehrmacht,_WWII_Wehrmacht],
+	[c_WWII_USA,_WWII_USA],
+	[c_ColdWar_ARVN,_ColdWar_ARVN],
+	[c_ColdWar_NVA,_ColdWar_NVA],
+	[c_ColdWar_USA,_ColdWar_USA]
 ];
 
 //Define global constant
@@ -68,11 +68,13 @@ c_engineer = "engineer";
 c_autorifleman = "autorifleman";
 c_marksman = "marksman"; 
 c_medic = "medic";
-
+c_radioman = "radioman";
+c_grenadier = "grenadier";
+c_ammobearer = "ammobearer";
 
 c_listOfRoles = [c_leader,c_at,c_rifleman,c_engineer,c_autorifleman,c_marksman,c_medic];
 
-c_variableToInit = ["loadout","rifleList","attachmentLongList","attachmentShortList","smgList","marksmanrifleList","autorifleList","launcherList","itemList","itemEngineerList","itemMedicList",'backPackList','uniformList'];
+c_variableToInit = ["listOfRoles","loadout","rifleList","grenadeLauncherList","attachmentLongList","attachmentShortList","smgList","marksmanrifleList","autorifleList","launcherList","itemList","itemEngineerList","itemMedicList",'backPackList','uniformList'];
 
 
 //Join
@@ -97,6 +99,7 @@ initFactionDb = {
 getLoadoutByRole = {
 	currentPlayer = _this select 0;
 	currentFaction = _this select 1;
+
 	currentPlayerClass = currentPlayer getVariable "role";
 	thisloadout = [];
 	//Need to adapt a little thing to allow default loadout when there's no loadout found
@@ -150,8 +153,17 @@ getVirtualWeaponList = {
 			{
 				virtualWeaponList = virtualWeaponList + (rifleList_db select {_x select 1  == currentFaction} select 0 select 0);
 				virtualWeaponList = virtualWeaponList + (smgList_db select {_x select 1  == currentFaction} select 0 select 0);
+			};	
+		case c_grenadier:
+			{
+				virtualWeaponList = virtualWeaponList + (rifleList_db select {_x select 1  == currentFaction} select 0 select 0);
+				virtualWeaponList = virtualWeaponList + (grenadeLauncherList_db select {_x select 1  == currentFaction} select 0 select 0);
 			};				
-		default { hint "default" };
+		default
+			{
+				//Non implemented role : Default rifle
+			 	virtualWeaponList = virtualWeaponList + (rifleList_db select {_x select 1  == currentFaction} select 0 select 0); 
+			};
 	};
 	diag_log format ["Player %1 with role %2 has access to weapons %3", name currentPlayer, currentPlayerClass,virtualWeaponList ];
 	virtualWeaponList
@@ -218,14 +230,6 @@ getVirtualItemList = {
 	diag_log format ["virtualItemList : %1", virtualItemList];
 	switch (currentPlayerClass) do
 	{
-		case c_leader;
-		case c_at;
-		case c_rifleman;
-		case c_autorifleman;
-		case c_marksman:
-			{
-				virtualItemList = virtualItemList + (itemList_db select {_x select 1  == currentFaction} select 0 select 0);
-			};
 		case c_medic:
 			{
 				virtualItemList = virtualItemList + (itemList_db select {_x select 1  == currentFaction} select 0 select 0);
@@ -236,7 +240,11 @@ getVirtualItemList = {
 				virtualItemList = virtualItemList + (itemList_db select {_x select 1  == currentFaction} select 0 select 0);
 				virtualItemList = virtualItemList + (itemEngineerList_db select {_x select 1  == currentFaction} select 0 select 0);
 			};		
-		default { hint "default" };
+		default 
+			{
+				//Default item list
+			 	virtualItemList = virtualItemList + (itemList_db select {_x select 1  == currentFaction} select 0 select 0); 
+			};
 	};
 	diag_log format ["Player %1 with role %2 has access to items %3", name currentPlayer, currentPlayerClass,virtualItemList ];
 	virtualItemList
@@ -251,14 +259,6 @@ getVirtualUniform = {
 	diag_log format ["virtualUniformList : %1", virtualUniformList];
 	switch (currentPlayerClass) do
 	{
-		case c_medic;
-		case c_at;
-		case c_rifleman;
-		case c_autorifleman;
-		case c_engineer:
-			{
-				virtualUniformList = virtualUniformList + (uniformList_db select {_x select 1  == currentFaction} select 0 select 0);
-			};
 		case c_leader:
 			{
 				//add leader uniform
@@ -269,7 +269,11 @@ getVirtualUniform = {
 				//add ghilie to the uniform list
 				virtualUniformList = virtualUniformList + (uniformList_db select {_x select 1  == currentFaction} select 0 select 0);
 			};		
-		default { hint "default" };
+		default 
+			{ 
+				//Default uniform list
+				virtualUniformList = virtualUniformList + (uniformList_db select {_x select 1  == currentFaction} select 0 select 0);
+			};
 	};
 	diag_log format ["Player %1 with role %2 has access to items %3", name currentPlayer, currentPlayerClass,virtualUniformList ];
 	virtualUniformList
@@ -285,21 +289,16 @@ getVirtualAttachement = {
 
 	switch (currentPlayerClass) do
 	{
-		case c_leader;
-		case c_at;
-		case c_rifleman;
-		case c_autorifleman;
-		case c_medic;
-		case c_engineer:
-			{
-				virtualAttachementList = virtualAttachementList + (attachmentShortList_db select {_x select 1  == currentFaction} select 0 select 0);
-			};
 		case c_marksman:		
 			{
 				virtualAttachementList = virtualAttachementList + (attachmentShortList_db select {_x select 1  == currentFaction} select 0 select 0);
 				virtualAttachementList = virtualAttachementList + (attachmentLongList_db select {_x select 1  == currentFaction} select 0 select 0);
 			};		
-		default { hint "default" };
+		default 
+			{ 
+				//Default attachment list
+				virtualAttachementList = virtualAttachementList + (attachmentShortList_db select {_x select 1  == currentFaction} select 0 select 0); 
+			};
 	};
 	diag_log format ["Player %1 with role %2 has access to items %3", name currentPlayer, currentPlayerClass, virtualAttachementList ];
 	virtualAttachementList
@@ -314,17 +313,11 @@ getVirtualBackPack = {
 
 	switch (currentPlayerClass) do
 	{
-		case c_leader;
-		case c_at;
-		case c_rifleman;
-		case c_autorifleman;
-		case c_medic;
-		case c_engineer;
-		case c_marksman:
-			{
+		default 
+			{ 
+				//Default backpack list
 				virtualBackpackList = virtualBackpackList + (backPackList_db select {_x select 1  == currentFaction} select 0 select 0);
-			};	
-		default { hint "default" };
+			};
 	};
 	diag_log format ["Player %1 with role %2 has access to items %3", name currentPlayer, currentPlayerClass, virtualBackpackList ];
 	virtualBackpackList
@@ -363,6 +356,15 @@ setupRoleSwitchToItem = {
 	currentPlayer = _this select 1;
 	currentFaction = _this select 2;
 
+	//Check if current faction has specific role definition
+	if (count (listOfRoles_db select {_x select 1  == currentFaction} select 0 select 0) == 0 ) then 
+	{
+		listOfRoles = c_listOfRoles;
+	} else 
+	{
+		listOfRoles = listOfRoles_db select {_x select 1  == currentFaction} select 0 select 0;
+	};
+	
 	//Add action to change role
 	{
 		itemToAttachArsenal addAction 
@@ -377,6 +379,7 @@ setupRoleSwitchToItem = {
 				//Manage Unit trait
 				_caller setUnitTrait ["Medic", false];
 				_caller setUnitTrait ["Engineer", false];
+				_caller setUnitTrait ["ExplosiveSpecialist", false];
 				if ((_params select 0) == c_medic) then 
 				{
 					_caller setUnitTrait ["Medic", true];
@@ -384,6 +387,7 @@ setupRoleSwitchToItem = {
 				if ((_params select 0) == c_engineer) then 
 				{
 					_caller setUnitTrait ["Engineer", true];
+					_caller setUnitTrait ["ExplosiveSpecialist", true];
 				};
 
 				//Manage player's role
@@ -399,7 +403,7 @@ setupRoleSwitchToItem = {
 
 				titleCut ["", "BLACK IN", 5];
 			},[_x,currentFaction]];
-	} foreach c_listOfRoles;
+	} foreach listOfRoles;
 
 	//Display player's current role
 	itemToAttachArsenal addAction 
@@ -435,6 +439,8 @@ setupSaveRole = {
 
 			//Save loadout
 			_caller setVariable ["spawnLoadout", getUnitLoadout _caller];
+
+			hint "Loadout saved";
 		},[]];
 };
 
