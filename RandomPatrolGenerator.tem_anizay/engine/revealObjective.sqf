@@ -10,7 +10,7 @@ if ((count _revealedObjectives != count _tempMissionObjectives)) then
 {
 		_objectiveToReveal = objNull;
 
-		if (isNil "_objectiveToRevealSelected") then 
+		if (isNil "_objectiveToRevealSelected" || isNull _objectiveToRevealSelected) then 
 		{
 			_tempMissionObjectives = _tempMissionObjectives - _revealedObjectives;
 			_objectiveToReveal = selectRandom _tempMissionObjectives;
@@ -26,13 +26,6 @@ if ((count _revealedObjectives != count _tempMissionObjectives)) then
 			_thisObject = _objectiveToReveal select 0;
 			_nearestLoc = nearestLocations [getPos (_thisObject), ["NameLocal","NameVillage","NameCity","NameCityCapital"], 1500] select 0;
 			_currentObjectiveDescription = "";
-
-			//Check side to assign task
-			if (isNil _side) then 
-			{
-				//Default side is blufor
-				_side = blufor;
-			};
 
 			//Display custom dialogs according to the enemy position
 			switch (_objectiveToReveal select 1) do

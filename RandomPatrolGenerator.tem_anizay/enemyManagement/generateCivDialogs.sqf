@@ -53,12 +53,30 @@ _civs = allUnits select {alive _x AND side _x isEqualTo civilian};
 					//
 				};
 		};
-		if (_hasToJoin) then 
+		if (_hasToJoin && (round (random 1))==0) then //50% chance to join
 		{
 			[1,["Ok let's go !", "PLAIN", 0.5]] remoteExec ["cutText", _caller];
-			[_civ] joinSilent (group player);	//Civ join player squad
-			_civ addWeapon ((weapons player) select 0); //Give to civ the same weapon as player
-			for "_i" from 0 to 7 do { _civ addItem (currentMagazine _civ); };	//Give civ some ammunitions
+			[_civ] remoteExec ["removeAllEventHandlers", 0, true];
+			[_civ] remoteExec ["removeAllActions", 0, true];
+			_civ switchMove "";
+			[_civ] joinSilent (group _caller);	//Civ join player squad
+			
+			//Manage loadout
+			_civLoadout = getUnitLoadout _civ;
+			_weapon = [((getUnitLoadout _caller) select 0) select 0];	
+			_weaponArray = ["","","","",[],[],""];
+			_vestArray = ["V_BandollierB_rgr",[]];
+			_weaponArray set [0, _weapon select  0];
+			
+			_civLoadout set [0, _weaponArray];
+			_civLoadout set [4, _vestArray];
+
+			_civ setUnitLoadout _civLoadout;
+			sleep 2;
+			for "_i" from 0 to 3 do { _civ addItem (currentMagazine _caller); };	//Give civ some ammunitions
+
+			sleep 5;
+			reload _civ;
 		} else 
 		{
 			_randomAnswers = ["Oh please leave me alone !","I don't trust you !"];

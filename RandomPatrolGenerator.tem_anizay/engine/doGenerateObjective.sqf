@@ -124,8 +124,13 @@ generateObjectiveObject =
 					diag_log format ["VIP task setup ! : %1", objectiveObject];
 					(objectiveObject) setPos (getPos _thisObjectivePosition);
 					[objectiveObject, objectiveObject, 75, [], true] call lambs_wp_fnc_taskGarrison;
-					[objectiveObject, true] call ACE_captives_fnc_setHandcuffed;
 
+					//Use ACE function to set hancuffed
+					if (isClass (configFile >> "CfgPatches" >> "ace_medical")) then 
+					{
+						[objectiveObject, true] call ACE_captives_fnc_setHandcuffed;
+					};
+					
 					//Objective failed
 					objectiveObject setVariable ["thisTask", _objectiveUniqueID, true];
 					objectiveObject addEventHandler ["Killed", {
@@ -223,7 +228,7 @@ generateObjectiveObject =
 							[_thisObjective select 2,"SUCCEEDED"] call BIS_fnc_taskSetState;
 						};
 						//Manage respawn and remove actions from NPC
-						removeAllActions objectiveObject;
+						removeAllActions _object;
 						if (["Respawn",1] call BIS_fnc_getParamValue == 1) then 
 						{
 							[[], "engine\respawnManager.sqf"] remoteExec ['BIS_fnc_execVM', 0];

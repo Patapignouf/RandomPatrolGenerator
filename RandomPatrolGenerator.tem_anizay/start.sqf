@@ -23,7 +23,7 @@ missionInitSetup = "MissionInitSetup" call BIS_fnc_getParamValue;
 warEra = "WarEra" call BIS_fnc_getParamValue;
 campaignMode = "CampaignMode" call BIS_fnc_getParamValue;
 chooseStartPos = "ChooseStartPos" call BIS_fnc_getParamValue;
-
+timeOfDay = "TimeOfDay" call BIS_fnc_getParamValue;
 
 
 
@@ -85,13 +85,9 @@ waitUntil {count allPlayers != 0};
 
 //Determine main player side
 _mainPlayerSide = blufor;
-if ({isPlayer _x && side _x == independent} count allUnits != 0) then 
+if ({isPlayer _x && side _x == independent} count allPlayers != 0) then 
 {
 	_mainPlayerSide = independent;
-	for [{_i = 0}, {_i <= lengthParameter}, {_i = _i + 1}] do //Peut être optimisé
-	{
-		[objNull, objNull, _mainPlayerSide] execVM 'engine\revealObjective.sqf';
-	};
 };
 
 /////////////////////////
@@ -99,26 +95,26 @@ if ({isPlayer _x && side _x == independent} count allUnits != 0) then
 /////////////////////////
 
 initCityLocationPosition = objNull;
-publicVariable = "initCityLocationPosition";
+publicVariable "initCityLocationPosition";
 initBlueforLocationPosition = objNull;
-publicVariable = "initBlueforLocationPosition";
+publicVariable "initBlueforLocationPosition";
 
-chooseStartPos
-switch (missionInitSetup) do
+
+switch (chooseStartPos) do
 {
 	case 1:
 		{
 			//If independent are avalaible server is waiting for independent init position
 			if (_mainPlayerSide == independent) then 
 			{
-				waitUntil {!isNil "initCityLocationPosition"};
+				waitUntil {initCityLocationPosition isEqualType []};
 			};
 			
 			//Wait for blufor leader to choose a start position
 			if ({isPlayer _x && side _x == blufor} count allUnits != 0) then 
 			{
-				waitUntil {!isNil "initBlueforLocationPosition"};
-			}
+				waitUntil {initBlueforLocationPosition isEqualType []};
+			};
 		};
 	default
 		{
@@ -129,8 +125,9 @@ switch (missionInitSetup) do
 
 
 //Initilize independent starting position 
-if (!isNil "initCityLocationPosition") then 
+if (initCityLocationPosition isEqualType []) then 
 {
+
 	if (!([initCityLocationPosition, [0,0,0]] call BIS_fnc_areEqual)) then 
 	{
 		_nearestCity = nearestLocations [initCityLocationPosition, ["NameLocal","NameVillage","NameCity","NameCityCapital"], 1500] select 0;
@@ -327,15 +324,18 @@ if ((round (random 1))==0 ) then
 selectedBluforVehicle =[];
 selectedBluforAirDroneVehicle = [];
 vehicleGoodPosition = [];
-initBlueforLocation = objNull;
+initBlueforLocation = [0,0,0];
 bluforShortFrequencyTFAR = (((round random 400)+400)/10);
 publicvariable "bluforShortFrequencyTFAR";
 
+diag_log "test0";
 //Initilize blufor starting position 
-if (!isNil "initBlueforLocationPosition") then 
+if (initBlueforLocationPosition isEqualType []) then 
 {
+	diag_log "test0";
 	if (!([initBlueforLocationPosition, [0,0,0]] call BIS_fnc_areEqual)) then 
 	{
+		diag_log format ["test0 : %1", initBlueforLocationPosition];
 		initBlueforLocation = initBlueforLocationPosition;
 	};
 };
@@ -344,7 +344,7 @@ if (!isNil "initBlueforLocationPosition") then
 if (initBluforBase == 0 || (initBluforBase == 2 && (round random 1 == 0))) then
 {
 	//Check if position is already determine by player
-	if (isNil "initBlueforLocation") then 
+	if ([initBlueforLocation, [0,0,0]] call BIS_fnc_areEqual) then 
 	{
 		initBlueforLocation = [getPos initCityLocation, (aoSize+400), (aoSize+700), 3, 0, 0.25, 0, [areaOfOperation], [[0,0,0],[0,0,0]]] call BIS_fnc_findSafePos;
 		if ([initBlueforLocation , [0,0,0]] call BIS_fnc_areEqual) then
@@ -355,7 +355,7 @@ if (initBluforBase == 0 || (initBluforBase == 2 && (round random 1 == 0))) then
 		//Safe position
 		initBlueforLocation = [selectMax [selectMin [initBlueforLocation select 0, worldSize-50 ],50],selectMax [selectMin [initBlueforLocation select 1, worldSize-50],50]]; 
 	};
-
+	diag_log format ["test0 : %1", initBlueforLocation];
 	//Generate FOB
 	spawnFOBObjects = [initBlueforLocation, (random 360), selectRandom avalaibleFOB] call BIS_fnc_ObjectsMapper;
 	sleep 3;
@@ -366,7 +366,7 @@ if (initBluforBase == 0 || (initBluforBase == 2 && (round random 1 == 0))) then
 } else 
 {
 	//Check if position is already determine by player
-	if (isNil "initBlueforLocation") then 
+	if ([initBlueforLocation, [0,0,0]] call BIS_fnc_areEqual) then 
 	{
 		initBlueforLocation = [getPos initCityLocation, (aoSize+2000), (aoSize+4000), 3, 0, 0.25, 0, [areaOfOperation], [[0,0,0],[0,0,0]]] call BIS_fnc_findSafePos;
 		//Safe position
@@ -437,7 +437,7 @@ diag_log format ["Generating blufor vehicle : %1",selectedBluforVehicle];
 [initBlueforLocation, selectedBluforVehicle, 30, 100] call doGenerateVehicleForFOB;	
 
 //Init VA
-VA2 = createVehicle ["B_supplyCrate_F", [initBlueforLocation, 1, 5, 3, 0, 20, 0] call BIS_fnc_findSafePos, [], 0, "NONE"];
+VA2 = createVehicle ["Box_NATO_WpsSpecial_F", [initBlueforLocation, 1, 5, 3, 0, 20, 0] call BIS_fnc_findSafePos, [], 0, "NONE"];
 clearWeaponCargoGlobal VA2;
 clearMagazineCargoGlobal VA2;
 clearItemCargoGlobal VA2;
@@ -457,14 +457,36 @@ publicvariable "deployableFOBItem";
 			params ["_object","_caller","_ID","_avalaibleOutpost"];
 			
 			//[TODO] Check distance from blufor spawn
+			if (_caller distance initBlueforLocation > 100) then 
+			{
+				//Spawn outpost
+				_spawnFOBObjects = [getPos _object, (random 360), _avalaibleOutpost] call BIS_fnc_ObjectsMapper;
 
-			//Spawn outpost
-			_spawnFOBObjects = [getPos _object, (random 360), selectRandom _avalaibleOutpost] call BIS_fnc_ObjectsMapper;
+				TPFlag2 = createVehicle ["Flag_Blue_F", [getPos _object, 1, 5, 3, 0, 20, 0] call BIS_fnc_findSafePos, [], 0, "NONE"];
 
-			//Remove Box
-			deleteVehicle _object;
+				[TPFlag2, ["Take a nap",{
+					params ["_object","_caller","_ID","_param"];
+					
+					if (!(missionNamespace getVariable ["usedFewTimeAgo",false])) then 
+					{
+						6 remoteExec ["skipTime", 2, false]; 
+						[format ["%1 needs to rest", name _caller]] remoteExec ["hint",0,true];
+						missionNamespace setVariable ["usedFewTimeAgo",true,true];
+						sleep 300;
+						missionNamespace setVariable ["usedFewTimeAgo",false,true];
+					} else {
+						hint "No need to rest";
+					};
+				},objNull,1.5,true,false,"","_target distance _this <5"]] remoteExec [ "addAction", 0, true ];
 
-		},avalaibleFOB,1.5,true,true,"","_target distance _this <5"]] remoteExec ["addAction", 0, true];
+				//Remove Box
+				deleteVehicle _object;
+			} else {
+				hint "Too close to base";
+			};
+
+
+		},deployableFOBMounted,1.5,true,false,"","_target distance _this <5"]] remoteExec ["addAction", 0, true];
 
 
 //Place empty box to blufor camp
@@ -477,10 +499,10 @@ publicvariable "deployableFOBItem";
 } foreach ["Box_NATO_Uniforms_F", "ACE_Box_82mm_Mo_Combo", "Box_NATO_Equip_F"];
 
 //Setup fortification ACE mod
-[blufor, 150, [["Land_BagFence_Long_F", 5], ["Land_BagBunker_Small_F", 50]]] call ace_fortify_fnc_registerObjects;
-
-
-
+if (isClass (configFile >> "CfgPatches" >> "ace_medical")) then 
+{
+	[blufor, 150, [["Land_BagFence_Long_F", 20], ["Land_BagBunker_Small_F", 50]]] call ace_fortify_fnc_registerObjects;
+};
 //Setup view distance changer
 SettingsComputer =  createVehicle ["Land_MultiScreenComputer_01_olive_F", [initBlueforLocation, 1, 5, 3, 0, 20, 0] call BIS_fnc_findSafePos, [], 0, "NONE"];
 {
@@ -534,6 +556,16 @@ switch (missionInitSetup) do
 		};
 };
 
+//reveal objective for ind
+if (_mainPlayerSide == independent) then 
+{
+		for [{_i = 0}, {_i <= lengthParameter}, {_i = _i + 1}] do //Peut être optimisé
+	{
+		[objNull, objNull, _mainPlayerSide] execVM 'engine\revealObjective.sqf';
+	};
+};
+
+
 //Init garbage collector
 [] execVM 'engine\garbageCollector.sqf'; 
 
@@ -547,6 +579,37 @@ switch (missionInitSetup) do
 	}
 ];
 } forEach playableUnits;
+
+//Setup weather and time 
+switch (timeOfDay) do
+{
+	case 1:
+		{
+			//set morning
+			skipTime ((06 - dayTime + 24) % 24);
+		};
+	case 2:
+		{
+			//set day
+			skipTime ((12 - dayTime + 24) % 24);
+		};
+	case 3:
+		{
+			//set afternoon
+			skipTime ((18 - dayTime + 24) % 24);
+		};
+	case 4:
+		{
+			//set night
+			skipTime ((00 - dayTime + 24) % 24);
+		};
+	default
+		{
+			//set random time
+			skipTime ((round (random (24)) - dayTime + 24) % 24);
+		};
+};
+
 
 
 //Init checkdeath

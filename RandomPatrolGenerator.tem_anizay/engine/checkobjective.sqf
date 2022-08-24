@@ -17,6 +17,7 @@ independantTrigger setTriggerArea [60, 60, 0, false]; // trigger area with a rad
 
 waitUntil {!isNil "initBlueforLocation"};
 waitUntil {count initBlueforLocation != 0};
+
 bluforTrigger = createTrigger ["EmptyDetector", initBlueforLocation]; //create a trigger area created at object with variable name my_object
 bluforTrigger setTriggerArea [100, 100, 0, false]; // trigger area with a radius of 100m.
 objectReturnedToCity = []; 

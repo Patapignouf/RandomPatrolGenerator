@@ -8,6 +8,7 @@ enablePlane = "EnablePlane" call BIS_fnc_getParamValue;
 enableHalo = "EnableHALO" call BIS_fnc_getParamValue;
 enableArmored = "EnableArmored" call BIS_fnc_getParamValue;
 initBluforBase = "InitBluforBase" call BIS_fnc_getParamValue;
+chooseStartPos = "ChooseStartPos" call BIS_fnc_getParamValue;
 
 //Optimize scripts
 private _disableThermal = compile preprocessFileLineNumbers "engine\disableThermal.sqf";
@@ -56,23 +57,26 @@ if (!hasInterface || isDedicated) exitWith {};
 
 if (hasInterface) then
 {
-	diag_log format ["Setup Player %1 at position 3", name player];
-	waituntil {!isNil "isBluforAttacked" && !isNil "isIndAttacked"};
+	diag_log format ["Setup Player %1 at position 1", name player];
 	if (side player == independent) then 
 	{
 		if (player == (leader (group player))) then
 		{	
-			if (!didJIP) then 
+			if (chooseStartPos == 1) then 
 			{
-				titleCut ["", "BLACK IN", 5];
-				initCityLocationPosition = [0,0,0];
-				openMap true;
-				sleep 1;
-				hint "Click on map to select a starting area";
-				onMapSingleClick "initCityLocationPosition = _pos; onMapSingleClick ''; openMap false; true;";
-				waitUntil{!(visibleMap)}; 
-				publicVariable = "initCityLocationPosition";
-				titleCut ["Please wait while mission is generating", "BLACK FADED", 5];
+				if (!didJIP) then 
+				{
+					sleep 5;
+					titleCut ["", "BLACK IN", 5];
+					initCityLocationPosition = objNull;
+					openMap true;
+					sleep 1;
+					hint "Click on map to select a starting area";
+					onMapSingleClick "initCityLocationPosition = _pos; onMapSingleClick ''; openMap false; true;";
+					waitUntil{!(visibleMap)}; 
+					publicVariable "initCityLocationPosition";
+					titleCut ["Please wait while mission is generating", "BLACK FADED", 5];
+				};
 			};
 
 			diag_log format ["Warlord is set to player : %1", name player];
@@ -89,7 +93,7 @@ if (hasInterface) then
 		};
 
 		//Wait for the player to choose position
-		waitUntil {!isNil "initCityLocation"};
+		waitUntil {!isNil "missionGenerated"};
 
 		player setVariable ["sideBeforeDeath","independent"];
 		player setPos ([getPos initCityLocation, 1, 5, 3, 0, 20, 0] call BIS_fnc_findSafePos);
@@ -104,6 +108,7 @@ if (hasInterface) then
 		[VA1, player, indFaction] call setupRoleSwitchToItem;
 		[VA1, player] call setupSaveRole;
 
+		waituntil {!isNil "isBluforAttacked" && !isNil "isIndAttacked"};
 		if (isIndAttacked) then
 		{
 				[["Vos informateurs vous informent qu'une attaque est en cours sur votre position.",independent], 'engine\doGenerateMessage.sqf'] remoteExec ['BIS_fnc_execVM', 0];
@@ -113,21 +118,26 @@ if (hasInterface) then
 
 	if (side player == blufor) then
 	{
-		if (player == (leader (group player))) then
+		diag_log format ["Setup Player %1 at position 2", name player];
+		if (player == (leader (group player)) && chooseStartPos == 1) then
 		{	
 			if (!didJIP) then 
 			{
+				sleep 5;
 				titleCut ["", "BLACK IN", 5];
-				initBlueforLocationPosition = [0,0,0];
 				openMap true;
 				sleep 1;
 				hint "Click on map to select a starting area";
 				onMapSingleClick "initBlueforLocationPosition = _pos; onMapSingleClick ''; openMap false; true;";
-				waitUntil{!(visibleMap)}; 
-				publicVariable = "initBlueforLocationPosition";
+				waitUntil{!visibleMap}; 
+				publicVariable "initBlueforLocationPosition";
 				titleCut ["Please wait while mission is generating", "BLACK FADED", 5];
 			};
 		};
+		diag_log format ["Setup Player %1 at position 3", name player];
+
+		//Wait for the player to choose position
+		waitUntil {!isNil "missionGenerated"};
 
 
 		player setVariable ["sideBeforeDeath","blufor"];
@@ -230,7 +240,7 @@ if (hasInterface) then
 			},o,1.5,true,false,"","_target distance _this <5"];
 		};
 
-
+		waituntil {!isNil "isBluforAttacked" && !isNil "isIndAttacked"};
 		if (isBluforAttacked) then
 		{
 				//There's an issue : this message will erase the first one for Blufor
