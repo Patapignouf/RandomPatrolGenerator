@@ -63,8 +63,12 @@ bluforBoat_2035_AAF = [
 	
 ];
 
-// Planes "I_Plane_Fighter_03_dynamicLoadout_F", 
-// "I_Plane_Fighter_04_F"
+//FixedWing vehicle avalaible for blufor
+bluforFixedWing_2035_AAF = [
+	"I_Plane_Fighter_03_dynamicLoadout_F", 
+	"I_Plane_Fighter_04_F"
+	];
+
 
 ////////////////////////
 //Loadout management////
