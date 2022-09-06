@@ -11,6 +11,7 @@ _WWII_USA = 9;
 _ColdWar_USA = 10;
 _ColdWar_NVA = 11;
 _ColdWar_ARVN = 12;
+_2035_AAF = 13;
 
 #include "object_db\USA.sqf"
 #include "object_db\French.sqf"
@@ -25,6 +26,8 @@ _ColdWar_ARVN = 12;
 #include "object_db\ColdWar_ARVN.sqf"
 #include "object_db\ColdWar_NVA.sqf"
 #include "object_db\ColdWar_USA.sqf"
+#include "object_db\2035_AAF.sqf"
+
 
 //Define faction prefix
 c_db = "_db";
@@ -41,23 +44,26 @@ c_WWII_USA = "_WWII_USA";
 c_ColdWar_ARVN = "_ColdWar_ARVN";
 c_ColdWar_NVA = "_ColdWar_NVA";
 c_ColdWar_USA = "_ColdWar_USA";
+c_2035_AAF = "_2035_AAF";
 
 //Import mission params
 warEra = "WarEra" call BIS_fnc_getParamValue;
 
-factionInfos = [[c_USA,_USA],
-[c_Russian,_Ru],
-[c_Taki,_Taki],
-[c_Syndikat,_Syndikat],
-[c_French,_French],
-[c_USA_2000,_USA_2000],
-[c_WWII_UK,_WWII_UK],
-[c_WWII_URSS,_WWII_URSS],
-[c_WWII_Wehrmacht,_WWII_Wehrmacht],
-[c_WWII_USA,_WWII_USA],
-[c_ColdWar_ARVN,_ColdWar_ARVN],
-[c_ColdWar_NVA,_ColdWar_NVA],
-[c_ColdWar_USA,_ColdWar_USA]
+factionInfos = [
+	[c_USA,_USA],
+	[c_Russian,_Ru],
+	[c_Taki,_Taki],
+	[c_Syndikat,_Syndikat],
+	[c_French,_French],
+	[c_USA_2000,_USA_2000],
+	[c_WWII_UK,_WWII_UK],
+	[c_WWII_URSS,_WWII_URSS],
+	[c_WWII_Wehrmacht,_WWII_Wehrmacht],
+	[c_WWII_USA,_WWII_USA],
+	[c_ColdWar_ARVN,_ColdWar_ARVN],
+	[c_ColdWar_NVA,_ColdWar_NVA],
+	[c_ColdWar_USA,_ColdWar_USA],
+	[c_2035_AAF,_2035_AAF]
 ];
 
 c_variableToInit = ["bluforUnarmedVehicle","bluforArmedVehicle","bluforUnarmedVehicleChopper","bluforDrone","bluforBoat","civilian_group",
