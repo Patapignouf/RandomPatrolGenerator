@@ -68,7 +68,7 @@ factionInfos = [
 
 c_variableToInit = ["bluforUnarmedVehicle","bluforArmedVehicle","bluforUnarmedVehicleChopper","bluforDrone","bluforBoat","civilian_group",
 "civilian_big_group","civilianTruck","baseEnemyGroup","baseEnemyATGroup","baseEnemyDemoGroup","baseEnemyMortarGroup","baseEnemyVehicleGroup",
-"baseEnemyLightArmoredVehicleGroup","baseEnemyHeavyArmoredVehicleGroup"];
+"baseEnemyLightArmoredVehicleGroup","baseEnemyHeavyArmoredVehicleGroup","bluforFixedWing"];
 
 //////////////////////////////
 ////Define objectives data////

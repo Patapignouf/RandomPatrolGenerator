@@ -51,6 +51,9 @@ publicVariable "bluforArmedVehicle";
 bluforUnarmedVehicleChopper = bluforUnarmedVehicleChopper_db select {_x select 1  == bluFaction} select 0 select 0;
 publicVariable "bluforUnarmedVehicleChopper";
 
+bluforFixedWing = bluforFixedWing_db select {_x select 1  == bluFaction} select 0 select 0;
+publicVariable "bluforFixedWing";
+
 bluforDrone = bluforDrone_db select {_x select 1  == bluFaction} select 0 select 0;
 bluforBoat = bluforBoat_db select {_x select 1  == bluFaction} select 0 select 0;
 
