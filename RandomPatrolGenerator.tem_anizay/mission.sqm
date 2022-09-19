@@ -12,7 +12,7 @@ class EditorData
 	};
 	class ItemIDProvider
 	{
-		nextID=1567;
+		nextID=1872;
 	};
 	class MarkerIDProvider
 	{
@@ -24,10 +24,10 @@ class EditorData
 	};
 	class Camera
 	{
-		pos[]={5504.5537,294.31116,2622.7161};
-		dir[]={0.22756518,-0.65250164,-0.72281098};
-		up[]={0.19594766,0.75778735,-0.62238485};
-		aside[]={-0.95384413,0,-0.30030218};
+		pos[]={5602.9443,265.92432,2473.7014};
+		dir[]={-0.42169493,-0.56247336,0.7112931};
+		up[]={-0.28685588,0.82678699,0.48385629};
+		aside[]={0.86025691,9.7323209e-007,0.51000422};
 	};
 };
 binarizationWanted=0;
@@ -441,7 +441,7 @@ class Mission
 			side="West";
 			class Entities
 			{
-				items=11;
+				items=14;
 				class Item0
 				{
 					dataType="Object";
@@ -455,6 +455,7 @@ class Mission
 					{
 						rank="SERGEANT";
 						init="this setVariable [""role"", ""leader"" , true];";
+						description="1: Squad Leader";
 						isPlayer=1;
 						isPlayable=1;
 						class Inventory
@@ -538,7 +539,7 @@ class Mission
 							headgear="H_HelmetB_desert";
 						};
 					};
-					id=1535;
+					id=1846;
 					type="B_Soldier_SL_F";
 					class CustomAttributes
 					{
@@ -576,7 +577,7 @@ class Mission
 					dataType="Object";
 					class PositionInfo
 					{
-						position[]={5510.3882,204.03036,2557.4399};
+						position[]={5513,203.82744,2556.05};
 					};
 					side="West";
 					flags=5;
@@ -584,6 +585,7 @@ class Mission
 					{
 						skill=0.40000001;
 						init="this setVariable [""role"", ""autorifleman"" , true];";
+						description="2: Autorifleman";
 						isPlayable=1;
 						class Inventory
 						{
@@ -666,7 +668,7 @@ class Mission
 							headgear="H_HelmetB_desert";
 						};
 					};
-					id=1536;
+					id=1847;
 					type="B_soldier_AR_F";
 					class CustomAttributes
 					{
@@ -713,6 +715,7 @@ class Mission
 						skill=0.44999999;
 						rank="CORPORAL";
 						init="this setVariable [""role"", ""rifleman"" , true];";
+						description="3: Rifleman";
 						isPlayable=1;
 						class Inventory
 						{
@@ -795,7 +798,7 @@ class Mission
 							headgear="H_HelmetB_desert";
 						};
 					};
-					id=1537;
+					id=1848;
 					type="B_Soldier_GL_F";
 					class CustomAttributes
 					{
@@ -841,6 +844,7 @@ class Mission
 					{
 						rank="SERGEANT";
 						init="this setVariable [""role"", ""marksman"" , true];";
+						description="4: Marksman";
 						isPlayable=1;
 						class Inventory
 						{
@@ -923,7 +927,7 @@ class Mission
 							headgear="H_HelmetB_desert";
 						};
 					};
-					id=1538;
+					id=1849;
 					type="B_soldier_M_F";
 					class CustomAttributes
 					{
@@ -970,6 +974,7 @@ class Mission
 						skill=0.44999999;
 						rank="CORPORAL";
 						init="this setVariable [""role"", ""at"" , true];";
+						description="5: Missile Specialist (AT)";
 						isPlayable=1;
 						class Inventory
 						{
@@ -1052,7 +1057,7 @@ class Mission
 							headgear="H_HelmetB_desert";
 						};
 					};
-					id=1539;
+					id=1850;
 					type="B_soldier_AT_F";
 					class CustomAttributes
 					{
@@ -1098,6 +1103,7 @@ class Mission
 					{
 						skill=0.40000001;
 						init="this setVariable [""role"", ""at"" , true];";
+						description="6: Missile Specialist (AT)";
 						isPlayable=1;
 						class Inventory
 						{
@@ -1180,7 +1186,7 @@ class Mission
 							headgear="H_HelmetB_desert";
 						};
 					};
-					id=1540;
+					id=1851;
 					type="B_soldier_AAT_F";
 					class CustomAttributes
 					{
@@ -1226,6 +1232,7 @@ class Mission
 					{
 						skill=0.40000001;
 						init="this setVariable [""role"", ""engineer"" , true];";
+						description="7: Engineer";
 						isPlayable=1;
 						class Inventory
 						{
@@ -1308,7 +1315,7 @@ class Mission
 							headgear="H_HelmetB_desert";
 						};
 					};
-					id=1541;
+					id=1852;
 					type="B_Soldier_A_F";
 					class CustomAttributes
 					{
@@ -1354,6 +1361,7 @@ class Mission
 					{
 						skill=0.40000001;
 						init="this setVariable [""role"", ""medic"" , true];";
+						description="8: Combat Life Saver";
 						isPlayable=1;
 						class Inventory
 						{
@@ -1436,7 +1444,7 @@ class Mission
 							headgear="H_HelmetB_desert";
 						};
 					};
-					id=1542;
+					id=1853;
 					type="B_medic_F";
 					class CustomAttributes
 					{
@@ -1482,6 +1490,7 @@ class Mission
 					{
 						skill=0.40000001;
 						init="this setVariable [""role"", ""medic"" , true];";
+						description="9: Combat Life Saver";
 						isPlayable=1;
 						class Inventory
 						{
@@ -1564,7 +1573,7 @@ class Mission
 							headgear="H_HelmetB_desert";
 						};
 					};
-					id=1544;
+					id=1854;
 					type="B_medic_F";
 					class CustomAttributes
 					{
@@ -1602,7 +1611,7 @@ class Mission
 					dataType="Object";
 					class PositionInfo
 					{
-						position[]={5513.6099,203.17953,2551.7041};
+						position[]={5504,204.44945,2561.05};
 					};
 					side="West";
 					flags=5;
@@ -1610,6 +1619,7 @@ class Mission
 					{
 						rank="SERGEANT";
 						init="this setVariable [""role"", ""marksman"" , true];";
+						description="10: Marksman";
 						isPlayable=1;
 						class Inventory
 						{
@@ -1692,7 +1702,7 @@ class Mission
 							headgear="H_HelmetB_desert";
 						};
 					};
-					id=1550;
+					id=1855;
 					type="B_soldier_M_F";
 					class CustomAttributes
 					{
@@ -1730,7 +1740,7 @@ class Mission
 					dataType="Object";
 					class PositionInfo
 					{
-						position[]={5507.437,203.99246,2557.4287};
+						position[]={5511,204.40744,2560.05};
 					};
 					side="West";
 					flags=5;
@@ -1738,6 +1748,7 @@ class Mission
 					{
 						skill=0.40000001;
 						init="this setVariable [""role"", ""autorifleman"" , true];";
+						description="11: Autorifleman";
 						isPlayable=1;
 						class Inventory
 						{
@@ -1820,7 +1831,7 @@ class Mission
 							headgear="H_HelmetB_desert";
 						};
 					};
-					id=1548;
+					id=1856;
 					type="B_soldier_AR_F";
 					class CustomAttributes
 					{
@@ -1853,11 +1864,401 @@ class Mission
 						nAttributes=2;
 					};
 				};
+				class Item11
+				{
+					dataType="Object";
+					class PositionInfo
+					{
+						position[]={5498,203.30142,2555.05};
+					};
+					side="West";
+					flags=5;
+					class Attributes
+					{
+						skill=0.44999999;
+						rank="CORPORAL";
+						init="this setVariable [""role"", ""rifleman"" , true];";
+						description="12: Rifleman";
+						isPlayable=1;
+						class Inventory
+						{
+							class binocular
+							{
+								name="Binocular";
+							};
+							class uniform
+							{
+								typeName="U_B_CombatUniform_mcam_vest";
+								isBackpack=0;
+								class ItemCargo
+								{
+									items=1;
+									class Item0
+									{
+										name="FirstAidKit";
+										count=1;
+									};
+								};
+							};
+							class vest
+							{
+								typeName="V_PlateCarrierGL_rgr";
+								isBackpack=0;
+								class MagazineCargo
+								{
+									items=7;
+									class Item0
+									{
+										name="HandGrenade";
+										count=2;
+										ammoLeft=1;
+									};
+									class Item1
+									{
+										name="B_IR_Grenade";
+										count=2;
+										ammoLeft=1;
+									};
+									class Item2
+									{
+										name="SmokeShell";
+										count=1;
+										ammoLeft=1;
+									};
+									class Item3
+									{
+										name="SmokeShellGreen";
+										count=1;
+										ammoLeft=1;
+									};
+									class Item4
+									{
+										name="SmokeShellBlue";
+										count=1;
+										ammoLeft=1;
+									};
+									class Item5
+									{
+										name="SmokeShellOrange";
+										count=1;
+										ammoLeft=1;
+									};
+									class Item6
+									{
+										name="Chemlight_green";
+										count=2;
+										ammoLeft=1;
+									};
+								};
+							};
+							map="ItemMap";
+							compass="ItemCompass";
+							watch="ItemWatch";
+							radio="ItemRadio";
+							gps="ItemGPS";
+							goggles="G_Tactical_Black";
+							hmd="NVGoggles";
+							headgear="H_HelmetB_desert";
+						};
+					};
+					id=1857;
+					type="B_Soldier_GL_F";
+					class CustomAttributes
+					{
+						class Attribute0
+						{
+							property="speaker";
+							expression="_this setspeaker _value;";
+							class Value
+							{
+								class data
+								{
+									singleType="STRING";
+									value="Male01ENG";
+								};
+							};
+						};
+						class Attribute1
+						{
+							property="pitch";
+							expression="_this setpitch _value;";
+							class Value
+							{
+								class data
+								{
+									singleType="SCALAR";
+									value=1.04;
+								};
+							};
+						};
+						nAttributes=2;
+					};
+				};
+				class Item12
+				{
+					dataType="Object";
+					class PositionInfo
+					{
+						position[]={5510,204.80145,2563.05};
+					};
+					side="West";
+					flags=5;
+					class Attributes
+					{
+						skill=0.44999999;
+						rank="CORPORAL";
+						init="this setVariable [""role"", ""rifleman"" , true];";
+						description="13: Rifleman";
+						isPlayable=1;
+						class Inventory
+						{
+							class binocular
+							{
+								name="Binocular";
+							};
+							class uniform
+							{
+								typeName="U_B_CombatUniform_mcam_vest";
+								isBackpack=0;
+								class ItemCargo
+								{
+									items=1;
+									class Item0
+									{
+										name="FirstAidKit";
+										count=1;
+									};
+								};
+							};
+							class vest
+							{
+								typeName="V_PlateCarrierGL_rgr";
+								isBackpack=0;
+								class MagazineCargo
+								{
+									items=7;
+									class Item0
+									{
+										name="HandGrenade";
+										count=2;
+										ammoLeft=1;
+									};
+									class Item1
+									{
+										name="B_IR_Grenade";
+										count=2;
+										ammoLeft=1;
+									};
+									class Item2
+									{
+										name="SmokeShell";
+										count=1;
+										ammoLeft=1;
+									};
+									class Item3
+									{
+										name="SmokeShellGreen";
+										count=1;
+										ammoLeft=1;
+									};
+									class Item4
+									{
+										name="SmokeShellBlue";
+										count=1;
+										ammoLeft=1;
+									};
+									class Item5
+									{
+										name="SmokeShellOrange";
+										count=1;
+										ammoLeft=1;
+									};
+									class Item6
+									{
+										name="Chemlight_green";
+										count=2;
+										ammoLeft=1;
+									};
+								};
+							};
+							map="ItemMap";
+							compass="ItemCompass";
+							watch="ItemWatch";
+							radio="ItemRadio";
+							gps="ItemGPS";
+							goggles="G_Tactical_Black";
+							hmd="NVGoggles";
+							headgear="H_HelmetB_desert";
+						};
+					};
+					id=1858;
+					type="B_Soldier_GL_F";
+					class CustomAttributes
+					{
+						class Attribute0
+						{
+							property="speaker";
+							expression="_this setspeaker _value;";
+							class Value
+							{
+								class data
+								{
+									singleType="STRING";
+									value="Male01ENG";
+								};
+							};
+						};
+						class Attribute1
+						{
+							property="pitch";
+							expression="_this setpitch _value;";
+							class Value
+							{
+								class data
+								{
+									singleType="SCALAR";
+									value=1.04;
+								};
+							};
+						};
+						nAttributes=2;
+					};
+				};
+				class Item13
+				{
+					dataType="Object";
+					class PositionInfo
+					{
+						position[]={5502,204.10945,2559.05};
+					};
+					side="West";
+					flags=5;
+					class Attributes
+					{
+						skill=0.44999999;
+						rank="CORPORAL";
+						init="this setVariable [""role"", ""rifleman"" , true];";
+						description="14: Rifleman";
+						isPlayable=1;
+						class Inventory
+						{
+							class binocular
+							{
+								name="Binocular";
+							};
+							class uniform
+							{
+								typeName="U_B_CombatUniform_mcam_vest";
+								isBackpack=0;
+								class ItemCargo
+								{
+									items=1;
+									class Item0
+									{
+										name="FirstAidKit";
+										count=1;
+									};
+								};
+							};
+							class vest
+							{
+								typeName="V_PlateCarrierGL_rgr";
+								isBackpack=0;
+								class MagazineCargo
+								{
+									items=7;
+									class Item0
+									{
+										name="HandGrenade";
+										count=2;
+										ammoLeft=1;
+									};
+									class Item1
+									{
+										name="B_IR_Grenade";
+										count=2;
+										ammoLeft=1;
+									};
+									class Item2
+									{
+										name="SmokeShell";
+										count=1;
+										ammoLeft=1;
+									};
+									class Item3
+									{
+										name="SmokeShellGreen";
+										count=1;
+										ammoLeft=1;
+									};
+									class Item4
+									{
+										name="SmokeShellBlue";
+										count=1;
+										ammoLeft=1;
+									};
+									class Item5
+									{
+										name="SmokeShellOrange";
+										count=1;
+										ammoLeft=1;
+									};
+									class Item6
+									{
+										name="Chemlight_green";
+										count=2;
+										ammoLeft=1;
+									};
+								};
+							};
+							map="ItemMap";
+							compass="ItemCompass";
+							watch="ItemWatch";
+							radio="ItemRadio";
+							gps="ItemGPS";
+							goggles="G_Tactical_Black";
+							hmd="NVGoggles";
+							headgear="H_HelmetB_desert";
+						};
+					};
+					id=1859;
+					type="B_Soldier_GL_F";
+					class CustomAttributes
+					{
+						class Attribute0
+						{
+							property="speaker";
+							expression="_this setspeaker _value;";
+							class Value
+							{
+								class data
+								{
+									singleType="STRING";
+									value="Male01ENG";
+								};
+							};
+						};
+						class Attribute1
+						{
+							property="pitch";
+							expression="_this setpitch _value;";
+							class Value
+							{
+								class data
+								{
+									singleType="SCALAR";
+									value=1.04;
+								};
+							};
+						};
+						nAttributes=2;
+					};
+				};
 			};
 			class Attributes
 			{
 			};
-			id=1534;
+			id=1845;
 		};
 		class Item1
 		{
@@ -1879,6 +2280,7 @@ class Mission
 					{
 						rank="SERGEANT";
 						init="this setVariable [""role"", ""leader"" , true];";
+						description="1: Squad Leader";
 						isPlayable=1;
 						class Inventory
 						{
@@ -1960,7 +2362,7 @@ class Mission
 							headgear="H_HelmetB_desert";
 						};
 					};
-					id=1552;
+					id=1861;
 					type="B_Soldier_SL_F";
 					class CustomAttributes
 					{
@@ -1998,7 +2400,7 @@ class Mission
 					dataType="Object";
 					class PositionInfo
 					{
-						position[]={5568.7725,197.50716,2535.1211};
+						position[]={5566,197.65944,2536.05};
 					};
 					side="Independent";
 					flags=5;
@@ -2007,6 +2409,7 @@ class Mission
 						skill=0.44999999;
 						rank="CORPORAL";
 						init="this setVariable [""role"", ""rifleman"" , true];";
+						description="2: Grenadier";
 						isPlayable=1;
 						class Inventory
 						{
@@ -2088,7 +2491,7 @@ class Mission
 							headgear="H_HelmetB_desert";
 						};
 					};
-					id=1554;
+					id=1862;
 					type="B_Soldier_GL_F";
 					class CustomAttributes
 					{
@@ -2126,7 +2529,7 @@ class Mission
 					dataType="Object";
 					class PositionInfo
 					{
-						position[]={5583.772,196.42213,2530.1211};
+						position[]={5586,197.16545,2535.05};
 					};
 					side="Independent";
 					flags=5;
@@ -2134,6 +2537,7 @@ class Mission
 					{
 						rank="SERGEANT";
 						init="this setVariable [""role"", ""marksman"" , true];";
+						description="3: Marksman";
 						isPlayable=1;
 						class Inventory
 						{
@@ -2215,7 +2619,7 @@ class Mission
 							headgear="H_HelmetB_desert";
 						};
 					};
-					id=1555;
+					id=1863;
 					type="B_soldier_M_F";
 					class CustomAttributes
 					{
@@ -2253,7 +2657,7 @@ class Mission
 					dataType="Object";
 					class PositionInfo
 					{
-						position[]={5563.7725,197.17827,2530.1211};
+						position[]={5563,197.21143,2531.05};
 					};
 					side="Independent";
 					flags=5;
@@ -2262,6 +2666,7 @@ class Mission
 						skill=0.44999999;
 						rank="CORPORAL";
 						init="this setVariable [""role"", ""at"" , true];";
+						description="4: Missile Specialist (AT)";
 						isPlayable=1;
 						class Inventory
 						{
@@ -2343,7 +2748,7 @@ class Mission
 							headgear="H_HelmetB_desert";
 						};
 					};
-					id=1556;
+					id=1864;
 					type="B_soldier_AT_F";
 					class CustomAttributes
 					{
@@ -2381,7 +2786,7 @@ class Mission
 					dataType="Object";
 					class PositionInfo
 					{
-						position[]={5587.3843,196.30879,2526.7312};
+						position[]={5590,196.36743,2528.05};
 					};
 					side="Independent";
 					flags=5;
@@ -2389,6 +2794,7 @@ class Mission
 					{
 						skill=0.40000001;
 						init="this setVariable [""role"", ""at"" , true];";
+						description="5: Asst. Missile Specialist (AT)";
 						isPlayable=1;
 						class Inventory
 						{
@@ -2470,7 +2876,7 @@ class Mission
 							headgear="H_HelmetB_desert";
 						};
 					};
-					id=1557;
+					id=1865;
 					type="B_soldier_AAT_F";
 					class CustomAttributes
 					{
@@ -2516,6 +2922,7 @@ class Mission
 					{
 						skill=0.40000001;
 						init="this setVariable [""role"", ""engineer"" , true];";
+						description="6: Ammo Bearer";
 						isPlayable=1;
 						class Inventory
 						{
@@ -2597,7 +3004,7 @@ class Mission
 							headgear="H_HelmetB_desert";
 						};
 					};
-					id=1558;
+					id=1866;
 					type="B_Soldier_A_F";
 					class CustomAttributes
 					{
@@ -2643,6 +3050,7 @@ class Mission
 					{
 						skill=0.40000001;
 						init="this setVariable [""role"", ""medic"" , true];";
+						description="7: Combat Life Saver";
 						isPlayable=1;
 						class Inventory
 						{
@@ -2724,7 +3132,7 @@ class Mission
 							headgear="H_HelmetB_desert";
 						};
 					};
-					id=1559;
+					id=1867;
 					type="B_medic_F";
 					class CustomAttributes
 					{
@@ -2770,6 +3178,7 @@ class Mission
 					{
 						skill=0.40000001;
 						init="this setVariable [""role"", ""medic"" , true];";
+						description="8: Combat Life Saver";
 						isPlayable=1;
 						class Inventory
 						{
@@ -2851,7 +3260,7 @@ class Mission
 							headgear="H_HelmetB_desert";
 						};
 					};
-					id=1560;
+					id=1868;
 					type="B_medic_F";
 					class CustomAttributes
 					{
@@ -2889,7 +3298,7 @@ class Mission
 					dataType="Object";
 					class PositionInfo
 					{
-						position[]={5580,198.19545,2539.05};
+						position[]={5582,198.51144,2540.05};
 					};
 					side="Independent";
 					flags=5;
@@ -2897,6 +3306,7 @@ class Mission
 					{
 						rank="SERGEANT";
 						init="this setVariable [""role"", ""marksman"" , true];";
+						description="9: Marksman";
 						isPlayable=1;
 						class Inventory
 						{
@@ -2978,7 +3388,7 @@ class Mission
 							headgear="H_HelmetB_desert";
 						};
 					};
-					id=1561;
+					id=1869;
 					type="B_soldier_M_F";
 					class CustomAttributes
 					{
@@ -3016,7 +3426,7 @@ class Mission
 					dataType="Object";
 					class PositionInfo
 					{
-						position[]={5574,200.43945,2547.05};
+						position[]={5573,200.34541,2547.05};
 					};
 					side="Independent";
 					flags=5;
@@ -3024,6 +3434,7 @@ class Mission
 					{
 						skill=0.40000001;
 						init="this setVariable [""role"", ""autorifleman"" , true];";
+						description="10: Autorifleman";
 						isPlayable=1;
 						class Inventory
 						{
@@ -3105,7 +3516,7 @@ class Mission
 							headgear="H_HelmetB_desert";
 						};
 					};
-					id=1562;
+					id=1870;
 					type="B_soldier_AR_F";
 					class CustomAttributes
 					{
@@ -3143,7 +3554,7 @@ class Mission
 					dataType="Object";
 					class PositionInfo
 					{
-						position[]={5571,199.13544,2543.05};
+						position[]={5569,198.83145,2542.05};
 					};
 					side="Independent";
 					flags=5;
@@ -3151,6 +3562,7 @@ class Mission
 					{
 						skill=0.40000001;
 						init="this setVariable [""role"", ""autorifleman"" , true];";
+						description="11: Autorifleman";
 						isPlayable=1;
 						class Inventory
 						{
@@ -3232,7 +3644,7 @@ class Mission
 							headgear="H_HelmetB_desert";
 						};
 					};
-					id=1553;
+					id=1871;
 					type="B_soldier_AR_F";
 					class CustomAttributes
 					{
@@ -3269,7 +3681,7 @@ class Mission
 			class Attributes
 			{
 			};
-			id=1563;
+			id=1860;
 		};
 	};
 };
