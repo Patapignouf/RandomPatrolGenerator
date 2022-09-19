@@ -1,87 +1,11 @@
-_Taki = 0;
-_USA = 1;
-_Syndikat = 2;
-_Ru = 3;
-_French = 4;
-_USA_2000 = 5;
-_WWII_UK = 6;
-_WWII_Wehrmacht = 7;
-_WWII_URSS = 8;
-_WWII_USA = 9;
-_ColdWar_USA = 10;
-_ColdWar_NVA = 11;
-_ColdWar_ARVN = 12;
-_2035_AAF = 13;
-
-#include "object_db\USA.sqf"
-#include "object_db\French.sqf"
-#include "object_db\Russian.sqf"
-#include "object_db\Syndikat.sqf"
-#include "object_db\Takistani.sqf"
-#include "object_db\USA_2000.sqf"
-#include "object_db\WWII_Wehrmacht.sqf"
-#include "object_db\WWII_URSS.sqf"
-#include "object_db\WWII_UK.sqf"
-#include "object_db\WWII_USA.sqf"
-#include "object_db\ColdWar_ARVN.sqf"
-#include "object_db\ColdWar_NVA.sqf"
-#include "object_db\ColdWar_USA.sqf"
-#include "object_db\2035_AAF.sqf"
-
-
-//Define faction prefix
-c_db = "_db";
-c_USA = "_USA";
-c_USA_2000 = "_USA_2000";
-c_Russian = "_Russian";
-c_Taki = "_Taki";
-c_Syndikat = "_Syndikat";
-c_French = "_French";
-c_WWII_UK = "_WWII_UK";
-c_WWII_URSS = "_WWII_URSS";
-c_WWII_Wehrmacht = "_WWII_Wehrmacht";
-c_WWII_USA = "_WWII_USA";
-c_ColdWar_ARVN = "_ColdWar_ARVN";
-c_ColdWar_NVA = "_ColdWar_NVA";
-c_ColdWar_USA = "_ColdWar_USA";
-c_2035_AAF = "_2035_AAF";
+#include "factionParameters.sqf"
 
 //Import mission params
 warEra = "WarEra" call BIS_fnc_getParamValue;
 
-factionInfos = [
-	[c_USA,_USA],
-	[c_Russian,_Ru],
-	[c_Taki,_Taki],
-	[c_Syndikat,_Syndikat],
-	[c_French,_French],
-	[c_USA_2000,_USA_2000],
-	[c_WWII_UK,_WWII_UK],
-	[c_WWII_URSS,_WWII_URSS],
-	[c_WWII_Wehrmacht,_WWII_Wehrmacht],
-	[c_WWII_USA,_WWII_USA],
-	[c_ColdWar_ARVN,_ColdWar_ARVN],
-	[c_ColdWar_NVA,_ColdWar_NVA],
-	[c_ColdWar_USA,_ColdWar_USA],
-	[c_2035_AAF,_2035_AAF]
-];
-
-//Define global constant
-c_leader = "leader";
-c_at = "at";
-c_rifleman = "rifleman";
-c_engineer = "engineer";
-c_autorifleman = "autorifleman";
-c_marksman = "marksman"; 
-c_medic = "medic";
-c_radioman = "radioman";
-c_grenadier = "grenadier";
-c_ammobearer = "ammobearer";
-
 c_listOfRoles = [c_leader,c_at,c_rifleman,c_engineer,c_autorifleman,c_marksman,c_medic];
 
 c_variableToInit = ["listOfRoles","loadout","rifleList","grenadeLauncherList","attachmentLongList","attachmentShortList","smgList","marksmanrifleList","autorifleList","launcherList","itemList","itemEngineerList","itemMedicList",'backPackList','uniformList'];
-
 
 //Join
 
@@ -286,7 +210,6 @@ getVirtualUniform = {
 };
 
 
-
 getVirtualAttachement = {
 	currentPlayer = _this select 0;
 	currentFaction = _this select 1;
@@ -344,10 +267,10 @@ setupArsenalToItem = {
 	[itemToAttachArsenal,itemToAttachArsenal call BIS_fnc_getVirtualMagazineCargo,false] call BIS_fnc_removeVirtualMagazineCargo;
 	[itemToAttachArsenal,itemToAttachArsenal call BIS_fnc_getVirtualBackpackCargo,false] call BIS_fnc_removeVirtualBackpackCargo;
 
-	//Add Weapon to to arsenal
+	//Add Weapon to arsenal
 	[itemToAttachArsenal, ([currentPlayer, currentFaction] call getVirtualWeaponList )] call BIS_fnc_addVirtualWeaponCargo;
 
-	//[itemToAttachArsenal,backpacksList] call BIS_fnc_addVirtualBackpackCargo;
+	//Add backpack to arsenal
 	[itemToAttachArsenal, ([currentPlayer, currentFaction] call getVirtualBackPack )] call BIS_fnc_addVirtualBackpackCargo;
 
 	//[VA2,((itemCargo VA2) + _availableHeadgear + _availableUniforms + _availableVests)] call BIS_fnc_addVirtualItemCargo;
