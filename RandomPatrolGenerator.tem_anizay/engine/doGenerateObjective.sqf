@@ -192,7 +192,7 @@ generateObjectiveObject =
 						_missionUncompletedObjectives = _missionUncompletedObjectives - [_thisObjective];
 						missionNamespace setVariable ["missionUncompletedObjectives",_missionUncompletedObjectives,true];
 						//Manage player's feedback
-						if ("RealismMode" call BIS_fnc_getParamValue == 1 && {alive _x && side _x == independent} count allPlayers == 0) then 
+						if ("RealismMode" call BIS_fnc_getParamValue == 1) then 
 						{
 							[_thisObjective select 2,"SUCCEEDED"] call BIS_fnc_taskSetState;
 						};
@@ -223,12 +223,13 @@ generateObjectiveObject =
 						_missionUncompletedObjectives = _missionUncompletedObjectives - [_thisObjective];
 						missionNamespace setVariable ["missionUncompletedObjectives",_missionUncompletedObjectives,true];
 						//Manage player's feedback
-						if ("RealismMode" call BIS_fnc_getParamValue == 1 && {alive _x && side _x == independent} count allPlayers == 0) then 
+						if ("RealismMode" call BIS_fnc_getParamValue == 1) then 
 						{
 							[_thisObjective select 2,"SUCCEEDED"] call BIS_fnc_taskSetState;
 						};
 						//Manage respawn and remove actions from NPC
 						removeAllActions _object;
+						[_object] remoteExec ["removeAllActions", 0, true];
 						if (["Respawn",1] call BIS_fnc_getParamValue == 1) then 
 						{
 							[[], "engine\respawnManager.sqf"] remoteExec ['BIS_fnc_execVM', 0];

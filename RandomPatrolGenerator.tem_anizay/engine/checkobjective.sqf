@@ -9,14 +9,16 @@ respawnSettings = ["Respawn",1] call BIS_fnc_getParamValue;
 current_obj = objNull;
 
 missionComplete = false;
+RTBComplete = false;
+isRTBMissionGenerated = false;
 numberOfCompletedObj = 0;
 numberOfObjectives = count _objectivesToTest;
 
 independantTrigger = createTrigger ["EmptyDetector", getPos _objectivesDestinationArea]; //create a trigger area created at object with variable name my_object
 independantTrigger setTriggerArea [60, 60, 0, false]; // trigger area with a radius of 100m.
 
-waitUntil {!isNil "initBlueforLocation"};
-waitUntil {count initBlueforLocation != 0};
+waitUntil {!isNil "missionGenerated"};
+waitUntil {missionGenerated};
 
 bluforTrigger = createTrigger ["EmptyDetector", initBlueforLocation]; //create a trigger area created at object with variable name my_object
 bluforTrigger setTriggerArea [100, 100, 0, false]; // trigger area with a radius of 100m.
@@ -27,7 +29,7 @@ if (respawnSettings == 1) then
 	[] execVM "engine\respawnSetup.sqf";
 };
 
-while {sleep 10; !missionComplete} do
+while {sleep 10; !RTBComplete} do
 {
 	_completedObjectives = missionNamespace getVariable ["completedObjectives",[]];
 	_missionObjectives = missionNamespace getVariable ["MissionObjectives",[]];
@@ -162,27 +164,27 @@ while {sleep 10; !missionComplete} do
 	} foreach _missionUncompletedObjectives;
 	missionComplete = count _completedObjectives + 1 >= count _missionObjectives;
 
-
-};
-
-
-
-//Generate RTB task
-RTBComplete = false;
-[true, "taskRTB", ["Return to your initial base", "RTB", ""], objNull, 1, 3, true] call BIS_fnc_taskCreate;
-while {sleep 5; !RTBComplete} do
-{
-	nbBluePlayer = {alive _x && side _x == blufor} count allPlayers;
-    nbIndPlayer = {alive _x && side _x == independent} count allPlayers;
-	nbBluePlayerBack = count ((allPlayers select {alive _x && side _x == blufor} ) inAreaArray bluforTrigger); //vehicles (all vehicles) inAreaArray (Returns list of Objects or Positions that are in the area _independantTrigger.)  
-	nbIndPlayerBack = count ((allPlayers select {alive _x && side _x == independent} ) inAreaArray independantTrigger);
-	if (nbBluePlayer == nbBluePlayerBack && nbIndPlayer == nbIndPlayerBack) then 
+	//Check if mission is complete
+	if (missionComplete) then 
 	{
-		["taskRTB","SUCCEEDED"] call BIS_fnc_taskSetState;
-		RTBComplete = true;
+		//Generate RTB mission
+		if (!isRTBMissionGenerated) then 
+		{
+			[true, "taskRTB", ["Return to your initial base", "RTB", ""], objNull, 1, 3, true] call BIS_fnc_taskCreate;
+			isRTBMissionGenerated = true;
+		};
+
+		nbBluePlayer = {alive _x && side _x == blufor} count allPlayers;
+		nbIndPlayer = {alive _x && side _x == independent} count allPlayers;
+		nbBluePlayerBack = count ((allPlayers select {alive _x && side _x == blufor} ) inAreaArray bluforTrigger); //vehicles (all vehicles) inAreaArray (Returns list of Objects or Positions that are in the area _independantTrigger.)  
+		nbIndPlayerBack = count ((allPlayers select {alive _x && side _x == independent} ) inAreaArray independantTrigger);
+		if (nbBluePlayer == nbBluePlayerBack && nbIndPlayer == nbIndPlayerBack) then 
+		{
+			["taskRTB","SUCCEEDED"] call BIS_fnc_taskSetState;
+			RTBComplete = true;
+		};
 	};
 };
-
 
 
 diag_log format ["All objectives completed !"];

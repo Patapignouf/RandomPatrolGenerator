@@ -24,6 +24,7 @@ warEra = "WarEra" call BIS_fnc_getParamValue;
 campaignMode = "CampaignMode" call BIS_fnc_getParamValue;
 chooseStartPos = "ChooseStartPos" call BIS_fnc_getParamValue;
 timeOfDay = "TimeOfDay" call BIS_fnc_getParamValue;
+respawnSettings = "Respawn" call BIS_fnc_getParamValue;
 
 
 
@@ -359,6 +360,7 @@ if (initBluforBase == 0 || (initBluforBase == 2 && (round random 1 == 0))) then
 		initBlueforLocation = [selectMax [selectMin [initBlueforLocation select 0, worldSize-50 ],50],selectMax [selectMin [initBlueforLocation select 1, worldSize-50],50]]; 
 	};
 	diag_log format ["test0 : %1", initBlueforLocation];
+
 	//Generate FOB
 	spawnFOBObjects = [initBlueforLocation, (random 360), selectRandom avalaibleFOB] call BIS_fnc_ObjectsMapper;
 	sleep 3;
@@ -448,7 +450,7 @@ clearBackpackCargoGlobal VA2;
 publicvariable "VA2";
 
 //Create portable FOB 
-deployableFOBItem = createVehicle [deployableFOB, [initBlueforLocation, 1, 5, 3, 0, 20, 0] call BIS_fnc_findSafePos, [], 0, "NONE"];
+deployableFOBItem = createVehicle [deployableFOB, [initBlueforLocation, 20, 50, 3, 0, 20, 0] call BIS_fnc_findSafePos, [], 0, "NONE"];
 clearWeaponCargoGlobal deployableFOBItem;
 clearMagazineCargoGlobal deployableFOBItem;
 clearItemCargoGlobal deployableFOBItem;
@@ -457,8 +459,10 @@ publicvariable "deployableFOBItem";
 
 //Add action to deploy advanced outpost
 [deployableFOBItem, ["Deploy advanced outpost",{
-			params ["_object","_caller","_ID","_avalaibleOutpost"];
-			
+			params ["_object","_caller","_ID","_param"];
+			_avalaibleOutpost = _param select 0;
+			_respawnSetting = _param select 1;
+
 			//[TODO] Check distance from blufor spawn
 			if (_caller distance initBlueforLocation > 100) then 
 			{
@@ -501,6 +505,28 @@ publicvariable "deployableFOBItem";
 					};
 				},objNull,1.5,true,false,"","_target distance _this <5"]] remoteExec [ "addAction", 0, true ];
 
+				//Add action to make all player respawn
+				if (_respawnSetting == 1) then 
+				{
+					[TPFlag2, ["Call Reinforcements",{
+						params ["_object","_caller","_ID","_param"];
+						
+						if (!(missionNamespace getVariable ["usedRespawnFewTimeAgo",false])) then 
+						{
+							//set morning
+							skipTime 24;
+							[[], "engine\respawnManager.sqf"] remoteExec ['BIS_fnc_execVM', 0];
+							[format ["%1 needs reinforcement", name _caller]] remoteExec ["hint",0,true];
+							missionNamespace setVariable ["usedRespawnFewTimeAgo",true,true];
+							sleep 1200;
+							missionNamespace setVariable ["usedRespawnFewTimeAgo",false,true];
+						} else {
+							hint "You must wait before call reinforcements";
+						};
+					},[respawnSettings],1.5,true,false,"","_target distance _this <5"]] remoteExec [ "addAction", 0, true ];
+				};
+
+
 				//Remove Box
 				deleteVehicle _object;
 			} else {
@@ -508,7 +534,7 @@ publicvariable "deployableFOBItem";
 			};
 
 
-		},deployableFOBMounted,1.5,true,false,"","_target distance _this <5"]] remoteExec ["addAction", 0, true];
+		},[deployableFOBMounted, respawnSettings],1.5,true,false,"","_target distance _this <5"]] remoteExec ["addAction", 0, true];
 
 
 //Place empty box to blufor camp
