@@ -12,29 +12,74 @@ c_grenadier = "grenadier";
 //////////////////////////////
 
 
-civilian_group_2035_AAF = [];
+civilian_group_2035_AAF = ["C_Man_casual_9_F", 
+"C_Man_casual_4_v2_F", 
+"C_Man_casual_6_v2_F", 
+"C_Man_casual_7_F", 
+"C_Man_ConstructionWorker_01_Blue_F"];
 
-civilian_big_group_2035_AAF = [ ];
+civilian_big_group_2035_AAF = ["C_Man_casual_9_F", 
+"C_Man_casual_4_v2_F", 
+"C_Man_casual_6_v2_F", 
+"C_Man_casual_7_F", 
+"C_Man_ConstructionWorker_01_Blue_F", 
+"C_man_w_worker_F", 
+"C_Man_UtilityWorker_01_F", 
+"C_man_polo_2_F" ];
 
-civilianTruck_2035_AAF = [];
+civilianTruck_2035_AAF = ["C_Hatchback_01_sport_F", 
+"C_Hatchback_01_F", 
+"C_SUV_01_F", 
+"C_Quadbike_01_F", 
+"C_Van_01_box_F", 
+"C_Van_01_fuel_F", 
+"C_Offroad_01_repair_F"];
 
 //////////////////////////////
 ///Define enemy group data////
 //////////////////////////////
 
-baseEnemyGroup_2035_AAF = [];
+baseEnemyGroup_2035_AAF = ["I_Soldier_SL_F", 
+"I_Soldier_AR_F", 
+"I_Soldier_GL_F", 
+"I_Soldier_M_F", 
+"I_Soldier_LAT2_F", 
+"I_Soldier_AAT_F", 
+"I_Soldier_A_F", 
+"I_medic_F"];
 
-baseEnemyATGroup_2035_AAF = [];
+baseEnemyATGroup_2035_AAF = ["I_Soldier_TL_F", 
+"I_Soldier_AT_F", 
+"I_Soldier_AAT_F",
+"I_Soldier_LAT2_F"];
 
-baseEnemyDemoGroup_2035_AAF = [];
+baseEnemyDemoGroup_2035_AAF = [
+"I_Soldier_TL_F", 
+"I_Soldier_AAT_F", 
+"I_Soldier_GL_F", 
+"I_soldier_mine_F"];
 
-baseEnemyMortarGroup_2035_AAF = [];
+baseEnemyMortarGroup_2035_AAF = [
+"I_Mortar_01_F","I_Soldier_SL_F", 
+"I_Soldier_AR_F", 
+"I_Soldier_GL_F"];
 
-baseEnemyVehicleGroup_2035_AAF = [];
+baseEnemyVehicleGroup_2035_AAF = [
+"I_MRAP_03_F", 
+"I_MRAP_03_hmg_F", 
+"I_Truck_02_transport_F", 
+"I_Truck_02_medical_F"];
 
-baseEnemyLightArmoredVehicleGroup_2035_AAF = [ ];
+baseEnemyLightArmoredVehicleGroup_2035_AAF = [
+"I_LT_01_AT_F", 
+"I_LT_01_scout_F", 
+"I_LT_01_cannon_F"
+ ];
 
-baseEnemyHeavyArmoredVehicleGroup_2035_AAF = [];
+baseEnemyHeavyArmoredVehicleGroup_2035_AAF = [
+"I_MBT_03_cannon_F", 
+"I_APC_Wheeled_03_cannon_F", 
+"I_APC_tracked_03_cannon_F"];
 
 ////////////////////////
 //Vehicle management////
@@ -119,7 +164,7 @@ smgList_2035_AAF = [
 	"hgun_PDW2000_F"
 ];
 
-
+           
 //////////////////////////
 //Attachement management//
 //////////////////////////

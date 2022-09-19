@@ -85,12 +85,18 @@ bluforUnarmedVehicleChopper_USA_2000 = ["CUP_B_UH60M_Unarmed_US",
 "CUP_B_CH53E_VIV_USMC"];
 
 
-bluforDrone_USA_2000 = [];
+bluforDrone_USA_2000 = [
+	"CUP_B_USMC_DYN_MQ9"
+	];
 
 bluforBoat_USA_2000 = ["CUP_B_RHIB_HIL",
 "CUP_B_Zodiac_USMC"
 ];
 
+//FixedWing vehicle avalaible for blufor
+bluforFixedWing_USA_2000 = [
+"CUP_B_A10_DYN_USA"
+];
 
 ////////////////////////
 //Loadout management////
@@ -216,14 +222,40 @@ itemList_USA_2000 = [
 itemEngineerList_USA_2000 = [
 	"ToolKit",
 	"MineDetector",
-	"ACE_wirecutter", "ACE_Fortify"
+	"ACE_wirecutter",
+	"ACE_Fortify",
+	"ACE_DefusalKit",
+	"ACE_DeadManSwitch"
 	];
 	
 itemMedicList_USA_2000 = [
 	"ACE_epinephrine",
+	"ACE_morphine",
+	"ACE_splint",
+	"ACE_tourniquet",
 	"ACE_bloodIV",
 	"ACE_bloodIV_500",
 	"ACE_bloodIV_250",
 	"ACE_personalAidKit",
-	"ACE_surgicalKit"
+	"ACE_surgicalKit",
+	"ACE_bodyBag"
+	];
+
+
+	//backpack avalaible for all unit
+backPackList_USA_2000 = [
+	"B_Mortar_01_weapon_F",
+	"B_Mortar_01_support_F",
+	"CUP_B_USMC_MOLLE_MG"
+	];
+
+
+//Uniform, vest, headgear, avalaible for all unit
+uniformList_USA_2000 = [
+	"CUP_H_LWHv2_MARPAT_des_cov_fr",
+	"CUP_U_B_USMC_MCCUU_des_gloves"
+	];
+
+//Magazine avalaible for all unit
+magazineList_USA_2000 = [
 	];
