@@ -5,6 +5,7 @@ c_engineer = "engineer";
 c_autorifleman = "autorifleman";
 c_marksman = "marksman"; 
 c_medic = "medic";
+c_pilot = "pilot";
 
 //////////////////////////////
 ////Define civ group data/////
@@ -84,6 +85,12 @@ bluforUnarmedVehicleChopper_USA_2000 = ["CUP_B_UH60M_Unarmed_US",
 "CUP_B_CH53E_USMC",
 "CUP_B_CH53E_VIV_USMC"];
 
+bluforArmedChopper_USA_2000 = [
+	"CUP_B_AH64_DL_USA", 
+	"CUP_B_AH6M_USA", 
+	"CUP_B_UH60M_US", 
+	"CUP_B_AH1Z_Dynamic_USMC"
+	];
 
 bluforDrone_USA_2000 = [
 	"CUP_B_USMC_DYN_MQ9"
@@ -103,6 +110,8 @@ bluforFixedWing_USA_2000 = [
 ////////////////////////
 
 //USA
+listOfRoles_USA_2000 = [c_leader,c_at,c_rifleman,c_engineer,c_autorifleman,c_marksman,c_medic,c_pilot];
+
 loadout_USA_2000 = [		
 	[c_leader,"CUP_B_USMC_Soldier_SL_des"],
 	[c_at,"CUP_B_USMC_Soldier_AT_des"],
@@ -110,7 +119,8 @@ loadout_USA_2000 = [
 	[c_engineer,"CUP_B_USMC_Engineer_des"],
 	[c_autorifleman,"CUP_B_USMC_Soldier_AR_des"],
 	[c_marksman,"CUP_B_USMC_Soldier_Marksman_des"],
-	[c_medic,"CUP_B_USMC_Medic_des"]
+	[c_medic,"CUP_B_USMC_Medic_des"],
+	[c_pilot,"CUP_B_US_Pilot"]
 ];
 
 ////////////////////////
