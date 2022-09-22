@@ -11,6 +11,7 @@
 difficultyParameter = "Difficulty" call BIS_fnc_getParamValue;
 enableArmored = "EnableArmored" call BIS_fnc_getParamValue;
 enablePlane = "EnablePlane" call BIS_fnc_getParamValue;
+enableArmedChopper = "EnableArmedChopper" call BIS_fnc_getParamValue;
 lengthParameter = "MissionLength" call BIS_fnc_getParamValue;
 civFaction = "CivFaction" call BIS_fnc_getParamValue;
 opFaction = "OpFaction" call BIS_fnc_getParamValue;
@@ -54,6 +55,9 @@ publicVariable "bluforUnarmedVehicleChopper";
 
 bluforFixedWing = bluforFixedWing_db select {_x select 1  == bluFaction} select 0 select 0;
 publicVariable "bluforFixedWing";
+
+bluforArmedChopper = bluforArmedChopper_db select {_x select 1  == bluFaction} select 0 select 0;
+publicVariable "bluforArmedChopper";
 
 bluforDrone = bluforDrone_db select {_x select 1  == bluFaction} select 0 select 0;
 bluforBoat = bluforBoat_db select {_x select 1  == bluFaction} select 0 select 0;

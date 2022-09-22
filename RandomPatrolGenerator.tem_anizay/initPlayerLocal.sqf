@@ -5,6 +5,7 @@ bluFaction = "BluFaction" call BIS_fnc_getParamValue;
 indFaction = "IndFaction" call BIS_fnc_getParamValue;
 enableThermal = "EnableThermal" call BIS_fnc_getParamValue;
 enablePlane = "EnablePlane" call BIS_fnc_getParamValue;
+enableArmedChopper = "EnableArmedChopper" call BIS_fnc_getParamValue;
 enableHalo = "EnableHALO" call BIS_fnc_getParamValue;
 enableArmored = "EnableArmored" call BIS_fnc_getParamValue;
 initBluforBase = "InitBluforBase" call BIS_fnc_getParamValue;
@@ -193,11 +194,25 @@ if (hasInterface) then
 			} foreach bluforUnarmedVehicleChopper; 
 		};
 
+		waitUntil {!isNil "bluforArmedChopper"};
+		if (initBluforBase == 1 && enableArmedChopper == 1) then 
+		{	
+			{
+				_IDVehicleSpawn = TPFlag1 addAction [format ["Spawn an %1", getText (configFile >> "cfgVehicles" >> _x >> "displayName")],{
+					params ["_object","_caller","_ID","_avalaibleVehicle"];
+					//Click on map to spawn
+					[initBlueforLocation, [_avalaibleVehicle], 30, 100] call doGenerateVehicleForFOB;	
+					[_object,_ID] remoteExec [ "removeAction", 0, true ];
+				},_x,1.5,true,true,"","_target distance _this <5"];
+			} foreach bluforArmedChopper; 
+		};
+
 		
 		//Manage vehicle spawn options 
 		waitUntil {!isNil "bluforFixedWing"};
 		if (enablePlane == 1) then 
-		{	{
+		{	
+			{
 				_IDVehicleSpawn = TPFlag1 addAction [format ["Spawn an %1 (this will open the map to choose a position)", getText (configFile >> "cfgVehicles" >> _x >> "displayName")],{
 					params ["_object","_caller","_ID","_avalaibleAicraft"];
 					//Click on map to spawn

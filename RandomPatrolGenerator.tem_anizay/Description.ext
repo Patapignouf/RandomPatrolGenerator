@@ -31,6 +31,13 @@ class Params
 		texts[] = {"No","Yes"};
 		default = 0;
 	};
+	class EnableArmedChopper
+	{
+		title = "Enable armed chopper (WIP)";
+		values[] = {0,1};
+		texts[] = {"No","Yes"};
+		default = 0;
+	};
 	class EnableHalo
 	{
 		title = "Enable HALO JUMP (WIP)";

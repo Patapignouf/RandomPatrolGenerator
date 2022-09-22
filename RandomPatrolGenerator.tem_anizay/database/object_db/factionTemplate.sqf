@@ -90,8 +90,11 @@ bluforUnarmedVehicle_newFaction = ["B_AMF_VAB_ULTIMA_X8_F"];
 //Armed vehicle avalaible for blufor : Ex heavy hummvee
 bluforArmedVehicle_newFaction = ["amf_pvp_01_CE_f","AMF_VBMR_L_CE_01"];
 
-//Chopper unarmed vehicle avalaible for blufor : Ex CH47
+//Chopper unarmed chopper avalaible for blufor : Ex CH47
 bluforUnarmedVehicleChopper_newFaction = ["ffaa_nh90_tth_transport","AMF_gazelle_afte_f","ffaa_famet_cougar"];
+
+//Chopper armed choper avalaible for blufor : Ex AH-Z1
+bluforArmedChopper_newFaction = ["ffaa_nh90_tth_transport","AMF_gazelle_afte_f","ffaa_famet_cougar"];
 
 //Armored vehicle avalaible for blufor : Ex light tank
 bluforArmoredVehicle_newFaction = ["B_AMF_VAB_ULTIMA_TOP_X8_F","AMF_VBMR_L_CE_01"];
