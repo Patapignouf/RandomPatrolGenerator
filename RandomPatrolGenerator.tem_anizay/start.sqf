@@ -562,11 +562,12 @@ SettingsComputer =  createVehicle ["Land_MultiScreenComputer_01_olive_F", [initB
 				params ["_object","_caller","_ID","_viewDistance"];
 				//Select ViewDistance
 				setViewDistance _viewDistance;
-			},_x,1.5,true,true,"","_target distance _this <5"]] remoteExec ["addAction"];
+			},_x,1.5,true,true,"","_target distance _this <5"]] remoteExec ["addAction", 0, true];
 } foreach [-1,300,500,1000,1500,2000,2500];
 
 TPFlag1 = createVehicle ["Flag_Blue_F", [initBlueforLocation, 1, 5, 3, 0, 20, 0] call BIS_fnc_findSafePos, [], 0, "NONE"];
 publicvariable "TPFlag1";
+
 
 //Setup random attack on blufor at the beginning
 isBluforAttacked = false;
@@ -682,6 +683,26 @@ if (campaignMode == 1) then
 	_completedObjectives = missionNamespace getVariable ["completedObjectives",[]];
 	_objectiveCompletedCounter = count _completedObjectives;
 	_maxObjectivesGenerated = false;
+
+	//Add this action on campaign mode
+	[TPFlag1, ["Complete mission",{
+			//Param initialization
+			params ["_object","_caller","_ID","_lengthParameter"];
+			_completedObjectives = missionNamespace getVariable ["completedObjectives",[]];
+
+			//End mission
+			if (_lengthParameter <= (count _completedObjectives)) then 
+			{
+				if (isMultiplayer) then {
+					['OBJ_OK'] remoteExec ["BIS_fnc_endMissionServer", 2];
+				} else {
+					['OBJ_OK'] remoteExec ["BIS_fnc_endMission", 2];
+				}; 
+			} else 
+			{
+				hint "Not enough mission completed";
+			};
+		},lengthParameter,1.5,true,true,"","_target distance _this <5"]] remoteExec ["addAction", 0, true];
 
 	//Loop until maximum number of possible objective are generated
 	while {sleep 10; (!_maxObjectivesGenerated)} do 
