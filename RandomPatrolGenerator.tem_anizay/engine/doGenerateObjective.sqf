@@ -202,7 +202,7 @@ generateObjectiveObject =
 						{
 							[[], "engine\respawnManager.sqf"] remoteExec ['BIS_fnc_execVM', 0];
 						};
-					},_thisObjective,1.5,true,true,"","_target distance _this <3"]] remoteExec ["addAction"];
+					},_thisObjective,1.5,true,true,"","_target distance _this <3"]] remoteExec ["addAction", 0, true];
 				};
 			case "informant":
 				{
@@ -234,7 +234,7 @@ generateObjectiveObject =
 						{
 							[[], "engine\respawnManager.sqf"] remoteExec ['BIS_fnc_execVM', 0];
 						};
-					},_thisObjective,1.5,true,true,"","_target distance _this <3"]] remoteExec ["addAction"];
+					},_thisObjective,1.5,true,true,"","_target distance _this <3"]] remoteExec ["addAction", 0, true];
 
 					//Objective failed
 					objectiveObject setVariable ["thisTask", _objectiveUniqueID, true];
