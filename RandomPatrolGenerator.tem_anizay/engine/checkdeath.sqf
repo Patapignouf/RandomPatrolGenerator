@@ -4,8 +4,6 @@ waituntil {count allPlayers != 0};
 nb_ind_alive = {isPlayer _x && side _x == independent} count allUnits;
 nb_blu_alive = {isPlayer _x && side _x == blufor} count allUnits;
 nb_blu_init = nb_blu_alive;
-nb_civ_alive = {side _x == civilian} count allUnits;
-nb_civ_init =  nb_civ_alive;
 missionOver = false;
 initWarlord = objNull;
 publicvariable "initWarlord";
@@ -108,19 +106,6 @@ while {sleep 10; !missionOver} do
 	{
 		nb_blu_alive = {isPlayer _x && side _x == blufor} count allUnits;
 		publicvariable "nb_blu_alive";
-	};
-	if (nb_civ_init - nb_civ_alive >=5) then 
-	{
-		missionOver = true;
-		diag_log format ["Mission end !"];
-		if (isMultiplayer) then {
-			'CIV_DEAD' call BIS_fnc_endMissionServer;
-		} else {
-			'CIV_DEAD' call BIS_fnc_endMission;
-		};
-	} else {
-		nb_civ_alive = {side _x == civilian} count allUnits;
-		publicvariable "nb_civ_alive";
 	};
 };
 

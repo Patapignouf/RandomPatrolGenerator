@@ -249,10 +249,31 @@ for [{_i = 0}, {_i <= 2}, {_i = _i + 1}] do
 {
 	if (side _x == civilian) then
 	{
+
 		_x addEventHandler ["Killed", {
 			params ["_unit", "_killer", "_instigator", "_useEffects"];
-			diag_log format ["Civilian has been killed by : %1", name _killer];
-			[[format ["Civilian has been killed by : %1", name _killer],independent], 'engine\doGenerateMessage.sqf'] remoteExec ['BIS_fnc_execVM', 0];
+
+			if (isPlayer _killer) then 
+			{
+				//Add civ killed counter
+				_tempCivKilled = missionNamespace getVariable "civKilled";
+				_tempCivKilled = _tempCivKilled + 1;
+				missionNamespace setVariable ["civKilled", _tempCivKilled, true];
+
+				//If number of killed civ reach max civ killed number then end mission
+				if (missionNamespace getVariable "civKilled" > missionNamespace getVariable "maxCivKilled") then 
+				{
+					diag_log "END MISSION";
+					if (isMultiplayer) then {
+						['CIV_DEAD'] remoteExec ["BIS_fnc_endMissionServer", 2];
+					} else {
+						['CIV_DEAD'] remoteExec ["BIS_fnc_endMission", 2];
+					}; 
+				};
+
+				diag_log format ["Civilian has been killed by : %1 on side %2", name _killer, side _killer];
+				[[format ["Civilian has been killed by : %1", name _killer],side _killer], 'engine\doGenerateMessage.sqf'] remoteExec ['BIS_fnc_execVM', 0];
+			}; 
 		}];
 	};
 } foreach allUnits;
