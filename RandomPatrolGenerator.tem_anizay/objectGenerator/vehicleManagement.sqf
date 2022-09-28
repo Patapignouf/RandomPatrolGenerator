@@ -80,10 +80,10 @@ doGenerateVehicleForFOB =
 			case (_x isKindOf "Helicopter"): {
 					_kind = "Helicopter";
 					_spawnAttempts = 0;
-					_vehicleGoodPosition = [_thisPosition, _thisMinRadius, _thisMaxRadius, 30, 0, 0.25, 0] call BIS_fnc_findSafePos;
+					_vehicleGoodPosition = [_thisPosition, _thisMinRadius, _thisMaxRadius, 20, 0, 0.25, 0] call BIS_fnc_findSafePos;
 					while {(isNil "_vehicleGoodPosition" || count _vehicleGoodPosition==0) && _spawnAttempts <10} do 
 					{
-						_vehicleGoodPosition = [_thisPosition, _thisMinRadius, _thisMaxRadius, 30, 0, 0.25, 0] call BIS_fnc_findSafePos;
+						_vehicleGoodPosition = [_thisPosition, _thisMinRadius, _thisMaxRadius, 20, 0, 0.25, 0] call BIS_fnc_findSafePos;
 						_spawnAttempts = _spawnAttempts +1;
 					};
 					if (!isNil "_vehicleGoodPosition"&& count _vehicleGoodPosition>0) then 
