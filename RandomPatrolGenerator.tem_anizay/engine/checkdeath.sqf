@@ -21,9 +21,6 @@ obj_hvt = [];
 obj_vip = [];
 obj_must_be_alive = [];
 
-
-waitUntil {!isNil "SupplyObjects" && count SupplyObjects != 0};
-
 {
 	switch (_x select 1) do
 	{

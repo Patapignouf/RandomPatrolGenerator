@@ -56,8 +56,15 @@ baseEnemyMortarGroup_taki = ["CUP_O_TK_INS_Mechanic",
 "CUP_O_2b14_82mm_TK_INS",
 "CUP_O_TK_INS_Bomber"];
 
-baseEnemyVehicleGroup_taki = ["CUP_I_Datsun_PK_TK",
-"CUP_I_Hilux_M2_TK"];
+baseEnemyVehicleGroup_taki = ["CUP_O_LR_Transport_TKM", 
+"CUP_O_Hilux_zu23_TK_INS", 
+"CUP_O_Hilux_AGS30_TK_INS", 
+"CUP_O_LR_SPG9_TKM", 
+"CUP_O_LR_MG_TKM", 
+"CUP_O_Hilux_podnos_TK_INS", 
+"CUP_O_Hilux_MLRS_TK_INS", 
+"CUP_O_Hilux_igla_TK_INS", 
+"CUP_O_Hilux_DSHKM_TK_INS"];
 
 baseEnemyLightArmoredVehicleGroup_taki = ["CUP_O_Ural_ZU23_TKM", 
 "CUP_O_BTR40_MG_TKM","CUP_O_Hilux_armored_DSHKM_TK_INS"];
@@ -216,7 +223,6 @@ itemList_Taki = [
 	"Rangefinder",
 	"ACE_MapTools",
 	"ACE_microDAGR",
-	"ACE_SpraypaintRed",
 	"ACE_CableTie",
 	"ACE_DAGR",
 	"ACE_WaterBottle",
@@ -229,13 +235,18 @@ itemList_Taki = [
 	"ACE_morphine",
 	"ACE_quikclot",
 	"ACE_EntrenchingTool",
-	"ACE_RangeTable_82mm"
+	"ACE_RangeTable_82mm",
+	"ACE_SpraypaintBlack",
+	"ACE_SpraypaintBlue",
+	"ACE_SpraypaintGreen",
+	"ACE_SpraypaintRed",
+	"ACE_IR_Strobe_Item"
 	];
 
 itemEngineerList_Taki = [
 	"ToolKit",
 	"MineDetector",
-	"ACE_wirecutter"
+	"ACE_wirecutter", "ACE_Fortify"
 	];
 	
 itemMedicList_Taki = [

@@ -5,202 +5,87 @@ _civs = allUnits select {alive _x AND side _x isEqualTo civilian};
 {
 	_x linkItem "ItemRadio"; //so they can "talk" if they're editor placed civilian units
 
+
+	//Add action to ask civilian for intel
 	_ID = _x addAction ["Talk to civilian",{
 
-		params ["_object","_caller","_ID","_civs"];
+		params ["_object","_caller","_ID","_civ"];
 		_reveal = (missionNamespace getVariable ["TAG_fnc_civsAsked",0]) >= 1;//will return true on the third unit
 		if (_reveal) exitWith {
-			//Case intel given to player
-			_revealedObjectives = missionNamespace getVariable ["revealedObjectives",[]];
-			_tempMissionObjectives = missionNamespace getVariable ["MissionObjectives",[]];
-			_revealedMissionEnemyInfo = missionNamespace getVariable ["revealedMissionEnemyInfo",[]];
-			_MissionEnemyInfo = missionNamespace getVariable ["MissionEnemyInfo",[]];
-			_realismMode = "RealismMode" call BIS_fnc_getParamValue;
-			if ((count _revealedObjectives != count _tempMissionObjectives) && side _caller != independent) then
-			{
-				//Check if there are independent avalaible
-				if ({isPlayer _x && side _x == independent} count allUnits == 0) then
-				{
-					_tempMissionObjectives = _tempMissionObjectives - _revealedObjectives;
-					_objectiveToReveal = selectRandom _tempMissionObjectives;
-					_revealedObjectives pushBack _objectiveToReveal;
-					missionNamespace setVariable ["revealedObjectives",_revealedObjectives,true];
-					if (_realismMode == 1) then 
-					{
-						//Search the nearestLocation from the intel
-						_thisObject = _objectiveToReveal select 0;
-						_nearestLoc = nearestLocations [getPos (_thisObject), ["NameLocal","NameVillage","NameCity","NameCityCapital"], 1500] select 0;
-						//Display custom dialogs according to the enemy position
-						switch (_objectiveToReveal select 1) do
-						{
-							case "supply":
-								{	
-									_currentObjectiveDescription = format ["There's %1 near %2. Can you bring it to %3...", getText (configFile >> "cfgVehicles" >> typeOf _thisObject >> "displayName"),text _nearestLoc, text initCityLocation];
-									[1,[_currentObjectiveDescription, "PLAIN", 0.5]] remoteExec ["cutText", _caller];
-									[blufor, _objectiveToReveal select 2, [_currentObjectiveDescription, "Supply case", "cookiemarker2"], objNull, 1, 3, true] call BIS_fnc_taskCreate;
-								};
-							case "ammo":
-								{
-									_currentObjectiveDescription = format ["There's %1 near %2. Can you bring it to %3 or destroy it...", getText (configFile >> "cfgVehicles" >> typeOf _thisObject >> "displayName"),text _nearestLoc, text initCityLocation];
-									[1,[_currentObjectiveDescription, "PLAIN", 0.5]] remoteExec ["cutText", _caller];
-									[blufor, _objectiveToReveal select 2, [_currentObjectiveDescription, "Ammo cache", "cookiemarker2"], objNull, 1, 3, true] call BIS_fnc_taskCreate;
-								};
-							case "hvt":
-								{
-									_currentObjectiveDescription = format ["There's an enemy %1 near %2. You have to kill him...", getText (configFile >> "cfgVehicles" >> typeOf _thisObject >> "displayName"),text _nearestLoc];
-									[1,[_currentObjectiveDescription, "PLAIN", 0.5]] remoteExec ["cutText", _caller];
-									[blufor, _objectiveToReveal select 2, [_currentObjectiveDescription, "HVT", "cookiemarker2"], objNull, 1, 3, true] call BIS_fnc_taskCreate;
-								};
-							case "vip":
-								{
-									_currentObjectiveDescription = format ["I have a friend who's captured near %2. He looks like %1. Can you bring it to %3...", getText (configFile >> "cfgVehicles" >> typeOf _thisObject >> "displayName"),text _nearestLoc, text initCityLocation];
-									[1,[_currentObjectiveDescription, "PLAIN", 0.5]] remoteExec ["cutText", _caller];
-									[blufor, _objectiveToReveal select 2, [_currentObjectiveDescription, "VIP", "cookiemarker2"], objNull, 1, 3, true] call BIS_fnc_taskCreate;
-								};
-							case "steal":
-								{
-									_currentObjectiveDescription = format ["Some people stole our vehicle %1. I think it's located in %2. Can you bring it to %3...", getText (configFile >> "cfgVehicles" >> typeOf _thisObject >> "displayName"),text _nearestLoc, text initCityLocation];
-									[1,[_currentObjectiveDescription, "PLAIN", 0.5]] remoteExec ["cutText", _caller];
-									[blufor, _objectiveToReveal select 2, [_currentObjectiveDescription, "Steal vehicle", "cookiemarker2"], objNull, 1, 3, true] call BIS_fnc_taskCreate;
-								};
-							case "informant":
-								{
-									_currentObjectiveDescription = format ["I have a friend who lives near %2. He looks like %1. Can you talk to him...", getText (configFile >> "cfgVehicles" >> typeOf _thisObject >> "displayName"),text _nearestLoc];
-									[1,[_currentObjectiveDescription, "PLAIN", 0.5]] remoteExec ["cutText", _caller];
-									[blufor, _objectiveToReveal select 2, [_currentObjectiveDescription, "Talk to the informant", "cookiemarker2"], objNull, 1, 3, true] call BIS_fnc_taskCreate;
-								};
-							case "clearArea":
-								{
-									_currentObjectiveDescription = format ["There is a lot of enemies in %1, you have to clear the location...", text _nearestLoc];
-									[1,[_currentObjectiveDescription, "PLAIN", 0.5]] remoteExec ["cutText", _caller];
-									[blufor, _objectiveToReveal select 2, [_currentObjectiveDescription, "Clear area", "cookiemarker2"], objNull, 1, 3, true] call BIS_fnc_taskCreate;
-								};
-							case "collectIntel":
-								{
-									_currentObjectiveDescription = format ["I drop my %1 with a lot of intel about enemy's location in %2. Can you pick it up ?", getText (configFile >> "cfgVehicles" >> typeOf _thisObject >> "displayName"),text _nearestLoc];
-									[1,[_currentObjectiveDescription, "PLAIN", 0.5]] remoteExec ["cutText", _caller];
-									[blufor, _objectiveToReveal select 2, [_currentObjectiveDescription, "Collect intel", "cookiemarker2"], objNull, 1, 3, true] call BIS_fnc_taskCreate;
-								};
-							default { hint "default" };
-						};
-					} else 
-					{ 
-						//Add marker to player's map and display dialogs on screen
-						[[_objectiveToReveal, getPos (_objectiveToReveal select 0), side _caller], 'objectGenerator\doGeneratePOIMarker.sqf'] remoteExec ['BIS_fnc_execVM', 0];
-						[1,["Fine ! I'll show you something, look on your map !", "PLAIN", 0.5]] remoteExec ["cutText", _caller];
-					};
-				} else
-				{
-					
-					_potentialMissionEnemyInfo = _MissionEnemyInfo - _revealedMissionEnemyInfo;
-					_infoToReveal = selectRandom _potentialMissionEnemyInfo;
-					_revealedMissionEnemyInfo pushBack _infoToReveal;
-					missionNamespace setVariable ["revealedMissionEnemyInfo",_revealedMissionEnemyInfo,true];
-					_infoName = _infoToReveal select 0;
-					_infoPos = _infoToReveal select 1;
-					_infoGroup = _infoToReveal select 2;
-					_nearestCity = nearestLocations [_infoPos, ["NameLocal","NameVillage","NameCity","NameCityCapital"], 1500] select 0;
-					if (_realismMode == 1) then 
-					{
-						switch (_infoName) do 
-						{
-							case "Mortar":
-							{
-								[1,[format ["This morning i saw a mortar position near %1. I don't know if they are there for you, be careful.",text _nearestCity], "PLAIN", 0.5]] remoteExec ["cutText", _caller];
-							};
-							case "Patrol":
-							{
-								[1,[format ["I've heard there's soldiers patrolling around %1. About %2 men.",text _nearestCity, count units _infoGroup], "PLAIN", 0.5]] remoteExec ["cutText", _caller];
-							};
-							case "Car":
-							{
-								[1,[format ["I saw an unknown car leaving here for %1 this morning...",text _nearestCity], "PLAIN", 0.5]] remoteExec ["cutText", _caller];
-							};
-							case "LightArmored";
-							case "HeavyArmored":
-							{
-								[1,[format ["I've heard there's military vehicles next to %1. They seem to prepare an attack.",text _nearestCity], "PLAIN", 0.5]] remoteExec ["cutText", _caller];
-							};
-
-							case "DefenseInfantry":
-							{
-								[1,[format ["I know there is a group of %2 soldiers defending %1, this location seems dangerous",text _nearestCity, count units _infoGroup], "PLAIN", 0.5]] remoteExec ["cutText", _caller];
-							};
-							case "Civilian":
-							{
-								[1,[format ["Be careful, there are civilian in %1. Watch your fire...",text _nearestCity], "PLAIN", 0.5]] remoteExec ["cutText", _caller];
-							};
-						};
-					} else 
-					{ 
-						_groupToReveal = selectRandom (allGroups select  {side _x == opfor});
-						//Add marker to player's map and display dialogs on screen
-						[1,["Fine ! I'll show you something, look on your map !", "PLAIN", 0.5]] remoteExec ["cutText", _caller];
-						[["Enemy spotted","ColorRed","hd_warning",getPos (leader _groupToReveal), side _caller], 'objectGenerator\doGenerateMarker.sqf'] remoteExec ['BIS_fnc_execVM', 0];
-					};
-				};
-			} else 
-			{
-				//Same code here, needs to be factorize
-					_potentialMissionEnemyInfo = _MissionEnemyInfo - _revealedMissionEnemyInfo;
-					_infoToReveal = selectRandom _potentialMissionEnemyInfo;
-					_revealedMissionEnemyInfo pushBack _infoToReveal;
-					missionNamespace setVariable ["revealedMissionEnemyInfo",_revealedMissionEnemyInfo,true];
-					_infoName = _infoToReveal select 0;
-					_infoPos = _infoToReveal select 1;
-					_infoGroup = _infoToReveal select 2;
-					_nearestCity = nearestLocations [_infoPos, ["NameLocal","NameVillage","NameCity","NameCityCapital"], 1500] select 0;
-					if (_realismMode == 1) then 
-					{
-						switch (_infoName) do 
-						{
-							case "Mortar":
-							{
-								[1,[format ["This morning i saw a mortar position near %1. I don't know if they are there for you, be careful.",text _nearestCity], "PLAIN", 0.5]] remoteExec ["cutText", _caller];
-							};
-							case "Patrol":
-							{
-								[1,[format ["I've heard there's soldiers patrolling around %1. About %2 men.",text _nearestCity, count units _infoGroup], "PLAIN", 0.5]] remoteExec ["cutText", _caller];
-							};
-							case "Car":
-							{
-								[1,[format ["I saw an unknown car leaving here for %1 this morning...",text _nearestCity], "PLAIN", 0.5]] remoteExec ["cutText", _caller];
-							};
-							case "LightArmored";
-							case "HeavyArmored":
-							{
-								[1,[format ["I've heard there's military vehicles next to %1. They seem to prepare an attack.",text _nearestCity], "PLAIN", 0.5]] remoteExec ["cutText", _caller];
-							};
-
-							case "DefenseInfantry":
-							{
-								[1,[format ["I know there is a group of %2 soldiers defending %1, this location seems dangerous",text _nearestCity, count units _infoGroup], "PLAIN", 0.5]] remoteExec ["cutText", _caller];
-							};
-							case "Civilian":
-							{
-								[1,[format ["Be careful, there are civilian in %1. Watch your fire...",text _nearestCity], "PLAIN", 0.5]] remoteExec ["cutText", _caller];
-							};
-						};
-					} else 
-					{ 
-						_groupToReveal = selectRandom (allGroups select  {side _x == opfor});
-						//Add marker to player's map and display dialogs on screen
-						[1,["Fine ! I'll show you something, look on your map !", "PLAIN", 0.5]] remoteExec ["cutText", _caller];
-						[["Enemy spotted","ColorRed","hd_warning",getPos (leader _groupToReveal), side _caller], 'objectGenerator\doGenerateMarker.sqf'] remoteExec ['BIS_fnc_execVM', 0];
-					};
-				};
-
-				missionNamespace setVariable ["TAG_fnc_civsAsked",(round random 1),true];
-				[_object,_ID] remoteExec [ "removeAction", 0, true ];
+			[_caller] execVM 'engine\askCivilianIntel.sqf';
+			missionNamespace setVariable ["TAG_fnc_civsAsked",(round random 1),true];
+			[_object,_ID] remoteExec [ "removeAction", 0, true ];
 		};
 		
 		//Case no intel given
-		_randomAnswers = ["No idea what you're talking about!","Go bother someone else?","Oh please leave me alone !","Get out of this area !","Get out of this area !"];
+		_randomAnswers = ["No idea what you're talking about!","Go bother someone else?","Oh please leave me alone !","Get out of this area !"];
 		[1,[selectRandom _randomAnswers, "PLAIN", 0.5]] remoteExec ["cutText", _caller];
 		_counter = missionNamespace getVariable ["TAG_fnc_civsAsked",0];
 		_counter = _counter + 1;
 		missionNamespace setVariable ["TAG_fnc_civsAsked",_counter,true];
 		[_object,_ID] remoteExec [ "removeAction", 0, true ];
-	},_civs,1.5,true,true,"","_target distance _this <5"];
+	},_x,1.5,true,true,"","_target distance _this <5"];
 	_x setVariable ["TAG_fnc_revealActionID",_ID]; //Can be used to remove all talk actions
+
+
+	//Add action to ask civilian to join player team
+	_ID = _x addAction ["Ask civilian to join your team",{
+
+		params ["_object","_caller","_ID","_civ"];
+		_civJoinableFaction = "CivJoinableFaction" call BIS_fnc_getParamValue;
+		_hasToJoin = false;
+		switch (_civJoinableFaction) do
+		{
+			case 1:
+				{
+					_hasToJoin = (side player == independent);
+				};
+			case 2:
+				{
+					_hasToJoin = (side player == blufor);
+				};
+			case 3:
+				{
+					_hasToJoin = true;
+				};
+			default
+				{
+					//
+				};
+		};
+		if (_hasToJoin && (round (random 1))==0) then //50% chance to join
+		{
+			[1,["Ok let's go !", "PLAIN", 0.5]] remoteExec ["cutText", _caller];
+			[_civ] remoteExec ["removeAllEventHandlers", 0, true];
+			[_civ] remoteExec ["removeAllActions", 0, true];
+			_civ switchMove "";
+			[_civ] joinSilent (group _caller);	//Civ join player squad
+			
+			//Manage loadout
+			_civLoadout = getUnitLoadout _civ;
+			_weapon = [((getUnitLoadout _caller) select 0) select 0];	
+			_weaponArray = ["","","","",[],[],""];
+			_vestArray = ["V_BandollierB_rgr",[]];
+			_weaponArray set [0, _weapon select  0];
+			
+			_civLoadout set [0, _weaponArray];
+			_civLoadout set [4, _vestArray];
+
+			_civ setUnitLoadout _civLoadout;
+			sleep 2;
+			for "_i" from 0 to 3 do { _civ addItem (currentMagazine _caller); };	//Give civ some ammunitions
+
+			sleep 5;
+			reload _civ;
+		} else 
+		{
+			_randomAnswers = ["Oh please leave me alone !","I don't trust you !"];
+			[1,[selectRandom _randomAnswers, "PLAIN", 0.5]] remoteExec ["cutText", _caller];
+		};
+
+		[_object,_ID] remoteExec [ "removeAction", 0, true ];
+	},_x,1.5,true,true,"","_target distance _this <5"];
+	_x setVariable ["TAG_fnc_joinActionID",_ID]; //Can be used to remove all talk actions
+
+
 } forEach _civs;

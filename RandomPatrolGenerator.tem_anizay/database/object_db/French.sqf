@@ -66,14 +66,21 @@ baseEnemyHeavyArmoredVehicleGroup_French = ["I_C_Offroad_02_LMG_F",
 //Vehicle management////
 ////////////////////////
 //French
-bluforUnarmedVehicle_French = ["B_AMF_VAB_ULTIMA_X8_F"];
+bluforUnarmedVehicle_French = ["B_AMF_VAB_ULTIMA_X8_F","AMF_GBC180_PERS_01"];
 
-bluforArmedVehicle_French = ["amf_pvp_01_CE_f","B_AMF_VAB_ULTIMA_TOP_X8_F","AMF_VBMR_L_CE_01"];
+bluforArmedVehicle_French = ["amf_pvp_01_top_CE_f",
+"amf_pvp_01_mag_CE_f",
+"B_AMF_VAB_ULTIMA_TOP_X8_F",
+"AMF_VBMR_L_CE_01"];
 
-bluforUnarmedVehicleChopper_French = ["ffaa_nh90_tth_transport","AMF_gazelle_afte_f","ffaa_famet_cougar"];
+bluforUnarmedVehicleChopper_French = ["amf_cougar", 
+"AMF_panther_FRA", 
+"AMF_gazelle_afte_f", 
+"B_AMF_Heli_Transport_01_F", 
+"amf_nh90_tth_transport"];
 
 
-bluforDrone_French = ["B_UAV_02_dynamicLoadout_F"
+bluforDrone_French = ["B_AMF_REAPER_dynamicLoadout_F"
 ];
 
 bluforBoat_French = ["CUP_B_RHIB_HIL",
@@ -105,12 +112,13 @@ rifleList_French = [
 	"AMF_Samas_F1_01_F",
 	"AMF_Samas_FELIN_01_F",
 	"AMF_Samas_G2_01_F",
-	"AMF_Samas_VALO_01_F"
+	"AMF_Samas_VALO_01_F",
+	"amf_sig552"
 ];	
 
 launcherList_French = [		
 	"CUP_launch_Metis",
-	"CUP_launch_M136_Loaded"
+	"AMF_AT4CS_F"
 ];	
 
 autorifleList_French = [			
@@ -128,7 +136,8 @@ marksmanrifleList_French = [
 ];
 
 smgList_French = [		
-	"amf_hk_mp5_01_f"
+	"amf_hk_mp5_01_f",
+	"amf_hk_mp5_02_f"
 ];
 
 
@@ -149,7 +158,6 @@ attachmentShortList_French	= [
 	"amf_xps3_magnifier_side",
 	"amf_specter",
 	"AMF_EOTECH_553"
-
 ];
 
 attachmentLongList_French	= [
@@ -158,6 +166,7 @@ attachmentLongList_French	= [
 	"amf_schmidt_benderx4",
 	"optic_lrps"
 ];
+
 
 ////////////////////////
 ////Items management////
@@ -172,7 +181,6 @@ itemList_French = [
 	"Rangefinder",
 	"ACE_MapTools",
 	"ACE_microDAGR",
-	"ACE_SpraypaintRed",
 	"ACE_CableTie",
 	"ACE_DAGR",
 	"ACE_WaterBottle",
@@ -185,13 +193,18 @@ itemList_French = [
 	"ACE_morphine",
 	"ACE_quikclot",
 	"ACE_EntrenchingTool",
-	"ACE_RangeTable_82mm"
+	"ACE_RangeTable_82mm",
+	"ACE_SpraypaintBlack",
+	"ACE_SpraypaintBlue",
+	"ACE_SpraypaintGreen",
+	"ACE_SpraypaintRed",
+	"ACE_IR_Strobe_Item"
 	];
 
 itemEngineerList_French = [
 	"ToolKit",
 	"MineDetector",
-	"ACE_wirecutter"
+	"ACE_wirecutter", "ACE_Fortify"
 	];
 	
 itemMedicList_French = [

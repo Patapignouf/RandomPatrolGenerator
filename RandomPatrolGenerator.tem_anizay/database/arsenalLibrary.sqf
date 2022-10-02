@@ -1,59 +1,17 @@
-_Taki = 0;
-_USA = 1;
-_Syndikat = 2;
-_Ru = 3;
-_French = 4;
+#include "factionParameters.sqf"
 
-#include "object_db\USA.sqf"
-#include "object_db\French.sqf"
-#include "object_db\Russian.sqf"
-#include "object_db\Syndikat.sqf"
-#include "object_db\Takistani.sqf"
-
-//Define global constant
-c_leader = "leader";
-c_at = "at";
-c_rifleman = "rifleman";
-c_engineer = "engineer";
-c_autorifleman = "autorifleman";
-c_marksman = "marksman"; 
-c_medic = "medic";
-
-//Define faction prefix
-c_db = "_db";
-c_USA = "_USA";
-c_Russian = "_Russian";
-c_Taki = "_Taki";
-c_Syndikat = "_Syndikat";
-c_French = "_French";
-
-factionInfos = [[c_USA,_USA],[c_Russian,_Ru],[c_Taki,_Taki],[c_Syndikat,_Syndikat],[c_French,_French]];
+//Import mission params
+warEra = "WarEra" call BIS_fnc_getParamValue;
 
 c_listOfRoles = [c_leader,c_at,c_rifleman,c_engineer,c_autorifleman,c_marksman,c_medic];
 
-c_variableToInit = ["loadout","rifleList","attachmentLongList","attachmentShortList","smgList","marksmanrifleList","autorifleList","launcherList","itemList","itemEngineerList","itemMedicList"];
-
+c_variableToInit = ["listOfRoles","loadout","rifleList","grenadeLauncherList","attachmentLongList","attachmentShortList","smgList","marksmanrifleList","autorifleList","launcherList","itemList","itemEngineerList","itemMedicList",'backPackList','uniformList'];
 
 //Join
 
 ////////////////////////
 //Backpack management///
 ////////////////////////
-backpacksList = [
-
-	"CUP_B_USPack_Coyote",
-	"CUP_B_USPack_Black",
-	"B_Kitbag_cbr",
-	"B_Kitbag_rgr",
-	"CUP_B_US_Assault_OCP",
-	"CUP_B_US_IIID_OCP",
-	"B_Mortar_01_weapon_F",
-	"B_Mortar_01_support_F"
-];
-
-//New line to manage backpack in a future update
-//backpacksList_db = [[backpacksList_USA,_USA],[backpacksList_Russian,_Ru],[backpacksList_Taki,_Taki],[backpacksList_Syndikat,_Syndikat],[backpacksList_French,_French]];
-
 
 initFactionDb = {
 	params ["_currentVariable"];
@@ -71,6 +29,7 @@ initFactionDb = {
 getLoadoutByRole = {
 	currentPlayer = _this select 0;
 	currentFaction = _this select 1;
+
 	currentPlayerClass = currentPlayer getVariable "role";
 	thisloadout = [];
 	//Need to adapt a little thing to allow default loadout when there's no loadout found
@@ -124,33 +83,83 @@ getVirtualWeaponList = {
 			{
 				virtualWeaponList = virtualWeaponList + (rifleList_db select {_x select 1  == currentFaction} select 0 select 0);
 				virtualWeaponList = virtualWeaponList + (smgList_db select {_x select 1  == currentFaction} select 0 select 0);
+			};	
+		case c_grenadier:
+			{
+				virtualWeaponList = virtualWeaponList + (rifleList_db select {_x select 1  == currentFaction} select 0 select 0);
+				virtualWeaponList = virtualWeaponList + (grenadeLauncherList_db select {_x select 1  == currentFaction} select 0 select 0);
 			};				
-		default { hint "default" };
+		default
+			{
+				//Non implemented role : Default rifle
+			 	virtualWeaponList = virtualWeaponList + (rifleList_db select {_x select 1  == currentFaction} select 0 select 0); 
+			};
 	};
 	diag_log format ["Player %1 with role %2 has access to weapons %3", name currentPlayer, currentPlayerClass,virtualWeaponList ];
 	virtualWeaponList
 };
 
-getVirtualBackPack = {
-	currentPlayerClass = _this select 0;
+
+getItembyWarEra = {
+	params ["_warEra"];
+	_itemList = [];
+
+	switch (_warEra) do
+	{
+		//2nd War
+		case 0:
+		{
+			_itemList = ["ACE_EntrenchingTool","ACE_WaterBottle","ACE_CableTie","ACE_MapTools","ItemCompass","ItemMap","ItemWatch","ACE_RangeTable_82mm","Binocular","ACE_EarPlugs"];
+		};
+		//Cold War
+		case 1:
+		{
+			_itemList = ["ACE_EntrenchingTool","ACE_WaterBottle","ACE_CableTie","ACE_MapTools","ItemCompass","ItemMap","ItemWatch","ACE_RangeTable_82mm","Binocular","ACE_SpraypaintRed","ACE_EarPlugs"];
+			if (isClass (configFile >> "CfgPatches" >> "task_force_radio")) then {
+				_itemList pushBack "TFAR_anprc152";
+			} ;
+		};
+		//Modern Warfare
+		case 2:
+		{
+			_itemList = ["ACE_DAGR","ACE_EntrenchingTool","ACE_WaterBottle","ACE_CableTie","ACE_MapTools","ItemCompass","ItemMap","ItemWatch","ACE_RangeTable_82mm","Binocular","ACE_SpraypaintRed","ACE_EarPlugs"];
+			if (isClass (configFile >> "CfgPatches" >> "task_force_radio")) then {
+				_itemList pushBack "TFAR_anprc152";
+			} ;
+		};
+		//Actual Warfare
+		case 3:
+		{
+			_itemList = ["ACE_DAGR", "ACE_microDAGR","B_UavTerminal","ACE_EntrenchingTool","ACE_WaterBottle","ACE_CableTie","ACE_MapTools","ItemCompass","ItemMap","ItemWatch","ACE_RangeTable_82mm","Binocular","ACE_SpraypaintRed","ACE_EarPlugs"];
+			if (isClass (configFile >> "CfgPatches" >> "task_force_radio")) then {
+				_itemList pushBack "TFAR_anprc152";
+			} ;
+		};
+		//Future Warfare
+		case 4:
+		{
+			_itemList = ["ACE_DAGR", "ACE_microDAGR","ACE_EntrenchingTool","ACE_WaterBottle","ACE_CableTie","ACE_MapTools","ItemCompass","ItemMap","ItemWatch","ACE_RangeTable_82mm","Binocular","ACE_SpraypaintRed","ACE_EarPlugs"];
+			if (isClass (configFile >> "CfgPatches" >> "task_force_radio")) then {
+				_itemList pushBack "TFAR_anprc152";
+			} ;
+		};
+		default
+		{
+			
+		};
+	};
+	diag_log format ["itemList : %1", _itemList];
+	_itemList
 };
 
 getVirtualItemList = {
 	currentPlayer = _this select 0;
 	currentFaction = _this select 1;
 	currentPlayerClass = currentPlayer getVariable "role";
-	virtualItemList = [];
-
+	virtualItemList = [warEra] call getItembyWarEra;
+	diag_log format ["virtualItemList : %1", virtualItemList];
 	switch (currentPlayerClass) do
 	{
-		case c_leader;
-		case c_at;
-		case c_rifleman;
-		case c_autorifleman;
-		case c_marksman:
-			{
-				virtualItemList = virtualItemList + (itemList_db select {_x select 1  == currentFaction} select 0 select 0);
-			};
 		case c_medic:
 			{
 				virtualItemList = virtualItemList + (itemList_db select {_x select 1  == currentFaction} select 0 select 0);
@@ -161,11 +170,45 @@ getVirtualItemList = {
 				virtualItemList = virtualItemList + (itemList_db select {_x select 1  == currentFaction} select 0 select 0);
 				virtualItemList = virtualItemList + (itemEngineerList_db select {_x select 1  == currentFaction} select 0 select 0);
 			};		
-		default { hint "default" };
+		default 
+			{
+				//Default item list
+			 	virtualItemList = virtualItemList + (itemList_db select {_x select 1  == currentFaction} select 0 select 0); 
+			};
 	};
 	diag_log format ["Player %1 with role %2 has access to items %3", name currentPlayer, currentPlayerClass,virtualItemList ];
 	virtualItemList
 };
+
+
+getVirtualUniform = {
+	currentPlayer = _this select 0;
+	currentFaction = _this select 1;
+	currentPlayerClass = currentPlayer getVariable "role";
+	virtualUniformList = [warEra] call getItembyWarEra;
+	diag_log format ["virtualUniformList : %1", virtualUniformList];
+	switch (currentPlayerClass) do
+	{
+		case c_leader:
+			{
+				//add leader uniform
+				virtualUniformList = virtualUniformList + (uniformList_db select {_x select 1  == currentFaction} select 0 select 0);
+			};			
+		case c_marksman:	
+			{
+				//add ghilie to the uniform list
+				virtualUniformList = virtualUniformList + (uniformList_db select {_x select 1  == currentFaction} select 0 select 0);
+			};		
+		default 
+			{ 
+				//Default uniform list
+				virtualUniformList = virtualUniformList + (uniformList_db select {_x select 1  == currentFaction} select 0 select 0);
+			};
+	};
+	diag_log format ["Player %1 with role %2 has access to items %3", name currentPlayer, currentPlayerClass,virtualUniformList ];
+	virtualUniformList
+};
+
 
 getVirtualAttachement = {
 	currentPlayer = _this select 0;
@@ -175,25 +218,40 @@ getVirtualAttachement = {
 
 	switch (currentPlayerClass) do
 	{
-		case c_leader;
-		case c_at;
-		case c_rifleman;
-		case c_autorifleman;
-		case c_medic;
-		case c_engineer:
-			{
-				virtualAttachementList = virtualAttachementList + (attachmentShortList_db select {_x select 1  == currentFaction} select 0 select 0);
-			};
 		case c_marksman:		
 			{
 				virtualAttachementList = virtualAttachementList + (attachmentShortList_db select {_x select 1  == currentFaction} select 0 select 0);
 				virtualAttachementList = virtualAttachementList + (attachmentLongList_db select {_x select 1  == currentFaction} select 0 select 0);
 			};		
-		default { hint "default" };
+		default 
+			{ 
+				//Default attachment list
+				virtualAttachementList = virtualAttachementList + (attachmentShortList_db select {_x select 1  == currentFaction} select 0 select 0); 
+			};
 	};
-	diag_log format ["Player %1 with role %2 has access to items %3", name currentPlayer, currentPlayerClass,virtualAttachementList ];
+	diag_log format ["Player %1 with role %2 has access to items %3", name currentPlayer, currentPlayerClass, virtualAttachementList ];
 	virtualAttachementList
 };
+
+
+getVirtualBackPack = {
+	currentPlayer = _this select 0;
+	currentFaction = _this select 1;
+	currentPlayerClass = currentPlayer getVariable "role";
+	virtualBackpackList = [];
+
+	switch (currentPlayerClass) do
+	{
+		default 
+			{ 
+				//Default backpack list
+				virtualBackpackList = virtualBackpackList + (backPackList_db select {_x select 1  == currentFaction} select 0 select 0);
+			};
+	};
+	diag_log format ["Player %1 with role %2 has access to items %3", name currentPlayer, currentPlayerClass, virtualBackpackList ];
+	virtualBackpackList
+};
+
 
 setupArsenalToItem = {
 	//InitParam
@@ -209,12 +267,15 @@ setupArsenalToItem = {
 	[itemToAttachArsenal,itemToAttachArsenal call BIS_fnc_getVirtualMagazineCargo,false] call BIS_fnc_removeVirtualMagazineCargo;
 	[itemToAttachArsenal,itemToAttachArsenal call BIS_fnc_getVirtualBackpackCargo,false] call BIS_fnc_removeVirtualBackpackCargo;
 
-	//AddItems to arsenal
-	[itemToAttachArsenal,([currentPlayer,currentFaction] call getVirtualWeaponList )] call BIS_fnc_addVirtualWeaponCargo;
-	[itemToAttachArsenal,backpacksList] call BIS_fnc_addVirtualBackpackCargo;
+	//Add Weapon to arsenal
+	[itemToAttachArsenal, ([currentPlayer, currentFaction] call getVirtualWeaponList )] call BIS_fnc_addVirtualWeaponCargo;
+
+	//Add backpack to arsenal
+	[itemToAttachArsenal, ([currentPlayer, currentFaction] call getVirtualBackPack )] call BIS_fnc_addVirtualBackpackCargo;
+
 	//[VA2,((itemCargo VA2) + _availableHeadgear + _availableUniforms + _availableVests)] call BIS_fnc_addVirtualItemCargo;
 	[VA2,true] call BIS_fnc_addVirtualMagazineCargo;
-	[itemToAttachArsenal,([currentPlayer,currentFaction] call getVirtualAttachement ) + ([currentPlayer,currentFaction] call getVirtualItemList ) ] call BIS_fnc_addVirtualItemCargo;
+	[itemToAttachArsenal,([currentPlayer,currentFaction] call getVirtualAttachement ) + ([currentPlayer,currentFaction] call getVirtualItemList ) + ([currentPlayer,currentFaction] call getVirtualUniform ) ] call BIS_fnc_addVirtualItemCargo;
 	["AmmoboxInit",[itemToAttachArsenal,false,{true}]] call BIS_fnc_arsenal;
 };
 
@@ -224,6 +285,15 @@ setupRoleSwitchToItem = {
 	currentPlayer = _this select 1;
 	currentFaction = _this select 2;
 
+	//Check if current faction has specific role definition
+	if (count (listOfRoles_db select {_x select 1  == currentFaction} select 0 select 0) == 0 ) then 
+	{
+		listOfRoles = c_listOfRoles;
+	} else 
+	{
+		listOfRoles = listOfRoles_db select {_x select 1  == currentFaction} select 0 select 0;
+	};
+	
 	//Add action to change role
 	{
 		itemToAttachArsenal addAction 
@@ -238,6 +308,7 @@ setupRoleSwitchToItem = {
 				//Manage Unit trait
 				_caller setUnitTrait ["Medic", false];
 				_caller setUnitTrait ["Engineer", false];
+				_caller setUnitTrait ["ExplosiveSpecialist", false];
 				if ((_params select 0) == c_medic) then 
 				{
 					_caller setUnitTrait ["Medic", true];
@@ -245,6 +316,7 @@ setupRoleSwitchToItem = {
 				if ((_params select 0) == c_engineer) then 
 				{
 					_caller setUnitTrait ["Engineer", true];
+					_caller setUnitTrait ["ExplosiveSpecialist", true];
 				};
 
 				//Manage player's role
@@ -260,7 +332,7 @@ setupRoleSwitchToItem = {
 
 				titleCut ["", "BLACK IN", 5];
 			},[_x,currentFaction]];
-	} foreach c_listOfRoles;
+	} foreach listOfRoles;
 
 	//Display player's current role
 	itemToAttachArsenal addAction 
@@ -283,8 +355,43 @@ setupRoleSwitchToItem = {
 };
 
 
+setupSaveRole = {
+	//InitParam
+	params ["_itemToAttachArsenal", "_currentPlayer" ];
+
+	//Add action where player can save his loadout
+	itemToAttachArsenal addAction 
+		["Save loadout", 
+		{
+			//Define params
+			params ["_target","_caller","_ID","_params"];
+
+			//Save loadout
+			_caller setVariable ["spawnLoadout", getUnitLoadout _caller];
+
+			hint "Loadout saved";
+		},[]];
+};
+
+//Define's TFAR Radio frequencie
+adjustTFARRadio = {
+	params ["_currentPlayer"];
+	if (isClass (configFile >> "CfgPatches" >> "task_force_radio")) then {
+		_currentPlayer addItem "TFAR_anprc152";
+		_currentPlayer assignItem "TFAR_anprc152";
+
+		//Seems not working
+		if (side _currentPlayer == blufor) then
+		{
+			[(call TFAR_fnc_activeSwRadio), 1, format ["%1",bluforShortFrequencyTFAR]] call TFAR_fnc_setChannelFrequency;
+			[(call TFAR_fnc_activeLrRadio), 1, format ["%1",bluforShortFrequencyTFAR]] call TFAR_fnc_SetChannelFrequency;
+		};
+	};
+};
+
 adjustLoadout = {
 	currentPlayer = _this select 0;
+
 	if (currentPlayer getUnitTrait "Medic" == false) then 
 	{
 		for "_i" from 0 to 7 do { currentPlayer addItem "ACE_elasticBandage" };	
@@ -308,24 +415,47 @@ adjustLoadout = {
 	currentPlayer addItem "ACE_morphine";	
 	currentPlayer addItem "ACE_WaterBottle";
 	currentPlayer addItem "ACE_EarPlugs";
-	currentPlayer addItem "ACE_microDAGR";
 	currentPlayer unassignItem "itemRadio";
 	currentPlayer removeItem "itemRadio";
 	currentPlayer setSpeaker "noVoice";
 
-	//Define's TFAR Radio frequencie
-	if (isClass (configFile >> "CfgPatches" >> "task_force_radio")) then {
-		//player addItem "TFAR_anprc148jem";
-		//player assignItem "TFAR_anprc148jem";
-		currentPlayer addItem "TFAR_anprc152";
-		currentPlayer assignItem "TFAR_anprc152";
-
-		if (side currentPlayer == blufor) then
+	//Adapt loadout to a specific Era
+	switch (warEra) do
+	{
+		//2nd War
+		case 0:
 		{
-			[(call TFAR_fnc_activeSwRadio), 1, format ["%1",bluforShortFrequencyTFAR]] call TFAR_fnc_setChannelFrequency;
-			[(call TFAR_fnc_activeLrRadio), 1, format ["%1",bluforShortFrequencyTFAR]] call TFAR_fnc_SetChannelFrequency;
+			
+		};
+		//Cold War
+		case 1:
+		{
+			[currentPlayer] call adjustTFARRadio;
+		};
+		//Modern Warfare
+		case 2:
+		{
+			currentPlayer addItem "ACE_DAGR";
+			[currentPlayer] call adjustTFARRadio;
+		};
+		//Actual Warfare
+		case 3:
+		{
+			currentPlayer addItem "ACE_microDAGR";
+			[currentPlayer] call adjustTFARRadio;
+		};
+		//Future Warfare
+		case 4:
+		{
+			currentPlayer addItem "ACE_microDAGR";
+			[currentPlayer] call adjustTFARRadio;
+		};
+		default
+		{
+			
 		};
 	};
+	diag_log format ["Player %1 loadout adjust", name currentPlayer];
 };
 
 

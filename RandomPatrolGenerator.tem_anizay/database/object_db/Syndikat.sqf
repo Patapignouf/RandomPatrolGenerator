@@ -53,7 +53,9 @@ baseEnemyMortarGroup_Syndikat = ["I_G_Mortar_01_F",
 "I_C_Soldier_Bandit_6_F"];
 
 baseEnemyVehicleGroup_Syndikat = ["I_C_Offroad_02_LMG_F", 
-"I_C_Offroad_02_AT_F"];
+"I_C_Offroad_02_AT_F", 
+"CUP_I_M151_M2_SYND", 
+"I_C_Offroad_02_unarmed_F"];
 
 baseEnemyLightArmoredVehicleGroup_Syndikat = ["CUP_I_Hilux_zu23_IND_G_F", 
 "CUP_I_Hilux_armored_DSHKM_IND_G_F"];
@@ -158,7 +160,6 @@ itemList_Syndikat = [
 	"Rangefinder",
 	"ACE_MapTools",
 	"ACE_microDAGR",
-	"ACE_SpraypaintRed",
 	"ACE_CableTie",
 	"ACE_DAGR",
 	"ACE_WaterBottle",
@@ -171,13 +172,18 @@ itemList_Syndikat = [
 	"ACE_morphine",
 	"ACE_quikclot",
 	"ACE_EntrenchingTool",
-	"ACE_RangeTable_82mm"
+	"ACE_RangeTable_82mm",
+	"ACE_SpraypaintBlack",
+	"ACE_SpraypaintBlue",
+	"ACE_SpraypaintGreen",
+	"ACE_SpraypaintRed",
+	"ACE_IR_Strobe_Item"
 	];
 
 itemEngineerList_Syndikat = [
 	"ToolKit",
 	"MineDetector",
-	"ACE_wirecutter"
+	"ACE_wirecutter", "ACE_Fortify"
 	];
 	
 itemMedicList_Syndikat = [

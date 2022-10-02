@@ -9,7 +9,7 @@ doGenerateVehicleForFOB =
 	_thisMaxRadius = _this select 3;
 
 	//Define process 
-	_shipGoodPosition = [];
+	_shipGoodPosition = [0,0,0];
 	{
 		switch (true) do {   
 			case (_x isKindOf "Tank");
@@ -79,11 +79,11 @@ doGenerateVehicleForFOB =
 				};    
 			case (_x isKindOf "Helicopter"): {
 					_kind = "Helicopter";
-					spawnAttempts = 0;
-					_vehicleGoodPosition = [_thisPosition, _thisMinRadius, _thisMaxRadius, 25, 0, 0.25, 0] call BIS_fnc_findSafePos;
+					_spawnAttempts = 0;
+					_vehicleGoodPosition = [_thisPosition, _thisMinRadius, _thisMaxRadius, 30, 0, 0.25, 0] call BIS_fnc_findSafePos;
 					while {(isNil "_vehicleGoodPosition" || count _vehicleGoodPosition==0) && _spawnAttempts <10} do 
 					{
-						_vehicleGoodPosition = [_thisPosition, _thisMinRadius, _thisMaxRadius, 25, 0, 0.25, 0] call BIS_fnc_findSafePos;
+						_vehicleGoodPosition = [_thisPosition, _thisMinRadius, _thisMaxRadius, 30, 0, 0.25, 0] call BIS_fnc_findSafePos;
 						_spawnAttempts = _spawnAttempts +1;
 					};
 					if (!isNil "_vehicleGoodPosition"&& count _vehicleGoodPosition>0) then 
