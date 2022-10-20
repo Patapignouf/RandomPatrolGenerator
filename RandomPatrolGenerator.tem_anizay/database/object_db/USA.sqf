@@ -84,6 +84,12 @@ bluforUnarmedVehicleChopper_USA = ["CUP_B_MH6J_USA",
 "B_Heli_Transport_03_unarmed_F",
 "CUP_B_CH53E_USMC"];
 
+bluforArmedChopper_USA = [
+	"CUP_B_AH64_DL_USA", 
+	"CUP_B_AH6M_USA", 
+	"CUP_B_UH60M_US", 
+	"CUP_B_AH1Z_Dynamic_USMC"
+	];
 
 bluforDrone_USA = ["B_UAV_02_dynamicLoadout_F"
 ];

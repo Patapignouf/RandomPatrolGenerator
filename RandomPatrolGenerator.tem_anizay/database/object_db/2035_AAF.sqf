@@ -99,6 +99,10 @@ bluforUnarmedVehicleChopper_2035_AAF = [
 	"I_Heli_light_03_unarmed_F"
 ];
 
+bluforArmedChopper_2035_AAF = [
+	"I_Heli_light_03_dynamicLoadout_F"
+];
+
 
 bluforDrone_2035_AAF = [
 	"I_UAV_02_dynamicLoadout_F"

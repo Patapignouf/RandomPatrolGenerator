@@ -79,6 +79,10 @@ bluforUnarmedVehicleChopper_French = ["amf_cougar",
 "B_AMF_Heli_Transport_01_F", 
 "amf_nh90_tth_transport"];
 
+bluforArmedChopper_French = [
+	"AMF_TIGRE_01",
+	"AMF_gazelle_minigun_da_f"
+	];
 
 bluforDrone_French = ["B_AMF_REAPER_dynamicLoadout_F"
 ];
