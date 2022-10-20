@@ -569,7 +569,23 @@ publicvariable "deployableFOBItem";
 	clearMagazineCargoGlobal _tempBox;
 	clearItemCargoGlobal _tempBox;
 	clearBackpackCargoGlobal _tempBox;
-} foreach ["Box_NATO_Uniforms_F", "ACE_Box_82mm_Mo_Combo", "Box_NATO_Equip_F"];
+} foreach ["Box_NATO_Uniforms_F", "ACE_Box_82mm_Mo_Combo"];
+
+//Place empty box with ACE medical stuff
+_tempBox = createVehicle ["Box_NATO_Equip_F", [ initBlueforLocation, 1, 15, 2, 0, 20, 0] call BIS_fnc_findSafePos, [], 0, "NONE"];
+clearWeaponCargoGlobal _tempBox;
+clearMagazineCargoGlobal _tempBox;
+clearItemCargoGlobal _tempBox;
+clearBackpackCargoGlobal _tempBox;
+_tempBox addItemCargo ["ACE_surgicalKit", 1];
+_tempBox addItemCargo ["ACE_epinephrine", 10];
+_tempBox addItemCargo ["ACE_splint", 10];
+_tempBox addItemCargo ["ACE_elasticBandage", 50];
+_tempBox addItemCargo ["ACE_quikclot", 50];
+_tempBox addItemCargo ["ACE_morphine", 10];
+_tempBox addItemCargo ["ACE_bloodIV_500", 10];
+_tempBox addItemCargo ["ACE_bloodIV", 5];
+_tempBox addItemCargo ["ACE_tourniquet", 5];
 
 //Setup fortification ACE mod
 if (isClass (configFile >> "CfgPatches" >> "ace_medical")) then 
