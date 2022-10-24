@@ -238,45 +238,12 @@ currentCivGroup = objNull;
 civsGroup = [];
 for [{_i = 0}, {_i <= 2}, {_i = _i + 1}] do
 { 
-	
-	currentCivGroup = [((getPos initCityLocation) findEmptyPosition [5, 60]), civilian, civilian_big_group,[],[],[],[],[],180] call BIS_fnc_spawnGroup;
+	currentCivGroup = [civilian_big_group, ((getPos initCityLocation) findEmptyPosition [5, 60]), civilian, "Civilian"] call doGenerateEnemyGroup;
 	civsGroup pushBack currentCivGroup;
 	diag_log format ["Generation of civilian group : %1 on position %2 has been completed", currentCivGroup, initCityLocation];
 };
 
 [civsGroup, false] execVM 'enemyManagement\doGarrison.sqf';
-
-{
-	if (side _x == civilian) then
-	{
-
-		_x addEventHandler ["Killed", {
-			params ["_unit", "_killer", "_instigator", "_useEffects"];
-
-			if (isPlayer _killer) then 
-			{
-				//Add civ killed counter
-				_tempCivKilled = missionNamespace getVariable "civKilled";
-				_tempCivKilled = _tempCivKilled + 1;
-				missionNamespace setVariable ["civKilled", _tempCivKilled, true];
-
-				//If number of killed civ reach max civ killed number then end mission
-				if (missionNamespace getVariable "civKilled" > missionNamespace getVariable "maxCivKilled") then 
-				{
-					diag_log "END MISSION";
-					if (isMultiplayer) then {
-						['CIV_DEAD'] remoteExec ["BIS_fnc_endMissionServer", 2];
-					} else {
-						['CIV_DEAD'] remoteExec ["BIS_fnc_endMission", 2];
-					}; 
-				};
-
-				diag_log format ["Civilian has been killed by : %1 on side %2", name _killer, side _killer];
-				[[format ["Civilian has been killed by : %1", name _killer],side _killer], 'engine\doGenerateMessage.sqf'] remoteExec ['BIS_fnc_execVM', 0];
-			}; 
-		}];
-	};
-} foreach allUnits;
 
 //Init VA
 VA1 = createVehicle ["Box_IND_Wps_F", [getPos initCityLocation, 1, 5, 3, 0, 20, 0] call BIS_fnc_findSafePos, [], 0, "NONE"];
@@ -577,15 +544,15 @@ clearWeaponCargoGlobal _tempBox;
 clearMagazineCargoGlobal _tempBox;
 clearItemCargoGlobal _tempBox;
 clearBackpackCargoGlobal _tempBox;
-_tempBox addItemCargo ["ACE_surgicalKit", 1];
-_tempBox addItemCargo ["ACE_epinephrine", 10];
-_tempBox addItemCargo ["ACE_splint", 10];
-_tempBox addItemCargo ["ACE_elasticBandage", 50];
-_tempBox addItemCargo ["ACE_quikclot", 50];
-_tempBox addItemCargo ["ACE_morphine", 10];
-_tempBox addItemCargo ["ACE_bloodIV_500", 10];
-_tempBox addItemCargo ["ACE_bloodIV", 5];
-_tempBox addItemCargo ["ACE_tourniquet", 5];
+_tempBox addItemCargoGlobal  ["ACE_surgicalKit", 1];
+_tempBox addItemCargoGlobal  ["ACE_epinephrine", 10];
+_tempBox addItemCargoGlobal ["ACE_splint", 10];
+_tempBox addItemCargoGlobal ["ACE_elasticBandage", 50];
+_tempBox addItemCargoGlobal ["ACE_quikclot", 50];
+_tempBox addItemCargoGlobal ["ACE_morphine", 10];
+_tempBox addItemCargoGlobal ["ACE_bloodIV_500", 10];
+_tempBox addItemCargoGlobal ["ACE_bloodIV", 5];
+_tempBox addItemCargoGlobal ["ACE_tourniquet", 5];
 
 //Setup fortification ACE mod
 if (isClass (configFile >> "CfgPatches" >> "ace_medical")) then 

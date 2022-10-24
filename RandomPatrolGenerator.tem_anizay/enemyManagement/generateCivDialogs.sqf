@@ -58,8 +58,14 @@ _civs = allUnits select {alive _x AND side _x isEqualTo civilian};
 			[1,["Ok let's go !", "PLAIN", 0.5]] remoteExec ["cutText", _caller];
 			[_civ] remoteExec ["removeAllEventHandlers", 0, true];
 			[_civ] remoteExec ["removeAllActions", 0, true];
+			_thisUnit removeAllMPEventHandlers "mpkilled"; 
 			_civ switchMove "";
-			[_civ] joinSilent (group _caller);	//Civ join player squad
+
+			//Civ join player squad
+			_tempGroup = createGroup (side _caller); //Specific line to debug unit which doesn't change side
+			[_civ] joinSilent _tempGroup;
+			[_civ] joinSilent (group _caller); //join player group
+
 			
 			//Manage loadout
 			_civLoadout = getUnitLoadout _civ;
