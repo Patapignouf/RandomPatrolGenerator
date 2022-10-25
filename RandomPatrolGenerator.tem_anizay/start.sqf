@@ -688,8 +688,28 @@ if (campaignMode == 1) then
 	_objectiveCompletedCounter = count _completedObjectives;
 	_maxObjectivesGenerated = false;
 
-	//Add this action on campaign mode
+	//Add this action on campaign mode blufor side
 	[TPFlag1, ["Complete mission",{
+			//Param initialization
+			params ["_object","_caller","_ID","_lengthParameter"];
+			_completedObjectives = missionNamespace getVariable ["completedObjectives",[]];
+
+			//End mission
+			if (_lengthParameter <= (count _completedObjectives)) then 
+			{
+				if (isMultiplayer) then {
+					['OBJ_OK'] remoteExec ["BIS_fnc_endMissionServer", 2];
+				} else {
+					['OBJ_OK'] remoteExec ["BIS_fnc_endMission", 2];
+				}; 
+			} else 
+			{
+				hint "Not enough mission completed";
+			};
+		},lengthParameter,1.5,true,true,"","_target distance _this <5"]] remoteExec ["addAction", 0, true];
+
+	//Add this action on campaign mode independent side
+	[VA1, ["Complete mission",{
 			//Param initialization
 			params ["_object","_caller","_ID","_lengthParameter"];
 			_completedObjectives = missionNamespace getVariable ["completedObjectives",[]];
