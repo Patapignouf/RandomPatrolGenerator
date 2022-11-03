@@ -110,7 +110,7 @@ if (hasInterface) then
 		//Manage arsenal	
 		[VA1, player, indFaction] call setupArsenalToItem;
 		[VA1, player, indFaction] call setupRoleSwitchToItem;
-		[VA1, player] call setupSaveRole;
+		[VA1, player] call setupSaveAndLoadRole;
 
 		waituntil {!isNil "isBluforAttacked" && !isNil "isIndAttacked"};
 		if (isIndAttacked) then
@@ -153,7 +153,7 @@ if (hasInterface) then
 		//Manage arsenal	
 		[VA2, player, bluFaction] call setupArsenalToItem;
 		[VA2, player, bluFaction] call setupRoleSwitchToItem;
-		[VA2, player] call setupSaveRole;
+		[VA2, player] call setupSaveAndLoadRole;
 
 		//Manage vehicle spawn options 
 		if (enableArmored == 1) then 

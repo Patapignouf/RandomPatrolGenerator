@@ -355,7 +355,7 @@ setupRoleSwitchToItem = {
 };
 
 
-setupSaveRole = {
+setupSaveAndLoadRole = {
 	//InitParam
 	params ["_itemToAttachArsenal", "_currentPlayer" ];
 
@@ -370,6 +370,19 @@ setupSaveRole = {
 			_caller setVariable ["spawnLoadout", getUnitLoadout _caller];
 
 			hint "Loadout saved";
+		},[]];
+			
+	//Add action where player can load his loadout
+	itemToAttachArsenal addAction 
+		["Load loadout", 
+		{
+			//Define params
+			params ["_target","_caller","_ID","_params"];
+
+			//load loadout
+			_caller setUnitLoadout (_caller getVariable "spawnLoadout");
+
+			hint "Loadout loaded";
 		},[]];
 };
 
