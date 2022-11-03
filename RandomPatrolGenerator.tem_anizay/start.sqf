@@ -26,7 +26,7 @@ campaignMode = "CampaignMode" call BIS_fnc_getParamValue;
 chooseStartPos = "ChooseStartPos" call BIS_fnc_getParamValue;
 timeOfDay = "TimeOfDay" call BIS_fnc_getParamValue;
 respawnSettings = "Respawn" call BIS_fnc_getParamValue;
-
+objInitSetup = "ObjInitSetup" call BIS_fnc_getParamValue;
 
 
 /////////////////////////
@@ -206,6 +206,24 @@ currentObjType = nil;
 currentRandomPos = [];
 currentObj = objNull;
 currentRandObj = objNull;
+
+//Define the type of objective avalaible
+switch (objInitSetup) do
+{
+	case 1:
+		{
+			avalaibleTypeOfObj = avalaibleAttackTypeOfObj;
+		};
+	case 2:
+		{
+			avalaibleTypeOfObj = avalaibleSupportTypeOfObj;			
+		};
+	default 
+		{
+			avalaibleTypeOfObj = avalaibleAttackTypeOfObj + avalaibleSupportTypeOfObj;
+		};
+};
+
 
 //Generate objectives according to the mission's length parameter
 for [{_i = 0}, {_i <= lengthParameter}, {_i = _i + 1}] do //Peut être optimisé
