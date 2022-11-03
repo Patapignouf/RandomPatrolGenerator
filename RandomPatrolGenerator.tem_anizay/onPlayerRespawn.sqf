@@ -35,3 +35,5 @@ showHUD [
   false  // showIcon3D
 ];
 //#####
+
+[player, false] call TFAR_fnc_forceSpectator;
