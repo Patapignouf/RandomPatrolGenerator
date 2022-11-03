@@ -13,6 +13,7 @@ _ColdWar_NVA = 11;
 _ColdWar_ARVN = 12;
 _2035_AAF = 13;
 _2035_NATO = 14;
+_USA_2000_DF = 15;
 
 #include "object_db\USA.sqf"
 #include "object_db\French.sqf"
@@ -29,7 +30,7 @@ _2035_NATO = 14;
 #include "object_db\ColdWar_USA.sqf"
 #include "object_db\2035_AAF.sqf"
 #include "object_db\2035_NATO.sqf"
-
+#include "object_db\USA_2000_DF.sqf"
 
 //Define faction prefix
 c_db = "_db";
@@ -48,7 +49,7 @@ c_ColdWar_NVA = "_ColdWar_NVA";
 c_ColdWar_USA = "_ColdWar_USA";
 c_2035_AAF = "_2035_AAF";
 c_2035_NATO = "_2035_NATO";
-
+c_USA_2000_DF = "_USA_2000_DF";
 
 factionInfos = [
 	[c_USA,_USA],
@@ -65,7 +66,8 @@ factionInfos = [
 	[c_ColdWar_NVA,_ColdWar_NVA],
 	[c_ColdWar_USA,_ColdWar_USA],
 	[c_2035_AAF,_2035_AAF],
-	[c_2035_NATO,_2035_NATO]
+	[c_2035_NATO,_2035_NATO],
+	[c_USA_2000_DF,_USA_2000_DF]
 ];
 
 
