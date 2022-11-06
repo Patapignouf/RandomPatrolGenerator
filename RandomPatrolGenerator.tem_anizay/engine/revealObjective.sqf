@@ -10,7 +10,7 @@ if ((count _revealedObjectives != count _tempMissionObjectives)) then
 {
 		_objectiveToReveal = objNull;
 
-		if (isNil "_objectiveToRevealSelected" || isNull _objectiveToRevealSelected) then 
+		if (count _objectiveToRevealSelected == 0) then 
 		{
 			_tempMissionObjectives = _tempMissionObjectives - _revealedObjectives;
 			_objectiveToReveal = selectRandom _tempMissionObjectives;

@@ -536,7 +536,6 @@ publicvariable "deployableFOBItem";
 					},[respawnSettings],1.5,true,false,"","_target distance _this <5"]] remoteExec [ "addAction", 0, true ];
 				};
 
-
 				//Remove Box
 				deleteVehicle _object;
 			} else {
@@ -622,7 +621,7 @@ switch (missionInitSetup) do
 		{
 			for [{_i = 0}, {_i <= lengthParameter}, {_i = _i + 1}] do //Peut être optimisé
 			{
-				[objNull, objNull, _mainPlayerSide] execVM 'engine\revealObjective.sqf';
+				[objNull, [], _mainPlayerSide] execVM 'engine\revealObjective.sqf';
 			};
 		};
 	default
@@ -636,7 +635,7 @@ if (_mainPlayerSide == independent) then
 {
 		for [{_i = 0}, {_i <= lengthParameter}, {_i = _i + 1}] do //Peut être optimisé
 	{
-		[objNull, objNull, _mainPlayerSide] execVM 'engine\revealObjective.sqf';
+		[objNull, [], _mainPlayerSide] execVM 'engine\revealObjective.sqf';
 	};
 };
 
@@ -761,7 +760,7 @@ if (campaignMode == 1) then
 			PossibleObjectivePosition = [avalaibleTypeOfObj, PossibleObjectivePosition] call generateObjective;
 
 			//Reveal objective to the player
-			[objNull, objNull, _mainPlayerSide] execVM 'engine\revealObjective.sqf';
+			[objNull, [], _mainPlayerSide] execVM 'engine\revealObjective.sqf';
 
 			//Update objective complete counter
 			_completedObjectives = missionNamespace getVariable ["completedObjectives",[]];

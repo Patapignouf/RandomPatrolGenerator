@@ -16,7 +16,7 @@ if (count _revealedObjectives != count _tempMissionObjectives) then
 		{
 			_mainPlayerSide = independent;
 		};
-		[_caller, objNull, _mainPlayerSide] execVM 'engine\revealObjective.sqf';
+		[_caller, [], _mainPlayerSide] execVM 'engine\revealObjective.sqf';
 	} else 
 	{ 
 		_tempMissionObjectives = _tempMissionObjectives - _revealedObjectives;

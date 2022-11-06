@@ -43,7 +43,7 @@ avalaibleDestroyVehicle = [
 
 avalaibleCollectIntel = ["Land_Suitcase_F"];
 
-avalaibleTypeOfObj = ["supply","ammo","vip","hvt","collectIntel","informant","steal"];
+avalaibleTypeOfObj = [];
 avalaibleAttackTypeOfObj = ["ammo","hvt","collectIntel","informant"];
 avalaibleSupportTypeOfObj = ["supply","vip","collectIntel","informant","steal"];
 
