@@ -36,4 +36,6 @@ showHUD [
 ];
 //#####
 
-[player, false] call TFAR_fnc_forceSpectator;
+if (isClass (configFile >> "CfgPatches" >> "task_force_radio")) then {
+	[player, false] call TFAR_fnc_forceSpectator;
+};

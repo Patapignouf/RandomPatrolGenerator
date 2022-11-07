@@ -33,4 +33,8 @@ if ((["Respawn",1] call BIS_fnc_getParamValue) == 0 ) then
 		["Initialize", [player, [] , false, false ]] call BIS_fnc_EGSpectator;
 	};
 };
+
+if (isClass (configFile >> "CfgPatches" >> "task_force_radio")) then {
+	[player, true] call TFAR_fnc_forceSpectator;
+};
 	
