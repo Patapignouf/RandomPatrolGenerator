@@ -1,6 +1,6 @@
 params ["_objective"];
 
-_objectiveID = current_obj select 2;
+_objectiveID = _objective select 2;
 
 if ([_objectiveID] call BIS_fnc_taskExists) then 
 {
