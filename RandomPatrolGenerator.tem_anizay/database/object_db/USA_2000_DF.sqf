@@ -170,8 +170,9 @@ smgList_USA_2000_DF = [
 attachmentShortList_USA_2000_DF	= [
 	"CUP_optic_Aimpoint_5000",
 	"CUP_acc_Flashlight",
-	"CUP_optic_CompM4"
-
+	"CUP_optic_CompM4",
+	"CUP_optic_LeupoldMk4_CQ_T",
+	"CUP_optic_SB_11_4x20_PM_pip"
 ];
 
 attachmentLongList_USA_2000_DF	= [
