@@ -25,7 +25,14 @@ doGenerateVehicleForFOB =
 						if (!isNil "_vehicleGoodPosition" && count _vehicleGoodPosition>0) then 
 						{
 							diag_log format ["Position to spawn vehicle is not Nil %1",_vehicleGoodPosition];
-							createVehicle [_x, _vehicleGoodPosition , [], 0, "NONE"];
+							_currentCar = createVehicle [_x, _vehicleGoodPosition , [], 0, "NONE"];
+							/* Lock the generated vehicle
+							* 0 - Unlocked
+							* 1 - Default (player subordinate cannot enter until his leader says so)
+							* 2 - Locked
+							* 3 - Locked for player
+							*/
+							_currentCar lock 2;
 						};
 				};   
 			case (_x isKindOf "Ship"): {
@@ -75,6 +82,13 @@ doGenerateVehicleForFOB =
 								"(_this distance _target < 8) && (vehicle _this == _this)"
 							]
 						] remoteExec ["addAction", 0, true];
+						/* Lock the generated vehicle
+						* 0 - Unlocked
+						* 1 - Default (player subordinate cannot enter until his leader says so)
+						* 2 - Locked
+						* 3 - Locked for player
+						*/
+							_currentBoat lock 2;
 					};
 				};    
 			case (_x isKindOf "Helicopter"): {
@@ -90,7 +104,14 @@ doGenerateVehicleForFOB =
 					{
 						diag_log format ["Position to spawn chopper is not Nil %1",_vehicleGoodPosition];
 						createVehicle ["Land_HelipadCircle_F", _vehicleGoodPosition , [], 0, "NONE"];
-						createVehicle [_x, [_vehicleGoodPosition select 0,_vehicleGoodPosition select 1]  , [], 0, "NONE"];
+						_currntHelicopter = createVehicle [_x, [_vehicleGoodPosition select 0,_vehicleGoodPosition select 1]  , [], 0, "NONE"];
+						/* Lock the generated vehicle
+						* 0 - Unlocked
+						* 1 - Default (player subordinate cannot enter until his leader says so)
+						* 2 - Locked
+						* 3 - Locked for player
+						*/
+							_currentHelicopter lock 2;
 					};
 				};   
 			case (_x isKindOf "Plane"): {_kind = "Plane";};   
