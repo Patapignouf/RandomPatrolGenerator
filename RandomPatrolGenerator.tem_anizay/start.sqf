@@ -444,6 +444,7 @@ if (0 < count bluforBoat ) then
 //Generate all vehicles
 diag_log format ["Generating blufor vehicle : %1",selectedBluforVehicle];
 [initBlueforLocation, selectedBluforVehicle, 30, 100] call doGenerateVehicleForFOB;	
+//TODO: get each vehicule and set the lock parameter to LOCKED;
 
 //Init VA
 VA2 = createVehicle ["Box_NATO_WpsSpecial_F", [initBlueforLocation, 1, 5, 3, 0, 20, 0] call BIS_fnc_findSafePos, [], 0, "NONE"];
@@ -452,6 +453,27 @@ clearMagazineCargoGlobal VA2;
 clearItemCargoGlobal VA2;
 clearBackpackCargoGlobal VA2;
 publicvariable "VA2";
+
+//Init vehicle keys for BLUEFOR 
+//Check for option to add it here or if we add the keys to special role
+cargoKeys = createVehicle [deployableFOB, [initBlueforLocation, 20, 50, 3, 0, 20, 0] call BIS_fnc_findSafePos, [], 0, "NONE"];
+clearWeaponCargoGlobal cargoKeys;
+clearMagazineCargoGlobal cargoKeys;
+clearItemCargoGlobal cargoKeys;
+clearBackpackCargoGlobal cargoKeys;
+publicvariable "cargoKeys";
+/*
+* Some documentation:
+* Class Name	    |   In-Game Name           |	Type
+* ACE_key_master  |	Vehicle Key: Master      | ACE_ItemCore //ALL
+* ACE_key_lockpick|	Lockpick	               | ACE_ItemCore //item to steal vehicles by lock picking them
+* ACE_key_west	  | Vehicle Key: West	       | ACE_ItemCore //BLUFOR
+* ACE_key_east	  | Vehicle Key: East	       | ACE_ItemCore //OPFOR
+* ACE_key_indp	  | Vehicle Key: Independent | ACE_ItemCore //Independent
+* ACE_key_civ	    | Vehicle Key: Civilian	   | ACE_ItemCore //Civilian
+*/
+cargoKeys addItemCargo ["ACE_key_west", 100];
+//cargoKeys addItemCargo ["ACE_key_lockpick", 100];
 
 //Create portable FOB 
 deployableFOBItem = createVehicle [deployableFOB, [initBlueforLocation, 20, 50, 3, 0, 20, 0] call BIS_fnc_findSafePos, [], 0, "NONE"];
