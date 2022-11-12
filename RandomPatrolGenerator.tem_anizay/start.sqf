@@ -561,21 +561,25 @@ clearWeaponCargoGlobal _tempBox;
 clearMagazineCargoGlobal _tempBox;
 clearItemCargoGlobal _tempBox;
 clearBackpackCargoGlobal _tempBox;
-_tempBox addItemCargoGlobal  ["ACE_surgicalKit", 1];
-_tempBox addItemCargoGlobal  ["ACE_epinephrine", 10];
-_tempBox addItemCargoGlobal ["ACE_splint", 10];
-_tempBox addItemCargoGlobal ["ACE_elasticBandage", 50];
-_tempBox addItemCargoGlobal ["ACE_quikclot", 50];
-_tempBox addItemCargoGlobal ["ACE_morphine", 10];
-_tempBox addItemCargoGlobal ["ACE_bloodIV_500", 10];
-_tempBox addItemCargoGlobal ["ACE_bloodIV", 5];
-_tempBox addItemCargoGlobal ["ACE_tourniquet", 5];
 
-//Setup fortification ACE mod
+//Check if ACE is enable on the server
 if (isClass (configFile >> "CfgPatches" >> "ace_medical")) then 
 {
+	//Setup medic ACE box 
+	_tempBox addItemCargoGlobal  ["ACE_surgicalKit", 1];
+	_tempBox addItemCargoGlobal  ["ACE_epinephrine", 10];
+	_tempBox addItemCargoGlobal ["ACE_splint", 10];
+	_tempBox addItemCargoGlobal ["ACE_elasticBandage", 50];
+	_tempBox addItemCargoGlobal ["ACE_quikclot", 50];
+	_tempBox addItemCargoGlobal ["ACE_morphine", 10];
+	_tempBox addItemCargoGlobal ["ACE_bloodIV_500", 10];
+	_tempBox addItemCargoGlobal ["ACE_bloodIV", 5];
+	_tempBox addItemCargoGlobal ["ACE_tourniquet", 5];
+
+	//Setup fortification ACE mod
 	[blufor, 150, [["Land_BagFence_Long_F", 20], ["Land_BagBunker_Small_F", 50]]] call ace_fortify_fnc_registerObjects;
 };
+
 //Setup view distance changer
 SettingsComputer =  createVehicle ["Land_MultiScreenComputer_01_olive_F", [initBlueforLocation, 1, 5, 3, 0, 20, 0] call BIS_fnc_findSafePos, [], 0, "NONE"];
 {
