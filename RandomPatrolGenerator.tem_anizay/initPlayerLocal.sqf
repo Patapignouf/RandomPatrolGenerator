@@ -179,23 +179,43 @@ if (hasInterface) then
 		//Unarmed vehicle
 		waitUntil {!isNil "bluforUnarmedVehicle"};
 		{
-			_IDVehicleSpawn = TPFlag1 addAction [format ["Spawn an %1", getText (configFile >> "cfgVehicles" >> _x >> "displayName")],{
-				params ["_object","_caller","_ID","_avalaibleVehicle"];
-				//Click on map to spawn
-				[initBlueforLocation, [_avalaibleVehicle], 30, 100] call doGenerateVehicleForFOB;	
-				[_object,_ID] remoteExec [ "removeAction", 0, true ];
-			},_x,1.5,true,true,"","_target distance _this <5"];
+			_IDVehicleSpawn = TPFlag1 addAction [format ["Spawn a %1", getText (configFile >> "cfgVehicles" >> _x >> "displayName")],{
+					//Define parameters
+					params ["_object","_caller","_ID","_avalaibleVehicle"];
+
+					//Check players credit
+					bluforVehicleAvalaibleSpawnCounter = missionNamespace getVariable "bluforVehicleAvalaibleSpawn";
+					if (bluforVehicleAvalaibleSpawnCounter > 0) then 
+					{
+						[initBlueforLocation, [_avalaibleVehicle], 30, 100] call doGenerateVehicleForFOB;	
+						missionNamespace setVariable ["bluforVehicleAvalaibleSpawn", bluforVehicleAvalaibleSpawnCounter-1, true];
+						hint format ["A %2 has spawned, %1 avdvanced spawn credit left.", bluforVehicleAvalaibleSpawnCounter-1, getText (configFile >> "cfgVehicles" >> _avalaibleVehicle >> "displayName")];
+					} else 
+					{
+						hint "You don't have enough advanced vehicle spawned credit left.";
+					};
+			},_x,1.5,true,false,"","_target distance _this <5"];
 		} foreach bluforUnarmedVehicle; 
 
 		//Armed vehicle
 		waitUntil {!isNil "bluforArmedVehicle"};
 		{
-			_IDVehicleSpawn = TPFlag1 addAction [format ["Spawn an %1", getText (configFile >> "cfgVehicles" >> _x >> "displayName")],{
+			_IDVehicleSpawn = TPFlag1 addAction [format ["Spawn a %1", getText (configFile >> "cfgVehicles" >> _x >> "displayName")],{
+				//Define parameters
 				params ["_object","_caller","_ID","_avalaibleVehicle"];
-				//Click on map to spawn
-				[initBlueforLocation, [_avalaibleVehicle], 30, 100] call doGenerateVehicleForFOB;	
-				[_object,_ID] remoteExec [ "removeAction", 0, true ];
-			},_x,1.5,true,true,"","_target distance _this <5"];
+
+				//Check players credit
+				bluforAdvancedVehicleAvalaibleSpawnCounter = missionNamespace getVariable "bluforAdvancedVehicleAvalaibleSpawn";
+				if (bluforAdvancedVehicleAvalaibleSpawnCounter > 0) then 
+				{
+					[initBlueforLocation, [_avalaibleVehicle], 30, 100] call doGenerateVehicleForFOB;	
+					missionNamespace setVariable ["bluforAdvancedVehicleAvalaibleSpawn", bluforAdvancedVehicleAvalaibleSpawnCounter-1, true];
+					hint format ["A %2 has spawned, %1 avdvanced spawn credit left.", bluforAdvancedVehicleAvalaibleSpawnCounter-1, getText (configFile >> "cfgVehicles" >> _avalaibleVehicle >> "displayName")];
+				} else 
+				{
+					hint "You don't have enough advanced vehicle spawned credit left.";
+				};
+			},_x,1.5,true,false,"","_target distance _this <5"];
 		} foreach bluforArmedVehicle; 
 
 		//Unarmed Chopper
@@ -203,12 +223,22 @@ if (hasInterface) then
 		if (initBluforBase == 1) then 
 		{
 			{
-				_IDVehicleSpawn = TPFlag1 addAction [format ["Spawn an %1", getText (configFile >> "cfgVehicles" >> _x >> "displayName")],{
+				_IDVehicleSpawn = TPFlag1 addAction [format ["Spawn a %1", getText (configFile >> "cfgVehicles" >> _x >> "displayName")],{
+					//Define parameters
 					params ["_object","_caller","_ID","_avalaibleVehicle"];
-					//Click on map to spawn
-					[initBlueforLocation, [_avalaibleVehicle], 30, 100] call doGenerateVehicleForFOB;	
-					[_object,_ID] remoteExec [ "removeAction", 0, true ];
-				},_x,1.5,true,true,"","_target distance _this <5"];
+
+					//Check players credit
+					bluforAdvancedVehicleAvalaibleSpawnCounter = missionNamespace getVariable "bluforAdvancedVehicleAvalaibleSpawn";
+					if (bluforAdvancedVehicleAvalaibleSpawnCounter > 0) then 
+					{
+						[initBlueforLocation, [_avalaibleVehicle], 30, 100] call doGenerateVehicleForFOB;	
+						missionNamespace setVariable ["bluforAdvancedVehicleAvalaibleSpawn", bluforAdvancedVehicleAvalaibleSpawnCounter-1, true];
+						hint format ["A %2 has spawned, %1 avdvanced spawn credit left.", bluforAdvancedVehicleAvalaibleSpawnCounter-1, getText (configFile >> "cfgVehicles" >> _avalaibleVehicle >> "displayName")];
+					} else 
+					{
+						hint "You don't have enough advanced vehicle spawned credit left.";
+					};
+				},_x,1.5,true,false,"","_target distance _this <5"];
 			} foreach bluforUnarmedVehicleChopper; 
 		};
 
@@ -216,12 +246,22 @@ if (hasInterface) then
 		if (initBluforBase == 1 && enableArmedChopper == 1) then 
 		{	
 			{
-				_IDVehicleSpawn = TPFlag1 addAction [format ["Spawn an %1", getText (configFile >> "cfgVehicles" >> _x >> "displayName")],{
+				_IDVehicleSpawn = TPFlag1 addAction [format ["Spawn a %1", getText (configFile >> "cfgVehicles" >> _x >> "displayName")],{
+					//Define parameters
 					params ["_object","_caller","_ID","_avalaibleVehicle"];
-					//Click on map to spawn
-					[initBlueforLocation, [_avalaibleVehicle], 30, 100] call doGenerateVehicleForFOB;	
-					[_object,_ID] remoteExec [ "removeAction", 0, true ];
-				},_x,1.5,true,true,"","_target distance _this <5"];
+
+					//Check players credit
+					bluforAdvancedVehicleAvalaibleSpawnCounter = missionNamespace getVariable "bluforAdvancedVehicleAvalaibleSpawn";
+					if (bluforAdvancedVehicleAvalaibleSpawnCounter > 0) then 
+					{
+						[initBlueforLocation, [_avalaibleVehicle], 30, 100] call doGenerateVehicleForFOB;	
+						missionNamespace setVariable ["bluforAdvancedVehicleAvalaibleSpawn", bluforAdvancedVehicleAvalaibleSpawnCounter-1, true];
+						hint format ["A %2 has spawned, %1 avdvanced spawn credit left.", bluforAdvancedVehicleAvalaibleSpawnCounter - 1, getText (configFile >> "cfgVehicles" >> _avalaibleVehicle >> "displayName")];
+					} else 
+					{
+						hint "You don't have enough advanced vehicle spawned credit left.";
+					};
+				},_x,1.5,true,false,"","_target distance _this <5"];
 			} foreach bluforArmedChopper; 
 		};
 
@@ -233,24 +273,32 @@ if (hasInterface) then
 			{
 				_IDVehicleSpawn = TPFlag1 addAction [format ["Spawn an %1 (this will open the map to choose a position)", getText (configFile >> "cfgVehicles" >> _x >> "displayName")],{
 					params ["_object","_caller","_ID","_avalaibleAicraft"];
-					//Click on map to spawn
-					selectedLoc = [0,0,0];
-					openMap true;
-					sleep 1;
-					hint "Click on map to sapwn an aircraft and teleport\n The aircraft will spawn oriented on the north";
-					onMapSingleClick "selectedLoc = _pos; onMapSingleClick ''; openMap false; true;";
-					waitUntil{!(visibleMap)};  
-					if (!([selectedLoc, [0,0,0]] call BIS_fnc_areEqual)) then 
+
+					bluforAdvancedVehicleAvalaibleSpawnCounter = missionNamespace getVariable "bluforAdvancedVehicleAvalaibleSpawn";
+					if (bluforAdvancedVehicleAvalaibleSpawnCounter > 0) then 
 					{
-						_caller setPos selectedLoc;
-						createVehicle [_avalaibleAicraft, selectedLoc, [], 0, "NONE"];
-						[_object,_ID] remoteExec [ "removeAction", 0, true ];
-					}
-					else 
+						//Click on map to spawn
+						selectedLoc = [0,0,0];
+						openMap true;
+						sleep 1;
+						hint "Click on map to sapwn an aircraft and teleport\n The aircraft will spawn oriented on the north";
+						onMapSingleClick "selectedLoc = _pos; onMapSingleClick ''; openMap false; true;";
+						waitUntil{!(visibleMap)};  
+						if (!([selectedLoc, [0,0,0]] call BIS_fnc_areEqual)) then 
+						{
+							_caller setPos selectedLoc;
+							createVehicle [_avalaibleAicraft, selectedLoc, [], 0, "NONE"];
+							[_object,_ID] remoteExec [ "removeAction", 0, true ];
+							
+							//Reduce avalaible spawn counter
+							missionNamespace setVariable ["bluforAdvancedVehicleAvalaibleSpawn", bluforAdvancedVehicleAvalaibleSpawnCounter-1, true];
+							hint format ["A %2 has spawned, %1 avdvanced spawn credit left.", bluforAdvancedVehicleAvalaibleSpawnCounter-1, getText (configFile >> "cfgVehicles" >> _avalaibleVehicle >> "displayName")];
+						};
+					} else 
 					{
-						//hint format ["fail with selectedLoc : %1", selectedLoc];
+						hint "You don't have enough advanced vehicle spawned credit left.";
 					};
-				},_x,1.5,true,true,"","_target distance _this <5"];
+				},_x,1.5,true,false,"","_target distance _this <5"];
 			} foreach bluforFixedWing;
 		};
 

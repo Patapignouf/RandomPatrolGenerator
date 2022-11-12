@@ -1,3 +1,5 @@
+#include "..\objectGenerator\vehicleManagement.sqf"
+
 params ["_objective"];
 
 //init object 
@@ -26,6 +28,7 @@ switch (_objectiveType) do
 		//Manage player's feedback
 		if ("RealismMode" call BIS_fnc_getParamValue == 1) then 
 		{
+			[] call doIncrementVehicleSpawnCounter;	
 			[_objective] execVM 'engine\completeObjective.sqf'; 
 		};
 		if (["Respawn",1] call BIS_fnc_getParamValue == 1) then 

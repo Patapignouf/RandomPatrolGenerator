@@ -27,6 +27,7 @@ chooseStartPos = "ChooseStartPos" call BIS_fnc_getParamValue;
 timeOfDay = "TimeOfDay" call BIS_fnc_getParamValue;
 respawnSettings = "Respawn" call BIS_fnc_getParamValue;
 objInitSetup = "ObjInitSetup" call BIS_fnc_getParamValue;
+bluforVehicleSpawnType = "BluforVehicleSpawnType" call BIS_fnc_getParamValue;
 
 
 /////////////////////////
@@ -396,11 +397,14 @@ if (initBluforBase == 0 || (initBluforBase == 2 && (round random 1 == 0))) then
 	waitUntil {!isNil "spawnFOBObjects"};
 	
 	//Generate air vehicle
-	if (0 < count bluforUnarmedVehicleChopper ) then 
+	if (bluforVehicleSpawnType == 1) then 
 	{
-		for [{_i = 0}, {_i < 2}, {_i = _i + 1}] do
+		if (0 < count bluforUnarmedVehicleChopper ) then 
 		{
-			selectedBluforVehicle pushBack (selectRandom bluforUnarmedVehicleChopper);
+			for [{_i = 0}, {_i < 2}, {_i = _i + 1}] do
+			{
+				selectedBluforVehicle pushBack (selectRandom bluforUnarmedVehicleChopper);
+			};
 		};
 	};
 		
@@ -429,11 +433,15 @@ if (0 < count bluforUnarmedVehicle ) then
 	};
 };
 
-if (0 < count bluforArmedVehicle ) then 
+
+if (bluforVehicleSpawnType == 1) then 
 {
-	for [{_i = 0}, {_i < 1}, {_i = _i + 1}] do
+	if (0 < count bluforArmedVehicle ) then 
 	{
-		selectedBluforVehicle pushBack (selectRandom bluforArmedVehicle);
+		for [{_i = 0}, {_i < 1}, {_i = _i + 1}] do
+		{
+			selectedBluforVehicle pushBack (selectRandom bluforArmedVehicle);
+		};
 	};
 };
 
@@ -566,8 +574,8 @@ clearBackpackCargoGlobal _tempBox;
 if (isClass (configFile >> "CfgPatches" >> "ace_medical")) then 
 {
 	//Setup medic ACE box 
-	_tempBox addItemCargoGlobal  ["ACE_surgicalKit", 1];
-	_tempBox addItemCargoGlobal  ["ACE_epinephrine", 10];
+	_tempBox addItemCargoGlobal ["ACE_surgicalKit", 1];
+	_tempBox addItemCargoGlobal ["ACE_epinephrine", 10];
 	_tempBox addItemCargoGlobal ["ACE_splint", 10];
 	_tempBox addItemCargoGlobal ["ACE_elasticBandage", 50];
 	_tempBox addItemCargoGlobal ["ACE_quikclot", 50];

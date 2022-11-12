@@ -157,6 +157,13 @@ class Params
 		texts[] = {"Random positions","Leaders can choose start positions"};
 		default = 0;             
 	};
+	class BluforVehicleSpawnType
+	{
+		title = "Choose blufor vehicle spawn condition (WIP)";
+		values[] = {0,1};
+		texts[] = {"Spawn with credits","Spawn on mission start"};
+		default = 0;             
+	};
 	class TimeOfDay
 	{
 		title = "Choose time of day";

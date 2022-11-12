@@ -1,3 +1,5 @@
+#include "..\objectGenerator\vehicleManagement.sqf"
+
 _objectivesToTest = _this select 0;
 _objectivesDestinationArea = _this select 1;
 
@@ -64,6 +66,7 @@ while {sleep 10; !RTBComplete} do
 						//Manage player's feedback
 						if ("RealismMode" call BIS_fnc_getParamValue == 1) then 
 						{
+							[] call doIncrementVehicleSpawnCounter;	
 							[current_obj] execVM 'engine\completeObjective.sqf'; 
 						};
 						if (respawnSettings == 1) then 
@@ -86,6 +89,7 @@ while {sleep 10; !RTBComplete} do
 						//Manage player's feedback
 						if ("RealismMode" call BIS_fnc_getParamValue == 1) then 
 						{
+							[] call doIncrementVehicleSpawnCounter;	
 							[current_obj] execVM 'engine\completeObjective.sqf'; 
 						};
 						if (respawnSettings == 1) then 
@@ -108,6 +112,7 @@ while {sleep 10; !RTBComplete} do
 						//Manage player's feedback
 						if ("RealismMode" call BIS_fnc_getParamValue == 1) then 
 						{
+							[] call doIncrementVehicleSpawnCounter;	
 							[current_obj] execVM 'engine\completeObjective.sqf'; 
 						};
 						if (respawnSettings == 1) then 
@@ -130,6 +135,7 @@ while {sleep 10; !RTBComplete} do
 						//Manage player's feedback
 						if ("RealismMode" call BIS_fnc_getParamValue == 1) then 
 						{
+							[] call doIncrementVehicleSpawnCounter;	
 							[current_obj] execVM 'engine\completeObjective.sqf'; 
 						};
 						if (respawnSettings == 1) then 
@@ -151,6 +157,7 @@ while {sleep 10; !RTBComplete} do
 						//Manage player's feedback
 						if ("RealismMode" call BIS_fnc_getParamValue == 1) then 
 						{
+							[] call doIncrementVehicleSpawnCounter;	
 							[current_obj] execVM 'engine\completeObjective.sqf'; 
 						};
 						[[format ["L'objectif %1 est terminé", getText (configFile >> "cfgVehicles" >> typeOf (current_obj select 0) >> "displayName")],independent], 'engine\doGenerateMessage.sqf'] remoteExec ['BIS_fnc_execVM', 0];
