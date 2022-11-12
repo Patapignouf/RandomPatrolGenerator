@@ -291,6 +291,9 @@ if ( count AvalaibleInitAttackPositions != 0 && (enableInitAttack == 1 || ((enab
 	waitUntil {isNull _handleCivGeneration};
 };
 
+//Generate items on VA1 box 
+VA1 addItemCargoGlobal ["ACE_key_indp", 5];
+
 //Init perma harass on player
 [[baseEnemyGroup,baseEnemyATGroup,baseEnemyDemoGroup],baseEnemyVehicleGroup, baseEnemyLightArmoredVehicleGroup, baseEnemyHeavyArmoredVehicleGroup] execVM 'enemyManagement\generateHarass.sqf'; 
 
@@ -468,27 +471,6 @@ clearItemCargoGlobal VA2;
 clearBackpackCargoGlobal VA2;
 publicvariable "VA2";
 
-//Init vehicle keys for BLUEFOR 
-//Check for option to add it here or if we add the keys to special role
-cargoKeys = createVehicle [deployableFOB, [initBlueforLocation, 20, 50, 3, 0, 20, 0] call BIS_fnc_findSafePos, [], 0, "NONE"];
-clearWeaponCargoGlobal cargoKeys;
-clearMagazineCargoGlobal cargoKeys;
-clearItemCargoGlobal cargoKeys;
-clearBackpackCargoGlobal cargoKeys;
-publicvariable "cargoKeys";
-/*
-* Some documentation:
-* Class Name	    |   In-Game Name           |	Type
-* ACE_key_master  |	Vehicle Key: Master      | ACE_ItemCore //ALL
-* ACE_key_lockpick|	Lockpick	               | ACE_ItemCore //item to steal vehicles by lock picking them
-* ACE_key_west	  | Vehicle Key: West	       | ACE_ItemCore //BLUFOR
-* ACE_key_east	  | Vehicle Key: East	       | ACE_ItemCore //OPFOR
-* ACE_key_indp	  | Vehicle Key: Independent | ACE_ItemCore //Independent
-* ACE_key_civ	    | Vehicle Key: Civilian	   | ACE_ItemCore //Civilian
-*/
-cargoKeys addItemCargo ["ACE_key_west", 100];
-//cargoKeys addItemCargo ["ACE_key_lockpick", 100];
-
 //Create portable FOB 
 deployableFOBItem = createVehicle [deployableFOB, [initBlueforLocation, 20, 50, 3, 0, 20, 0] call BIS_fnc_findSafePos, [], 0, "NONE"];
 clearWeaponCargoGlobal deployableFOBItem;
@@ -605,6 +587,9 @@ if (isClass (configFile >> "CfgPatches" >> "ace_medical")) then
 	_tempBox addItemCargoGlobal ["ACE_bloodIV_500", 10];
 	_tempBox addItemCargoGlobal ["ACE_bloodIV", 5];
 	_tempBox addItemCargoGlobal ["ACE_tourniquet", 5];
+
+	//Add keys to the box
+	_tempBox addItemCargoGlobal ["ACE_key_west", 5];
 
 	//Setup fortification ACE mod
 	[blufor, 150, [["Land_BagFence_Long_F", 20], ["Land_BagBunker_Small_F", 50]]] call ace_fortify_fnc_registerObjects;
