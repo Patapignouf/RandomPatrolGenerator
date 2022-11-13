@@ -1,6 +1,7 @@
 params ["_objective"];
 
 _objectiveID = _objective select 2;
+diag_log format ["The task %1 has been completed", _objectiveID];
 
 if ([_objectiveID] call BIS_fnc_taskExists) then 
 {

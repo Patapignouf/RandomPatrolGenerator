@@ -44,7 +44,7 @@ avalaibleDestroyVehicle = [
 avalaibleCollectIntel = ["Land_Suitcase_F"];
 
 avalaibleTypeOfObj = [];
-avalaibleAttackTypeOfObj = ["ammo","hvt","collectIntel","informant"];
+avalaibleAttackTypeOfObj = ["ammo","hvt","collectIntel","informant","clearArea"];
 avalaibleSupportTypeOfObj = ["supply","vip","collectIntel","informant","steal"];
 
 //avalaibleTypeOfObj = ["ammo"]; //Line use to debug a specific objective
