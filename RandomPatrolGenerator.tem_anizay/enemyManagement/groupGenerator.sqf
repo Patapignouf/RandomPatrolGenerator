@@ -31,6 +31,7 @@ doGenerateEnemyGroup =
 			//Add eventhandler civKilled
 			_x addEventHandler ["Killed", {
 				params ["_unit", "_killer", "_instigator", "_useEffects"];
+				[_unit] remoteExec ["removeAllActions", 0, true];
 
 				if (isPlayer _killer) then 
 				{
