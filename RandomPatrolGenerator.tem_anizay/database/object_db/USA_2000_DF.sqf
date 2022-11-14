@@ -177,7 +177,6 @@ attachmentShortList_USA_2000_DF	= [
 
 attachmentLongList_USA_2000_DF	= [
 	"CUP_optic_SB_11_4x20_PM",
-	"CUP_optic_SB_11_4x20_PM_pip",
 	"CUP_optic_SB_3_12x50_PMII",
 	"CUP_optic_SB_3_12x50_PMII_PIP",
 	"CUP_optic_LeupoldMk4",

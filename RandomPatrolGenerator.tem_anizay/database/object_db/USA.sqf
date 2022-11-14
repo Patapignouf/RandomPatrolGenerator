@@ -176,7 +176,7 @@ attachmentShortList_USA	= [
 	"CUP_optic_SUSAT",
 	"CUP_optic_SUSAT_PIP",
 	"CUP_optic_SUSAT_3D",
-	//"CUP_optic_ACOG",  //Remove too versatile optics to test players new choice
+	"CUP_optic_ACOG",  //Add but too versatile optics to test players new choice
 	"CUP_optic_ACOG_PIP",
 	"CUP_optic_ACOG_3D",
 	"CUP_optic_ACOG2",
@@ -212,7 +212,9 @@ attachmentShortList_USA	= [
 	"CUP_muzzle_snds_KZRZP_SVD",
 	"CUP_muzzle_snds_KZRZP_AK762",
 	"CUP_muzzle_snds_KZRZP_AK545",
-	"CUP_muzzle_snds_KZRZP_PK"
+	"CUP_muzzle_snds_KZRZP_PK",
+	"CUP_optic_LeupoldMk4_CQ_T",
+	"CUP_optic_SB_11_4x20_PM_pip"
 ];
 
 attachmentLongList_USA	= [
