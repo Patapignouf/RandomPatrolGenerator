@@ -341,5 +341,14 @@ titleCut ["", "BLACK IN", 5];
 //If a player join in progress he will be teleported to his teamleader (WIP feature)
 if (didJIP) then 
 {
-	player setPos (getPos (leader (group player)));
+	//Check if player is trying to respawn by deco/reco method
+	_deadPlayerList = missionNamespace getVariable "deadPlayer";
+	if (count (_deadPlayerList select { _x == (name player) }) == 0) then 
+	{
+		player setPos (getPos (leader (group player)));
+	} else 
+	{
+		player setPos [0,0];
+		player setDamage 1;
+	};
 };

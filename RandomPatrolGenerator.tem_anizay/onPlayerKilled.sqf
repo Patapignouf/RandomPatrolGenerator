@@ -38,3 +38,7 @@ if (isClass (configFile >> "CfgPatches" >> "task_force_radio")) then {
 	[player, true] call TFAR_fnc_forceSpectator;
 };
 	
+//Add player to a dead player base | This will block disconnection/connection method to respawn 
+_deadPlayerList = missionNamespace getVariable "deadPlayer";
+_deadPlayerList pushBack (name player);
+missionNamespace setVariable ["deadPlayer", _deadPlayerList, true];

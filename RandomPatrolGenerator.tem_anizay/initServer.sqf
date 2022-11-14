@@ -8,4 +8,8 @@ missionNamespace setVariable ["civKilled", 0, true];
 missionNamespace setVariable ["bluforAdvancedVehicleAvalaibleSpawn", 2, true];
 missionNamespace setVariable ["bluforVehicleAvalaibleSpawn", 10, true];
 
+//Dead player base
+missionNamespace setVariable ["deadPlayer", [], true];
+
+//Init scenario scripts
 [] execVM 'start.sqf'; 
