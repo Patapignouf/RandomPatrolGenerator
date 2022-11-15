@@ -92,7 +92,7 @@ class Params
 		title = "Mission's difficulty";
 		values[] = {0,1,2,3,4};
 		texts[] = {"Easy","Medium","Hard","Very Hard","Insane"};
-		default = 1;
+		default = 0;
 	};
 	class MissionLength
 	{
