@@ -50,7 +50,7 @@ baseEnemyGroup_2035_AAF = [
 
 
 baseEnemyATGroup_2035_AAF = [
-"I_Soldier_TL_F", 
+"I_soldier_F", 
 "I_Soldier_AT_F", 
 "I_Soldier_LAT2_F"];
 
