@@ -220,28 +220,26 @@ if (hasInterface) then
 
 		//Unarmed Chopper
 		waitUntil {!isNil "bluforUnarmedVehicleChopper"};
-		if (initBluforBase == 1) then 
 		{
-			{
-				_IDVehicleSpawn = TPFlag1 addAction [format ["Spawn a %1", getText (configFile >> "cfgVehicles" >> _x >> "displayName")],{
-					//Define parameters
-					params ["_object","_caller","_ID","_avalaibleVehicle"];
+			_IDVehicleSpawn = TPFlag1 addAction [format ["Spawn a %1", getText (configFile >> "cfgVehicles" >> _x >> "displayName")],{
+				//Define parameters
+				params ["_object","_caller","_ID","_avalaibleVehicle"];
 
-					//Check players credit
-					bluforAdvancedVehicleAvalaibleSpawnCounter = missionNamespace getVariable "bluforAdvancedVehicleAvalaibleSpawn";
-					if (bluforAdvancedVehicleAvalaibleSpawnCounter > 0) then 
-					{
-						[initBlueforLocation, [_avalaibleVehicle], 30, 100] call doGenerateVehicleForFOB;	
-						missionNamespace setVariable ["bluforAdvancedVehicleAvalaibleSpawn", bluforAdvancedVehicleAvalaibleSpawnCounter-1, true];
-						hint format ["A %2 has spawned, %1 avdvanced spawn credit left.", bluforAdvancedVehicleAvalaibleSpawnCounter-1, getText (configFile >> "cfgVehicles" >> _avalaibleVehicle >> "displayName")];
-					} else 
-					{
-						hint "You don't have enough advanced vehicle spawned credit left.";
-					};
-				},_x,1.5,true,false,"","_target distance _this <5"];
-			} foreach bluforUnarmedVehicleChopper; 
-		};
+				//Check players credit
+				bluforAdvancedVehicleAvalaibleSpawnCounter = missionNamespace getVariable "bluforAdvancedVehicleAvalaibleSpawn";
+				if (bluforAdvancedVehicleAvalaibleSpawnCounter > 0) then 
+				{
+					[initBlueforLocation, [_avalaibleVehicle], 30, 100] call doGenerateVehicleForFOB;	
+					missionNamespace setVariable ["bluforAdvancedVehicleAvalaibleSpawn", bluforAdvancedVehicleAvalaibleSpawnCounter-1, true];
+					hint format ["A %2 has spawned, %1 avdvanced spawn credit left.", bluforAdvancedVehicleAvalaibleSpawnCounter-1, getText (configFile >> "cfgVehicles" >> _avalaibleVehicle >> "displayName")];
+				} else 
+				{
+					hint "You don't have enough advanced vehicle spawned credit left.";
+				};
+			},_x,1.5,true,false,"","_target distance _this <5"];
+		} foreach bluforUnarmedVehicleChopper; 
 
+		//Armed Chopper
 		waitUntil {!isNil "bluforArmedChopper"};
 		if (initBluforBase == 1 && enableArmedChopper == 1) then 
 		{	
