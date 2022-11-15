@@ -39,28 +39,30 @@ civilianTruck_2035_AAF = ["C_Hatchback_01_sport_F",
 ///Define enemy group data////
 //////////////////////////////
 
-baseEnemyGroup_2035_AAF = ["I_Soldier_SL_F", 
+baseEnemyGroup_2035_AAF = [
+"I_soldier_F", 
 "I_Soldier_AR_F", 
 "I_Soldier_GL_F", 
 "I_Soldier_M_F", 
 "I_Soldier_LAT2_F", 
-"I_Soldier_AAT_F", 
-"I_Soldier_A_F", 
+"I_soldier_F", 
 "I_medic_F"];
 
-baseEnemyATGroup_2035_AAF = ["I_Soldier_TL_F", 
+
+baseEnemyATGroup_2035_AAF = [
+"I_soldier_F", 
 "I_Soldier_AT_F", 
-"I_Soldier_AAT_F",
 "I_Soldier_LAT2_F"];
 
 baseEnemyDemoGroup_2035_AAF = [
-"I_Soldier_TL_F", 
+"I_soldier_F", 
 "I_Soldier_AAT_F", 
 "I_Soldier_GL_F", 
 "I_soldier_mine_F"];
 
 baseEnemyMortarGroup_2035_AAF = [
-"I_Mortar_01_F","I_Soldier_SL_F", 
+"I_Mortar_01_F",
+"I_soldier_F", 
 "I_Soldier_AR_F", 
 "I_Soldier_GL_F"];
 
@@ -97,6 +99,10 @@ bluforArmedVehicle_2035_AAF = [
 bluforUnarmedVehicleChopper_2035_AAF = [
 	"I_Heli_Transport_02_F", 
 	"I_Heli_light_03_unarmed_F"
+];
+
+bluforArmedChopper_2035_AAF = [
+	"I_Heli_light_03_dynamicLoadout_F"
 ];
 
 

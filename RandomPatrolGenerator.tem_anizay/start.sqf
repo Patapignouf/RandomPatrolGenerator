@@ -26,7 +26,8 @@ campaignMode = "CampaignMode" call BIS_fnc_getParamValue;
 chooseStartPos = "ChooseStartPos" call BIS_fnc_getParamValue;
 timeOfDay = "TimeOfDay" call BIS_fnc_getParamValue;
 respawnSettings = "Respawn" call BIS_fnc_getParamValue;
-
+objInitSetup = "ObjInitSetup" call BIS_fnc_getParamValue;
+bluforVehicleSpawnType = "BluforVehicleSpawnType" call BIS_fnc_getParamValue;
 
 
 /////////////////////////
@@ -207,6 +208,24 @@ currentRandomPos = [];
 currentObj = objNull;
 currentRandObj = objNull;
 
+//Define the type of objective avalaible
+switch (objInitSetup) do
+{
+	case 1:
+		{
+			avalaibleTypeOfObj = avalaibleAttackTypeOfObj;
+		};
+	case 2:
+		{
+			avalaibleTypeOfObj = avalaibleSupportTypeOfObj;			
+		};
+	default 
+		{
+			avalaibleTypeOfObj = avalaibleAttackTypeOfObj + avalaibleSupportTypeOfObj;
+		};
+};
+
+
 //Generate objectives according to the mission's length parameter
 for [{_i = 0}, {_i <= lengthParameter}, {_i = _i + 1}] do //Peut être optimisé
 {
@@ -238,24 +257,12 @@ currentCivGroup = objNull;
 civsGroup = [];
 for [{_i = 0}, {_i <= 2}, {_i = _i + 1}] do
 { 
-	
-	currentCivGroup = [((getPos initCityLocation) findEmptyPosition [5, 60]), civilian, civilian_big_group,[],[],[],[],[],180] call BIS_fnc_spawnGroup;
+	currentCivGroup = [civilian_big_group, ((getPos initCityLocation) findEmptyPosition [5, 60]), civilian, "Civilian"] call doGenerateEnemyGroup;
 	civsGroup pushBack currentCivGroup;
 	diag_log format ["Generation of civilian group : %1 on position %2 has been completed", currentCivGroup, initCityLocation];
 };
 
 [civsGroup, false] execVM 'enemyManagement\doGarrison.sqf';
-
-{
-	if (side _x == civilian) then
-	{
-		_x addEventHandler ["Killed", {
-			params ["_unit", "_killer", "_instigator", "_useEffects"];
-			diag_log format ["Civilian has been killed by : %1", name _killer];
-			[[format ["Civilian has been killed by : %1", name _killer],independent], 'engine\doGenerateMessage.sqf'] remoteExec ['BIS_fnc_execVM', 0];
-		}];
-	};
-} foreach allUnits;
 
 //Init VA
 VA1 = createVehicle ["Box_IND_Wps_F", [getPos initCityLocation, 1, 5, 3, 0, 20, 0] call BIS_fnc_findSafePos, [], 0, "NONE"];
@@ -283,6 +290,9 @@ if ( count AvalaibleInitAttackPositions != 0 && (enableInitAttack == 1 || ((enab
 	publicvariable "isIndAttacked";
 	waitUntil {isNull _handleCivGeneration};
 };
+
+//Generate items on VA1 box 
+VA1 addItemCargoGlobal ["ACE_key_indp", 5];
 
 //Init perma harass on player
 [[baseEnemyGroup,baseEnemyATGroup,baseEnemyDemoGroup],baseEnemyVehicleGroup, baseEnemyLightArmoredVehicleGroup, baseEnemyHeavyArmoredVehicleGroup] execVM 'enemyManagement\generateHarass.sqf'; 
@@ -390,11 +400,14 @@ if (initBluforBase == 0 || (initBluforBase == 2 && (round random 1 == 0))) then
 	waitUntil {!isNil "spawnFOBObjects"};
 	
 	//Generate air vehicle
-	if (0 < count bluforUnarmedVehicleChopper ) then 
+	if (bluforVehicleSpawnType == 1) then 
 	{
-		for [{_i = 0}, {_i < 2}, {_i = _i + 1}] do
+		if (0 < count bluforUnarmedVehicleChopper ) then 
 		{
-			selectedBluforVehicle pushBack (selectRandom bluforUnarmedVehicleChopper);
+			for [{_i = 0}, {_i < 2}, {_i = _i + 1}] do
+			{
+				selectedBluforVehicle pushBack (selectRandom bluforUnarmedVehicleChopper);
+			};
 		};
 	};
 		
@@ -423,11 +436,15 @@ if (0 < count bluforUnarmedVehicle ) then
 	};
 };
 
-if (0 < count bluforArmedVehicle ) then 
+
+if (bluforVehicleSpawnType == 1) then 
 {
-	for [{_i = 0}, {_i < 1}, {_i = _i + 1}] do
+	if (0 < count bluforArmedVehicle ) then 
 	{
-		selectedBluforVehicle pushBack (selectRandom bluforArmedVehicle);
+		for [{_i = 0}, {_i < 1}, {_i = _i + 1}] do
+		{
+			selectedBluforVehicle pushBack (selectRandom bluforArmedVehicle);
+		};
 	};
 };
 
@@ -444,6 +461,7 @@ if (0 < count bluforBoat ) then
 //Generate all vehicles
 diag_log format ["Generating blufor vehicle : %1",selectedBluforVehicle];
 [initBlueforLocation, selectedBluforVehicle, 30, 100] call doGenerateVehicleForFOB;	
+//TODO: get each vehicule and set the lock parameter to LOCKED;
 
 //Init VA
 VA2 = createVehicle ["Box_NATO_WpsSpecial_F", [initBlueforLocation, 1, 5, 3, 0, 20, 0] call BIS_fnc_findSafePos, [], 0, "NONE"];
@@ -530,7 +548,6 @@ publicvariable "deployableFOBItem";
 					},[respawnSettings],1.5,true,false,"","_target distance _this <5"]] remoteExec [ "addAction", 0, true ];
 				};
 
-
 				//Remove Box
 				deleteVehicle _object;
 			} else {
@@ -548,13 +565,36 @@ publicvariable "deployableFOBItem";
 	clearMagazineCargoGlobal _tempBox;
 	clearItemCargoGlobal _tempBox;
 	clearBackpackCargoGlobal _tempBox;
-} foreach ["Box_NATO_Uniforms_F", "ACE_Box_82mm_Mo_Combo", "Box_NATO_Equip_F"];
+} foreach ["Box_NATO_Uniforms_F", "ACE_Box_82mm_Mo_Combo"];
 
-//Setup fortification ACE mod
+//Place empty box with ACE medical stuff
+_tempBox = createVehicle ["Box_NATO_Equip_F", [ initBlueforLocation, 1, 15, 2, 0, 20, 0] call BIS_fnc_findSafePos, [], 0, "NONE"];
+clearWeaponCargoGlobal _tempBox;
+clearMagazineCargoGlobal _tempBox;
+clearItemCargoGlobal _tempBox;
+clearBackpackCargoGlobal _tempBox;
+
+//Check if ACE is enable on the server
 if (isClass (configFile >> "CfgPatches" >> "ace_medical")) then 
 {
+	//Setup medic ACE box 
+	_tempBox addItemCargoGlobal ["ACE_surgicalKit", 1];
+	_tempBox addItemCargoGlobal ["ACE_epinephrine", 10];
+	_tempBox addItemCargoGlobal ["ACE_splint", 10];
+	_tempBox addItemCargoGlobal ["ACE_elasticBandage", 50];
+	_tempBox addItemCargoGlobal ["ACE_quikclot", 50];
+	_tempBox addItemCargoGlobal ["ACE_morphine", 10];
+	_tempBox addItemCargoGlobal ["ACE_bloodIV_500", 10];
+	_tempBox addItemCargoGlobal ["ACE_bloodIV", 5];
+	_tempBox addItemCargoGlobal ["ACE_tourniquet", 5];
+
+	//Add keys to the box
+	_tempBox addItemCargoGlobal ["ACE_key_west", 5];
+
+	//Setup fortification ACE mod
 	[blufor, 150, [["Land_BagFence_Long_F", 20], ["Land_BagBunker_Small_F", 50]]] call ace_fortify_fnc_registerObjects;
 };
+
 //Setup view distance changer
 SettingsComputer =  createVehicle ["Land_MultiScreenComputer_01_olive_F", [initBlueforLocation, 1, 5, 3, 0, 20, 0] call BIS_fnc_findSafePos, [], 0, "NONE"];
 {
@@ -562,11 +602,12 @@ SettingsComputer =  createVehicle ["Land_MultiScreenComputer_01_olive_F", [initB
 				params ["_object","_caller","_ID","_viewDistance"];
 				//Select ViewDistance
 				setViewDistance _viewDistance;
-			},_x,1.5,true,true,"","_target distance _this <5"]] remoteExec ["addAction"];
+			},_x,1.5,true,true,"","_target distance _this <5"]] remoteExec ["addAction", 0, true];
 } foreach [-1,300,500,1000,1500,2000,2500];
 
 TPFlag1 = createVehicle ["Flag_Blue_F", [initBlueforLocation, 1, 5, 3, 0, 20, 0] call BIS_fnc_findSafePos, [], 0, "NONE"];
 publicvariable "TPFlag1";
+
 
 //Setup random attack on blufor at the beginning
 isBluforAttacked = false;
@@ -599,7 +640,7 @@ switch (missionInitSetup) do
 		{
 			for [{_i = 0}, {_i <= lengthParameter}, {_i = _i + 1}] do //Peut être optimisé
 			{
-				[objNull, objNull, _mainPlayerSide] execVM 'engine\revealObjective.sqf';
+				[objNull, [], _mainPlayerSide] execVM 'engine\revealObjective.sqf';
 			};
 		};
 	default
@@ -613,7 +654,7 @@ if (_mainPlayerSide == independent) then
 {
 		for [{_i = 0}, {_i <= lengthParameter}, {_i = _i + 1}] do //Peut être optimisé
 	{
-		[objNull, objNull, _mainPlayerSide] execVM 'engine\revealObjective.sqf';
+		[objNull, [], _mainPlayerSide] execVM 'engine\revealObjective.sqf';
 	};
 };
 
@@ -683,6 +724,46 @@ if (campaignMode == 1) then
 	_objectiveCompletedCounter = count _completedObjectives;
 	_maxObjectivesGenerated = false;
 
+	//Add this action on campaign mode blufor side
+	[TPFlag1, ["Complete mission",{
+			//Param initialization
+			params ["_object","_caller","_ID","_lengthParameter"];
+			_completedObjectives = missionNamespace getVariable ["completedObjectives",[]];
+
+			//End mission
+			if (_lengthParameter <= (count _completedObjectives)) then 
+			{
+				if (isMultiplayer) then {
+					['OBJ_OK'] remoteExec ["BIS_fnc_endMissionServer", 2];
+				} else {
+					['OBJ_OK'] remoteExec ["BIS_fnc_endMission", 2];
+				}; 
+			} else 
+			{
+				hint "Not enough mission completed";
+			};
+		},lengthParameter,1.5,true,true,"","_target distance _this <5"]] remoteExec ["addAction", 0, true];
+
+	//Add this action on campaign mode independent side
+	[VA1, ["Complete mission",{
+			//Param initialization
+			params ["_object","_caller","_ID","_lengthParameter"];
+			_completedObjectives = missionNamespace getVariable ["completedObjectives",[]];
+
+			//End mission
+			if (_lengthParameter <= (count _completedObjectives)) then 
+			{
+				if (isMultiplayer) then {
+					['OBJ_OK'] remoteExec ["BIS_fnc_endMissionServer", 2];
+				} else {
+					['OBJ_OK'] remoteExec ["BIS_fnc_endMission", 2];
+				}; 
+			} else 
+			{
+				hint "Not enough mission completed";
+			};
+		},lengthParameter,1.5,true,true,"","_target distance _this <5"]] remoteExec ["addAction", 0, true];
+
 	//Loop until maximum number of possible objective are generated
 	while {sleep 10; (!_maxObjectivesGenerated)} do 
 	{
@@ -698,7 +779,7 @@ if (campaignMode == 1) then
 			PossibleObjectivePosition = [avalaibleTypeOfObj, PossibleObjectivePosition] call generateObjective;
 
 			//Reveal objective to the player
-			[objNull, objNull, _mainPlayerSide] execVM 'engine\revealObjective.sqf';
+			[objNull, [], _mainPlayerSide] execVM 'engine\revealObjective.sqf';
 
 			//Update objective complete counter
 			_completedObjectives = missionNamespace getVariable ["completedObjectives",[]];

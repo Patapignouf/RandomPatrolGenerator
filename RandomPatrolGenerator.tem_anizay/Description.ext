@@ -69,15 +69,15 @@ class Params
 	class IndFaction
 	{
 		title = "Independent Faction";
-		values[] = {0,1,2,3,4,5,6,7,8,9,10,11,12,13,14};
-		texts[] = {"Takistani","US Army","Syndikat","Russian","French","2000 USA Marines","WWII UK", "WWII Wehrmacht", "WWII URSS","WWII USA","Cold War USA","Cold War NVA","Cold War ARVN","2035 AAF","2035 NATO"};
+		values[] = {0,1,2,3,4,5,6,7,8,9,10,11,12,13,14,15};
+		texts[] = {"Takistani","US Army","Syndikat","Russian","French","2000 USA Marines","WWII UK", "WWII Wehrmacht", "WWII URSS","WWII USA","Cold War USA","Cold War NVA","Cold War ARVN","2035 AAF","2035 NATO","2000 USA Delta Force "};
 		default = 2;
 	};
 	class BluFaction
 	{
 		title = "Blufor Faction";
-		values[] = {0,1,2,3,4,5,6,7,8,9,10,11,12,13,14};
-		texts[] = {"Takistani","US Army","Syndikat","Russian","French","2000 USA Marines","WWII UK", "WWII Wehrmacht", "WWII URSS","WWII USA","Cold War USA","Cold War NVA","Cold War ARVN","2035 AAF","2035 NATO"};
+		values[] = {0,1,2,3,4,5,6,7,8,9,10,11,12,13,14,15};
+		texts[] = {"Takistani","US Army","Syndikat","Russian","French","2000 USA Marines","WWII UK", "WWII Wehrmacht", "WWII URSS","WWII USA","Cold War USA","Cold War NVA","Cold War ARVN","2035 AAF","2035 NATO","2000 USA Delta Force "};
 		default = 14;
 	};
 	class OpFaction
@@ -157,14 +157,27 @@ class Params
 		texts[] = {"Random positions","Leaders can choose start positions"};
 		default = 0;             
 	};
+	class BluforVehicleSpawnType
+	{
+		title = "Choose blufor vehicle spawn condition (WIP)";
+		values[] = {0,1};
+		texts[] = {"Spawn with credits","Spawn on mission start"};
+		default = 0;             
+	};
 	class TimeOfDay
 	{
-		title = "Choose initial bases positions";
+		title = "Choose time of day";
 		values[] = {0,1,2,3,4};
 		texts[] = {"Random","Morning","Day","Afternoon","Night"};
 		default = 2;             
 	};
-	
+	class ObjInitSetup
+	{
+		title = "Type of objective";
+		values[] = {0,1,2};
+		texts[] = {"All objectives","Attack objectives only","Support objectives only"};
+		default = 0;
+	};
 };
 
 class CfgDebriefing

@@ -16,7 +16,7 @@ if (count _revealedObjectives != count _tempMissionObjectives) then
 		{
 			_mainPlayerSide = independent;
 		};
-		[_caller, objNull, _mainPlayerSide] execVM 'engine\revealObjective.sqf';
+		[_caller, [], _mainPlayerSide] execVM 'engine\revealObjective.sqf';
 	} else 
 	{ 
 		_tempMissionObjectives = _tempMissionObjectives - _revealedObjectives;
@@ -40,35 +40,46 @@ if (count _revealedObjectives != count _tempMissionObjectives) then
 	_nearestCity = nearestLocations [_infoPos, ["NameLocal","NameVillage","NameCity","NameCityCapital"], 1500] select 0;
 	if (_realismMode == 1) then 
 	{
+		_intelRevelated = "";
 		switch (_infoName) do 
 		{
 			case "Mortar":
 			{
-				[1,[format ["This morning i saw a mortar position near %1. I don't know if they are there for you, be careful.",text _nearestCity], "PLAIN", 0.5]] remoteExec ["cutText", _caller];
+				_intelRevelated = format ["This morning i saw a mortar position near %1. I don't know if they are there for you, be careful.",text _nearestCity];
 			};
 			case "Patrol":
 			{
-				[1,[format ["I've heard there's soldiers patrolling around %1. About %2 men.",text _nearestCity, count units _infoGroup], "PLAIN", 0.5]] remoteExec ["cutText", _caller];
+				_intelRevelated = format ["I've heard there's soldiers patrolling around %1. About %2 men.",text _nearestCity, count units _infoGroup];
 			};
 			case "Car":
 			{
-				[1,[format ["I saw an unknown car leaving here for %1 this morning...",text _nearestCity], "PLAIN", 0.5]] remoteExec ["cutText", _caller];
+				_intelRevelated = format ["I saw an unknown car leaving here for %1 this morning...",text _nearestCity];
 			};
 			case "LightArmored";
 			case "HeavyArmored":
 			{
-				[1,[format ["I've heard there's military vehicles next to %1. They seem to prepare an attack.",text _nearestCity], "PLAIN", 0.5]] remoteExec ["cutText", _caller];
+				_intelRevelated = format ["I've heard there's military vehicles next to %1. They seem to prepare an attack.",text _nearestCity];
 			};
 
 			case "DefenseInfantry":
 			{
-				[1,[format ["I know there is a group of %2 soldiers defending %1, this location seems dangerous",text _nearestCity, count units _infoGroup], "PLAIN", 0.5]] remoteExec ["cutText", _caller];
+				_intelRevelated = format ["I know there is a group of %2 soldiers defending %1, this location seems dangerous",text _nearestCity, count units _infoGroup];
 			};
 			case "Civilian":
 			{
-				[1,[format ["Be careful, there are civilian in %1. Watch your fire...",text _nearestCity], "PLAIN", 0.5]] remoteExec ["cutText", _caller];
+				_intelRevelated = format ["Be careful, there are civilian in %1. Watch your fire...",text _nearestCity];
 			};
 		};
+		
+		//Display dialog to the player
+		cutText [_intelRevelated, "PLAIN", 0.5];
+
+		//Create diary entry for the intel 
+		_intelDiaryAlreadyRevealed = _caller getVariable "diaryIntel";
+		_allDiaryIntel =  format ["%1 <br/> %2 <br/>", _intelDiaryAlreadyRevealed, _intelRevelated];
+		_caller removeDiaryRecord  ["RPG", _intelDiaryAlreadyRevealed]; //Update diary doesn't work very well so delete/create is the only solution
+		_newIntelDiaryAlreadyRevealed = _caller createDiaryRecord ["RPG", ["Random Patrol Generator intel", _allDiaryIntel]];
+		_caller setVariable ["diaryIntel", _newIntelDiaryAlreadyRevealed];
 	} else 
 	{ 
 		_groupToReveal = selectRandom (allGroups select  {side _x == opfor});

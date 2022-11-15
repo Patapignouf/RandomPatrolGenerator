@@ -1,3 +1,5 @@
+#include "..\objectGenerator\vehicleManagement.sqf"
+
 params ["_objective"];
 
 //init object 
@@ -24,9 +26,10 @@ switch (_objectiveType) do
 		_missionUncompletedObjectives = _missionUncompletedObjectives - _objective;
 		missionNamespace setVariable ["missionUncompletedObjectives", _missionUncompletedObjectives, true];
 		//Manage player's feedback
-		if ("RealismMode" call BIS_fnc_getParamValue == 1 && {alive _x && side _x == independent} count allPlayers == 0) then 
+		if ("RealismMode" call BIS_fnc_getParamValue == 1) then 
 		{
-			[_objectiveTaskID, "SUCCEEDED"] call BIS_fnc_taskSetState;
+			[] call doIncrementVehicleSpawnCounter;	
+			[_objective] execVM 'engine\completeObjective.sqf'; 
 		};
 		if (["Respawn",1] call BIS_fnc_getParamValue == 1) then 
 		{

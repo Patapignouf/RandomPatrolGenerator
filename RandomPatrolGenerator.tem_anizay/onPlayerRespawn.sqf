@@ -35,3 +35,12 @@ showHUD [
   false  // showIcon3D
 ];
 //#####
+
+if (isClass (configFile >> "CfgPatches" >> "task_force_radio")) then {
+	[player, false] call TFAR_fnc_forceSpectator;
+};
+
+//Remove player name from the dead player's list
+_deadPlayerList = missionNamespace getVariable "deadPlayer";
+_deadPlayerList = _deadPlayerList - [name player];
+missionNamespace setVariable ["deadPlayer", _deadPlayerList, true];

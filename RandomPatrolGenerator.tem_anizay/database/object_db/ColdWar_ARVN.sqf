@@ -107,6 +107,9 @@ bluforUnarmedVehicleChopper_ColdWar_ARVN = ["uns_ch47_m60_arvn",
 "uns_UH1D_vnaf_m60", 
 "uns_ch34_VNAF"];
 
+//Chopper armed choper avalaible for blufor : Ex AH-Z1
+bluforArmedChopper_ColdWar_ARVN = ["UNS_AH1G","uns_ach47_m200"];
+
 bluforArmoredVehicle_ColdWar_ARVN = ["uns_xm706"];
 
 bluforDrone_ColdWar_ARVN = [];

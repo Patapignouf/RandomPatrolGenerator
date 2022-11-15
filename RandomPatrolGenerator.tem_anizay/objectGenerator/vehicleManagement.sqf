@@ -16,16 +16,16 @@ doGenerateVehicleForFOB =
 			case (_x isKindOf "Car"): {
 						_kind = "Car";
 						_spawnAttempts = 0;
-						_vehicleGoodPosition = [_thisPosition, _thisMinRadius, _thisMaxRadius, 10, 0, 0.25, 0] call BIS_fnc_findSafePos;
+						_vehicleGoodPosition = _thisPosition findEmptyPosition [_thisMinRadius, _thisMaxRadius,_x];
 						while {(isNil "_vehicleGoodPosition" || count _vehicleGoodPosition==0) && _spawnAttempts <10} do 
 						{
-							_vehicleGoodPosition = [_thisPosition, _thisMinRadius, _thisMaxRadius, 10, 0, 0.25, 0] call BIS_fnc_findSafePos;
+							_vehicleGoodPosition = _thisPosition findEmptyPosition [_thisMinRadius, _thisMaxRadius,_x];
 							_spawnAttempts = _spawnAttempts +1;
 						};
 						if (!isNil "_vehicleGoodPosition" && count _vehicleGoodPosition>0) then 
 						{
 							diag_log format ["Position to spawn vehicle is not Nil %1",_vehicleGoodPosition];
-							createVehicle [_x, _vehicleGoodPosition , [], 0, "NONE"];
+							_currentCar = createVehicle [_x, _vehicleGoodPosition , [], 0, "NONE"];
 						};
 				};   
 			case (_x isKindOf "Ship"): {
@@ -80,17 +80,17 @@ doGenerateVehicleForFOB =
 			case (_x isKindOf "Helicopter"): {
 					_kind = "Helicopter";
 					_spawnAttempts = 0;
-					_vehicleGoodPosition = [_thisPosition, _thisMinRadius, _thisMaxRadius, 30, 0, 0.25, 0] call BIS_fnc_findSafePos;
+					_vehicleGoodPosition = _thisPosition findEmptyPosition [_thisMinRadius, _thisMaxRadius,_x];
 					while {(isNil "_vehicleGoodPosition" || count _vehicleGoodPosition==0) && _spawnAttempts <10} do 
 					{
-						_vehicleGoodPosition = [_thisPosition, _thisMinRadius, _thisMaxRadius, 30, 0, 0.25, 0] call BIS_fnc_findSafePos;
+						_vehicleGoodPosition = _thisPosition findEmptyPosition [_thisMinRadius, _thisMaxRadius,_x];
 						_spawnAttempts = _spawnAttempts +1;
 					};
 					if (!isNil "_vehicleGoodPosition"&& count _vehicleGoodPosition>0) then 
 					{
 						diag_log format ["Position to spawn chopper is not Nil %1",_vehicleGoodPosition];
 						createVehicle ["Land_HelipadCircle_F", _vehicleGoodPosition , [], 0, "NONE"];
-						createVehicle [_x, [_vehicleGoodPosition select 0,_vehicleGoodPosition select 1]  , [], 0, "NONE"];
+						_currntHelicopter = createVehicle [_x, [_vehicleGoodPosition select 0,_vehicleGoodPosition select 1]  , [], 0, "NONE"];
 					};
 				};   
 			case (_x isKindOf "Plane"): {_kind = "Plane";};   
@@ -103,4 +103,19 @@ doGenerateVehicleForFOB =
 	{
 		[["Boats","ColorBlue","hd_pickup_noShadow",_shipGoodPosition, blufor], 'objectGenerator\doGenerateMarker.sqf'] remoteExec ['BIS_fnc_execVM', 0];	
 	};
+};
+
+
+doIncrementVehicleSpawnCounter =
+{
+	//Increment spawn credit counter Vehicle
+	bluforVehicleAvalaibleSpawnCounter = missionNamespace getVariable "bluforVehicleAvalaibleSpawn";
+	bluforVehicleAvalaibleSpawnCounter = bluforVehicleAvalaibleSpawnCounter + 1;
+	missionNamespace setVariable ["bluforVehicleAvalaibleSpawn", bluforVehicleAvalaibleSpawnCounter, true];
+	//Increment spawn credit counter Advanced Vehicle
+	bluforAdvancedVehicleAvalaibleSpawnCounter = missionNamespace getVariable "bluforAdvancedVehicleAvalaibleSpawn";
+	bluforAdvancedVehicleAvalaibleSpawnCounter = bluforAdvancedVehicleAvalaibleSpawnCounter + 1;
+	missionNamespace setVariable ["bluforAdvancedVehicleAvalaibleSpawn", bluforAdvancedVehicleAvalaibleSpawnCounter, true];
+	//Show the counter to blufor
+	[format ["Standard vehicle spawn credits : %1\nAdvanced vehicle spawn credits : %2", bluforVehicleAvalaibleSpawnCounter, bluforAdvancedVehicleAvalaibleSpawnCounter]] remoteExec ["hint", blufor, true];
 };

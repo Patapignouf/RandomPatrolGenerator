@@ -24,10 +24,10 @@ class EditorData
 	};
 	class Camera
 	{
-		pos[]={5602.9443,265.92432,2473.7014};
-		dir[]={-0.42169493,-0.56247336,0.7112931};
-		up[]={-0.28685588,0.82678699,0.48385629};
-		aside[]={0.86025691,9.7323209e-007,0.51000422};
+		pos[]={5621.2383,232.17819,2558.4353};
+		dir[]={-0.83581877,-0.26275909,0.48204216};
+		up[]={-0.2276171,0.96486145,0.13127372};
+		aside[]={0.49959725,7.4505806e-009,0.86625779};
 	};
 };
 binarizationWanted=0;
@@ -36,14 +36,22 @@ addons[]=
 {
 	"A3_Characters_F",
 	"A3_Weapons_F",
+	"ace_optics",
+	"ace_goggles",
+	"ace_nightvision",
 	"A3_Weapons_F_Items",
-	"A3_Characters_F_Mark"
+	"ace_medical_engine",
+	"ace_medical_treatment",
+	"A3_Characters_F_Mark",
+	"ace_realisticnames",
+	"ace_attach",
+	"ace_chemlights"
 };
 class AddonsMetaData
 {
 	class List
 	{
-		items=3;
+		items=10;
 		class Item0
 		{
 			className="A3_Characters_F";
@@ -60,10 +68,59 @@ class AddonsMetaData
 		};
 		class Item2
 		{
+			className="ace_optics";
+			name="ACE3 - Optics";
+			author="ACE-Team";
+			url="https://ace3.acemod.org/";
+		};
+		class Item3
+		{
+			className="ace_goggles";
+			name="ACE3 - Goggles";
+			author="ACE-Team";
+			url="https://ace3.acemod.org/";
+		};
+		class Item4
+		{
+			className="ace_nightvision";
+			name="ACE3 - Night Vision";
+			author="ACE-Team";
+			url="https://ace3.acemod.org/";
+		};
+		class Item5
+		{
+			className="ace_medical_engine";
+			name="ACE3 - Medical Engine";
+			author="ACE-Team";
+			url="https://ace3.acemod.org/";
+		};
+		class Item6
+		{
+			className="ace_medical_treatment";
+			name="ACE3 - Medical Treatment";
+			author="ACE-Team";
+			url="https://ace3.acemod.org/";
+		};
+		class Item7
+		{
 			className="A3_Characters_F_Mark";
 			name="Arma 3 Marksmen - Characters and Clothing";
 			author="Bohemia Interactive";
 			url="https://www.arma3.com";
+		};
+		class Item8
+		{
+			className="ace_attach";
+			name="ACE3 - Attach";
+			author="ACE-Team";
+			url="https://ace3.acemod.org/";
+		};
+		class Item9
+		{
+			className="ace_chemlights";
+			name="ace_chemlights";
+			author="ACE-Team";
+			url="https://ace3.acemod.org/";
 		};
 	};
 };
@@ -316,7 +373,7 @@ class CustomAttributes
 				class data
 				{
 					singleType="STRING";
-					value="Aidez la ville de amicale à résoudre ses problèmes en vous entrenant avec le seigneur de guerre qui contrôle la ville.";
+					value="";
 				};
 			};
 		};
@@ -329,7 +386,7 @@ class CustomAttributes
 				class data
 				{
 					singleType="STRING";
-					value="Soldats ! Vous représentez l'OTAN et les valeurs occidentales en ces terres lointaines. Votre bivouac est établi depuis quelques jours et vous entretenez de bonnes relations avec une ville pivot de la région." \n "Comme chaque matin vous partez patrouiller et maintenez l'ordre en cette région instable.";
+					value="";
 				};
 			};
 		};
@@ -394,6 +451,7 @@ class CustomAttributes
 };
 class Mission
 {
+	assetType="Free";
 	class Intel
 	{
 		briefingName="RandomPatrolGenerator";
@@ -3554,7 +3612,7 @@ class Mission
 					dataType="Object";
 					class PositionInfo
 					{
-						position[]={5569,198.83145,2542.05};
+						position[]={5579,200.81544,2547.05};
 					};
 					side="Independent";
 					flags=5;

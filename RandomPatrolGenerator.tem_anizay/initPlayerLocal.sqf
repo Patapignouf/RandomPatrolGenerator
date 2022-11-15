@@ -59,8 +59,15 @@ if (!hasInterface || isDedicated) exitWith {};
 if (hasInterface) then
 {
 	diag_log format ["Setup Player %1 at position 1", name player];
+
 	if (side player == independent) then 
 	{
+		player createDiarySubject ["RPG", "Random Patrol Generator"];
+		player createDiaryRecord ["RPG", ["Random Patrol Generator objectives", "Help the people in the town. Complete the tasks assigned to your unit to finish the mission. 
+		"]];
+		_diaryIntel = player createDiaryRecord ["RPG", ["Random Patrol Generator intel", "You can see here all intels collected : <br/>"]];
+		player setVariable ["diaryIntel", _diaryIntel];
+
 		if (player == (leader (group player))) then
 		{	
 			if (chooseStartPos == 1) then 
@@ -80,17 +87,20 @@ if (hasInterface) then
 				};
 			};
 
-			diag_log format ["Warlord is set to player : %1", name player];
-			player addEventHandler ["Killed", {
-				params ["_unit", "_killer", "_instigator", "_useEffects"];
-				diag_log format ["Warlord has been killed by : %1", _killer];
-				diag_log format ["Mission end !"];
-				if (isMultiplayer) then {
-					['IND_DEAD'] remoteExec ["BIS_fnc_endMission"];
-				} else {
-					'IND_DEAD' call BIS_fnc_endMission;
-				};
-			}];
+			if (!didJIP) then 
+			{
+				diag_log format ["Warlord is set to player : %1", name player];
+				player addEventHandler ["Killed", {
+					params ["_unit", "_killer", "_instigator", "_useEffects"];
+					diag_log format ["Warlord has been killed by : %1", _killer];
+					diag_log format ["Mission end !"];
+					if (isMultiplayer) then {
+						['IND_DEAD'] remoteExec ["BIS_fnc_endMission"];
+					} else {
+						'IND_DEAD' call BIS_fnc_endMission;
+					};
+				}];
+			};
 		};
 
 		//Wait for the player to choose position
@@ -107,7 +117,7 @@ if (hasInterface) then
 		//Manage arsenal	
 		[VA1, player, indFaction] call setupArsenalToItem;
 		[VA1, player, indFaction] call setupRoleSwitchToItem;
-		[VA1, player] call setupSaveRole;
+		[VA1, player] call setupSaveAndLoadRole;
 
 		waituntil {!isNil "isBluforAttacked" && !isNil "isIndAttacked"};
 		if (isIndAttacked) then
@@ -119,6 +129,14 @@ if (hasInterface) then
 
 	if (side player == blufor) then
 	{
+		//Setup briefing 
+		player createDiarySubject ["RPG", "Random Patrol Generator"];
+		player createDiaryRecord ["RPG", ["Random Patrol Generator objectives", "Help the independent town located on your map. Complete the tasks assigned to your unit to finish the mission.
+		"]];
+		_diaryIntel = player createDiaryRecord ["RPG", ["Random Patrol Generator intel", "You can see here all intels collected : <br/>"]];
+		player setVariable ["diaryIntel", _diaryIntel];
+
+
 		diag_log format ["Setup Player %1 at position 2", name player];
 		if (player == (leader (group player)) && chooseStartPos == 1) then
 		{	
@@ -150,7 +168,7 @@ if (hasInterface) then
 		//Manage arsenal	
 		[VA2, player, bluFaction] call setupArsenalToItem;
 		[VA2, player, bluFaction] call setupRoleSwitchToItem;
-		[VA2, player] call setupSaveRole;
+		[VA2, player] call setupSaveAndLoadRole;
 
 		//Manage vehicle spawn options 
 		if (enableArmored == 1) then 
@@ -161,49 +179,87 @@ if (hasInterface) then
 		//Unarmed vehicle
 		waitUntil {!isNil "bluforUnarmedVehicle"};
 		{
-			_IDVehicleSpawn = TPFlag1 addAction [format ["Spawn an %1", getText (configFile >> "cfgVehicles" >> _x >> "displayName")],{
-				params ["_object","_caller","_ID","_avalaibleVehicle"];
-				//Click on map to spawn
-				[initBlueforLocation, [_avalaibleVehicle], 30, 100] call doGenerateVehicleForFOB;	
-				[_object,_ID] remoteExec [ "removeAction", 0, true ];
-			},_x,1.5,true,true,"","_target distance _this <5"];
+			_IDVehicleSpawn = TPFlag1 addAction [format ["Spawn a %1", getText (configFile >> "cfgVehicles" >> _x >> "displayName")],{
+					//Define parameters
+					params ["_object","_caller","_ID","_avalaibleVehicle"];
+
+					//Check players credit
+					bluforVehicleAvalaibleSpawnCounter = missionNamespace getVariable "bluforVehicleAvalaibleSpawn";
+					if (bluforVehicleAvalaibleSpawnCounter > 0) then 
+					{
+						[initBlueforLocation, [_avalaibleVehicle], 30, 100] call doGenerateVehicleForFOB;	
+						missionNamespace setVariable ["bluforVehicleAvalaibleSpawn", bluforVehicleAvalaibleSpawnCounter-1, true];
+						hint format ["A %2 has spawned, %1 avdvanced spawn credit left.", bluforVehicleAvalaibleSpawnCounter-1, getText (configFile >> "cfgVehicles" >> _avalaibleVehicle >> "displayName")];
+					} else 
+					{
+						hint "You don't have enough advanced vehicle spawned credit left.";
+					};
+			},_x,1.5,true,false,"","_target distance _this <5"];
 		} foreach bluforUnarmedVehicle; 
 
 		//Armed vehicle
 		waitUntil {!isNil "bluforArmedVehicle"};
 		{
-			_IDVehicleSpawn = TPFlag1 addAction [format ["Spawn an %1", getText (configFile >> "cfgVehicles" >> _x >> "displayName")],{
+			_IDVehicleSpawn = TPFlag1 addAction [format ["Spawn a %1", getText (configFile >> "cfgVehicles" >> _x >> "displayName")],{
+				//Define parameters
 				params ["_object","_caller","_ID","_avalaibleVehicle"];
-				//Click on map to spawn
-				[initBlueforLocation, [_avalaibleVehicle], 30, 100] call doGenerateVehicleForFOB;	
-				[_object,_ID] remoteExec [ "removeAction", 0, true ];
-			},_x,1.5,true,true,"","_target distance _this <5"];
+
+				//Check players credit
+				bluforAdvancedVehicleAvalaibleSpawnCounter = missionNamespace getVariable "bluforAdvancedVehicleAvalaibleSpawn";
+				if (bluforAdvancedVehicleAvalaibleSpawnCounter > 0) then 
+				{
+					[initBlueforLocation, [_avalaibleVehicle], 30, 100] call doGenerateVehicleForFOB;	
+					missionNamespace setVariable ["bluforAdvancedVehicleAvalaibleSpawn", bluforAdvancedVehicleAvalaibleSpawnCounter-1, true];
+					hint format ["A %2 has spawned, %1 avdvanced spawn credit left.", bluforAdvancedVehicleAvalaibleSpawnCounter-1, getText (configFile >> "cfgVehicles" >> _avalaibleVehicle >> "displayName")];
+				} else 
+				{
+					hint "You don't have enough advanced vehicle spawned credit left.";
+				};
+			},_x,1.5,true,false,"","_target distance _this <5"];
 		} foreach bluforArmedVehicle; 
 
 		//Unarmed Chopper
 		waitUntil {!isNil "bluforUnarmedVehicleChopper"};
-		if (initBluforBase == 1) then 
 		{
-			{
-				_IDVehicleSpawn = TPFlag1 addAction [format ["Spawn an %1", getText (configFile >> "cfgVehicles" >> _x >> "displayName")],{
-					params ["_object","_caller","_ID","_avalaibleVehicle"];
-					//Click on map to spawn
-					[initBlueforLocation, [_avalaibleVehicle], 30, 100] call doGenerateVehicleForFOB;	
-					[_object,_ID] remoteExec [ "removeAction", 0, true ];
-				},_x,1.5,true,true,"","_target distance _this <5"];
-			} foreach bluforUnarmedVehicleChopper; 
-		};
+			_IDVehicleSpawn = TPFlag1 addAction [format ["Spawn a %1", getText (configFile >> "cfgVehicles" >> _x >> "displayName")],{
+				//Define parameters
+				params ["_object","_caller","_ID","_avalaibleVehicle"];
 
+				//Check players credit
+				bluforAdvancedVehicleAvalaibleSpawnCounter = missionNamespace getVariable "bluforAdvancedVehicleAvalaibleSpawn";
+				if (bluforAdvancedVehicleAvalaibleSpawnCounter > 0) then 
+				{
+					[initBlueforLocation, [_avalaibleVehicle], 30, 100] call doGenerateVehicleForFOB;	
+					missionNamespace setVariable ["bluforAdvancedVehicleAvalaibleSpawn", bluforAdvancedVehicleAvalaibleSpawnCounter-1, true];
+					hint format ["A %2 has spawned, %1 avdvanced spawn credit left.", bluforAdvancedVehicleAvalaibleSpawnCounter-1, getText (configFile >> "cfgVehicles" >> _avalaibleVehicle >> "displayName")];
+				} else 
+				{
+					hint "You don't have enough advanced vehicle spawned credit left.";
+				};
+			},_x,1.5,true,false,"","_target distance _this <5"];
+		} foreach bluforUnarmedVehicleChopper; 
+
+		//Armed Chopper
 		waitUntil {!isNil "bluforArmedChopper"};
 		if (initBluforBase == 1 && enableArmedChopper == 1) then 
 		{	
 			{
-				_IDVehicleSpawn = TPFlag1 addAction [format ["Spawn an %1", getText (configFile >> "cfgVehicles" >> _x >> "displayName")],{
+				_IDVehicleSpawn = TPFlag1 addAction [format ["Spawn a %1", getText (configFile >> "cfgVehicles" >> _x >> "displayName")],{
+					//Define parameters
 					params ["_object","_caller","_ID","_avalaibleVehicle"];
-					//Click on map to spawn
-					[initBlueforLocation, [_avalaibleVehicle], 30, 100] call doGenerateVehicleForFOB;	
-					[_object,_ID] remoteExec [ "removeAction", 0, true ];
-				},_x,1.5,true,true,"","_target distance _this <5"];
+
+					//Check players credit
+					bluforAdvancedVehicleAvalaibleSpawnCounter = missionNamespace getVariable "bluforAdvancedVehicleAvalaibleSpawn";
+					if (bluforAdvancedVehicleAvalaibleSpawnCounter > 0) then 
+					{
+						[initBlueforLocation, [_avalaibleVehicle], 30, 100] call doGenerateVehicleForFOB;	
+						missionNamespace setVariable ["bluforAdvancedVehicleAvalaibleSpawn", bluforAdvancedVehicleAvalaibleSpawnCounter-1, true];
+						hint format ["A %2 has spawned, %1 avdvanced spawn credit left.", bluforAdvancedVehicleAvalaibleSpawnCounter - 1, getText (configFile >> "cfgVehicles" >> _avalaibleVehicle >> "displayName")];
+					} else 
+					{
+						hint "You don't have enough advanced vehicle spawned credit left.";
+					};
+				},_x,1.5,true,false,"","_target distance _this <5"];
 			} foreach bluforArmedChopper; 
 		};
 
@@ -215,24 +271,32 @@ if (hasInterface) then
 			{
 				_IDVehicleSpawn = TPFlag1 addAction [format ["Spawn an %1 (this will open the map to choose a position)", getText (configFile >> "cfgVehicles" >> _x >> "displayName")],{
 					params ["_object","_caller","_ID","_avalaibleAicraft"];
-					//Click on map to spawn
-					selectedLoc = [0,0,0];
-					openMap true;
-					sleep 1;
-					hint "Click on map to sapwn an aircraft and teleport\n The aircraft will spawn oriented on the north";
-					onMapSingleClick "selectedLoc = _pos; onMapSingleClick ''; openMap false; true;";
-					waitUntil{!(visibleMap)};  
-					if (!([selectedLoc, [0,0,0]] call BIS_fnc_areEqual)) then 
+
+					bluforAdvancedVehicleAvalaibleSpawnCounter = missionNamespace getVariable "bluforAdvancedVehicleAvalaibleSpawn";
+					if (bluforAdvancedVehicleAvalaibleSpawnCounter > 0) then 
 					{
-						_caller setPos selectedLoc;
-						createVehicle [_avalaibleAicraft, selectedLoc, [], 0, "NONE"];
-						[_object,_ID] remoteExec [ "removeAction", 0, true ];
-					}
-					else 
+						//Click on map to spawn
+						selectedLoc = [0,0,0];
+						openMap true;
+						sleep 1;
+						hint "Click on map to sapwn an aircraft and teleport\n The aircraft will spawn oriented on the north";
+						onMapSingleClick "selectedLoc = _pos; onMapSingleClick ''; openMap false; true;";
+						waitUntil{!(visibleMap)};  
+						if (!([selectedLoc, [0,0,0]] call BIS_fnc_areEqual)) then 
+						{
+							_caller setPos selectedLoc;
+							createVehicle [_avalaibleAicraft, selectedLoc, [], 0, "NONE"];
+							[_object,_ID] remoteExec [ "removeAction", 0, true ];
+							
+							//Reduce avalaible spawn counter
+							missionNamespace setVariable ["bluforAdvancedVehicleAvalaibleSpawn", bluforAdvancedVehicleAvalaibleSpawnCounter-1, true];
+							hint format ["A %2 has spawned, %1 avdvanced spawn credit left.", bluforAdvancedVehicleAvalaibleSpawnCounter-1, getText (configFile >> "cfgVehicles" >> _avalaibleVehicle >> "displayName")];
+						};
+					} else 
 					{
-						//hint format ["fail with selectedLoc : %1", selectedLoc];
+						hint "You don't have enough advanced vehicle spawned credit left.";
 					};
-				},_x,1.5,true,true,"","_target distance _this <5"];
+				},_x,1.5,true,false,"","_target distance _this <5"];
 			} foreach bluforFixedWing;
 		};
 
@@ -275,5 +339,14 @@ titleCut ["", "BLACK IN", 5];
 //If a player join in progress he will be teleported to his teamleader (WIP feature)
 if (didJIP) then 
 {
-	player setPos (getPos (leader (group player)));
+	//Check if player is trying to respawn by deco/reco method
+	_deadPlayerList = missionNamespace getVariable "deadPlayer";
+	if (count (_deadPlayerList select { _x == (name player) }) == 0) then 
+	{
+		player setPos (getPos (leader (group player)));
+	} else 
+	{
+		player setPos [0,0];
+		player setDamage 1;
+	};
 };

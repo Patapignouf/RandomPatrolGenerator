@@ -14,29 +14,39 @@ avalaibleAmmoBox = ["CUP_BOX_TK_MILITIA_Wps_F",
 "CUP_BOX_TK_MILITIA_Ammo_F"
 ];
 
-avalaibleSupplyBox = ["ACE_medicalSupplyCrate_advanced", 
-"ACE_medicalSupplyCrate"
+avalaibleSupplyBox = [
+	"ACE_medicalSupplyCrate_advanced", 
+	"ACE_medicalSupplyCrate"
 ];
 
 avalaibleHVT = ["CUP_O_TK_Officer",
-"CUP_O_RU_Officer_EMR", 
-"O_Officer_Parade_F", 
-"O_G_officer_F"
+	"CUP_O_RU_Officer_EMR", 
+	"O_Officer_Parade_F", 
+	"O_G_officer_F"
 ];
 
-avalaibleVIP = ["CUP_C_TK_Man_03_Waist",
-"C_Driver_1_F",
-"CUP_C_R_Functionary_jacket_02"
+avalaibleVIP = [
+	"CUP_C_TK_Man_03_Waist",
+	"C_Driver_1_F",
+	"CUP_C_R_Functionary_jacket_02"
 ];
 
-avalaibleStealVehicle = ["O_G_Van_01_transport_F", 
-"O_G_Van_02_transport_F", 
-"O_G_Van_01_fuel_F"
+avalaibleStealVehicle = [
+	"O_G_Van_01_transport_F", 
+	"O_G_Van_02_transport_F", 
+	"O_G_Van_01_fuel_F"
+];
+
+avalaibleDestroyVehicle = [
+	"CUP_O_Hilux_DSHKM_TK_INS"
 ];
 
 avalaibleCollectIntel = ["Land_Suitcase_F"];
 
-avalaibleTypeOfObj = ["supply","ammo","vip","hvt","collectIntel","informant","steal"];
+avalaibleTypeOfObj = [];
+avalaibleAttackTypeOfObj = ["ammo","hvt","collectIntel","informant","clearArea"];
+avalaibleSupportTypeOfObj = ["supply","vip","collectIntel","informant","steal"];
+
 //avalaibleTypeOfObj = ["ammo"]; //Line use to debug a specific objective
 
 //FOB description from DRO

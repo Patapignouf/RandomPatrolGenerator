@@ -101,7 +101,7 @@ getVirtualWeaponList = {
 
 
 getItembyWarEra = {
-	params ["_warEra"];
+	params ["_warEra","_currentPlayer"];
 	_itemList = [];
 
 	switch (_warEra) do
@@ -148,35 +148,52 @@ getItembyWarEra = {
 			
 		};
 	};
+
+	//Add ACE Key management
+	//ACE key doesn't work on the arsenal
+	switch (side _currentPlayer) do 
+	{
+		case independent:
+		{
+			_itemList pushBack "ACE_key_indp";
+		};
+		case blufor:
+		{
+			_itemList pushBack "ACE_key_west";
+		};
+		default 
+		{
+			//Do nothing
+		};
+	};
 	diag_log format ["itemList : %1", _itemList];
 	_itemList
 };
 
 getVirtualItemList = {
-	currentPlayer = _this select 0;
-	currentFaction = _this select 1;
-	currentPlayerClass = currentPlayer getVariable "role";
-	virtualItemList = [warEra] call getItembyWarEra;
+	params ["_currentPlayer","_currentFaction"];
+	currentPlayerClass = _currentPlayer getVariable "role";
+	virtualItemList = [warEra, _currentPlayer] call getItembyWarEra;
 	diag_log format ["virtualItemList : %1", virtualItemList];
 	switch (currentPlayerClass) do
 	{
 		case c_medic:
 			{
-				virtualItemList = virtualItemList + (itemList_db select {_x select 1  == currentFaction} select 0 select 0);
-				virtualItemList = virtualItemList + (itemMedicList_db select {_x select 1  == currentFaction} select 0 select 0);
+				virtualItemList = virtualItemList + (itemList_db select {_x select 1  == _currentFaction} select 0 select 0);
+				virtualItemList = virtualItemList + (itemMedicList_db select {_x select 1  == _currentFaction} select 0 select 0);
 			};			
 		case c_engineer:	
 			{
-				virtualItemList = virtualItemList + (itemList_db select {_x select 1  == currentFaction} select 0 select 0);
-				virtualItemList = virtualItemList + (itemEngineerList_db select {_x select 1  == currentFaction} select 0 select 0);
+				virtualItemList = virtualItemList + (itemList_db select {_x select 1  == _currentFaction} select 0 select 0);
+				virtualItemList = virtualItemList + (itemEngineerList_db select {_x select 1  == _currentFaction} select 0 select 0);
 			};		
 		default 
 			{
 				//Default item list
-			 	virtualItemList = virtualItemList + (itemList_db select {_x select 1  == currentFaction} select 0 select 0); 
+			 	virtualItemList = virtualItemList + (itemList_db select {_x select 1  == _currentFaction} select 0 select 0); 
 			};
 	};
-	diag_log format ["Player %1 with role %2 has access to items %3", name currentPlayer, currentPlayerClass,virtualItemList ];
+	diag_log format ["Player %1 with role %2 has access to items %3", name _currentPlayer, currentPlayerClass,virtualItemList ];
 	virtualItemList
 };
 
@@ -185,7 +202,7 @@ getVirtualUniform = {
 	currentPlayer = _this select 0;
 	currentFaction = _this select 1;
 	currentPlayerClass = currentPlayer getVariable "role";
-	virtualUniformList = [warEra] call getItembyWarEra;
+	virtualUniformList = [warEra, currentPlayer] call getItembyWarEra;
 	diag_log format ["virtualUniformList : %1", virtualUniformList];
 	switch (currentPlayerClass) do
 	{
@@ -255,28 +272,26 @@ getVirtualBackPack = {
 
 setupArsenalToItem = {
 	//InitParam
-	itemToAttachArsenal = _this select 0;
-	currentPlayer = _this select 1;
-	currentFaction = _this select 2;
+	params ["_itemToAttachArsenal","_currentPlayer","_currentFaction"];
 
 	//Process
 	//Clean arsenal
 	//["AmmoboxExit", itemToAttachArsenal] call BIS_fnc_arsenal;	
-	[itemToAttachArsenal,itemToAttachArsenal call BIS_fnc_getVirtualWeaponCargo,false] call BIS_fnc_removeVirtualWeaponCargo;
-	[itemToAttachArsenal,itemToAttachArsenal call BIS_fnc_getVirtualItemCargo,false] call BIS_fnc_removeVirtualItemCargo;
-	[itemToAttachArsenal,itemToAttachArsenal call BIS_fnc_getVirtualMagazineCargo,false] call BIS_fnc_removeVirtualMagazineCargo;
-	[itemToAttachArsenal,itemToAttachArsenal call BIS_fnc_getVirtualBackpackCargo,false] call BIS_fnc_removeVirtualBackpackCargo;
+	[_itemToAttachArsenal,_itemToAttachArsenal call BIS_fnc_getVirtualWeaponCargo,false] call BIS_fnc_removeVirtualWeaponCargo;
+	[_itemToAttachArsenal,_itemToAttachArsenal call BIS_fnc_getVirtualItemCargo,false] call BIS_fnc_removeVirtualItemCargo;
+	[_itemToAttachArsenal,_itemToAttachArsenal call BIS_fnc_getVirtualMagazineCargo,false] call BIS_fnc_removeVirtualMagazineCargo;
+	[_itemToAttachArsenal,_itemToAttachArsenal call BIS_fnc_getVirtualBackpackCargo,false] call BIS_fnc_removeVirtualBackpackCargo;
 
 	//Add Weapon to arsenal
-	[itemToAttachArsenal, ([currentPlayer, currentFaction] call getVirtualWeaponList )] call BIS_fnc_addVirtualWeaponCargo;
+	[_itemToAttachArsenal, ([_currentPlayer, _currentFaction] call getVirtualWeaponList )] call BIS_fnc_addVirtualWeaponCargo;
 
 	//Add backpack to arsenal
-	[itemToAttachArsenal, ([currentPlayer, currentFaction] call getVirtualBackPack )] call BIS_fnc_addVirtualBackpackCargo;
+	[_itemToAttachArsenal, ([_currentPlayer, _currentFaction] call getVirtualBackPack )] call BIS_fnc_addVirtualBackpackCargo;
 
 	//[VA2,((itemCargo VA2) + _availableHeadgear + _availableUniforms + _availableVests)] call BIS_fnc_addVirtualItemCargo;
 	[VA2,true] call BIS_fnc_addVirtualMagazineCargo;
-	[itemToAttachArsenal,([currentPlayer,currentFaction] call getVirtualAttachement ) + ([currentPlayer,currentFaction] call getVirtualItemList ) + ([currentPlayer,currentFaction] call getVirtualUniform ) ] call BIS_fnc_addVirtualItemCargo;
-	["AmmoboxInit",[itemToAttachArsenal,false,{true}]] call BIS_fnc_arsenal;
+	[_itemToAttachArsenal,([_currentPlayer,_currentFaction] call getVirtualAttachement ) + ([_currentPlayer,_currentFaction] call getVirtualItemList ) + ([_currentPlayer,_currentFaction] call getVirtualUniform ) ] call BIS_fnc_addVirtualItemCargo;
+	["AmmoboxInit",[_itemToAttachArsenal,false,{true}]] call BIS_fnc_arsenal;
 };
 
 setupRoleSwitchToItem = {
@@ -355,7 +370,7 @@ setupRoleSwitchToItem = {
 };
 
 
-setupSaveRole = {
+setupSaveAndLoadRole = {
 	//InitParam
 	params ["_itemToAttachArsenal", "_currentPlayer" ];
 
@@ -370,6 +385,19 @@ setupSaveRole = {
 			_caller setVariable ["spawnLoadout", getUnitLoadout _caller];
 
 			hint "Loadout saved";
+		},[]];
+			
+	//Add action where player can load his loadout
+	itemToAttachArsenal addAction 
+		["Load loadout", 
+		{
+			//Define params
+			params ["_target","_caller","_ID","_params"];
+
+			//load loadout
+			_caller setUnitLoadout (_caller getVariable "spawnLoadout");
+
+			hint "Loadout loaded";
 		},[]];
 };
 
@@ -390,34 +418,50 @@ adjustTFARRadio = {
 };
 
 adjustLoadout = {
-	currentPlayer = _this select 0;
+	params ["_currentPlayer"];
 
-	if (currentPlayer getUnitTrait "Medic" == false) then 
+	if (_currentPlayer getUnitTrait "Medic" == false) then 
 	{
-		for "_i" from 0 to 7 do { currentPlayer addItem "ACE_elasticBandage" };	
-		for "_i" from 0 to 1 do { currentPlayer addItem "ACE_tourniquet" };
-		for "_i" from 0 to 1 do { currentPlayer addItem "ACE_splint" };
+		for "_i" from 0 to 7 do { _currentPlayer addItem "ACE_elasticBandage" };	
+		for "_i" from 0 to 1 do { _currentPlayer addItem "ACE_tourniquet" };
+		for "_i" from 0 to 1 do { _currentPlayer addItem "ACE_splint" };
 	}
 	else 
 	{
-		currentPlayer addItem "ACE_surgicalKit";
-		for "_i" from 0 to 7 do { currentPlayer addItem "ACE_epinephrine" };
-		for "_i" from 0 to 7 do { currentPlayer addItem "ACE_splint" };
-		for "_i" from 0 to 29 do { currentPlayer addItem "ACE_elasticBandage" };
-		for "_i" from 0 to 29 do { currentPlayer addItem "ACE_quikclot" };
-		for "_i" from 0 to 9 do { currentPlayer addItem "ACE_morphine" };
-		for "_i" from 0 to 5 do { currentPlayer addItem "ACE_bloodIV_500" };
-		for "_i" from 0 to 2 do { currentPlayer addItem "ACE_bloodIV" };
-		for "_i" from 0 to 5 do { currentPlayer addItem "ACE_tourniquet" };	
+		_currentPlayer addItem "ACE_surgicalKit";
+		for "_i" from 0 to 7 do { _currentPlayer addItem "ACE_epinephrine" };
+		for "_i" from 0 to 7 do { _currentPlayer addItem "ACE_splint" };
+		for "_i" from 0 to 29 do { _currentPlayer addItem "ACE_elasticBandage" };
+		for "_i" from 0 to 29 do { _currentPlayer addItem "ACE_quikclot" };
+		for "_i" from 0 to 9 do { _currentPlayer addItem "ACE_morphine" };
+		for "_i" from 0 to 5 do { _currentPlayer addItem "ACE_bloodIV_500" };
+		for "_i" from 0 to 2 do { _currentPlayer addItem "ACE_bloodIV" };
+		for "_i" from 0 to 5 do { _currentPlayer addItem "ACE_tourniquet" };	
 	};
-	for "_i" from 0 to 1 do { currentPlayer addItem "ACE_CableTie" };
-	currentPlayer addItem "ACE_MapTools";	
-	currentPlayer addItem "ACE_morphine";	
-	currentPlayer addItem "ACE_WaterBottle";
-	currentPlayer addItem "ACE_EarPlugs";
-	currentPlayer unassignItem "itemRadio";
-	currentPlayer removeItem "itemRadio";
-	currentPlayer setSpeaker "noVoice";
+	for "_i" from 0 to 1 do { _currentPlayer addItem "ACE_CableTie" };
+	_currentPlayer addItem "ACE_MapTools";	
+	_currentPlayer addItem "ACE_morphine";	
+	_currentPlayer addItem "ACE_WaterBottle";
+	_currentPlayer addItem "ACE_EarPlugs";
+	_currentPlayer unassignItem "itemRadio";
+	_currentPlayer removeItem "itemRadio";
+	_currentPlayer setSpeaker "noVoice";
+
+	switch (side _currentPlayer) do 
+	{
+		case independent:
+		{
+			_currentPlayer addItem "ACE_key_indp";
+		};
+		case blufor:
+		{
+			_currentPlayer addItem "ACE_key_west";
+		};
+		default 
+		{
+			//Do nothing
+		};
+	};
 
 	//Adapt loadout to a specific Era
 	switch (warEra) do
@@ -430,32 +474,32 @@ adjustLoadout = {
 		//Cold War
 		case 1:
 		{
-			[currentPlayer] call adjustTFARRadio;
+			[_currentPlayer] call adjustTFARRadio;
 		};
 		//Modern Warfare
 		case 2:
 		{
-			currentPlayer addItem "ACE_DAGR";
-			[currentPlayer] call adjustTFARRadio;
+			_currentPlayer addItem "ACE_DAGR";
+			[_currentPlayer] call adjustTFARRadio;
 		};
 		//Actual Warfare
 		case 3:
 		{
-			currentPlayer addItem "ACE_microDAGR";
-			[currentPlayer] call adjustTFARRadio;
+			_currentPlayer addItem "ACE_microDAGR";
+			[_currentPlayer] call adjustTFARRadio;
 		};
 		//Future Warfare
 		case 4:
 		{
-			currentPlayer addItem "ACE_microDAGR";
-			[currentPlayer] call adjustTFARRadio;
+			_currentPlayer addItem "ACE_microDAGR";
+			[_currentPlayer] call adjustTFARRadio;
 		};
 		default
 		{
 			
 		};
 	};
-	diag_log format ["Player %1 loadout adjust", name currentPlayer];
+	diag_log format ["Player %1 loadout adjust", name _currentPlayer];
 };
 
 
