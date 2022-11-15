@@ -18,7 +18,9 @@ if (isServer) then
 		nb_ind_player_alive = {isPlayer _x && side _x == independent} count allUnits;
 		nb_blu_player_alive = {isPlayer _x && side _x == blufor} count allUnits;
 		
-		if (({alive _x && side _x == opfor} count allUnits) <=175) then
+		//Test if there are too much IA
+		//Test if IA are already in combat mode to simulate reinforcement
+		if (({alive _x && side _x == opfor} count allUnits) <=175 && {side _x == opfor && behaviour _x == "COMBAT"} count allUnits > 5) then
 		{
 			//Prioritize attack on independent 
 			if (nb_blu_player_alive != 0) then
