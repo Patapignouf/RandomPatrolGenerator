@@ -194,7 +194,7 @@ if (hasInterface) then
 					{
 						hint "You don't have enough advanced vehicle spawned credit left.";
 					};
-			},_x,1.5,true,false,"","_target distance _this <5"];
+			},_x,1.5,true,false,"","(_target distance _this <5) && (_this getVariable 'role' == 'leader')"];
 		} foreach bluforUnarmedVehicle; 
 
 		//Armed vehicle
@@ -215,7 +215,7 @@ if (hasInterface) then
 				{
 					hint "You don't have enough advanced vehicle spawned credit left.";
 				};
-			},_x,1.5,true,false,"","_target distance _this <5"];
+			},_x,1.5,true,false,"","(_target distance _this <5) && (_this getVariable 'role' == 'leader')"];
 		} foreach bluforArmedVehicle; 
 
 		//Unarmed Chopper
@@ -236,7 +236,7 @@ if (hasInterface) then
 				{
 					hint "You don't have enough advanced vehicle spawned credit left.";
 				};
-			},_x,1.5,true,false,"","_target distance _this <5"];
+			},_x,1.5,true,false,"","(_target distance _this <5) && (_this getVariable 'role' == 'leader')"];
 		} foreach bluforUnarmedVehicleChopper; 
 
 		//Armed Chopper
@@ -259,7 +259,7 @@ if (hasInterface) then
 					{
 						hint "You don't have enough advanced vehicle spawned credit left.";
 					};
-				},_x,1.5,true,false,"","_target distance _this <5"];
+				},_x,1.5,true,false,"","(_target distance _this <5) && (_this getVariable 'role' == 'leader')"];
 			} foreach bluforArmedChopper; 
 		};
 
@@ -296,7 +296,7 @@ if (hasInterface) then
 					{
 						hint "You don't have enough advanced vehicle spawned credit left.";
 					};
-				},_x,1.5,true,false,"","_target distance _this <5"];
+				},_x,1.5,true,false,"","(_target distance _this <5) && (_this getVariable 'role' == 'leader')"];
 			} foreach bluforFixedWing;
 		};
 
