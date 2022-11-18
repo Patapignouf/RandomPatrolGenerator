@@ -13,4 +13,7 @@ while {sleep 15; _nbBluePlayer + _nbIndPlayer == 0 || _nbOpfor > 2} do
 _thisObjectiveToComplete = _thisTrigger getVariable "associatedTask";
 [_thisObjectiveToComplete] execVM 'engine\completeObjective.sqf'; 
 
-//(allPlayers select {alive _x && side _x == blufor} ) inAreaArray (missionNamespace getVariable "missionObjectives" select 0 select 0);
+//Manage Completed Objective
+_completedObjectives = missionNamespace getVariable ["completedObjectives",[]];
+_completedObjectives pushBack _thisObjectiveToComplete;
+missionNamespace setVariable ["completedObjectives",_completedObjectives,true];	
