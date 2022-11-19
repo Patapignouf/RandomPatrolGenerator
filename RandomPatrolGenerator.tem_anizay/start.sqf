@@ -13,10 +13,6 @@ enableArmored = "EnableArmored" call BIS_fnc_getParamValue;
 enablePlane = "EnablePlane" call BIS_fnc_getParamValue;
 enableArmedChopper = "EnableArmedChopper" call BIS_fnc_getParamValue;
 lengthParameter = "MissionLength" call BIS_fnc_getParamValue;
-civFaction = "CivFaction" call BIS_fnc_getParamValue;
-opFaction = "OpFaction" call BIS_fnc_getParamValue;
-bluFaction = "BluFaction" call BIS_fnc_getParamValue;
-indFaction = "IndFaction" call BIS_fnc_getParamValue;
 enableInitAttack = "EnableInitAttack" call BIS_fnc_getParamValue;
 enableInitBluAttack = "EnableInitBluAttack" call BIS_fnc_getParamValue;
 initBluforBase = "InitBluforBase" call BIS_fnc_getParamValue;
@@ -28,6 +24,14 @@ timeOfDay = "TimeOfDay" call BIS_fnc_getParamValue;
 respawnSettings = "Respawn" call BIS_fnc_getParamValue;
 objInitSetup = "ObjInitSetup" call BIS_fnc_getParamValue;
 bluforVehicleSpawnType = "BluforVehicleSpawnType" call BIS_fnc_getParamValue;
+
+//faction definition
+waitUntil {missionNamespace getVariable "generationSetup" == true};
+bluFaction = missionNamespace getVariable "bluforFaction"; //Default faction 14 -> OTAN 2035
+opFaction = missionNamespace getVariable "opforFaction"; //Default faction 3 -> Syndikat
+indFaction = missionNamespace getVariable "independentFaction"; //Default faction 3 -> Syndikat
+civFaction = missionNamespace getVariable "civilianFaction"; //Default faction 3 -> Syndikat
+
 
 
 /////////////////////////

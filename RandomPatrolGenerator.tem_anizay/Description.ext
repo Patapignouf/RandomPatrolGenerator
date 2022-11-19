@@ -1,3 +1,6 @@
+#include "\a3\ui_f\hpp\defineCommonGrids.inc"
+#include "GUI\BaseControls.hpp"
+#include "GUI\dialogs.hpp"
 
 respawnDialog = 0;
 respawnOnStart = 0;
@@ -6,7 +9,6 @@ respawnDelay = 20;
 enableDebugConsole = 1;
 briefing = 0;
 respawnTemplates[] = {"Tickets"};
-
 
 class Params
 {
@@ -59,33 +61,12 @@ class Params
 		texts[] = {"No","Yes"};
 		default = 1;
 	};
-	class CivFaction
+	class ForceBluforSetup
 	{
-		title = "Civilian Faction";
-		values[] = {0,1,2,3,4,5,6,7,8,9,10,11,12,13,14};
-		texts[] = {"Takistani","US Army","Syndikat","Russian","French","2000 USA Marines","WWII UK", "WWII Wehrmacht", "WWII URSS","WWII USA","Cold War USA","Cold War NVA","Cold War ARVN","2035 AAF","2035 NATO"};
-		default = 2;
-	};
-	class IndFaction
-	{
-		title = "Independent Faction";
-		values[] = {0,1,2,3,4,5,6,7,8,9,10,11,12,13,14,15};
-		texts[] = {"Takistani","US Army","Syndikat","Russian","French","2000 USA Marines","WWII UK", "WWII Wehrmacht", "WWII URSS","WWII USA","Cold War USA","Cold War NVA","Cold War ARVN","2035 AAF","2035 NATO","2000 USA Delta Force "};
-		default = 2;
-	};
-	class BluFaction
-	{
-		title = "Blufor Faction";
-		values[] = {0,1,2,3,4,5,6,7,8,9,10,11,12,13,14,15};
-		texts[] = {"Takistani","US Army","Syndikat","Russian","French","2000 USA Marines","WWII UK", "WWII Wehrmacht", "WWII URSS","WWII USA","Cold War USA","Cold War NVA","Cold War ARVN","2035 AAF","2035 NATO","2000 USA Delta Force "};
-		default = 14;
-	};
-	class OpFaction
-	{
-		title = "Opfor Faction";
-		values[] = {0,1,2,3,4,5,6,7,8,9,10,11,12,13,14};
-		texts[] = {"Takistani","US Army","Syndikat","Russian","French","2000 USA Marines","WWII UK", "WWII Wehrmacht", "WWII URSS","WWII USA","Cold War USA","Cold War NVA","Cold War ARVN","2035 AAF","2035 NATO"};
-		default = 2;
+		title = "Faction who setup mission";
+		values[] = {0,1};
+		texts[] = {"Default","Force blufor"};
+		default = 0;
 	};
 	class Difficulty
 	{

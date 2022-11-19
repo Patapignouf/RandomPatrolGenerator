@@ -52,24 +52,23 @@ c_2035_NATO = "_2035_NATO";
 c_USA_2000_DF = "_USA_2000_DF";
 
 factionInfos = [
-	[c_USA,_USA],
-	[c_Russian,_Ru],
-	[c_Taki,_Taki],
-	[c_Syndikat,_Syndikat],
-	[c_French,_French],
-	[c_USA_2000,_USA_2000],
-	[c_WWII_UK,_WWII_UK],
-	[c_WWII_URSS,_WWII_URSS],
-	[c_WWII_Wehrmacht,_WWII_Wehrmacht],
-	[c_WWII_USA,_WWII_USA],
-	[c_ColdWar_ARVN,_ColdWar_ARVN],
-	[c_ColdWar_NVA,_ColdWar_NVA],
-	[c_ColdWar_USA,_ColdWar_USA],
-	[c_2035_AAF,_2035_AAF],
-	[c_2035_NATO,_2035_NATO],
-	[c_USA_2000_DF,_USA_2000_DF]
+	[c_USA,_USA,"US Army"],
+	[c_Russian,_Ru,"Russian"],
+	[c_Taki,_Taki,"Takistani"],
+	[c_Syndikat,_Syndikat,"Syndikat"],
+	[c_French,_French,"French"],
+	[c_USA_2000,_USA_2000,"2000 USA Marines"],
+	[c_WWII_UK,_WWII_UK,"WWII UK"],
+	[c_WWII_URSS,_WWII_URSS,"WWII URSS"],
+	[c_WWII_Wehrmacht,_WWII_Wehrmacht,"WWII Wehrmacht"],
+	[c_WWII_USA,_WWII_USA,"WWII USA"],
+	[c_ColdWar_ARVN,_ColdWar_ARVN,"Cold War ARVN"],
+	[c_ColdWar_NVA,_ColdWar_NVA,"Cold War NVA"],
+	[c_ColdWar_USA,_ColdWar_USA,"Cold War USA"],
+	[c_2035_AAF,_2035_AAF,"2035 AAF"],
+	[c_2035_NATO,_2035_NATO,"2035_NATO"],
+	[c_USA_2000_DF,_USA_2000_DF,"1993 USA Delta Force"]
 ];
-
 
 //Define global constant
 c_leader = "leader";

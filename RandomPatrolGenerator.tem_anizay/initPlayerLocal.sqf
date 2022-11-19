@@ -1,8 +1,6 @@
 #include "database\arsenalLibrary.sqf"
 #include "objectGenerator\vehicleManagement.sqf"
 
-bluFaction = "BluFaction" call BIS_fnc_getParamValue;
-indFaction = "IndFaction" call BIS_fnc_getParamValue;
 enableThermal = "EnableThermal" call BIS_fnc_getParamValue;
 enablePlane = "EnablePlane" call BIS_fnc_getParamValue;
 enableArmedChopper = "EnableArmedChopper" call BIS_fnc_getParamValue;
@@ -10,6 +8,43 @@ enableHalo = "EnableHALO" call BIS_fnc_getParamValue;
 enableArmored = "EnableArmored" call BIS_fnc_getParamValue;
 initBluforBase = "InitBluforBase" call BIS_fnc_getParamValue;
 chooseStartPos = "ChooseStartPos" call BIS_fnc_getParamValue;
+forceBluforSetup = "ForceBluforSetup" call BIS_fnc_getParamValue;
+
+//Wait player load
+if (!hasInterface || isDedicated) exitWith {};
+waitUntil {!isNull player && getClientStateNumber>=10};
+
+diag_log format ["Setup Player %1 at position 0", name player];
+
+//init tp to be able to spawn on the ground on each map
+player setPos [0,0];
+player allowdamage false;
+titleCut ["Please wait while mission is generating", "BLACK FADED", 5];
+sleep 3; //Wait player load correctly the mission
+
+//Define faction
+//Independent leader can choose mission
+if (!didJIP) then 
+{
+	if ({isPlayer _x && side _x == independent} count allPlayers != 0 && forceBluforSetup == 0) then 
+	{
+		if (side player == independent && player == (leader (group player))) then 
+		{
+			//Display setup menu
+			[[], 'GUI\initMissionMenu.sqf'] remoteExec ['BIS_fnc_execVM', player];
+		};
+	} else {
+		//If there is no independent, blufor leader can choose mission
+		if (side player == blufor && player == (leader (group player))) then 
+		{
+			//Display setup menu
+			[[], 'GUI\initMissionMenu.sqf'] remoteExec ['BIS_fnc_execVM', player];
+		};
+	};
+};
+waitUntil {missionNamespace getVariable "generationSetup" == true};
+bluFaction = missionNamespace getVariable "bluforFaction";
+indFaction = missionNamespace getVariable "independentFaction";
 
 //Optimize scripts
 private _disableThermal = compile preprocessFileLineNumbers "engine\disableThermal.sqf";
@@ -35,13 +70,6 @@ player addEventHandler ["Respawn",{
 
 }];
 
-diag_log format ["Setup Player %1 at position 0", name player];
-
-//init tp to be able to spawn on the ground on each map
-player setPos [0,0];
-player allowdamage false;
-titleCut ["Please wait while mission is generating", "BLACK FADED", 5];
-
 //Init disableThermal
 if (enableThermal==0) then 
 {
@@ -50,11 +78,6 @@ if (enableThermal==0) then
 
 //Init player respawn ticket
 [player, -1, true] call BIS_fnc_respawnTickets;
-
-//Wait player load
-waitUntil {!isNull player};
-if (!hasInterface || isDedicated) exitWith {};
-
 
 if (hasInterface) then
 {
