@@ -12,7 +12,7 @@ forceBluforSetup = "ForceBluforSetup" call BIS_fnc_getParamValue;
 
 //Wait player load
 if (!hasInterface || isDedicated) exitWith {};
-waitUntil {!isNull player && getClientStateNumber>=10};
+waitUntil {!isNull player && (getClientStateNumber>=10||!isMultiplayer)};
 
 diag_log format ["Setup Player %1 at position 0", name player];
 
