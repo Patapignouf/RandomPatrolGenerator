@@ -91,9 +91,15 @@ bluforBoat_French = ["CUP_B_RHIB_HIL",
 "CUP_B_Zodiac_USMC"
 ];
 
+bluforFixedWing_French = [
+
+];
+
 ////////////////////////
 //Loadout management////
 ////////////////////////
+
+listOfRoles_French = [c_leader,c_at,c_rifleman,c_engineer,c_autorifleman,c_marksman,c_medic];
 
 //French
 loadout_French = [		
@@ -148,6 +154,8 @@ smgList_French = [
 //////////////////////////
 //Attachement management//
 //////////////////////////
+
+//items avalaible for everyone (optics)
 attachmentShortList_French	= [
 	"AMF_Aimpoint_CompM5",
 	"AMF_AIMPOINT_MICRO_T1",
@@ -164,6 +172,7 @@ attachmentShortList_French	= [
 	"AMF_EOTECH_553"
 ];
 
+//Items avalaible only for marksman
 attachmentLongList_French	= [
 	"amf_scrome_j4",
 	"amf_scrome_j8",
@@ -175,6 +184,8 @@ attachmentLongList_French	= [
 ////////////////////////
 ////Items management////
 ////////////////////////
+
+//Items avalaible for everyone
 itemList_French = [
 	"ItemMap",
 	"ItemCompass",
@@ -205,12 +216,14 @@ itemList_French = [
 	"ACE_IR_Strobe_Item"
 	];
 
+//items avalaible only for engineer
 itemEngineerList_French = [
 	"ToolKit",
 	"MineDetector",
 	"ACE_wirecutter", "ACE_Fortify"
 	];
-	
+
+//item avalaible only for medics
 itemMedicList_French = [
 	"ACE_epinephrine",
 	"ACE_bloodIV",
@@ -218,4 +231,23 @@ itemMedicList_French = [
 	"ACE_bloodIV_250",
 	"ACE_personalAidKit",
 	"ACE_surgicalKit"
+	];
+
+
+//backpack avalaible for all unit
+backPackList_French = [
+	"B_Mortar_01_weapon_F",
+	"B_Mortar_01_support_F",
+	"CUP_B_USMC_MOLLE_MG"
+	];
+
+
+//Uniform, vest, headgear, avalaible for all unit
+uniformList_French = [
+	"CUP_H_LWHv2_MARPAT_des_cov_fr",
+	"CUP_U_B_USMC_MCCUU_des_gloves"
+	];
+
+//Magazine avalaible for all unit
+magazineList_French = [
 	];
