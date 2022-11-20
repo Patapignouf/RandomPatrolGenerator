@@ -1,12 +1,3 @@
-c_leader = "leader";
-c_at = "at";
-c_rifleman = "rifleman";
-c_engineer = "engineer";
-c_autorifleman = "autorifleman";
-c_marksman = "marksman"; 
-c_medic = "medic";
-c_grenadier = "grenadier";
-
 //////////////////////////////
 ////Define civ group data/////
 //////////////////////////////
@@ -115,6 +106,15 @@ bluforFixedWing_newFaction = ["I_C_Offroad_02_LMG_F",
 ////////////////////////
 //Loadout management////
 ////////////////////////
+
+c_leader = "leader";
+c_at = "at";
+c_rifleman = "rifleman";
+c_engineer = "engineer";
+c_autorifleman = "autorifleman";
+c_marksman = "marksman"; 
+c_medic = "medic";
+c_grenadier = "grenadier";
 
 //List of Roles accepted in the BIS_fnc_arsenal
 //You can add or delete role to this list
