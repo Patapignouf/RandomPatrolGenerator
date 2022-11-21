@@ -13,14 +13,14 @@ sleep 1000;
 
 if (isServer) then
 {
-	while {sleep 20; true} do 
+	while {sleep 20; true} do  
 	{
 		nb_ind_player_alive = {isPlayer _x && side _x == independent} count allUnits;
 		nb_blu_player_alive = {isPlayer _x && side _x == blufor} count allUnits;
 		
 		//Test if there are too much IA
 		//Test if IA are already in combat mode to simulate reinforcement
-		if (({alive _x && side _x == opfor} count allUnits) <=175 && {side _x == opfor && behaviour _x == "COMBAT"} count allUnits > 5) then
+		if (({alive _x && side _x == opfor} count allUnits) <=150 && {side _x == opfor && behaviour _x == "COMBAT"} count allUnits > 5) then
 		{
 			//Prioritize attack on independent 
 			if (nb_blu_player_alive != 0) then
@@ -59,16 +59,17 @@ if (isServer) then
 				_tempVehicleGroup pushBack [selectRandom _thisAvailableOpforLightArmoredVehicle];
 
 				//Heavy armored vehicle spawn chance 17%
-				if (count _thisAvailableOpforHeavyArmoredVehicle != 0 && round random 1 == 0) then 
-				{
-					_tempVehicleGroup pushBack [selectRandom _thisAvailableOpforHeavyArmoredVehicle];
-				};
+				//Remove heavy armor enemy reinforcement to balance gameplay
+				// if (count _thisAvailableOpforHeavyArmoredVehicle != 0 && round random 1 == 0) then 
+				// {
+				// 	_tempVehicleGroup pushBack [selectRandom _thisAvailableOpforHeavyArmoredVehicle];
+				// };
 			};
 
 
 			AvalaibleInitAttackPositions = [];
-			AvalaibleInitAttackPositions = [positionToAttack, 1200, 2000, difficultyParameter] call getListOfPositionsAroundTarget;
-			[ AvalaibleInitAttackPositions, positionToAttack, _tempGroup,_tempVehicleGroup, difficultyParameter] execVM 'enemyManagement\doAmbush.sqf'; 
+			AvalaibleInitAttackPositions = [positionToAttack, 1200, 2000, round((difficultyParameter-0.5)/2)] call getListOfPositionsAroundTarget;
+			[ AvalaibleInitAttackPositions, positionToAttack, _tempGroup,_tempVehicleGroup, round((difficultyParameter-0.5)/2)] execVM 'enemyManagement\doAmbush.sqf'; 
 			diag_log format ["Harass start on position %1", positionToAttack];
 		};
 		sleep (1200+round (random 1000));
