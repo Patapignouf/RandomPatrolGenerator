@@ -110,8 +110,7 @@ if (hasInterface) then
 		player setPos ([getPos initCityLocation, 1, 5, 3, 0, 20, 0] call BIS_fnc_findSafePos);
 
 		//Manage loadout
-		player setUnitLoadout ([player,indFaction] call getLoadoutByRole);
-		[player] call adjustLoadout;
+		[player, indFaction] call doInitializeLoadout;
 		player setVariable ["spawnLoadout", getUnitLoadout player];
 
 		//Manage arsenal	
@@ -161,8 +160,7 @@ if (hasInterface) then
 
 		player setVariable ["sideBeforeDeath","blufor"];
 		player setPos ([initBlueforLocation, 1, 5, 3, 0, 20, 0] call BIS_fnc_findSafePos);
-		player setUnitLoadout ([player, bluFaction] call getLoadoutByRole);
-		[player] call adjustLoadout;
+		[player, bluFaction] call doInitializeLoadout;
 		player setVariable ["spawnLoadout", getUnitLoadout player];
 
 		//Manage arsenal	

@@ -294,6 +294,31 @@ setupArsenalToItem = {
 	["AmmoboxInit",[_itemToAttachArsenal,false,{true}]] call BIS_fnc_arsenal;
 };
 
+doInitializeLoadout = {
+	//InitParam
+	params ["_player","_currentFaction"];
+
+	_currentPlayerClass = _player getVariable "role";
+	_thisClasse = ((loadout_db select {_x select 1 == _currentFaction}) select 0 select 0) select {_x select 0 == _currentPlayerClass} select 0;
+
+	_player setUnitLoadout ([_player,_currentFaction] call getLoadoutByRole);
+
+	//Check if loadout need adjustment
+	//If the faction doesn't implement well ACE, loadout will be adjusted (check boolean flag in role definition)
+	if (count _thisClasse == 2) then 
+	{
+		[_player] call adjustLoadout;
+		
+	} else 
+	{
+		if (_thisClasse select 2 == false) then 
+		{
+			[_player] call adjustLoadout;
+		};
+	};
+	
+};
+
 setupRoleSwitchToItem = {
 	//InitParam
 	itemToAttachArsenal = _this select 0;
@@ -338,8 +363,8 @@ setupRoleSwitchToItem = {
 				_caller setVariable ["role", (_params select 0)];
 
 				//Manage default stuff
-				_caller setUnitLoadout ([_caller,(_params select 1)] call getLoadoutByRole);
-				[_caller] call adjustLoadout;
+				[_caller,(_params select 1)] call doInitializeLoadout;
+
 				_caller setVariable ["spawnLoadout", getUnitLoadout _caller];
 
 				//Manage arsenal stuff
@@ -433,10 +458,10 @@ adjustLoadout = {
 		for "_i" from 0 to 7 do { _currentPlayer addItem "ACE_splint" };
 		for "_i" from 0 to 29 do { _currentPlayer addItem "ACE_elasticBandage" };
 		for "_i" from 0 to 29 do { _currentPlayer addItem "ACE_quikclot" };
-		for "_i" from 0 to 9 do { _currentPlayer addItem "ACE_morphine" };
+		//for "_i" from 0 to 9 do { _currentPlayer addItem "ACE_morphine" }; //Basic ACE conversion will give enough morphine
 		for "_i" from 0 to 5 do { _currentPlayer addItem "ACE_bloodIV_500" };
 		for "_i" from 0 to 2 do { _currentPlayer addItem "ACE_bloodIV" };
-		for "_i" from 0 to 5 do { _currentPlayer addItem "ACE_tourniquet" };	
+		//for "_i" from 0 to 5 do { _currentPlayer addItem "ACE_tourniquet" };	//Basic ACE conversion will give enough tourniquet
 	};
 	for "_i" from 0 to 1 do { _currentPlayer addItem "ACE_CableTie" };
 	_currentPlayer addItem "ACE_MapTools";	
