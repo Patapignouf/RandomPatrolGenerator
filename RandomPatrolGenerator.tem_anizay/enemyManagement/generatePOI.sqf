@@ -63,8 +63,8 @@ for [{_i = 0}, {_i < round((_thisDifficulty-0.5)/2)}, {_i = _i + 1}] do
 };
 
 diag_log format ["Civilian generation start on AO %1",_thisAvailablePosition];
-//Add chance to spawn civilian 25%
-if (round (random 3) != 0 && count _thisAvailableCivGroup > 0) then 
+//Add chance to spawn civilian 33%
+if (round (random 3) == 0 && count _thisAvailableCivGroup > 0) then 
 {
 	for [{_i = 0}, {_i < _thisDifficulty+1}, {_i = _i + 1}] do 
 	{
