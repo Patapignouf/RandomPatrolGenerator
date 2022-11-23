@@ -270,6 +270,7 @@ clearWeaponCargoGlobal VA1;
 clearMagazineCargoGlobal VA1;
 clearItemCargoGlobal VA1;
 clearBackpackCargoGlobal VA1;
+VA1 allowDamage false; 
 publicvariable "VA1";
 
 
@@ -469,6 +470,7 @@ clearWeaponCargoGlobal VA2;
 clearMagazineCargoGlobal VA2;
 clearItemCargoGlobal VA2;
 clearBackpackCargoGlobal VA2;
+VA2 allowDamage false; 
 publicvariable "VA2";
 
 //Create portable FOB 
@@ -477,6 +479,7 @@ clearWeaponCargoGlobal deployableFOBItem;
 clearMagazineCargoGlobal deployableFOBItem;
 clearItemCargoGlobal deployableFOBItem;
 clearBackpackCargoGlobal deployableFOBItem;
+deployableFOBItem allowDamage false; 
 publicvariable "deployableFOBItem";
 
 //Add action to deploy advanced outpost
