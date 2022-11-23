@@ -291,6 +291,7 @@ itemEngineerList_2035_NATO = [
 
 //item avalaible for all medic
 itemMedicList_2035_NATO = [
+	"Medikit",
 	"ACE_epinephrine",
 	"ACE_morphine",
 	"ACE_splint",

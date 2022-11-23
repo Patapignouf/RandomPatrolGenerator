@@ -262,6 +262,7 @@ itemList_USA = [
 	];
 
 itemEngineerList_USA = [
+	"Medikit",
 	"ToolKit",
 	"MineDetector",
 	"ACE_wirecutter", "ACE_Fortify"

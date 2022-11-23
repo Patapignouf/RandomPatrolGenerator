@@ -207,6 +207,7 @@ itemEngineerList_ColdWar_NVA = [
 	];
 	
 itemMedicList_ColdWar_NVA = [
+	"Medikit",
 	"ACE_epinephrine",
 	"ACE_bloodIV",
 	"ACE_bloodIV_500",

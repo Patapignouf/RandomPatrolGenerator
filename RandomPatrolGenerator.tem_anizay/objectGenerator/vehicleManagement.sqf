@@ -96,7 +96,7 @@ doGenerateVehicleForFOB =
 			case (_x isKindOf "Plane"): {_kind = "Plane";};   
 			default {_kind = "Other";};   
 		};   
-		
+		sleep 2; //Wait vehicle spawn (avoid vehicle crash)
 	} forEach _thisVehicleList;
 	//Generate boat location on map
 	if !([_shipGoodPosition , [0,0,0]] call BIS_fnc_areEqual) then 

@@ -245,6 +245,7 @@ itemList_newFaction = [
 
 //item avalaible for all engineer
 itemEngineerList_newFaction = [
+	"Medikit",
 	"ToolKit",
 	"MineDetector",
 	"ACE_wirecutter",

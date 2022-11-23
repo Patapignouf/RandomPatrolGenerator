@@ -226,6 +226,7 @@ itemEngineerList_2035_AAF = [
 	];
 	
 itemMedicList_2035_AAF = [
+	"Medikit",
 	"ACE_epinephrine",
 	"ACE_bloodIV",
 	"ACE_bloodIV_500",

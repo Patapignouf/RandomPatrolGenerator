@@ -211,6 +211,7 @@ itemEngineerList_ColdWar_USA = [
 	];
 	
 itemMedicList_ColdWar_USA = [
+	"Medikit",
 	"ACE_epinephrine",
 	"ACE_bloodIV",
 	"ACE_bloodIV_500",

@@ -248,6 +248,7 @@ itemEngineerList_WWII_UK = [
 ];
 	
 itemMedicList_WWII_UK = [
+	"Medikit",
 	"ACE_epinephrine",
 	"ACE_bloodIV",
 	"ACE_bloodIV_500",

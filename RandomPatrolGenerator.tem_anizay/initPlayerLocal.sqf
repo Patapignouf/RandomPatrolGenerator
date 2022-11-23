@@ -83,13 +83,18 @@ if (hasInterface) then
 {
 	diag_log format ["Setup Player %1 at position 1", name player];
 
+	//Setup briefing 
+	player createDiarySubject ["RPG", "Random Patrol Generator"];
+	_diaryIntel = player createDiaryRecord ["RPG", ["Random Patrol Generator intel", "You can see here all intels collected : <br/>"]];
+	player setVariable ["diaryIntel", _diaryIntel];
+	player createDiaryRecord ["RPG", ["Random Patrol Generator respawn", "There are two ways to respawn on Random Patrol Generator missions :<br/>- First, when a mission is completed<br/>- Secondly, when players call a reinforcement on blufor advanced FOB<br/><br/><br/>Note : Respawn setting has to be enabled"]];
+	player createDiaryRecord ["RPG", ["Random Patrol Generator arsenal", "A limited arsenal is avalaible on your start position, it will allow you to switch between roles."]];
+
 	if (side player == independent) then 
 	{
-		player createDiarySubject ["RPG", "Random Patrol Generator"];
-		player createDiaryRecord ["RPG", ["Random Patrol Generator objectives", "Help the people in the town. Complete the tasks assigned to your unit to finish the mission. 
+		//Setup briefing independent
+		player createDiaryRecord ["RPG", ["Random Patrol Generator objectives", "Help the people in the town. Complete the tasks assigned to your unit to finish the mission. You can also ask town citizens for intel to help you prepare the operation.
 		"]];
-		_diaryIntel = player createDiaryRecord ["RPG", ["Random Patrol Generator intel", "You can see here all intels collected : <br/>"]];
-		player setVariable ["diaryIntel", _diaryIntel];
 
 		if (player == (leader (group player))) then
 		{	
@@ -151,14 +156,12 @@ if (hasInterface) then
 
 	if (side player == blufor) then
 	{
-		//Setup briefing 
-		player createDiarySubject ["RPG", "Random Patrol Generator"];
+		//Setup briefing blufor
 		player createDiaryRecord ["RPG", ["Random Patrol Generator objectives", "Help the independent town located on your map. Complete the tasks assigned to your unit to finish the mission.
 		"]];
-		_diaryIntel = player createDiaryRecord ["RPG", ["Random Patrol Generator intel", "You can see here all intels collected : <br/>"]];
-		player setVariable ["diaryIntel", _diaryIntel];
-
-
+		player createDiaryRecord ["RPG", ["Random Patrol Generator FOB", "You can deploy an advanced FOB avalaible in a supply box near main FOB :<br/>- It can be used to skip time<br/>- It can be used to call a reinforcement (respawn players)"]];
+		player createDiaryRecord ["RPG", ["Random Patrol Generator vehicles", "You can deploy use the blue flag on the main FOB to spawn vehicules. Each vehicle spawned use one specific credit. You have 10 credits for basic vehicle and 2 for advanced ones.<br/>Complete a mission to earn credits.<br/><br/> Note : Only the team leader can spawn vehicles."]];
+		
 		diag_log format ["Setup Player %1 at position 2", name player];
 		if (player == (leader (group player)) && chooseStartPos == 1) then
 		{	

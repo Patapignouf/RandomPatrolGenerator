@@ -274,6 +274,7 @@ itemEngineerList_French = [
 
 //item avalaible only for medics
 itemMedicList_French = [
+	"Medikit",
 	"ACE_epinephrine",
 	"ACE_bloodIV",
 	"ACE_bloodIV_500",

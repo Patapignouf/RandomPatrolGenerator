@@ -274,6 +274,7 @@ clearWeaponCargoGlobal VA1;
 clearMagazineCargoGlobal VA1;
 clearItemCargoGlobal VA1;
 clearBackpackCargoGlobal VA1;
+VA1 allowDamage false; 
 publicvariable "VA1";
 
 
@@ -393,7 +394,7 @@ if (initBluforBase == 0 || (initBluforBase == 2 && (round random 1 == 0))) then
 	{
 		initBlueforLocation = [getPos initCityLocation, (aoSize+2000), (aoSize+4000), 3, 0, 0.25, 0, [areaOfOperation], [[0,0,0],[0,0,0]]] call BIS_fnc_findSafePos;
 		//Safe position
-		initBlueforLocation = [selectMax [selectMin [initBlueforLocation select 0, worldSize-50 ],50],selectMax [selectMin [initBlueforLocation select 1, worldSize-50],50]]; 
+		initBlueforLocation = [selectMax [selectMin [initBlueforLocation select 0, worldSize-100 ],100],selectMax [selectMin [initBlueforLocation select 1, worldSize-100],100]]; 
 	};
 	//Generate FOB
 	spawnFOBObjects = [initBlueforLocation, (random 360), selectRandom avalaibleFOB] call BIS_fnc_ObjectsMapper;
@@ -473,6 +474,7 @@ clearWeaponCargoGlobal VA2;
 clearMagazineCargoGlobal VA2;
 clearItemCargoGlobal VA2;
 clearBackpackCargoGlobal VA2;
+VA2 allowDamage false; 
 publicvariable "VA2";
 
 //Create portable FOB 
@@ -481,86 +483,107 @@ clearWeaponCargoGlobal deployableFOBItem;
 clearMagazineCargoGlobal deployableFOBItem;
 clearItemCargoGlobal deployableFOBItem;
 clearBackpackCargoGlobal deployableFOBItem;
+deployableFOBItem allowDamage false; 
 publicvariable "deployableFOBItem";
 
 //Add action to deploy advanced outpost
-[deployableFOBItem, ["Deploy advanced outpost",{
-			params ["_object","_caller","_ID","_param"];
-			_avalaibleOutpost = _param select 0;
-			_respawnSetting = _param select 1;
+[
+	deployableFOBItem, 
+	"Deploy advanced FOB", 
+	"\a3\ui_f_oldman\data\IGUI\Cfg\holdactions\repair_ca.paa", 
+	"\a3\ui_f_oldman\data\IGUI\Cfg\holdactions\repair_ca.paa", 
+	"true",
+	"true", 
+	{
+		// Action start code
+	}, 
+	{
+		// Action on going code
+	},  
+	{
+		// Action successfull code
+		params ["_object","_caller","_ID","_param"];
+		_avalaibleOutpost = _param select 0;
+		_respawnSetting = _param select 1;
 
-			//[TODO] Check distance from blufor spawn
-			if (_caller distance initBlueforLocation > 100) then 
-			{
-				//Spawn outpost
-				_spawnFOBObjects = [getPos _object, (random 360), _avalaibleOutpost] call BIS_fnc_ObjectsMapper;
+		//[TODO] Check distance from blufor spawn
+		if (_caller distance initBlueforLocation > 100) then 
+		{
+			//Spawn outpost
+			_spawnFOBObjects = [getPos _object, (random 360), _avalaibleOutpost] call BIS_fnc_ObjectsMapper;
 
-				TPFlag2 = createVehicle ["Flag_Blue_F", [getPos _object, 1, 5, 3, 0, 20, 0] call BIS_fnc_findSafePos, [], 0, "NONE"];
+			TPFlag2 = createVehicle ["Flag_Blue_F", [getPos _object, 1, 5, 3, 0, 20, 0] call BIS_fnc_findSafePos, [], 0, "NONE"];
+			
+			//Add action to rest and skip 6 hours
+			[TPFlag2, ["Take a nap",{
+				params ["_object","_caller","_ID","_param"];
 				
-				//Add action to rest and skip 6 hours
-				[TPFlag2, ["Take a nap",{
-					params ["_object","_caller","_ID","_param"];
-					
-					if (!(missionNamespace getVariable ["usedFewTimeAgo",false])) then 
-					{
-						//Skip 6 hour
-						6 remoteExec ["skipTime", 2, false]; 
-						[format ["%1 needs to rest", name _caller]] remoteExec ["hint",0,true];
-						missionNamespace setVariable ["usedFewTimeAgo",true,true];
-						sleep 300;
-						missionNamespace setVariable ["usedFewTimeAgo",false,true];
-					} else {
-						hint "No need to rest";
-					};
-				},objNull,1.5,true,false,"","_target distance _this <5"]] remoteExec [ "addAction", 0, true ];
+				if (!(missionNamespace getVariable ["usedFewTimeAgo",false])) then 
+				{
+					//Skip 6 hour
+					6 remoteExec ["skipTime", 2, false]; 
+					[format ["%1 needs to rest", name _caller]] remoteExec ["hint",0,true];
+					missionNamespace setVariable ["usedFewTimeAgo",true,true];
+					sleep 300;
+					missionNamespace setVariable ["usedFewTimeAgo",false,true];
+				} else {
+					hint "No need to rest";
+				};
+			},objNull,1.5,true,false,"","_target distance _this <5"]] remoteExec [ "addAction", 0, true ];
 
-				//Add action to rest until morning
-				[TPFlag2, ["Sleep until next morning",{
+			//Add action to rest until morning
+			[TPFlag2, ["Sleep until next morning",{
+				params ["_object","_caller","_ID","_param"];
+				
+				if (!(missionNamespace getVariable ["usedFewTimeAgo",false])) then 
+				{
+					//set morning
+					skipTime ((06 - dayTime + 24) % 24);
+					[format ["%1 needs to rest", name _caller]] remoteExec ["hint",0,true];
+					missionNamespace setVariable ["usedFewTimeAgo",true,true];
+					sleep 300;
+					missionNamespace setVariable ["usedFewTimeAgo",false,true];
+				} else {
+					hint "No need to rest";
+				};
+			},objNull,1.5,true,false,"","_target distance _this <5"]] remoteExec [ "addAction", 0, true ];
+
+			//Add action to make all player respawn
+			if (_respawnSetting == 1) then 
+			{
+				[TPFlag2, ["Call Reinforcements",{
 					params ["_object","_caller","_ID","_param"];
 					
-					if (!(missionNamespace getVariable ["usedFewTimeAgo",false])) then 
+					if (!(missionNamespace getVariable ["usedRespawnFewTimeAgo",false])) then 
 					{
 						//set morning
-						skipTime ((06 - dayTime + 24) % 24);
-						[format ["%1 needs to rest", name _caller]] remoteExec ["hint",0,true];
-						missionNamespace setVariable ["usedFewTimeAgo",true,true];
-						sleep 300;
-						missionNamespace setVariable ["usedFewTimeAgo",false,true];
+						skipTime 24;
+						[[], "engine\respawnManager.sqf"] remoteExec ['BIS_fnc_execVM', 0];
+						[format ["%1 needs reinforcement", name _caller]] remoteExec ["hint",0,true];
+						missionNamespace setVariable ["usedRespawnFewTimeAgo",true,true];
+						sleep 1200;
+						missionNamespace setVariable ["usedRespawnFewTimeAgo",false,true];
 					} else {
-						hint "No need to rest";
+						hint "You must wait before call reinforcements";
 					};
-				},objNull,1.5,true,false,"","_target distance _this <5"]] remoteExec [ "addAction", 0, true ];
-
-				//Add action to make all player respawn
-				if (_respawnSetting == 1) then 
-				{
-					[TPFlag2, ["Call Reinforcements",{
-						params ["_object","_caller","_ID","_param"];
-						
-						if (!(missionNamespace getVariable ["usedRespawnFewTimeAgo",false])) then 
-						{
-							//set morning
-							skipTime 24;
-							[[], "engine\respawnManager.sqf"] remoteExec ['BIS_fnc_execVM', 0];
-							[format ["%1 needs reinforcement", name _caller]] remoteExec ["hint",0,true];
-							missionNamespace setVariable ["usedRespawnFewTimeAgo",true,true];
-							sleep 1200;
-							missionNamespace setVariable ["usedRespawnFewTimeAgo",false,true];
-						} else {
-							hint "You must wait before call reinforcements";
-						};
-					},[respawnSettings],1.5,true,false,"","_target distance _this <5"]] remoteExec [ "addAction", 0, true ];
-				};
-
-				//Remove Box
-				deleteVehicle _object;
-			} else {
-				hint "Too close to base";
+				},[respawnSettings],1.5,true,false,"","_target distance _this <5"]] remoteExec [ "addAction", 0, true ];
 			};
 
-
-		},[deployableFOBMounted, respawnSettings],1.5,true,false,"","_target distance _this <5"]] remoteExec ["addAction", 0, true];
-
+			//Remove Box
+			deleteVehicle _object;
+		} else {
+			hint "Too close to base";
+		};
+	}, 
+	{
+		// Action failed code
+	}, 
+	[deployableFOBMounted, respawnSettings],  
+	10,
+	0, 
+	true,
+	false
+] remoteExec ["BIS_fnc_holdActionAdd", 0, true];
 
 //Place empty box to blufor camp
 {
