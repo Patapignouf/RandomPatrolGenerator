@@ -239,6 +239,7 @@ itemEngineerList_USA_2000 = [
 	];
 	
 itemMedicList_USA_2000 = [
+	"Medikit",
 	"ACE_epinephrine",
 	"ACE_morphine",
 	"ACE_splint",

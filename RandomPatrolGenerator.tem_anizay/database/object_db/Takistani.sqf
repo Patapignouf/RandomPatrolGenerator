@@ -250,6 +250,7 @@ itemEngineerList_Taki = [
 	];
 	
 itemMedicList_Taki = [
+	"Medikit",
 	"ACE_epinephrine",
 	"ACE_bloodIV",
 	"ACE_bloodIV_500",

@@ -251,6 +251,7 @@ itemEngineerList_Russian = [
 	];
 	
 itemMedicList_Russian = [
+	"Medikit",
 	"ACE_epinephrine",
 	"ACE_bloodIV",
 	"ACE_bloodIV_500",

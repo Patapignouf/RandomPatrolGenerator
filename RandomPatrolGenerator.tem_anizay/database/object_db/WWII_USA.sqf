@@ -250,6 +250,7 @@ itemEngineerList_WWII_USA = [
 ];
 	
 itemMedicList_WWII_USA = [
+	"Medikit",
 	"ACE_epinephrine",
 	"ACE_bloodIV",
 	"ACE_bloodIV_500",
