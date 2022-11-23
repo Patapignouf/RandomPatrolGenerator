@@ -61,6 +61,8 @@ bluforArmedChopper = bluforArmedChopper_db select {_x select 1  == bluFaction} s
 publicVariable "bluforArmedChopper";
 
 bluforDrone = bluforDrone_db select {_x select 1  == bluFaction} select 0 select 0;
+publicVariable "bluforDrone";
+
 bluforBoat = bluforBoat_db select {_x select 1  == bluFaction} select 0 select 0;
 
 //CivilianGroupDefinition
@@ -407,7 +409,7 @@ if (initBluforBase == 0 || (initBluforBase == 2 && (round random 1 == 0))) then
 		{
 			for [{_i = 0}, {_i < 2}, {_i = _i + 1}] do
 			{
-				selectedBluforVehicle pushBack (selectRandom bluforUnarmedVehicleChopper);
+				selectedBluforVehicle pushBack [(selectRandom bluforUnarmedVehicleChopper), false];
 			};
 		};
 	};
@@ -415,11 +417,7 @@ if (initBluforBase == 0 || (initBluforBase == 2 && (round random 1 == 0))) then
     //Generate air drone vehicle
 	if (0 < count bluforDrone ) then 
 	{
-		selectedBluforAirDroneVehicle pushBack (selectRandom bluforDrone);
-		{
-			currentGroup = [([[initBlueforLocation select 0, initBlueforLocation select 1, (initBlueforLocation select 2)+400],1,60,10,0] call BIS_fnc_findSafePos), blufor, [_x],[],[],[],[],[],0] call BIS_fnc_spawnGroup;
-		}
-		foreach selectedBluforAirDroneVehicle;
+		selectedBluforVehicle pushBack [(selectRandom bluforDrone), true];
 	};
 };
 [["FOB","ColorBlue","loc_Fortress",initBlueforLocation, blufor], 'objectGenerator\doGenerateMarker.sqf'] remoteExec ['BIS_fnc_execVM', 0];
@@ -433,7 +431,7 @@ if (0 < count bluforUnarmedVehicle ) then
 {
 	for [{_i = 0}, {_i < 3}, {_i = _i + 1}] do
 	{
-		selectedBluforVehicle pushBack (selectRandom bluforUnarmedVehicle);
+		selectedBluforVehicle pushBack [(selectRandom bluforUnarmedVehicle), false];
 	};
 };
 
@@ -444,7 +442,7 @@ if (bluforVehicleSpawnType == 1) then
 	{
 		for [{_i = 0}, {_i < 1}, {_i = _i + 1}] do
 		{
-			selectedBluforVehicle pushBack (selectRandom bluforArmedVehicle);
+			selectedBluforVehicle pushBack [(selectRandom bluforArmedVehicle), false];
 		};
 	};
 };
@@ -454,7 +452,7 @@ if (0 < count bluforBoat ) then
 {
 	for [{_i = 0}, {_i < 3}, {_i = _i + 1}] do
 	{
-		selectedBluforVehicle pushBack (selectRandom bluforBoat);
+		selectedBluforVehicle pushBack [(selectRandom bluforBoat), false];
 	};
 };
 

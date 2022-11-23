@@ -11,24 +11,28 @@ doGenerateVehicleForFOB =
 	//Define process 
 	_shipGoodPosition = [0,0,0];
 	{
+		//Define current vehicle
+		_vehicleClass = _x select 0;
+		_isUAV = _x select 1;
+
 		switch (true) do {   
-			case (_x isKindOf "Tank");
-			case (_x isKindOf "Car"): {
+			case (_vehicleClass isKindOf "Tank");
+			case (_vehicleClass isKindOf "Car"): {
 						_kind = "Car";
 						_spawnAttempts = 0;
-						_vehicleGoodPosition = _thisPosition findEmptyPosition [_thisMinRadius, _thisMaxRadius,_x];
+						_vehicleGoodPosition = _thisPosition findEmptyPosition [_thisMinRadius, _thisMaxRadius,_vehicleClass];
 						while {(isNil "_vehicleGoodPosition" || count _vehicleGoodPosition==0) && _spawnAttempts <10} do 
 						{
-							_vehicleGoodPosition = _thisPosition findEmptyPosition [_thisMinRadius, _thisMaxRadius,_x];
+							_vehicleGoodPosition = _thisPosition findEmptyPosition [_thisMinRadius, _thisMaxRadius,_vehicleClass];
 							_spawnAttempts = _spawnAttempts +1;
 						};
 						if (!isNil "_vehicleGoodPosition" && count _vehicleGoodPosition>0) then 
 						{
 							diag_log format ["Position to spawn vehicle is not Nil %1",_vehicleGoodPosition];
-							_currentCar = createVehicle [_x, _vehicleGoodPosition , [], 0, "NONE"];
+							_currentCar = createVehicle [_vehicleClass, _vehicleGoodPosition , [], 0, "NONE"];
 						};
 				};   
-			case (_x isKindOf "Ship"): {
+			case (_vehicleClass isKindOf "Ship"): {
 					_kind = "Ship";
 					_spawnAttempts = 0;
 					//In the specific case of boat, max radius is replaced by 1000 to find water inArea
@@ -55,7 +59,7 @@ doGenerateVehicleForFOB =
 					if (!isNil "_shipGoodPosition" && count _shipGoodPosition>0 && !([_shipGoodPosition , [0,0,0]] call BIS_fnc_areEqual)) then 
 					{
 						diag_log format ["Position to spawn vehicle is not Nil %1",_shipGoodPosition];
-						_currentBoat = createVehicle [_x, _shipGoodPosition , [], 0, "NONE"];
+						_currentBoat = createVehicle [_vehicleClass, _shipGoodPosition , [], 0, "NONE"];
 
 						//Nudge code from DRO to move boat stuck on beach
 						[
@@ -77,25 +81,38 @@ doGenerateVehicleForFOB =
 						] remoteExec ["addAction", 0, true];
 					};
 				};    
-			case (_x isKindOf "Helicopter"): {
+			case (_vehicleClass isKindOf "Helicopter"): {
 					_kind = "Helicopter";
 					_spawnAttempts = 0;
-					_vehicleGoodPosition = _thisPosition findEmptyPosition [_thisMinRadius, _thisMaxRadius,_x];
+					_vehicleGoodPosition = _thisPosition findEmptyPosition [_thisMinRadius, _thisMaxRadius,_vehicleClass];
 					while {(isNil "_vehicleGoodPosition" || count _vehicleGoodPosition==0) && _spawnAttempts <10} do 
 					{
-						_vehicleGoodPosition = _thisPosition findEmptyPosition [_thisMinRadius, _thisMaxRadius,_x];
+						_vehicleGoodPosition = _thisPosition findEmptyPosition [_thisMinRadius, _thisMaxRadius,_vehicleClass];
 						_spawnAttempts = _spawnAttempts +1;
 					};
 					if (!isNil "_vehicleGoodPosition"&& count _vehicleGoodPosition>0) then 
 					{
 						diag_log format ["Position to spawn chopper is not Nil %1",_vehicleGoodPosition];
 						createVehicle ["Land_HelipadCircle_F", _vehicleGoodPosition , [], 0, "NONE"];
-						_currntHelicopter = createVehicle [_x, [_vehicleGoodPosition select 0,_vehicleGoodPosition select 1]  , [], 0, "NONE"];
+						_currntHelicopter = createVehicle [_vehicleClass, [_vehicleGoodPosition select 0,_vehicleGoodPosition select 1]  , [], 0, "NONE"];
 					};
 				};   
-			case (_x isKindOf "Plane"): {_kind = "Plane";};   
-			default {_kind = "Other";};   
-		};   
+			case (_vehicleClass isKindOf "Plane"): {
+				if (_isUAV) then 
+				{
+					_kind = "UAV";
+
+					//UAV spawn is only avalaible for blufor
+					_currentGroup = [([[_thisPosition select 0, _thisPosition select 1, (_thisPosition select 2)+400],1,60,10,0] call BIS_fnc_findSafePos), blufor, [_vehicleClass],[],[],[],[],[],0] call BIS_fnc_spawnGroup; 
+				};
+				if (_isUAV) then 
+				{
+					_kind = "Plane";
+					//WIP
+				};   
+				default {_kind = "Other";};   
+			};
+		}; 
 		sleep 2; //Wait vehicle spawn (avoid vehicle crash)
 	} forEach _thisVehicleList;
 	//Generate boat location on map
