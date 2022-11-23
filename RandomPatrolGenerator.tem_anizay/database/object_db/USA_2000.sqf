@@ -202,6 +202,7 @@ attachmentLongList_USA_2000	= [
 ////Items management////
 ////////////////////////
 itemList_USA_2000 = [
+	"FirstAidKit",
 	"ItemMap",
 	"ItemCompass",
 	"ItemWatch",

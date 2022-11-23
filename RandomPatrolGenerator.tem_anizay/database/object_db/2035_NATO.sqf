@@ -238,6 +238,7 @@ attachmentLongList_2035_NATO	= [
 
 //item avalaible for all unit
 itemList_2035_NATO = [
+	"FirstAidKit",
 	"ItemMap",
 	"ItemCompass",
 	"ItemWatch",

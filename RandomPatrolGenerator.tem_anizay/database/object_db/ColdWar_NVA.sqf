@@ -178,6 +178,7 @@ attachmentLongList_ColdWar_NVA	= [
 ////Items management////
 ////////////////////////
 itemList_ColdWar_NVA = [
+	"FirstAidKit",
 	"ItemMap",
 	"ItemCompass",
 	"ItemWatch",

@@ -182,6 +182,7 @@ attachmentLongList_ColdWar_USA	= [
 ////Items management////
 ////////////////////////
 itemList_ColdWar_USA = [
+	"FirstAidKit",
 	"ItemMap",
 	"ItemCompass",
 	"ItemWatch",

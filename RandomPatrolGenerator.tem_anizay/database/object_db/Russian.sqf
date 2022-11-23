@@ -214,6 +214,7 @@ attachmentLongList_Russian	= [
 ////Items management////
 ////////////////////////
 itemList_Russian = [
+	"FirstAidKit",
 	"ItemMap",
 	"ItemCompass",
 	"ItemWatch",

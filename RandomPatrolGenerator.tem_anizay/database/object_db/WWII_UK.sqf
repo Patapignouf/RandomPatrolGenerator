@@ -222,6 +222,7 @@ attachmentLongList_WWII_UK	= [
 ////Items management////
 ////////////////////////
 itemList_WWII_UK = [
+	"FirstAidKit",
 	"ItemMap",
 	"ItemCompass",
 	"ItemWatch",

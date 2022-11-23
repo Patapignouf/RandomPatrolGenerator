@@ -215,6 +215,7 @@ attachmentLongList_Taki	= [
 ////Items management////
 ////////////////////////
 itemList_Taki = [
+	"FirstAidKit",
 	"ItemMap",
 	"ItemCompass",
 	"ItemWatch",

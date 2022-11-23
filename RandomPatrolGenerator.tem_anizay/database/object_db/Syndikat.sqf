@@ -152,6 +152,7 @@ attachmentLongList_Syndikat	= [
 ////Items management////
 ////////////////////////
 itemList_Syndikat = [
+	"FirstAidKit",
 	"ItemMap",
 	"ItemCompass",
 	"ItemWatch",
