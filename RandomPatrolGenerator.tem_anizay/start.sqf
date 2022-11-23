@@ -389,7 +389,7 @@ if (initBluforBase == 0 || (initBluforBase == 2 && (round random 1 == 0))) then
 	{
 		initBlueforLocation = [getPos initCityLocation, (aoSize+2000), (aoSize+4000), 3, 0, 0.25, 0, [areaOfOperation], [[0,0,0],[0,0,0]]] call BIS_fnc_findSafePos;
 		//Safe position
-		initBlueforLocation = [selectMax [selectMin [initBlueforLocation select 0, worldSize-50 ],50],selectMax [selectMin [initBlueforLocation select 1, worldSize-50],50]]; 
+		initBlueforLocation = [selectMax [selectMin [initBlueforLocation select 0, worldSize-100 ],100],selectMax [selectMin [initBlueforLocation select 1, worldSize-100],100]]; 
 	};
 	//Generate FOB
 	spawnFOBObjects = [initBlueforLocation, (random 360), selectRandom avalaibleFOB] call BIS_fnc_ObjectsMapper;
@@ -485,7 +485,7 @@ publicvariable "deployableFOBItem";
 	"Deploy advanced FOB", 
 	"\a3\ui_f_oldman\data\IGUI\Cfg\holdactions\repair_ca.paa", 
 	"\a3\ui_f_oldman\data\IGUI\Cfg\holdactions\repair_ca.paa", 
-	"true", 
+	"true",
 	"true", 
 	{
 		// Action start code
