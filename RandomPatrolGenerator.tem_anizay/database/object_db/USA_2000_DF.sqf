@@ -189,6 +189,7 @@ attachmentLongList_USA_2000_DF	= [
 ////Items management////
 ////////////////////////
 itemList_USA_2000_DF = [
+	"FirstAidKit",
 	"ItemMap",
 	"ItemCompass",
 	"ItemWatch",

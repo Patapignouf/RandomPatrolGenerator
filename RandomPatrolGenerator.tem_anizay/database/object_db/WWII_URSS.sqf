@@ -250,6 +250,7 @@ attachmentLongList_WWII_URSS	= [
 ////Items management////
 ////////////////////////
 itemList_WWII_URSS = [
+	"FirstAidKit",
 	"ItemMap",
 	"LIB_GER_ItemCompass",
 	"LIB_GER_ItemCompass_deg",

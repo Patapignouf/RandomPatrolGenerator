@@ -236,6 +236,7 @@ attachmentLongList_French	= [
 
 //Items avalaible for everyone
 itemList_French = [
+	"FirstAidKit",
 	"ItemMap",
 	"ItemCompass",
 	"ItemWatch",

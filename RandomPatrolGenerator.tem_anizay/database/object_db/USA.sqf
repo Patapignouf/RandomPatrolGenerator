@@ -232,6 +232,7 @@ attachmentLongList_USA	= [
 ////Items management////
 ////////////////////////
 itemList_USA = [
+	"FirstAidKit",
 	"ItemMap",
 	"ItemCompass",
 	"ItemWatch",

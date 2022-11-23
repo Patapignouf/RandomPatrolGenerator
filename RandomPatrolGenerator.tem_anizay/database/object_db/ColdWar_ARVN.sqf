@@ -177,6 +177,7 @@ attachmentLongList_ColdWar_ARVN	= [
 ////Items management////
 ////////////////////////
 itemList_ColdWar_ARVN = [
+	"FirstAidKit",
 	"ItemMap",
 	"ItemCompass",
 	"ItemWatch",

@@ -243,6 +243,7 @@ attachmentLongList_WWII_Wehrmacht	= [
 ////Items management////
 ////////////////////////
 itemList_WWII_Wehrmacht = [
+	"FirstAidKit",
 	"ItemMap",
 	"LIB_GER_ItemCompass",
 	"LIB_GER_ItemCompass_deg",

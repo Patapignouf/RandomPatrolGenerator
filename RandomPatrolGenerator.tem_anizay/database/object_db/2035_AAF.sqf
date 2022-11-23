@@ -189,6 +189,7 @@ attachmentLongList_2035_AAF	= [
 ////Items management////
 ////////////////////////
 itemList_2035_AAF = [
+	"FirstAidKit",
 	"ItemMap",
 	"ItemCompass",
 	"ItemWatch",

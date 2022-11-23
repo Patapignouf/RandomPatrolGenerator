@@ -218,6 +218,7 @@ attachmentLongList_newFaction	= [
 
 //item avalaible for all unit
 itemList_newFaction = [
+	"FirstAidKit",
 	"ItemMap",
 	"ItemCompass",
 	"ItemWatch",
