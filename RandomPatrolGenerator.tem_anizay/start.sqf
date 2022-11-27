@@ -5,34 +5,35 @@
 #include "objectGenerator\vehicleManagement.sqf"
 #include "enemyManagement\groupGenerator.sqf"
 
-
-
 //Init base mission parameters 
-difficultyParameter = "Difficulty" call BIS_fnc_getParamValue;
-enableArmored = "EnableArmored" call BIS_fnc_getParamValue;
-enablePlane = "EnablePlane" call BIS_fnc_getParamValue;
-enableArmedChopper = "EnableArmedChopper" call BIS_fnc_getParamValue;
-lengthParameter = "MissionLength" call BIS_fnc_getParamValue;
 enableInitAttack = "EnableInitAttack" call BIS_fnc_getParamValue;
 enableInitBluAttack = "EnableInitBluAttack" call BIS_fnc_getParamValue;
 initBluforBase = "InitBluforBase" call BIS_fnc_getParamValue;
 missionInitSetup = "MissionInitSetup" call BIS_fnc_getParamValue;
-warEra = "WarEra" call BIS_fnc_getParamValue;
-campaignMode = "CampaignMode" call BIS_fnc_getParamValue;
 chooseStartPos = "ChooseStartPos" call BIS_fnc_getParamValue;
 timeOfDay = "TimeOfDay" call BIS_fnc_getParamValue;
 respawnSettings = "Respawn" call BIS_fnc_getParamValue;
 objInitSetup = "ObjInitSetup" call BIS_fnc_getParamValue;
 bluforVehicleSpawnType = "BluforVehicleSpawnType" call BIS_fnc_getParamValue;
 
-//faction definition
+//Mission settings waiting
 waitUntil {missionNamespace getVariable "generationSetup" == true};
+
+//faction definition
+warEra = missionNamespace getVariable "warEra"; // Default actual warfare
 bluFaction = missionNamespace getVariable "bluforFaction"; //Default faction 14 -> OTAN 2035
 opFaction = missionNamespace getVariable "opforFaction"; //Default faction 3 -> Syndikat
 indFaction = missionNamespace getVariable "independentFaction"; //Default faction 3 -> Syndikat
 civFaction = missionNamespace getVariable "civilianFaction"; //Default faction 3 -> Syndikat
 
+//Missions vehicle settings
+enableArmedAicraft = missionNamespace getVariable "enableArmedAicraft"; //Default armed aircraft are disabled
+enableArmoredVehicle = missionNamespace getVariable "enableArmoredVehicle"; //Default armored vehicle are disabled
 
+//Mission configuration
+enableCampaignMode = missionNamespace getVariable "enableCampaignMode"; //Default disable
+missionLength = missionNamespace getVariable "missionLength"; //Default 2 missions + 1 optional
+missionDifficultyParam = missionNamespace getVariable "missionDifficultyParam"; //Default medium
 
 /////////////////////////
 ////Setup IA Opti////////
@@ -159,7 +160,7 @@ publicvariable "initCityLocation";
 possiblePOILocation = ([initCityLocation, 2500] call getLocationsAround) - [initCityLocation];
 dangerAreaList = [];
 
-if ( count possiblePOILocation < lengthParameter + 1) then 
+if ( count possiblePOILocation < missionLength + 1) then 
 {
 	possiblePOILocation = ([initCityLocation, 4000] call getLocationsAround) - [initCityLocation];
 };
@@ -182,7 +183,7 @@ _distance = 0;
 	foreach tempPossibleAmbush;
 } foreach possiblePOILocation;
 
-numberOfAmbush = (lengthParameter+1)*4;
+numberOfAmbush = (missionLength+1)*4;
 AmbushPositions = [];
 for [{_i = 0}, {_i < numberOfAmbush}, {_i = _i + 1}] do
 {
@@ -233,9 +234,9 @@ switch (objInitSetup) do
 
 
 //Generate objectives according to the mission's length parameter
-for [{_i = 0}, {_i <= lengthParameter}, {_i = _i + 1}] do //Peut être optimisé
+for [{_i = 0}, {_i <= missionLength}, {_i = _i + 1}] do //Peut être optimisé
 {
-	PossibleObjectivePosition = [avalaibleTypeOfObj, PossibleObjectivePosition] call generateObjective;
+	PossibleObjectivePosition = [avalaibleTypeOfObj, PossibleObjectivePosition, missionDifficultyParam] call generateObjective;
 };
 
 //check wave spawn 
@@ -288,11 +289,11 @@ publicvariable "VA1";
 isIndAttacked = false;
 publicvariable "isIndAttacked";
 AvalaibleInitAttackPositions = [];
-AvalaibleInitAttackPositions = [getPos initCityLocation, 1200,1400,difficultyParameter] call getListOfPositionsAroundTarget;
+AvalaibleInitAttackPositions = [getPos initCityLocation, 1200,1400, missionDifficultyParam] call getListOfPositionsAroundTarget;
 if ( count AvalaibleInitAttackPositions != 0 && (enableInitAttack == 1 || ((enableInitAttack == 2) && (round (random 1))==0))) then
 {
 	diag_log "Init attack on independent city";
-	_handleCivGeneration = [AvalaibleInitAttackPositions,getPos initCityLocation,[baseEnemyGroup,baseEnemyATGroup],baseEnemyVehicleGroup,difficultyParameter] execVM 'enemyManagement\doAmbush.sqf'; 
+	_handleCivGeneration = [AvalaibleInitAttackPositions,getPos initCityLocation,[baseEnemyGroup,baseEnemyATGroup],baseEnemyVehicleGroup, missionDifficultyParam] execVM 'enemyManagement\doAmbush.sqf'; 
 	isIndAttacked = true;
 	publicvariable "isIndAttacked";
 	waitUntil {isNull _handleCivGeneration};
@@ -312,12 +313,12 @@ areaOfOperation = [possiblePOILocation] call getAreaOfMission;
 aoSize = 1500;
 
 //IA taskPatrol with level 1 enemy
-[EnemyWaveLevel_1,AmbushPositions,difficultyParameter] execVM 'enemyManagement\generatePatrol.sqf'; 
+[EnemyWaveLevel_1,AmbushPositions, missionDifficultyParam] execVM 'enemyManagement\generatePatrol.sqf'; 
 
 //Generate Wave
 if (1 <= (count EnemyWaveSpawnPositions)) then 
 {
-	[EnemyWaveGroups,EnemyWaveSpawnPositions,initCityLocation,difficultyParameter] execVM 'enemyManagement\generateWave.sqf'; 
+	[EnemyWaveGroups,EnemyWaveSpawnPositions,initCityLocation, missionDifficultyParam] execVM 'enemyManagement\generateWave.sqf'; 
 };
 
 //Generate mortar | 50% chance to spawn 
@@ -639,11 +640,11 @@ isBluforAttacked = false;
 publicvariable "isBluforAttacked";
 
 AvalaibleInitAttackPositions = [];
-AvalaibleInitAttackPositions = [initBlueforLocation, 800,1000,difficultyParameter] call getListOfPositionsAroundTarget;
+AvalaibleInitAttackPositions = [initBlueforLocation, 800,1000, missionDifficultyParam] call getListOfPositionsAroundTarget;
 if ( count AvalaibleInitAttackPositions != 0 && (enableInitBluAttack == 1 || ((enableInitBluAttack == 2) && (round (random 4))==0))) then
 {
 	diag_log "Init attack on blufor FOB";
-	[AvalaibleInitAttackPositions,initBlueforLocation,[baseEnemyGroup,baseEnemyATGroup],baseEnemyVehicleGroup,difficultyParameter] execVM 'enemyManagement\doAmbush.sqf'; 
+	[AvalaibleInitAttackPositions,initBlueforLocation,[baseEnemyGroup,baseEnemyATGroup],baseEnemyVehicleGroup, missionDifficultyParam] execVM 'enemyManagement\doAmbush.sqf'; 
 	isBluforAttacked = true;
 	publicvariable "isBluforAttacked";
 };
@@ -663,7 +664,7 @@ switch (missionInitSetup) do
 		};
 	case 2:
 		{
-			for [{_i = 0}, {_i <= lengthParameter}, {_i = _i + 1}] do //Peut être optimisé
+			for [{_i = 0}, {_i <= missionLength}, {_i = _i + 1}] do //Peut être optimisé
 			{
 				[objNull, [], _mainPlayerSide] execVM 'engine\revealObjective.sqf';
 			};
@@ -677,7 +678,7 @@ switch (missionInitSetup) do
 //reveal objective for ind
 if (_mainPlayerSide == independent) then 
 {
-		for [{_i = 0}, {_i <= lengthParameter}, {_i = _i + 1}] do //Peut être optimisé
+		for [{_i = 0}, {_i <= missionLength}, {_i = _i + 1}] do //Peut être optimisé
 	{
 		[objNull, [], _mainPlayerSide] execVM 'engine\revealObjective.sqf';
 	};
@@ -742,7 +743,7 @@ publicvariable "missionGenerated";
 ///Init Campaign mode////
 /////////////////////////
 
-if (campaignMode == 1) then 
+if (enableCampaignMode) then 
 {
 	//Init mission objective status
 	_completedObjectives = missionNamespace getVariable ["completedObjectives",[]];
@@ -752,11 +753,11 @@ if (campaignMode == 1) then
 	//Add this action on campaign mode blufor side
 	[TPFlag1, ["Complete mission",{
 			//Param initialization
-			params ["_object","_caller","_ID","_lengthParameter"];
+			params ["_object","_caller","_ID","_missionLength"];
 			_completedObjectives = missionNamespace getVariable ["completedObjectives",[]];
 
 			//End mission
-			if (_lengthParameter <= (count _completedObjectives)) then 
+			if (_missionLength <= (count _completedObjectives)) then 
 			{
 				if (isMultiplayer) then {
 					['OBJ_OK'] remoteExec ["BIS_fnc_endMissionServer", 2];
@@ -767,16 +768,16 @@ if (campaignMode == 1) then
 			{
 				hint "Not enough mission completed";
 			};
-		},lengthParameter,1.5,true,true,"","_target distance _this <5"]] remoteExec ["addAction", 0, true];
+		},missionLength,1.5,true,true,"","_target distance _this <5"]] remoteExec ["addAction", 0, true];
 
 	//Add this action on campaign mode independent side
 	[VA1, ["Complete mission",{
 			//Param initialization
-			params ["_object","_caller","_ID","_lengthParameter"];
+			params ["_object","_caller","_ID","_missionLength"];
 			_completedObjectives = missionNamespace getVariable ["completedObjectives",[]];
 
 			//End mission
-			if (_lengthParameter <= (count _completedObjectives)) then 
+			if (_missionLength <= (count _completedObjectives)) then 
 			{
 				if (isMultiplayer) then {
 					['OBJ_OK'] remoteExec ["BIS_fnc_endMissionServer", 2];
@@ -787,7 +788,7 @@ if (campaignMode == 1) then
 			{
 				hint "Not enough mission completed";
 			};
-		},lengthParameter,1.5,true,true,"","_target distance _this <5"]] remoteExec ["addAction", 0, true];
+		},missionLength,1.5,true,true,"","_target distance _this <5"]] remoteExec ["addAction", 0, true];
 
 	//Loop until maximum number of possible objective are generated
 	while {sleep 10; (!_maxObjectivesGenerated)} do 
@@ -801,7 +802,7 @@ if (campaignMode == 1) then
 		} else 
 		{
 			//Generate the new objective
-			PossibleObjectivePosition = [avalaibleTypeOfObj, PossibleObjectivePosition] call generateObjective;
+			PossibleObjectivePosition = [avalaibleTypeOfObj, PossibleObjectivePosition, missionDifficultyParam] call generateObjective;
 
 			//Reveal objective to the player
 			[objNull, [], _mainPlayerSide] execVM 'engine\revealObjective.sqf';

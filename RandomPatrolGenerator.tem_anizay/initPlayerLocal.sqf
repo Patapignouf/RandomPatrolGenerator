@@ -1,13 +1,3 @@
-#include "database\arsenalLibrary.sqf"
-#include "objectGenerator\vehicleManagement.sqf"
-
-enableThermal = "EnableThermal" call BIS_fnc_getParamValue;
-enablePlane = "EnablePlane" call BIS_fnc_getParamValue;
-enableArmedChopper = "EnableArmedChopper" call BIS_fnc_getParamValue;
-enableHalo = "EnableHALO" call BIS_fnc_getParamValue;
-enableArmored = "EnableArmored" call BIS_fnc_getParamValue;
-initBluforBase = "InitBluforBase" call BIS_fnc_getParamValue;
-chooseStartPos = "ChooseStartPos" call BIS_fnc_getParamValue;
 forceBluforSetup = "ForceBluforSetup" call BIS_fnc_getParamValue;
 
 //Wait player load
@@ -22,7 +12,7 @@ player allowdamage false;
 titleCut ["Please wait while mission is generating", "BLACK FADED", 5];
 sleep 3; //Wait player load correctly the mission
 
-//Define faction
+//Define player who configure mission
 //Independent leader can choose mission
 if (!didJIP) then 
 {
@@ -42,9 +32,26 @@ if (!didJIP) then
 		};
 	};
 };
+
+//Wait mission setup
 waitUntil {missionNamespace getVariable "generationSetup" == true};
+
+//Load every mission settings dependencies
+#include "database\arsenalLibrary.sqf"
+#include "objectGenerator\vehicleManagement.sqf"
+
+enableThermal = "EnableThermal" call BIS_fnc_getParamValue;
+enableHalo = "EnableHALO" call BIS_fnc_getParamValue;
+initBluforBase = "InitBluforBase" call BIS_fnc_getParamValue;
+chooseStartPos = "ChooseStartPos" call BIS_fnc_getParamValue;
+
+
+
 bluFaction = missionNamespace getVariable "bluforFaction";
 indFaction = missionNamespace getVariable "independentFaction";
+enableArmedAicraft = missionNamespace getVariable "enableArmedAicraft"; //Default armed aircraft are disabled
+enableArmoredVehicle = missionNamespace getVariable "enableArmoredVehicle"; //Default armored vehicle are disabled
+
 
 //Optimize scripts
 private _disableThermal = compile preprocessFileLineNumbers "engine\disableThermal.sqf";
@@ -195,8 +202,9 @@ if (hasInterface) then
 		[VA2, player] call setupSaveAndLoadRole;
 
 		//Manage vehicle spawn options 
-		if (enableArmored == 1) then 
+		if (enableArmoredVehicle) then 
 		{	
+			//TODO
 		};
 
 		//Add vehicle spawn option 
@@ -265,7 +273,7 @@ if (hasInterface) then
 
 		//Armed Chopper
 		waitUntil {!isNil "bluforArmedChopper"};
-		if (initBluforBase == 1 && enableArmedChopper == 1) then 
+		if (initBluforBase == 1 && enableArmedAicraft) then 
 		{	
 			{
 				_IDVehicleSpawn = TPFlag1 addAction [format ["Spawn a %1", getText (configFile >> "cfgVehicles" >> _x >> "displayName")],{
@@ -310,7 +318,7 @@ if (hasInterface) then
 		
 		//Manage vehicle spawn options 
 		waitUntil {!isNil "bluforFixedWing"};
-		if (enablePlane == 1) then 
+		if (enableArmedAicraft) then 
 		{	
 			{
 				_IDVehicleSpawn = TPFlag1 addAction [format ["Spawn an %1 (this will open the map to choose a position)", getText (configFile >> "cfgVehicles" >> _x >> "displayName")],{

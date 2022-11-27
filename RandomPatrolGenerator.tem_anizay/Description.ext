@@ -19,27 +19,6 @@ class Params
 		texts[] = {"No respawn","Respawn on objective success"};
 		default = 1;
 	};
-	class EnableArmored
-	{
-		title = "Enable armored enemies (WIP)";
-		values[] = {0,1};
-		texts[] = {"No","Yes"};
-		default = 0;
-	};
-	class EnablePlane
-	{
-		title = "Enable planes (WIP)";
-		values[] = {0,1};
-		texts[] = {"No","Yes"};
-		default = 0;
-	};
-	class EnableArmedChopper
-	{
-		title = "Enable armed chopper (WIP)";
-		values[] = {0,1};
-		texts[] = {"No","Yes"};
-		default = 0;
-	};
 	class EnableHalo
 	{
 		title = "Enable HALO JUMP (WIP)";
@@ -68,33 +47,12 @@ class Params
 		texts[] = {"Default","Force blufor"};
 		default = 0;
 	};
-	class Difficulty
-	{
-		title = "Mission's difficulty";
-		values[] = {0,1,2,3,4};
-		texts[] = {"Easy","Medium","Hard","Very Hard","Insane"};
-		default = 1;
-	};
-	class MissionLength
-	{
-		title = "Mission's length";
-		values[] = {1,2,3,4};
-		texts[] = {"Short","Medium","Long","Very Long"};
-		default = 2;
-	};
 	class MissionInitSetup
 	{
 		title = "Mission Init Setup";
 		values[] = {1,2};
 		texts[] = {"Blufor must contact civilian to take objectives","Blufor has objective on spawn"};
 		default = 1;
-	};
-	class CampaignMode
-	{
-		title = "Enable Campaign mode (WIP)";
-		values[] = {0,1};
-		texts[] = {"No","Yes"};
-		default = 0;
 	};
 	class EnableInitAttack
 	{
@@ -114,15 +72,8 @@ class Params
 	{
 		title = "Start position of blufor";
 		values[] = {0,1,2};
-		texts[] = {"Close to AO","Base","Random"};
+		texts[] = {"Close to AO","Far to AO","Random"};
 		default = 0;
-	};
-	class WarEra
-	{
-		title = "Set the era of the game";
-		values[] = {0,1,2,3,4};
-		texts[] = {"2nd War", "Cold War", "Modern Warfare","Actual Warfare","Future Warfare"};
-		default = 3;               
 	};
 	class CivJoinableFaction
 	{

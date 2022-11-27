@@ -6,7 +6,7 @@ _objectivesDestinationArea = _this select 1;
 //Obj management
 obj_list_items = [];
 respawnSettings = ["Respawn",1] call BIS_fnc_getParamValue;
-campaignMode = "CampaignMode" call BIS_fnc_getParamValue;
+enableCampaignMode = missionNamespace getVariable "enableCampaignMode"; //Default disable
 
 //Define current test
 current_obj = objNull;
@@ -173,7 +173,7 @@ while {sleep 10; !RTBComplete} do
 	missionComplete = count _completedObjectives + 1 >= count _missionObjectives;
 
 	//Check if mission is complete
-	if (missionComplete && campaignMode == 0) then 
+	if (missionComplete && !enableCampaignMode) then 
 	{
 		//Generate RTB mission
 		if (!isRTBMissionGenerated) then 
