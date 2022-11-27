@@ -66,7 +66,7 @@ factionInfos = [
 	[c_ColdWar_NVA,_ColdWar_NVA,"Cold War NVA"],
 	[c_ColdWar_USA,_ColdWar_USA,"Cold War USA"],
 	[c_2035_AAF,_2035_AAF,"2035 AAF"],
-	[c_2035_NATO,_2035_NATO,"2035_NATO"],
+	[c_2035_NATO,_2035_NATO,"2035 NATO"],
 	[c_USA_2000_DF,_USA_2000_DF,"1993 USA Delta Force"]
 ];
 

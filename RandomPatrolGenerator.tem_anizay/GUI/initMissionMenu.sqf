@@ -56,8 +56,8 @@ _comboBoxWarEra lbSetCurSel (3); //Actual Warfare
 
 
 //Default values
-_comboBoxEnableArmedAicraft lbSetCurSel (1); //Disable
-_comboBoxEnableArmoredVehicle lbSetCurSel (1); //Disable
+_comboBoxEnableArmedAicraft lbSetCurSel (0); //Disable
+_comboBoxEnableArmoredVehicle lbSetCurSel (0); //Disable
 
 
 //Populate mission configuration
@@ -84,6 +84,6 @@ _currentComboBox = _comboBoxMissionDifficulty;
 } foreach missionDifficultySelection;
 
 //Default values 
-_comboBoxEnableCampaignMode lbSetCurSel (1); //Syndikat
+_comboBoxEnableCampaignMode lbSetCurSel (0); //Syndikat
 _comboBoxMissionLength lbSetCurSel (1); //Syndikat
 _comboBoxMissionDifficulty lbSetCurSel (1); //Syndikat
