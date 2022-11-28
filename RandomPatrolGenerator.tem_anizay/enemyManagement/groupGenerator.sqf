@@ -22,8 +22,8 @@ doGenerateEnemyGroup =
 	{
 		{		
 			//Manage hostile civilian
-			// 9% chance not to be hostile at all
-			if (round (random 10 )!= 0) then 
+			// 20% chance not to be hostile at all
+			if (round (random 4 )== 0) then 
 			{
 				[_x] execVM "enemyManagement\manageHostileCivilian.sqf";
 			};
