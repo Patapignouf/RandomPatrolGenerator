@@ -184,7 +184,9 @@ attachmentShortList_USA_2000	= [
 	"CUP_muzzle_snds_KZRZP_SVD",
 	"CUP_muzzle_snds_KZRZP_AK762",
 	"CUP_muzzle_snds_KZRZP_AK545",
-	"CUP_muzzle_snds_KZRZP_PK"
+	"CUP_muzzle_snds_KZRZP_PK",
+	"CUP_optic_LeupoldMk4_CQ_T",
+	"CUP_optic_SB_11_4x20_PM_pip"
 ];
 
 attachmentLongList_USA_2000	= [
