@@ -103,7 +103,11 @@ doGenerateVehicleForFOB =
 					_kind = "UAV";
 
 					//UAV spawn is only avalaible for blufor
-					_currentGroup = [([[_thisPosition select 0, _thisPosition select 1, (_thisPosition select 2)+400],1,60,10,0] call BIS_fnc_findSafePos), blufor, [_vehicleClass],[],[],[],[],[],0] call BIS_fnc_spawnGroup; 
+					_tempPos = [[_thisPosition select 0, _thisPosition select 1],1,60,10,0] call BIS_fnc_findSafePos;
+					_tempPos pushBack ((_thisPosition select 2)+400); //Set 3 dimension position
+					//_currentGroup =[_tempPos , blufor, [_vehicleClass],[],[],[],[],[],0] call BIS_fnc_spawnGroup; 
+					_currentUAV = createVehicle [_vehicleClass, _tempPos, [], 0,""];  
+					createVehicleCrew _currentUAV; 
 				};
 				if (_isUAV) then 
 				{
