@@ -83,6 +83,13 @@ if (enableThermal==0) then
 	[] spawn _disableThermal;
 };
 
+//Disable miniMap GPS for ACE Player (use microDAGR instead)
+if (isClass (configFile >> "CfgPatches" >> "ace_medical")) then 
+{
+	player enableInfoPanelComponent ["left", "MinimapDisplay", false];
+	player enableInfoPanelComponent ["right", "MinimapDisplay", false];
+};
+
 //Init player respawn ticket
 [player, -1, true] call BIS_fnc_respawnTickets;
 
