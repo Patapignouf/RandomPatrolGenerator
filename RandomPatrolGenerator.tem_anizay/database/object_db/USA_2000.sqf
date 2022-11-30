@@ -6,6 +6,7 @@ c_autorifleman = "autorifleman";
 c_marksman = "marksman"; 
 c_medic = "medic";
 c_pilot = "pilot";
+c_drone = "UAV operator";
 
 //////////////////////////////
 ////Define civ group data/////
@@ -110,7 +111,7 @@ bluforFixedWing_USA_2000 = [
 ////////////////////////
 
 //USA
-listOfRoles_USA_2000 = [c_leader,c_at,c_rifleman,c_engineer,c_autorifleman,c_marksman,c_medic,c_pilot];
+listOfRoles_USA_2000 = [c_leader,c_at,c_rifleman,c_engineer,c_autorifleman,c_marksman,c_medic,c_pilot,c_drone];
 
 loadout_USA_2000 = [		
 	[c_leader,"CUP_B_USMC_Soldier_SL_des"],
@@ -120,7 +121,8 @@ loadout_USA_2000 = [
 	[c_autorifleman,"CUP_B_USMC_Soldier_AR_des"],
 	[c_marksman,"CUP_B_USMC_Soldier_Marksman_des"],
 	[c_medic,"CUP_B_USMC_Medic_des"],
-	[c_pilot,"CUP_B_US_Pilot"]
+	[c_pilot,"CUP_B_US_Pilot"],
+	[c_drone,"CUP_B_USMC_Soldier_UAV_des"]
 ];
 
 ////////////////////////
