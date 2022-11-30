@@ -76,15 +76,25 @@ baseEnemyHeavyArmoredVehicleGroup_USA_2000 = ["CUP_B_M1126_ICV_M2_Desert",
 //Vehicle management////
 ////////////////////////
 //USA
-bluforUnarmedVehicle_USA_2000 = ["CUP_B_M1151_USA"];
+bluforUnarmedVehicle_USA_2000 = [
+	"CUP_B_M1151_USA",
+	"CUP_B_MTVR_USA"
+	];
 
-bluforArmedVehicle_USA_2000 = ["CUP_B_M1151_Deploy_USA","CUP_B_nM1025_SOV_M2_USA_DES","CUP_B_nM1025_M240_USA_DES","CUP_B_M1165_GMV_DSRT_USMC"];
+bluforArmedVehicle_USA_2000 = [
+	"CUP_B_M1151_Deploy_USA",
+	"CUP_B_nM1025_SOV_M2_USA_DES",
+	"CUP_B_nM1025_M240_USA_DES",
+	"CUP_B_M1165_GMV_DSRT_USMC"
+	];
 
-bluforUnarmedVehicleChopper_USA_2000 = ["CUP_B_UH60M_Unarmed_US",
-"CUP_MH60S_Unarmed_USN", 
-"CUP_B_UH1Y_UNA_USMC", 
-"CUP_B_CH53E_USMC",
-"CUP_B_CH53E_VIV_USMC"];
+bluforUnarmedVehicleChopper_USA_2000 = [
+	"CUP_B_UH60M_Unarmed_US",
+	"CUP_MH60S_Unarmed_USN", 
+	"CUP_B_UH1Y_UNA_USMC", 
+	"CUP_B_CH53E_USMC",
+	"CUP_B_CH53E_VIV_USMC"
+];
 
 bluforArmedChopper_USA_2000 = [
 	"CUP_B_AH64_DL_USA", 
@@ -97,13 +107,14 @@ bluforDrone_USA_2000 = [
 	"CUP_B_USMC_DYN_MQ9"
 	];
 
-bluforBoat_USA_2000 = ["CUP_B_RHIB_HIL",
-"CUP_B_Zodiac_USMC"
+bluforBoat_USA_2000 = [
+	"CUP_B_RHIB_HIL",
+	"CUP_B_Zodiac_USMC"
 ];
 
 //FixedWing vehicle avalaible for blufor
 bluforFixedWing_USA_2000 = [
-"CUP_B_A10_DYN_USA"
+	"CUP_B_A10_DYN_USA"
 ];
 
 ////////////////////////
