@@ -9,7 +9,8 @@ diag_log format ["Setup Player %1 at position 0", name player];
 //init tp to be able to spawn on the ground on each map
 player setPos [0,0];
 player allowdamage false;
-titleCut ["Please wait while mission is generating", "BLACK FADED", 5];
+
+cutText ["Please wait while mission is generating", "BLACK FADED", 100];
 sleep 3; //Wait player load correctly the mission
 
 //Define player who configure mission
@@ -391,8 +392,9 @@ if (hasInterface) then
 [] spawn _generateCivDialogs;
 
 //Let's get it started !
+
 player allowdamage true;
-titleCut ["", "BLACK IN", 5];
+cutText ["", "BLACK IN", 5];
 
 
 //If a player join in progress he will be teleported to his teamleader (WIP feature)
