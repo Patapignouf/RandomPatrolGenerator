@@ -105,9 +105,25 @@ doGenerateVehicleForFOB =
 					//UAV spawn is only avalaible for blufor
 					_tempPos = [[_thisPosition select 0, _thisPosition select 1],1,60,10,0] call BIS_fnc_findSafePos;
 					_tempPos pushBack ((_thisPosition select 2)+400); //Set 3 dimension position
-					//_currentGroup =[_tempPos , blufor, [_vehicleClass],[],[],[],[],[],0] call BIS_fnc_spawnGroup; 
-					_currentUAV = createVehicle [_vehicleClass, _tempPos, [], 0,""];  
-					createVehicleCrew _currentUAV; 
+					_currentUAVArray = [_tempPos, 0, _vehicleClass, blufor] call BIS_fnc_spawnVehicle;
+					_currentUAV = _currentUAVArray select 0;
+					_currentUAVGroup = _currentUAVArray select 2;
+
+					//Set waypoint to current pos to the UAV
+					_wp = _currentUAVGroup addWaypoint [_tempPos, 0];
+
+					//Set unlimited fuel to the UAV
+					_h = [_currentUAV] spawn
+					{
+						while {true} do
+						{
+							if ((fuel (_this select 0)) < 0.8) then
+							{
+								(_this select 0) setFuel 1;
+							};
+							sleep 120;
+						};
+					};
 				};
 				if (_isUAV) then 
 				{
