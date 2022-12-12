@@ -32,9 +32,8 @@ avalaibleVIP = [
 ];
 
 avalaibleStealVehicle = [
-	"O_G_Van_01_transport_F", 
-	"O_G_Van_02_transport_F", 
-	"O_G_Van_01_fuel_F"
+	"C_Van_01_box_F",
+	"C_Van_01_fuel_F"
 ];
 
 avalaibleDestroyVehicle = [
