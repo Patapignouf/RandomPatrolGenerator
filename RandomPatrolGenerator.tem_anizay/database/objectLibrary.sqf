@@ -10,29 +10,43 @@ c_variableToInit = ["bluforUnarmedVehicle","bluforArmedVehicle","bluforUnarmedVe
 //////////////////////////////
 ////Define objectives data////
 //////////////////////////////
-avalaibleAmmoBox = ["CUP_BOX_TK_MILITIA_Wps_F", 
-"CUP_BOX_TK_MILITIA_Ammo_F"
+avalaibleAmmoBox = [
+	"Box_IDAP_Uniforms_F", 
+	"Box_NATO_AmmoOrd_F", 
+	"Box_NATO_Grenades_F", 
+	"Box_NATO_WpsLaunch_F", 
+	"Box_IND_Support_F"
 ];
 
 avalaibleSupplyBox = [
 	"ACE_medicalSupplyCrate_advanced", 
-	"ACE_medicalSupplyCrate"
+	"ACE_medicalSupplyCrate",
+	"Box_IND_Support_F"
 ];
 
-avalaibleHVT = ["CUP_O_TK_Officer",
+avalaibleHVT = [
+	"CUP_O_TK_Officer",
 	"CUP_O_RU_Officer_EMR", 
 	"O_Officer_Parade_F", 
 	"O_G_officer_F"
 ];
 
 avalaibleVIP = [
-	"CUP_C_TK_Man_03_Waist",
 	"C_Driver_1_F",
-	"CUP_C_R_Functionary_jacket_02"
+	"C_Man_ConstructionWorker_01_Black_F", 
+	"C_man_pilot_F", 
+	"C_Man_UAV_06_medical_F", 
+	"C_scientist_02_formal_F", 
+	"C_Man_smart_casual_2_F_tanoan", 
+	"C_IDAP_Man_EOD_01_F", 
+	"C_IDAP_Man_AidWorker_09_F", 
+	"C_scientist_01_formal_F"
 ];
 
 avalaibleStealVehicle = [
-	"C_Van_01_box_F",
+	"C_Truck_02_box_F", 
+	"C_Truck_02_fuel_F", 
+	"C_Offroad_01_repair_F", 
 	"C_Van_01_fuel_F"
 ];
 
@@ -40,7 +54,14 @@ avalaibleDestroyVehicle = [
 	"CUP_O_Hilux_DSHKM_TK_INS"
 ];
 
-avalaibleCollectIntel = ["Land_Suitcase_F"];
+avalaibleCollectIntel = [
+	"Land_Suitcase_F",
+	"Land_MultiScreenComputer_01_olive_F", 
+	"Land_Laptop_unfolded_F", 
+	"Land_FirstAidKit_01_open_F", 
+	"Land_Defibrillator_F", 
+	"MapBoard_altis_F"
+];
 
 avalaibleTypeOfObj = [];
 avalaibleAttackTypeOfObj = ["ammo","hvt","collectIntel","informant","clearArea"];
