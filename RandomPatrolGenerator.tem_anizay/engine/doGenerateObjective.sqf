@@ -22,23 +22,27 @@ generateObjective =
 		case "supply":
 			{
 				currentObj = createVehicle [selectRandom avalaibleSupplyBox, currentRandomPos, [], 0, "NONE"];
+				currentObj setVariable ["isObjectiveObject", true, true];
 			};
 		case "ammo":
 			{
 				currentObj = createVehicle [selectRandom avalaibleAmmoBox, currentRandomPos, [], 0, "NONE"];
+				currentObj setVariable ["isObjectiveObject", true, true];
 			};
 		case "hvt":
 			{
 				currentObj = leader ([currentRandomPos, east, [selectRandom avalaibleHVT],[],[],[],[],[], random 360] call BIS_fnc_spawnGroup);
+				currentObj setVariable ["isObjectiveObject", true, true];
 			};
 		case "vip":
 			{
 				currentObj = leader ([currentRandomPos, civilian, [selectRandom avalaibleVIP],[],[],[],[],[], random 360] call BIS_fnc_spawnGroup);
-				currentObj setVariable ["missionObjectiveCivilian", true, true];
+				currentObj setVariable ["isObjectiveObject", true, true];
 			};
 		case "steal":
 			{
 				currentObj = createVehicle [selectRandom avalaibleStealVehicle, currentRandomPos, [], 0, "NONE"];
+				currentObj setVariable ["isObjectiveObject", true, true];
 			};
 		case "clearArea":
 			{
@@ -49,12 +53,13 @@ generateObjective =
 			{
 				//Add intel action to the intel case
 				currentObj = createVehicle [selectRandom avalaibleCollectIntel, currentRandomPos, [], 0, "NONE"];
-				currentObj setVariable ["missionObjectiveCivilian", true, true];
+				currentObj setVariable ["isObjectiveObject", true, true];
 			};
 		case "informant":
 			{
 				//Add dialog to the informant
 				currentObj = leader ([currentRandomPos, civilian, [selectRandom avalaibleVIP],[],[],[],[],[], random 360] call BIS_fnc_spawnGroup);
+				currentObj setVariable ["isObjectiveObject", true, true];
 			};
 		default { hint "default" };
 	};
