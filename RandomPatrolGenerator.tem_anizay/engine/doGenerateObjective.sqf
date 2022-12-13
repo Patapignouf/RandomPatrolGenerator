@@ -72,11 +72,11 @@ generateObjective =
 	diag_log format ["Objective generation started : %1 on position %2", _currentObject, _selectedObjectivePosition];
 	
 	//Generate mission environement
-	_handlePOIGeneration = [EnemyWaveLevel_1, baseEnemyVehicleGroup, baseEnemyLightArmoredVehicleGroup, baseEnemyHeavyArmoredVehicleGroup, civilian_group, _selectedObjectivePosition, difficultyParameter] execVM 'enemyManagement\generatePOI.sqf'; 
+	_handlePOIGeneration = [EnemyWaveLevel_1, baseEnemyVehicleGroup, baseEnemyLightArmoredVehicleGroup, baseEnemyHeavyArmoredVehicleGroup, civilian_group, getPos _selectedObjectivePosition, difficultyParameter] execVM 'enemyManagement\generatePOI.sqf'; 
 	waitUntil {isNull _handlePOIGeneration};
 
 	//Generate mission objectives
-	[_currentObject, _selectedObjectivePosition] call generateObjectiveObject; 
+	[_currentObject, getPos _selectedObjectivePosition] call generateObjectiveObject; 
 	_possibleObjectivePosition;
 };
 
@@ -94,11 +94,19 @@ generateObjectiveObject =
 		_objectiveUniqueID = format ["%1%2",objectiveType, random 10000];
 		_thisObjective pushBack _objectiveUniqueID;
 
+		//Try to find position with building if avalaible
+		_tempAvailablePosition = getPos (nearestBuilding _thisObjectivePosition);
+		if (_tempAvailablePosition distance _thisObjectivePosition < 100) then 
+		{
+			_thisObjectivePosition = _tempAvailablePosition;
+		};
+
+
 		switch (objectiveType) do
 		{
 			case "supply":
 				{
-					(objectiveObject) setPos ([(getPos _thisObjectivePosition), 1, 25, 5, 0, 20, 0] call BIS_fnc_findSafePos);
+					(objectiveObject) setPos ([(_thisObjectivePosition), 1, 25, 5, 0, 20, 0] call BIS_fnc_findSafePos);
 
 					//Objective failed
 					objectiveObject setVariable ["thisTask", _objectiveUniqueID, true];
@@ -119,19 +127,19 @@ generateObjectiveObject =
 				};
 			case "ammo":
 				{
-					(objectiveObject) setPos ([(getPos _thisObjectivePosition), 1, 25, 5, 0, 20, 0] call BIS_fnc_findSafePos);
+					(objectiveObject) setPos ([(_thisObjectivePosition), 1, 25, 5, 0, 20, 0] call BIS_fnc_findSafePos);
 					objectiveObject setVariable ["thisTask", _objectiveUniqueID, true];
 					[_thisObjective] execVM 'engine\checkDeadVehicle.sqf';  
 				};
 			case "hvt":
 				{
-					(objectiveObject) setPos (getPos _thisObjectivePosition);
+					(objectiveObject) setPos (_thisObjectivePosition);
 					[objectiveObject, objectiveObject, 75, [], true] call lambs_wp_fnc_taskGarrison;
 				};
 			case "vip":
 				{
 					diag_log format ["VIP task setup ! : %1", objectiveObject];
-					(objectiveObject) setPos (getPos _thisObjectivePosition);
+					(objectiveObject) setPos (_thisObjectivePosition);
 					[objectiveObject, objectiveObject, 75, [], true] call lambs_wp_fnc_taskGarrison;
 
 					//Use ACE function to set hancuffed
@@ -160,7 +168,7 @@ generateObjectiveObject =
 			case "steal":
 				{
 					diag_log format ["Steal task setup ! : %1", objectiveObject];
-					objectiveObject setPos ([(getPos _thisObjectivePosition), 1, 60, 7, 0, 20, 0] call BIS_fnc_findSafePos);
+					objectiveObject setPos ([(_thisObjectivePosition), 1, 60, 7, 0, 20, 0] call BIS_fnc_findSafePos);
 
 					//Objective failed
 					objectiveObject setVariable ["thisTask", _objectiveUniqueID, true];
@@ -182,7 +190,7 @@ generateObjectiveObject =
 			case "clearArea":
 				{
 					//Add trigger to detect cleared area
-					objectiveObject setPos (getPos _thisObjectivePosition); //create a trigger area created at object with variable name my_object
+					objectiveObject setPos (_thisObjectivePosition); //create a trigger area created at object with variable name my_object
 					objectiveObject setTriggerArea [200, 200, 0, false]; // trigger area with a radius of 200m.
 					objectiveObject setVariable ["associatedTask", _thisObjective];
 					[objectiveObject] execVM 'engine\checkClearArea.sqf'; 
@@ -190,7 +198,7 @@ generateObjectiveObject =
 			case "collectIntel":
 				{
 					//Add intel action to the intel case
-					objectiveObject setPos ([(getPos _thisObjectivePosition), 1, 25, 5, 0, 20, 0] call BIS_fnc_findSafePos);
+					objectiveObject setPos ([(_thisObjectivePosition), 1, 25, 5, 0, 20, 0] call BIS_fnc_findSafePos);
 					[objectiveObject, ["Collect intel",{
 						params ["_object","_caller","_ID","_thisObjective"];
 						//Manage Completed Objective
@@ -219,7 +227,7 @@ generateObjectiveObject =
 				{
 					//Add dialog to the informant
 					diag_log format ["VIP task setup ! : %1", objectiveObject];
-					(objectiveObject) setPos (getPos _thisObjectivePosition);
+					(objectiveObject) setPos (_thisObjectivePosition);
 					[objectiveObject, objectiveObject, 75, [], true] call lambs_wp_fnc_taskGarrison;
 					
 					//Objective completion
