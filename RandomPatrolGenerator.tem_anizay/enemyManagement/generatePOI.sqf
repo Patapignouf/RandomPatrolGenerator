@@ -4,13 +4,20 @@ currentRandomGroup = objNull;
 currentGroup = objNull;
 diag_log format ["Begin generation AO %1",_thisAvailablePosition];
 
+//Try to find position with building if avalaible
+_tempAvailablePosition = getPos (nearestBuilding _thisAvailablePosition);
+if (_tempAvailablePosition distance _thisAvailablePosition < 200) then 
+{
+	_thisAvailablePosition = _tempAvailablePosition;
+};
+
 //Generate enemy infantry on AO
 diag_log format ["Infantry generation start on AO %1",_thisAvailablePosition];
 _baseRadius = 30;
 for [{_i = 0}, {_i < _thisDifficulty+2}, {_i = _i + 1}] do 
 {
 	currentRandomGroup = selectRandom _thisAvailableOpforGroup;
-	currentGroup = [currentRandomGroup, getPos _thisAvailablePosition, east, "DefenseInfantry"] call doGenerateEnemyGroup;
+	currentGroup = [currentRandomGroup, _thisAvailablePosition, east, "DefenseInfantry"] call doGenerateEnemyGroup;
 	
 	//Spawn group
 	[currentGroup, currentGroup, _baseRadius, [], true, (round random 3 == 0), -2, true] call lambs_wp_fnc_taskGarrison;
@@ -25,7 +32,7 @@ for [{_i = 0}, {_i < round((_thisDifficulty-0.5)/2)+1}, {_i = _i + 1}] do
 	//Generate light vehicle
 	if (count _thisAvailableOpforCars != 0) then 
 	{
-		_safeVehicleSpawn = [getPos _thisAvailablePosition, 2, 200, 7, 10, 1, 0, [], [[0,0,0],[0,0,0]]] call BIS_fnc_findSafePos;
+		_safeVehicleSpawn = [_thisAvailablePosition, 2, 200, 7, 10, 1, 0, [], [[0,0,0],[0,0,0]]] call BIS_fnc_findSafePos;
 		if !([_safeVehicleSpawn , [0,0,0]] call BIS_fnc_areEqual) then 
 		{
 			_currentEnemyCars = [[selectRandom _thisAvailableOpforCars], _safeVehicleSpawn, east, "Car"] call doGenerateEnemyGroup;
@@ -43,7 +50,7 @@ for [{_i = 0}, {_i < round((_thisDifficulty-0.5)/2)}, {_i = _i + 1}] do
 		//Light armored vehicle spawn chance 50%
 		if (round random 1 == 0) then 
 		{
-			_safeVehicleSpawn = [getPos _thisAvailablePosition, 2, 200, 7, 10, 1, 0, [], [[0,0,0],[0,0,0]]] call BIS_fnc_findSafePos;
+			_safeVehicleSpawn = [_thisAvailablePosition, 2, 200, 7, 10, 1, 0, [], [[0,0,0],[0,0,0]]] call BIS_fnc_findSafePos;
 			if !([_safeVehicleSpawn , [0,0,0]] call BIS_fnc_areEqual) then 
 			{
 				_currentEnemyCars = [[selectRandom _thisAvailableOpforLightArmoredVehicle], _safeVehicleSpawn, east, "LightArmored"] call doGenerateEnemyGroup;
@@ -53,7 +60,7 @@ for [{_i = 0}, {_i < round((_thisDifficulty-0.5)/2)}, {_i = _i + 1}] do
 		//Heavy armored vehicle spawn chance 50%
 		if (count _thisAvailableOpforHeavyArmoredVehicle != 0 && round random 1 == 0) then 
 		{
-			_safeVehicleSpawn = [getPos _thisAvailablePosition, 2, 200, 7, 10, 1, 0, [], [[0,0,0],[0,0,0]]] call BIS_fnc_findSafePos;
+			_safeVehicleSpawn = [_thisAvailablePosition, 2, 200, 7, 10, 1, 0, [], [[0,0,0],[0,0,0]]] call BIS_fnc_findSafePos;
 			if !([_safeVehicleSpawn , [0,0,0]] call BIS_fnc_areEqual) then 
 			{
 				_currentEnemyCars = [[selectRandom _thisAvailableOpforHeavyArmoredVehicle], _safeVehicleSpawn, east, "HeavyArmored"] call doGenerateEnemyGroup;
@@ -68,7 +75,7 @@ if (round (random 3) == 0 && count _thisAvailableCivGroup > 0) then
 {
 	for [{_i = 0}, {_i < _thisDifficulty+1}, {_i = _i + 1}] do 
 	{
-		currentGroup = [_thisAvailableCivGroup, getPos _thisAvailablePosition, civilian, "Civilian"] call doGenerateEnemyGroup;
+		currentGroup = [_thisAvailableCivGroup, _thisAvailablePosition, civilian, "Civilian"] call doGenerateEnemyGroup;
 		if (round (random 2) != 0) then 
 		{
 			diag_log "Task_Garrison civilian !";
