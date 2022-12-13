@@ -303,7 +303,8 @@ uniformList_French = [
 	"amf_DCS_05_MTP",
 	"amf_uniform_05_MTP",
 	"amf_uniform_02_DA",
-	"amf_jpc_02_TAN"
+	"amf_jpc_02_TAN",
+	"amf_uniform_03_TUNDRA"
 	];
 
 //Magazine avalaible for all unit
