@@ -157,12 +157,12 @@ if (initCityLocationPosition isEqualType []) then
 };
 
 publicvariable "initCityLocation";
-possiblePOILocation = ([initCityLocation, 2500] call getLocationsAround) - [initCityLocation];
+possiblePOILocation = ([initCityLocation, 2500] call getLocationsAroundWithBuilding) - [initCityLocation];
 dangerAreaList = [];
 
 if ( count possiblePOILocation < missionLength + 1) then 
 {
-	possiblePOILocation = ([initCityLocation, 4000] call getLocationsAround) - [initCityLocation];
+	possiblePOILocation = ([initCityLocation, 4000] call getLocationsAroundWithBuilding) - [initCityLocation];
 };
 
 //Search road around AO
@@ -242,7 +242,7 @@ for [{_i = 0}, {_i <= missionLength}, {_i = _i + 1}] do //Peut être optimisé
 //check wave spawn 
 EnemyWaveSpawnPositions = [];
 numberOfSpawnWave = 4;
-possibleEnemyWaveSpawnPositions = (([initCityLocation, 2000] call getLocationsAround) - [initCityLocation]) - SupplyPositions;
+possibleEnemyWaveSpawnPositions = (([initCityLocation, 2000] call getLocationsAroundWithBuilding) - [initCityLocation]) - SupplyPositions;
 
 for [{_i = 0}, {_i < numberOfSpawnWave}, {_i = _i + 1}] do
 {
