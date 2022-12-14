@@ -14,13 +14,35 @@ getRandomCenterLocations =
 	_LocList
 };
 
-
 getLocationsAround = 
 {
 	_thisLocation = _this select 0;
 	_thisRadius = _this select 1;	
 	
 	_LocList = nearestLocations [[(getPos _thisLocation) select 0, (getPos _thisLocation) select 1], ["NameLocal","NameVillage","NameCity","NameCityCapital"], _thisRadius];
+	_LocList
+};
+
+getLocationsAroundWithBuilding = 
+{
+	_thisLocation = _this select 0;
+	_thisRadius = _this select 1;	
+	
+	_LocList = nearestLocations [[(getPos _thisLocation) select 0, (getPos _thisLocation) select 1], ["NameLocal","NameVillage","NameCity","NameCityCapital"], _thisRadius];
+	
+	//Clear location without building
+	{
+		//Select smallest location (mountain, forest, plains)
+		if (type _x == "NameLocal") then 
+		{
+			//Check if there is building near the location
+			if (count ((locationPosition _x) nearObjects ["House", 150]) == 0) then 
+			{
+				//Remove the location
+				_LocList = _LocList - [_x];
+			};
+		};
+	} foreach _LocList;
 	_LocList
 };
 
