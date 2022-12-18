@@ -53,7 +53,7 @@ if (isServer) then
 			};
 
 			//Generate heavy vehicle
-			if (count _thisAvailableOpforLightArmoredVehicle != 0 && enableArmored == 1) then 
+			if (count _thisAvailableOpforLightArmoredVehicle != 0 && enableArmoredVehicle) then 
 			{
 				//Light armored vehicle spawn chance 33%
 				_tempVehicleGroup pushBack [selectRandom _thisAvailableOpforLightArmoredVehicle];
@@ -68,8 +68,8 @@ if (isServer) then
 
 
 			AvalaibleInitAttackPositions = [];
-			AvalaibleInitAttackPositions = [positionToAttack, 1200, 2000, round((difficultyParameter-0.5)/2)] call getListOfPositionsAroundTarget;
-			[ AvalaibleInitAttackPositions, positionToAttack, _tempGroup,_tempVehicleGroup, round((difficultyParameter-0.5)/2)] execVM 'enemyManagement\doAmbush.sqf'; 
+			AvalaibleInitAttackPositions = [positionToAttack, 1200, 2000, round((_thisDifficulty-0.5)/2)] call getListOfPositionsAroundTarget;
+			[ AvalaibleInitAttackPositions, positionToAttack, _tempGroup,_tempVehicleGroup, round((_thisDifficulty-0.5)/2)] execVM 'enemyManagement\doAmbush.sqf'; 
 			diag_log format ["Harass start on position %1", positionToAttack];
 		};
 		sleep (1200+round (random 1000));

@@ -1,15 +1,58 @@
+forceBluforSetup = "ForceBluforSetup" call BIS_fnc_getParamValue;
+
+//Wait player load
+if (!hasInterface || isDedicated) exitWith {};
+waitUntil {!isNull player && (getClientStateNumber>=10||!isMultiplayer)};
+
+diag_log format ["Setup Player %1 at position 0", name player];
+
+//init tp to be able to spawn on the ground on each map
+player setPos [0,0];
+player allowdamage false;
+
+cutText ["Please wait while mission is generating", "BLACK FADED", 100];
+sleep 3; //Wait player load correctly the mission
+
+//Define player who configure mission
+//Independent leader can choose mission
+if (!didJIP) then 
+{
+	if ({isPlayer _x && side _x == independent} count allPlayers != 0 && forceBluforSetup == 0) then 
+	{
+		if (side player == independent && player == (leader (group player))) then 
+		{
+			//Display setup menu
+			[[], 'GUI\initMissionMenu.sqf'] remoteExec ['BIS_fnc_execVM', player];
+		};
+	} else {
+		//If there is no independent, blufor leader can choose mission
+		if (side player == blufor && player == (leader (group player))) then 
+		{
+			//Display setup menu
+			[[], 'GUI\initMissionMenu.sqf'] remoteExec ['BIS_fnc_execVM', player];
+		};
+	};
+};
+
+//Wait mission setup
+waitUntil {missionNamespace getVariable "generationSetup" == true};
+
+//Load every mission settings dependencies
 #include "database\arsenalLibrary.sqf"
 #include "objectGenerator\vehicleManagement.sqf"
 
-bluFaction = "BluFaction" call BIS_fnc_getParamValue;
-indFaction = "IndFaction" call BIS_fnc_getParamValue;
 enableThermal = "EnableThermal" call BIS_fnc_getParamValue;
-enablePlane = "EnablePlane" call BIS_fnc_getParamValue;
-enableArmedChopper = "EnableArmedChopper" call BIS_fnc_getParamValue;
 enableHalo = "EnableHALO" call BIS_fnc_getParamValue;
-enableArmored = "EnableArmored" call BIS_fnc_getParamValue;
 initBluforBase = "InitBluforBase" call BIS_fnc_getParamValue;
 chooseStartPos = "ChooseStartPos" call BIS_fnc_getParamValue;
+
+
+
+bluFaction = missionNamespace getVariable "bluforFaction";
+indFaction = missionNamespace getVariable "independentFaction";
+enableArmedAicraft = missionNamespace getVariable "enableArmedAicraft"; //Default armed aircraft are disabled
+enableArmoredVehicle = missionNamespace getVariable "enableArmoredVehicle"; //Default armored vehicle are disabled
+
 
 //Optimize scripts
 private _disableThermal = compile preprocessFileLineNumbers "engine\disableThermal.sqf";
@@ -35,13 +78,6 @@ player addEventHandler ["Respawn",{
 
 }];
 
-diag_log format ["Setup Player %1 at position 0", name player];
-
-//init tp to be able to spawn on the ground on each map
-player setPos [0,0];
-player allowdamage false;
-titleCut ["Please wait while mission is generating", "BLACK FADED", 5];
-
 //Init disableThermal
 if (enableThermal==0) then 
 {
@@ -57,11 +93,6 @@ if (isClass (configFile >> "CfgPatches" >> "ace_medical")) then
 
 //Init player respawn ticket
 [player, -1, true] call BIS_fnc_respawnTickets;
-
-//Wait player load
-waitUntil {!isNull player};
-if (!hasInterface || isDedicated) exitWith {};
-
 
 if (hasInterface) then
 {
@@ -179,8 +210,9 @@ if (hasInterface) then
 		[VA2, player] call setupSaveAndLoadRole;
 
 		//Manage vehicle spawn options 
-		if (enableArmored == 1) then 
+		if (enableArmoredVehicle) then 
 		{	
+			//TODO
 		};
 
 		//Add vehicle spawn option 
@@ -249,7 +281,7 @@ if (hasInterface) then
 
 		//Armed Chopper
 		waitUntil {!isNil "bluforArmedChopper"};
-		if (initBluforBase == 1 && enableArmedChopper == 1) then 
+		if (initBluforBase == 1 && enableArmedAicraft) then 
 		{	
 			{
 				_IDVehicleSpawn = TPFlag1 addAction [format ["Spawn a %1", getText (configFile >> "cfgVehicles" >> _x >> "displayName")],{
@@ -294,7 +326,7 @@ if (hasInterface) then
 		
 		//Manage vehicle spawn options 
 		waitUntil {!isNil "bluforFixedWing"};
-		if (enablePlane == 1) then 
+		if (enableArmedAicraft) then 
 		{	
 			{
 				_IDVehicleSpawn = TPFlag1 addAction [format ["Spawn an %1 (this will open the map to choose a position)", getText (configFile >> "cfgVehicles" >> _x >> "displayName")],{
@@ -360,8 +392,9 @@ if (hasInterface) then
 [] spawn _generateCivDialogs;
 
 //Let's get it started !
+
 player allowdamage true;
-titleCut ["", "BLACK IN", 5];
+cutText ["", "BLACK IN", 5];
 
 
 //If a player join in progress he will be teleported to his teamleader (WIP feature)

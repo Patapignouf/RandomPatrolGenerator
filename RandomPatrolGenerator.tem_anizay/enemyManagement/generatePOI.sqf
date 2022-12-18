@@ -45,7 +45,7 @@ diag_log format ["Heavy vehicle generation start on AO %1",_thisAvailablePositio
 for [{_i = 0}, {_i < round((_thisDifficulty-0.5)/2)}, {_i = _i + 1}] do 
 {
 	//Generate heavy vehicle
-	if (count _thisAvailableOpforLightArmoredVehicle != 0 && enableArmored == 1) then 
+	if (count _thisAvailableOpforLightArmoredVehicle != 0 && enableArmoredVehicle) then 
 	{
 		//Light armored vehicle spawn chance 50%
 		if (round random 1 == 0) then 

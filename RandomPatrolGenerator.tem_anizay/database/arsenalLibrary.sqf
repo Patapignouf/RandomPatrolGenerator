@@ -1,7 +1,7 @@
 #include "factionParameters.sqf"
 
 //Import mission params
-warEra = "WarEra" call BIS_fnc_getParamValue;
+warEra = missionNamespace getVariable "warEra"; // Default actual warfare
 
 c_listOfRoles = [c_leader,c_at,c_rifleman,c_engineer,c_autorifleman,c_marksman,c_medic];
 
