@@ -42,13 +42,13 @@ for [{_i = 0}, {_i < round((_thisDifficulty-0.5)/2)+1}, {_i = _i + 1}] do
 
 diag_log format ["Heavy vehicle generation start on AO %1",_thisAvailablePosition];
 //Generate heavy enemy light vehicle on AO
-for [{_i = 0}, {_i < round((_thisDifficulty-0.5)/2)}, {_i = _i + 1}] do 
+for [{_i = 0}, {_i < round((_thisDifficulty-0.5)/2) + 1}, {_i = _i + 1}] do 
 {
 	//Generate heavy vehicle
 	if (count _thisAvailableOpforLightArmoredVehicle != 0 && enableArmoredVehicle) then 
 	{
-		//Light armored vehicle spawn chance 50%
-		if (round random 1 == 0) then 
+		//Light armored vehicle spawn chance 33%
+		if (round random 2 == 0) then 
 		{
 			_safeVehicleSpawn = [_thisAvailablePosition, 2, 200, 7, 10, 1, 0, [], [[0,0,0],[0,0,0]]] call BIS_fnc_findSafePos;
 			if !([_safeVehicleSpawn , [0,0,0]] call BIS_fnc_areEqual) then 
@@ -57,8 +57,8 @@ for [{_i = 0}, {_i < round((_thisDifficulty-0.5)/2)}, {_i = _i + 1}] do
 			};
 		};
 
-		//Heavy armored vehicle spawn chance 50%
-		if (count _thisAvailableOpforHeavyArmoredVehicle != 0 && round random 1 == 0) then 
+		//Heavy armored vehicle spawn chance 33%
+		if (count _thisAvailableOpforHeavyArmoredVehicle != 0 && round random 2 == 0) then 
 		{
 			_safeVehicleSpawn = [_thisAvailablePosition, 2, 200, 7, 10, 1, 0, [], [[0,0,0],[0,0,0]]] call BIS_fnc_findSafePos;
 			if !([_safeVehicleSpawn , [0,0,0]] call BIS_fnc_areEqual) then 
