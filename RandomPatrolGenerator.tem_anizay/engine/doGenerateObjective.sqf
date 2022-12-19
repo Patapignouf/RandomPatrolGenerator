@@ -153,6 +153,11 @@ generateObjectiveObject =
 						params ["_unit", "_killer", "_instigator", "_useEffects"];
 						//get task associated to the object
 						_thisTaskID = _unit getVariable "thisTask";
+
+						//Remove all actions
+						[_unit] remoteExec ["removeAllEventHandlers", 0, true];
+						[_unit] remoteExec ["removeAllActions", 0, true];
+
 						//Manage objective
 						_missionFailedObjectives = missionNamespace getVariable ["missionFailedObjectives", []];
 						_missionFailedObjectives = _missionFailedObjectives + [_thisTaskID]; //needs to be improved
@@ -229,31 +234,56 @@ generateObjectiveObject =
 					(objectiveObject) setPos ( _thisObjectivePosition);
 					[objectiveObject, objectiveObject, 75, [], true] call lambs_wp_fnc_taskGarrison;
 					
-					//Objective completion
-					[objectiveObject, ["Talk to the informant",{
-						params ["_object","_caller","_ID","_thisObjective"];
-						//Manage Completed Objective
-						_completedObjectives = missionNamespace getVariable ["completedObjectives",[]];
-						_completedObjectives pushBack _thisObjective;
-						missionNamespace setVariable ["completedObjectives",_completedObjectives,true];	
-						//Manage UncompletedObjective
-						_missionUncompletedObjectives = missionNamespace getVariable ["missionUncompletedObjectives",[]];
-						_missionUncompletedObjectives = _missionUncompletedObjectives - [_thisObjective];
-						missionNamespace setVariable ["missionUncompletedObjectives",_missionUncompletedObjectives,true];
-						//Manage player's feedback
-						if ("RealismMode" call BIS_fnc_getParamValue == 1) then 
-						{
-							[] call doIncrementVehicleSpawnCounter;	
-							[_thisObjective] execVM 'engine\completeObjective.sqf'; 
-						};
-						//Manage respawn and remove actions from NPC
-						removeAllActions _object;
-						[_object] remoteExec ["removeAllActions", 0, true];
-						if (["Respawn",1] call BIS_fnc_getParamValue == 1) then 
-						{
-							[[], "engine\respawnManager.sqf"] remoteExec ['BIS_fnc_execVM', 0];
-						};
-					},_thisObjective,1.5,true,true,"","_target distance _this <3"]] remoteExec ["addAction", 0, true];
+					_ID = 	[
+								objectiveObject, 
+								"Talk to the informant", 
+								"\a3\missions_f_oldman\data\img\holdactions\holdAction_talk_ca.paa", 
+								"\a3\missions_f_oldman\data\img\holdactions\holdAction_talk_ca.paa", 
+								"true", 
+								"true", 
+								{
+									// Action start code
+								}, 
+								{
+									// Action on going code
+								},  
+								{
+									// Action successfull code
+									params ["_object","_caller","_ID","_objectParams","_progress","_maxProgress"];
+									_thisObjective = _objectParams select 0;
+
+									//Manage Completed Objective
+									_completedObjectives = missionNamespace getVariable ["completedObjectives",[]];
+									_completedObjectives pushBack _thisObjective;
+									missionNamespace setVariable ["completedObjectives",_completedObjectives,true];	
+									//Manage UncompletedObjective
+									_missionUncompletedObjectives = missionNamespace getVariable ["missionUncompletedObjectives",[]];
+									_missionUncompletedObjectives = _missionUncompletedObjectives - [_thisObjective];
+									missionNamespace setVariable ["missionUncompletedObjectives",_missionUncompletedObjectives,true];
+									//Manage player's feedback
+									if ("RealismMode" call BIS_fnc_getParamValue == 1) then 
+									{
+										[] call doIncrementVehicleSpawnCounter;	
+										[_thisObjective] execVM 'engine\completeObjective.sqf'; 
+										
+									};
+									//Manage respawn and remove actions from NPC
+									removeAllActions _object;
+									[_object] remoteExec ["removeAllActions", 0, true];
+									if (["Respawn",1] call BIS_fnc_getParamValue == 1) then 
+									{
+										[[], "engine\respawnManager.sqf"] remoteExec ['BIS_fnc_execVM', 0];
+									};
+								}, 
+								{
+									// Action failed code
+								}, 
+								[_thisObjective],  
+								2,
+								0, 
+								true, 
+								false
+							] call BIS_fnc_holdActionAdd;
 
 					//Objective failed
 					objectiveObject setVariable ["thisTask", _objectiveUniqueID, true];
@@ -265,6 +295,11 @@ generateObjectiveObject =
 						_missionFailedObjectives = missionNamespace getVariable ["missionFailedObjectives", []];
 						_missionFailedObjectives = _missionFailedObjectives + [_thisTaskID]; //needs to be improved
 						missionNamespace setVariable ["missionFailedObjectives", _missionFailedObjectives, true];
+
+						//Remove all actions
+						[_unit] remoteExec ["removeAllEventHandlers", 0, true];
+						[_unit] remoteExec ["removeAllActions", 0, true];
+
 						//Manage task system
 						if ("RealismMode" call BIS_fnc_getParamValue == 1) then 
 						{
