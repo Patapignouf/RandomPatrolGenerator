@@ -14,6 +14,7 @@ _ColdWar_ARVN = 12;
 _2035_AAF = 13;
 _2035_NATO = 14;
 _USA_2000_DF = 15;
+_Russian_Winter = 16;
 
 #include "object_db\USA.sqf"
 #include "object_db\French.sqf"
@@ -31,6 +32,7 @@ _USA_2000_DF = 15;
 #include "object_db\2035_AAF.sqf"
 #include "object_db\2035_NATO.sqf"
 #include "object_db\USA_2000_DF.sqf"
+#include "object_db\Russian_Winter.sqf"
 
 //Define faction prefix
 c_db = "_db";
@@ -50,6 +52,7 @@ c_ColdWar_USA = "_ColdWar_USA";
 c_2035_AAF = "_2035_AAF";
 c_2035_NATO = "_2035_NATO";
 c_USA_2000_DF = "_USA_2000_DF";
+c_Russian_Winter = "_Russian_Winter";
 
 factionInfos = [
 	[c_USA,_USA,"US Army"],
@@ -67,7 +70,8 @@ factionInfos = [
 	[c_ColdWar_USA,_ColdWar_USA,"Cold War USA"],
 	[c_2035_AAF,_2035_AAF,"2035 AAF"],
 	[c_2035_NATO,_2035_NATO,"2035 NATO"],
-	[c_USA_2000_DF,_USA_2000_DF,"1993 USA Delta Force"]
+	[c_USA_2000_DF,_USA_2000_DF,"1993 USA Delta Force"],
+	[c_Russian_Winter, _Russian_Winter, "Russian Winter"]
 ];
 
 //Define global constant
