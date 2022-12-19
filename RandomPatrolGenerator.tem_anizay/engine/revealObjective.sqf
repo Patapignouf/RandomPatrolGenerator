@@ -19,7 +19,10 @@ if ((count _revealedObjectives != count _tempMissionObjectives)) then
 		} else 
 		{
 			_objectiveToReveal = _objectiveToRevealSelected;
+			_revealedObjectives pushBack _objectiveToReveal;
+			missionNamespace setVariable ["revealedObjectives",_revealedObjectives,true];
 		};
+		
 		if (_realismMode == 1) then 
 		{
 			//Search the nearestLocation from the intel
