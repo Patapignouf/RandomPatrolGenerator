@@ -36,13 +36,13 @@ switch (_objectiveType) do
 			[[], "engine\respawnManager.sqf"] remoteExec ['BIS_fnc_execVM', 0];
 		};
 	};
-	case "supply":
-	case "ammo":
-	case "hvt":
-	case "vip":
-	case "steal":
-	case "clearArea":
-	case "collectIntel":
-	case "informant":
+	// case "supply":
+	// case "ammo":
+	// case "hvt":
+	// case "vip":
+	// case "steal":
+	// case "clearArea":
+	// case "collectIntel":
+	// case "informant":
 	default { hint "default" };
 };

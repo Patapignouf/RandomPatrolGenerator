@@ -97,42 +97,43 @@ doGenerateVehicleForFOB =
 						_currntHelicopter = createVehicle [_vehicleClass, [_vehicleGoodPosition select 0,_vehicleGoodPosition select 1]  , [], 0, "NONE"];
 					};
 				};   
-			case (_vehicleClass isKindOf "Plane"): {
-				if (_isUAV) then 
+			case (_vehicleClass isKindOf "Plane"): 
 				{
-					_kind = "UAV";
-
-					//UAV spawn is only avalaible for blufor
-					_tempPos = [[_thisPosition select 0, _thisPosition select 1],1,60,10,0] call BIS_fnc_findSafePos;
-					_tempPos pushBack ((_thisPosition select 2)+400); //Set 3 dimension position
-					_currentUAVArray = [_tempPos, 0, _vehicleClass, blufor] call BIS_fnc_spawnVehicle;
-					_currentUAV = _currentUAVArray select 0;
-					_currentUAVGroup = _currentUAVArray select 2;
-
-					//Set waypoint to current pos to the UAV
-					_wp = _currentUAVGroup addWaypoint [_tempPos, 0];
-
-					//Set unlimited fuel to the UAV
-					_h = [_currentUAV] spawn
+					if (_isUAV) then 
 					{
-						while {true} do
+						_kind = "UAV";
+
+						//UAV spawn is only avalaible for blufor
+						_tempPos = [[_thisPosition select 0, _thisPosition select 1],1,60,10,0] call BIS_fnc_findSafePos;
+						_tempPos pushBack ((_thisPosition select 2)+400); //Set 3 dimension position
+						_currentUAVArray = [_tempPos, 0, _vehicleClass, blufor] call BIS_fnc_spawnVehicle;
+						_currentUAV = _currentUAVArray select 0;
+						_currentUAVGroup = _currentUAVArray select 2;
+
+						//Set waypoint to current pos to the UAV
+						_wp = _currentUAVGroup addWaypoint [_tempPos, 0];
+
+						//Set unlimited fuel to the UAV
+						_h = [_currentUAV] spawn
 						{
-							if ((fuel (_this select 0)) < 0.8) then
+							while {true} do
 							{
-								(_this select 0) setFuel 1;
+								if ((fuel (_this select 0)) < 0.8) then
+								{
+									(_this select 0) setFuel 1;
+								};
+								sleep 120;
 							};
-							sleep 120;
 						};
 					};
+					if (_isUAV) then 
+					{
+						_kind = "Plane";
+						//WIP
+					};   
 				};
-				if (_isUAV) then 
-				{
-					_kind = "Plane";
-					//WIP
-				};   
 				default {_kind = "Other";};   
 			};
-		}; 
 		sleep 2; //Wait vehicle spawn (avoid vehicle crash)
 	} forEach _thisVehicleList;
 	//Generate boat location on map
