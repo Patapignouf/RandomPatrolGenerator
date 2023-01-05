@@ -75,27 +75,43 @@ baseEnemyHeavyArmoredVehicleGroup_USA = ["CUP_B_M1126_ICV_M2_Desert",
 //Vehicle management////
 ////////////////////////
 //USA
-bluforUnarmedVehicle_USA = ["CUP_B_M1151_USA"];
+bluforUnarmedVehicle_USA = [
+	"CUP_B_M1151_USA",
+	"CUP_B_nM1037sc_DF_USMC_DES", 
+	"CUP_B_nM1038_DF_USMC_DES", 
+	"CUP_B_M1152_DSRT_USMC"
+];
 
-bluforArmedVehicle_USA = ["CUP_B_M1151_Deploy_USA","CUP_B_nM1025_SOV_M2_USA_DES","CUP_B_nM1025_M240_USA_DES","CUP_B_M1165_GMV_DSRT_USMC"];
+bluforArmedVehicle_USA = [
+	"CUP_B_M1151_Deploy_USA",
+	"CUP_B_nM1025_SOV_M2_USA_DES",
+	"CUP_B_nM1025_M240_USA_DES",
+	"CUP_B_M1165_GMV_DSRT_USMC",
+	"CUP_B_RG31_M2_USMC", 
+	"CUP_B_RG31E_M2_USMC"
+];
 
-bluforUnarmedVehicleChopper_USA = ["CUP_B_MH6J_USA",
-"CUP_B_UH60M_Unarmed_US",
-"B_Heli_Transport_03_unarmed_F",
-"CUP_B_CH53E_USMC"];
+bluforUnarmedVehicleChopper_USA = [
+	"CUP_B_MH6J_USA",
+	"CUP_B_UH60M_Unarmed_US",
+	"B_Heli_Transport_03_unarmed_F",
+	"CUP_B_CH53E_USMC"
+];
 
 bluforArmedChopper_USA = [
 	"CUP_B_AH64_DL_USA", 
 	"CUP_B_AH6M_USA", 
 	"CUP_B_UH60M_US", 
 	"CUP_B_AH1Z_Dynamic_USMC"
-	];
-
-bluforDrone_USA = ["B_UAV_02_dynamicLoadout_F"
 ];
 
-bluforBoat_USA = ["CUP_B_RHIB_HIL",
-"CUP_B_Zodiac_USMC"
+bluforDrone_USA = [
+	"B_UAV_02_dynamicLoadout_F"
+];
+
+bluforBoat_USA = [
+	"CUP_B_RHIB_HIL",
+	"CUP_B_Zodiac_USMC"
 ];
 
 
@@ -123,12 +139,14 @@ loadout_USA = [
 //USA
 rifleList_USA = [		
 	"CUP_arifle_mk18_black",
-	"CUP_arifle_mk18_m203_black"
+	"CUP_arifle_SBR_black",
+	"CUP_arifle_M4A1_SOMMOD_Grip_black"
 ];	
 
 //Grenade launcher or weapon with grenade launcher option
 grenadeLauncherList_USA = [		
-	"CUP_arifle_mk18_m203_tan_holo_laserflash"
+	"CUP_arifle_mk18_m203_tan_holo_laserflash",
+	"CUP_arifle_mk18_m203_black"
 ];
 
 launcherList_USA = [		
@@ -139,17 +157,22 @@ launcherList_USA = [
 ];	
 
 autorifleList_USA = [			
-	"CUP_lmg_Mk48"
+	"CUP_lmg_Mk48",
+	"CUP_lmg_m249_pip2"
 ];	
 
 
 marksmanrifleList_USA = [		
-	"CUP_srifle_Mk12SPR"
+	"CUP_srifle_Mk12SPR",
+	"CUP_srifle_M40A3",
+	"CUP_srifle_M110_black"
 ];
 
 smgList_USA = [		
-	"CUP_smg_MP7"
+	"CUP_smg_MP7",
+	"CUP_smg_MP5SD6"
 ];
+
 
 
 //////////////////////////
@@ -266,8 +289,9 @@ itemEngineerList_USA = [
 	"Medikit",
 	"ToolKit",
 	"MineDetector",
-	"ACE_wirecutter", "ACE_Fortify"
-	];
+	"ACE_wirecutter", 
+	"ACE_Fortify"
+];
 	
 itemMedicList_USA = [
 	"ACE_epinephrine",
@@ -276,4 +300,4 @@ itemMedicList_USA = [
 	"ACE_bloodIV_250",
 	"ACE_personalAidKit",
 	"ACE_surgicalKit"
-	];
+];
