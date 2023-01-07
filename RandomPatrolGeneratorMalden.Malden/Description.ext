@@ -1,6 +1,7 @@
 #include "\a3\ui_f\hpp\defineCommonGrids.inc"
 #include "GUI\BaseControls.hpp"
-#include "GUI\dialogs.hpp"
+#include "GUI\missionSetup.hpp"
+#include "GUI\playerLoadoutSetup.hpp"
 
 respawnDialog = 0;
 respawnOnStart = 0;

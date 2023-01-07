@@ -46,13 +46,10 @@ enableHalo = "EnableHALO" call BIS_fnc_getParamValue;
 initBluforBase = "InitBluforBase" call BIS_fnc_getParamValue;
 chooseStartPos = "ChooseStartPos" call BIS_fnc_getParamValue;
 
-
-
 bluFaction = missionNamespace getVariable "bluforFaction";
 indFaction = missionNamespace getVariable "independentFaction";
 enableArmedAicraft = missionNamespace getVariable "enableArmedAicraft"; //Default armed aircraft are disabled
 enableArmoredVehicle = missionNamespace getVariable "enableArmoredVehicle"; //Default armored vehicle are disabled
-
 
 //Optimize scripts
 private _disableThermal = compile preprocessFileLineNumbers "engine\disableThermal.sqf";
@@ -157,9 +154,10 @@ if (hasInterface) then
 		player setVariable ["spawnLoadout", getUnitLoadout player];
 
 		//Manage arsenal	
-		[VA1, player, indFaction] call setupArsenalToItem;
-		[VA1, player, indFaction] call setupRoleSwitchToItem;
-		[VA1, player] call setupSaveAndLoadRole;
+		// [VA1, player, indFaction] call setupArsenalToItem;
+		// [VA1, player, indFaction] call setupRoleSwitchToItem;
+		// [VA1, player] call setupSaveAndLoadRole;
+		[VA1, player, indFaction] call setupPlayerLoadout;
 
 		waituntil {!isNil "isBluforAttacked" && !isNil "isIndAttacked"};
 		if (isIndAttacked) then
@@ -205,9 +203,10 @@ if (hasInterface) then
 		player setVariable ["spawnLoadout", getUnitLoadout player];
 
 		//Manage arsenal	
-		[VA2, player, bluFaction] call setupArsenalToItem;
-		[VA2, player, bluFaction] call setupRoleSwitchToItem;
-		[VA2, player] call setupSaveAndLoadRole;
+		// [VA2, player, bluFaction] call setupArsenalToItem;
+		// [VA2, player, bluFaction] call setupRoleSwitchToItem;
+		// [VA2, player ] call setupSaveAndLoadRole;
+		[VA2, player, bluFaction] call setupPlayerLoadout;	
 
 		//Manage vehicle spawn options 
 		if (enableArmoredVehicle) then 

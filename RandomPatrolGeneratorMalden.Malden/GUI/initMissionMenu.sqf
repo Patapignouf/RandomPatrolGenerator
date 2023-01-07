@@ -1,4 +1,3 @@
-
 disableSerialization;
 #include "..\database\factionParameters.sqf"
 #include "..\database\missionParameters.sqf"
@@ -87,3 +86,6 @@ _currentComboBox = _comboBoxMissionDifficulty;
 _comboBoxEnableCampaignMode lbSetCurSel (0); //Syndikat
 _comboBoxMissionLength lbSetCurSel (1); //Syndikat
 _comboBoxMissionDifficulty lbSetCurSel (1); //Syndikat
+
+
+

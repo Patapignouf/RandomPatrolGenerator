@@ -291,8 +291,10 @@ setupArsenalToItem = {
 	//[VA2,((itemCargo VA2) + _availableHeadgear + _availableUniforms + _availableVests)] call BIS_fnc_addVirtualItemCargo;
 	[VA2,true] call BIS_fnc_addVirtualMagazineCargo;
 	[_itemToAttachArsenal,([_currentPlayer,_currentFaction] call getVirtualAttachement ) + ([_currentPlayer,_currentFaction] call getVirtualItemList ) + ([_currentPlayer,_currentFaction] call getVirtualUniform ) ] call BIS_fnc_addVirtualItemCargo;
-	["AmmoboxInit",[_itemToAttachArsenal,false,{true}]] call BIS_fnc_arsenal;
+	//["AmmoboxInit",[_itemToAttachArsenal,false,{true}]] call BIS_fnc_arsenal;
+	_itemToAttachArsenal;
 };
+
 
 doInitializeLoadout = {
 	//InitParam
@@ -319,6 +321,44 @@ doInitializeLoadout = {
 	
 };
 
+
+switchToRole = {
+	//Init params
+	params ["_arsenalItem", "_caller", "_faction", "_role"];
+
+	//Switch to role
+	diag_log format ["Player %1 has switch to role %2 in faction %3", name _caller, _role, _faction];
+
+	titleCut [format ["Switching to role %1",(_role)], "BLACK FADED", 5];
+
+	//Manage Unit trait
+	_caller setUnitTrait ["Medic", false];
+	_caller setUnitTrait ["Engineer", false];
+	_caller setUnitTrait ["ExplosiveSpecialist", false];
+	if ((_role) == c_medic) then 
+	{
+		_caller setUnitTrait ["Medic", true];
+	};
+	if ((_role) == c_engineer) then 
+	{
+		_caller setUnitTrait ["Engineer", true];
+		_caller setUnitTrait ["ExplosiveSpecialist", true];
+	};
+
+	//Manage player's role
+	_caller setVariable ["role", (_role)];
+
+	//Manage default stuff
+	[_caller,(_faction)] call doInitializeLoadout;
+
+	_caller setVariable ["spawnLoadout", getUnitLoadout _caller];
+
+	//Manage arsenal stuff
+	[_arsenalItem, _caller, (_faction)] call setupArsenalToItem;
+
+	titleCut ["", "BLACK IN", 5];
+};
+
 setupRoleSwitchToItem = {
 	//InitParam
 	itemToAttachArsenal = _this select 0;
@@ -341,36 +381,7 @@ setupRoleSwitchToItem = {
 			{
 				//Define params
 				params ["_target","_caller","_ID","_params"];
-				diag_log format ["Player %1 has switch to role %2 in faction %3", name _caller, _params select 0, _params select 1];
-
-				titleCut [format ["Switching to role %1",(_params select 1)], "BLACK FADED", 5];
-
-				//Manage Unit trait
-				_caller setUnitTrait ["Medic", false];
-				_caller setUnitTrait ["Engineer", false];
-				_caller setUnitTrait ["ExplosiveSpecialist", false];
-				if ((_params select 0) == c_medic) then 
-				{
-					_caller setUnitTrait ["Medic", true];
-				};
-				if ((_params select 0) == c_engineer) then 
-				{
-					_caller setUnitTrait ["Engineer", true];
-					_caller setUnitTrait ["ExplosiveSpecialist", true];
-				};
-
-				//Manage player's role
-				_caller setVariable ["role", (_params select 0)];
-
-				//Manage default stuff
-				[_caller,(_params select 1)] call doInitializeLoadout;
-
-				_caller setVariable ["spawnLoadout", getUnitLoadout _caller];
-
-				//Manage arsenal stuff
-				[_target, _caller, (_params select 1)] call setupArsenalToItem;
-
-				titleCut ["", "BLACK IN", 5];
+				[_target, _caller, _params select 1, _params select 0] call switchToRole;
 			},[_x,currentFaction]];
 	} foreach listOfRoles;
 
@@ -395,12 +406,46 @@ setupRoleSwitchToItem = {
 };
 
 
+
+setupRoleSwitchToList = {
+	//InitParam
+	params ["_currentFaction"];
+
+	//Check if current faction has specific role definition
+	if (count (listOfRoles_db select {_x select 1  == _currentFaction} select 0 select 0) == 0 ) then 
+	{
+		listOfRoles = c_listOfRoles;
+	} else 
+	{
+		listOfRoles = listOfRoles_db select {_x select 1  == _currentFaction} select 0 select 0;
+	};
+ 	listOfRoles;
+};
+
+setupPlayerLoadout = {
+	//InitParam
+	params ["_itemToAttachArsenal", "_currentPlayer", "_currentFaction"];
+
+	//Add action to setup arsenal
+	_itemToAttachArsenal addAction 
+		[
+			format ["Setup loadout"], 
+			{
+				//Params
+				params ["_target", "_caller", "_unusedParam" ,"_params"];
+				//Show GUI
+				[[], 'GUI\initPlayerLoadoutSetup.sqf'] remoteExec ['BIS_fnc_execVM', _caller];
+			},
+			[currentFaction]
+		];
+};
+
 setupSaveAndLoadRole = {
 	//InitParam
 	params ["_itemToAttachArsenal", "_currentPlayer" ];
 
 	//Add action where player can save his loadout
-	itemToAttachArsenal addAction 
+	_itemToAttachArsenal addAction 
 		["Save loadout", 
 		{
 			//Define params
@@ -413,7 +458,7 @@ setupSaveAndLoadRole = {
 		},[]];
 			
 	//Add action where player can load his loadout
-	itemToAttachArsenal addAction 
+	_itemToAttachArsenal addAction 
 		["Load loadout", 
 		{
 			//Define params
