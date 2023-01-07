@@ -10,8 +10,8 @@ _civs = allUnits select {alive _x AND side _x isEqualTo civilian};
 				"Talk to civilian", 
 				"\a3\missions_f_oldman\data\img\holdactions\holdAction_talk_ca.paa", 
 				"\a3\missions_f_oldman\data\img\holdactions\holdAction_talk_ca.paa", 
-				"true", 
-				"true", 
+				"_this distance _target < 3",						// Condition for the action to be shown
+				"_caller distance _target < 3",						// Condition for the action to progress
 				{
 					// Action start code
 				}, 
@@ -53,9 +53,8 @@ _civs = allUnits select {alive _x AND side _x isEqualTo civilian};
 				_x, 
 				"Ask civilian to join your team", 
 				"\a3\missions_f_oldman\data\img\holdactions\holdAction_talk_ca.paa", 
-				"\a3\missions_f_oldman\data\img\holdactions\holdAction_talk_ca.paa", 
-				"true", 
-				"true", 
+				"_this distance _target < 3",						// Condition for the action to be shown
+				"_caller distance _target < 3",						// Condition for the action to progress
 				{
 					// Action start code
 				}, 
