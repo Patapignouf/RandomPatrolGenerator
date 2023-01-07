@@ -239,8 +239,8 @@ generateObjectiveObject =
 								"Talk to the informant", 
 								"\a3\missions_f_oldman\data\img\holdactions\holdAction_talk_ca.paa", 
 								"\a3\missions_f_oldman\data\img\holdactions\holdAction_talk_ca.paa", 
-								"true", 
-								"true", 
+								"_this distance _target < 3",						// Condition for the action to be shown
+								"_caller distance _target < 3",						// Condition for the action to progress
 								{
 									// Action start code
 								}, 
