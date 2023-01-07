@@ -289,7 +289,7 @@ setupArsenalToItem = {
 	[_itemToAttachArsenal, ([_currentPlayer, _currentFaction] call getVirtualBackPack )] call BIS_fnc_addVirtualBackpackCargo;
 
 	//[VA2,((itemCargo VA2) + _availableHeadgear + _availableUniforms + _availableVests)] call BIS_fnc_addVirtualItemCargo;
-	[VA2,true] call BIS_fnc_addVirtualMagazineCargo;
+	[_itemToAttachArsenal,true] call BIS_fnc_addVirtualMagazineCargo;
 	[_itemToAttachArsenal,([_currentPlayer,_currentFaction] call getVirtualAttachement ) + ([_currentPlayer,_currentFaction] call getVirtualItemList ) + ([_currentPlayer,_currentFaction] call getVirtualUniform ) ] call BIS_fnc_addVirtualItemCargo;
 	//["AmmoboxInit",[_itemToAttachArsenal,false,{true}]] call BIS_fnc_arsenal;
 	_itemToAttachArsenal;
@@ -424,20 +424,36 @@ setupRoleSwitchToList = {
 
 setupPlayerLoadout = {
 	//InitParam
-	params ["_itemToAttachArsenal", "_currentPlayer", "_currentFaction"];
-
-	//Add action to setup arsenal
-	_itemToAttachArsenal addAction 
-		[
-			format ["Setup loadout"], 
+	params ["_itemToAttachArsenal"];
+	[
+			_itemToAttachArsenal, 
+			"Setup loadout", 
+			"\a3\missions_f_oldman\data\img\holdactions\holdAction_box_ca.paa", 
+			"\a3\missions_f_oldman\data\img\holdactions\holdAction_box_ca.paa", 
+			"_this distance _target < 3",						// Condition for the action to be shown
+			"_caller distance _target < 3",						// Condition for the action to progress
 			{
+				// Action start code
+			}, 
+			{
+				// Action on going code
+			},  
+			{
+				// Action successfull code
 				//Params
 				params ["_target", "_caller", "_unusedParam" ,"_params"];
 				//Show GUI
 				[[], 'GUI\initPlayerLoadoutSetup.sqf'] remoteExec ['BIS_fnc_execVM', _caller];
-			},
-			[currentFaction]
-		];
+			}, 
+			{
+				// Action failed code
+			}, 
+			[],  
+			0.5,
+			1000, 
+			false, 
+			false
+		] call BIS_fnc_holdActionAdd;
 };
 
 setupSaveAndLoadRole = {

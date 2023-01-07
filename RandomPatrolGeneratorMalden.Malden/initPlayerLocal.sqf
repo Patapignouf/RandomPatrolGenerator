@@ -157,7 +157,7 @@ if (hasInterface) then
 		// [VA1, player, indFaction] call setupArsenalToItem;
 		// [VA1, player, indFaction] call setupRoleSwitchToItem;
 		// [VA1, player] call setupSaveAndLoadRole;
-		[VA1, player, indFaction] call setupPlayerLoadout;
+		[VA1] call setupPlayerLoadout;
 
 		waituntil {!isNil "isBluforAttacked" && !isNil "isIndAttacked"};
 		if (isIndAttacked) then
@@ -206,7 +206,7 @@ if (hasInterface) then
 		// [VA2, player, bluFaction] call setupArsenalToItem;
 		// [VA2, player, bluFaction] call setupRoleSwitchToItem;
 		// [VA2, player ] call setupSaveAndLoadRole;
-		[VA2, player, bluFaction] call setupPlayerLoadout;	
+		[VA2] call setupPlayerLoadout;	
 
 		//Manage vehicle spawn options 
 		if (enableArmoredVehicle) then 
