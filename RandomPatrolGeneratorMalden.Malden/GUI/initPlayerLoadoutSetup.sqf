@@ -95,3 +95,21 @@ _currentComboBox = _comboBoxClassSelection;
 //Default value of role combo box 
 _comboBoxClassSelection lbSetCurSel (_listOfAvalaibleRole find (player getVariable "role")); //Actual Warfare
 
+//Disable space button in dialog
+waituntil {!(IsNull (findDisplay 7000))};
+_keyDown = (findDisplay 7000) displayAddEventHandler ["KeyDown", {
+	params ["_control", "_dikCode", "_shift", "_ctrl", "_alt"];
+
+	private _handled = false;
+
+	switch (_dikCode) do {
+		case 57: {
+			// case 1 for ESC -> https://community.bistudio.com/wiki/DIK_KeyCodes
+			// open your dialog
+			_control closeDisplay 1;
+			[[], 'GUI\initPlayerLoadoutSetup.sqf'] remoteExec ['BIS_fnc_execVM', player];
+		};
+	};
+
+	_handled
+}];
