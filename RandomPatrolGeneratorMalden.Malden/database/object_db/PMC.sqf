@@ -158,7 +158,8 @@ rifleList_PMC = [
 	"CUP_arifle_M4A1_SOMMOD_Grip_black",
 	"CUP_arifle_X95_Grippod_mars",
 	"CUP_arifle_M4A1_ACOG_flashlight",
-	"CUP_arifle_G36C_VFG_holo"
+	"CUP_arifle_G36C_VFG_holo",
+	"CUP_arifle_AKM_Early"
 ];	
 
 //Grenade launcher or weapon with grenade launcher option
@@ -186,7 +187,9 @@ marksmanrifleList_PMC = [
 
 smgList_PMC = [		
 	"CUP_smg_MP7",
-	"CUP_smg_MP5SD6"
+	"CUP_smg_MP5SD6",
+	"CUP_hgun_Glock17",
+	"CUP_hgun_M9"
 ];
 
 
@@ -320,13 +323,14 @@ itemMedicList_PMC = [
 
 //backpack avalaible for all unit
 backPackList_PMC = [
-	"CUP_B_PMC_AlicePack_XM8Auto"
+	"CUP_B_AlicePack_Khaki"
 	];
 
 
 //Uniform, vest, headgear, avalaible for all unit
 uniformList_PMC = [
 	"CUP_V_B_Ciras_Olive4",
+	"CUP_V_I_RACS_Carrier_Rig_wdl_2",
 	"CUP_I_B_PMC_Unit_43",
 	"CUP_I_B_PMC_Unit_37",
 	"CUP_I_B_PMC_Unit_43",
