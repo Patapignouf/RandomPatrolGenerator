@@ -39,56 +39,54 @@ civilianTruck_PMC = [
 //////////////////////////////
 //PMC
 baseEnemyGroup_PMC = [
-	"CUP_B_US_Soldier_SL_OCP", 
-	"CUP_B_US_Soldier_MG_OCP", 
-	"CUP_B_US_Soldier_MG_OCP",
-	"CUP_B_US_Soldier_GL_OCP",
-	"CUP_B_US_Soldier_GL_OCP",  
-	"CUP_B_US_Soldier_AMG_OCP", 
-	"CUP_B_US_Soldier_LAT_OCP",
-	"CUP_B_US_Soldier_LAT_OCP"
+	"CUP_I_PMC_Soldier_TL", 
+	"CUP_I_PMC_Sniper", 
+	"CUP_I_PMC_Soldier_AT", 
+	"CUP_I_PMC_Soldier_MG", 
+	"CUP_I_PMC_Soldier_MG_PKM", 
+	"CUP_I_PMC_Soldier_GL", 
+	"CUP_I_PMC_Soldier_GL_M16A2", 
+	"CUP_I_PMC_Soldier_M4A3", 
+	"CUP_I_PMC_Soldier"
 ];
 
 baseEnemyATGroup_PMC = [
-	"CUP_B_US_Soldier_TL_OCP", 
-	"CUP_B_US_Soldier_AT_OCP", 
-	"CUP_B_US_Soldier_AT_OCP", 
-	"CUP_B_US_Soldier_AT_OCP", 
-	"CUP_B_US_Soldier_AAT_OCP"
+	"CUP_I_PMC_Soldier_GL", 
+	"CUP_I_PMC_Soldier_GL_M16A2", 
+	"CUP_I_PMC_Soldier_AT", 
+	"CUP_I_PMC_Soldier_AT", 
+	"CUP_I_PMC_Soldier_AA"
 ];
 
 baseEnemyDemoGroup_PMC = [
-	"CUP_B_US_Soldier_TL_OCP", 
-	"CUP_B_US_Soldier_MG_OCP", 
-	"CUP_B_US_Soldier_GL_OCP", 
-	"CUP_B_US_Soldier_AMG_OCP"
+	"CUP_I_PMC_Soldier_TL", 
+	"CUP_I_PMC_Engineer", 
+	"CUP_I_PMC_Engineer", 
+	"CUP_I_PMC_Medic", 
+	"CUP_I_PMC_Bodyguard_AA12"
 ];
 
 baseEnemyMortarGroup_PMC = [
 	"B_Mortar_01_F",
-	"CUP_B_US_Soldier_GL_OCP", 
-	"CUP_B_US_Soldier_AMG_OCP"
+	"CUP_I_PMC_Sniper", 
+	"CUP_I_PMC_Sniper_KSVK"
 ];
 
 baseEnemyVehicleGroup_PMC = [
-	"CUP_B_M1151_Deploy_PMC",
-	"CUP_B_nM1025_SOV_M2_PMC_DES",
-	"CUP_B_nM1025_M240_PMC_DES",
-	"CUP_B_M1165_GMV_DSRT_USMC"
-	];
+	"CUP_I_SUV_Armored_ION", 
+	"CUP_I_nM1025_Mk19_DF_ION", 
+	"CUP_I_RG31E_M2_ION"
+];
 
 baseEnemyLightArmoredVehicleGroup_PMC = [
-	"CUP_B_M113A3_desert_PMC", 
-	"CUP_B_RG31E_M2_PMC", 
-	"CUP_B_RG31_Mk19_PMC"
-	];
+	"CUP_I_FENNEK_GMG_ION", 
+	"CUP_I_FENNEK_HMG_ION", 
+	"CUP_I_MATV_HMG_ION"
+];
 
 baseEnemyHeavyArmoredVehicleGroup_PMC = [
-	"CUP_B_M1126_ICV_M2_Desert", 
-	"CUP_B_M1128_MGS_Desert", 
-	"CUP_B_M2A3Bradley_PMC_D", 
-	"CUP_B_M1A2SEP_TUSK_II_Desert_US_Army", 
-	"CUP_B_M1A1SA_Desert_US_Army"
+	"CUP_I_BTR80A_ION", 
+	"CUP_I_BTR80_ION"
 ];
 
 ////////////////////////
