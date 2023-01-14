@@ -360,7 +360,7 @@ setupRoleSwitchToItem = {
 				};
 
 				//Manage player's role
-				_caller setVariable ["role", (_params select 0)];
+				_caller setVariable ["role", (_params select 0), true];
 
 				//Manage default stuff
 				[_caller,(_params select 1)] call doInitializeLoadout;
