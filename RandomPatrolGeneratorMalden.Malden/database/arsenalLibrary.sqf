@@ -332,21 +332,25 @@ switchToRole = {
 	titleCut [format ["Switching to role %1",(_role)], "BLACK FADED", 5];
 
 	//Manage Unit trait
+	_caller setVariable ["ace_medical_medicClass", 0, true]; //Remove special ACE medic trait
+	_caller setVariable ["ace_isEngineer", 0, true];
 	_caller setUnitTrait ["Medic", false];
 	_caller setUnitTrait ["Engineer", false];
 	_caller setUnitTrait ["ExplosiveSpecialist", false];
-	if ((_role) == c_medic) then 
+	if ((_params select 0) == c_medic) then 
 	{
 		_caller setUnitTrait ["Medic", true];
+		_caller setVariable ["ace_medical_medicClass", 2, true]; //add special ACE medic trait doctor
 	};
-	if ((_role) == c_engineer) then 
+	if ((_params select 0) == c_engineer) then 
 	{
 		_caller setUnitTrait ["Engineer", true];
 		_caller setUnitTrait ["ExplosiveSpecialist", true];
+		_caller setVariable ["ace_isEngineer", 2, true]; //add special ACE medic trait advanced engineer
 	};
 
 	//Manage player's role
-	_caller setVariable ["role", (_role)];
+	_caller setVariable ["role", (_params select 0), true];
 
 	//Manage default stuff
 	[_caller,(_faction)] call doInitializeLoadout;
@@ -381,7 +385,36 @@ setupRoleSwitchToItem = {
 			{
 				//Define params
 				params ["_target","_caller","_ID","_params"];
-				[_target, _caller, _params select 1, _params select 0] call switchToRole;
+				diag_log format ["Player %1 has switch to role %2 in faction %3", name _caller, _params select 0, _params select 1];
+
+				titleCut [format ["Switching to role %1",(_params select 1)], "BLACK FADED", 5];
+
+				//Manage Unit trait
+				_caller setUnitTrait ["Medic", false];
+				_caller setUnitTrait ["Engineer", false];
+				_caller setUnitTrait ["ExplosiveSpecialist", false];
+				if ((_params select 0) == c_medic) then 
+				{
+					_caller setUnitTrait ["Medic", true];
+				};
+				if ((_params select 0) == c_engineer) then 
+				{
+					_caller setUnitTrait ["Engineer", true];
+					_caller setUnitTrait ["ExplosiveSpecialist", true];
+				};
+
+				//Manage player's role
+				_caller setVariable ["role", (_params select 0)];
+
+				//Manage default stuff
+				[_caller,(_params select 1)] call doInitializeLoadout;
+
+				_caller setVariable ["spawnLoadout", getUnitLoadout _caller];
+
+				//Manage arsenal stuff
+				[_target, _caller, (_params select 1)] call setupArsenalToItem;
+
+				titleCut ["", "BLACK IN", 5];
 			},[_x,currentFaction]];
 	} foreach listOfRoles;
 
