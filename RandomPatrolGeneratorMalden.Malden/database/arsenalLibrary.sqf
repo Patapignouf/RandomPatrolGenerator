@@ -346,17 +346,21 @@ setupRoleSwitchToItem = {
 				titleCut [format ["Switching to role %1",(_params select 1)], "BLACK FADED", 5];
 
 				//Manage Unit trait
+				_caller setVariable ["ace_medical_medicClass", 0, true]; //Remove special ACE medic trait
+				_caller setVariable ["ace_isEngineer", 0, true];
 				_caller setUnitTrait ["Medic", false];
 				_caller setUnitTrait ["Engineer", false];
 				_caller setUnitTrait ["ExplosiveSpecialist", false];
 				if ((_params select 0) == c_medic) then 
 				{
 					_caller setUnitTrait ["Medic", true];
+					_caller setVariable ["ace_medical_medicClass", 2, true]; //add special ACE medic trait doctor
 				};
 				if ((_params select 0) == c_engineer) then 
 				{
 					_caller setUnitTrait ["Engineer", true];
 					_caller setUnitTrait ["ExplosiveSpecialist", true];
+					_caller setVariable ["ace_isEngineer", 2, true]; //add special ACE medic trait advanced engineer
 				};
 
 				//Manage player's role
