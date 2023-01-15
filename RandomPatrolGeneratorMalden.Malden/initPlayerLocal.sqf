@@ -12,6 +12,21 @@ player allowdamage false;
 player enableSimulationGlobal false;
 player setVariable ["isDead", false, true];
 
+//Hide HUD group to debug the UI 
+showHUD [
+  true, // scriptedHUD
+  true, // info
+  true, // radar
+  true, // compass
+  true, // direction
+  true, // menu
+  false, // group
+  true, // cursors
+  true, // panels
+  false, // kills
+  false  // showIcon3D
+];
+
 cutText ["Please wait while mission is generating", "BLACK FADED", 100];
 sleep 3; //Wait player load correctly the mission
 
