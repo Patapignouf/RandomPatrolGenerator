@@ -406,7 +406,8 @@ if (didJIP) then
 	_deadPlayerList = missionNamespace getVariable "deadPlayer";
 	if (count (_deadPlayerList select { _x == (name player) }) == 0) then 
 	{
-		player setPos [(getPos (leader (group player))) select 0, (getPos (leader (group player))) select 1]; //Set Pos player squad leader on ground
+		_tempPos = getPos (allUnits select {alive _x && side _x isEqualTo (side player) && _x getVariable "isDead" == false} select 0);
+		player setPos [_tempPos select 0, _tempPos select 1]; //Set Pos player squad leader on ground
 	} else 
 	{
 		player setPos [0,0];

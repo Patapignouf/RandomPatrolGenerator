@@ -27,6 +27,8 @@ _buttonRespawnStart ctrlAddEventHandler[ "ButtonClick",
 			//Blufor
 			player setPos ([initBlueforLocation, 1, 5, 3, 0, 20, 0] call BIS_fnc_findSafePos);
 		};
+
+		//Enable gameplay for player
 		player setVariable ["isDead", false, true];
 		player allowdamage true;
 		player enableSimulationGlobal true;
@@ -52,16 +54,12 @@ _buttonRespawnStart ctrlAddEventHandler[ "ButtonClick",
 _buttonRespawnLeader ctrlAddEventHandler[ "ButtonClick", 
 	{ 
 		hint "Respawn on teamleader";
-		if (player getVariable "sideBeforeDeath" == "independent") then 
-		{
-			//Independent
-			player setPos (((side player) call BIS_fnc_getRespawnPositions) select 0);
-			
-		} else 
-		{
-			//Blufor
-			player setPos (((side player) call BIS_fnc_getRespawnPositions) select 0);
-		};
+
+		//teleport player to another player with same side
+		_tempPos = getPos (allUnits select {alive _x && side _x isEqualTo (side player) && _x getVariable "isDead" == false} select 0);
+		player setPos [_tempPos select 0, _tempPos select 1];
+
+		//Enable gameplay for player
 		player setVariable ["isDead", false, true];
 		player allowdamage true;
 		player enableSimulationGlobal true;
