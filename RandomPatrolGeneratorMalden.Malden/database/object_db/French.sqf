@@ -172,8 +172,9 @@ grenadeLauncherList_French =  [
 ];	
 
 launcherList_French = [		
-	"CUP_launch_Metis",
-	"AMF_AT4CS_F"
+	"AMF_AT4CS_F",
+	"AMF_LRAC89_F",
+	"AMF_Eryx"
 ];	
 
 autorifleList_French = [			
