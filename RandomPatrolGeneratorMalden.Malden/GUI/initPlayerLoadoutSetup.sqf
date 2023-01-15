@@ -62,13 +62,13 @@ _buttonArsenal ctrlAddEventHandler[ "ButtonClick",
 _buttonSave ctrlAddEventHandler[ "ButtonClick", 
 	{ 
 		player setVariable ["spawnLoadout", getUnitLoadout player];
-		hint "Loadout saved";
+		cutText ["Loadout saved", "PLAIN", 0.3];
 	}];
 
 _buttonLoad ctrlAddEventHandler[ "ButtonClick", 
 	{ 
 		player setUnitLoadout (player getVariable "spawnLoadout");
-		hint "Loadout loaded"
+		cutText ["Loadout loaded", "PLAIN", 0.3];
 	}];
 
 
