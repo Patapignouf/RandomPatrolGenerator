@@ -337,12 +337,12 @@ switchToRole = {
 	_caller setUnitTrait ["Medic", false];
 	_caller setUnitTrait ["Engineer", false];
 	_caller setUnitTrait ["ExplosiveSpecialist", false];
-	if ((_params select 0) == c_medic) then 
+	if (_role == c_medic) then 
 	{
 		_caller setUnitTrait ["Medic", true];
 		_caller setVariable ["ace_medical_medicClass", 2, true]; //add special ACE medic trait doctor
 	};
-	if ((_params select 0) == c_engineer) then 
+	if (_role == c_engineer) then 
 	{
 		_caller setUnitTrait ["Engineer", true];
 		_caller setUnitTrait ["ExplosiveSpecialist", true];
@@ -350,7 +350,7 @@ switchToRole = {
 	};
 
 	//Manage player's role
-	_caller setVariable ["role", (_params select 0), true];
+	_caller setVariable ["role", _role, true];
 
 	//Manage default stuff
 	[_caller,(_faction)] call doInitializeLoadout;
