@@ -7,8 +7,10 @@ waitUntil {!isNull player && (getClientStateNumber>=10||!isMultiplayer)};
 diag_log format ["Setup Player %1 at position 0", name player];
 
 //init tp to be able to spawn on the ground on each map
-player setPos [0,0];
+player setPos [0,0,10000];
 player allowdamage false;
+player enableSimulationGlobal false;
+player setVariable ["isDead", false, true];
 
 cutText ["Please wait while mission is generating", "BLACK FADED", 100];
 sleep 3; //Wait player load correctly the mission
@@ -68,12 +70,12 @@ private _generateCivDialogs = compile preprocessFileLineNumbers "enemyManagement
 }] call BIS_fnc_addScriptedEventHandler;
 
 //Remove Body on respawn 
-player addEventHandler ["Respawn",{ 
+// player addEventHandler ["Respawn",{ 
 
-	params ["_newObject","_oldObject"];
-	deleteVehicle _oldObject; 
+// 	params ["_newObject","_oldObject"];
+// 	deleteVehicle _oldObject; 
 
-}];
+// }];
 
 //Init disableThermal
 if (enableThermal==0) then 
@@ -393,6 +395,7 @@ if (hasInterface) then
 //Let's get it started !
 
 player allowdamage true;
+player enableSimulationGlobal true;
 cutText ["", "BLACK IN", 5];
 
 

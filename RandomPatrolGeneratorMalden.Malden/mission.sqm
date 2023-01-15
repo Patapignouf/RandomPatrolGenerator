@@ -24,10 +24,10 @@ class EditorData
 	};
 	class Camera
 	{
-		pos[]={5479.3018,307.89581,2533.2471};
-		dir[]={0.51435387,-0.59141803,0.62102318};
-		up[]={0.3772496,0.80635864,0.45548546};
-		aside[]={0.77015162,1.2293458e-007,-0.63786727};
+		pos[]={5695.7896,316.73599,2682.2236};
+		dir[]={-0.54322541,-0.59606898,-0.59127653};
+		up[]={-0.40327117,0.80293322,-0.43894261};
+		aside[]={-0.7363956,0,0.67655116};
 	};
 };
 binarizationWanted=0;
@@ -107,7 +107,7 @@ class CustomAttributes
 				class data
 				{
 					singleType="SCALAR";
-					value=-1;
+					value=0;
 				};
 			};
 		};
@@ -242,7 +242,7 @@ class CustomAttributes
 					singleType="ARRAY";
 					class value
 					{
-						items=2;
+						items=3;
 						class Item0
 						{
 							class data
@@ -252,6 +252,14 @@ class CustomAttributes
 							};
 						};
 						class Item1
+						{
+							class data
+							{
+								singleType="STRING";
+								value="Tickets";
+							};
+						};
+						class Item2
 						{
 							class data
 							{
@@ -272,7 +280,7 @@ class CustomAttributes
 				class data
 				{
 					singleType="SCALAR";
-					value=-1;
+					value=0;
 				};
 			};
 		};

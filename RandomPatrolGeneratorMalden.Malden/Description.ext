@@ -2,9 +2,11 @@
 #include "GUI\BaseControls.hpp"
 #include "GUI\missionSetup.hpp"
 #include "GUI\playerLoadoutSetup.hpp"
+#include "GUI\playerRespawnMenu.hpp"
+
 
 respawnDialog = 0;
-respawnOnStart = 0;
+respawnOnStart = -1;
 respawnDelay = 20; 
 
 enableDebugConsole = 1;

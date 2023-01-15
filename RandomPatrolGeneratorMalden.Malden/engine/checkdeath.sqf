@@ -1,8 +1,8 @@
 //Wait mission generation to init deatch check
 waituntil {count allPlayers != 0};
 
-nb_ind_alive = {isPlayer _x && side _x == independent} count allUnits;
-nb_blu_alive = {isPlayer _x && side _x == blufor} count allUnits;
+nb_ind_alive = {isPlayer _x && side _x == independent && _x getVariable "isDead" == false} count allUnits;
+nb_blu_alive = {isPlayer _x && side _x == blufor, _x getVariable "isDead" == false} count allUnits;
 nb_blu_init = nb_blu_alive;
 missionOver = false;
 initWarlord = objNull;
@@ -67,7 +67,7 @@ while {sleep 10; !missionOver} do
 		// };
 	} else 
 	{
-		nb_ind_alive = {isPlayer _x && side _x == independent} count allUnits;
+		nb_ind_alive = {isPlayer _x && side _x == independent && _x getVariable "isDead" == false} count allUnits;
 		publicvariable "nb_ind_alive";
 	};
 	
@@ -104,7 +104,7 @@ while {sleep 10; !missionOver} do
 		};
 	} else 
 	{
-		nb_blu_alive = {isPlayer _x && side _x == blufor} count allUnits;
+		nb_blu_alive = {isPlayer _x && side _x == blufor && _x getVariable "isDead" == false} count allUnits;
 		publicvariable "nb_blu_alive";
 	};
 };
