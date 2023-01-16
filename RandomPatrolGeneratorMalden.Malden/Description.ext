@@ -7,7 +7,7 @@
 
 respawnDialog = 0;
 respawnOnStart = -1;
-respawnDelay = 20; 
+respawnDelay = 1; 
 
 enableDebugConsole = 1;
 briefing = 0;

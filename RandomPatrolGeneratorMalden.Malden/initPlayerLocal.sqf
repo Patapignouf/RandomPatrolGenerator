@@ -10,6 +10,7 @@ diag_log format ["Setup Player %1 at position 0", name player];
 player setPos [0,0,10000];
 player allowdamage false;
 player enableSimulationGlobal false;
+player setVariable ["role", "rifleman"];
 player setVariable ["isDead", false, true];
 
 //Hide HUD group to debug the UI 
