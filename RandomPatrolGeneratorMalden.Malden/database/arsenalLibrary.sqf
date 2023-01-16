@@ -353,7 +353,7 @@ switchToRole = {
 	_caller setVariable ["role", _role, true];
 
 	//Manage default stuff
-	[_caller,(_faction)] call doInitializeLoadout;
+	[_caller, _faction] call doInitializeLoadout;
 
 	_caller setVariable ["spawnLoadout", getUnitLoadout _caller];
 
