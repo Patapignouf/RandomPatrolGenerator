@@ -15,8 +15,8 @@ if (isServer) then
 {
 	while {sleep 20; true} do  
 	{
-		nb_ind_player_alive = {isPlayer _x && side _x == independent} count allUnits;
-		nb_blu_player_alive = {isPlayer _x && side _x == blufor} count allUnits;
+		nb_ind_player_alive = {isPlayer _x && side _x == independent && _x getVariable "isDead" == false} count allUnits;
+		nb_blu_player_alive = {isPlayer _x && side _x == blufor && _x getVariable "isDead" == false} count allUnits;
 		
 		//Test if there are too much IA
 		//Test if IA are already in combat mode to simulate reinforcement
@@ -26,7 +26,7 @@ if (isServer) then
 			if (nb_blu_player_alive != 0) then
 			{
 				{
-					if (isPlayer _x && alive _x && side _x == blufor) exitWith
+					if (isPlayer _x && alive _x && side _x == blufor && _x getVariable "isDead" == false) exitWith
 					{
 						positionToAttack = getPos _x;
 					};
@@ -35,7 +35,7 @@ if (isServer) then
 			if (nb_ind_player_alive != 0) then
 			{
 				{
-					if (isPlayer _x && alive _x && side _x == independent) exitWith
+					if (isPlayer _x && alive _x && side _x == independent && _x getVariable "isDead" == false) exitWith
 					{
 						positionToAttack = getPos _x;
 					};
