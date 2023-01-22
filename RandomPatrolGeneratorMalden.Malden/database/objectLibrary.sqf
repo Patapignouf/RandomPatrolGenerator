@@ -2,7 +2,7 @@
 
 c_variableToInit = ["bluforUnarmedVehicle","bluforArmedVehicle","bluforUnarmedVehicleChopper","bluforDrone","bluforBoat","civilian_group",
 "civilian_big_group","civilianTruck","baseEnemyGroup","baseEnemyATGroup","baseEnemyDemoGroup","baseEnemyMortarGroup","baseEnemyVehicleGroup",
-"baseEnemyLightArmoredVehicleGroup","baseEnemyHeavyArmoredVehicleGroup","bluforFixedWing","bluforArmedChopper"];
+"baseEnemyLightArmoredVehicleGroup","baseEnemyHeavyArmoredVehicleGroup","bluforFixedWing","bluforArmedChopper", "bluforHQVehicle"];
 
 //////////////////////////////
 ////Define objectives data////
@@ -320,6 +320,7 @@ initFactionDb = {
 		_currentTempVariable pushBack [missionNamespace getVariable [_currentFactionBuild,[]], _currentFactionParameters];
 	} foreach factionInfos;
 	_currentVariableName = format ["%1%2", _currentVariable, c_db];
+	diag_log "Init Object Library";
 	missionNamespace setVariable [_currentVariableName, _currentTempVariable, true];
 };
 

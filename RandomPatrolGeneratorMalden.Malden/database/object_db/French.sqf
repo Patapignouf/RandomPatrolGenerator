@@ -100,6 +100,11 @@ bluforFixedWing_French = [
 	"B_AMF_PLANE_FIGHTER_02_F"
 ];
 
+bluforHQVehicle_French = [
+	"AMF_VBMR_COMMANDEMENT_CE",
+	"AMF_GBC180_PERS_01"
+];
+
 ////////////////////////
 //Loadout management////
 ////////////////////////
