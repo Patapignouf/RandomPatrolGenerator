@@ -12,7 +12,7 @@ class EditorData
 	};
 	class ItemIDProvider
 	{
-		nextID=1872;
+		nextID=1928;
 	};
 	class MarkerIDProvider
 	{
@@ -24,44 +24,27 @@ class EditorData
 	};
 	class Camera
 	{
-		pos[]={5595.4917,303.29489,2555.2813};
-		dir[]={-0.83094501,-0.55634463,0.0033189638};
-		up[]={-0.55634022,0.83095169,0.0022221361};
-		aside[]={0.003994172,1.1641532e-010,0.99999201};
+		pos[]={5582.8457,130.65634,2501.5449};
+		dir[]={-0.44293022,-0.75136501,0.48914564};
+		up[]={-0.50433236,0.65988684,0.5569545};
+		aside[]={0.74125689,-1.4901161e-008,0.67122149};
 	};
 };
 binarizationWanted=0;
-sourceName="RandomPatrolGenerator";
+sourceName="RandomPatrolGeneratorMalden";
 addons[]=
 {
-	"A3_Characters_F",
-	"A3_Weapons_F",
-	"A3_Weapons_F_Items",
-	"A3_Characters_F_Mark"
+	"A3_Characters_F"
 };
 class AddonsMetaData
 {
 	class List
 	{
-		items=3;
+		items=1;
 		class Item0
 		{
 			className="A3_Characters_F";
 			name="Arma 3 Alpha - Characters and Clothing";
-			author="Bohemia Interactive";
-			url="https://www.arma3.com";
-		};
-		class Item1
-		{
-			className="A3_Weapons_F";
-			name="Arma 3 Alpha - Weapons and Accessories";
-			author="Bohemia Interactive";
-			url="https://www.arma3.com";
-		};
-		class Item2
-		{
-			className="A3_Characters_F_Mark";
-			name="Arma 3 Marksmen - Characters and Clothing";
 			author="Bohemia Interactive";
 			url="https://www.arma3.com";
 		};
@@ -75,10 +58,6 @@ class DynamicSimulation
 		Vehicle=2500;
 		Group=2000;
 	};
-};
-dlcs[]=
-{
-	"Mark"
 };
 randomSeed=1466210;
 class ScenarioData
@@ -107,7 +86,7 @@ class CustomAttributes
 				class data
 				{
 					singleType="SCALAR";
-					value=-1;
+					value=0;
 				};
 			};
 		};
@@ -242,7 +221,7 @@ class CustomAttributes
 					singleType="ARRAY";
 					class value
 					{
-						items=2;
+						items=3;
 						class Item0
 						{
 							class data
@@ -252,6 +231,14 @@ class CustomAttributes
 							};
 						};
 						class Item1
+						{
+							class data
+							{
+								singleType="STRING";
+								value="Tickets";
+							};
+						};
+						class Item2
 						{
 							class data
 							{
@@ -272,7 +259,7 @@ class CustomAttributes
 				class data
 				{
 					singleType="SCALAR";
-					value=-1;
+					value=0;
 				};
 			};
 		};
@@ -442,106 +429,23 @@ class Mission
 			side="West";
 			class Entities
 			{
-				items=14;
+				items=19;
 				class Item0
 				{
 					dataType="Object";
 					class PositionInfo
 					{
-						position[]={5508,205.18144,2566.05};
+						position[]={5535,36.283443,2618.05};
 					};
 					side="West";
 					flags=7;
 					class Attributes
 					{
-						rank="SERGEANT";
-						init="this setVariable [""role"", ""leader"" , true];";
-						description="1: Squad Leader";
+						description="Rifleman (setup)";
 						isPlayer=1;
-						isPlayable=1;
-						class Inventory
-						{
-							class binocular
-							{
-								name="Binocular";
-							};
-							class uniform
-							{
-								typeName="U_B_CombatUniform_mcam_vest";
-								isBackpack=0;
-								class ItemCargo
-								{
-									items=1;
-									class Item0
-									{
-										name="FirstAidKit";
-										count=1;
-									};
-								};
-							};
-							class vest
-							{
-								typeName="V_PlateCarrierGL_rgr";
-								isBackpack=0;
-								class MagazineCargo
-								{
-									items=7;
-									class Item0
-									{
-										name="HandGrenade";
-										count=2;
-										ammoLeft=1;
-									};
-									class Item1
-									{
-										name="B_IR_Grenade";
-										count=2;
-										ammoLeft=1;
-									};
-									class Item2
-									{
-										name="SmokeShell";
-										count=1;
-										ammoLeft=1;
-									};
-									class Item3
-									{
-										name="SmokeShellGreen";
-										count=1;
-										ammoLeft=1;
-									};
-									class Item4
-									{
-										name="SmokeShellBlue";
-										count=1;
-										ammoLeft=1;
-									};
-									class Item5
-									{
-										name="SmokeShellOrange";
-										count=1;
-										ammoLeft=1;
-									};
-									class Item6
-									{
-										name="Chemlight_green";
-										count=2;
-										ammoLeft=1;
-									};
-								};
-							};
-							map="ItemMap";
-							compass="ItemCompass";
-							watch="ItemWatch";
-							radio="ItemRadio";
-							gps="ItemGPS";
-							goggles="G_Tactical_Black";
-							hmd="NVGoggles";
-							headgear="H_HelmetB_desert";
-						};
 					};
-					id=1846;
-					type="B_Soldier_SL_F";
+					id=1876;
+					type="B_Soldier_unarmed_F";
 					class CustomAttributes
 					{
 						class Attribute0
@@ -553,7 +457,7 @@ class Mission
 								class data
 								{
 									singleType="STRING";
-									value="Male02ENG";
+									value="Male04ENG";
 								};
 							};
 						};
@@ -566,7 +470,7 @@ class Mission
 								class data
 								{
 									singleType="SCALAR";
-									value=0.95999998;
+									value=1;
 								};
 							};
 						};
@@ -578,358 +482,17 @@ class Mission
 					dataType="Object";
 					class PositionInfo
 					{
-						position[]={5513,203.82744,2556.05};
+						position[]={5536,36.458637,2608.05};
 					};
 					side="West";
 					flags=5;
 					class Attributes
 					{
-						skill=0.40000001;
-						init="this setVariable [""role"", ""autorifleman"" , true];";
-						description="2: Autorifleman";
+						description="Rifleman";
 						isPlayable=1;
-						class Inventory
-						{
-							class binocular
-							{
-								name="Binocular";
-							};
-							class uniform
-							{
-								typeName="U_B_CombatUniform_mcam_vest";
-								isBackpack=0;
-								class ItemCargo
-								{
-									items=1;
-									class Item0
-									{
-										name="FirstAidKit";
-										count=1;
-									};
-								};
-							};
-							class vest
-							{
-								typeName="V_PlateCarrierGL_rgr";
-								isBackpack=0;
-								class MagazineCargo
-								{
-									items=7;
-									class Item0
-									{
-										name="HandGrenade";
-										count=2;
-										ammoLeft=1;
-									};
-									class Item1
-									{
-										name="B_IR_Grenade";
-										count=2;
-										ammoLeft=1;
-									};
-									class Item2
-									{
-										name="SmokeShell";
-										count=1;
-										ammoLeft=1;
-									};
-									class Item3
-									{
-										name="SmokeShellGreen";
-										count=1;
-										ammoLeft=1;
-									};
-									class Item4
-									{
-										name="SmokeShellBlue";
-										count=1;
-										ammoLeft=1;
-									};
-									class Item5
-									{
-										name="SmokeShellOrange";
-										count=1;
-										ammoLeft=1;
-									};
-									class Item6
-									{
-										name="Chemlight_green";
-										count=2;
-										ammoLeft=1;
-									};
-								};
-							};
-							map="ItemMap";
-							compass="ItemCompass";
-							watch="ItemWatch";
-							radio="ItemRadio";
-							gps="ItemGPS";
-							goggles="G_Tactical_Black";
-							hmd="NVGoggles";
-							headgear="H_HelmetB_desert";
-						};
 					};
-					id=1847;
-					type="B_soldier_AR_F";
-					class CustomAttributes
-					{
-						class Attribute0
-						{
-							property="speaker";
-							expression="_this setspeaker _value;";
-							class Value
-							{
-								class data
-								{
-									singleType="STRING";
-									value="Male01ENG";
-								};
-							};
-						};
-						class Attribute1
-						{
-							property="pitch";
-							expression="_this setpitch _value;";
-							class Value
-							{
-								class data
-								{
-									singleType="SCALAR";
-									value=0.94999999;
-								};
-							};
-						};
-						nAttributes=2;
-					};
-				};
-				class Item2
-				{
-					dataType="Object";
-					class PositionInfo
-					{
-						position[]={5500.3882,203.82602,2557.4399};
-					};
-					side="West";
-					flags=5;
-					class Attributes
-					{
-						skill=0.44999999;
-						rank="CORPORAL";
-						init="this setVariable [""role"", ""rifleman"" , true];";
-						description="3: Rifleman";
-						isPlayable=1;
-						class Inventory
-						{
-							class binocular
-							{
-								name="Binocular";
-							};
-							class uniform
-							{
-								typeName="U_B_CombatUniform_mcam_vest";
-								isBackpack=0;
-								class ItemCargo
-								{
-									items=1;
-									class Item0
-									{
-										name="FirstAidKit";
-										count=1;
-									};
-								};
-							};
-							class vest
-							{
-								typeName="V_PlateCarrierGL_rgr";
-								isBackpack=0;
-								class MagazineCargo
-								{
-									items=7;
-									class Item0
-									{
-										name="HandGrenade";
-										count=2;
-										ammoLeft=1;
-									};
-									class Item1
-									{
-										name="B_IR_Grenade";
-										count=2;
-										ammoLeft=1;
-									};
-									class Item2
-									{
-										name="SmokeShell";
-										count=1;
-										ammoLeft=1;
-									};
-									class Item3
-									{
-										name="SmokeShellGreen";
-										count=1;
-										ammoLeft=1;
-									};
-									class Item4
-									{
-										name="SmokeShellBlue";
-										count=1;
-										ammoLeft=1;
-									};
-									class Item5
-									{
-										name="SmokeShellOrange";
-										count=1;
-										ammoLeft=1;
-									};
-									class Item6
-									{
-										name="Chemlight_green";
-										count=2;
-										ammoLeft=1;
-									};
-								};
-							};
-							map="ItemMap";
-							compass="ItemCompass";
-							watch="ItemWatch";
-							radio="ItemRadio";
-							gps="ItemGPS";
-							goggles="G_Tactical_Black";
-							hmd="NVGoggles";
-							headgear="H_HelmetB_desert";
-						};
-					};
-					id=1848;
-					type="B_Soldier_GL_F";
-					class CustomAttributes
-					{
-						class Attribute0
-						{
-							property="speaker";
-							expression="_this setspeaker _value;";
-							class Value
-							{
-								class data
-								{
-									singleType="STRING";
-									value="Male01ENG";
-								};
-							};
-						};
-						class Attribute1
-						{
-							property="pitch";
-							expression="_this setpitch _value;";
-							class Value
-							{
-								class data
-								{
-									singleType="SCALAR";
-									value=1.04;
-								};
-							};
-						};
-						nAttributes=2;
-					};
-				};
-				class Item3
-				{
-					dataType="Object";
-					class PositionInfo
-					{
-						position[]={5515.3882,203.27983,2552.4399};
-					};
-					side="West";
-					flags=5;
-					class Attributes
-					{
-						rank="SERGEANT";
-						init="this setVariable [""role"", ""marksman"" , true];";
-						description="4: Marksman";
-						isPlayable=1;
-						class Inventory
-						{
-							class binocular
-							{
-								name="Binocular";
-							};
-							class uniform
-							{
-								typeName="U_B_CombatUniform_mcam_vest";
-								isBackpack=0;
-								class ItemCargo
-								{
-									items=1;
-									class Item0
-									{
-										name="FirstAidKit";
-										count=1;
-									};
-								};
-							};
-							class vest
-							{
-								typeName="V_PlateCarrierGL_rgr";
-								isBackpack=0;
-								class MagazineCargo
-								{
-									items=7;
-									class Item0
-									{
-										name="HandGrenade";
-										count=2;
-										ammoLeft=1;
-									};
-									class Item1
-									{
-										name="B_IR_Grenade";
-										count=2;
-										ammoLeft=1;
-									};
-									class Item2
-									{
-										name="SmokeShell";
-										count=1;
-										ammoLeft=1;
-									};
-									class Item3
-									{
-										name="SmokeShellGreen";
-										count=1;
-										ammoLeft=1;
-									};
-									class Item4
-									{
-										name="SmokeShellBlue";
-										count=1;
-										ammoLeft=1;
-									};
-									class Item5
-									{
-										name="SmokeShellOrange";
-										count=1;
-										ammoLeft=1;
-									};
-									class Item6
-									{
-										name="Chemlight_green";
-										count=2;
-										ammoLeft=1;
-									};
-								};
-							};
-							map="ItemMap";
-							compass="ItemCompass";
-							watch="ItemWatch";
-							radio="ItemRadio";
-							gps="ItemGPS";
-							goggles="G_Tactical_Black";
-							hmd="NVGoggles";
-							headgear="H_HelmetB_desert";
-						};
-					};
-					id=1849;
-					type="B_soldier_M_F";
+					id=1878;
+					type="B_Soldier_unarmed_F";
 					class CustomAttributes
 					{
 						class Attribute0
@@ -954,7 +517,102 @@ class Mission
 								class data
 								{
 									singleType="SCALAR";
-									value=1.01;
+									value=0.95999998;
+								};
+							};
+						};
+						nAttributes=2;
+					};
+				};
+				class Item2
+				{
+					dataType="Object";
+					class PositionInfo
+					{
+						position[]={5539.0854,36.195297,2608.0044};
+						angles[]={0,6.0407553,-0};
+					};
+					side="West";
+					flags=5;
+					class Attributes
+					{
+						description="Rifleman";
+						isPlayable=1;
+					};
+					id=1880;
+					type="B_Soldier_unarmed_F";
+					class CustomAttributes
+					{
+						class Attribute0
+						{
+							property="speaker";
+							expression="_this setspeaker _value;";
+							class Value
+							{
+								class data
+								{
+									singleType="STRING";
+									value="Male10ENG";
+								};
+							};
+						};
+						class Attribute1
+						{
+							property="pitch";
+							expression="_this setpitch _value;";
+							class Value
+							{
+								class data
+								{
+									singleType="SCALAR";
+									value=0.95999998;
+								};
+							};
+						};
+						nAttributes=2;
+					};
+				};
+				class Item3
+				{
+					dataType="Object";
+					class PositionInfo
+					{
+						position[]={5546.9277,35.429581,2610.6985};
+					};
+					side="West";
+					flags=5;
+					class Attributes
+					{
+						description="Rifleman";
+						isPlayable=1;
+					};
+					id=1882;
+					type="B_Soldier_unarmed_F";
+					class CustomAttributes
+					{
+						class Attribute0
+						{
+							property="speaker";
+							expression="_this setspeaker _value;";
+							class Value
+							{
+								class data
+								{
+									singleType="STRING";
+									value="Male10ENG";
+								};
+							};
+						};
+						class Attribute1
+						{
+							property="pitch";
+							expression="_this setpitch _value;";
+							class Value
+							{
+								class data
+								{
+									singleType="SCALAR";
+									value=0.95999998;
 								};
 							};
 						};
@@ -966,100 +624,18 @@ class Mission
 					dataType="Object";
 					class PositionInfo
 					{
-						position[]={5495.3882,202.69345,2552.4399};
+						position[]={5550.0132,35.158562,2610.6528};
+						angles[]={0,6.0407553,-0};
 					};
 					side="West";
 					flags=5;
 					class Attributes
 					{
-						skill=0.44999999;
-						rank="CORPORAL";
-						init="this setVariable [""role"", ""at"" , true];";
-						description="5: Missile Specialist (AT)";
+						description="Rifleman";
 						isPlayable=1;
-						class Inventory
-						{
-							class binocular
-							{
-								name="Binocular";
-							};
-							class uniform
-							{
-								typeName="U_B_CombatUniform_mcam_vest";
-								isBackpack=0;
-								class ItemCargo
-								{
-									items=1;
-									class Item0
-									{
-										name="FirstAidKit";
-										count=1;
-									};
-								};
-							};
-							class vest
-							{
-								typeName="V_PlateCarrierGL_rgr";
-								isBackpack=0;
-								class MagazineCargo
-								{
-									items=7;
-									class Item0
-									{
-										name="HandGrenade";
-										count=2;
-										ammoLeft=1;
-									};
-									class Item1
-									{
-										name="B_IR_Grenade";
-										count=2;
-										ammoLeft=1;
-									};
-									class Item2
-									{
-										name="SmokeShell";
-										count=1;
-										ammoLeft=1;
-									};
-									class Item3
-									{
-										name="SmokeShellGreen";
-										count=1;
-										ammoLeft=1;
-									};
-									class Item4
-									{
-										name="SmokeShellBlue";
-										count=1;
-										ammoLeft=1;
-									};
-									class Item5
-									{
-										name="SmokeShellOrange";
-										count=1;
-										ammoLeft=1;
-									};
-									class Item6
-									{
-										name="Chemlight_green";
-										count=2;
-										ammoLeft=1;
-									};
-								};
-							};
-							map="ItemMap";
-							compass="ItemCompass";
-							watch="ItemWatch";
-							radio="ItemRadio";
-							gps="ItemGPS";
-							goggles="G_Tactical_Black";
-							hmd="NVGoggles";
-							headgear="H_HelmetB_desert";
-						};
 					};
-					id=1850;
-					type="B_soldier_AT_F";
+					id=1883;
+					type="B_Soldier_unarmed_F";
 					class CustomAttributes
 					{
 						class Attribute0
@@ -1071,7 +647,7 @@ class Mission
 								class data
 								{
 									singleType="STRING";
-									value="Male08ENG";
+									value="Male10ENG";
 								};
 							};
 						};
@@ -1084,7 +660,7 @@ class Mission
 								class data
 								{
 									singleType="SCALAR";
-									value=0.94999999;
+									value=0.95999998;
 								};
 							};
 						};
@@ -1096,99 +672,17 @@ class Mission
 					dataType="Object";
 					class PositionInfo
 					{
-						position[]={5519,202.69344,2549.05};
+						position[]={5542.3525,35.913017,2605.728};
 					};
 					side="West";
 					flags=5;
 					class Attributes
 					{
-						skill=0.40000001;
-						init="this setVariable [""role"", ""at"" , true];";
-						description="6: Missile Specialist (AT)";
+						description="Rifleman";
 						isPlayable=1;
-						class Inventory
-						{
-							class binocular
-							{
-								name="Binocular";
-							};
-							class uniform
-							{
-								typeName="U_B_CombatUniform_mcam_vest";
-								isBackpack=0;
-								class ItemCargo
-								{
-									items=1;
-									class Item0
-									{
-										name="FirstAidKit";
-										count=1;
-									};
-								};
-							};
-							class vest
-							{
-								typeName="V_PlateCarrierGL_rgr";
-								isBackpack=0;
-								class MagazineCargo
-								{
-									items=7;
-									class Item0
-									{
-										name="HandGrenade";
-										count=2;
-										ammoLeft=1;
-									};
-									class Item1
-									{
-										name="B_IR_Grenade";
-										count=2;
-										ammoLeft=1;
-									};
-									class Item2
-									{
-										name="SmokeShell";
-										count=1;
-										ammoLeft=1;
-									};
-									class Item3
-									{
-										name="SmokeShellGreen";
-										count=1;
-										ammoLeft=1;
-									};
-									class Item4
-									{
-										name="SmokeShellBlue";
-										count=1;
-										ammoLeft=1;
-									};
-									class Item5
-									{
-										name="SmokeShellOrange";
-										count=1;
-										ammoLeft=1;
-									};
-									class Item6
-									{
-										name="Chemlight_green";
-										count=2;
-										ammoLeft=1;
-									};
-								};
-							};
-							map="ItemMap";
-							compass="ItemCompass";
-							watch="ItemWatch";
-							radio="ItemRadio";
-							gps="ItemGPS";
-							goggles="G_Tactical_Black";
-							hmd="NVGoggles";
-							headgear="H_HelmetB_desert";
-						};
 					};
-					id=1851;
-					type="B_soldier_AAT_F";
+					id=1885;
+					type="B_Soldier_unarmed_F";
 					class CustomAttributes
 					{
 						class Attribute0
@@ -1200,7 +694,7 @@ class Mission
 								class data
 								{
 									singleType="STRING";
-									value="Male06ENG";
+									value="Male10ENG";
 								};
 							};
 						};
@@ -1213,7 +707,7 @@ class Mission
 								class data
 								{
 									singleType="SCALAR";
-									value=0.99000001;
+									value=0.95999998;
 								};
 							};
 						};
@@ -1225,99 +719,18 @@ class Mission
 					dataType="Object";
 					class PositionInfo
 					{
-						position[]={5490.3882,201.17198,2547.4399};
+						position[]={5545.438,35.608822,2605.6824};
+						angles[]={0,6.0407553,-0};
 					};
 					side="West";
 					flags=5;
 					class Attributes
 					{
-						skill=0.40000001;
-						init="this setVariable [""role"", ""engineer"" , true];";
-						description="7: Engineer";
+						description="Rifleman";
 						isPlayable=1;
-						class Inventory
-						{
-							class binocular
-							{
-								name="Binocular";
-							};
-							class uniform
-							{
-								typeName="U_B_CombatUniform_mcam_vest";
-								isBackpack=0;
-								class ItemCargo
-								{
-									items=1;
-									class Item0
-									{
-										name="FirstAidKit";
-										count=1;
-									};
-								};
-							};
-							class vest
-							{
-								typeName="V_PlateCarrierGL_rgr";
-								isBackpack=0;
-								class MagazineCargo
-								{
-									items=7;
-									class Item0
-									{
-										name="HandGrenade";
-										count=2;
-										ammoLeft=1;
-									};
-									class Item1
-									{
-										name="B_IR_Grenade";
-										count=2;
-										ammoLeft=1;
-									};
-									class Item2
-									{
-										name="SmokeShell";
-										count=1;
-										ammoLeft=1;
-									};
-									class Item3
-									{
-										name="SmokeShellGreen";
-										count=1;
-										ammoLeft=1;
-									};
-									class Item4
-									{
-										name="SmokeShellBlue";
-										count=1;
-										ammoLeft=1;
-									};
-									class Item5
-									{
-										name="SmokeShellOrange";
-										count=1;
-										ammoLeft=1;
-									};
-									class Item6
-									{
-										name="Chemlight_green";
-										count=2;
-										ammoLeft=1;
-									};
-								};
-							};
-							map="ItemMap";
-							compass="ItemCompass";
-							watch="ItemWatch";
-							radio="ItemRadio";
-							gps="ItemGPS";
-							goggles="G_Tactical_Black";
-							hmd="NVGoggles";
-							headgear="H_HelmetB_desert";
-						};
 					};
-					id=1852;
-					type="B_Soldier_A_F";
+					id=1886;
+					type="B_Soldier_unarmed_F";
 					class CustomAttributes
 					{
 						class Attribute0
@@ -1329,7 +742,7 @@ class Mission
 								class data
 								{
 									singleType="STRING";
-									value="Male08ENG";
+									value="Male10ENG";
 								};
 							};
 						};
@@ -1342,7 +755,7 @@ class Mission
 								class data
 								{
 									singleType="SCALAR";
-									value=0.99000001;
+									value=0.95999998;
 								};
 							};
 						};
@@ -1354,99 +767,17 @@ class Mission
 					dataType="Object";
 					class PositionInfo
 					{
-						position[]={5525.3882,201.53561,2542.4399};
+						position[]={5537.0444,36.532494,2602.658};
 					};
 					side="West";
 					flags=5;
 					class Attributes
 					{
-						skill=0.40000001;
-						init="this setVariable [""role"", ""medic"" , true];";
-						description="8: Combat Life Saver";
+						description="Rifleman";
 						isPlayable=1;
-						class Inventory
-						{
-							class binocular
-							{
-								name="Binocular";
-							};
-							class uniform
-							{
-								typeName="U_B_CombatUniform_mcam_vest";
-								isBackpack=0;
-								class ItemCargo
-								{
-									items=1;
-									class Item0
-									{
-										name="FirstAidKit";
-										count=1;
-									};
-								};
-							};
-							class vest
-							{
-								typeName="V_PlateCarrierGL_rgr";
-								isBackpack=0;
-								class MagazineCargo
-								{
-									items=7;
-									class Item0
-									{
-										name="HandGrenade";
-										count=2;
-										ammoLeft=1;
-									};
-									class Item1
-									{
-										name="B_IR_Grenade";
-										count=2;
-										ammoLeft=1;
-									};
-									class Item2
-									{
-										name="SmokeShell";
-										count=1;
-										ammoLeft=1;
-									};
-									class Item3
-									{
-										name="SmokeShellGreen";
-										count=1;
-										ammoLeft=1;
-									};
-									class Item4
-									{
-										name="SmokeShellBlue";
-										count=1;
-										ammoLeft=1;
-									};
-									class Item5
-									{
-										name="SmokeShellOrange";
-										count=1;
-										ammoLeft=1;
-									};
-									class Item6
-									{
-										name="Chemlight_green";
-										count=2;
-										ammoLeft=1;
-									};
-								};
-							};
-							map="ItemMap";
-							compass="ItemCompass";
-							watch="ItemWatch";
-							radio="ItemRadio";
-							gps="ItemGPS";
-							goggles="G_Tactical_Black";
-							hmd="NVGoggles";
-							headgear="H_HelmetB_desert";
-						};
 					};
-					id=1853;
-					type="B_medic_F";
+					id=1888;
+					type="B_Soldier_unarmed_F";
 					class CustomAttributes
 					{
 						class Attribute0
@@ -1458,7 +789,7 @@ class Mission
 								class data
 								{
 									singleType="STRING";
-									value="Male08ENG";
+									value="Male10ENG";
 								};
 							};
 						};
@@ -1471,7 +802,7 @@ class Mission
 								class data
 								{
 									singleType="SCALAR";
-									value=0.98000002;
+									value=0.95999998;
 								};
 							};
 						};
@@ -1483,99 +814,18 @@ class Mission
 					dataType="Object";
 					class PositionInfo
 					{
-						position[]={5523,202.09145,2546.05};
+						position[]={5540.1299,36.228191,2602.6123};
+						angles[]={0,6.0407553,-0};
 					};
 					side="West";
 					flags=5;
 					class Attributes
 					{
-						skill=0.40000001;
-						init="this setVariable [""role"", ""medic"" , true];";
-						description="9: Combat Life Saver";
+						description="Rifleman";
 						isPlayable=1;
-						class Inventory
-						{
-							class binocular
-							{
-								name="Binocular";
-							};
-							class uniform
-							{
-								typeName="U_B_CombatUniform_mcam_vest";
-								isBackpack=0;
-								class ItemCargo
-								{
-									items=1;
-									class Item0
-									{
-										name="FirstAidKit";
-										count=1;
-									};
-								};
-							};
-							class vest
-							{
-								typeName="V_PlateCarrierGL_rgr";
-								isBackpack=0;
-								class MagazineCargo
-								{
-									items=7;
-									class Item0
-									{
-										name="HandGrenade";
-										count=2;
-										ammoLeft=1;
-									};
-									class Item1
-									{
-										name="B_IR_Grenade";
-										count=2;
-										ammoLeft=1;
-									};
-									class Item2
-									{
-										name="SmokeShell";
-										count=1;
-										ammoLeft=1;
-									};
-									class Item3
-									{
-										name="SmokeShellGreen";
-										count=1;
-										ammoLeft=1;
-									};
-									class Item4
-									{
-										name="SmokeShellBlue";
-										count=1;
-										ammoLeft=1;
-									};
-									class Item5
-									{
-										name="SmokeShellOrange";
-										count=1;
-										ammoLeft=1;
-									};
-									class Item6
-									{
-										name="Chemlight_green";
-										count=2;
-										ammoLeft=1;
-									};
-								};
-							};
-							map="ItemMap";
-							compass="ItemCompass";
-							watch="ItemWatch";
-							radio="ItemRadio";
-							gps="ItemGPS";
-							goggles="G_Tactical_Black";
-							hmd="NVGoggles";
-							headgear="H_HelmetB_desert";
-						};
 					};
-					id=1854;
-					type="B_medic_F";
+					id=1889;
+					type="B_Soldier_unarmed_F";
 					class CustomAttributes
 					{
 						class Attribute0
@@ -1587,7 +837,7 @@ class Mission
 								class data
 								{
 									singleType="STRING";
-									value="Male08ENG";
+									value="Male10ENG";
 								};
 							};
 						};
@@ -1600,7 +850,7 @@ class Mission
 								class data
 								{
 									singleType="SCALAR";
-									value=0.98000002;
+									value=0.95999998;
 								};
 							};
 						};
@@ -1612,99 +862,17 @@ class Mission
 					dataType="Object";
 					class PositionInfo
 					{
-						position[]={5504,204.44945,2561.05};
+						position[]={5541.9819,35.851624,2612.072};
 					};
 					side="West";
 					flags=5;
 					class Attributes
 					{
-						rank="SERGEANT";
-						init="this setVariable [""role"", ""marksman"" , true];";
-						description="10: Marksman";
+						description="Rifleman";
 						isPlayable=1;
-						class Inventory
-						{
-							class binocular
-							{
-								name="Binocular";
-							};
-							class uniform
-							{
-								typeName="U_B_CombatUniform_mcam_vest";
-								isBackpack=0;
-								class ItemCargo
-								{
-									items=1;
-									class Item0
-									{
-										name="FirstAidKit";
-										count=1;
-									};
-								};
-							};
-							class vest
-							{
-								typeName="V_PlateCarrierGL_rgr";
-								isBackpack=0;
-								class MagazineCargo
-								{
-									items=7;
-									class Item0
-									{
-										name="HandGrenade";
-										count=2;
-										ammoLeft=1;
-									};
-									class Item1
-									{
-										name="B_IR_Grenade";
-										count=2;
-										ammoLeft=1;
-									};
-									class Item2
-									{
-										name="SmokeShell";
-										count=1;
-										ammoLeft=1;
-									};
-									class Item3
-									{
-										name="SmokeShellGreen";
-										count=1;
-										ammoLeft=1;
-									};
-									class Item4
-									{
-										name="SmokeShellBlue";
-										count=1;
-										ammoLeft=1;
-									};
-									class Item5
-									{
-										name="SmokeShellOrange";
-										count=1;
-										ammoLeft=1;
-									};
-									class Item6
-									{
-										name="Chemlight_green";
-										count=2;
-										ammoLeft=1;
-									};
-								};
-							};
-							map="ItemMap";
-							compass="ItemCompass";
-							watch="ItemWatch";
-							radio="ItemRadio";
-							gps="ItemGPS";
-							goggles="G_Tactical_Black";
-							hmd="NVGoggles";
-							headgear="H_HelmetB_desert";
-						};
 					};
-					id=1855;
-					type="B_soldier_M_F";
+					id=1891;
+					type="B_Soldier_unarmed_F";
 					class CustomAttributes
 					{
 						class Attribute0
@@ -1716,7 +884,7 @@ class Mission
 								class data
 								{
 									singleType="STRING";
-									value="Male07ENG";
+									value="Male10ENG";
 								};
 							};
 						};
@@ -1741,99 +909,18 @@ class Mission
 					dataType="Object";
 					class PositionInfo
 					{
-						position[]={5511,204.40744,2560.05};
+						position[]={5545.0674,35.580551,2612.0264};
+						angles[]={0,6.0407553,-0};
 					};
 					side="West";
 					flags=5;
 					class Attributes
 					{
-						skill=0.40000001;
-						init="this setVariable [""role"", ""autorifleman"" , true];";
-						description="11: Autorifleman";
+						description="Rifleman";
 						isPlayable=1;
-						class Inventory
-						{
-							class binocular
-							{
-								name="Binocular";
-							};
-							class uniform
-							{
-								typeName="U_B_CombatUniform_mcam_vest";
-								isBackpack=0;
-								class ItemCargo
-								{
-									items=1;
-									class Item0
-									{
-										name="FirstAidKit";
-										count=1;
-									};
-								};
-							};
-							class vest
-							{
-								typeName="V_PlateCarrierGL_rgr";
-								isBackpack=0;
-								class MagazineCargo
-								{
-									items=7;
-									class Item0
-									{
-										name="HandGrenade";
-										count=2;
-										ammoLeft=1;
-									};
-									class Item1
-									{
-										name="B_IR_Grenade";
-										count=2;
-										ammoLeft=1;
-									};
-									class Item2
-									{
-										name="SmokeShell";
-										count=1;
-										ammoLeft=1;
-									};
-									class Item3
-									{
-										name="SmokeShellGreen";
-										count=1;
-										ammoLeft=1;
-									};
-									class Item4
-									{
-										name="SmokeShellBlue";
-										count=1;
-										ammoLeft=1;
-									};
-									class Item5
-									{
-										name="SmokeShellOrange";
-										count=1;
-										ammoLeft=1;
-									};
-									class Item6
-									{
-										name="Chemlight_green";
-										count=2;
-										ammoLeft=1;
-									};
-								};
-							};
-							map="ItemMap";
-							compass="ItemCompass";
-							watch="ItemWatch";
-							radio="ItemRadio";
-							gps="ItemGPS";
-							goggles="G_Tactical_Black";
-							hmd="NVGoggles";
-							headgear="H_HelmetB_desert";
-						};
 					};
-					id=1856;
-					type="B_soldier_AR_F";
+					id=1892;
+					type="B_Soldier_unarmed_F";
 					class CustomAttributes
 					{
 						class Attribute0
@@ -1845,7 +932,7 @@ class Mission
 								class data
 								{
 									singleType="STRING";
-									value="Male01ENG";
+									value="Male10ENG";
 								};
 							};
 						};
@@ -1858,7 +945,7 @@ class Mission
 								class data
 								{
 									singleType="SCALAR";
-									value=0.94999999;
+									value=0.95999998;
 								};
 							};
 						};
@@ -1870,100 +957,17 @@ class Mission
 					dataType="Object";
 					class PositionInfo
 					{
-						position[]={5498,203.30142,2555.05};
+						position[]={5551.0342,35.12838,2604.8616};
 					};
 					side="West";
 					flags=5;
 					class Attributes
 					{
-						skill=0.44999999;
-						rank="CORPORAL";
-						init="this setVariable [""role"", ""rifleman"" , true];";
-						description="12: Rifleman";
+						description="Rifleman";
 						isPlayable=1;
-						class Inventory
-						{
-							class binocular
-							{
-								name="Binocular";
-							};
-							class uniform
-							{
-								typeName="U_B_CombatUniform_mcam_vest";
-								isBackpack=0;
-								class ItemCargo
-								{
-									items=1;
-									class Item0
-									{
-										name="FirstAidKit";
-										count=1;
-									};
-								};
-							};
-							class vest
-							{
-								typeName="V_PlateCarrierGL_rgr";
-								isBackpack=0;
-								class MagazineCargo
-								{
-									items=7;
-									class Item0
-									{
-										name="HandGrenade";
-										count=2;
-										ammoLeft=1;
-									};
-									class Item1
-									{
-										name="B_IR_Grenade";
-										count=2;
-										ammoLeft=1;
-									};
-									class Item2
-									{
-										name="SmokeShell";
-										count=1;
-										ammoLeft=1;
-									};
-									class Item3
-									{
-										name="SmokeShellGreen";
-										count=1;
-										ammoLeft=1;
-									};
-									class Item4
-									{
-										name="SmokeShellBlue";
-										count=1;
-										ammoLeft=1;
-									};
-									class Item5
-									{
-										name="SmokeShellOrange";
-										count=1;
-										ammoLeft=1;
-									};
-									class Item6
-									{
-										name="Chemlight_green";
-										count=2;
-										ammoLeft=1;
-									};
-								};
-							};
-							map="ItemMap";
-							compass="ItemCompass";
-							watch="ItemWatch";
-							radio="ItemRadio";
-							gps="ItemGPS";
-							goggles="G_Tactical_Black";
-							hmd="NVGoggles";
-							headgear="H_HelmetB_desert";
-						};
 					};
-					id=1857;
-					type="B_Soldier_GL_F";
+					id=1894;
+					type="B_Soldier_unarmed_F";
 					class CustomAttributes
 					{
 						class Attribute0
@@ -1975,7 +979,7 @@ class Mission
 								class data
 								{
 									singleType="STRING";
-									value="Male01ENG";
+									value="Male10ENG";
 								};
 							};
 						};
@@ -1988,7 +992,7 @@ class Mission
 								class data
 								{
 									singleType="SCALAR";
-									value=1.04;
+									value=0.95999998;
 								};
 							};
 						};
@@ -2000,100 +1004,18 @@ class Mission
 					dataType="Object";
 					class PositionInfo
 					{
-						position[]={5510,204.80145,2563.05};
+						position[]={5554.1196,34.869644,2604.8159};
+						angles[]={0,6.0407553,-0};
 					};
 					side="West";
 					flags=5;
 					class Attributes
 					{
-						skill=0.44999999;
-						rank="CORPORAL";
-						init="this setVariable [""role"", ""rifleman"" , true];";
-						description="13: Rifleman";
+						description="Rifleman";
 						isPlayable=1;
-						class Inventory
-						{
-							class binocular
-							{
-								name="Binocular";
-							};
-							class uniform
-							{
-								typeName="U_B_CombatUniform_mcam_vest";
-								isBackpack=0;
-								class ItemCargo
-								{
-									items=1;
-									class Item0
-									{
-										name="FirstAidKit";
-										count=1;
-									};
-								};
-							};
-							class vest
-							{
-								typeName="V_PlateCarrierGL_rgr";
-								isBackpack=0;
-								class MagazineCargo
-								{
-									items=7;
-									class Item0
-									{
-										name="HandGrenade";
-										count=2;
-										ammoLeft=1;
-									};
-									class Item1
-									{
-										name="B_IR_Grenade";
-										count=2;
-										ammoLeft=1;
-									};
-									class Item2
-									{
-										name="SmokeShell";
-										count=1;
-										ammoLeft=1;
-									};
-									class Item3
-									{
-										name="SmokeShellGreen";
-										count=1;
-										ammoLeft=1;
-									};
-									class Item4
-									{
-										name="SmokeShellBlue";
-										count=1;
-										ammoLeft=1;
-									};
-									class Item5
-									{
-										name="SmokeShellOrange";
-										count=1;
-										ammoLeft=1;
-									};
-									class Item6
-									{
-										name="Chemlight_green";
-										count=2;
-										ammoLeft=1;
-									};
-								};
-							};
-							map="ItemMap";
-							compass="ItemCompass";
-							watch="ItemWatch";
-							radio="ItemRadio";
-							gps="ItemGPS";
-							goggles="G_Tactical_Black";
-							hmd="NVGoggles";
-							headgear="H_HelmetB_desert";
-						};
 					};
-					id=1858;
-					type="B_Soldier_GL_F";
+					id=1895;
+					type="B_Soldier_unarmed_F";
 					class CustomAttributes
 					{
 						class Attribute0
@@ -2105,7 +1027,7 @@ class Mission
 								class data
 								{
 									singleType="STRING";
-									value="Male01ENG";
+									value="Male10ENG";
 								};
 							};
 						};
@@ -2118,7 +1040,7 @@ class Mission
 								class data
 								{
 									singleType="SCALAR";
-									value=1.04;
+									value=0.95999998;
 								};
 							};
 						};
@@ -2130,100 +1052,17 @@ class Mission
 					dataType="Object";
 					class PositionInfo
 					{
-						position[]={5502,204.10945,2559.05};
+						position[]={5546.7544,35.590271,2600.478};
 					};
 					side="West";
 					flags=5;
 					class Attributes
 					{
-						skill=0.44999999;
-						rank="CORPORAL";
-						init="this setVariable [""role"", ""rifleman"" , true];";
-						description="14: Rifleman";
+						description="Rifleman";
 						isPlayable=1;
-						class Inventory
-						{
-							class binocular
-							{
-								name="Binocular";
-							};
-							class uniform
-							{
-								typeName="U_B_CombatUniform_mcam_vest";
-								isBackpack=0;
-								class ItemCargo
-								{
-									items=1;
-									class Item0
-									{
-										name="FirstAidKit";
-										count=1;
-									};
-								};
-							};
-							class vest
-							{
-								typeName="V_PlateCarrierGL_rgr";
-								isBackpack=0;
-								class MagazineCargo
-								{
-									items=7;
-									class Item0
-									{
-										name="HandGrenade";
-										count=2;
-										ammoLeft=1;
-									};
-									class Item1
-									{
-										name="B_IR_Grenade";
-										count=2;
-										ammoLeft=1;
-									};
-									class Item2
-									{
-										name="SmokeShell";
-										count=1;
-										ammoLeft=1;
-									};
-									class Item3
-									{
-										name="SmokeShellGreen";
-										count=1;
-										ammoLeft=1;
-									};
-									class Item4
-									{
-										name="SmokeShellBlue";
-										count=1;
-										ammoLeft=1;
-									};
-									class Item5
-									{
-										name="SmokeShellOrange";
-										count=1;
-										ammoLeft=1;
-									};
-									class Item6
-									{
-										name="Chemlight_green";
-										count=2;
-										ammoLeft=1;
-									};
-								};
-							};
-							map="ItemMap";
-							compass="ItemCompass";
-							watch="ItemWatch";
-							radio="ItemRadio";
-							gps="ItemGPS";
-							goggles="G_Tactical_Black";
-							hmd="NVGoggles";
-							headgear="H_HelmetB_desert";
-						};
 					};
-					id=1859;
-					type="B_Soldier_GL_F";
+					id=1897;
+					type="B_Soldier_unarmed_F";
 					class CustomAttributes
 					{
 						class Attribute0
@@ -2235,7 +1074,7 @@ class Mission
 								class data
 								{
 									singleType="STRING";
-									value="Male01ENG";
+									value="Male10ENG";
 								};
 							};
 						};
@@ -2248,123 +1087,30 @@ class Mission
 								class data
 								{
 									singleType="SCALAR";
-									value=1.04;
+									value=0.95999998;
 								};
 							};
 						};
 						nAttributes=2;
 					};
 				};
-			};
-			class Attributes
-			{
-			};
-			id=1845;
-		};
-		class Item1
-		{
-			dataType="Group";
-			side="Independent";
-			class Entities
-			{
-				items=11;
-				class Item0
+				class Item14
 				{
 					dataType="Object";
 					class PositionInfo
 					{
-						position[]={5576,202.22746,2552.05};
+						position[]={5549.8398,35.271866,2600.4324};
+						angles[]={0,6.0407553,-0};
 					};
-					side="Independent";
-					flags=7;
+					side="West";
+					flags=5;
 					class Attributes
 					{
-						rank="SERGEANT";
-						init="this setVariable [""role"", ""leader"" , true];";
-						description="1: Squad Leader";
+						description="Rifleman";
 						isPlayable=1;
-						class Inventory
-						{
-							class binocular
-							{
-								name="Binocular";
-							};
-							class uniform
-							{
-								typeName="U_B_CombatUniform_mcam_vest";
-								isBackpack=0;
-								class ItemCargo
-								{
-									items=1;
-									class Item0
-									{
-										name="FirstAidKit";
-										count=1;
-									};
-								};
-							};
-							class vest
-							{
-								typeName="V_PlateCarrierGL_rgr";
-								isBackpack=0;
-								class MagazineCargo
-								{
-									items=7;
-									class Item0
-									{
-										name="HandGrenade";
-										count=2;
-										ammoLeft=1;
-									};
-									class Item1
-									{
-										name="B_IR_Grenade";
-										count=2;
-										ammoLeft=1;
-									};
-									class Item2
-									{
-										name="SmokeShell";
-										count=1;
-										ammoLeft=1;
-									};
-									class Item3
-									{
-										name="SmokeShellGreen";
-										count=1;
-										ammoLeft=1;
-									};
-									class Item4
-									{
-										name="SmokeShellBlue";
-										count=1;
-										ammoLeft=1;
-									};
-									class Item5
-									{
-										name="SmokeShellOrange";
-										count=1;
-										ammoLeft=1;
-									};
-									class Item6
-									{
-										name="Chemlight_green";
-										count=2;
-										ammoLeft=1;
-									};
-								};
-							};
-							map="ItemMap";
-							compass="ItemCompass";
-							watch="ItemWatch";
-							radio="ItemRadio";
-							gps="ItemGPS";
-							hmd="NVGoggles";
-							headgear="H_HelmetB_desert";
-						};
 					};
-					id=1861;
-					type="B_Soldier_SL_F";
+					id=1898;
+					type="B_Soldier_unarmed_F";
 					class CustomAttributes
 					{
 						class Attribute0
@@ -2376,7 +1122,258 @@ class Mission
 								class data
 								{
 									singleType="STRING";
-									value="Male02ENG";
+									value="Male10ENG";
+								};
+							};
+						};
+						class Attribute1
+						{
+							property="pitch";
+							expression="_this setpitch _value;";
+							class Value
+							{
+								class data
+								{
+									singleType="SCALAR";
+									value=0.95999998;
+								};
+							};
+						};
+						nAttributes=2;
+					};
+				};
+				class Item15
+				{
+					dataType="Object";
+					class PositionInfo
+					{
+						position[]={5539.3716,36.746914,2593.6658};
+					};
+					side="West";
+					flags=5;
+					class Attributes
+					{
+						description="Rifleman";
+						isPlayable=1;
+					};
+					id=1900;
+					type="B_Soldier_unarmed_F";
+					class CustomAttributes
+					{
+						class Attribute0
+						{
+							property="speaker";
+							expression="_this setspeaker _value;";
+							class Value
+							{
+								class data
+								{
+									singleType="STRING";
+									value="Male10ENG";
+								};
+							};
+						};
+						class Attribute1
+						{
+							property="pitch";
+							expression="_this setpitch _value;";
+							class Value
+							{
+								class data
+								{
+									singleType="SCALAR";
+									value=0.95999998;
+								};
+							};
+						};
+						nAttributes=2;
+					};
+				};
+				class Item16
+				{
+					dataType="Object";
+					class PositionInfo
+					{
+						position[]={5542.457,36.440983,2593.6201};
+						angles[]={0,6.0407553,-0};
+					};
+					side="West";
+					flags=5;
+					class Attributes
+					{
+						description="Rifleman";
+						isPlayable=1;
+					};
+					id=1901;
+					type="B_Soldier_unarmed_F";
+					class CustomAttributes
+					{
+						class Attribute0
+						{
+							property="speaker";
+							expression="_this setspeaker _value;";
+							class Value
+							{
+								class data
+								{
+									singleType="STRING";
+									value="Male10ENG";
+								};
+							};
+						};
+						class Attribute1
+						{
+							property="pitch";
+							expression="_this setpitch _value;";
+							class Value
+							{
+								class data
+								{
+									singleType="SCALAR";
+									value=0.95999998;
+								};
+							};
+						};
+						nAttributes=2;
+					};
+				};
+				class Item17
+				{
+					dataType="Object";
+					class PositionInfo
+					{
+						position[]={5544.8618,36.093498,2595.2847};
+					};
+					side="West";
+					flags=5;
+					class Attributes
+					{
+						description="Rifleman";
+						isPlayable=1;
+					};
+					id=1903;
+					type="B_Soldier_unarmed_F";
+					class CustomAttributes
+					{
+						class Attribute0
+						{
+							property="speaker";
+							expression="_this setspeaker _value;";
+							class Value
+							{
+								class data
+								{
+									singleType="STRING";
+									value="Male10ENG";
+								};
+							};
+						};
+						class Attribute1
+						{
+							property="pitch";
+							expression="_this setpitch _value;";
+							class Value
+							{
+								class data
+								{
+									singleType="SCALAR";
+									value=0.95999998;
+								};
+							};
+						};
+						nAttributes=2;
+					};
+				};
+				class Item18
+				{
+					dataType="Object";
+					class PositionInfo
+					{
+						position[]={5547.9473,35.772923,2595.239};
+						angles[]={0,6.0407553,-0};
+					};
+					side="West";
+					flags=5;
+					class Attributes
+					{
+						description="Rifleman";
+						isPlayable=1;
+					};
+					id=1904;
+					type="B_Soldier_unarmed_F";
+					class CustomAttributes
+					{
+						class Attribute0
+						{
+							property="speaker";
+							expression="_this setspeaker _value;";
+							class Value
+							{
+								class data
+								{
+									singleType="STRING";
+									value="Male10ENG";
+								};
+							};
+						};
+						class Attribute1
+						{
+							property="pitch";
+							expression="_this setpitch _value;";
+							class Value
+							{
+								class data
+								{
+									singleType="SCALAR";
+									value=0.95999998;
+								};
+							};
+						};
+						nAttributes=2;
+					};
+				};
+			};
+			class Attributes
+			{
+			};
+			id=1875;
+		};
+		class Item1
+		{
+			dataType="Group";
+			side="Independent";
+			class Entities
+			{
+				items=17;
+				class Item0
+				{
+					dataType="Object";
+					class PositionInfo
+					{
+						position[]={5522,40.355057,2544.05};
+						angles[]={0,6.0407586,0};
+					};
+					side="Independent";
+					flags=7;
+					class Attributes
+					{
+						description="Rifleman (setup)";
+						isPlayable=1;
+					};
+					id=1908;
+					type="B_Soldier_unarmed_F";
+					class CustomAttributes
+					{
+						class Attribute0
+						{
+							property="speaker";
+							expression="_this setspeaker _value;";
+							class Value
+							{
+								class data
+								{
+									singleType="STRING";
+									value="Male10ENG";
 								};
 							};
 						};
@@ -2401,99 +1398,17 @@ class Mission
 					dataType="Object";
 					class PositionInfo
 					{
-						position[]={5566,197.65944,2536.05};
+						position[]={5527.7388,39.858528,2535.0681};
 					};
 					side="Independent";
 					flags=5;
 					class Attributes
 					{
-						skill=0.44999999;
-						rank="CORPORAL";
-						init="this setVariable [""role"", ""rifleman"" , true];";
-						description="2: Grenadier";
+						description="Rifleman";
 						isPlayable=1;
-						class Inventory
-						{
-							class binocular
-							{
-								name="Binocular";
-							};
-							class uniform
-							{
-								typeName="U_B_CombatUniform_mcam_vest";
-								isBackpack=0;
-								class ItemCargo
-								{
-									items=1;
-									class Item0
-									{
-										name="FirstAidKit";
-										count=1;
-									};
-								};
-							};
-							class vest
-							{
-								typeName="V_PlateCarrierGL_rgr";
-								isBackpack=0;
-								class MagazineCargo
-								{
-									items=7;
-									class Item0
-									{
-										name="HandGrenade";
-										count=2;
-										ammoLeft=1;
-									};
-									class Item1
-									{
-										name="B_IR_Grenade";
-										count=2;
-										ammoLeft=1;
-									};
-									class Item2
-									{
-										name="SmokeShell";
-										count=1;
-										ammoLeft=1;
-									};
-									class Item3
-									{
-										name="SmokeShellGreen";
-										count=1;
-										ammoLeft=1;
-									};
-									class Item4
-									{
-										name="SmokeShellBlue";
-										count=1;
-										ammoLeft=1;
-									};
-									class Item5
-									{
-										name="SmokeShellOrange";
-										count=1;
-										ammoLeft=1;
-									};
-									class Item6
-									{
-										name="Chemlight_green";
-										count=2;
-										ammoLeft=1;
-									};
-								};
-							};
-							map="ItemMap";
-							compass="ItemCompass";
-							watch="ItemWatch";
-							radio="ItemRadio";
-							gps="ItemGPS";
-							hmd="NVGoggles";
-							headgear="H_HelmetB_desert";
-						};
 					};
-					id=1862;
-					type="B_Soldier_GL_F";
+					id=1909;
+					type="B_Soldier_unarmed_F";
 					class CustomAttributes
 					{
 						class Attribute0
@@ -2505,7 +1420,7 @@ class Mission
 								class data
 								{
 									singleType="STRING";
-									value="Male01ENG";
+									value="Male10ENG";
 								};
 							};
 						};
@@ -2518,7 +1433,7 @@ class Mission
 								class data
 								{
 									singleType="SCALAR";
-									value=1.04;
+									value=0.95999998;
 								};
 							};
 						};
@@ -2530,98 +1445,18 @@ class Mission
 					dataType="Object";
 					class PositionInfo
 					{
-						position[]={5586,197.16545,2535.05};
+						position[]={5530.8242,39.428226,2535.022};
+						angles[]={0,6.0407586,0};
 					};
 					side="Independent";
 					flags=5;
 					class Attributes
 					{
-						rank="SERGEANT";
-						init="this setVariable [""role"", ""marksman"" , true];";
-						description="3: Marksman";
+						description="Rifleman";
 						isPlayable=1;
-						class Inventory
-						{
-							class binocular
-							{
-								name="Binocular";
-							};
-							class uniform
-							{
-								typeName="U_B_CombatUniform_mcam_vest";
-								isBackpack=0;
-								class ItemCargo
-								{
-									items=1;
-									class Item0
-									{
-										name="FirstAidKit";
-										count=1;
-									};
-								};
-							};
-							class vest
-							{
-								typeName="V_PlateCarrierGL_rgr";
-								isBackpack=0;
-								class MagazineCargo
-								{
-									items=7;
-									class Item0
-									{
-										name="HandGrenade";
-										count=2;
-										ammoLeft=1;
-									};
-									class Item1
-									{
-										name="B_IR_Grenade";
-										count=2;
-										ammoLeft=1;
-									};
-									class Item2
-									{
-										name="SmokeShell";
-										count=1;
-										ammoLeft=1;
-									};
-									class Item3
-									{
-										name="SmokeShellGreen";
-										count=1;
-										ammoLeft=1;
-									};
-									class Item4
-									{
-										name="SmokeShellBlue";
-										count=1;
-										ammoLeft=1;
-									};
-									class Item5
-									{
-										name="SmokeShellOrange";
-										count=1;
-										ammoLeft=1;
-									};
-									class Item6
-									{
-										name="Chemlight_green";
-										count=2;
-										ammoLeft=1;
-									};
-								};
-							};
-							map="ItemMap";
-							compass="ItemCompass";
-							watch="ItemWatch";
-							radio="ItemRadio";
-							gps="ItemGPS";
-							hmd="NVGoggles";
-							headgear="H_HelmetB_desert";
-						};
 					};
-					id=1863;
-					type="B_soldier_M_F";
+					id=1910;
+					type="B_Soldier_unarmed_F";
 					class CustomAttributes
 					{
 						class Attribute0
@@ -2633,7 +1468,7 @@ class Mission
 								class data
 								{
 									singleType="STRING";
-									value="Male11ENG";
+									value="Male10ENG";
 								};
 							};
 						};
@@ -2646,7 +1481,7 @@ class Mission
 								class data
 								{
 									singleType="SCALAR";
-									value=1.03;
+									value=0.95999998;
 								};
 							};
 						};
@@ -2658,99 +1493,17 @@ class Mission
 					dataType="Object";
 					class PositionInfo
 					{
-						position[]={5563,197.21143,2531.05};
+						position[]={5523.1636,40.502487,2530.0977};
 					};
 					side="Independent";
 					flags=5;
 					class Attributes
 					{
-						skill=0.44999999;
-						rank="CORPORAL";
-						init="this setVariable [""role"", ""at"" , true];";
-						description="4: Missile Specialist (AT)";
+						description="Rifleman";
 						isPlayable=1;
-						class Inventory
-						{
-							class binocular
-							{
-								name="Binocular";
-							};
-							class uniform
-							{
-								typeName="U_B_CombatUniform_mcam_vest";
-								isBackpack=0;
-								class ItemCargo
-								{
-									items=1;
-									class Item0
-									{
-										name="FirstAidKit";
-										count=1;
-									};
-								};
-							};
-							class vest
-							{
-								typeName="V_PlateCarrierGL_rgr";
-								isBackpack=0;
-								class MagazineCargo
-								{
-									items=7;
-									class Item0
-									{
-										name="HandGrenade";
-										count=2;
-										ammoLeft=1;
-									};
-									class Item1
-									{
-										name="B_IR_Grenade";
-										count=2;
-										ammoLeft=1;
-									};
-									class Item2
-									{
-										name="SmokeShell";
-										count=1;
-										ammoLeft=1;
-									};
-									class Item3
-									{
-										name="SmokeShellGreen";
-										count=1;
-										ammoLeft=1;
-									};
-									class Item4
-									{
-										name="SmokeShellBlue";
-										count=1;
-										ammoLeft=1;
-									};
-									class Item5
-									{
-										name="SmokeShellOrange";
-										count=1;
-										ammoLeft=1;
-									};
-									class Item6
-									{
-										name="Chemlight_green";
-										count=2;
-										ammoLeft=1;
-									};
-								};
-							};
-							map="ItemMap";
-							compass="ItemCompass";
-							watch="ItemWatch";
-							radio="ItemRadio";
-							gps="ItemGPS";
-							hmd="NVGoggles";
-							headgear="H_HelmetB_desert";
-						};
 					};
-					id=1864;
-					type="B_soldier_AT_F";
+					id=1911;
+					type="B_Soldier_unarmed_F";
 					class CustomAttributes
 					{
 						class Attribute0
@@ -2762,7 +1515,7 @@ class Mission
 								class data
 								{
 									singleType="STRING";
-									value="Male08ENG";
+									value="Male10ENG";
 								};
 							};
 						};
@@ -2775,7 +1528,7 @@ class Mission
 								class data
 								{
 									singleType="SCALAR";
-									value=0.94999999;
+									value=0.95999998;
 								};
 							};
 						};
@@ -2787,98 +1540,18 @@ class Mission
 					dataType="Object";
 					class PositionInfo
 					{
-						position[]={5590,196.36743,2528.05};
+						position[]={5526.249,40.126598,2530.052};
+						angles[]={0,6.0407553,-0};
 					};
 					side="Independent";
 					flags=5;
 					class Attributes
 					{
-						skill=0.40000001;
-						init="this setVariable [""role"", ""at"" , true];";
-						description="5: Asst. Missile Specialist (AT)";
+						description="Rifleman";
 						isPlayable=1;
-						class Inventory
-						{
-							class binocular
-							{
-								name="Binocular";
-							};
-							class uniform
-							{
-								typeName="U_B_CombatUniform_mcam_vest";
-								isBackpack=0;
-								class ItemCargo
-								{
-									items=1;
-									class Item0
-									{
-										name="FirstAidKit";
-										count=1;
-									};
-								};
-							};
-							class vest
-							{
-								typeName="V_PlateCarrierGL_rgr";
-								isBackpack=0;
-								class MagazineCargo
-								{
-									items=7;
-									class Item0
-									{
-										name="HandGrenade";
-										count=2;
-										ammoLeft=1;
-									};
-									class Item1
-									{
-										name="B_IR_Grenade";
-										count=2;
-										ammoLeft=1;
-									};
-									class Item2
-									{
-										name="SmokeShell";
-										count=1;
-										ammoLeft=1;
-									};
-									class Item3
-									{
-										name="SmokeShellGreen";
-										count=1;
-										ammoLeft=1;
-									};
-									class Item4
-									{
-										name="SmokeShellBlue";
-										count=1;
-										ammoLeft=1;
-									};
-									class Item5
-									{
-										name="SmokeShellOrange";
-										count=1;
-										ammoLeft=1;
-									};
-									class Item6
-									{
-										name="Chemlight_green";
-										count=2;
-										ammoLeft=1;
-									};
-								};
-							};
-							map="ItemMap";
-							compass="ItemCompass";
-							watch="ItemWatch";
-							radio="ItemRadio";
-							gps="ItemGPS";
-							hmd="NVGoggles";
-							headgear="H_HelmetB_desert";
-						};
 					};
-					id=1865;
-					type="B_soldier_AAT_F";
+					id=1912;
+					type="B_Soldier_unarmed_F";
 					class CustomAttributes
 					{
 						class Attribute0
@@ -2890,7 +1563,7 @@ class Mission
 								class data
 								{
 									singleType="STRING";
-									value="Male06ENG";
+									value="Male10ENG";
 								};
 							};
 						};
@@ -2903,7 +1576,7 @@ class Mission
 								class data
 								{
 									singleType="SCALAR";
-									value=0.99000001;
+									value=0.95999998;
 								};
 							};
 						};
@@ -2915,98 +1588,17 @@ class Mission
 					dataType="Object";
 					class PositionInfo
 					{
-						position[]={5558.7725,197.25635,2525.1211};
+						position[]={5517.8555,41.27951,2527.0276};
 					};
 					side="Independent";
 					flags=5;
 					class Attributes
 					{
-						skill=0.40000001;
-						init="this setVariable [""role"", ""engineer"" , true];";
-						description="6: Ammo Bearer";
+						description="Rifleman";
 						isPlayable=1;
-						class Inventory
-						{
-							class binocular
-							{
-								name="Binocular";
-							};
-							class uniform
-							{
-								typeName="U_B_CombatUniform_mcam_vest";
-								isBackpack=0;
-								class ItemCargo
-								{
-									items=1;
-									class Item0
-									{
-										name="FirstAidKit";
-										count=1;
-									};
-								};
-							};
-							class vest
-							{
-								typeName="V_PlateCarrierGL_rgr";
-								isBackpack=0;
-								class MagazineCargo
-								{
-									items=7;
-									class Item0
-									{
-										name="HandGrenade";
-										count=2;
-										ammoLeft=1;
-									};
-									class Item1
-									{
-										name="B_IR_Grenade";
-										count=2;
-										ammoLeft=1;
-									};
-									class Item2
-									{
-										name="SmokeShell";
-										count=1;
-										ammoLeft=1;
-									};
-									class Item3
-									{
-										name="SmokeShellGreen";
-										count=1;
-										ammoLeft=1;
-									};
-									class Item4
-									{
-										name="SmokeShellBlue";
-										count=1;
-										ammoLeft=1;
-									};
-									class Item5
-									{
-										name="SmokeShellOrange";
-										count=1;
-										ammoLeft=1;
-									};
-									class Item6
-									{
-										name="Chemlight_green";
-										count=2;
-										ammoLeft=1;
-									};
-								};
-							};
-							map="ItemMap";
-							compass="ItemCompass";
-							watch="ItemWatch";
-							radio="ItemRadio";
-							gps="ItemGPS";
-							hmd="NVGoggles";
-							headgear="H_HelmetB_desert";
-						};
 					};
-					id=1866;
-					type="B_Soldier_A_F";
+					id=1913;
+					type="B_Soldier_unarmed_F";
 					class CustomAttributes
 					{
 						class Attribute0
@@ -3018,7 +1610,7 @@ class Mission
 								class data
 								{
 									singleType="STRING";
-									value="Male08ENG";
+									value="Male10ENG";
 								};
 							};
 						};
@@ -3031,7 +1623,7 @@ class Mission
 								class data
 								{
 									singleType="SCALAR";
-									value=0.99000001;
+									value=0.95999998;
 								};
 							};
 						};
@@ -3043,98 +1635,18 @@ class Mission
 					dataType="Object";
 					class PositionInfo
 					{
-						position[]={5593.7725,196.79694,2520.1211};
+						position[]={5520.9409,40.837788,2526.9819};
+						angles[]={0,6.0407553,-0};
 					};
 					side="Independent";
 					flags=5;
 					class Attributes
 					{
-						skill=0.40000001;
-						init="this setVariable [""role"", ""medic"" , true];";
-						description="7: Combat Life Saver";
+						description="Rifleman";
 						isPlayable=1;
-						class Inventory
-						{
-							class binocular
-							{
-								name="Binocular";
-							};
-							class uniform
-							{
-								typeName="U_B_CombatUniform_mcam_vest";
-								isBackpack=0;
-								class ItemCargo
-								{
-									items=1;
-									class Item0
-									{
-										name="FirstAidKit";
-										count=1;
-									};
-								};
-							};
-							class vest
-							{
-								typeName="V_PlateCarrierGL_rgr";
-								isBackpack=0;
-								class MagazineCargo
-								{
-									items=7;
-									class Item0
-									{
-										name="HandGrenade";
-										count=2;
-										ammoLeft=1;
-									};
-									class Item1
-									{
-										name="B_IR_Grenade";
-										count=2;
-										ammoLeft=1;
-									};
-									class Item2
-									{
-										name="SmokeShell";
-										count=1;
-										ammoLeft=1;
-									};
-									class Item3
-									{
-										name="SmokeShellGreen";
-										count=1;
-										ammoLeft=1;
-									};
-									class Item4
-									{
-										name="SmokeShellBlue";
-										count=1;
-										ammoLeft=1;
-									};
-									class Item5
-									{
-										name="SmokeShellOrange";
-										count=1;
-										ammoLeft=1;
-									};
-									class Item6
-									{
-										name="Chemlight_green";
-										count=2;
-										ammoLeft=1;
-									};
-								};
-							};
-							map="ItemMap";
-							compass="ItemCompass";
-							watch="ItemWatch";
-							radio="ItemRadio";
-							gps="ItemGPS";
-							hmd="NVGoggles";
-							headgear="H_HelmetB_desert";
-						};
 					};
-					id=1867;
-					type="B_medic_F";
+					id=1914;
+					type="B_Soldier_unarmed_F";
 					class CustomAttributes
 					{
 						class Attribute0
@@ -3146,7 +1658,7 @@ class Mission
 								class data
 								{
 									singleType="STRING";
-									value="Male08ENG";
+									value="Male10ENG";
 								};
 							};
 						};
@@ -3159,7 +1671,7 @@ class Mission
 								class data
 								{
 									singleType="SCALAR";
-									value=0.98000002;
+									value=0.95999998;
 								};
 							};
 						};
@@ -3171,98 +1683,17 @@ class Mission
 					dataType="Object";
 					class PositionInfo
 					{
-						position[]={5591.3843,196.42848,2523.7312};
+						position[]={5522.793,40.496891,2536.4417};
 					};
 					side="Independent";
 					flags=5;
 					class Attributes
 					{
-						skill=0.40000001;
-						init="this setVariable [""role"", ""medic"" , true];";
-						description="8: Combat Life Saver";
+						description="Rifleman";
 						isPlayable=1;
-						class Inventory
-						{
-							class binocular
-							{
-								name="Binocular";
-							};
-							class uniform
-							{
-								typeName="U_B_CombatUniform_mcam_vest";
-								isBackpack=0;
-								class ItemCargo
-								{
-									items=1;
-									class Item0
-									{
-										name="FirstAidKit";
-										count=1;
-									};
-								};
-							};
-							class vest
-							{
-								typeName="V_PlateCarrierGL_rgr";
-								isBackpack=0;
-								class MagazineCargo
-								{
-									items=7;
-									class Item0
-									{
-										name="HandGrenade";
-										count=2;
-										ammoLeft=1;
-									};
-									class Item1
-									{
-										name="B_IR_Grenade";
-										count=2;
-										ammoLeft=1;
-									};
-									class Item2
-									{
-										name="SmokeShell";
-										count=1;
-										ammoLeft=1;
-									};
-									class Item3
-									{
-										name="SmokeShellGreen";
-										count=1;
-										ammoLeft=1;
-									};
-									class Item4
-									{
-										name="SmokeShellBlue";
-										count=1;
-										ammoLeft=1;
-									};
-									class Item5
-									{
-										name="SmokeShellOrange";
-										count=1;
-										ammoLeft=1;
-									};
-									class Item6
-									{
-										name="Chemlight_green";
-										count=2;
-										ammoLeft=1;
-									};
-								};
-							};
-							map="ItemMap";
-							compass="ItemCompass";
-							watch="ItemWatch";
-							radio="ItemRadio";
-							gps="ItemGPS";
-							hmd="NVGoggles";
-							headgear="H_HelmetB_desert";
-						};
 					};
-					id=1868;
-					type="B_medic_F";
+					id=1915;
+					type="B_Soldier_unarmed_F";
 					class CustomAttributes
 					{
 						class Attribute0
@@ -3274,7 +1705,7 @@ class Mission
 								class data
 								{
 									singleType="STRING";
-									value="Male08ENG";
+									value="Male10ENG";
 								};
 							};
 						};
@@ -3287,7 +1718,7 @@ class Mission
 								class data
 								{
 									singleType="SCALAR";
-									value=0.98000002;
+									value=0.95999998;
 								};
 							};
 						};
@@ -3299,98 +1730,18 @@ class Mission
 					dataType="Object";
 					class PositionInfo
 					{
-						position[]={5582,198.51144,2540.05};
+						position[]={5525.8784,40.146214,2536.396};
+						angles[]={0,6.0407553,-0};
 					};
 					side="Independent";
 					flags=5;
 					class Attributes
 					{
-						rank="SERGEANT";
-						init="this setVariable [""role"", ""marksman"" , true];";
-						description="9: Marksman";
+						description="Rifleman";
 						isPlayable=1;
-						class Inventory
-						{
-							class binocular
-							{
-								name="Binocular";
-							};
-							class uniform
-							{
-								typeName="U_B_CombatUniform_mcam_vest";
-								isBackpack=0;
-								class ItemCargo
-								{
-									items=1;
-									class Item0
-									{
-										name="FirstAidKit";
-										count=1;
-									};
-								};
-							};
-							class vest
-							{
-								typeName="V_PlateCarrierGL_rgr";
-								isBackpack=0;
-								class MagazineCargo
-								{
-									items=7;
-									class Item0
-									{
-										name="HandGrenade";
-										count=2;
-										ammoLeft=1;
-									};
-									class Item1
-									{
-										name="B_IR_Grenade";
-										count=2;
-										ammoLeft=1;
-									};
-									class Item2
-									{
-										name="SmokeShell";
-										count=1;
-										ammoLeft=1;
-									};
-									class Item3
-									{
-										name="SmokeShellGreen";
-										count=1;
-										ammoLeft=1;
-									};
-									class Item4
-									{
-										name="SmokeShellBlue";
-										count=1;
-										ammoLeft=1;
-									};
-									class Item5
-									{
-										name="SmokeShellOrange";
-										count=1;
-										ammoLeft=1;
-									};
-									class Item6
-									{
-										name="Chemlight_green";
-										count=2;
-										ammoLeft=1;
-									};
-								};
-							};
-							map="ItemMap";
-							compass="ItemCompass";
-							watch="ItemWatch";
-							radio="ItemRadio";
-							gps="ItemGPS";
-							hmd="NVGoggles";
-							headgear="H_HelmetB_desert";
-						};
 					};
-					id=1869;
-					type="B_soldier_M_F";
+					id=1916;
+					type="B_Soldier_unarmed_F";
 					class CustomAttributes
 					{
 						class Attribute0
@@ -3402,7 +1753,7 @@ class Mission
 								class data
 								{
 									singleType="STRING";
-									value="Male02ENG";
+									value="Male10ENG";
 								};
 							};
 						};
@@ -3415,7 +1766,7 @@ class Mission
 								class data
 								{
 									singleType="SCALAR";
-									value=1.02;
+									value=0.95999998;
 								};
 							};
 						};
@@ -3427,98 +1778,17 @@ class Mission
 					dataType="Object";
 					class PositionInfo
 					{
-						position[]={5573,200.34541,2547.05};
+						position[]={5531.8452,39.223038,2529.2312};
 					};
 					side="Independent";
 					flags=5;
 					class Attributes
 					{
-						skill=0.40000001;
-						init="this setVariable [""role"", ""autorifleman"" , true];";
-						description="10: Autorifleman";
+						description="Rifleman";
 						isPlayable=1;
-						class Inventory
-						{
-							class binocular
-							{
-								name="Binocular";
-							};
-							class uniform
-							{
-								typeName="U_B_CombatUniform_mcam_vest";
-								isBackpack=0;
-								class ItemCargo
-								{
-									items=1;
-									class Item0
-									{
-										name="FirstAidKit";
-										count=1;
-									};
-								};
-							};
-							class vest
-							{
-								typeName="V_PlateCarrierGL_rgr";
-								isBackpack=0;
-								class MagazineCargo
-								{
-									items=7;
-									class Item0
-									{
-										name="HandGrenade";
-										count=2;
-										ammoLeft=1;
-									};
-									class Item1
-									{
-										name="B_IR_Grenade";
-										count=2;
-										ammoLeft=1;
-									};
-									class Item2
-									{
-										name="SmokeShell";
-										count=1;
-										ammoLeft=1;
-									};
-									class Item3
-									{
-										name="SmokeShellGreen";
-										count=1;
-										ammoLeft=1;
-									};
-									class Item4
-									{
-										name="SmokeShellBlue";
-										count=1;
-										ammoLeft=1;
-									};
-									class Item5
-									{
-										name="SmokeShellOrange";
-										count=1;
-										ammoLeft=1;
-									};
-									class Item6
-									{
-										name="Chemlight_green";
-										count=2;
-										ammoLeft=1;
-									};
-								};
-							};
-							map="ItemMap";
-							compass="ItemCompass";
-							watch="ItemWatch";
-							radio="ItemRadio";
-							gps="ItemGPS";
-							hmd="NVGoggles";
-							headgear="H_HelmetB_desert";
-						};
 					};
-					id=1870;
-					type="B_soldier_AR_F";
+					id=1917;
+					type="B_Soldier_unarmed_F";
 					class CustomAttributes
 					{
 						class Attribute0
@@ -3530,7 +1800,7 @@ class Mission
 								class data
 								{
 									singleType="STRING";
-									value="Male01ENG";
+									value="Male10ENG";
 								};
 							};
 						};
@@ -3543,7 +1813,7 @@ class Mission
 								class data
 								{
 									singleType="SCALAR";
-									value=0.94999999;
+									value=0.95999998;
 								};
 							};
 						};
@@ -3555,98 +1825,18 @@ class Mission
 					dataType="Object";
 					class PositionInfo
 					{
-						position[]={5579,200.81544,2547.05};
+						position[]={5534.9307,38.758602,2529.1855};
+						angles[]={0,6.0407553,-0};
 					};
 					side="Independent";
 					flags=5;
 					class Attributes
 					{
-						skill=0.40000001;
-						init="this setVariable [""role"", ""autorifleman"" , true];";
-						description="11: Autorifleman";
+						description="Rifleman";
 						isPlayable=1;
-						class Inventory
-						{
-							class binocular
-							{
-								name="Binocular";
-							};
-							class uniform
-							{
-								typeName="U_B_CombatUniform_mcam_vest";
-								isBackpack=0;
-								class ItemCargo
-								{
-									items=1;
-									class Item0
-									{
-										name="FirstAidKit";
-										count=1;
-									};
-								};
-							};
-							class vest
-							{
-								typeName="V_PlateCarrierGL_rgr";
-								isBackpack=0;
-								class MagazineCargo
-								{
-									items=7;
-									class Item0
-									{
-										name="HandGrenade";
-										count=2;
-										ammoLeft=1;
-									};
-									class Item1
-									{
-										name="B_IR_Grenade";
-										count=2;
-										ammoLeft=1;
-									};
-									class Item2
-									{
-										name="SmokeShell";
-										count=1;
-										ammoLeft=1;
-									};
-									class Item3
-									{
-										name="SmokeShellGreen";
-										count=1;
-										ammoLeft=1;
-									};
-									class Item4
-									{
-										name="SmokeShellBlue";
-										count=1;
-										ammoLeft=1;
-									};
-									class Item5
-									{
-										name="SmokeShellOrange";
-										count=1;
-										ammoLeft=1;
-									};
-									class Item6
-									{
-										name="Chemlight_green";
-										count=2;
-										ammoLeft=1;
-									};
-								};
-							};
-							map="ItemMap";
-							compass="ItemCompass";
-							watch="ItemWatch";
-							radio="ItemRadio";
-							gps="ItemGPS";
-							hmd="NVGoggles";
-							headgear="H_HelmetB_desert";
-						};
 					};
-					id=1871;
-					type="B_soldier_AR_F";
+					id=1918;
+					type="B_Soldier_unarmed_F";
 					class CustomAttributes
 					{
 						class Attribute0
@@ -3658,7 +1848,7 @@ class Mission
 								class data
 								{
 									singleType="STRING";
-									value="Male01ENG";
+									value="Male10ENG";
 								};
 							};
 						};
@@ -3671,7 +1861,292 @@ class Mission
 								class data
 								{
 									singleType="SCALAR";
-									value=0.94999999;
+									value=0.95999998;
+								};
+							};
+						};
+						nAttributes=2;
+					};
+				};
+				class Item11
+				{
+					dataType="Object";
+					class PositionInfo
+					{
+						position[]={5527.5654,39.948059,2524.8477};
+					};
+					side="Independent";
+					flags=5;
+					class Attributes
+					{
+						description="Rifleman";
+						isPlayable=1;
+					};
+					id=1919;
+					type="B_Soldier_unarmed_F";
+					class CustomAttributes
+					{
+						class Attribute0
+						{
+							property="speaker";
+							expression="_this setspeaker _value;";
+							class Value
+							{
+								class data
+								{
+									singleType="STRING";
+									value="Male10ENG";
+								};
+							};
+						};
+						class Attribute1
+						{
+							property="pitch";
+							expression="_this setpitch _value;";
+							class Value
+							{
+								class data
+								{
+									singleType="SCALAR";
+									value=0.95999998;
+								};
+							};
+						};
+						nAttributes=2;
+					};
+				};
+				class Item12
+				{
+					dataType="Object";
+					class PositionInfo
+					{
+						position[]={5530.6509,39.447735,2524.802};
+						angles[]={0,6.0407553,-0};
+					};
+					side="Independent";
+					flags=5;
+					class Attributes
+					{
+						description="Rifleman";
+						isPlayable=1;
+					};
+					id=1920;
+					type="B_Soldier_unarmed_F";
+					class CustomAttributes
+					{
+						class Attribute0
+						{
+							property="speaker";
+							expression="_this setspeaker _value;";
+							class Value
+							{
+								class data
+								{
+									singleType="STRING";
+									value="Male10ENG";
+								};
+							};
+						};
+						class Attribute1
+						{
+							property="pitch";
+							expression="_this setpitch _value;";
+							class Value
+							{
+								class data
+								{
+									singleType="SCALAR";
+									value=0.95999998;
+								};
+							};
+						};
+						nAttributes=2;
+					};
+				};
+				class Item13
+				{
+					dataType="Object";
+					class PositionInfo
+					{
+						position[]={5520.1826,41.397488,2518.0354};
+					};
+					side="Independent";
+					flags=5;
+					class Attributes
+					{
+						description="Rifleman";
+						isPlayable=1;
+					};
+					id=1921;
+					type="B_Soldier_unarmed_F";
+					class CustomAttributes
+					{
+						class Attribute0
+						{
+							property="speaker";
+							expression="_this setspeaker _value;";
+							class Value
+							{
+								class data
+								{
+									singleType="STRING";
+									value="Male10ENG";
+								};
+							};
+						};
+						class Attribute1
+						{
+							property="pitch";
+							expression="_this setpitch _value;";
+							class Value
+							{
+								class data
+								{
+									singleType="SCALAR";
+									value=0.95999998;
+								};
+							};
+						};
+						nAttributes=2;
+					};
+				};
+				class Item14
+				{
+					dataType="Object";
+					class PositionInfo
+					{
+						position[]={5523.2681,40.955379,2517.9897};
+						angles[]={0,6.0407553,-0};
+					};
+					side="Independent";
+					flags=5;
+					class Attributes
+					{
+						description="Rifleman";
+						isPlayable=1;
+					};
+					id=1922;
+					type="B_Soldier_unarmed_F";
+					class CustomAttributes
+					{
+						class Attribute0
+						{
+							property="speaker";
+							expression="_this setspeaker _value;";
+							class Value
+							{
+								class data
+								{
+									singleType="STRING";
+									value="Male10ENG";
+								};
+							};
+						};
+						class Attribute1
+						{
+							property="pitch";
+							expression="_this setpitch _value;";
+							class Value
+							{
+								class data
+								{
+									singleType="SCALAR";
+									value=0.95999998;
+								};
+							};
+						};
+						nAttributes=2;
+					};
+				};
+				class Item15
+				{
+					dataType="Object";
+					class PositionInfo
+					{
+						position[]={5525.6729,40.493408,2519.6543};
+					};
+					side="Independent";
+					flags=5;
+					class Attributes
+					{
+						description="Rifleman";
+						isPlayable=1;
+					};
+					id=1923;
+					type="B_Soldier_unarmed_F";
+					class CustomAttributes
+					{
+						class Attribute0
+						{
+							property="speaker";
+							expression="_this setspeaker _value;";
+							class Value
+							{
+								class data
+								{
+									singleType="STRING";
+									value="Male10ENG";
+								};
+							};
+						};
+						class Attribute1
+						{
+							property="pitch";
+							expression="_this setpitch _value;";
+							class Value
+							{
+								class data
+								{
+									singleType="SCALAR";
+									value=0.95999998;
+								};
+							};
+						};
+						nAttributes=2;
+					};
+				};
+				class Item16
+				{
+					dataType="Object";
+					class PositionInfo
+					{
+						position[]={5528.7583,39.893375,2519.6086};
+						angles[]={0,6.0407553,-0};
+					};
+					side="Independent";
+					flags=5;
+					class Attributes
+					{
+						description="Rifleman";
+						isPlayable=1;
+					};
+					id=1924;
+					type="B_Soldier_unarmed_F";
+					class CustomAttributes
+					{
+						class Attribute0
+						{
+							property="speaker";
+							expression="_this setspeaker _value;";
+							class Value
+							{
+								class data
+								{
+									singleType="STRING";
+									value="Male10ENG";
+								};
+							};
+						};
+						class Attribute1
+						{
+							property="pitch";
+							expression="_this setpitch _value;";
+							class Value
+							{
+								class data
+								{
+									singleType="SCALAR";
+									value=0.95999998;
 								};
 							};
 						};
@@ -3682,7 +2157,7 @@ class Mission
 			class Attributes
 			{
 			};
-			id=1860;
+			id=1925;
 		};
 	};
 };

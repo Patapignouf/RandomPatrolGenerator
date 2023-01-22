@@ -283,16 +283,18 @@ setupArsenalToItem = {
 	[_itemToAttachArsenal,_itemToAttachArsenal call BIS_fnc_getVirtualBackpackCargo,false] call BIS_fnc_removeVirtualBackpackCargo;
 
 	//Add Weapon to arsenal
-	[_itemToAttachArsenal, ([_currentPlayer, _currentFaction] call getVirtualWeaponList )] call BIS_fnc_addVirtualWeaponCargo;
+	[_itemToAttachArsenal, ([_currentPlayer, _currentFaction] call getVirtualWeaponList ), false, false] call BIS_fnc_addVirtualWeaponCargo;
 
 	//Add backpack to arsenal
-	[_itemToAttachArsenal, ([_currentPlayer, _currentFaction] call getVirtualBackPack )] call BIS_fnc_addVirtualBackpackCargo;
+	[_itemToAttachArsenal, ([_currentPlayer, _currentFaction] call getVirtualBackPack ), false, false] call BIS_fnc_addVirtualBackpackCargo;
 
 	//[VA2,((itemCargo VA2) + _availableHeadgear + _availableUniforms + _availableVests)] call BIS_fnc_addVirtualItemCargo;
-	[VA2,true] call BIS_fnc_addVirtualMagazineCargo;
-	[_itemToAttachArsenal,([_currentPlayer,_currentFaction] call getVirtualAttachement ) + ([_currentPlayer,_currentFaction] call getVirtualItemList ) + ([_currentPlayer,_currentFaction] call getVirtualUniform ) ] call BIS_fnc_addVirtualItemCargo;
-	["AmmoboxInit",[_itemToAttachArsenal,false,{true}]] call BIS_fnc_arsenal;
+	[_itemToAttachArsenal,true, false, false] call BIS_fnc_addVirtualMagazineCargo;
+	[_itemToAttachArsenal,([_currentPlayer,_currentFaction] call getVirtualAttachement ) + ([_currentPlayer,_currentFaction] call getVirtualItemList ) + ([_currentPlayer,_currentFaction] call getVirtualUniform ),false, false] call BIS_fnc_addVirtualItemCargo;
+	//["AmmoboxInit",[_itemToAttachArsenal,false,{true}]] call BIS_fnc_arsenal;
+	_itemToAttachArsenal;
 };
+
 
 doInitializeLoadout = {
 	//InitParam
@@ -317,6 +319,48 @@ doInitializeLoadout = {
 		};
 	};
 	
+};
+
+
+switchToRole = {
+	//Init params
+	params ["_arsenalItem", "_caller", "_faction", "_role"];
+
+	//Switch to role
+	diag_log format ["Player %1 has switch to role %2 in faction %3", name _caller, _role, _faction];
+
+	titleCut [format ["Switching to role %1",(_role)], "BLACK FADED", 5];
+
+	//Manage Unit trait
+	_caller setVariable ["ace_medical_medicClass", 0, true]; //Remove special ACE medic trait
+	_caller setVariable ["ace_isEngineer", 0, true];
+	_caller setUnitTrait ["Medic", false];
+	_caller setUnitTrait ["Engineer", false];
+	_caller setUnitTrait ["ExplosiveSpecialist", false];
+	if (_role == c_medic) then 
+	{
+		_caller setUnitTrait ["Medic", true];
+		_caller setVariable ["ace_medical_medicClass", 2, true]; //add special ACE medic trait doctor
+	};
+	if (_role == c_engineer) then 
+	{
+		_caller setUnitTrait ["Engineer", true];
+		_caller setUnitTrait ["ExplosiveSpecialist", true];
+		_caller setVariable ["ace_isEngineer", 2, true]; //add special ACE medic trait advanced engineer
+	};
+
+	//Manage player's role
+	_caller setVariable ["role", _role, true];
+
+	//Manage default stuff
+	[_caller, _faction] call doInitializeLoadout;
+
+	_caller setVariable ["spawnLoadout", getUnitLoadout _caller];
+
+	//Manage arsenal stuff
+	[_arsenalItem, _caller, (_faction)] call setupArsenalToItem;
+
+	titleCut ["", "BLACK IN", 5];
 };
 
 setupRoleSwitchToItem = {
@@ -346,25 +390,21 @@ setupRoleSwitchToItem = {
 				titleCut [format ["Switching to role %1",(_params select 1)], "BLACK FADED", 5];
 
 				//Manage Unit trait
-				_caller setVariable ["ace_medical_medicClass", 0, true]; //Remove special ACE medic trait
-				_caller setVariable ["ace_isEngineer", 0, true];
 				_caller setUnitTrait ["Medic", false];
 				_caller setUnitTrait ["Engineer", false];
 				_caller setUnitTrait ["ExplosiveSpecialist", false];
 				if ((_params select 0) == c_medic) then 
 				{
 					_caller setUnitTrait ["Medic", true];
-					_caller setVariable ["ace_medical_medicClass", 2, true]; //add special ACE medic trait doctor
 				};
 				if ((_params select 0) == c_engineer) then 
 				{
 					_caller setUnitTrait ["Engineer", true];
 					_caller setUnitTrait ["ExplosiveSpecialist", true];
-					_caller setVariable ["ace_isEngineer", 2, true]; //add special ACE medic trait advanced engineer
 				};
 
 				//Manage player's role
-				_caller setVariable ["role", (_params select 0), true];
+				_caller setVariable ["role", (_params select 0)];
 
 				//Manage default stuff
 				[_caller,(_params select 1)] call doInitializeLoadout;
@@ -399,12 +439,62 @@ setupRoleSwitchToItem = {
 };
 
 
+
+setupRoleSwitchToList = {
+	//InitParam
+	params ["_currentFaction"];
+
+	//Check if current faction has specific role definition
+	if (count (listOfRoles_db select {_x select 1  == _currentFaction} select 0 select 0) == 0 ) then 
+	{
+		listOfRoles = c_listOfRoles;
+	} else 
+	{
+		listOfRoles = listOfRoles_db select {_x select 1  == _currentFaction} select 0 select 0;
+	};
+ 	listOfRoles;
+};
+
+setupPlayerLoadout = {
+	//InitParam
+	params ["_itemToAttachArsenal"];
+	[
+			_itemToAttachArsenal, 
+			"Setup loadout", 
+			"\a3\missions_f_oldman\data\img\holdactions\holdAction_box_ca.paa", 
+			"\a3\missions_f_oldman\data\img\holdactions\holdAction_box_ca.paa", 
+			"_this distance _target < 3",						// Condition for the action to be shown
+			"_caller distance _target < 3",						// Condition for the action to progress
+			{
+				// Action start code
+			}, 
+			{
+				// Action on going code
+			},  
+			{
+				// Action successfull code
+				//Params
+				params ["_target", "_caller", "_unusedParam" ,"_params"];
+				//Show GUI
+				[[], 'GUI\initPlayerLoadoutSetup.sqf'] remoteExec ['BIS_fnc_execVM', _caller];
+			}, 
+			{
+				// Action failed code
+			}, 
+			[],  
+			0.5,
+			1000, 
+			false, 
+			false
+		] call BIS_fnc_holdActionAdd;
+};
+
 setupSaveAndLoadRole = {
 	//InitParam
 	params ["_itemToAttachArsenal", "_currentPlayer" ];
 
 	//Add action where player can save his loadout
-	itemToAttachArsenal addAction 
+	_itemToAttachArsenal addAction 
 		["Save loadout", 
 		{
 			//Define params
@@ -417,7 +507,7 @@ setupSaveAndLoadRole = {
 		},[]];
 			
 	//Add action where player can load his loadout
-	itemToAttachArsenal addAction 
+	_itemToAttachArsenal addAction 
 		["Load loadout", 
 		{
 			//Define params

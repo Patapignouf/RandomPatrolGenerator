@@ -7,8 +7,26 @@ waitUntil {!isNull player && (getClientStateNumber>=10||!isMultiplayer)};
 diag_log format ["Setup Player %1 at position 0", name player];
 
 //init tp to be able to spawn on the ground on each map
-player setPos [0,0];
+player setPos [0,0,10000];
 player allowdamage false;
+player enableSimulationGlobal false;
+player setVariable ["role", "rifleman"];
+player setVariable ["isDead", false, true];
+
+//Hide HUD group to debug the UI 
+showHUD [
+  true, // scriptedHUD
+  true, // info
+  true, // radar
+  true, // compass
+  true, // direction
+  true, // menu
+  false, // group
+  true, // cursors
+  true, // panels
+  false, // kills
+  false  // showIcon3D
+];
 
 cutText ["Please wait while mission is generating", "BLACK FADED", 100];
 sleep 3; //Wait player load correctly the mission
@@ -46,13 +64,10 @@ enableHalo = "EnableHALO" call BIS_fnc_getParamValue;
 initBluforBase = "InitBluforBase" call BIS_fnc_getParamValue;
 chooseStartPos = "ChooseStartPos" call BIS_fnc_getParamValue;
 
-
-
 bluFaction = missionNamespace getVariable "bluforFaction";
 indFaction = missionNamespace getVariable "independentFaction";
 enableArmedAicraft = missionNamespace getVariable "enableArmedAicraft"; //Default armed aircraft are disabled
 enableArmoredVehicle = missionNamespace getVariable "enableArmoredVehicle"; //Default armored vehicle are disabled
-
 
 //Optimize scripts
 private _disableThermal = compile preprocessFileLineNumbers "engine\disableThermal.sqf";
@@ -71,12 +86,12 @@ private _generateCivDialogs = compile preprocessFileLineNumbers "enemyManagement
 }] call BIS_fnc_addScriptedEventHandler;
 
 //Remove Body on respawn 
-player addEventHandler ["Respawn",{ 
+// player addEventHandler ["Respawn",{ 
 
-	params ["_newObject","_oldObject"];
-	deleteVehicle _oldObject; 
+// 	params ["_newObject","_oldObject"];
+// 	deleteVehicle _oldObject; 
 
-}];
+// }];
 
 //Init disableThermal
 if (enableThermal==0) then 
@@ -157,9 +172,10 @@ if (hasInterface) then
 		player setVariable ["spawnLoadout", getUnitLoadout player];
 
 		//Manage arsenal	
-		[VA1, player, indFaction] call setupArsenalToItem;
-		[VA1, player, indFaction] call setupRoleSwitchToItem;
-		[VA1, player] call setupSaveAndLoadRole;
+		// [VA1, player, indFaction] call setupArsenalToItem;
+		// [VA1, player, indFaction] call setupRoleSwitchToItem;
+		// [VA1, player] call setupSaveAndLoadRole;
+		[VA1] call setupPlayerLoadout;
 
 		waituntil {!isNil "isBluforAttacked" && !isNil "isIndAttacked"};
 		if (isIndAttacked) then
@@ -205,9 +221,10 @@ if (hasInterface) then
 		player setVariable ["spawnLoadout", getUnitLoadout player];
 
 		//Manage arsenal	
-		[VA2, player, bluFaction] call setupArsenalToItem;
-		[VA2, player, bluFaction] call setupRoleSwitchToItem;
-		[VA2, player] call setupSaveAndLoadRole;
+		// [VA2, player, bluFaction] call setupArsenalToItem;
+		// [VA2, player, bluFaction] call setupRoleSwitchToItem;
+		// [VA2, player ] call setupSaveAndLoadRole;
+		[VA2] call setupPlayerLoadout;	
 
 		//Manage vehicle spawn options 
 		if (enableArmoredVehicle) then 
@@ -394,6 +411,7 @@ if (hasInterface) then
 //Let's get it started !
 
 player allowdamage true;
+player enableSimulationGlobal true;
 cutText ["", "BLACK IN", 5];
 
 
@@ -404,7 +422,8 @@ if (didJIP) then
 	_deadPlayerList = missionNamespace getVariable "deadPlayer";
 	if (count (_deadPlayerList select { _x == (name player) }) == 0) then 
 	{
-		player setPos [(getPos (leader (group player))) select 0, (getPos (leader (group player))) select 1]; //Set Pos player squad leader on ground
+		_tempPos = getPos (allUnits select {alive _x && side _x isEqualTo (side player) && _x getVariable "isDead" == false} select 0);
+		player setPos [_tempPos select 0, _tempPos select 1]; //Set Pos player squad leader on ground
 	} else 
 	{
 		player setPos [0,0];

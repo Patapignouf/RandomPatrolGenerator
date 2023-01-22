@@ -17,3 +17,4 @@ if ([_objectiveID] call BIS_fnc_taskExists) then
 	sleep 5;
 	[_objectiveID,"SUCCEEDED"] call BIS_fnc_taskSetState;
 };
+
