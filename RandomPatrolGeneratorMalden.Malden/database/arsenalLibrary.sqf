@@ -23,6 +23,7 @@ initFactionDb = {
 		_currentTempVariable pushBack [missionNamespace getVariable [_currentFactionBuild,[]], _currentFactionParameters];
 	} foreach factionInfos;
 	_currentVariableName = format ["%1%2", _currentVariable, c_db];
+	diag_log "Init Arsenal Library";
 	missionNamespace setVariable [_currentVariableName, _currentTempVariable, true];
 };
 
@@ -455,15 +456,31 @@ setupRoleSwitchToList = {
  	listOfRoles;
 };
 
+//Controls if a player is in a safe area to access arsenal
+isAreaEligibleForArsenal = {
+	params ["_caller"];
+	_controlDistance = "";
+	if (side _caller == blufor) then 
+	{
+		_controlDistance = "(_this distance _target < 3) && ((_target distance initBlueforLocation < 30) || (_target distance (missionNamespace getVariable ""advancedBlueforLocation"") < 30))"
+	};
+	if (side _caller == independent) then 
+	{
+		_controlDistance = "(_this distance _target < 3) && (_target distance (getPos initCityLocation) < 30)";
+	};
+	_controlDistance;
+};
+
 setupPlayerLoadout = {
 	//InitParam
+	diag_log "test setupPlayerLoadout";
 	params ["_itemToAttachArsenal"];
 	[
 			_itemToAttachArsenal, 
 			"Setup loadout", 
 			"\a3\missions_f_oldman\data\img\holdactions\holdAction_box_ca.paa", 
 			"\a3\missions_f_oldman\data\img\holdactions\holdAction_box_ca.paa", 
-			"_this distance _target < 3",						// Condition for the action to be shown
+			[player] call isAreaEligibleForArsenal,						// Condition for the action to be shown
 			"_caller distance _target < 3",						// Condition for the action to progress
 			{
 				// Action start code

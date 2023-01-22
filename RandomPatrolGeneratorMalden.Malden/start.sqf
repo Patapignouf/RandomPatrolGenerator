@@ -68,7 +68,11 @@ publicVariable "bluforArmedChopper";
 bluforDrone = bluforDrone_db select {_x select 1  == bluFaction} select 0 select 0;
 publicVariable "bluforDrone";
 
+bluforHQVehicle = bluforHQVehicle_db select {_x select 1  == bluFaction} select 0 select 0;
+publicVariable "bluforHQVehicle";
+
 bluforBoat = bluforBoat_db select {_x select 1  == bluFaction} select 0 select 0;
+publicVariable "bluforBoat";
 
 //CivilianGroupDefinition
 civilian_group = civilian_group_db select {_x select 1  == civFaction} select 0 select 0;
@@ -464,8 +468,25 @@ if (0 < count bluforBoat ) then
 
 //Generate all vehicles
 diag_log format ["Generating blufor vehicle : %1",selectedBluforVehicle];
-[initBlueforLocation, selectedBluforVehicle, 30, 100] call doGenerateVehicleForFOB;	
+_spawnedVehicle = [initBlueforLocation, selectedBluforVehicle, 30, 100] call doGenerateVehicleForFOB;	
+diag_log format ["Generating blufor vehicle spawned : %1", _spawnedVehicle];
 //TODO: get each vehicule and set the lock parameter to LOCKED;
+
+//HQ Vehicle spawn
+if (count bluforHQVehicle >0) then 
+{
+	//Spawn one HQ vehicle at bluforFOB
+	_bluforHQVehicleSpawned = ([initBlueforLocation, [[selectRandom bluforHQVehicle, false]], 30, 100] call doGenerateVehicleForFOB);	
+	diag_log format ["Generating blufor HQ vehicle spawned : %1", _bluforHQVehicleSpawned];
+	if (count _bluforHQVehicleSpawned >0) then 
+	{
+		// //Change vehicle name
+		createVehicle ["Flag_Blue_F", getPos (_bluforHQVehicleSpawned select 0) , [], 0, "NONE"];
+		bluforMobileHQ = _bluforHQVehicleSpawned select 0;
+		publicVariable "bluforMobileHQ";
+	};
+};
+
 
 //Init VA
 VA2 = createVehicle ["Box_NATO_WpsSpecial_F", [initBlueforLocation, 1, 5, 3, 0, 20, 0] call BIS_fnc_findSafePos, [], 0, "NONE"];
@@ -513,6 +534,8 @@ publicvariable "deployableFOBItem";
 
 			TPFlag2 = createVehicle ["Flag_Blue_F", [getPos _object, 1, 5, 3, 0, 20, 0] call BIS_fnc_findSafePos, [], 0, "NONE"];
 			
+			missionNamespace setVariable ["advancedBlueforLocation", getPos TPFlag2, true];
+
 			//Add action to rest and skip 6 hours
 			[TPFlag2, ["Take a nap",{
 				params ["_object","_caller","_ID","_param"];

@@ -8,12 +8,15 @@ doGenerateVehicleForFOB =
 	_thisMinRadius = _this select 2;
 	_thisMaxRadius = _this select 3;
 
+	_vehicleSpawned = [];
+
 	//Define process 
 	_shipGoodPosition = [0,0,0];
 	{
 		//Define current vehicle
 		_vehicleClass = _x select 0;
 		_isUAV = _x select 1;
+		_currentVehicle = objNull;
 
 		switch (true) do {   
 			case (_vehicleClass isKindOf "Tank");
@@ -29,7 +32,7 @@ doGenerateVehicleForFOB =
 						if (!isNil "_vehicleGoodPosition" && count _vehicleGoodPosition>0) then 
 						{
 							diag_log format ["Position to spawn vehicle is not Nil %1",_vehicleGoodPosition];
-							_currentCar = createVehicle [_vehicleClass, _vehicleGoodPosition , [], 0, "NONE"];
+							_currentVehicle = createVehicle [_vehicleClass, _vehicleGoodPosition , [], 0, "NONE"];
 						};
 				};   
 			case (_vehicleClass isKindOf "Ship"): {
@@ -59,11 +62,11 @@ doGenerateVehicleForFOB =
 					if (!isNil "_shipGoodPosition" && count _shipGoodPosition>0 && !([_shipGoodPosition , [0,0,0]] call BIS_fnc_areEqual)) then 
 					{
 						diag_log format ["Position to spawn vehicle is not Nil %1",_shipGoodPosition];
-						_currentBoat = createVehicle [_vehicleClass, _shipGoodPosition , [], 0, "NONE"];
+						_currentVehicle = createVehicle [_vehicleClass, _shipGoodPosition , [], 0, "NONE"];
 
 						//Nudge code from DRO to move boat stuck on beach
 						[
-							_currentBoat,
+							_currentVehicle,
 							[
 								"Nudge",  
 								{  
@@ -94,7 +97,7 @@ doGenerateVehicleForFOB =
 					{
 						diag_log format ["Position to spawn chopper is not Nil %1",_vehicleGoodPosition];
 						createVehicle ["Land_HelipadCircle_F", _vehicleGoodPosition , [], 0, "NONE"];
-						_currntHelicopter = createVehicle [_vehicleClass, [_vehicleGoodPosition select 0,_vehicleGoodPosition select 1]  , [], 0, "NONE"];
+						_currentVehicle = createVehicle [_vehicleClass, [_vehicleGoodPosition select 0,_vehicleGoodPosition select 1]  , [], 0, "NONE"];
 					};
 				};   
 			case (_vehicleClass isKindOf "Plane"): 
@@ -107,14 +110,14 @@ doGenerateVehicleForFOB =
 						_tempPos = [[_thisPosition select 0, _thisPosition select 1],1,60,10,0] call BIS_fnc_findSafePos;
 						_tempPos pushBack ((_thisPosition select 2)+400); //Set 3 dimension position
 						_currentUAVArray = [_tempPos, 0, _vehicleClass, blufor] call BIS_fnc_spawnVehicle;
-						_currentUAV = _currentUAVArray select 0;
+						_currentVehicle = _currentUAVArray select 0;
 						_currentUAVGroup = _currentUAVArray select 2;
 
 						//Set waypoint to current pos to the UAV
 						_wp = _currentUAVGroup addWaypoint [_tempPos, 0];
 
 						//Set unlimited fuel to the UAV
-						_h = [_currentUAV] spawn
+						_h = [_currentVehicle] spawn
 						{
 							while {true} do
 							{
@@ -135,12 +138,20 @@ doGenerateVehicleForFOB =
 				default {_kind = "Other";};   
 			};
 		sleep 2; //Wait vehicle spawn (avoid vehicle crash)
+
+		//Feed vehicle list
+		if (!isNull _currentVehicle) then 
+		{
+			_vehicleSpawned pushback _currentVehicle;
+		};
+
 	} forEach _thisVehicleList;
 	//Generate boat location on map
 	if !([_shipGoodPosition , [0,0,0]] call BIS_fnc_areEqual) then 
 	{
 		[["Boats","ColorBlue","hd_pickup_noShadow",_shipGoodPosition, blufor], 'objectGenerator\doGenerateMarker.sqf'] remoteExec ['BIS_fnc_execVM', 0];	
 	};
+	_vehicleSpawned;
 };
 
 

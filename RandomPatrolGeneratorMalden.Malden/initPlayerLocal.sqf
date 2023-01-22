@@ -221,10 +221,8 @@ if (hasInterface) then
 		player setVariable ["spawnLoadout", getUnitLoadout player];
 
 		//Manage arsenal	
-		// [VA2, player, bluFaction] call setupArsenalToItem;
-		// [VA2, player, bluFaction] call setupRoleSwitchToItem;
-		// [VA2, player ] call setupSaveAndLoadRole;
 		[VA2] call setupPlayerLoadout;	
+		[bluforMobileHQ] call setupPlayerLoadout;
 
 		//Manage vehicle spawn options 
 		if (enableArmoredVehicle) then 
@@ -418,11 +416,13 @@ cutText ["", "BLACK IN", 5];
 //If a player join in progress he will be teleported to his teamleader (WIP feature)
 if (didJIP) then 
 {
+	diag_log format ["Player %1 has arrived on JIP", name player];
 	//Check if player is trying to respawn by deco/reco method
 	_deadPlayerList = missionNamespace getVariable "deadPlayer";
 	if (count (_deadPlayerList select { _x == (name player) }) == 0) then 
 	{
 		_tempPos = getPos (allUnits select {alive _x && side _x isEqualTo (side player) && _x getVariable "isDead" == false} select 0);
+		diag_log _tempPos;
 		player setPos [_tempPos select 0, _tempPos select 1]; //Set Pos player squad leader on ground
 	} else 
 	{
