@@ -1,9 +1,3 @@
-#include "factionParameters.sqf"
-
-c_variableToInit = ["bluforUnarmedVehicle","bluforArmedVehicle","bluforUnarmedVehicleChopper","bluforDrone","bluforBoat","civilian_group",
-"civilian_big_group","civilianTruck","baseEnemyGroup","baseEnemyATGroup","baseEnemyDemoGroup","baseEnemyMortarGroup","baseEnemyVehicleGroup",
-"baseEnemyLightArmoredVehicleGroup","baseEnemyHeavyArmoredVehicleGroup","bluforFixedWing","bluforArmedChopper", "bluforHQVehicle"];
-
 //////////////////////////////
 ////Define objectives data////
 //////////////////////////////
@@ -310,25 +304,3 @@ avalaibleFOB = [
 ];
 
 
-initFactionDb = {
-	params ["_currentVariable"];
-	_currentTempVariable = [];
-	{
-		_currentFactionName = _x select 0;
-		_currentFactionParameters = _x select 1;
-		_currentFactionBuild = format ["%1%2", _currentVariable, _currentFactionName];
-		_currentTempVariable pushBack [missionNamespace getVariable [_currentFactionBuild,[]], _currentFactionParameters];
-	} foreach factionInfos;
-	_currentVariableName = format ["%1%2", _currentVariable, c_db];
-	diag_log "Init Object Library";
-	missionNamespace setVariable [_currentVariableName, _currentTempVariable, true];
-};
-
-//////////
-//InitDB//
-//////////
-
-{
-	[_x] call initFactionDb;
-}
-foreach c_variableToInit;

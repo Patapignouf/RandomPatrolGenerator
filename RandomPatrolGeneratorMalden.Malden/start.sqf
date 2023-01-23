@@ -16,6 +16,10 @@ respawnSettings = "Respawn" call BIS_fnc_getParamValue;
 objInitSetup = "ObjInitSetup" call BIS_fnc_getParamValue;
 bluforVehicleSpawnType = "BluforVehicleSpawnType" call BIS_fnc_getParamValue;
 
+//Init all environement database variable
+_handleEnvironmentInitialization = [] execVM 'initEnvironment.sqf'; 
+waitUntil {isNull _handleEnvironmentInitialization};
+
 //Mission settings waiting
 waitUntil {missionNamespace getVariable "generationSetup" == true};
 

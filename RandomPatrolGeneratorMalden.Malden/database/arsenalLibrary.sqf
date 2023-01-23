@@ -1,31 +1,7 @@
-#include "factionParameters.sqf"
-
 //Import mission params
 warEra = missionNamespace getVariable "warEra"; // Default actual warfare
 
 c_listOfRoles = [c_leader,c_at,c_rifleman,c_engineer,c_autorifleman,c_marksman,c_medic];
-
-c_variableToInit = ["listOfRoles","loadout","rifleList","grenadeLauncherList","attachmentLongList","attachmentShortList","smgList","marksmanrifleList","autorifleList","launcherList","itemList","itemEngineerList","itemMedicList",'backPackList','uniformList'];
-
-//Join
-
-////////////////////////
-//Backpack management///
-////////////////////////
-
-initFactionDb = {
-	params ["_currentVariable"];
-	_currentTempVariable = [];
-	{
-		_currentFactionName = _x select 0;
-		_currentFactionParameters = _x select 1;
-		_currentFactionBuild = format ["%1%2", _currentVariable, _currentFactionName];
-		_currentTempVariable pushBack [missionNamespace getVariable [_currentFactionBuild,[]], _currentFactionParameters];
-	} foreach factionInfos;
-	_currentVariableName = format ["%1%2", _currentVariable, c_db];
-	diag_log "Init Arsenal Library";
-	missionNamespace setVariable [_currentVariableName, _currentTempVariable, true];
-};
 
 getLoadoutByRole = {
 	currentPlayer = _this select 0;
@@ -641,11 +617,3 @@ adjustLoadout = {
 
 
 
-//////////
-//InitDB//
-//////////
-
-{
-	[_x] call initFactionDb;
-}
-foreach c_variableToInit;
