@@ -222,7 +222,11 @@ if (hasInterface) then
 
 		//Manage arsenal	
 		[VA2] call setupPlayerLoadout;	
-		[bluforMobileHQ] call setupPlayerLoadout;
+		if (!isNil "bluformobilehq") then
+		{
+			[bluforMobileHQ] call setupPlayerLoadout;
+		};
+
 
 		//Manage vehicle spawn options 
 		if (enableArmoredVehicle) then 
