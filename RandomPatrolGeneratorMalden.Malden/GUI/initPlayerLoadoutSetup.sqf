@@ -52,6 +52,7 @@ _comboBoxClassSelection ctrlAddEventHandler[ "LBSelChanged",
 		};
 	}];
 
+//Open arsenal
 _buttonArsenal ctrlAddEventHandler[ "ButtonClick", 
 	{ 
 		hint "ButtonClicked";
@@ -59,15 +60,45 @@ _buttonArsenal ctrlAddEventHandler[ "ButtonClick",
 		[] execVM 'database\openArsenal.sqf';
 	}];
 
+//Save loadout
 _buttonSave ctrlAddEventHandler[ "ButtonClick", 
 	{ 
+		//Manage default stuff
 		player setVariable ["spawnLoadout", getUnitLoadout player];
+
+		//Save personnal loadout
+		if (player getVariable "sideBeforeDeath" == "independent") then 
+		{
+			//Independent
+			profileNamespace setVariable [format ["RPG_%1_%2_%3", name player, indFaction, player getVariable "role"], getUnitLoadout player];
+		} else 
+		{
+			//Blufor
+			profileNamespace setVariable [format ["RPG_%1_%2_%3", name player, bluFaction, player getVariable "role"], getUnitLoadout player];
+		};
+		diag_log format ["Loadout saved on : RPG_%1_%2_%3", name player, indFaction, player getVariable "role"];
+		saveProfileNamespace;
+
 		cutText ["Loadout saved", "PLAIN", 0.3];
 	}];
 
+//Load loadout
 _buttonLoad ctrlAddEventHandler[ "ButtonClick", 
 	{ 
-		player setUnitLoadout (player getVariable "spawnLoadout");
+		_loadableLoadout = [];
+		//Save personnal loadout
+		if (player getVariable "sideBeforeDeath" == "independent") then 
+		{
+			//Independent
+			_loadableLoadout = profileNamespace getVariable [format ["RPG_%1_%2_%3", name player, indFaction, player getVariable "role"], player getVariable "spawnLoadout"];
+		} else 
+		{
+			//Blufor
+			_loadableLoadout = profileNamespace getVariable [format ["RPG_%1_%2_%3", name player, bluFaction, player getVariable "role"], player getVariable "spawnLoadout"];
+		};
+		
+		player setUnitLoadout _loadableLoadout;
+
 		cutText ["Loadout loaded", "PLAIN", 0.3];
 	}];
 

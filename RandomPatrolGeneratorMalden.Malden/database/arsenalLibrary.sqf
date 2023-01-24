@@ -305,15 +305,17 @@ switchToRole = {
 
 	//Switch to role
 	diag_log format ["Player %1 has switch to role %2 in faction %3", name _caller, _role, _faction];
-
-	titleCut [format ["Switching to role %1",(_role)], "BLACK FADED", 5];
+	titleCut [format ["Switching to role %1", _role], "BLACK FADED", 5];
 
 	//Manage Unit trait
+	//Reset unit trait
 	_caller setVariable ["ace_medical_medicClass", 0, true]; //Remove special ACE medic trait
 	_caller setVariable ["ace_isEngineer", 0, true];
 	_caller setUnitTrait ["Medic", false];
 	_caller setUnitTrait ["Engineer", false];
 	_caller setUnitTrait ["ExplosiveSpecialist", false];
+
+	//Set specific trait
 	if (_role == c_medic) then 
 	{
 		_caller setUnitTrait ["Medic", true];
@@ -330,12 +332,21 @@ switchToRole = {
 	_caller setVariable ["role", _role, true];
 
 	//Manage default stuff
-	[_caller, _faction] call doInitializeLoadout;
+	_personalLoadout = profileNamespace getVariable [format ["RPG_%1_%2_%3",name _caller, _faction , _role], []];
+	if (count _personalLoadout != 0) then 
+	{
+		//Personal loadout 
+		_caller setUnitLoadout _personalLoadout;
+	} else 
+	{
+		//Default loadout
+		[_caller, _faction] call doInitializeLoadout;
+	};
 
 	_caller setVariable ["spawnLoadout", getUnitLoadout _caller];
 
 	//Manage arsenal stuff
-	[_arsenalItem, _caller, (_faction)] call setupArsenalToItem;
+	[_arsenalItem, _caller, _faction] call setupArsenalToItem;
 
 	titleCut ["", "BLACK IN", 5];
 };
