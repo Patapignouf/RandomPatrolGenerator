@@ -408,14 +408,8 @@ if (hasInterface) then
 	};
 };
 
+//Generate civilian dialogs
 [] spawn _generateCivDialogs;
-
-//Let's get it started !
-
-player allowdamage true;
-player enableSimulationGlobal true;
-cutText ["", "BLACK IN", 5];
-
 
 //If a player join in progress he will be teleported to his teamleader (WIP feature)
 if (didJIP) then 
@@ -425,12 +419,18 @@ if (didJIP) then
 	_deadPlayerList = missionNamespace getVariable "deadPlayer";
 	if (count (_deadPlayerList select { _x == (name player) }) == 0) then 
 	{
-		_tempPos = getPos (allUnits select {alive _x && side _x isEqualTo (side player) && _x getVariable "isDead" == false} select 0);
-		diag_log _tempPos;
-		player setPos [_tempPos select 0, _tempPos select 1]; //Set Pos player squad leader on ground
+		player setPos [0,0,10000];
+		player allowdamage false;
+		player enableSimulationGlobal false;
+		[[], 'GUI\initPlayerRespawnMenu.sqf'] remoteExec ['BIS_fnc_execVM', player];
 	} else 
 	{
 		player setPos [0,0];
 		player setDamage 1;
 	};
 };
+
+//Let's get it started !
+player allowdamage true;
+player enableSimulationGlobal true;
+cutText ["", "BLACK IN", 5];
