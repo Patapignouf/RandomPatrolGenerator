@@ -32,6 +32,7 @@ _buttonRespawnStart ctrlAddEventHandler[ "ButtonClick",
 		player setVariable ["isDead", false, true];
 		player allowdamage true;
 		player enableSimulationGlobal true;
+		cutText ["", "BLACK IN", 5];
 
 		//Remove player name from the dead player's list
 		_deadPlayerList = missionNamespace getVariable "deadPlayer";
@@ -56,13 +57,14 @@ _buttonRespawnLeader ctrlAddEventHandler[ "ButtonClick",
 		hint "Respawn on teamleader";
 
 		//teleport player to another player with same side
-		_tempPos = getPos (allUnits select {alive _x && side _x isEqualTo (side player) && _x getVariable "isDead" == false} select 0);
+		_tempPos = getPos (((allPlayers - [player]) select {alive _x && side _x isEqualTo (side player) && _x getVariable "isDead" == false}) select 0);
 		player setPos [_tempPos select 0, _tempPos select 1];
 
 		//Enable gameplay for player
 		player setVariable ["isDead", false, true];
 		player allowdamage true;
 		player enableSimulationGlobal true;
+		cutText ["", "BLACK IN", 5];
 
 		//Remove player name from the dead player's list
 		_deadPlayerList = missionNamespace getVariable "deadPlayer";

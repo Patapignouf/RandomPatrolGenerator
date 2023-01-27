@@ -428,9 +428,10 @@ if (didJIP) then
 		player setPos [0,0];
 		player setDamage 1;
 	};
+} else {
+	//Let's get it started !
+	player allowdamage true;
+	player enableSimulationGlobal true;
+	cutText ["", "BLACK IN", 5];
 };
 
-//Let's get it started !
-player allowdamage true;
-player enableSimulationGlobal true;
-cutText ["", "BLACK IN", 5];
