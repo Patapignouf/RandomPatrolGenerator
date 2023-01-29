@@ -1,30 +1,7 @@
-#include "factionParameters.sqf"
-
 //Import mission params
 warEra = missionNamespace getVariable "warEra"; // Default actual warfare
 
 c_listOfRoles = [c_leader,c_at,c_rifleman,c_engineer,c_autorifleman,c_marksman,c_medic];
-
-c_variableToInit = ["listOfRoles","loadout","rifleList","grenadeLauncherList","attachmentLongList","attachmentShortList","smgList","marksmanrifleList","autorifleList","launcherList","itemList","itemEngineerList","itemMedicList",'backPackList','uniformList'];
-
-//Join
-
-////////////////////////
-//Backpack management///
-////////////////////////
-
-initFactionDb = {
-	params ["_currentVariable"];
-	_currentTempVariable = [];
-	{
-		_currentFactionName = _x select 0;
-		_currentFactionParameters = _x select 1;
-		_currentFactionBuild = format ["%1%2", _currentVariable, _currentFactionName];
-		_currentTempVariable pushBack [missionNamespace getVariable [_currentFactionBuild,[]], _currentFactionParameters];
-	} foreach factionInfos;
-	_currentVariableName = format ["%1%2", _currentVariable, c_db];
-	missionNamespace setVariable [_currentVariableName, _currentTempVariable, true];
-};
 
 getLoadoutByRole = {
 	currentPlayer = _this select 0;
@@ -328,15 +305,17 @@ switchToRole = {
 
 	//Switch to role
 	diag_log format ["Player %1 has switch to role %2 in faction %3", name _caller, _role, _faction];
-
-	titleCut [format ["Switching to role %1",(_role)], "BLACK FADED", 5];
+	titleCut [format ["Switching to role %1", _role], "BLACK FADED", 5];
 
 	//Manage Unit trait
+	//Reset unit trait
 	_caller setVariable ["ace_medical_medicClass", 0, true]; //Remove special ACE medic trait
 	_caller setVariable ["ace_isEngineer", 0, true];
 	_caller setUnitTrait ["Medic", false];
 	_caller setUnitTrait ["Engineer", false];
 	_caller setUnitTrait ["ExplosiveSpecialist", false];
+
+	//Set specific trait
 	if (_role == c_medic) then 
 	{
 		_caller setUnitTrait ["Medic", true];
@@ -353,12 +332,21 @@ switchToRole = {
 	_caller setVariable ["role", _role, true];
 
 	//Manage default stuff
-	[_caller, _faction] call doInitializeLoadout;
+	_personalLoadout = profileNamespace getVariable [format ["RPG_%1_%2_%3",name _caller, _faction , _role], []];
+	if (count _personalLoadout != 0) then 
+	{
+		//Personal loadout 
+		_caller setUnitLoadout _personalLoadout;
+	} else 
+	{
+		//Default loadout
+		[_caller, _faction] call doInitializeLoadout;
+	};
 
 	_caller setVariable ["spawnLoadout", getUnitLoadout _caller];
 
 	//Manage arsenal stuff
-	[_arsenalItem, _caller, (_faction)] call setupArsenalToItem;
+	[_arsenalItem, _caller, _faction] call setupArsenalToItem;
 
 	titleCut ["", "BLACK IN", 5];
 };
@@ -455,15 +443,31 @@ setupRoleSwitchToList = {
  	listOfRoles;
 };
 
+//Controls if a player is in a safe area to access arsenal
+isAreaEligibleForArsenal = {
+	params ["_caller"];
+	_controlDistance = "";
+	if (side _caller == blufor) then 
+	{
+		_controlDistance = "(_this distance _target < 3) && ((_target distance initBlueforLocation < 30) || (_target distance (missionNamespace getVariable ""advancedBlueforLocation"") < 30))"
+	};
+	if (side _caller == independent) then 
+	{
+		_controlDistance = "(_this distance _target < 3) && (_target distance (getPos initCityLocation) < 30)";
+	};
+	_controlDistance;
+};
+
 setupPlayerLoadout = {
 	//InitParam
+	diag_log "test setupPlayerLoadout";
 	params ["_itemToAttachArsenal"];
 	[
 			_itemToAttachArsenal, 
 			"Setup loadout", 
 			"\a3\missions_f_oldman\data\img\holdactions\holdAction_box_ca.paa", 
 			"\a3\missions_f_oldman\data\img\holdactions\holdAction_box_ca.paa", 
-			"_this distance _target < 3",						// Condition for the action to be shown
+			[player] call isAreaEligibleForArsenal,						// Condition for the action to be shown
 			"_caller distance _target < 3",						// Condition for the action to progress
 			{
 				// Action start code
@@ -624,11 +628,3 @@ adjustLoadout = {
 
 
 
-//////////
-//InitDB//
-//////////
-
-{
-	[_x] call initFactionDb;
-}
-foreach c_variableToInit;

@@ -114,6 +114,16 @@ bluforBoat_USA = [
 	"CUP_B_Zodiac_USMC"
 ];
 
+//FixedWing vehicle avalaible for blufor
+bluforFixedWing_USA = [
+	"CUP_B_A10_DYN_USA"
+];
+
+//Vehicule able to do HQ features (Loadout management and more)
+bluforHQVehicle_USA = [
+	"CUP_B_M113A1_HQ_desert_USA"
+];
+
 
 ////////////////////////
 //Loadout management////

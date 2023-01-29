@@ -1,5 +1,7 @@
 player setPos [0,0,10000];
 
+diag_log format ["Player %1 is dead", name player];
+
 waitUntil {!isNull player};
 
 player setUnitLoadout (player getVariable "spawnLoadout");

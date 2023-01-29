@@ -30,5 +30,8 @@ missionNamespace setVariable ["enableCampaignMode", false, true]; //Default armo
 missionNamespace setVariable ["missionLength", 2, true]; //Default armored vehicle are disabled
 missionNamespace setVariable ["missionDifficultyParam", 1, true]; //Default armored vehicle are disabled
 
+//Blufor Initilization 
+missionNamespace setVariable ["advancedBlueforLocation", [0,0], true]; //Default armored vehicle are disabled
+
 //Init scenario scripts
 [] execVM 'start.sqf'; 

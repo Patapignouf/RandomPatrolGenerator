@@ -103,6 +103,11 @@ bluforBoat_newFaction = ["CUP_B_RHIB_HIL",
 bluforFixedWing_newFaction = ["I_C_Offroad_02_LMG_F", 
 "I_C_Offroad_02_AT_F"];
 
+//Vehicule able to do HQ features (Loadout management and more)
+bluforHQVehicle_newFaction = [
+	"amf_pvp_01_CE_f"
+];
+
 ////////////////////////
 //Loadout management////
 ////////////////////////
