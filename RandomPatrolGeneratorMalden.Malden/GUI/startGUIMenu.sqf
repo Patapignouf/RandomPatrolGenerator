@@ -47,8 +47,8 @@ missionNamespace setVariable ["enableCampaignMode", [enableCampaignModeSelected,
 missionNamespace setVariable ["missionLength", parseNumber missionLengthSelected, true]; //Default armored vehicle are disabled
 missionNamespace setVariable ["missionDifficultyParam", parseNumber missionDifficultySelected, true]; //Default armored vehicle are disabled
 
-//Begin mission generation
-missionNamespace setVariable ["generationSetup", true, true]; 
+//Go to objective selection
+[[], 'GUI\startGUIMenuObjectives.sqf'] remoteExec ['BIS_fnc_execVM', player];
 
 //Close setup menu
 _mainDisplay closeDisplay 1;

@@ -17,6 +17,12 @@ _buttonLoad ctrlAddEventHandler[ "ButtonClick",
 		_display = ctrlParent _ctrl;
 		_display closeDisplay 1;
 
+		//Select random objective if no objective are selected in GUI
+		if (count avalaibleTypeOfObj == 0) then 
+		{
+			avalaibleTypeOfObj = [(selectRandom (avalaibleTypeOfObjectives)) select 0];
+		};
+
 		//Publish avalaible objectives types
 		publicVariable "avalaibleTypeOfObj";
 
@@ -26,7 +32,7 @@ _buttonLoad ctrlAddEventHandler[ "ButtonClick",
 
 
 //Create list of button to find avalaible objectives
-_coordinateY = 0.15;
+_coordinateButtonRatioY = 0.20;
 {
 	//Define objective params
 	_currentObjectiveKey = _x select 0;  //Objective type
@@ -35,19 +41,19 @@ _coordinateY = 0.15;
 
 	_RcsButtonObjective = _mainDisplay ctrlCreate ["RscButton", -1];
 	_RcsButtonObjective ctrlSetText _currentObjectiveName;
-	_RcsButtonObjective ctrlSetTextColor [0, 0.2, 0, 1]; //Green seems enable
+	_RcsButtonObjective ctrlSetTextColor [0.5, 1, 0.5, 0.8]; //Green seems enable
 	avalaibleTypeOfObj pushBack _currentObjectiveKey; //Add objective to avalaible objective
 
 	//Position and size
 	_coordinateX = 0.26 * safezoneW + safezoneX;
-	_coordinateY = _coordinateY * safezoneH + safezoneY;
-	_weight = 0.211441 * safezoneW;
-	_height = 0.241947 * safezoneH;
+	_coordinateY = (_coordinateButtonRatioY) * safezoneH + safezoneY;
+	_weight = 1;
+	_height = 0.05;
 
 	_RcsButtonObjective ctrlSetPosition [_coordinateX, _coordinateY, _weight, _height];
 	_RcsButtonObjective ctrlCommit 0;
 
-	_coordinateY = _coordinateY + 0.15;
+	_coordinateButtonRatioY = _coordinateButtonRatioY + 0.05;
 
 	//Add control logic (enable or disable objective)
 	_RcsButtonObjective ctrlAddEventHandler[ "ButtonClick", 
@@ -62,7 +68,7 @@ _coordinateY = 0.15;
 			avalaibleTypeOfObj = avalaibleTypeOfObj - [_currentButtonObjective select 0]; //Add objective to avalaible objective
 		} else 
 		{
-			_ctrl ctrlSetTextColor [0, 0.2, 0, 1]; //Green
+			_ctrl ctrlSetTextColor [0.5, 1, 0.5, 0.8]; //Green
 			avalaibleTypeOfObj pushBack (_currentButtonObjective select 0); //Add objective to avalaible objective
 		};
 	}];

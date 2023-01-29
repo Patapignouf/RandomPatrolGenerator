@@ -16,6 +16,20 @@ class DialogSetupObjectivesParams
 	};
 	class Controls
 	{
+		
+		//Title of GUI
+		class RscText_6001: RscText
+		{
+			idc = 9001;
+			style = ST_MULTI;
+			lineSpacing = 1;
+			text = "Random Patrol Generator Objectives"; //--- ToDo: Localize;
+			x = 0.459686 * safezoneW + safezoneX;
+			y = 0.017436 * safezoneH + safezoneY;
+			w = 0.211441 * safezoneW;
+			h = 0.241947 * safezoneH;
+		};
+
 		//Validate button
 		class ClickMe: RscButton
 		{
