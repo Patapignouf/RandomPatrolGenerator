@@ -100,16 +100,16 @@ generateObjectiveObject =
 		_thisObjective pushBack _objectiveUniqueID;
 
 		//Try to find position with building if avalaible
-		_tempAvailablePosition = getPos (nearestBuilding _thisObjectivePosition);
-		if (_tempAvailablePosition distance _thisObjectivePosition < 100) then 
-		{
-			_thisObjectivePosition = _tempAvailablePosition;
-		};
+		_allBuildings = nearestTerrainObjects [_thisObjectivePosition, ["house"], 100, false, true];
+		_allPositions = [];
+		_allBuildings apply {_allPositions append (_x buildingPos -1)};
+		_thisObjectivePosition = selectRandom _allPositions;
 
 		switch (objectiveType) do
 		{
 			case "supply":
 				{
+					//Search safe position around objective position
 					(objectiveObject) setPos ([( _thisObjectivePosition), 1, 25, 5, 0, 20, 0] call BIS_fnc_findSafePos);
 
 					//Objective failed
@@ -137,14 +137,12 @@ generateObjectiveObject =
 				};
 			case "hvt":
 				{
-					(objectiveObject) setPos ( _thisObjectivePosition);
-					[objectiveObject, objectiveObject, 75, [], true] call lambs_wp_fnc_taskGarrison;
+					objectiveObject setPos _thisObjectivePosition;
 				};
 			case "vip":
 				{
 					diag_log format ["VIP task setup ! : %1", objectiveObject];
-					(objectiveObject) setPos ( _thisObjectivePosition);
-					[objectiveObject, objectiveObject, 75, [], true] call lambs_wp_fnc_taskGarrison;
+					(objectiveObject) setPos _thisObjectivePosition;
 
 					//Use ACE function to set hancuffed
 					if (isClass (configFile >> "CfgPatches" >> "ace_medical")) then 
@@ -199,7 +197,7 @@ generateObjectiveObject =
 			case "clearArea":
 				{
 					//Add trigger to detect cleared area
-					objectiveObject setPos ( _thisObjectivePosition); //create a trigger area created at object with variable name my_object
+					objectiveObject setPos _thisObjectivePosition; //create a trigger area created at object with variable name my_object
 					objectiveObject setTriggerArea [200, 200, 0, false]; // trigger area with a radius of 200m.
 					objectiveObject setVariable ["associatedTask", _thisObjective];
 					[objectiveObject] execVM 'engine\checkClearArea.sqf'; 
@@ -207,7 +205,7 @@ generateObjectiveObject =
 			case "defendArea":
 				{
 					//Add trigger to detect cleared area
-					objectiveObject setPos ( _thisObjectivePosition); //create a trigger area created at object with variable name my_object
+					objectiveObject setPos _thisObjectivePosition; //create a trigger area created at object with variable name my_object
 					objectiveObject setTriggerArea [200, 200, 0, false]; // trigger area with a radius of 200m.
 					objectiveObject setVariable ["associatedTask", _thisObjective];
 					[objectiveObject] execVM 'engine\checkDefendArea.sqf'; 
@@ -215,7 +213,7 @@ generateObjectiveObject =
 			case "collectIntel":
 				{
 					//Add intel action to the intel case
-					objectiveObject setPos ([( _thisObjectivePosition), 1, 25, 5, 0, 20, 0] call BIS_fnc_findSafePos);
+					objectiveObject setPos _thisObjectivePosition;
 					[objectiveObject, ["Collect intel",{
 						params ["_object","_caller","_ID","_thisObjective"];
 						//Manage Completed Objective
