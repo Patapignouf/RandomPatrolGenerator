@@ -64,6 +64,7 @@ avalaibleTypeOfObjectives = [
 	["ammo", "Ammo cache", "Attack", true],
 	["hvt", "HVT", "Attack", true],
 	["clearArea", "Clear Area", "Attack", true],
+	["defendArea", "Defend Area", "Attack", true],	
 	["supply", "Supply box", "Support", true],
 	["vip", "VIP", "Support", true],
 	["informant", "Informant", "Support", true],

@@ -49,6 +49,11 @@ generateObjective =
 				//Add trigger to detect cleared area
 				currentObj = createTrigger ["EmptyDetector", currentRandomPos]; //create a trigger area created at object with variable name my_object
 			};
+		case "defendArea":
+			{
+				//Add trigger to detect cleared area
+				currentObj = createTrigger ["EmptyDetector", currentRandomPos]; //create a trigger area created at object with variable name my_object
+			};
 		case "collectIntel":
 			{
 				//Add intel action to the intel case
@@ -198,6 +203,14 @@ generateObjectiveObject =
 					objectiveObject setTriggerArea [200, 200, 0, false]; // trigger area with a radius of 200m.
 					objectiveObject setVariable ["associatedTask", _thisObjective];
 					[objectiveObject] execVM 'engine\checkClearArea.sqf'; 
+				};
+			case "defendArea":
+				{
+					//Add trigger to detect cleared area
+					objectiveObject setPos ( _thisObjectivePosition); //create a trigger area created at object with variable name my_object
+					objectiveObject setTriggerArea [200, 200, 0, false]; // trigger area with a radius of 200m.
+					objectiveObject setVariable ["associatedTask", _thisObjective];
+					[objectiveObject] execVM 'engine\checkDefendArea.sqf'; 
 				};
 			case "collectIntel":
 				{

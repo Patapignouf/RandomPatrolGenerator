@@ -68,8 +68,8 @@ if (isServer) then
 
 
 			AvalaibleInitAttackPositions = [];
-			AvalaibleInitAttackPositions = [positionToAttack, 1200, 2000, round((_thisDifficulty-0.5)/2)] call getListOfPositionsAroundTarget;
-			[ AvalaibleInitAttackPositions, positionToAttack, _tempGroup,_tempVehicleGroup, round((_thisDifficulty-0.5)/2)] execVM 'enemyManagement\doAmbush.sqf'; 
+			AvalaibleInitAttackPositions = [positionToAttack, 1200, 2000, round((_thisDifficulty-0.5)/2)+1] call getListOfPositionsAroundTarget;
+			[ AvalaibleInitAttackPositions, positionToAttack, _tempGroup,_tempVehicleGroup, round((_thisDifficulty-0.5)/2)+1] execVM 'enemyManagement\doAmbush.sqf'; 
 			diag_log format ["Harass start on position %1", positionToAttack];
 		};
 		sleep (600+round (random 300));

@@ -68,6 +68,11 @@ if ((count _revealedObjectives != count _tempMissionObjectives)) then
 							_currentObjectiveDescription = format ["There is a lot of enemies in %1, you have to clear the location...", text _nearestLoc];
 							[_side, _objectiveToReveal select 2, [_currentObjectiveDescription, "Clear area", "cookiemarker2"], objNull, 1, 3, true] call BIS_fnc_taskCreate;
 						};
+					case "defendArea":
+						{
+							_currentObjectiveDescription = format ["There is some enemies in %1, you have to take the location and defend it against enemy reinforcement", text _nearestLoc];
+							[_side, _objectiveToReveal select 2, [_currentObjectiveDescription, "Defend area", "cookiemarker2"], objNull, 1, 3, true] call BIS_fnc_taskCreate;
+						};
 					case "collectIntel":
 						{
 							_currentObjectiveDescription = format ["I drop my %1 with a lot of intel about enemy's location in %2. Can you pick it up ?", getText (configFile >> "cfgVehicles" >> typeOf _thisObject >> "displayName"),text _nearestLoc];
