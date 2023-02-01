@@ -103,7 +103,13 @@ generateObjectiveObject =
 		_allBuildings = nearestTerrainObjects [_thisObjectivePosition, ["house"], 100, false, true];
 		_allPositions = [];
 		_allBuildings apply {_allPositions append (_x buildingPos -1)};
-		_thisObjectivePosition = selectRandom _allPositions;
+		_thistempObjectivePosition = selectRandom _allPositions;
+		
+		//Test if there's an avalaible position
+		if (count _thistempObjectivePosition != 0) then 
+		{
+			_thisObjectivePosition = _thistempObjectivePosition;
+		};
 
 		switch (objectiveType) do
 		{
