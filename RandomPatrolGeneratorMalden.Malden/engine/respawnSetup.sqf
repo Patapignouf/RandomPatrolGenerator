@@ -1,5 +1,5 @@
-bluforRespawn = [west, initBlueforLocation, "Blufor respawn"] call  BIS_fnc_addRespawnPosition;
-independentRespawn = [independent, getPos initCityLocation, "Independent respawn"] call  BIS_fnc_addRespawnPosition;
+bluforRespawn = "respawn_west" setMarkerPos initBlueforLocation;
+independentRespawn = "respawn_guerrila" setMarkerPos (getPos initCityLocation);
 
 
 //Disable dynamic teamleader respawn
