@@ -45,7 +45,7 @@ _coordinateButtonRatioY = 0.20;
 	avalaibleTypeOfObj pushBack _currentObjectiveKey; //Add objective to avalaible objective
 
 	//Position and size
-	_coordinateX = 0.26 * safezoneW + safezoneX;
+	_coordinateX = 0.30 * safezoneW + safezoneX;
 	_coordinateY = (_coordinateButtonRatioY) * safezoneH + safezoneY;
 	_weight = 1;
 	_height = 0.05;
@@ -53,7 +53,7 @@ _coordinateButtonRatioY = 0.20;
 	_RcsButtonObjective ctrlSetPosition [_coordinateX, _coordinateY, _weight, _height];
 	_RcsButtonObjective ctrlCommit 0;
 
-	_coordinateButtonRatioY = _coordinateButtonRatioY + 0.05;
+	_coordinateButtonRatioY = _coordinateButtonRatioY + (safezoneH)/((count avalaibleTypeOfObjectives)*4);
 
 	//Add control logic (enable or disable objective)
 	_RcsButtonObjective ctrlAddEventHandler[ "ButtonClick", 
