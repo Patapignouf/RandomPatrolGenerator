@@ -292,7 +292,7 @@ if ( count AvalaibleInitAttackPositions != 0 && (enableInitAttack == 1 || ((enab
 VA1 addItemCargoGlobal ["ACE_key_indp", 5];
 
 //Init perma harass on player
-[[baseEnemyGroup,baseEnemyATGroup,baseEnemyDemoGroup],baseEnemyVehicleGroup, baseEnemyLightArmoredVehicleGroup, baseEnemyHeavyArmoredVehicleGroup] execVM 'enemyManagement\generateHarass.sqf'; 
+[[baseEnemyGroup,baseEnemyATGroup,baseEnemyDemoGroup],baseEnemyVehicleGroup, baseEnemyLightArmoredVehicleGroup, baseEnemyHeavyArmoredVehicleGroup, missionDifficultyParam] execVM 'enemyManagement\generateHarass.sqf'; 
 
 /////////////////////////
 ///////Generate AO///////
