@@ -13,7 +13,7 @@ if (_tempAvailablePosition distance _thisAvailablePosition < 200) then
 
 //Generate enemy infantry on AO
 diag_log format ["Infantry generation start on AO %1",_thisAvailablePosition];
-_baseRadius = 30;
+_baseRadius = 60;
 for [{_i = 0}, {_i < _thisDifficulty+2}, {_i = _i + 1}] do 
 {
 	currentRandomGroup = selectRandom _thisAvailableOpforGroup;
@@ -21,7 +21,7 @@ for [{_i = 0}, {_i < _thisDifficulty+2}, {_i = _i + 1}] do
 	
 	//Spawn group
 	[currentGroup, currentGroup, _baseRadius, [], true, (round random 3 == 0), -2, true] call lambs_wp_fnc_taskGarrison;
-	_baseRadius = _baseRadius + 15;
+	_baseRadius = _baseRadius + 30;
 };
 
 
