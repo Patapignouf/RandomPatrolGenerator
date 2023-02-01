@@ -175,7 +175,7 @@ generateObjectiveObject =
 			case "steal":
 				{
 					diag_log format ["Steal task setup ! : %1", objectiveObject];
-					objectiveObject setPos ([( _thisObjectivePosition), 1, 60, 7, 0, 20, 0] call BIS_fnc_findSafePos);
+					objectiveObject setPos ([( _thisObjectivePosition), 1, 100, 7, 0, 20, 0] call BIS_fnc_findSafePos);
 
 					//Objective failed
 					objectiveObject setVariable ["thisTask", _objectiveUniqueID, true];
