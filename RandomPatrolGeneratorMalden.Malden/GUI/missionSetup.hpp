@@ -20,7 +20,7 @@ class DialogSetupParams
 		class ClickMe: RscButton
 		{
 			idc = 6200;
-			text = "Generate Patrol";
+			text = "Next";
 			onButtonClick = "[_this] execVM 'GUI\startGUIMenu.sqf';";
 			x = GUI_GRID_CENTER_X + 10 * GUI_GRID_CENTER_W;
 			y = GUI_GRID_CENTER_Y + 22 * GUI_GRID_CENTER_H;

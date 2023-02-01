@@ -55,8 +55,27 @@ avalaibleCollectIntel = [
 ];
 
 avalaibleTypeOfObj = [];
-avalaibleAttackTypeOfObj = ["ammo","hvt","collectIntel","informant","clearArea"];
+avalaibleAttackTypeOfObj = ["ammo","hvt","clearArea"];
 avalaibleSupportTypeOfObj = ["supply","vip","collectIntel","informant","steal"];
+
+//List of all avalaible objective
+avalaibleTypeOfObjectives = [
+	// [Technical Objective name, Display name, type of objective, enable]
+	["ammo", "Ammo cache", "Attack", true],
+	["hvt", "HVT", "Attack", true],
+	["clearArea", "Clear Area", "Attack", true],
+	["supply", "Supply box", "Support", true],
+	["vip", "VIP", "Support", true],
+	["informant", "Informant", "Support", true],
+	["collectIntel", "Collect Intel", "Support", true],
+	["steal", "Steal vehicle", "Support", true]
+];
+
+
+// avalaibleTypeOfObjectives = [
+// 	// [Technical Objective name, Display name, type of objective]
+// 	["ammo", "Ammo cache", "Attack"],
+// ];
 
 //avalaibleTypeOfObj = ["ammo"]; //Line use to debug a specific objective
 

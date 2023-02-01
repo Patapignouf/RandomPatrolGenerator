@@ -3,6 +3,7 @@
 #include "GUI\missionSetup.hpp"
 #include "GUI\playerLoadoutSetup.hpp"
 #include "GUI\playerRespawnMenu.hpp"
+#include "GUI\missionSetupObjectives.hpp"
 
 
 respawnDialog = 0;
@@ -105,13 +106,6 @@ class Params
 		values[] = {0,1,2,3,4};
 		texts[] = {"Random","Morning","Day","Afternoon","Night"};
 		default = 2;             
-	};
-	class ObjInitSetup
-	{
-		title = "Type of objective";
-		values[] = {0,1,2};
-		texts[] = {"All objectives","Attack objectives only","Support objectives only"};
-		default = 0;
 	};
 };
 
