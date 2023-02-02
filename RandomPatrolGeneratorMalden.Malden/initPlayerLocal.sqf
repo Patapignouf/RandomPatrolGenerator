@@ -375,7 +375,7 @@ if (hasInterface) then
 					{
 						hint "You don't have enough advanced vehicle spawned credit left.";
 					};
-				},_x,1.5,true,false,"","(_target distance _this <5) && (_this getVariable 'role' == 'leader')"];
+				},_x,1.5,true,false,"","(_target distance _this <5) && (_this getVariable 'role' == 'pilot')"];
 			} foreach bluforFixedWing;
 		};
 
