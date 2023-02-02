@@ -1,7 +1,7 @@
 disableSerialization;
-#include "..\database\factionParameters.sqf"
-#include "..\database\missionParameters.sqf"
-#include "..\database\arsenalLibrary.sqf"
+#include "..\..\database\factionParameters.sqf"
+#include "..\..\database\missionParameters.sqf"
+#include "..\..\database\arsenalLibrary.sqf"
 
 //Create GUI
 createDialog "PlayerLoadoutSetup";
@@ -138,7 +138,7 @@ _keyDown = (findDisplay 7000) displayAddEventHandler ["KeyDown", {
 			// case 1 for ESC -> https://community.bistudio.com/wiki/DIK_KeyCodes
 			// open your dialog
 			_control closeDisplay 1;
-			[[], 'GUI\initPlayerLoadoutSetup.sqf'] remoteExec ['BIS_fnc_execVM', player];
+			[[], 'GUI\loadoutGUI\initPlayerLoadoutSetup.sqf'] remoteExec ['BIS_fnc_execVM', player];
 		};
 	};
 

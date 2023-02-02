@@ -1,5 +1,5 @@
 disableSerialization;
-#include "..\database\factionParameters.sqf"
+#include "..\..\database\factionParameters.sqf"
 
 //Create GUI
 createDialog "playerRespawnMenu";
@@ -97,14 +97,14 @@ _keyDown = (findDisplay 8000) displayAddEventHandler ["KeyDown", {
 			// case 57 for SPACE -> https://community.bistudio.com/wiki/DIK_KeyCodes
 			// open your dialog
 			_control closeDisplay 1;
-			[[], 'GUI\initPlayerRespawnMenu.sqf'] remoteExec ['BIS_fnc_execVM', player];
+			[[], 'GUI\respawnGUI\initPlayerRespawnMenu.sqf'] remoteExec ['BIS_fnc_execVM', player];
 		};
 		case 1:
 		{
 			// case 1 for ESC -> https://community.bistudio.com/wiki/DIK_KeyCodes
 			// open your dialog
 			_control closeDisplay 1;
-			[[], 'GUI\initPlayerRespawnMenu.sqf'] remoteExec ['BIS_fnc_execVM', player];
+			[[], 'GUI\respawnGUI\initPlayerRespawnMenu.sqf'] remoteExec ['BIS_fnc_execVM', player];
 		};
 	};
 

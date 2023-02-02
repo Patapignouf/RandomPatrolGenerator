@@ -1,9 +1,10 @@
 #include "\a3\ui_f\hpp\defineCommonGrids.inc"
 #include "GUI\BaseControls.hpp"
-#include "GUI\missionSetup.hpp"
-#include "GUI\playerLoadoutSetup.hpp"
-#include "GUI\playerRespawnMenu.hpp"
-#include "GUI\missionSetupObjectives.hpp"
+#include "GUI\setupGUI\missionSetup.hpp"
+#include "GUI\setupGUI\missionSetupObjectives.hpp"
+#include "GUI\loadoutGUI\playerLoadoutSetup.hpp"
+#include "GUI\respawnGUI\playerRespawnMenu.hpp"
+
 
 
 respawnDialog = 0;

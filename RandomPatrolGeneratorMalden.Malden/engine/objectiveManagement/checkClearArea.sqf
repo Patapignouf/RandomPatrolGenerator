@@ -28,7 +28,7 @@ while {sleep 15; _nbBluePlayer + _nbIndPlayer == 0 || _nbOpfor > 2} do
 
 //Complete mission
 _thisObjectiveToComplete = _thisTrigger getVariable "associatedTask";
-[_thisObjectiveToComplete] execVM 'engine\completeObjective.sqf'; 
+[_thisObjectiveToComplete] execVM 'engine\objectiveManagement\completeObjective.sqf'; 
 
 //Manage Completed Objective
 _completedObjectives = missionNamespace getVariable ["completedObjectives",[]];

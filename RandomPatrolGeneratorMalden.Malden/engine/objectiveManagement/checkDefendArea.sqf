@@ -16,7 +16,7 @@ while {sleep 15; _nbBluePlayer + _nbIndPlayer == 0 || _nbOpfor > 2} do
 //Generate enemy attack wave
 AvalaibleInitAttackPositions = [];
 AvalaibleInitAttackPositions = [getPos _thisTrigger, 550, 800, missionDifficultyParam+1] call getListOfPositionsAroundTarget;
-_handleAttackGeneration = [AvalaibleInitAttackPositions, getPos _thisTrigger, [baseEnemyGroup,baseEnemyATGroup], baseEnemyVehicleGroup, round((missionDifficultyParam-0.5)/2)+1] execVM 'enemyManagement\doAmbush.sqf'; 
+_handleAttackGeneration = [AvalaibleInitAttackPositions, getPos _thisTrigger, [baseEnemyGroup,baseEnemyATGroup], baseEnemyVehicleGroup, round((missionDifficultyParam-0.5)/2)+1] execVM 'enemyManagement\behaviorEngine\doAmbush.sqf'; 
 waitUntil {isNull _handleAttackGeneration};
 _nearestCity = nearestLocations [getPos _thisTrigger, ["NameLocal","NameVillage","NameCity","NameCityCapital"], 1500] select 0;
 [format ["Opfor attack has begun on %1, be ready", text _nearestCity]] remoteExec ["hint",0,true];
@@ -32,7 +32,7 @@ while {sleep 15; _nbBluePlayer + _nbIndPlayer == 0 || _nbOpfor > 2} do
 
 //Complete mission if there's few opfor on the area
 _thisObjectiveToComplete = _thisTrigger getVariable "associatedTask";
-[_thisObjectiveToComplete] execVM 'engine\completeObjective.sqf'; 
+[_thisObjectiveToComplete] execVM 'engine\objectiveManagement\completeObjective.sqf'; 
 
 //Manage Completed Objective
 _completedObjectives = missionNamespace getVariable ["completedObjectives",[]];

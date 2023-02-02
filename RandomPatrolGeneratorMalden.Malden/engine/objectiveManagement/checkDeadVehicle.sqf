@@ -1,4 +1,4 @@
-#include "..\objectGenerator\vehicleManagement.sqf"
+#include "..\..\objectGenerator\vehicleManagement.sqf"
 
 params ["_objective"];
 
@@ -29,11 +29,11 @@ switch (_objectiveType) do
 		if ("RealismMode" call BIS_fnc_getParamValue == 1) then 
 		{
 			[] call doIncrementVehicleSpawnCounter;	
-			[_objective] execVM 'engine\completeObjective.sqf'; 
+			[_objective] execVM 'engine\objectiveManagement\completeObjective.sqf'; 
 		};
 		if (["Respawn",1] call BIS_fnc_getParamValue == 1) then 
 		{
-			[[], "engine\respawnManager.sqf"] remoteExec ['BIS_fnc_execVM', 0];
+			[[], "engine\respawnManagement\respawnManager.sqf"] remoteExec ['BIS_fnc_execVM', 0];
 		};
 	};
 	// case "supply":

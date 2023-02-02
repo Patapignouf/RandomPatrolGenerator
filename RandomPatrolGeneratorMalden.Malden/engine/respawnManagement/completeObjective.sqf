@@ -13,7 +13,7 @@ if ([_objectiveID] call BIS_fnc_taskExists) then
 	{
 		_mainPlayerSide = independent;
 	};
-	[objNull, _objective, _mainPlayerSide] execVM 'engine\revealObjective.sqf';
+	[objNull, _objective, _mainPlayerSide] execVM 'engine\objectiveManagement\revealObjective.sqf';
 	sleep 5;
 	[_objectiveID,"SUCCEEDED"] call BIS_fnc_taskSetState;
 };

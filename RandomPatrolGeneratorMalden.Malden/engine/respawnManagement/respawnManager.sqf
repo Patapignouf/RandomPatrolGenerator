@@ -10,5 +10,5 @@
 
 if (player getVariable "isDead") then 
 {
-	[[], 'GUI\initPlayerRespawnMenu.sqf'] remoteExec ['BIS_fnc_execVM', player];
+	[[], 'GUI\respawnGUI\initPlayerRespawnMenu.sqf'] remoteExec ['BIS_fnc_execVM', player];
 };

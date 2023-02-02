@@ -1,5 +1,5 @@
 disableSerialization;
-#include "..\database\objectLibrary.sqf"
+#include "..\..\database\objectLibrary.sqf"
 
 //Create GUI
 createDialog "DialogSetupObjectivesParams";
@@ -87,7 +87,7 @@ _keyDown = (findDisplay 9000) displayAddEventHandler ["KeyDown", {
 			// case 1 for ESC -> https://community.bistudio.com/wiki/DIK_KeyCodes
 			// open your dialog
 			_control closeDisplay 1;
-			[[], 'GUI\startGUIMenuObjectives.sqf'] remoteExec ['BIS_fnc_execVM', player];
+			[[], 'GUI\setupGUI\startGUIMenuObjectives.sqf'] remoteExec ['BIS_fnc_execVM', player];
 		};
 	};
 

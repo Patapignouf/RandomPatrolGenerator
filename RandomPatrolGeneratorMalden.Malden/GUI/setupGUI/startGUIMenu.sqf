@@ -48,7 +48,7 @@ missionNamespace setVariable ["missionLength", parseNumber missionLengthSelected
 missionNamespace setVariable ["missionDifficultyParam", parseNumber missionDifficultySelected, true]; //Default armored vehicle are disabled
 
 //Go to objective selection
-[[], 'GUI\startGUIMenuObjectives.sqf'] remoteExec ['BIS_fnc_execVM', player];
+[[], 'GUI\setupGUI\startGUIMenuObjectives.sqf'] remoteExec ['BIS_fnc_execVM', player];
 
 //Close setup menu
 _mainDisplay closeDisplay 1;

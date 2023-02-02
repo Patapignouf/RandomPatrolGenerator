@@ -1,6 +1,6 @@
 disableSerialization;
-#include "..\database\factionParameters.sqf"
-#include "..\database\missionParameters.sqf"
+#include "..\..\database\factionParameters.sqf"
+#include "..\..\database\missionParameters.sqf"
 
 //Create GUI
 createDialog "DialogSetupParams";

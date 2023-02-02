@@ -480,7 +480,7 @@ setupPlayerLoadout = {
 				//Params
 				params ["_target", "_caller", "_unusedParam" ,"_params"];
 				//Show GUI
-				[[], 'GUI\initPlayerLoadoutSetup.sqf'] remoteExec ['BIS_fnc_execVM', _caller];
+				[[], 'GUI\loadoutGUI\initPlayerLoadoutSetup.sqf'] remoteExec ['BIS_fnc_execVM', _caller];
 			}, 
 			{
 				// Action failed code

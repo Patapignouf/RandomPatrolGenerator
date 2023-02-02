@@ -1,9 +1,9 @@
 //Init Location functions
 #include "engine\searchLocation.sqf"
-#include "engine\doGenerateObjective.sqf"
+#include "engine\objectiveManagement\doGenerateObjective.sqf"
 #include "database\objectLibrary.sqf"
 #include "objectGenerator\vehicleManagement.sqf"
-#include "enemyManagement\groupGenerator.sqf"
+#include "enemyManagement\generationEngine\groupGenerator.sqf"
 
 //Init base mission parameters 
 enableInitAttack = "EnableInitAttack" call BIS_fnc_getParamValue;
@@ -240,7 +240,7 @@ for [{_i = 0}, {_i < numberOfSpawnWave}, {_i = _i + 1}] do
 
 
 //Init checkobjective
-[SelectedObjectives, initCityLocation] execVM 'engine\checkobjective.sqf';
+[SelectedObjectives, initCityLocation] execVM 'engine\objectiveManagement\checkobjective.sqf';
 
 
 /////////////////////////
@@ -258,7 +258,7 @@ for [{_i = 0}, {_i <= 2}, {_i = _i + 1}] do
 	diag_log format ["Generation of civilian group : %1 on position %2 has been completed", currentCivGroup, initCityLocation];
 };
 
-[civsGroup, false] execVM 'enemyManagement\doGarrison.sqf';
+[civsGroup, false] execVM 'enemyManagement\behaviorEngine\doGarrison.sqf';
 
 //Init VA
 VA1 = createVehicle ["Box_IND_Wps_F", [getPos initCityLocation, 1, 5, 3, 0, 20, 0] call BIS_fnc_findSafePos, [], 0, "NONE"];
@@ -282,7 +282,7 @@ AvalaibleInitAttackPositions = [getPos initCityLocation, 1200,1400, missionDiffi
 if ( count AvalaibleInitAttackPositions != 0 && (enableInitAttack == 1 || ((enableInitAttack == 2) && (round (random 1))==0))) then
 {
 	diag_log "Init attack on independent city";
-	_handleCivGeneration = [AvalaibleInitAttackPositions,getPos initCityLocation,[baseEnemyGroup,baseEnemyATGroup],baseEnemyVehicleGroup, missionDifficultyParam] execVM 'enemyManagement\doAmbush.sqf'; 
+	_handleCivGeneration = [AvalaibleInitAttackPositions,getPos initCityLocation,[baseEnemyGroup,baseEnemyATGroup],baseEnemyVehicleGroup, missionDifficultyParam] execVM 'enemyManagement\behaviorEngine\doAmbush.sqf'; 
 	isIndAttacked = true;
 	publicvariable "isIndAttacked";
 	waitUntil {isNull _handleCivGeneration};
@@ -292,7 +292,7 @@ if ( count AvalaibleInitAttackPositions != 0 && (enableInitAttack == 1 || ((enab
 VA1 addItemCargoGlobal ["ACE_key_indp", 5];
 
 //Init perma harass on player
-[[baseEnemyGroup,baseEnemyATGroup,baseEnemyDemoGroup],baseEnemyVehicleGroup, baseEnemyLightArmoredVehicleGroup, baseEnemyHeavyArmoredVehicleGroup, missionDifficultyParam] execVM 'enemyManagement\generateHarass.sqf'; 
+[[baseEnemyGroup,baseEnemyATGroup,baseEnemyDemoGroup],baseEnemyVehicleGroup, baseEnemyLightArmoredVehicleGroup, baseEnemyHeavyArmoredVehicleGroup, missionDifficultyParam] execVM 'enemyManagement\generationEngine\generateHarass.sqf'; 
 
 /////////////////////////
 ///////Generate AO///////
@@ -302,12 +302,12 @@ areaOfOperation = [possiblePOILocation] call getAreaOfMission;
 aoSize = 1500;
 
 //IA taskPatrol with level 1 enemy
-[EnemyWaveLevel_1,AmbushPositions, missionDifficultyParam] execVM 'enemyManagement\generatePatrol.sqf'; 
+[EnemyWaveLevel_1,AmbushPositions, missionDifficultyParam] execVM 'enemyManagement\generationEngine\generatePatrol.sqf'; 
 
 //Generate Wave
 if (1 <= (count EnemyWaveSpawnPositions)) then 
 {
-	[EnemyWaveGroups,EnemyWaveSpawnPositions,initCityLocation, missionDifficultyParam] execVM 'enemyManagement\generateWave.sqf'; 
+	[EnemyWaveGroups,EnemyWaveSpawnPositions,initCityLocation, missionDifficultyParam] execVM 'enemyManagement\generationEngine\generateWave.sqf'; 
 };
 
 //Generate mortar | 50% chance to spawn 
@@ -565,7 +565,7 @@ publicvariable "deployableFOBItem";
 					{
 						//set morning
 						skipTime 24;
-						[[], "engine\respawnManager.sqf"] remoteExec ['BIS_fnc_execVM', 0];
+						[[], "engine\respawnManagement\respawnManager.sqf"] remoteExec ['BIS_fnc_execVM', 0];
 						[format ["%1 needs reinforcement", name _caller]] remoteExec ["hint",0,true];
 						missionNamespace setVariable ["usedRespawnFewTimeAgo",true,true];
 						sleep 1200;
@@ -652,7 +652,7 @@ AvalaibleInitAttackPositions = [initBlueforLocation, 800,1000, missionDifficulty
 if ( count AvalaibleInitAttackPositions != 0 && (enableInitBluAttack == 1 || ((enableInitBluAttack == 2) && (round (random 4))==0))) then
 {
 	diag_log "Init attack on blufor FOB";
-	[AvalaibleInitAttackPositions,initBlueforLocation,[baseEnemyGroup,baseEnemyATGroup],baseEnemyVehicleGroup, missionDifficultyParam] execVM 'enemyManagement\doAmbush.sqf'; 
+	[AvalaibleInitAttackPositions,initBlueforLocation,[baseEnemyGroup,baseEnemyATGroup],baseEnemyVehicleGroup, missionDifficultyParam] execVM 'enemyManagement\behaviorEngine\doAmbush.sqf'; 
 	isBluforAttacked = true;
 	publicvariable "isBluforAttacked";
 };
@@ -674,7 +674,7 @@ switch (missionInitSetup) do
 		{
 			for [{_i = 0}, {_i <= missionLength}, {_i = _i + 1}] do //Peut être optimisé
 			{
-				[objNull, [], _mainPlayerSide] execVM 'engine\revealObjective.sqf';
+				[objNull, [], _mainPlayerSide] execVM 'engine\objectiveManagement\revealObjective.sqf';
 			};
 		};
 	default
@@ -688,7 +688,7 @@ if (_mainPlayerSide == independent) then
 {
 		for [{_i = 0}, {_i <= missionLength}, {_i = _i + 1}] do //Peut être optimisé
 	{
-		[objNull, [], _mainPlayerSide] execVM 'engine\revealObjective.sqf';
+		[objNull, [], _mainPlayerSide] execVM 'engine\objectiveManagement\revealObjective.sqf';
 	};
 };
 
@@ -813,7 +813,7 @@ if (enableCampaignMode) then
 			PossibleObjectivePosition = [avalaibleTypeOfObj, PossibleObjectivePosition, missionDifficultyParam] call generateObjective;
 
 			//Reveal objective to the player
-			[objNull, [], _mainPlayerSide] execVM 'engine\revealObjective.sqf';
+			[objNull, [], _mainPlayerSide] execVM 'engine\objectiveManagement\revealObjective.sqf';
 
 			//Update objective complete counter
 			_completedObjectives = missionNamespace getVariable ["completedObjectives",[]];

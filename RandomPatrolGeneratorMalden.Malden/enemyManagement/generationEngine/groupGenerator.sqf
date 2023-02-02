@@ -25,7 +25,7 @@ doGenerateEnemyGroup =
 			// 20% chance not to be hostile at all
 			if (round (random 4 )== 0) then 
 			{
-				[_x] execVM "enemyManagement\manageHostileCivilian.sqf";
+				[_x] execVM "enemyManagement\behaviorEngine\manageHostileCivilian.sqf";
 			};
 
 			//Add eventhandler civKilled

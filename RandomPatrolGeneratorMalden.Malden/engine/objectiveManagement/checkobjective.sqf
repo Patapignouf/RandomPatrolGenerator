@@ -1,4 +1,4 @@
-#include "..\objectGenerator\vehicleManagement.sqf"
+#include "..\..\objectGenerator\vehicleManagement.sqf"
 
 _objectivesToTest = _this select 0;
 _objectivesDestinationArea = _this select 1;
@@ -29,7 +29,7 @@ objectReturnedToCity = [];
 
 if (respawnSettings == 1) then 
 {
-	[] execVM "engine\respawnSetup.sqf";
+	[] execVM "engine\respawnManagement\respawnSetup.sqf";
 };
 
 while {sleep 10; !RTBComplete} do
@@ -67,11 +67,11 @@ while {sleep 10; !RTBComplete} do
 						if ("RealismMode" call BIS_fnc_getParamValue == 1) then 
 						{
 							[] call doIncrementVehicleSpawnCounter;	
-							[current_obj] execVM 'engine\completeObjective.sqf'; 
+							[current_obj] execVM 'engine\objectiveManagement\completeObjective.sqf'; 
 						};
 						if (respawnSettings == 1) then 
 						{
-							[[], "engine\respawnManager.sqf"] remoteExec ['BIS_fnc_execVM', 0];
+							[[], "engine\respawnManagement\respawnManager.sqf"] remoteExec ['BIS_fnc_execVM', 0];
 						};
 					};
 				};
@@ -90,11 +90,11 @@ while {sleep 10; !RTBComplete} do
 						if ("RealismMode" call BIS_fnc_getParamValue == 1) then 
 						{
 							[] call doIncrementVehicleSpawnCounter;	
-							[current_obj] execVM 'engine\completeObjective.sqf'; 
+							[current_obj] execVM 'engine\objectiveManagement\completeObjective.sqf'; 
 						};
 						if (respawnSettings == 1) then 
 						{
-							[[], "engine\respawnManager.sqf"] remoteExec ['BIS_fnc_execVM', 0];
+							[[], "engine\respawnManagement\respawnManager.sqf"] remoteExec ['BIS_fnc_execVM', 0];
 						};
 					};
 				};
@@ -113,11 +113,11 @@ while {sleep 10; !RTBComplete} do
 						if ("RealismMode" call BIS_fnc_getParamValue == 1) then 
 						{
 							[] call doIncrementVehicleSpawnCounter;	
-							[current_obj] execVM 'engine\completeObjective.sqf'; 
+							[current_obj] execVM 'engine\objectiveManagement\completeObjective.sqf'; 
 						};
 						if (respawnSettings == 1) then 
 						{
-							[[], "engine\respawnManager.sqf"] remoteExec ['BIS_fnc_execVM', 0];
+							[[], "engine\respawnManagement\respawnManager.sqf"] remoteExec ['BIS_fnc_execVM', 0];
 						};
 					};
 				};
@@ -136,11 +136,11 @@ while {sleep 10; !RTBComplete} do
 						if ("RealismMode" call BIS_fnc_getParamValue == 1) then 
 						{
 							[] call doIncrementVehicleSpawnCounter;	
-							[current_obj] execVM 'engine\completeObjective.sqf'; 
+							[current_obj] execVM 'engine\objectiveManagement\completeObjective.sqf'; 
 						};
 						if (respawnSettings == 1) then 
 						{
-							[[], "engine\respawnManager.sqf"] remoteExec ['BIS_fnc_execVM', 0];
+							[[], "engine\respawnManagement\respawnManager.sqf"] remoteExec ['BIS_fnc_execVM', 0];
 						};
 					};
 				};
@@ -158,12 +158,12 @@ while {sleep 10; !RTBComplete} do
 						if ("RealismMode" call BIS_fnc_getParamValue == 1) then 
 						{
 							[] call doIncrementVehicleSpawnCounter;	
-							[current_obj] execVM 'engine\completeObjective.sqf'; 
+							[current_obj] execVM 'engine\objectiveManagement\completeObjective.sqf'; 
 						};
 						[[format ["L'objectif %1 est terminé", getText (configFile >> "cfgVehicles" >> typeOf (current_obj select 0) >> "displayName")],independent], 'engine\doGenerateMessage.sqf'] remoteExec ['BIS_fnc_execVM', 0];
 						if (respawnSettings == 1) then 
 						{
-							[[], "engine\respawnManager.sqf"] remoteExec ['BIS_fnc_execVM', 0];
+							[[], "engine\respawnManagement\respawnManager.sqf"] remoteExec ['BIS_fnc_execVM', 0];
 						};
 					};
 				};

@@ -40,14 +40,14 @@ if (!didJIP) then
 		if (side player == independent && player == (leader (group player))) then 
 		{
 			//Display setup menu
-			[[], 'GUI\initMissionMenu.sqf'] remoteExec ['BIS_fnc_execVM', player];
+			[[], 'GUI\setupGUI\initMissionMenu.sqf'] remoteExec ['BIS_fnc_execVM', player];
 		};
 	} else {
 		//If there is no independent, blufor leader can choose mission
 		if (side player == blufor && player == (leader (group player))) then 
 		{
 			//Display setup menu
-			[[], 'GUI\initMissionMenu.sqf'] remoteExec ['BIS_fnc_execVM', player];
+			[[], 'GUI\setupGUI\initMissionMenu.sqf'] remoteExec ['BIS_fnc_execVM', player];
 		};
 	};
 };
@@ -71,7 +71,7 @@ enableArmoredVehicle = missionNamespace getVariable "enableArmoredVehicle"; //De
 
 //Optimize scripts
 private _disableThermal = compile preprocessFileLineNumbers "engine\disableThermal.sqf";
-private _generateCivDialogs = compile preprocessFileLineNumbers "enemyManagement\generateCivDialogs.sqf";
+private _generateCivDialogs = compile preprocessFileLineNumbers "enemyManagement\generationEngine\generateCivDialogs.sqf";
 
 //////////////////////////
 ////Event Handler/////////
@@ -422,7 +422,7 @@ if (didJIP) then
 		player setPos [0,0,10000];
 		player allowdamage false;
 		player enableSimulationGlobal false;
-		[[], 'GUI\initPlayerRespawnMenu.sqf'] remoteExec ['BIS_fnc_execVM', player];
+		[[], 'GUI\respawnGUI\initPlayerRespawnMenu.sqf'] remoteExec ['BIS_fnc_execVM', player];
 	} else 
 	{
 		player setPos [0,0];

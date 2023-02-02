@@ -1,4 +1,4 @@
-#include "..\objectGenerator\vehicleManagement.sqf"
+#include "..\..\objectGenerator\vehicleManagement.sqf"
 
 generateObjective =
 {
@@ -28,7 +28,7 @@ generateObjective =
 	[currentObjType, getPos _selectedObjectivePosition] call generateObjectiveObject; 
 	
 	//Generate mission environement
-	_handlePOIGeneration = [EnemyWaveLevel_1, baseEnemyVehicleGroup, baseEnemyLightArmoredVehicleGroup, baseEnemyHeavyArmoredVehicleGroup, civilian_group, getPos _selectedObjectivePosition, _missionDifficulty] execVM 'enemyManagement\generatePOI.sqf'; 
+	_handlePOIGeneration = [EnemyWaveLevel_1, baseEnemyVehicleGroup, baseEnemyLightArmoredVehicleGroup, baseEnemyHeavyArmoredVehicleGroup, civilian_group, getPos _selectedObjectivePosition, _missionDifficulty] execVM 'enemyManagement\generationEngine\generatePOI.sqf'; 
 	waitUntil {isNull _handlePOIGeneration};
 
 	//Return objective selected location
@@ -99,7 +99,7 @@ generateObjectiveObject =
 
 				(objectiveObject) setPos ([( _thisObjectivePosition), 1, 25, 5, 0, 20, 0] call BIS_fnc_findSafePos);
 				objectiveObject setVariable ["thisTask", _thisObjective select 2, true];
-				[_thisObjective] execVM 'engine\checkDeadVehicle.sqf';  
+				[_thisObjective] execVM 'engine\objectiveManagement\checkDeadVehicle.sqf';  
 			};
 		case "hvt":
 			{
@@ -187,7 +187,7 @@ generateObjectiveObject =
 				objectiveObject setPos _thisObjectivePosition; //create a trigger area created at object with variable name my_object
 				objectiveObject setTriggerArea [200, 200, 0, false]; // trigger area with a radius of 200m.
 				objectiveObject setVariable ["associatedTask", _thisObjective];
-				[objectiveObject] execVM 'engine\checkClearArea.sqf'; 
+				[objectiveObject] execVM 'engine\objectiveManagement\checkClearArea.sqf'; 
 			};
 		case "defendArea":
 			{
@@ -200,7 +200,7 @@ generateObjectiveObject =
 				objectiveObject setPos _thisObjectivePosition; //create a trigger area created at object with variable name my_object
 				objectiveObject setTriggerArea [200, 200, 0, false]; // trigger area with a radius of 200m.
 				objectiveObject setVariable ["associatedTask", _thisObjective];
-				[objectiveObject] execVM 'engine\checkDefendArea.sqf'; 
+				[objectiveObject] execVM 'engine\objectiveManagement\checkDefendArea.sqf'; 
 			};
 		case "collectIntel":
 			{
@@ -225,13 +225,13 @@ generateObjectiveObject =
 					if ("RealismMode" call BIS_fnc_getParamValue == 1) then 
 					{
 						[] call doIncrementVehicleSpawnCounter;	
-						[_thisObjective] execVM 'engine\completeObjective.sqf'; 
+						[_thisObjective] execVM 'engine\objectiveManagement\completeObjective.sqf'; 
 					};
 					//Manage respawn and delete object
 					deleteVehicle _object;
 					if (["Respawn",1] call BIS_fnc_getParamValue == 1) then 
 					{
-						[[], "engine\respawnManager.sqf"] remoteExec ['BIS_fnc_execVM', 0];
+						[[], "engine\respawnManagement\respawnManager.sqf"] remoteExec ['BIS_fnc_execVM', 0];
 					};
 				},_thisObjective,1.5,true,true,"","_target distance _this <3"]] remoteExec ["addAction", 0, true];
 			};
@@ -277,7 +277,7 @@ generateObjectiveObject =
 						if ("RealismMode" call BIS_fnc_getParamValue == 1) then 
 						{
 							[] call doIncrementVehicleSpawnCounter;	
-							[_thisObjective] execVM 'engine\completeObjective.sqf'; 
+							[_thisObjective] execVM 'engine\objectiveManagement\completeObjective.sqf'; 
 							
 						};
 						//Manage respawn and remove actions from NPC
@@ -285,7 +285,7 @@ generateObjectiveObject =
 						[_object] remoteExec ["removeAllActions", 0, true];
 						if (["Respawn",1] call BIS_fnc_getParamValue == 1) then 
 						{
-							[[], "engine\respawnManager.sqf"] remoteExec ['BIS_fnc_execVM', 0];
+							[[], "engine\respawnManagement\respawnManager.sqf"] remoteExec ['BIS_fnc_execVM', 0];
 						};
 					}, 
 					{

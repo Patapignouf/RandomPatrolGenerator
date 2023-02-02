@@ -23,7 +23,7 @@ _civs = allUnits select {alive _x AND side _x isEqualTo civilian};
 					params ["_object","_caller","_ID","_civ","_progress","_maxProgress"];
 					_reveal = (missionNamespace getVariable ["TAG_fnc_civsAsked",0]) >= 1;//will return true on the third unit
 					if (_reveal) exitWith {
-						[_caller,"engine\askCivilianIntel.sqf"] remoteExec ["BIS_fnc_execVM", _caller];
+						[_caller,"engine\objectiveManagement\askCivilianIntel.sqf"] remoteExec ["BIS_fnc_execVM", _caller];
 						missionNamespace setVariable ["TAG_fnc_civsAsked",(round random 1),true];
 						[_object,_ID] remoteExec [ "removeAction", 0, true ];
 					};
