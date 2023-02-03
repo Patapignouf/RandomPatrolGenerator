@@ -60,7 +60,10 @@ if (count _revealedObjectives != count _tempMissionObjectives) then
 			{
 				_intelRevelated = format ["I've heard there's military vehicles next to %1. They seem to prepare an attack.",text _nearestCity];
 			};
-
+			case "DefenseFOBInfantry":
+			{
+				_intelRevelated = format ["I know there is an enemy base around %1, this location seems dangerous",text _nearestCity];
+			};
 			case "DefenseInfantry":
 			{
 				_intelRevelated = format ["I know there is a group of %2 soldiers defending %1, this location seems dangerous",text _nearestCity, count units _infoGroup];

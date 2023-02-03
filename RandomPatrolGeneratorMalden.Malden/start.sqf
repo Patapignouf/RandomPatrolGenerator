@@ -294,46 +294,13 @@ VA1 addItemCargoGlobal ["ACE_key_indp", 5];
 //Init perma harass on player
 [[baseEnemyGroup,baseEnemyATGroup,baseEnemyDemoGroup],baseEnemyVehicleGroup, baseEnemyLightArmoredVehicleGroup, baseEnemyHeavyArmoredVehicleGroup, missionDifficultyParam] execVM 'enemyManagement\generationEngine\generateHarass.sqf'; 
 
-/////////////////////////
-///////Generate AO///////
-/////////////////////////
 // Get smallest distance to an AO
 areaOfOperation = [possiblePOILocation] call getAreaOfMission;
 aoSize = 1500;
 
-//IA taskPatrol with level 1 enemy
-[EnemyWaveLevel_1,AmbushPositions, missionDifficultyParam] execVM 'enemyManagement\generationEngine\generatePatrol.sqf'; 
-
-//Generate Wave
-if (1 <= (count EnemyWaveSpawnPositions)) then 
-{
-	[EnemyWaveGroups,EnemyWaveSpawnPositions,initCityLocation, missionDifficultyParam] execVM 'enemyManagement\generationEngine\generateWave.sqf'; 
-};
-
-//Generate mortar | 50% chance to spawn 
-if ((round (random 1))==0 ) then  
-{ 
-	for [{_i = 0}, {_i < 2}, {_i = _i + 1}] do
-	{ 
-		_mortarSpawnPosition = [getPos initCityLocation, (800), (aoSize+700), 3, 10, 0.25, 0, [], [[0,0,0],[0,0,0]]] call BIS_fnc_findSafePos;
-		if !([_mortarSpawnPosition , [0,0,0]] call BIS_fnc_areEqual) then 
-		{
-			_mortarGroup = [baseEnemyMortarGroup, _mortarSpawnPosition, east, "Mortar"] call doGenerateEnemyGroup;
-		};
-	};
-}; 
-
-
-//Generate Civs dialogs
-//[] execVM 'enemyManagement\generateCivDialogs.sqf'; 
-//[] remoteExec ['enemyManagement\generateCivDialogs.sqf',0];
-
 /////////////////////////
 ////Generate Blufor//////
 /////////////////////////
-
-//Generate blufor FOB Location
-
 
 //Init
 selectedBluforVehicle =[];
@@ -343,11 +310,10 @@ initBlueforLocation = [0,0,0];
 bluforShortFrequencyTFAR = (((round random 400)+400)/10);
 publicvariable "bluforShortFrequencyTFAR";
 
-diag_log "test0";
 //Initilize blufor starting position 
+//Generate blufor FOB Location
 if (initBlueforLocationPosition isEqualType []) then 
 {
-	diag_log "test0";
 	if (!([initBlueforLocationPosition, [0,0,0]] call BIS_fnc_areEqual)) then 
 	{
 		diag_log format ["test0 : %1", initBlueforLocationPosition];
@@ -656,6 +622,39 @@ if ( count AvalaibleInitAttackPositions != 0 && (enableInitBluAttack == 1 || ((e
 	isBluforAttacked = true;
 	publicvariable "isBluforAttacked";
 };
+
+/////////////////////////
+///////Generate Opfor///////
+/////////////////////////
+//IA taskPatrol with level 1 enemy
+[EnemyWaveLevel_1,AmbushPositions, missionDifficultyParam] execVM 'enemyManagement\generationEngine\generatePatrol.sqf'; 
+
+//Generate Wave
+if (1 <= (count EnemyWaveSpawnPositions)) then 
+{
+	[EnemyWaveGroups,EnemyWaveSpawnPositions,initCityLocation, missionDifficultyParam] execVM 'enemyManagement\generationEngine\generateWave.sqf'; 
+};
+
+//Generate mortar | 50% chance to spawn 
+if ((round (random 1))==0 ) then  
+{ 
+	for [{_i = 0}, {_i < 2}, {_i = _i + 1}] do
+	{ 
+		_mortarSpawnPosition = [getPos initCityLocation, (800), (aoSize+700), 3, 10, 0.25, 0, [], [[0,0,0],[0,0,0]]] call BIS_fnc_findSafePos;
+		if !([_mortarSpawnPosition , [0,0,0]] call BIS_fnc_areEqual) then 
+		{
+			_mortarGroup = [baseEnemyMortarGroup, _mortarSpawnPosition, east, "Mortar"] call doGenerateEnemyGroup;
+		};
+	};
+}; 
+
+
+for [{_i = 0}, {_i <= missionLength}, {_i = _i + 1}] do //Peut être optimisé
+{
+	[] execVM 'enemyManagement\generationEngine\generateOpforFOB.sqf';
+};
+
+
 
 ////////////////////////////
 ///// MissionInitSetup /////

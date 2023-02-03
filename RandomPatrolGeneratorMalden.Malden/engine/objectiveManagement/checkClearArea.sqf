@@ -26,11 +26,22 @@ while {sleep 15; _nbBluePlayer + _nbIndPlayer == 0 || _nbOpfor > 2} do
 	_nbOpfor = count ((allUnits select {alive _x && side _x == opfor} ) inAreaArray _thisTrigger);
 };
 
-//Complete mission
-_thisObjectiveToComplete = _thisTrigger getVariable "associatedTask";
-[_thisObjectiveToComplete] execVM 'engine\objectiveManagement\completeObjective.sqf'; 
+//Check tasks
+_thisObjectiveToComplete = _thisTrigger getVariable ["associatedTask","none"];
+if (_thisObjectiveToComplete != "none") then 
+{
+	[_thisObjectiveToComplete] execVM 'engine\objectiveManagement\completeObjective.sqf'; 
 
-//Manage Completed Objective
-_completedObjectives = missionNamespace getVariable ["completedObjectives",[]];
-_completedObjectives pushBack _thisObjectiveToComplete;
-missionNamespace setVariable ["completedObjectives",_completedObjectives,true];	
+	//Manage Completed Objective
+	_completedObjectives = missionNamespace getVariable ["completedObjectives",[]];
+	_completedObjectives pushBack _thisObjectiveToComplete;
+	missionNamespace setVariable ["completedObjectives",_completedObjectives,true];	
+};
+
+//Check FOB clear
+_thisFOBCheck = _thisTrigger getVariable ["isFOBAssociated",false];
+if (_thisFOBCheck) then 
+{
+	_OpforFOBCleared = missionNamespace getVariable ["OpforFOBCleared", 0];
+	missionNamespace setVariable ["OpforFOBCleared", _OpforFOBCleared+1, true];	
+};

@@ -13,9 +13,13 @@ doGenerateEnemyGroup =
 	
 
 	//Intel Synchronization
-	_missionEnemyInfo = missionNamespace getVariable ["MissionEnemyInfo",[]];
-	_missionEnemyInfo pushBack [_thisGroupType,_thisSpawnPosition, _currentGroupPatrol];
-	missionNamespace setVariable ["MissionEnemyInfo", _missionEnemyInfo, true];
+	if (_thisGroupType != "") then
+	{
+		_missionEnemyInfo = missionNamespace getVariable ["MissionEnemyInfo",[]];
+		_missionEnemyInfo pushBack [_thisGroupType,_thisSpawnPosition, _currentGroupPatrol];
+		missionNamespace setVariable ["MissionEnemyInfo", _missionEnemyInfo, true];
+	};
+
 
 	//Manage civilian specific feature
 	if (_thisFaction == civilian) then 

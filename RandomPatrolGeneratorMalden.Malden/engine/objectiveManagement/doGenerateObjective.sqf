@@ -40,11 +40,8 @@ generateObjectiveObject =
 {
 	params ["_thisObjectiveType","_thisObjectivePosition"];
 
-	_thisObjective = [currentObj, currentObjType];
-	
 	//Define specific objective data
 	_thisObjective = []; 
-	objectiveObject = objNull;
 
 	//Try to find position with building if avalaible
 	_allBuildings = nearestTerrainObjects [_thisObjectivePosition, ["house"], 100, false, true];
@@ -53,7 +50,7 @@ generateObjectiveObject =
 	_thistempObjectivePosition = selectRandom _allPositions;
 	
 	//Test if there's an avalaible position
-	if (count _thistempObjectivePosition != 0) then 
+	if (!isNil "_thistempObjectivePosition") then 
 	{
 		_thisObjectivePosition = _thistempObjectivePosition;
 	};
@@ -66,16 +63,16 @@ generateObjectiveObject =
 		case "supply":
 			{
 				//Generate objective object
-				objectiveObject = createVehicle [selectRandom avalaibleSupplyBox, _currentRandomPos, [], 0, "NONE"];
-				objectiveObject setVariable ["isObjectiveObject", true, true];
-				_thisObjective = [objectiveObject, _thisObjectiveType] call generateObjectiveTracker;
+				_objectiveObject = createVehicle [selectRandom avalaibleSupplyBox, _currentRandomPos, [], 0, "NONE"];
+				_objectiveObject setVariable ["isObjectiveObject", true, true];
+				_thisObjective = [_objectiveObject, _thisObjectiveType] call generateObjectiveTracker;
 
 				//Search safe position around objective position
-				(objectiveObject) setPos ([( _thisObjectivePosition), 1, 25, 5, 0, 20, 0] call BIS_fnc_findSafePos);
+				_objectiveObject setPos ([( _thisObjectivePosition), 1, 25, 5, 0, 20, 0] call BIS_fnc_findSafePos);
 
 				//Objective failed
-				objectiveObject setVariable ["thisTask", _thisObjective select 2, true];
-				objectiveObject addEventHandler ["Killed", {
+				_objectiveObject setVariable ["thisTask", _thisObjective select 2, true];
+				_objectiveObject addEventHandler ["Killed", {
 					params ["_unit", "_killer", "_instigator", "_useEffects"];
 					//get task associated to the object
 					_thisTaskID = _unit getVariable "thisTask";
@@ -93,43 +90,44 @@ generateObjectiveObject =
 		case "ammo":
 			{
 				//Generate objective object
-				objectiveObject = createVehicle [selectRandom avalaibleAmmoBox, _currentRandomPos, [], 0, "NONE"];
-				objectiveObject setVariable ["isObjectiveObject", true, true];
-				_thisObjective = [objectiveObject, _thisObjectiveType] call generateObjectiveTracker;
+				_objectiveObject = createVehicle [selectRandom avalaibleAmmoBox, _currentRandomPos, [], 0, "NONE"];
+				_objectiveObject setVariable ["isObjectiveObject", true, true];
+				_thisObjective = [_objectiveObject, _thisObjectiveType] call generateObjectiveTracker;
 
-				(objectiveObject) setPos ([( _thisObjectivePosition), 1, 25, 5, 0, 20, 0] call BIS_fnc_findSafePos);
-				objectiveObject setVariable ["thisTask", _thisObjective select 2, true];
+				_objectiveObject setPos ([( _thisObjectivePosition), 1, 25, 5, 0, 20, 0] call BIS_fnc_findSafePos);
+				_objectiveObject setVariable ["thisTask", _thisObjective select 2, true];
 				[_thisObjective] execVM 'engine\objectiveManagement\checkDeadVehicle.sqf';  
 			};
 		case "hvt":
 			{
 				//Generate objective object
-				objectiveObject = leader ([_currentRandomPos, east, [selectRandom avalaibleHVT],[],[],[],[],[], random 360] call BIS_fnc_spawnGroup);
+				_objectiveObject = leader ([_currentRandomPos, east, [selectRandom avalaibleHVT],[],[],[],[],[], random 360] call BIS_fnc_spawnGroup);
+				diag_log format ["HVT %2 _thisObjectivePosition : %1",_thisObjectivePosition, _objectiveObject];
 				currentObj setVariable ["isObjectiveObject", true, true];
-				objectiveObject setVariable ["isObjectiveObject", true, true];
-				_thisObjective = [objectiveObject, _thisObjectiveType] call generateObjectiveTracker;
-
-				objectiveObject setPos _thisObjectivePosition;
+				_objectiveObject setVariable ["isObjectiveObject", true, true];
+				_thisObjective = [_objectiveObject, _thisObjectiveType] call generateObjectiveTracker;
+				diag_log format ["HVT %2 _thisObjectivePosition : %1",_thisObjectivePosition, _objectiveObject];
+				_objectiveObject setPos _thisObjectivePosition;
 			};
 		case "vip":
 			{
 				//Generate objective object
-				objectiveObject =  leader ([_currentRandomPos, civilian, [selectRandom avalaibleVIP],[],[],[],[],[], random 360] call BIS_fnc_spawnGroup);
-				objectiveObject setVariable ["isObjectiveObject", true, true];
-				_thisObjective = [objectiveObject, _thisObjectiveType] call generateObjectiveTracker;
+				_objectiveObject =  leader ([_currentRandomPos, civilian, [selectRandom avalaibleVIP],[],[],[],[],[], random 360] call BIS_fnc_spawnGroup);
+				_objectiveObject setVariable ["isObjectiveObject", true, true];
+				_thisObjective = [_objectiveObject, _thisObjectiveType] call generateObjectiveTracker;
 
-				diag_log format ["VIP task setup ! : %1", objectiveObject];
-				(objectiveObject) setPos _thisObjectivePosition;
+				diag_log format ["VIP task setup ! : %1", _objectiveObject];
+				_objectiveObject setPos _thisObjectivePosition;
 
 				//Use ACE function to set hancuffed
 				if (isClass (configFile >> "CfgPatches" >> "ace_medical")) then 
 				{
-					[objectiveObject, true] call ACE_captives_fnc_setHandcuffed;
+					[_objectiveObject, true] call ACE_captives_fnc_setHandcuffed;
 				};
 				
 				//Objective failed
-				objectiveObject setVariable ["thisTask", _thisObjective select 2, true];
-				objectiveObject addEventHandler ["Killed", {
+				_objectiveObject setVariable ["thisTask", _thisObjective select 2, true];
+				_objectiveObject addEventHandler ["Killed", {
 					params ["_unit", "_killer", "_instigator", "_useEffects"];
 					//get task associated to the object
 					_thisTaskID = _unit getVariable "thisTask";
@@ -152,16 +150,16 @@ generateObjectiveObject =
 		case "steal":
 			{
 				//Generate objective object
-				objectiveObject = createVehicle [selectRandom avalaibleStealVehicle, _currentRandomPos, [], 0, "NONE"];
-				objectiveObject setVariable ["isObjectiveObject", true, true];
-				_thisObjective = [objectiveObject, _thisObjectiveType] call generateObjectiveTracker;
+				_objectiveObject = createVehicle [selectRandom avalaibleStealVehicle, _currentRandomPos, [], 0, "NONE"];
+				_objectiveObject setVariable ["isObjectiveObject", true, true];
+				_thisObjective = [_objectiveObject, _thisObjectiveType] call generateObjectiveTracker;
 
-				diag_log format ["Steal task setup ! : %1", objectiveObject];
-				objectiveObject setPos ([( _thisObjectivePosition), 1, 100, 7, 0, 20, 0] call BIS_fnc_findSafePos);
+				diag_log format ["Steal task setup ! : %1", _objectiveObject];
+				_objectiveObject setPos ([( _thisObjectivePosition), 1, 100, 7, 0, 20, 0] call BIS_fnc_findSafePos);
 
 				//Objective failed
-				objectiveObject setVariable ["thisTask", _thisObjective select 2, true];
-				objectiveObject addEventHandler ["Killed", {
+				_objectiveObject setVariable ["thisTask", _thisObjective select 2, true];
+				_objectiveObject addEventHandler ["Killed", {
 					params ["_unit", "_killer", "_instigator", "_useEffects"];
 					//get task associated to the object
 					_thisTaskID = _unit getVariable "thisTask";
@@ -179,39 +177,39 @@ generateObjectiveObject =
 		case "clearArea":
 			{
 				//Generate objective object
-				objectiveObject = createTrigger ["EmptyDetector", _currentRandomPos]; //create a trigger area created at object with variable name my_object
-				objectiveObject setVariable ["isObjectiveObject", true, true];
-				_thisObjective = [objectiveObject, _thisObjectiveType] call generateObjectiveTracker;
+				_objectiveObject = createTrigger ["EmptyDetector", _currentRandomPos]; //create a trigger area created at object with variable name my_object
+				_objectiveObject setVariable ["isObjectiveObject", true, true];
+				_thisObjective = [_objectiveObject, _thisObjectiveType] call generateObjectiveTracker;
 
 				//Add trigger to detect cleared area
-				objectiveObject setPos _thisObjectivePosition; //create a trigger area created at object with variable name my_object
-				objectiveObject setTriggerArea [200, 200, 0, false]; // trigger area with a radius of 200m.
-				objectiveObject setVariable ["associatedTask", _thisObjective];
-				[objectiveObject] execVM 'engine\objectiveManagement\checkClearArea.sqf'; 
+				_objectiveObject setPos _thisObjectivePosition; //create a trigger area created at object with variable name my_object
+				_objectiveObject setTriggerArea [200, 200, 0, false]; // trigger area with a radius of 200m.
+				_objectiveObject setVariable ["associatedTask", _thisObjective];
+				[_objectiveObject] execVM 'engine\objectiveManagement\checkClearArea.sqf'; 
 			};
 		case "defendArea":
 			{
 				//Generate objective object
-				objectiveObject = createTrigger ["EmptyDetector", _currentRandomPos]; //create a trigger area created at object with variable name my_object
-				objectiveObject setVariable ["isObjectiveObject", true, true];
-				_thisObjective = [objectiveObject, _thisObjectiveType] call generateObjectiveTracker;
+				_objectiveObject = createTrigger ["EmptyDetector", _currentRandomPos]; //create a trigger area created at object with variable name my_object
+				_objectiveObject setVariable ["isObjectiveObject", true, true];
+				_thisObjective = [_objectiveObject, _thisObjectiveType] call generateObjectiveTracker;
 
 				//Add trigger to detect cleared area
-				objectiveObject setPos _thisObjectivePosition; //create a trigger area created at object with variable name my_object
-				objectiveObject setTriggerArea [200, 200, 0, false]; // trigger area with a radius of 200m.
-				objectiveObject setVariable ["associatedTask", _thisObjective];
-				[objectiveObject] execVM 'engine\objectiveManagement\checkDefendArea.sqf'; 
+				_objectiveObject setPos _thisObjectivePosition; //create a trigger area created at object with variable name my_object
+				_objectiveObject setTriggerArea [200, 200, 0, false]; // trigger area with a radius of 200m.
+				_objectiveObject setVariable ["associatedTask", _thisObjective];
+				[_objectiveObject] execVM 'engine\objectiveManagement\checkDefendArea.sqf'; 
 			};
 		case "collectIntel":
 			{
 				//Generate objective object
-				objectiveObject = createVehicle [selectRandom avalaibleCollectIntel, _currentRandomPos, [], 0, "NONE"];
-				objectiveObject setVariable ["isObjectiveObject", true, true];
-				_thisObjective = [objectiveObject, _thisObjectiveType] call generateObjectiveTracker;
+				_objectiveObject = createVehicle [selectRandom avalaibleCollectIntel, _currentRandomPos, [], 0, "NONE"];
+				_objectiveObject setVariable ["isObjectiveObject", true, true];
+				_thisObjective = [_objectiveObject, _thisObjectiveType] call generateObjectiveTracker;
 
 				//Add intel action to the intel case
-				objectiveObject setPos _thisObjectivePosition;
-				[objectiveObject, ["Collect intel",{
+				_objectiveObject setPos _thisObjectivePosition;
+				[_objectiveObject, ["Collect intel",{
 					params ["_object","_caller","_ID","_thisObjective"];
 					//Manage Completed Objective
 					_completedObjectives = missionNamespace getVariable ["completedObjectives",[]];
@@ -238,17 +236,16 @@ generateObjectiveObject =
 		case "informant":
 			{
 				//Generate objective object
-				objectiveObject = leader ([_currentRandomPos, civilian, [selectRandom avalaibleVIP],[],[],[],[],[], random 360] call BIS_fnc_spawnGroup);
-				objectiveObject setVariable ["isObjectiveObject", true, true];
-				_thisObjective = [objectiveObject, _thisObjectiveType] call generateObjectiveTracker;
+				_objectiveObject = leader ([_currentRandomPos, civilian, [selectRandom avalaibleVIP],[],[],[],[],[], random 360] call BIS_fnc_spawnGroup);
+				_objectiveObject setVariable ["isObjectiveObject", true, true];
+				_thisObjective = [_objectiveObject, _thisObjectiveType] call generateObjectiveTracker;
 				
 				//Add dialog to the informant
-				diag_log format ["VIP task setup ! : %1", objectiveObject];
-				(objectiveObject) setPos ( _thisObjectivePosition);
-				[objectiveObject, objectiveObject, 75, [], true] call lambs_wp_fnc_taskGarrison;
+				diag_log format ["VIP task setup ! : %1", _objectiveObject];
+				_objectiveObject setPos ( _thisObjectivePosition);
 				
 				[
-					objectiveObject, 
+					_objectiveObject, 
 					"Talk to the informant", 
 					"\a3\missions_f_oldman\data\img\holdactions\holdAction_talk_ca.paa", 
 					"\a3\missions_f_oldman\data\img\holdactions\holdAction_talk_ca.paa", 
@@ -299,8 +296,8 @@ generateObjectiveObject =
 				] remoteExec ["BIS_fnc_holdActionAdd", 0, true];
 
 				//Objective failed
-				objectiveObject setVariable ["thisTask", _thisObjective select 2, true];
-				objectiveObject addEventHandler ["Killed", {
+				_objectiveObject setVariable ["thisTask", _thisObjective select 2, true];
+				_objectiveObject addEventHandler ["Killed", {
 					params ["_unit", "_killer", "_instigator", "_useEffects"];
 					//get task associated to the object
 					_thisTaskID = _unit getVariable "thisTask";

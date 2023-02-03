@@ -19,7 +19,9 @@ avalaibleHVT = [
 	"CUP_O_TK_Officer",
 	"CUP_O_RU_Officer_EMR", 
 	"O_Officer_Parade_F", 
-	"O_G_officer_F"
+	"O_G_officer_F",
+	"B_Officer_Parade_F", 
+	"I_E_Officer_Parade_Veteran_F"
 ];
 
 avalaibleVIP = [
@@ -75,7 +77,7 @@ avalaibleTypeOfObjectives = [
 
 // avalaibleTypeOfObjectives = [
 // 	// [Technical Objective name, Display name, type of objective]
-// 	["ammo", "Ammo cache", "Attack"],
+// 	["hvt", "HVT", "Attack", true]
 // ];
 
 //avalaibleTypeOfObj = ["ammo"]; //Line use to debug a specific objective
@@ -323,4 +325,19 @@ avalaibleFOB = [
 	fob4
 ];
 
+enemyFOB1 = /*
+Grab data:
+Mission: tempMissionSP
+World: VR
+Anchor position: [514.459, 3105.75]
+Area size: 100
+Using orientation of objects: no
+Sign_Arrow_Large_F are normal opfor
+Sign_Arrow_Large_Yellow_F are opfor turret
+*/
+[["Land_Cargo_HQ_V1_F",[-8.16159,-1.84863,-0.00143862],89.112,1,0,[0,0],"","",true,false],["Land_Cargo_House_V1_F",[8.6778,-12.7593,-0.00143909],180.445,1,0,[0,0],"","",true,false],["Land_Tank_rust_F",[-6.67087,-17.1284,-0.00143909],0,1,0,[0,0],"","",true,false],["Land_Cargo_Patrol_V1_F",[8.81061,21.6318,-0.00143862],180.641,1,0,[0,0],"","",true,false],["Land_cargo_addon02_V1_F",[-15.259,-17.3047,-0.00143909],0,1,0,[0,0],"","",true,false],["Sign_Arrow_Large_F",[1.5401,-2.63354,-0.00143909],357.506,1,0,[0,0],"","",true,false],["Sign_Arrow_Large_F",[-3.56216,1.78589,-0.00143909],50.2514,1,0,[0,0],"","",true,false],["Land_HBarrier_5_F",[-1.53027,-4.19385,-0.00143909],0.48668,1,0,[0,0],"","",true,false],["Sign_Arrow_Large_F",[-5.64795,1.60132,0.600235],0,1,0,[0,0],"","",true,false],["Sign_Arrow_Large_Yellow_F",[-4.80838,-5.35059,3.27925],91.3984,1,0,[0,-0],"","",true,false],["Sign_Arrow_Large_F",[-4.74808,-5.44409,0.600235],0,1,0,[0,0],"","",true,false],["Sign_Arrow_Large_F",[6.5401,2.36646,-0.00143909],305.22,1,0,[0,0],"","",true,false],["Sign_Arrow_Large_F",[-7.4599,-1.63354,0.600235],0,1,0,[0,0],"","",true,false],["Sign_Arrow_Large_F",[-8.4599,-2.63354,3.12508],0,1,0,[0,0],"","",true,false],["CamoNet_INDP_open_Curator_F",[8.42609,5.13525,-0.00143909],271.571,1,0,[0,0],"","",true,false],["Sign_Arrow_Large_F",[0.5401,10.3665,-0.00143909],0,1,0,[0,0],"","",true,false],["Sign_Arrow_Large_F",[4.81982,-9.73364,-0.00143909],266.936,1,0,[0,0],"","",true,false],["Sign_Arrow_Large_F",[9.5401,7.36646,-0.00143909],0,1,0,[0,0],"","",true,false],["Land_HBarrier_5_F",[-3.67429,12.0249,-0.00143909],0,1,0,[0,0],"","",true,false],["Sign_Arrow_Large_Yellow_F",[-12.8837,0.729248,3.27442],269.565,1,0,[0,0],"","",true,false],["Sign_Arrow_Large_Yellow_F",[-10.351,-7.92285,3.25522],179.149,1,0,[0,-0],"","",true,false],["Land_HBarrier_5_F",[1.59259,12.0054,-0.00143909],0,1,0,[0,0],"","",true,false],["Sign_Arrow_Large_F",[-10.4599,-7.63354,0.600235],0,1,0,[0,0],"","",true,false],["Sign_Arrow_Large_F",[-13.4599,-3.63354,3.20024],0,1,0,[0,0],"","",true,false],["Land_HBarrierBig_F",[13.3948,2.50439,-0.00143909],271.209,1,0,[0,0],"","",true,false],["Land_HBarrier_5_F",[4.65411,-15.5127,-0.00143909],270.531,1,0,[0,0],"","",true,false],["Sign_Arrow_Large_F",[-14.4599,-1.63354,0.72065],0,1,0,[0,0],"","",true,false],["Sign_Arrow_Large_F",[10.6263,-9.71606,-0.00143909],304.416,1,0,[0,0],"","",true,false],["Land_HBarrierBig_F",[13.4116,-5.87695,-0.00143909],271.209,1,0,[0,0],"","",true,false],["Sign_Arrow_Large_F",[-9.4599,-11.6335,-0.00143909],90.057,1,0,[0,-0],"","",true,false],["Sign_Arrow_Large_F",[-14.7661,-3.90894,-0.00143909],326.432,1,0,[0,0],"","",true,false],["Land_HBarrierBig_F",[-7.12033,-13.7573,-0.00143909],180.796,1,0,[0,0],"","",true,false],["Sign_Arrow_Large_F",[1.5401,-15.6335,-0.00143909],159.97,1,0,[0,-0],"","",true,false],["Sign_Arrow_Large_F",[-3.92276,15.8799,-0.00143909],80.6931,1,0,[0,0],"","",true,false],["Sign_Arrow_Large_F",[9.5401,-13.6335,0.998561],0,1,0,[0,0],"","",true,false],["Sign_Arrow_Large_F",[-10.8768,12.7925,-0.00143909],80.2045,1,0,[0,0],"","",true,false],["CamoNet_INDP_open_Curator_F",[-12.1255,12.7085,-0.00143909],178.49,1,0,[0,-0],"","",true,false],["Land_HBarrierBig_F",[-1.67987,-17.0522,-0.00143909],270.094,1,0,[0,0],"","",true,false],["Land_HBarrierBig_F",[13.325,11.0029,-0.00143909],271.209,1,0,[0,0],"","",true,false],["Land_HBarrierBig_F",[-6.6445,17.4507,-0.00143909],0.851427,1,0,[0,0],"","",true,false],["Land_HBarrierBig_F",[7.90802,-17.3545,-0.00143909],181.513,1,0,[0,0],"","",true,false],["Sign_Arrow_Large_F",[-16.4599,-9.63354,-0.00143909],3.77149,1,0,[0,0],"","",true,false],["Land_HBarrierBig_F",[-19.2707,-0.820801,-0.00143909],271.207,1,0,[0,0],"","",true,false],["Sign_Arrow_Large_F",[-10.9134,-15.9717,-0.00143909],202.232,1,0,[0,0],"","",true,false],["Land_HBarrierBig_F",[13.3936,-14.2271,-0.00143909],271.209,1,0,[0,0],"","",true,false],["Sign_Arrow_Large_F",[9.37897,17.3682,-0.00143909],250.365,1,0,[0,0],"","",true,false],["Sign_Arrow_Large_F",[-3.4599,-19.6335,-0.00143909],265.093,1,0,[0,0],"","",true,false],["Land_CratesShabby_F",[-12.9475,-15.8311,-0.00143909],0,1,0,[0,0],"","",true,false],["Land_StallWater_F",[-4.79343,-20.0845,-0.00143909],0,1,0,[0,0],"","",true,false],["Land_HBarrierBig_F",[-19.3069,7.81104,-0.00143909],270.269,1,0,[0,0],"","",true,false],["Land_HBarrierBig_F",[-15.6426,-13.9614,-0.00143909],179.946,1,0,[0,-0],"","",true,false],["Land_HBarrierBig_F",[-19.1526,-8.9375,-0.00143909],270.269,1,0,[0,0],"","",true,false],["Land_HBarrierBig_F",[4.81036,21.2783,-0.00143909],270.888,1,0,[0,0],"","",true,false],["Land_HBarrier_5_F",[-2.15741,-22.0635,-0.00143909],0,1,0,[0,0],"","",true,false],["Land_Sack_F",[-15.1213,-16.1978,-0.00143909],0,1,0,[0,0],"","",true,false],["Land_HBarrier_5_F",[-7.80344,-22.0635,-0.00143909],0,1,0,[0,0],"","",true,false],["Land_HBarrier_5_F",[3.48975,-22.0679,-0.00143909],0,1,0,[0,0],"","",true,false],["Land_HBarrierBig_F",[-15.0551,17.3501,-0.00143909],0.851427,1,0,[0,0],"","",true,false],["Sign_Arrow_Large_Yellow_F",[9.5401,21.3665,4.46718],0.83532,1,0,[0,0],"","",true,false],["Land_CratesWooden_F",[-16.7859,-16.1519,-0.00143909],0,1,0,[0,0],"","",true,false],["Land_HBarrierBig_F",[13.3394,19.4253,-0.00143909],271.209,1,0,[0,0],"","",true,false],["Sign_Arrow_Large_F",[8.5401,22.3665,-0.00143909],0,1,0,[0,0],"","",true,false],["Land_HBarrier_3_F",[-10.9509,-22.1426,-0.00143909],0,1,0,[0,0],"","",true,false],["Land_BagBunker_Small_F",[-20.1565,14.2734,-0.00143909],88.7408,1,0,[0,0],"","",true,false],["Sign_Arrow_Large_F",[-20.1987,14.3467,-0.00143909],270.555,1,0,[0,0],"","",true,false],["Land_HBarrier_5_F",[-18.9951,-20.0928,-0.00143909],269.452,1,0,[0,0],"","",true,false],["Land_HBarrierBig_F",[9.9126,24.5962,-0.00143909],0.585755,1,0,[0,0],"","",true,false],["Land_HBarrier_1_F",[-18.9594,-21.377,-0.00143909],0,1,0,[0,0],"","",true,false]];
 
+
+avalaibleEnemyFOB = [
+	enemyFOB1
+];

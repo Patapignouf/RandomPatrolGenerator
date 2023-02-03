@@ -31,10 +31,13 @@ while {sleep 15; _nbBluePlayer + _nbIndPlayer == 0 || _nbOpfor > 2} do
 };
 
 //Complete mission if there's few opfor on the area
-_thisObjectiveToComplete = _thisTrigger getVariable "associatedTask";
-[_thisObjectiveToComplete] execVM 'engine\objectiveManagement\completeObjective.sqf'; 
+_thisObjectiveToComplete = _thisTrigger getVariable ["associatedTask","none"];
+if (_thisObjectiveToComplete != "none") then 
+{
+	[_thisObjectiveToComplete] execVM 'engine\objectiveManagement\completeObjective.sqf'; 
 
-//Manage Completed Objective
-_completedObjectives = missionNamespace getVariable ["completedObjectives",[]];
-_completedObjectives pushBack _thisObjectiveToComplete;
-missionNamespace setVariable ["completedObjectives", _completedObjectives, true];	
+	//Manage Completed Objective
+	_completedObjectives = missionNamespace getVariable ["completedObjectives",[]];
+	_completedObjectives pushBack _thisObjectiveToComplete;
+	missionNamespace setVariable ["completedObjectives",_completedObjectives,true];	
+};

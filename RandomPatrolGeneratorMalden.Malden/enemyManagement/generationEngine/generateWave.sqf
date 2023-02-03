@@ -1,7 +1,4 @@
-_thisAvailableWaveGroups = _this select 0;
-_thisAvailablePosition = _this select 1;
-_thisTargerPosition = _this select 2;
-_thisDifficulty = _this select 3;
+params ["_thisAvailableWaveGroups","_thisAvailablePosition","_thisTargerPosition","_thisDifficulty"];
 
 currentRandomAttack = objNull;
 currentGroupAttack = objNull;
@@ -21,7 +18,13 @@ if (isServer) then
 	CompletedObjectivesWave = 1;
 	while {sleep 20; waveCounter < (count _thisAvailableWaveGroups)} do 
 	{
-		
+		//Reduce difficulty of enemy wave if opfor FOB are cleared
+		_numberOfClearedFOB = missionNamespace getVariable ["OpforFOBCleared", 0];
+		if (_thisDifficulty > _numberOfClearedFOB) then 
+		{
+			_thisDifficulty = _thisDifficulty - _numberOfClearedFOB;
+		};
+
 		while {sleep 20; count (missionNamespace getVariable ["completedObjectives",[]]) == CompletedObjectivesWave} do
 		{
 			diag_log format ["Wave start : %1", waveCounter ];
