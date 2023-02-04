@@ -19,6 +19,8 @@ if (player getVariable "sideBeforeDeath" == "independent") then
 waitUntil {!isNull ( uiNamespace getVariable [ "BIS_fnc_arsenal_cam", objNull ] )};
 waitUntil {isNull ( uiNamespace getVariable [ "BIS_fnc_arsenal_cam", objNull ] )};
 
+//Save default stuff
+player setVariable ["spawnLoadout", getUnitLoadout player];
 
 //Open setup loadout GUI
 [[], 'GUI\loadoutGUI\initPlayerLoadoutSetup.sqf'] remoteExec ['BIS_fnc_execVM', player];

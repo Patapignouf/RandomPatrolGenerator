@@ -20,7 +20,6 @@ class PlayerLoadoutSetup
 		{
 			idc = 7200;
 			text = "Close";
-			onButtonClick = "(findDisplay 7000) closeDisplay 1;";
 			x = GUI_GRID_CENTER_X + 15 * GUI_GRID_CENTER_W;
 			y = GUI_GRID_CENTER_Y + 8 * GUI_GRID_CENTER_H;
 			w = 10 * GUI_GRID_CENTER_W;

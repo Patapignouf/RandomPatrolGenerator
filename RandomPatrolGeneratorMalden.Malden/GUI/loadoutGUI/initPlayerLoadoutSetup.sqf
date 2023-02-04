@@ -10,6 +10,7 @@ createDialog "PlayerLoadoutSetup";
 //Define a comboBox foreach faction
 private _mainDisplay = (findDisplay 7000);
 private _comboBoxClassSelection = _mainDisplay displayCtrl 7100;
+private _buttonClose = _mainDisplay displayCtrl 7200;
 private _buttonArsenal = _mainDisplay displayCtrl 7201;
 private _buttonSave = _mainDisplay displayCtrl 7202;
 private _buttonLoad = _mainDisplay displayCtrl 7203;
@@ -20,6 +21,9 @@ indFaction = missionNamespace getVariable "independentFaction";
 
 //Function params
 firstOpen = true;
+
+//Load default loadout when player open loadout screen
+player setUnitLoadout (player getVariable ["spawnLoadout", []]);
 
 //Specify all GUI content and button actions
 _comboBoxClassSelection ctrlAddEventHandler[ "LBSelChanged", 
@@ -55,7 +59,7 @@ _comboBoxClassSelection ctrlAddEventHandler[ "LBSelChanged",
 //Open arsenal
 _buttonArsenal ctrlAddEventHandler[ "ButtonClick", 
 	{ 
-		hint "ButtonClicked";
+		hint "Open arsenal";
 		(findDisplay 7000) closeDisplay 1;
 		[] execVM 'database\openArsenal.sqf';
 	}];
@@ -102,6 +106,18 @@ _buttonLoad ctrlAddEventHandler[ "ButtonClick",
 		cutText ["Loadout loaded", "PLAIN", 0.3];
 	}];
 
+//Close display
+_buttonClose ctrlAddEventHandler[ "ButtonClick", 
+	{ 
+		//Close mission setup
+		params ["_ctrl"];
+		_display = ctrlParent _ctrl;
+		_display closeDisplay 1;
+
+		//Save default stuff on close
+		player setVariable ["spawnLoadout", getUnitLoadout player];
+	}
+];
 
 //get list of avalaible role for player's faction
 _listOfAvalaibleRole =[];
@@ -115,6 +131,7 @@ if (player getVariable "sideBeforeDeath" == "independent") then
 	//Blufor
 	_listOfAvalaibleRole = [bluFaction] call setupRoleSwitchToList;
 };
+
 
 //Define list of role in the combo box
 _currentComboBox = _comboBoxClassSelection;
