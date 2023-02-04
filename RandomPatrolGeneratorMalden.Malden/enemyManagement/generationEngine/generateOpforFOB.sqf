@@ -58,7 +58,17 @@ if (!([_OpforFobLocation , [0,0,0]] call BIS_fnc_areEqual)) then
 	_objectiveObject = createTrigger ["EmptyDetector", _OpforFobLocation]; //create a trigger area created at object with variable name my_object
 	_objectiveObject setTriggerArea [200, 200, 0, false];
 	_objectiveObject setVariable ["isFOBAssociated", true, true];
-	[_objectiveObject] execVM 'engine\objectiveManagement\checkClearArea.sqf'; 
+
+	//Randomize if enemy FOB will received reinforcement
+	if (round random 2 == 0) then 
+	{
+		//33%
+		[_objectiveObject] execVM 'engine\objectiveManagement\checkClearArea.sqf';
+	} else 
+	{
+		//66%
+		[_objectiveObject] execVM 'engine\objectiveManagement\checkDefendArea.sqf';
+	};
 };
 
 

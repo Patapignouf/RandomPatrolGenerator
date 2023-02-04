@@ -18,8 +18,23 @@ AvalaibleInitAttackPositions = [];
 AvalaibleInitAttackPositions = [getPos _thisTrigger, 550, 800, missionDifficultyParam+1] call getListOfPositionsAroundTarget;
 _handleAttackGeneration = [AvalaibleInitAttackPositions, getPos _thisTrigger, [baseEnemyGroup,baseEnemyATGroup], baseEnemyVehicleGroup, round((missionDifficultyParam-0.5)/2)+1] execVM 'enemyManagement\behaviorEngine\doAmbush.sqf'; 
 waitUntil {isNull _handleAttackGeneration};
-_nearestCity = nearestLocations [getPos _thisTrigger, ["NameLocal","NameVillage","NameCity","NameCityCapital"], 1500] select 0;
-[format ["Opfor attack has begun on %1, be ready", text _nearestCity]] remoteExec ["hint",0,true];
+
+//Show a message for the opfor reinforcement
+_thisObjectiveToComplete = _thisTrigger getVariable ["associatedTask", "none"];
+if (_thisObjectiveToComplete != "none") then 
+{
+
+	_nearestCity = nearestLocations [getPos _thisTrigger, ["NameLocal","NameVillage","NameCity","NameCityCapital"], 1500] select 0;
+	[format ["Opfor attack has begun on %1, be ready", text _nearestCity]] remoteExec ["hint",0,true];
+};
+
+_thisFOBCheck = _thisTrigger getVariable ["isFOBAssociated", false];
+if (_thisFOBCheck) then 
+{
+	[format ["An opfor reinforcement is coming to %1, be ready to defend the FOB", getPos _thisTrigger]] remoteExec ["hint", 0, true];
+};
+
+//Wait enemy reinforcement
 sleep 500;
 
 //Check if there's opfor on the area after the attack
@@ -30,8 +45,7 @@ while {sleep 15; _nbBluePlayer + _nbIndPlayer == 0 || _nbOpfor > 2} do
 	_nbOpfor = count ((allUnits select {alive _x && side _x == opfor} ) inAreaArray _thisTrigger);
 };
 
-//Complete mission if there's few opfor on the area
-_thisObjectiveToComplete = _thisTrigger getVariable ["associatedTask","none"];
+//Check tasks
 if (_thisObjectiveToComplete != "none") then 
 {
 	[_thisObjectiveToComplete] execVM 'engine\objectiveManagement\completeObjective.sqf'; 
@@ -40,4 +54,11 @@ if (_thisObjectiveToComplete != "none") then
 	_completedObjectives = missionNamespace getVariable ["completedObjectives",[]];
 	_completedObjectives pushBack _thisObjectiveToComplete;
 	missionNamespace setVariable ["completedObjectives",_completedObjectives,true];	
+};
+
+//Check FOB clear
+if (_thisFOBCheck) then 
+{
+	_OpforFOBCleared = missionNamespace getVariable ["OpforFOBCleared", 0];
+	missionNamespace setVariable ["OpforFOBCleared", _OpforFOBCleared+1, true];	
 };
