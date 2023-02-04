@@ -539,7 +539,7 @@ publicvariable "deployableFOBItem";
 					} else {
 						hint "You must wait before call reinforcements";
 					};
-				},[respawnSettings],1.5,true,false,"","_target distance _this <5"]] remoteExec [ "addAction", 0, true ];
+				},[_respawnSetting],1.5,true,false,"","_target distance _this <5"]] remoteExec [ "addAction", 0, true ];
 			};
 
 			//Remove Box
@@ -607,6 +607,27 @@ SettingsComputer =  createVehicle ["Land_MultiScreenComputer_01_olive_F", [initB
 
 TPFlag1 = createVehicle ["Flag_Blue_F", [initBlueforLocation, 1, 5, 3, 0, 20, 0] call BIS_fnc_findSafePos, [], 0, "NONE"];
 publicvariable "TPFlag1";
+
+//Add action to make all player respawn
+if (respawnSettings == 1) then 
+{
+	[TPFlag1, ["Call Reinforcements",{
+		params ["_object","_caller","_ID","_param"];
+		
+		if (!(missionNamespace getVariable ["usedRespawnFewTimeAgo",false])) then 
+		{
+			//set morning
+			skipTime 24;
+			[[], "engine\respawnManagement\respawnManager.sqf"] remoteExec ['BIS_fnc_execVM', 0];
+			[format ["%1 needs reinforcement", name _caller]] remoteExec ["hint",0,true];
+			missionNamespace setVariable ["usedRespawnFewTimeAgo",true,true];
+			sleep 1200;
+			missionNamespace setVariable ["usedRespawnFewTimeAgo",false,true];
+		} else {
+			hint "You must wait before call reinforcements";
+		};
+	},[respawnSettings],1.5,true,false,"","_target distance _this <5"]] remoteExec [ "addAction", 0, true ];
+};
 
 
 //Setup random attack on blufor at the beginning
