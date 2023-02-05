@@ -20,8 +20,8 @@ _handleAttackGeneration = [AvalaibleInitAttackPositions, getPos _thisTrigger, [b
 waitUntil {isNull _handleAttackGeneration};
 
 //Show a message for the opfor reinforcement
-_thisObjectiveToComplete = _thisTrigger getVariable ["associatedTask", "none"];
-if (_thisObjectiveToComplete != "none") then 
+_thisObjectiveToComplete = _thisTrigger getVariable ["associatedTask", []];
+if (!([_thisObjectiveToComplete,[]] call BIS_fnc_areEqual)) then 
 {
 
 	_nearestCity = nearestLocations [getPos _thisTrigger, ["NameLocal","NameVillage","NameCity","NameCityCapital"], 1500] select 0;
@@ -46,7 +46,7 @@ while {sleep 15; _nbBluePlayer + _nbIndPlayer == 0 || _nbOpfor > 2} do
 };
 
 //Check tasks
-if (_thisObjectiveToComplete != "none") then 
+if (!([_thisObjectiveToComplete,[]] call BIS_fnc_areEqual)) then 
 {
 	[_thisObjectiveToComplete] execVM 'engine\objectiveManagement\completeObjective.sqf'; 
 
