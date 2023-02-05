@@ -27,8 +27,8 @@ while {sleep 15; _nbBluePlayer + _nbIndPlayer == 0 || _nbOpfor > 2} do
 };
 
 //Check tasks
-_thisObjectiveToComplete = _thisTrigger getVariable ["associatedTask","none"];
-if (_thisObjectiveToComplete != "none") then 
+_thisObjectiveToComplete = _thisTrigger getVariable ["associatedTask",[]];
+if (!([_thisObjectiveToComplete,[]] call BIS_fnc_areEqual)) then 
 {
 	[_thisObjectiveToComplete] execVM 'engine\objectiveManagement\completeObjective.sqf'; 
 
