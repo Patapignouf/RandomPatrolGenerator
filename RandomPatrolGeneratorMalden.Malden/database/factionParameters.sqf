@@ -58,24 +58,24 @@ c_Russian_Winter = "_Russian_Winter";
 c_PMC = "_PMC";
 
 factionInfos = [
-	[c_USA,_USA,"US Army"],
-	[c_Russian,_Ru,"Russian"],
-	[c_Taki,_Taki,"Takistani"],
+	[c_USA,_USA,"US Army [CUP]"],
+	[c_Russian,_Ru,"Russian [CUP]"],
+	[c_Taki,_Taki,"Takistani [CUP]"],
 	[c_Syndikat,_Syndikat,"Syndikat"],
-	[c_French,_French,"French"],
-	[c_USA_2000,_USA_2000,"2000 USA Marines"],
-	[c_WWII_UK,_WWII_UK,"WWII UK"],
-	[c_WWII_URSS,_WWII_URSS,"WWII URSS"],
-	[c_WWII_Wehrmacht,_WWII_Wehrmacht,"WWII Wehrmacht"],
-	[c_WWII_USA,_WWII_USA,"WWII USA"],
-	[c_ColdWar_ARVN,_ColdWar_ARVN,"Cold War ARVN"],
-	[c_ColdWar_NVA,_ColdWar_NVA,"Cold War NVA"],
-	[c_ColdWar_USA,_ColdWar_USA,"Cold War USA"],
+	[c_French,_French,"French [AMF][ACE]"],
+	[c_USA_2000,_USA_2000,"2000 USA Marines [CUP]"],
+	[c_WWII_UK,_WWII_UK,"WWII UK [IFA3]"],
+	[c_WWII_URSS,_WWII_URSS,"WWII URSS [IFA3]"],
+	[c_WWII_Wehrmacht,_WWII_Wehrmacht,"WWII Wehrmacht [IFA3]"],
+	[c_WWII_USA,_WWII_USA,"WWII USA [IFA3]"],
+	[c_ColdWar_ARVN,_ColdWar_ARVN,"Cold War ARVN [UNSUNG]"],
+	[c_ColdWar_NVA,_ColdWar_NVA,"Cold War NVA [UNSUNG]"],
+	[c_ColdWar_USA,_ColdWar_USA,"Cold War USA [UNSUNG]"],
 	[c_2035_AAF,_2035_AAF,"2035 AAF"],
-	[c_2035_NATO,_2035_NATO,"2035 NATO"],
-	[c_USA_2000_DF,_USA_2000_DF,"1993 USA Delta Force"],
-	[c_Russian_Winter, _Russian_Winter, "Russian Winter"],
-	[c_PMC, _PMC, "PMC Modern"]
+	[c_2035_NATO,_2035_NATO,"2035 NATO [ACE]"],
+	[c_USA_2000_DF,_USA_2000_DF,"1993 USA Delta Force [CUP]"],
+	[c_Russian_Winter, _Russian_Winter, "Russian Winter [CUP]"],
+	[c_PMC, _PMC, "PMC Modern [CUP]"]
 ];
 
 //Define global constant
