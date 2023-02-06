@@ -36,6 +36,12 @@ if (!([_thisObjectiveToComplete,[]] call BIS_fnc_areEqual)) then
 	_completedObjectives = missionNamespace getVariable ["completedObjectives",[]];
 	_completedObjectives pushBack _thisObjectiveToComplete;
 	missionNamespace setVariable ["completedObjectives",_completedObjectives,true];	
+
+	//Call respawn
+	if (["Respawn",1] call BIS_fnc_getParamValue) then 
+	{
+		[[], "engine\respawnManagement\respawnManager.sqf"] remoteExec ['BIS_fnc_execVM', 0];
+	};
 };
 
 //Check FOB clear
