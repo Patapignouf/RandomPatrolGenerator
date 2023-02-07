@@ -91,7 +91,7 @@ loadout_Syndikat = [
 	[c_rifleman,"I_C_Soldier_Bandit_5_F"],//Default stuff
 	[c_engineer,"I_C_Soldier_Para_8_F"],
 	[c_autorifleman,"I_C_Soldier_Bandit_3_F"],
-	[c_marksman,[["srifle_DMR_06_olive_F","","","optic_KHS_blk",["20Rnd_762x51_Mag",20],[],""],[],[],["U_I_C_Soldier_Para_4_F",[["FirstAidKit",1],["CUP_20Rnd_TE1_Green_Tracer_762x51_DMR",2,20]]],["V_Chestrig_khk",[["HandGrenade",2,1],["CUP_20Rnd_TE1_Green_Tracer_762x51_DMR",5,20]]],[],"","",[],["ItemMap","","ItemRadio","ItemCompass","ItemWatch",""]]],
+	[c_marksman,"I_G_Sharpshooter_F"],
 	[c_medic,"I_C_Soldier_Bandit_1_F"]
 ];
 

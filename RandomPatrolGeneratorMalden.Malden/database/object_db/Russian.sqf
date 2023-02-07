@@ -131,7 +131,7 @@ loadout_Russian = [
 	[c_engineer,"CUP_O_RU_Soldier_Engineer_Ratnik_Summer"],
 	[c_autorifleman,"CUP_O_RU_Soldier_MG_Ratnik_Summer"],
 	[c_marksman,"CUP_O_RU_Soldier_Marksman_Ratnik_Summer"],
-	[c_medic,[["CUP_arifle_AK74M_1p63","","","CUP_optic_1p63",["CUP_30Rnd_545x39_AK74M_M",30],[],""],[],["hgun_Rook40_F","","","",["16Rnd_9x21_Mag",16],[],""],["CUP_U_O_RUS_Soldier_VKPO_MSV_EMR_rolled_up_gloves_pads",[["ACE_tourniquet",2],["ACE_SpraypaintRed",1],["ACE_morphine",3],["ACE_microDAGR",1],["ACE_MapTools",1],["ACE_Flashlight_XL50",1],["ACE_CableTie",4],["ACE_elasticBandage",6],["ACE_Banana",1],["ACE_EarPlugs",2],["ACE_wirecutter",1]]],["CUP_Vest_RUS_6B45_Sh117_Del",[["ACE_WaterBottle",2],["30Rnd_545x39_Mag_Green_F",10,30],["SmokeShellRed",4,1],["CUP_HandGrenade_M67",2,1],["Chemlight_blue",2,1],["30Rnd_9x21_Mag",1,30]]],["B_Kitbag_rgr",[["ACE_tourniquet",10],["ACE_splint",12],["ACE_personalAidKit",1],["ACE_morphine",20],["ACE_epinephrine",12],["ACE_bloodIV_500",12],["ACE_bloodIV",8],["ACE_quikclot",20],["ACE_elasticBandage",40]]],"CUP_H_RUS_6B47_v2_GogglesClosed_Summer","CUP_G_RUS_Balaclava_Ratnik",["Binocular","","","",[],[],""],["ItemMap","ItemGPS","TFAR_anprc152","ItemCompass","ACE_Altimeter","CUP_NVG_HMNVS_Hide"]], true],
+	[c_medic,"CUP_O_RU_Soldier_Medic_Ratnik_Summer"],
 	[c_grenadier,"CUP_O_RU_Soldier_GL_Ratnik_Summer"]
 ];
 

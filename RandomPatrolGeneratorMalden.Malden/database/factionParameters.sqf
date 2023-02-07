@@ -58,7 +58,7 @@ c_Russian_Winter = "_Russian_Winter";
 c_PMC = "_PMC";
 
 factionInfos = [
-	[c_USA,_USA,"US Army [CUP]"],
+	[c_USA,_USA,"US Army [CUP][ACE]"],
 	[c_Russian,_Ru,"Russian [CUP]"],
 	[c_Taki,_Taki,"Takistani [CUP]"],
 	[c_Syndikat,_Syndikat,"Syndikat"],
@@ -73,7 +73,7 @@ factionInfos = [
 	[c_ColdWar_USA,_ColdWar_USA,"Cold War USA [UNSUNG]"],
 	[c_2035_AAF,_2035_AAF,"2035 AAF"],
 	[c_2035_NATO,_2035_NATO,"2035 NATO [ACE]"],
-	[c_USA_2000_DF,_USA_2000_DF,"1993 USA Delta Force [CUP]"],
+	[c_USA_2000_DF,_USA_2000_DF,"1993 USA Delta Force [CUP][ACE]"],
 	[c_Russian_Winter, _Russian_Winter, "Russian Winter [CUP]"],
 	[c_PMC, _PMC, "PMC Modern [CUP]"]
 ];
