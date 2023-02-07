@@ -58,7 +58,7 @@ c_Russian_Winter = "_Russian_Winter";
 c_PMC = "_PMC";
 
 factionInfos = [
-	[c_USA,_USA,"US Army [CUP][ACE]"],
+	[c_USA,_USA,"US Army [CUP]"],
 	[c_Russian,_Ru,"Russian [CUP]"],
 	[c_Taki,_Taki,"Takistani [CUP]"],
 	[c_Syndikat,_Syndikat,"Syndikat"],
