@@ -66,6 +66,10 @@ if (!([_thisObjectiveToComplete,[]] call BIS_fnc_areEqual)) then
 //Check FOB clear
 if (_thisFOBCheck) then 
 {
+	//Hint players for cleared FOB
+	[format ["The FOB at position %1 has been cleared", getPos _thisTrigger]] remoteExec ["hint", 0, true];	
+
+	//Add this FOB to cleared FOB
 	_OpforFOBCleared = missionNamespace getVariable ["OpforFOBCleared", 0];
 	missionNamespace setVariable ["OpforFOBCleared", _OpforFOBCleared+1, true];	
 };
