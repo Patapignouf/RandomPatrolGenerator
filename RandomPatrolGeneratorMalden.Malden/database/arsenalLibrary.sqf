@@ -301,7 +301,7 @@ doInitializeLoadout = {
 
 switchToRole = {
 	//Init params
-	params ["_arsenalItem", "_caller", "_faction", "_role"];
+	params ["_arsenalItem", "_caller", "_faction", "_role", "_allowCustomLoad"];
 
 	//Switch to role
 	diag_log format ["Player %1 has switch to role %2 in faction %3", name _caller, _role, _faction];
@@ -333,7 +333,7 @@ switchToRole = {
 
 	//Manage default stuff
 	_personalLoadout = profileNamespace getVariable [format ["RPG_%1_%2_%3",name _caller, _faction , _role], []];
-	if (count _personalLoadout != 0) then 
+	if (count _personalLoadout != 0 && _allowCustomLoad) then 
 	{
 		//Personal loadout 
 		_caller setUnitLoadout _personalLoadout;

@@ -40,13 +40,13 @@ _comboBoxClassSelection ctrlAddEventHandler[ "LBSelChanged",
 				//Independent
 				_listOfAvalaibleRole = [indFaction] call setupRoleSwitchToList;
 				_role = (_listOfAvalaibleRole select parseNumber ((_comboBoxClassSelection lbData (lbCurSel _comboBoxClassSelection))));
-				[VA1, player, indFaction ,_role] call switchToRole;
+				[VA1, player, indFaction , _role, false] call switchToRole;
 			} else 
 			{
 				//Blufor
 				_listOfAvalaibleRole = [bluFaction] call setupRoleSwitchToList;
 				_role = (_listOfAvalaibleRole select parseNumber ((_comboBoxClassSelection lbData (lbCurSel _comboBoxClassSelection))));
-				[VA2, player, bluFaction , _role] call switchToRole;
+				[VA2, player, bluFaction , _role, false] call switchToRole;
 			};
 		}
 		else 
