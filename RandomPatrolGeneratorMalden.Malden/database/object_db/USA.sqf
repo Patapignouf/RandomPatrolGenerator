@@ -170,7 +170,8 @@ launcherList_USA = [
 
 autorifleList_USA = [			
 	"CUP_lmg_Mk48",
-	"CUP_lmg_m249_pip2"
+	"CUP_lmg_m249_pip2",
+	"CUP_lmg_M240_B_ElcanM143_ANPEQ15"
 ];	
 
 
@@ -276,9 +277,7 @@ itemList_USA = [
 	"Binocular",
 	"Rangefinder",
 	"ACE_MapTools",
-	"ACE_microDAGR",
 	"ACE_CableTie",
-	"ACE_DAGR",
 	"ACE_WaterBottle",
 	"ACE_EarPlugs",
 	"ACE_fieldDressing",
@@ -313,3 +312,30 @@ itemMedicList_USA = [
 	"ACE_personalAidKit",
 	"ACE_surgicalKit"
 ];
+
+
+//backpack avalaible for all unit
+backPackList_USA = [
+	"CUP_B_US_IIID_OEFCP",
+	"CUP_B_US_IIID_OCP"
+	];
+
+
+//Uniform, vest, headgear, avalaible for all unit
+uniformList_USA = [
+	"CUP_U_B_USArmy_ACU_Kneepad_Rolled_Gloves_OEFCP", //Body
+	"CUP_H_USArmy_HelmetACH_ESS_Headset_OEFCP",       //Helmet
+	"CUP_V_B_IOTV_OEFCP_MG_USArmy",                    //Chest 
+	"CUP_V_B_IOTV_OEFCP_SL_USArmy",
+	"CUP_U_B_USArmy_ACU_Kneepad_Rolled_OCP",
+	"CUP_H_USArmy_HelmetACH_ESS_Headset_OCP",
+	"CUP_V_B_IOTV_OCP_Rifleman_USArmy",
+	"CUP_H_USArmy_Boonie_hs_OCP",
+	"CUP_PMC_Facewrap_Tropical"
+
+	];
+
+//Magazine avalaible for all unit
+magazineList_USA = [
+
+	];
