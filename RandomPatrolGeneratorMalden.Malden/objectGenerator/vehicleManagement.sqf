@@ -3,11 +3,8 @@
 doGenerateVehicleForFOB = 
 {
 	//Define parameters
-	_thisPosition = _this select 0;
-	_thisVehicleList = _this select 1;
-	_thisMinRadius = _this select 2;
-	_thisMaxRadius = _this select 3;
-
+	params ["_thisPosition","_thisVehicleList","_thisMinRadius","_thisMaxRadius"];
+	
 	_vehicleSpawned = [];
 
 	//Define process 
