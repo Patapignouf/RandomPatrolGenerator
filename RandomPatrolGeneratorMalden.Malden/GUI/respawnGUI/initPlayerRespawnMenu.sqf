@@ -58,11 +58,17 @@ _buttonRespawnLeader ctrlAddEventHandler[ "ButtonClick",
 
 		//teleport player to another player with same side
 		//Respawn on teamleader
-		_tempPos = getPos (((allPlayers - [player]) select {alive _x && side _x isEqualTo (side player) && _x getVariable "isDead" == false && _x getVariable "role" == "leader"}) select 0);
-		player setPos [_tempPos select 0, _tempPos select 1];
+		_tempLeader = ((allPlayers - [player]) select {alive _x && side _x isEqualTo (side player) && _x getVariable "isDead" == false && _x getVariable "role" == "leader"});
+		
+		//If no teamleader is avalaible respawn on another player
+		if (count _tempLeader == 0) then 
+		{
+			_tempLeader = ((allPlayers - [player]) select {alive _x && side _x isEqualTo (side player) && _x getVariable "isDead" == false});
+		};
 
-		//WARNING team must have a leader
-		//[TODO] Complete with teamleaderless team teleport
+		//SetPlayer position
+		_tempPos = getPos (_tempLeader select 0);
+		player setPos [_tempPos select 0, _tempPos select 1];
 
 		//Enable gameplay for player
 		player setVariable ["isDead", false, true];
