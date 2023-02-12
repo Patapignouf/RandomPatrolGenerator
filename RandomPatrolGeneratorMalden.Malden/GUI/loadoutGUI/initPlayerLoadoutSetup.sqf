@@ -77,19 +77,9 @@ _buttonSave ctrlAddEventHandler[ "ButtonClick",
 			player setVariable ["spawnLoadout", getUnitLoadout player];
 		};
 
-		//Save personnal loadout
-		if (player getVariable "sideBeforeDeath" == "independent") then 
-		{
-			//Independent
-			profileNamespace setVariable [format ["RPG_%1_%2_%3", name player, indFaction, player getVariable "role"], getUnitLoadout player];
-		} else 
-		{
-			//Blufor
-			profileNamespace setVariable [format ["RPG_%1_%2_%3", name player, bluFaction, player getVariable "role"], getUnitLoadout player];
-		};
-		diag_log format ["Loadout saved on : RPG_%1_%2_%3", name player, indFaction, player getVariable "role"];
-		saveProfileNamespace;
-	
+		//Save current loadout
+		[player, "personal"] call saveCustomLoadout;
+
 		//Load default faction stuff in ironMan mode
 		if (ironMan) then 
 		{
@@ -123,16 +113,7 @@ _buttonLoad ctrlAddEventHandler[ "ButtonClick",
 		if (ironMan) then 
 		{
 			//Wipe loadout according to player faction
-			if (player getVariable "sideBeforeDeath" == "independent") then 
-			{
-				//Independent
-				profileNamespace setVariable [format ["RPG_%1_%2_%3", name player, indFaction, player getVariable "role"], []];
-			} else 
-			{
-				//Blufor
-				profileNamespace setVariable [format ["RPG_%1_%2_%3", name player, bluFaction, player getVariable "role"], []];
-			};		
-			saveProfileNamespace;	
+			[player, "empty"] call saveCustomLoadout;
 			cutText ["Loadout loaded\nWipe custom loadout", "PLAIN", 0.3];
 		} else 
 		{

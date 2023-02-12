@@ -19,6 +19,9 @@ if (player getVariable "sideBeforeDeath" == "independent") then
 waitUntil {!isNull ( uiNamespace getVariable [ "BIS_fnc_arsenal_cam", objNull ] )};
 waitUntil {isNull ( uiNamespace getVariable [ "BIS_fnc_arsenal_cam", objNull ] )};
 
+
+
+
 //Save default stuff when ironMan mode is disable
 if (!ironMan) then 
 {
