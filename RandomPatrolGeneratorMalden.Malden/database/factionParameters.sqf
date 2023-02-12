@@ -16,6 +16,7 @@ _2035_NATO = 14;
 _USA_2000_DF = 15;
 _Russian_Winter = 16;
 _PMC = 17;
+_2035_Rebels = 18;
 
 #include "object_db\USA.sqf"
 #include "object_db\French.sqf"
@@ -35,6 +36,7 @@ _PMC = 17;
 #include "object_db\USA_2000_DF.sqf"
 #include "object_db\Russian_Winter.sqf"
 #include "object_db\PMC.sqf"
+#include "object_db\2035_Rebels.sqf"
 
 //Define faction prefix
 c_db = "_db";
@@ -56,6 +58,7 @@ c_2035_NATO = "_2035_NATO";
 c_USA_2000_DF = "_USA_2000_DF";
 c_Russian_Winter = "_Russian_Winter";
 c_PMC = "_PMC";
+c_2035_Rebels = "_2035_Rebels";
 
 factionInfos = [
 	[c_USA,_USA,"US Army [CUP]"],
@@ -73,6 +76,7 @@ factionInfos = [
 	[c_ColdWar_USA,_ColdWar_USA,"Cold War USA [UNSUNG]"],
 	[c_2035_AAF,_2035_AAF,"2035 AAF"],
 	[c_2035_NATO,_2035_NATO,"2035 NATO [ACE]"],
+	[c_2035_Rebels,_2035_Rebels,"2035 Rebels"],
 	[c_USA_2000_DF,_USA_2000_DF,"1993 USA Delta Force [CUP][ACE]"],
 	[c_Russian_Winter, _Russian_Winter, "Russian Winter [CUP]"],
 	[c_PMC, _PMC, "PMC Modern [CUP]"]
