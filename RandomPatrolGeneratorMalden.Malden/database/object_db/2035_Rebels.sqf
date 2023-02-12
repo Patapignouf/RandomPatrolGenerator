@@ -72,10 +72,10 @@ baseEnemyVehicleGroup_2035_Rebels = ["I_G_Offroad_01_AT_F",
 "I_G_Van_01_transport_F"];
 
 //Basic enemy light armored vehicle avalaible must be destroyed without heavy AT (ex : BMP)
-baseEnemyLightArmoredVehicleGroup_2035_Rebels = ["I_MRAP_03_hmg_F"];
+baseEnemyLightArmoredVehicleGroup_2035_Rebels = ["I_G_Offroad_01_armed_F"];
 
 //Basic enemy heavy armored vehicle avalaible must be destroyed with other vehicle or heavy AT (ex : tank)
-baseEnemyHeavyArmoredVehicleGroup_2035_Rebels = ["I_APC_tracked_03_cannon_F"];
+baseEnemyHeavyArmoredVehicleGroup_2035_Rebels = ["CUP_I_MTLB_pk_SYNDIKAT"];
 
 //Basic enemy chopper avalaible
 baseChopperGroup_2035_Rebels = [];
