@@ -4,8 +4,7 @@
 #include "GUI\setupGUI\missionSetupObjectives.hpp"
 #include "GUI\loadoutGUI\playerLoadoutSetup.hpp"
 #include "GUI\respawnGUI\playerRespawnMenu.hpp"
-
-
+#include "GUI\dialogGUI\dialogCivilian.hpp"
 
 respawnDialog = 0;
 respawnOnStart = -1;
