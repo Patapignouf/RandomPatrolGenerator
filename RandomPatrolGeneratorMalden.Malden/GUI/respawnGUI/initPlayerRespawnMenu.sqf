@@ -103,15 +103,9 @@ _keyDown = (findDisplay 8000) displayAddEventHandler ["KeyDown", {
 	private _handled = false;
 
 	switch (_dikCode) do {
+		case 1;
 		case 57: {
 			// case 57 for SPACE -> https://community.bistudio.com/wiki/DIK_KeyCodes
-			// open your dialog
-			_control closeDisplay 1;
-			[[], 'GUI\respawnGUI\initPlayerRespawnMenu.sqf'] remoteExec ['BIS_fnc_execVM', player];
-		};
-		case 1:
-		{
-			// case 1 for ESC -> https://community.bistudio.com/wiki/DIK_KeyCodes
 			// open your dialog
 			_control closeDisplay 1;
 			[[], 'GUI\respawnGUI\initPlayerRespawnMenu.sqf'] remoteExec ['BIS_fnc_execVM', player];

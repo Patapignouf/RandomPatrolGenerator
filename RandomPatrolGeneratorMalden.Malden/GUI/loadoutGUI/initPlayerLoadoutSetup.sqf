@@ -151,6 +151,7 @@ _keyDown = (findDisplay 7000) displayAddEventHandler ["KeyDown", {
 	private _handled = false;
 
 	switch (_dikCode) do {
+		case 1;
 		case 57: {
 			// case 1 for ESC -> https://community.bistudio.com/wiki/DIK_KeyCodes
 			// open your dialog
@@ -158,6 +159,5 @@ _keyDown = (findDisplay 7000) displayAddEventHandler ["KeyDown", {
 			[[], 'GUI\loadoutGUI\initPlayerLoadoutSetup.sqf'] remoteExec ['BIS_fnc_execVM', player];
 		};
 	};
-
 	_handled
 }];
