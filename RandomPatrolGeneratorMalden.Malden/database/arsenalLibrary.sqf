@@ -115,7 +115,7 @@ getItembyWarEra = {
 		//Future Warfare
 		case 4:
 		{
-			_itemList = ["ACE_DAGR", "ACE_microDAGR","ACE_EntrenchingTool","ACE_WaterBottle","ACE_CableTie","ACE_MapTools","ItemCompass","ItemMap","ItemWatch","ACE_RangeTable_82mm","Binocular","ACE_SpraypaintRed","ACE_EarPlugs"];
+			_itemList = ["ACE_DAGR", "ACE_microDAGR","B_UavTerminal","ACE_EntrenchingTool","ACE_WaterBottle","ACE_CableTie","ACE_MapTools","ItemCompass","ItemMap","ItemWatch","ACE_RangeTable_82mm","Binocular","ACE_SpraypaintRed","ACE_EarPlugs"];
 			if (isClass (configFile >> "CfgPatches" >> "task_force_radio")) then {
 				_itemList pushBack "TFAR_anprc152";
 			} ;
@@ -265,10 +265,18 @@ setupArsenalToItem = {
 	//Add backpack to arsenal
 	[_itemToAttachArsenal, ([_currentPlayer, _currentFaction] call getVirtualBackPack ), false, false] call BIS_fnc_addVirtualBackpackCargo;
 
-	//[VA2,((itemCargo VA2) + _availableHeadgear + _availableUniforms + _availableVests)] call BIS_fnc_addVirtualItemCargo;
-	[_itemToAttachArsenal,true, false, false] call BIS_fnc_addVirtualMagazineCargo;
+	//In ironMan mode the magazine are limited
+	if (!ironMan) then 
+	{
+		[_itemToAttachArsenal,true, false, false] call BIS_fnc_addVirtualMagazineCargo;
+	};
+	
 	[_itemToAttachArsenal,([_currentPlayer,_currentFaction] call getVirtualAttachement ) + ([_currentPlayer,_currentFaction] call getVirtualItemList ) + ([_currentPlayer,_currentFaction] call getVirtualUniform ),false, false] call BIS_fnc_addVirtualItemCargo;
 	//["AmmoboxInit",[_itemToAttachArsenal,false,{true}]] call BIS_fnc_arsenal;
+
+	//Remove action Arsenal
+	_itemToAttachArsenal call RemoveArsenalActionFromGivenObject;
+
 	_itemToAttachArsenal;
 };
 
@@ -625,6 +633,51 @@ adjustLoadout = {
 	diag_log format ["Player %1 loadout adjust", name _currentPlayer];
 };
 
+RemoveArsenalActionFromGivenObject = {
+	{if (_this actionParams _x select 0 == "Arsenal") exitWith {_this removeAction _x}} forEach actionIDs _this;
+};
 
 
+saveCustomLoadout = {
+		params ["_currentPlayer", "_defaultParam"];
 
+		//Case where no player's is given as parameter
+		if (isNull _currentPlayer) then 
+		{
+			_currentPlayer = player;
+		};
+
+		_defaultStuff = [];
+
+		//Determine default loadout
+		switch (_defaultParam) do
+			{
+			case "personal":
+				{
+					_defaultStuff = getUnitLoadout _currentPlayer;
+				};
+			case "spawnLoadout":
+				{
+					_defaultStuff = _currentPlayer getVariable ["spawnLoadout", []];
+				};
+			default
+				{
+					//Do nothing
+				};
+		};
+
+
+		//Save personnal loadout
+		if (_currentPlayer getVariable "sideBeforeDeath" == "independent") then 
+		{
+			//Independent
+			profileNamespace setVariable [format ["RPG_%1_%2_%3", name _currentPlayer, indFaction, _currentPlayer getVariable "role"], _defaultStuff];
+		} else 
+		{
+			//Blufor
+			profileNamespace setVariable [format ["RPG_%1_%2_%3", name _currentPlayer, bluFaction, _currentPlayer getVariable "role"], _defaultStuff];
+		};
+
+		diag_log format ["Loadout saved on : RPG_%1_%2_%3 = %4", name player, indFaction, player getVariable "role", _defaultStuff];
+		saveProfileNamespace;
+};

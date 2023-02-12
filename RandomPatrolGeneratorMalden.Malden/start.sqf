@@ -269,7 +269,6 @@ clearBackpackCargoGlobal VA1;
 VA1 allowDamage false; 
 publicvariable "VA1";
 
-
 /////////////////////////
 ////Generate Ind/////////
 /////////////////////////
@@ -833,7 +832,8 @@ if (enableCampaignMode) then
 			PossibleObjectivePosition = [avalaibleTypeOfObj, PossibleObjectivePosition, missionDifficultyParam] call generateObjective;
 
 			//Reveal objective to the player
-			[objNull, [], _mainPlayerSide] execVM 'engine\objectiveManagement\revealObjective.sqf';
+			//[objNull, [], _mainPlayerSide] execVM 'engine\objectiveManagement\revealObjective.sqf';
+			//Force player to get intel from civilian to have tasks
 
 			//Update objective complete counter
 			_completedObjectives = missionNamespace getVariable ["completedObjectives",[]];

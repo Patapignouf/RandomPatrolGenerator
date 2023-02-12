@@ -24,6 +24,7 @@ missionNamespace setVariable ["civilianFaction", 2, true]; //Default faction 2 -
 //Missions vehicle settings
 missionNamespace setVariable ["enableArmedAicraft", false, true]; //Default armed aircraft are disabled
 missionNamespace setVariable ["enableArmoredVehicle", false, true]; //Default armored vehicle are disabled
+missionNamespace setVariable ["ironMan", false, true]; //Default disable ironman mode
 
 //Mission configuration
 missionNamespace setVariable ["enableCampaignMode", false, true]; //Default armored vehicle are disabled

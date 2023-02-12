@@ -161,6 +161,30 @@ class DialogSetupParams
 			h = 0.0219952 * safezoneH;
 		};
 
+
+		//Faction civ select
+		class RscText_6012: RscText
+		{
+			idc = 6012;
+			style = ST_MULTI;
+			lineSpacing = 1;
+			text = "Ironman mode"; //--- ToDo: Localize;
+			x = 0.261406 * safezoneW + safezoneX;
+			y = 0.36 * safezoneH + safezoneY;
+			w = 0.211441 * safezoneW;
+			h = 0.241947 * safezoneH;
+		};
+
+		class RscCombo_6110: RscCombo
+		{
+			idc = 6110;
+			text = "Ironman Select Combo"; //--- ToDo: Localize;
+			x = 0.261406 * safezoneW + safezoneX;
+			y = 0.50 * safezoneH + safezoneY;
+			w = 0.154713 * safezoneW;
+			h = 0.0219952 * safezoneH;
+		};
+
 		////////////////////
 		//Mission settings//
 		////////////////////

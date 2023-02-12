@@ -68,7 +68,7 @@ doGenerateVehicleForFOB =
 								"Nudge",  
 								{  
 									_dir = [(_this select 1), (_this select 0)] call BIS_fnc_dirTo;  
-									_nudgePos = [(getPos (_this select 0)), 2, _dir] call dro_extendPos;  
+									//_nudgePos = [(getPos (_this select 0)), 2, _dir] call dro_extendPos;  
 									(_this select 0) setVelocity [(sin _dir)*3, (cos _dir)*3, 0.5];	
 								},  
 								nil,  

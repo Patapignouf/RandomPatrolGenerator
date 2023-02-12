@@ -22,8 +22,12 @@ indFaction = missionNamespace getVariable "independentFaction";
 //Function params
 firstOpen = true;
 
-//Load default loadout when player open loadout screen
-player setUnitLoadout (player getVariable ["spawnLoadout", []]);
+//Load default loadout when player open loadout screen if there isn't ironMan mode enabled
+if (!ironMan) then 
+{
+	player setUnitLoadout (player getVariable ["spawnLoadout", []]);
+};
+
 
 //Specify all GUI content and button actions
 _comboBoxClassSelection ctrlAddEventHandler[ "LBSelChanged", 
@@ -67,23 +71,24 @@ _buttonArsenal ctrlAddEventHandler[ "ButtonClick",
 //Save loadout
 _buttonSave ctrlAddEventHandler[ "ButtonClick", 
 	{ 
-		//Manage default stuff
-		player setVariable ["spawnLoadout", getUnitLoadout player];
-
-		//Save personnal loadout
-		if (player getVariable "sideBeforeDeath" == "independent") then 
+		//Save default stuff when ironMan mode is disable
+		if (!ironMan) then 
 		{
-			//Independent
-			profileNamespace setVariable [format ["RPG_%1_%2_%3", name player, indFaction, player getVariable "role"], getUnitLoadout player];
+			player setVariable ["spawnLoadout", getUnitLoadout player];
+		};
+
+		//Save current loadout
+		[player, "personal"] call saveCustomLoadout;
+
+		//Load default faction stuff in ironMan mode
+		if (ironMan) then 
+		{
+			player setUnitLoadout (player getVariable ["spawnLoadout", []]);
+			cutText ["Loadout saved\nLoading default loadout", "PLAIN", 0.3];
 		} else 
 		{
-			//Blufor
-			profileNamespace setVariable [format ["RPG_%1_%2_%3", name player, bluFaction, player getVariable "role"], getUnitLoadout player];
+			cutText ["Loadout saved", "PLAIN", 0.3];
 		};
-		diag_log format ["Loadout saved on : RPG_%1_%2_%3", name player, indFaction, player getVariable "role"];
-		saveProfileNamespace;
-
-		cutText ["Loadout saved", "PLAIN", 0.3];
 	}];
 
 //Load loadout
@@ -102,8 +107,18 @@ _buttonLoad ctrlAddEventHandler[ "ButtonClick",
 		};
 		
 		player setUnitLoadout _loadableLoadout;
+		
 
-		cutText ["Loadout loaded", "PLAIN", 0.3];
+		//Wipe saved loadout in Ironman mode
+		if (ironMan) then 
+		{
+			//Wipe loadout according to player faction
+			[player, "empty"] call saveCustomLoadout;
+			cutText ["Loadout loaded\nWipe custom loadout", "PLAIN", 0.3];
+		} else 
+		{
+			cutText ["Loadout loaded", "PLAIN", 0.3];
+		};
 	}];
 
 //Close display
@@ -114,8 +129,11 @@ _buttonClose ctrlAddEventHandler[ "ButtonClick",
 		_display = ctrlParent _ctrl;
 		_display closeDisplay 1;
 
-		//Save default stuff on close
-		player setVariable ["spawnLoadout", getUnitLoadout player];
+		//Save default stuff on close when ironMan mode is disable
+		if (!ironMan) then 
+		{
+			player setVariable ["spawnLoadout", getUnitLoadout player];
+		};
 	}
 ];
 
@@ -151,6 +169,7 @@ _keyDown = (findDisplay 7000) displayAddEventHandler ["KeyDown", {
 	private _handled = false;
 
 	switch (_dikCode) do {
+		case 1;
 		case 57: {
 			// case 1 for ESC -> https://community.bistudio.com/wiki/DIK_KeyCodes
 			// open your dialog
@@ -158,6 +177,5 @@ _keyDown = (findDisplay 7000) displayAddEventHandler ["KeyDown", {
 			[[], 'GUI\loadoutGUI\initPlayerLoadoutSetup.sqf'] remoteExec ['BIS_fnc_execVM', player];
 		};
 	};
-
 	_handled
 }];

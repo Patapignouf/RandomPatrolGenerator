@@ -190,6 +190,12 @@ while {sleep 10; !RTBComplete} do
 		{
 			["taskRTB","SUCCEEDED"] call BIS_fnc_taskSetState;
 			RTBComplete = true;
+
+			//Save current loadout
+			if (ironMan) then 
+			{
+				[objNull, "personal"] remoteExec ["saveCustomLoadout", 0, true];
+			};
 		};
 	};
 };
