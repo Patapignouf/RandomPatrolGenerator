@@ -265,8 +265,12 @@ setupArsenalToItem = {
 	//Add backpack to arsenal
 	[_itemToAttachArsenal, ([_currentPlayer, _currentFaction] call getVirtualBackPack ), false, false] call BIS_fnc_addVirtualBackpackCargo;
 
-	//[VA2,((itemCargo VA2) + _availableHeadgear + _availableUniforms + _availableVests)] call BIS_fnc_addVirtualItemCargo;
-	[_itemToAttachArsenal,true, false, false] call BIS_fnc_addVirtualMagazineCargo;
+	//In ironMan mode the magazine are limited
+	if (!ironMan) then 
+	{
+		[_itemToAttachArsenal,true, false, false] call BIS_fnc_addVirtualMagazineCargo;
+	};
+	
 	[_itemToAttachArsenal,([_currentPlayer,_currentFaction] call getVirtualAttachement ) + ([_currentPlayer,_currentFaction] call getVirtualItemList ) + ([_currentPlayer,_currentFaction] call getVirtualUniform ),false, false] call BIS_fnc_addVirtualItemCargo;
 	//["AmmoboxInit",[_itemToAttachArsenal,false,{true}]] call BIS_fnc_arsenal;
 	_itemToAttachArsenal;
@@ -625,6 +629,6 @@ adjustLoadout = {
 	diag_log format ["Player %1 loadout adjust", name _currentPlayer];
 };
 
-
-
-
+RemoveArsenalActionFromGivenObject = {
+	{if (_this actionParams _x select 0 == "Arsenal") exitWith {_this removeAction _x}} forEach actionIDs _this;
+};

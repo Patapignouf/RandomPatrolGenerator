@@ -18,6 +18,7 @@ private _comboBoxEnableArmoredVehicle = _mainDisplay displayCtrl 6106;
 private _comboBoxEnableCampaignMode = _mainDisplay displayCtrl 6107;
 private _comboBoxMissionLength = _mainDisplay displayCtrl 6108;
 private _comboBoxMissionDifficulty = _mainDisplay displayCtrl 6109;
+private _comboBoxIronman = _mainDisplay displayCtrl 6110;
 
 //Specify all GUI content 
 //Populate faction comboBox
@@ -51,13 +52,13 @@ _comboBoxWarEra lbSetCurSel (3); //Actual Warfare
 		_currentComboBox lbAdd format ["%1", _x];
 		_currentComboBox lbSetData [(lbSize _currentComboBox)-1, format ["%1",_x]];
 	} foreach booleanSelection;
-} foreach [_comboBoxEnableArmedAicraft, _comboBoxEnableArmoredVehicle];
+} foreach [_comboBoxEnableArmedAicraft, _comboBoxEnableArmoredVehicle, _comboBoxIronman];
 
 
 //Default values
 _comboBoxEnableArmedAicraft lbSetCurSel (0); //Disable
 _comboBoxEnableArmoredVehicle lbSetCurSel (0); //Disable
-
+_comboBoxIronman lbSetCurSel (0); 
 
 //Populate mission configuration
 

@@ -22,8 +22,12 @@ indFaction = missionNamespace getVariable "independentFaction";
 //Function params
 firstOpen = true;
 
-//Load default loadout when player open loadout screen
-player setUnitLoadout (player getVariable ["spawnLoadout", []]);
+//Load default loadout when player open loadout screen if there isn't ironMan mode enabled
+if (!ironMan) then 
+{
+	player setUnitLoadout (player getVariable ["spawnLoadout", []]);
+};
+
 
 //Specify all GUI content and button actions
 _comboBoxClassSelection ctrlAddEventHandler[ "LBSelChanged", 
@@ -67,8 +71,11 @@ _buttonArsenal ctrlAddEventHandler[ "ButtonClick",
 //Save loadout
 _buttonSave ctrlAddEventHandler[ "ButtonClick", 
 	{ 
-		//Manage default stuff
-		player setVariable ["spawnLoadout", getUnitLoadout player];
+		//Save default stuff when ironMan mode is disable
+		if (!ironMan) then 
+		{
+			player setVariable ["spawnLoadout", getUnitLoadout player];
+		};
 
 		//Save personnal loadout
 		if (player getVariable "sideBeforeDeath" == "independent") then 
@@ -82,8 +89,16 @@ _buttonSave ctrlAddEventHandler[ "ButtonClick",
 		};
 		diag_log format ["Loadout saved on : RPG_%1_%2_%3", name player, indFaction, player getVariable "role"];
 		saveProfileNamespace;
-
-		cutText ["Loadout saved", "PLAIN", 0.3];
+	
+		//Load default faction stuff in ironMan mode
+		if (ironMan) then 
+		{
+			player setUnitLoadout (player getVariable ["spawnLoadout", []]);
+			cutText ["Loadout saved\nLoading default loadout", "PLAIN", 0.3];
+		} else 
+		{
+			cutText ["Loadout saved", "PLAIN", 0.3];
+		};
 	}];
 
 //Load loadout
@@ -102,8 +117,27 @@ _buttonLoad ctrlAddEventHandler[ "ButtonClick",
 		};
 		
 		player setUnitLoadout _loadableLoadout;
+		
 
-		cutText ["Loadout loaded", "PLAIN", 0.3];
+		//Wipe saved loadout in Ironman mode
+		if (ironMan) then 
+		{
+			//Wipe loadout according to player faction
+			if (player getVariable "sideBeforeDeath" == "independent") then 
+			{
+				//Independent
+				profileNamespace setVariable [format ["RPG_%1_%2_%3", name player, indFaction, player getVariable "role"], []];
+			} else 
+			{
+				//Blufor
+				profileNamespace setVariable [format ["RPG_%1_%2_%3", name player, bluFaction, player getVariable "role"], []];
+			};		
+			saveProfileNamespace;	
+			cutText ["Loadout loaded\nWipe custom loadout", "PLAIN", 0.3];
+		} else 
+		{
+			cutText ["Loadout loaded", "PLAIN", 0.3];
+		};
 	}];
 
 //Close display
@@ -114,8 +148,11 @@ _buttonClose ctrlAddEventHandler[ "ButtonClick",
 		_display = ctrlParent _ctrl;
 		_display closeDisplay 1;
 
-		//Save default stuff on close
-		player setVariable ["spawnLoadout", getUnitLoadout player];
+		//Save default stuff on close when ironMan mode is disable
+		if (!ironMan) then 
+		{
+			player setVariable ["spawnLoadout", getUnitLoadout player];
+		};
 	}
 ];
 

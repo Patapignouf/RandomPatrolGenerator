@@ -269,6 +269,8 @@ clearBackpackCargoGlobal VA1;
 VA1 allowDamage false; 
 publicvariable "VA1";
 
+//Remove action Arsenal
+VA1 call RemoveArsenalActionFromGivenObject;
 
 /////////////////////////
 ////Generate Ind/////////
@@ -447,6 +449,9 @@ clearItemCargoGlobal VA2;
 clearBackpackCargoGlobal VA2;
 VA2 allowDamage false; 
 publicvariable "VA2";
+
+//Remove arsenal
+VA2 call RemoveArsenalActionFromGivenObject;
 
 //Create portable FOB 
 deployableFOBItem = createVehicle [deployableFOB, [initBlueforLocation, 20, 50, 3, 0, 20, 0] call BIS_fnc_findSafePos, [], 0, "NONE"];
