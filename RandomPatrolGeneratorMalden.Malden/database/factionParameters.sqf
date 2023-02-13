@@ -17,6 +17,7 @@ _USA_2000_DF = 15;
 _Russian_Winter = 16;
 _PMC = 17;
 _2035_Rebels = 18;
+_2035_NATO_FS = 19;
 
 #include "object_db\USA.sqf"
 #include "object_db\French.sqf"
@@ -33,6 +34,7 @@ _2035_Rebels = 18;
 #include "object_db\ColdWar_USA.sqf"
 #include "object_db\2035_AAF.sqf"
 #include "object_db\2035_NATO.sqf"
+#include "object_db\2035_NATO_FS.sqf"
 #include "object_db\USA_2000_DF.sqf"
 #include "object_db\Russian_Winter.sqf"
 #include "object_db\PMC.sqf"
@@ -55,6 +57,7 @@ c_ColdWar_NVA = "_ColdWar_NVA";
 c_ColdWar_USA = "_ColdWar_USA";
 c_2035_AAF = "_2035_AAF";
 c_2035_NATO = "_2035_NATO";
+c_2035_NATO_FS = "_2035_NATO_FS";
 c_USA_2000_DF = "_USA_2000_DF";
 c_Russian_Winter = "_Russian_Winter";
 c_PMC = "_PMC";
@@ -76,6 +79,7 @@ factionInfos = [
 	[c_ColdWar_USA,_ColdWar_USA,"Cold War USA [UNSUNG]"],
 	[c_2035_AAF,_2035_AAF,"2035 AAF"],
 	[c_2035_NATO,_2035_NATO,"2035 NATO [ACE]"],
+	[c_2035_NATO_FS,_2035_NATO_FS,"2035 NATO Special Forces"],
 	[c_2035_Rebels,_2035_Rebels,"2035 Rebels"],
 	[c_USA_2000_DF,_USA_2000_DF,"1993 USA Delta Force [CUP][ACE]"],
 	[c_Russian_Winter, _Russian_Winter, "Russian Winter [CUP]"],
