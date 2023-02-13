@@ -687,7 +687,23 @@ switch (missionInitSetup) do
 	case 1:
 		{
 			//Setup init Civ city
-			[[text initCityLocation,"ColorBlue","loc_help",getPos initCityLocation, "All"], 'objectGenerator\doGenerateMarker.sqf'] remoteExec ['BIS_fnc_execVM', 0];
+			//Init task for blufor to get informations
+			[blufor, "taskContactCiv", [format ["Contact civilians at %1 to get tasks", text initCityLocation], "Contact civilians", ""], objNull, 1, 3, true] call BIS_fnc_taskCreate;
+			initCityLocationTrigger = createTrigger ["EmptyDetector", getPos initCityLocation]; //create a trigger area created at object with variable name my_object
+			initCityLocationTrigger setTriggerArea [100, 100, 0, false]; // trigger area with a radius of 100m.
+			
+			//Setup task completion
+			[] spawn {
+				_hasContactCivilian = false;
+				while {sleep 10; !_hasContactCivilian} do 
+				{
+					if (count((allPlayers select {alive _x && side _x == blufor && _x getVariable "isDead" == false} ) inAreaArray initCityLocationTrigger) >0) then 
+					{
+						_hasContactCivilian = true;
+						["taskContactCiv","SUCCEEDED"] call BIS_fnc_taskSetState;
+					};
+				};
+			};
 		};
 	case 2:
 		{
