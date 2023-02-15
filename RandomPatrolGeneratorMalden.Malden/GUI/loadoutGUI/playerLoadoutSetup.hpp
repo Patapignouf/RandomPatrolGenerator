@@ -33,7 +33,7 @@ class PlayerLoadoutSetup
 			text = "Arsenal";
 			x = 0.551406 * safezoneW + safezoneX;
 			y = 0.25 * safezoneH + safezoneY;
-			w = 0.154713 * safezoneW;
+			w = 0.104713 * safezoneW;
 			h = 0.0219952 * safezoneH;
 		};
 
@@ -70,6 +70,17 @@ class PlayerLoadoutSetup
 			y = GUI_GRID_CENTER_Y + 5 * GUI_GRID_CENTER_H;
 			w = 10 * GUI_GRID_CENTER_W;
 			h = 1 * GUI_GRID_CENTER_H;
+		};
+
+		//Clear button
+		class ClearItemsButton: RscButton
+		{
+			idc = 7204;
+			text = "Clear items";
+			x = 0.701406 * safezoneW + safezoneX;
+			y = 0.25 * safezoneH + safezoneY;
+			w = 0.054713 * safezoneW;
+			h = 0.0219952 * safezoneH;
 		};
 
 		////////////////////

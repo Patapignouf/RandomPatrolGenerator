@@ -14,6 +14,8 @@ private _buttonClose = _mainDisplay displayCtrl 7200;
 private _buttonArsenal = _mainDisplay displayCtrl 7201;
 private _buttonSave = _mainDisplay displayCtrl 7202;
 private _buttonLoad = _mainDisplay displayCtrl 7203;
+private _buttonClearItems = _mainDisplay displayCtrl 7204;
+
 
 //Faction params
 bluFaction = missionNamespace getVariable "bluforFaction";
@@ -68,6 +70,13 @@ _buttonArsenal ctrlAddEventHandler[ "ButtonClick",
 		[] execVM 'database\openArsenal.sqf';
 	}];
 
+//Open arsenal
+_buttonClearItems ctrlAddEventHandler[ "ButtonClick", 
+	{ 
+			hint "Stuff cleared";
+			removeAllItemsWithMagazines player;
+	}];
+
 //Save loadout
 _buttonSave ctrlAddEventHandler[ "ButtonClick", 
 	{ 
@@ -99,11 +108,11 @@ _buttonLoad ctrlAddEventHandler[ "ButtonClick",
 		if (player getVariable "sideBeforeDeath" == "independent") then 
 		{
 			//Independent
-			_loadableLoadout = profileNamespace getVariable [format ["RPG_%1_%2_%3", name player, indFaction, player getVariable "role"], player getVariable "spawnLoadout"];
+			_loadableLoadout = profileNamespace getVariable [format [loadoutSaveName, name player, indFaction, player getVariable "role"], player getVariable "spawnLoadout"];
 		} else 
 		{
 			//Blufor
-			_loadableLoadout = profileNamespace getVariable [format ["RPG_%1_%2_%3", name player, bluFaction, player getVariable "role"], player getVariable "spawnLoadout"];
+			_loadableLoadout = profileNamespace getVariable [format [loadoutSaveName, name player, bluFaction, player getVariable "role"], player getVariable "spawnLoadout"];
 		};
 		
 		player setUnitLoadout _loadableLoadout;
