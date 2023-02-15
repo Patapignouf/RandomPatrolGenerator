@@ -3,6 +3,14 @@ warEra = missionNamespace getVariable "warEra"; // Default actual warfare
 
 c_listOfRoles = [c_leader,c_at,c_rifleman,c_engineer,c_autorifleman,c_marksman,c_medic];
 
+loadoutSaveName = "RPG_%1_%2_%3";
+
+if (ironMan) then 
+{
+	loadoutSaveName = "RPG_ironMan_%1_%2_%3";
+};
+
+
 getLoadoutByRole = {
 	currentPlayer = _this select 0;
 	currentFaction = _this select 1;
@@ -340,7 +348,7 @@ switchToRole = {
 	_caller setVariable ["role", _role, true];
 
 	//Manage default stuff
-	_personalLoadout = profileNamespace getVariable [format ["RPG_%1_%2_%3",name _caller, _faction , _role], []];
+	_personalLoadout = profileNamespace getVariable [format [loadoutSaveName,name _caller, _faction , _role], []];
 	if (count _personalLoadout != 0 && _allowCustomLoad) then 
 	{
 		//Personal loadout 
@@ -671,11 +679,11 @@ saveCustomLoadout = {
 		if (_currentPlayer getVariable "sideBeforeDeath" == "independent") then 
 		{
 			//Independent
-			profileNamespace setVariable [format ["RPG_%1_%2_%3", name _currentPlayer, indFaction, _currentPlayer getVariable "role"], _defaultStuff];
+			profileNamespace setVariable [format [loadoutSaveName, name _currentPlayer, indFaction, _currentPlayer getVariable "role"], _defaultStuff];
 		} else 
 		{
 			//Blufor
-			profileNamespace setVariable [format ["RPG_%1_%2_%3", name _currentPlayer, bluFaction, _currentPlayer getVariable "role"], _defaultStuff];
+			profileNamespace setVariable [format [loadoutSaveName, name _currentPlayer, bluFaction, _currentPlayer getVariable "role"], _defaultStuff];
 		};
 
 		diag_log format ["Loadout saved on : RPG_%1_%2_%3 = %4", name player, indFaction, player getVariable "role", _defaultStuff];
