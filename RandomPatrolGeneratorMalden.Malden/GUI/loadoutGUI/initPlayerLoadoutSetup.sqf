@@ -30,6 +30,13 @@ if (!ironMan) then
 	player setUnitLoadout (player getVariable ["spawnLoadout", []]);
 };
 
+//Specify button's names in ironMan mode 
+if (ironMan) then 
+{
+	_buttonSave ctrlSetText "Place loadout in the box"; 
+	_buttonLoad ctrlSetText "Get back loadout from the box";
+};
+
 
 //Specify all GUI content and button actions
 _comboBoxClassSelection ctrlAddEventHandler[ "LBSelChanged", 
