@@ -2,7 +2,6 @@
 params ["_thisAvailablePosition","_thisTargetPosition","_thisAvailableInfantryGroups","_thisAvailableVehicleGroups","_thisDifficulty"];
 
 currentAttackGroup = objNull;
-currentGroup = objNull;
 currentPosition = [];
 if (isServer) then
 {
@@ -24,13 +23,13 @@ if (isServer) then
 			
 			if (((_players apply {_x#1})#0) distance currentPosition >= 300) then 
 			{
-			currentGroup = [([currentPosition,1,60,10,0] call BIS_fnc_findSafePos), east, currentAttackGroup,[],[],[],[],[],0] call BIS_fnc_spawnGroup;
-			diag_log format ["Create group : %1 at position %2 and assault to position %3", currentGroup, getPos (leader currentGroup), _thisTargetPosition];
+			_currentGroup = [([currentPosition,1,60,10,0] call BIS_fnc_findSafePos), east, currentAttackGroup,[],[],[],[],[],0] call BIS_fnc_spawnGroup;
+			diag_log format ["Create group : %1 at position %2 and assault to position %3", _currentGroup, getPos (leader _currentGroup), _thisTargetPosition];
 
 			//Assault for infantry
-			[currentGroup, _thisTargetPosition] spawn lambs_wp_fnc_taskAssault;
-			[currentGroup, (currentPosition distance _thisTargetPosition) + 500] spawn lambs_wp_fnc_taskHunt;
-			currentGroup setFormation "DIAMOND";
+			[_currentGroup, _thisTargetPosition] execVM 'enemyManagement\behaviorEngine\doAttack.sqf';
+			//[currentGroup, (currentPosition distance _thisTargetPosition) + 500] spawn lambs_wp_fnc_taskHunt;
+			_currentGroup setFormation "DIAMOND";
 			diag_log format ["Group %1 ready to assault", _j ];
 			} else 
 			{
@@ -58,7 +57,7 @@ if (isServer) then
 					currentVehicleGroup move (_thisTargetPosition);
 					currentVehicleGroup setBehaviour "SAFE";
 					_numberOfVehicleSpawned = _numberOfVehicleSpawned + 1;
-					(vehicle leader currentGroup) limitSpeed 15; //limit speed of vehicle
+					(vehicle leader currentVehicleGroup) limitSpeed 15; //limit speed of vehicle
 				} else 
 				{
 					diag_log format ["doAmbush : Spawn on %1 near players %2 blocked", getPos ((_players apply {_x#1})#0), currentPosition];

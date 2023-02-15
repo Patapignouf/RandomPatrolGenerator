@@ -258,7 +258,11 @@ for [{_i = 0}, {_i <= 2}, {_i = _i + 1}] do
 	diag_log format ["Generation of civilian group : %1 on position %2 has been completed", currentCivGroup, initCityLocation];
 };
 
-[civsGroup, false] execVM 'enemyManagement\behaviorEngine\doGarrison.sqf';
+//Garrison or camp every civ group
+{
+	[_x, getPos (leader _x), 80, true] execVM 'enemyManagement\behaviorEngine\doGarrison.sqf';
+} foreach civsGroup;
+
 
 //Init VA
 VA1 = createVehicle ["Box_IND_Wps_F", [getPos initCityLocation, 1, 5, 3, 0, 20, 0] call BIS_fnc_findSafePos, [], 0, "NONE"];
