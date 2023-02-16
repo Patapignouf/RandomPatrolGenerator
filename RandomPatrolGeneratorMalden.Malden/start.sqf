@@ -292,7 +292,10 @@ if ( count AvalaibleInitAttackPositions != 0 && (enableInitAttack == 1 || ((enab
 };
 
 //Generate items on VA1 box 
-VA1 addItemCargoGlobal ["ACE_key_indp", 5];
+if (isClass (configFile >> "CfgPatches" >> "ace_medical")) then 
+{
+	VA1 addItemCargoGlobal ["ACE_key_indp", 5];
+};
 
 //Init perma harass on player
 [[baseEnemyGroup,baseEnemyATGroup,baseEnemyDemoGroup],baseEnemyVehicleGroup, baseEnemyLightArmoredVehicleGroup, baseEnemyHeavyArmoredVehicleGroup, missionDifficultyParam] execVM 'enemyManagement\generationEngine\generateHarass.sqf'; 
@@ -568,7 +571,7 @@ publicvariable "deployableFOBItem";
 	clearMagazineCargoGlobal _tempBox;
 	clearItemCargoGlobal _tempBox;
 	clearBackpackCargoGlobal _tempBox;
-} foreach ["Box_NATO_Uniforms_F", "ACE_Box_82mm_Mo_Combo"];
+} foreach ["Box_NATO_Uniforms_F", "Box_NATO_Grenades_F"];
 
 //Place empty box with ACE medical stuff
 _tempBox = createVehicle ["Box_NATO_Equip_F", [ initBlueforLocation, 1, 15, 2, 0, 20, 0] call BIS_fnc_findSafePos, [], 0, "NONE"];

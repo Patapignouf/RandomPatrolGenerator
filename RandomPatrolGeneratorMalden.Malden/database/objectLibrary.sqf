@@ -3,26 +3,35 @@
 //////////////////////////////
 avalaibleAmmoBox = [
 	"Box_IDAP_Uniforms_F", 
-	"Box_NATO_AmmoOrd_F", 
-	"Box_NATO_Grenades_F", 
+	"Box_NATO_AmmoOrd_F",  
 	"Box_NATO_WpsLaunch_F", 
-	"Box_IND_Support_F"
+	"Box_IND_Support_F",
+	"Box_FIA_Wps_F"
 ];
 
 avalaibleSupplyBox = [
-	"ACE_medicalSupplyCrate_advanced", 
-	"ACE_medicalSupplyCrate",
 	"Box_IND_Support_F"
 ];
 
+if (isClass (configFile >> "CfgPatches" >> "ace_medical")) then 
+{
+	avalaibleSupplyBox pushBack "ACE_medicalSupplyCrate_advanced";
+	avalaibleSupplyBox pushBack "ACE_medicalSupplyCrate";
+};
+
 avalaibleHVT = [
-	"CUP_O_TK_Officer",
-	"CUP_O_RU_Officer_EMR", 
 	"O_Officer_Parade_F", 
 	"O_G_officer_F",
 	"B_Officer_Parade_F", 
 	"I_E_Officer_Parade_Veteran_F"
 ];
+
+if (isClass (configFile >> "CfgPatches" >> "CUP_BaseData")) then 
+{
+	avalaibleHVT pushBack "CUP_O_TK_Officer";
+	avalaibleHVT pushBack "CUP_O_RU_Officer_EMR";
+};
+
 
 avalaibleVIP = [
 	"C_Driver_1_F",
@@ -35,6 +44,13 @@ avalaibleVIP = [
 	"C_IDAP_Man_AidWorker_09_F", 
 	"C_scientist_01_formal_F"
 ];
+
+if (isClass (configFile >> "CfgPatches" >> "CUP_BaseData")) then 
+{
+	avalaibleVIP pushBack "CUP_C_R_Priest_01";
+	avalaibleVIP pushBack "CUP_C_R_Fireman_01";
+	avalaibleVIP pushBack "CUP_C_R_Doctor_01";
+};
 
 avalaibleStealVehicle = [
 	"C_Truck_02_box_F", 
@@ -57,8 +73,6 @@ avalaibleCollectIntel = [
 ];
 
 avalaibleTypeOfObj = [];
-avalaibleAttackTypeOfObj = ["ammo","hvt","clearArea"];
-avalaibleSupportTypeOfObj = ["supply","vip","collectIntel","informant","steal"];
 
 //List of all avalaible objective
 avalaibleTypeOfObjectives = [
