@@ -46,7 +46,7 @@ if ((["Respawn",1] call BIS_fnc_getParamValue) == 0 ) then
   if (isClass (configFile >> "CfgPatches" >> "ace_medical")) then 
   {
     [true, true, false] call ace_spectator_fnc_setSpectator;
-    [allPlayers, []] call ace_spectator_fnc_updateUnits;
+    [allPlayers, allPlayers select {alive _x == false || _x getVariable "isDead" == true}] call ace_spectator_fnc_updateUnits;
     [[0,1,2], []] call ace_spectator_fnc_updateCameraModes;
   } else 
   {
@@ -58,7 +58,7 @@ if ((["Respawn",1] call BIS_fnc_getParamValue) == 0 ) then
   if (isClass (configFile >> "CfgPatches" >> "ace_medical")) then 
   {
     [true, true, false] call ace_spectator_fnc_setSpectator;
-    [allPlayers, []] call ace_spectator_fnc_updateUnits;
+    [allPlayers, allPlayers select {alive _x == false || _x getVariable "isDead" == true}] call ace_spectator_fnc_updateUnits;
     [[1,2], [0]] call ace_spectator_fnc_updateCameraModes;
   } else 
   {
