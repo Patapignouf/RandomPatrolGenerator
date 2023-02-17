@@ -254,6 +254,23 @@ getVirtualBackPack = {
 	virtualBackpackList
 };
 
+getVirtualMagazine = {
+	currentPlayer = _this select 0;
+	currentFaction = _this select 1;
+	currentPlayerClass = currentPlayer getVariable "role";
+	virtualMagazineList = [];
+
+	switch (currentPlayerClass) do
+	{
+		default 
+			{ 
+				//Default Magazine list
+				virtualMagazineList = virtualMagazineList + (magazineList_db select {_x select 1  == currentFaction} select 0 select 0);
+			};
+	};
+	diag_log format ["Player %1 with role %2 has access to items %3", name currentPlayer, currentPlayerClass, virtualMagazineList ];
+	virtualMagazineList
+};
 
 setupArsenalToItem = {
 	//InitParam
@@ -261,7 +278,6 @@ setupArsenalToItem = {
 
 	//Process
 	//Clean arsenal
-	//["AmmoboxExit", itemToAttachArsenal] call BIS_fnc_arsenal;	
 	[_itemToAttachArsenal,_itemToAttachArsenal call BIS_fnc_getVirtualWeaponCargo,false] call BIS_fnc_removeVirtualWeaponCargo;
 	[_itemToAttachArsenal,_itemToAttachArsenal call BIS_fnc_getVirtualItemCargo,false] call BIS_fnc_removeVirtualItemCargo;
 	[_itemToAttachArsenal,_itemToAttachArsenal call BIS_fnc_getVirtualMagazineCargo,false] call BIS_fnc_removeVirtualMagazineCargo;
@@ -273,14 +289,17 @@ setupArsenalToItem = {
 	//Add backpack to arsenal
 	[_itemToAttachArsenal, ([_currentPlayer, _currentFaction] call getVirtualBackPack ), false, false] call BIS_fnc_addVirtualBackpackCargo;
 
-	//In ironMan mode the magazine are limited
-	if (!ironMan) then 
+	//Add magazine to arsenal
+	_currentMagazineItems = [_currentPlayer,_currentFaction] call getVirtualMagazine;
+	if (count _currentMagazineItems == 0) then 
 	{
 		[_itemToAttachArsenal,true, false, false] call BIS_fnc_addVirtualMagazineCargo;
+	} else {
+		[_itemToAttachArsenal, _currentMagazineItems, false, false] call BIS_fnc_addVirtualItemCargo;
 	};
-	
+
+	//Add items, uniforms and optics to arsenal
 	[_itemToAttachArsenal,([_currentPlayer,_currentFaction] call getVirtualAttachement ) + ([_currentPlayer,_currentFaction] call getVirtualItemList ) + ([_currentPlayer,_currentFaction] call getVirtualUniform ),false, false] call BIS_fnc_addVirtualItemCargo;
-	//["AmmoboxInit",[_itemToAttachArsenal,false,{true}]] call BIS_fnc_arsenal;
 
 	//Remove action Arsenal
 	_itemToAttachArsenal call RemoveArsenalActionFromGivenObject;

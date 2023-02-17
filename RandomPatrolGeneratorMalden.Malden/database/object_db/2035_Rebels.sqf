@@ -284,9 +284,17 @@ backPackList_2035_Rebels = [
 //Uniform, vest, headgear, avalaible for all unit
 uniformList_2035_Rebels = [
 	"U_C_HunterBody_grn",
-	"U_Marshal"
+	"U_Marshal",
+	"U_C_Journalist",
+	"U_C_HunterBody_brn"
 	];
 
 //Magazine avalaible for all unit
 magazineList_2035_Rebels = [
+	"2Rnd_12Gauge_Pellets",
+	"2Rnd_12Gauge_Slug",
+	"6Rnd_45ACP_Cylinder",
+	"CUP_10x_303_M",
+	"CUP_1Rnd_12Gauge_Pellets_No00_Buck",
+	"CUP_7Rnd_45ACP_1911"
 	];
