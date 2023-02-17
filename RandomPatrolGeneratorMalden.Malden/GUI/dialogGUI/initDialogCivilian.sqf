@@ -186,7 +186,7 @@ _RcsButtonObjective ctrlAddEventHandler[ "ButtonClick",
 				_intelDiaryAlreadyRevealed = player getVariable "diaryIntel";
 				_allDiaryIntel =  format ["%1 <br/> %2 <br/>", _intelDiaryAlreadyRevealed, _intelRevelated];
 				player removeDiaryRecord  ["RPG", _intelDiaryAlreadyRevealed]; //Update diary doesn't work very well so delete/create is the only solution
-				_newIntelDiaryAlreadyRevealed = player createDiaryRecord ["RPG", ["Random Patrol Generator intel", _allDiaryIntel]];
+				_newIntelDiaryAlreadyRevealed = player createDiaryRecord ["RPG", ["RPG intel", _allDiaryIntel]];
 				player setVariable ["diaryIntel", _newIntelDiaryAlreadyRevealed];
 
 			missionNamespace setVariable ["TAG_fnc_civsAsked",(round random 1),true];
