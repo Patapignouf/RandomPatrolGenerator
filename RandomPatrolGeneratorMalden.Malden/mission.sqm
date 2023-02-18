@@ -55,8 +55,8 @@ class DynamicSimulation
 	saturateByObjectDistance=0;
 	class EnableRadiuses
 	{
-		Vehicle=2500;
-		Group=2000;
+		Vehicle=2000;
+		Group=1500;
 	};
 };
 randomSeed=1466210;
