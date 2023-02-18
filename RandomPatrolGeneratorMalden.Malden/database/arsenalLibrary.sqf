@@ -295,7 +295,7 @@ setupArsenalToItem = {
 	{
 		[_itemToAttachArsenal,true, false, false] call BIS_fnc_addVirtualMagazineCargo;
 	} else {
-		[_itemToAttachArsenal, _currentMagazineItems, false, false] call BIS_fnc_addVirtualItemCargo;
+		[_itemToAttachArsenal, _currentMagazineItems, false, false] call BIS_fnc_addVirtualMagazineCargo;
 	};
 
 	//Add items, uniforms and optics to arsenal
