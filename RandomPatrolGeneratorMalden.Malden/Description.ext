@@ -51,13 +51,6 @@ class Params
 		texts[] = {"Default","Force blufor"};
 		default = 0;
 	};
-	class MissionInitSetup
-	{
-		title = "Mission Init Setup";
-		values[] = {1,2};
-		texts[] = {"Blufor must contact civilian to take objectives","Blufor has objective on spawn"};
-		default = 1;
-	};
 	class EnableInitAttack
 	{
 		title = "Init an attack on independent position on start";

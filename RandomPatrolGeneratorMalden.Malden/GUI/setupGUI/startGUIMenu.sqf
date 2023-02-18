@@ -14,6 +14,8 @@ private _comboBoxEnableCampaignMode = _mainDisplay displayCtrl 6107;
 private _comboBoxMissionLength = _mainDisplay displayCtrl 6108;
 private _comboBoxMissionDifficulty = _mainDisplay displayCtrl 6109;
 private _comboBoxIronman = _mainDisplay displayCtrl 6110;
+private _comboBoxStartIntel = _mainDisplay displayCtrl 6112;
+
 
 //Get all combo box value
 bluforFactionSelected = _comboBoxBlufor lbData (lbCurSel _comboBoxBlufor);
@@ -28,6 +30,7 @@ enableArmoredVehicleSelected = _comboBoxEnableArmoredVehicle lbData (lbCurSel _c
 enableCampaignModeSelected = _comboBoxEnableCampaignMode lbData (lbCurSel _comboBoxEnableCampaignMode);
 missionLengthSelected = _comboBoxMissionLength lbData (lbCurSel _comboBoxMissionLength);
 missionDifficultySelected = _comboBoxMissionDifficulty lbData (lbCurSel _comboBoxMissionDifficulty);
+missionStartIntel = _comboBoxStartIntel lbData (lbCurSel _comboBoxStartIntel);
 
 //Display combo box value for debug
 diag_log format ["Blufor faction choose : %1\nOpfor faction choose : %2\nIndependent faction choose : %3\nCivilian faction choose : %4\n ", bluforFactionSelected, opforFactionSelected, independentFactionSelected, civilianFactionSelected];
@@ -49,6 +52,7 @@ missionNamespace setVariable ["enableCampaignMode", [enableCampaignModeSelected,
 missionNamespace setVariable ["missionLength", parseNumber missionLengthSelected, true]; //Default armored vehicle are disabled
 missionNamespace setVariable ["missionDifficultyParam", parseNumber missionDifficultySelected, true]; //Default armored vehicle are disabled
 missionNamespace setVariable ["ironMan", [ironManSelected, "true"] call BIS_fnc_inString, true]; //Default disable ironman mode
+missionNamespace setVariable ["startIntel", parseNumber missionStartIntel, true]; //Default disable ironman mode
 
 //Go to objective selection
 [[], 'GUI\setupGUI\startGUIMenuObjectives.sqf'] remoteExec ['BIS_fnc_execVM', player];

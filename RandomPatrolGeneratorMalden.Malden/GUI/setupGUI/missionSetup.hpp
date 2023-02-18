@@ -305,6 +305,29 @@ class DialogSetupParams
 			h = 0.0219952 * safezoneH;
 		};
 
+		//Starting intel
+		class RscText_6013: RscText
+		{
+			idc = -1;
+			style = ST_MULTI;
+			lineSpacing = 1;
+			text = "Starting intel"; //--- ToDo: Localize;
+			x = 0.551406 * safezoneW + safezoneX;
+			y = 0.36 * safezoneH + safezoneY;
+			w = 0.211441 * safezoneW;
+			h = 0.241947 * safezoneH;
+		};
+
+		class RscCombo_6112: RscCombo
+		{
+			idc = 6112;
+			text = "Starting intel Combo"; //--- ToDo: Localize;
+			x = 0.551406 * safezoneW + safezoneX;
+			y = 0.50 * safezoneH + safezoneY;
+			w = 0.154713 * safezoneW;
+			h = 0.0219952 * safezoneH;
+		};
+
 	};
 
 };

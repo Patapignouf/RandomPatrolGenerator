@@ -22,3 +22,9 @@ missionDifficultySelection = [
 	[3,"Very Hard"],
 	[4,"Insane"]
 ];
+
+missionStartIntelSelection = [
+	[1,"Blufor must contact civilian to take objectives"],
+	[2,"Blufor has objective on spawn"]
+];
+

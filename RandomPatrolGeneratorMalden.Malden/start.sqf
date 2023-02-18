@@ -9,7 +9,6 @@
 enableInitAttack = "EnableInitAttack" call BIS_fnc_getParamValue;
 enableInitBluAttack = "EnableInitBluAttack" call BIS_fnc_getParamValue;
 initBluforBase = "InitBluforBase" call BIS_fnc_getParamValue;
-missionInitSetup = "MissionInitSetup" call BIS_fnc_getParamValue;
 chooseStartPos = "ChooseStartPos" call BIS_fnc_getParamValue;
 timeOfDay = "TimeOfDay" call BIS_fnc_getParamValue;
 respawnSettings = "Respawn" call BIS_fnc_getParamValue;
@@ -37,6 +36,7 @@ enableArmoredVehicle = missionNamespace getVariable "enableArmoredVehicle"; //De
 enableCampaignMode = missionNamespace getVariable "enableCampaignMode"; //Default disable
 missionLength = missionNamespace getVariable "missionLength"; //Default 2 missions + 1 optional
 missionDifficultyParam = missionNamespace getVariable "missionDifficultyParam"; //Default medium
+startIntel = missionNamespace getVariable "startIntel"; //Default medium
 
 /////////////////////////
 ////Setup IA Opti////////
@@ -689,7 +689,7 @@ for [{_i = 0}, {_i <= missionLength}, {_i = _i + 1}] do //Peut être optimisé
 
 //Case where blufor has objective on start
 
-switch (missionInitSetup) do
+switch (startIntel) do
 {
 	case 1:
 		{
