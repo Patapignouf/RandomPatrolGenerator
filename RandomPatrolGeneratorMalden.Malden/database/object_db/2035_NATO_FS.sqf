@@ -285,16 +285,7 @@ itemList_2035_NATO_FS = [
 	"ACE_RangeTable_82mm",
 	"acc_flashlight",
 	"ACE_Banana",
-	"SmokeShell",
-	"SmokeShellBlue",
-	"SmokeShellGreen",
-	"SmokeShellOrange",
-	"SmokeShellPurple",
-	"SmokeShellRed",
-	"SmokeShellYellow",
 	"muzzle_snds_H_snd_F",
-	"HandGrenade",
-	"MiniGrenade",
 	"ACE_SpraypaintBlack",
 	"ACE_SpraypaintBlue",
 	"ACE_SpraypaintGreen",
@@ -347,6 +338,7 @@ uniformList_2035_NATO_FS = [
 ];
 
 //Magazine avalaible for all unit
+//Special note throwing items must be placed here too
 magazineList_2035_NATO_FS = [
 	"30Rnd_556x45_Stanag_Sand",
 	"11Rnd_45ACP_Mag",
@@ -361,7 +353,16 @@ magazineList_2035_NATO_FS = [
 	"Titan_AT",
 	"Titan_AP",
 	"NLAW_F",
-	"MRAWS_HEAT_F"
+	"MRAWS_HEAT_F",
+	"HandGrenade",
+	"MiniGrenade",
+	"SmokeShell",
+	"SmokeShellBlue",
+	"SmokeShellGreen",
+	"SmokeShellOrange",
+	"SmokeShellPurple",
+	"SmokeShellRed",
+	"SmokeShellYellow"
 ];
 
 //Get magazine with following command
