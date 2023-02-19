@@ -328,6 +328,28 @@ class DialogSetupParams
 			h = 0.0219952 * safezoneH;
 		};
 
+		//Starting IA Difficulty
+		class RscText_6014: RscText
+		{
+			idc = -1;
+			style = ST_MULTI;
+			lineSpacing = 1;
+			text = "IA Skills"; //--- ToDo: Localize;
+			x = 0.551406 * safezoneW + safezoneX;
+			y = 0.41 * safezoneH + safezoneY;
+			w = 0.211441 * safezoneW;
+			h = 0.241947 * safezoneH;
+		};
+
+		class RscCombo_6115: RscCombo
+		{
+			idc = 6113;
+			text = "IA Skills"; //--- ToDo: Localize;
+			x = 0.551406 * safezoneW + safezoneX;
+			y = 0.55 * safezoneH + safezoneY;
+			w = 0.154713 * safezoneW;
+			h = 0.0219952 * safezoneH;
+		};
 	};
 
 };

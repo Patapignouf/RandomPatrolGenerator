@@ -20,6 +20,7 @@ private _comboBoxMissionLength = _mainDisplay displayCtrl 6108;
 private _comboBoxMissionDifficulty = _mainDisplay displayCtrl 6109;
 private _comboBoxIronman = _mainDisplay displayCtrl 6110;
 private _comboBoxStartIntel = _mainDisplay displayCtrl 6112;
+private _comboBoxIASkill = _mainDisplay displayCtrl 6113;
 
 //Specify all GUI content 
 //Populate faction comboBox
@@ -92,11 +93,19 @@ _currentComboBox = _comboBoxStartIntel;
 	_currentComboBox lbSetData [(lbSize _currentComboBox)-1, format ["%1",_x select 0]];
 } foreach missionStartIntelSelection;
 
+//Mission IA Skill
+_currentComboBox = _comboBoxIASkill;
+{
+	_currentComboBox lbAdd format ["%1", _x select 1];
+	_currentComboBox lbSetData [(lbSize _currentComboBox)-1, format ["%1",_x select 0]];
+} foreach missionIASkill;
+
+
 //Default values 
 _comboBoxEnableCampaignMode lbSetCurSel (0); //Syndikat
 _comboBoxMissionLength lbSetCurSel (1); //Syndikat
 _comboBoxMissionDifficulty lbSetCurSel (1); //Syndikat
 _comboBoxStartIntel lbSetCurSel (0); //Blufor must take intel
-
+_comboBoxIASkill lbSetCurSel (1); //IA Skill default value : Balanced
 
 

@@ -19,7 +19,9 @@ doGenerateEnemyGroup =
 		_missionEnemyInfo pushBack [_thisGroupType,_thisSpawnPosition, _currentGroupPatrol];
 		missionNamespace setVariable ["MissionEnemyInfo", _missionEnemyInfo, true];
 	};
-
+	
+	//Set IA Skills
+	[_currentGroupPatrol, 0] call doSetGroupSkills;
 
 	//Manage civilian specific feature
 	if (_thisFaction == civilian) then 
@@ -62,9 +64,72 @@ doGenerateEnemyGroup =
 		} foreach (units _currentGroupPatrol);
 	};
 
-
-
-
 	//Return spawned group
 	_currentGroupPatrol
+};
+
+
+doSetGroupSkills = 
+{
+	params ["_thisGroup", "_thisSkillLevel"];
+
+	switch (_thisSkillLevel) do
+	{
+		case 0:
+			{
+				 {
+					_unit = _x;
+					_unit setSkill ["aimingAccuracy", random [0.25, 0.30, 0.35]];
+					_unit setSkill ["aimingShake", random [0.06, 0.08, 0.1]];
+					_unit setSkill ["aimingSpeed", random [0.1, 0.15, 0.20]];
+					_unit setSkill ["spotDistance", random [0.5, 0.6, 0.7]];
+					_unit setSkill ["spotTime", random [0.2, 0.3, 0.4]];
+					_unit setSkill ["general", random [0.6, 0.65, 0.7]];	
+					_unit setSkill ["courage", random [0.2, 0.25, 0.3]];
+					_unit setSkill ["reloadSpeed", random [0.2, 0.3, 0.3]];
+				 } forEach (units _thisGroup);
+			};
+		case 1:
+			{
+				 {
+					_unit = _x;
+					_unit setSkill ["aimingAccuracy", random [0.50, 0.55, 0.60]];
+					_unit setSkill ["aimingShake", random [0.06, 0.08, 0.1]];
+					_unit setSkill ["aimingSpeed", random [0.25, 0.30, 0.35]];
+					_unit setSkill ["spotDistance", random [0.7, 0.75, 0.8]];
+					_unit setSkill ["spotTime", random [0.3, 0.4, 0.5]];
+					_unit setSkill ["general", random [0.7, 0.75, 0.8]];	
+					_unit setSkill ["courage", random [0.3, 0.4, 0.5]];
+					_unit setSkill ["reloadSpeed", random [0.2, 0.3, 0.3]];
+				 } forEach (units _thisGroup);
+			};
+		case 2:
+			{
+				 {
+					_unit = _x;
+					_unit setSkill ["aimingAccuracy", random [0.50, 0.55, 0.60]];
+					_unit setSkill ["aimingShake", random [0.10, 0.15, 0.2]];
+					_unit setSkill ["aimingSpeed", random [0.40, 0.45, 0.50]];
+					_unit setSkill ["spotDistance", random [0.75, 0.8, 0.85]];
+					_unit setSkill ["spotTime", random [0.4, 0.45, 0.5]];
+					_unit setSkill ["general", random [0.8, 0.85, 0.88]];	
+					_unit setSkill ["courage", random [0.4, 0.5, 0.6]];
+					_unit setSkill ["reloadSpeed", random [0.3, 0.4, 0.5]];
+				 } forEach (units _thisGroup);
+			};
+		case 3:
+			{
+				 {
+					_unit = _x;
+					_unit setSkill ["aimingAccuracy", random [0.70, 0.80, 0.90]];
+					_unit setSkill ["aimingShake", random [0.10, 0.15, 0.20]];
+					_unit setSkill ["aimingSpeed", random [0.50, 0.60, 0.70]];
+					_unit setSkill ["spotDistance", random [0.75, 0.8, 0.9]];
+					_unit setSkill ["spotTime", random [0.4, 0.5, 0.55]];
+					_unit setSkill ["general", random [0.75, 0.8, 0.85]];	
+					_unit setSkill ["courage", random [0.4, 0.45, 0.5]];
+					_unit setSkill ["reloadSpeed", random [0.3, 0.4, 0.5]];
+				 } forEach (units _thisGroup);
+			};
+	};
 };
