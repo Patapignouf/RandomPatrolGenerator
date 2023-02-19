@@ -21,7 +21,7 @@ doGenerateEnemyGroup =
 	};
 	
 	//Set IA Skills
-	[_currentGroupPatrol, 0] call doSetGroupSkills;
+	[_currentGroupPatrol, missionIASkill] call doSetGroupSkills;
 
 	//Manage civilian specific feature
 	if (_thisFaction == civilian) then 
