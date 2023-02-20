@@ -1,6 +1,17 @@
 //Import mission params
 warEra = missionNamespace getVariable "warEra"; // Default actual warfare
 
+c_leader = "leader";
+c_at = "at";
+c_rifleman = "rifleman";
+c_engineer = "engineer";
+c_autorifleman = "autorifleman";
+c_marksman = "marksman"; 
+c_medic = "medic";
+c_radioman = "radioman";
+c_grenadier = "grenadier";
+c_ammobearer = "ammobearer";
+
 c_listOfRoles = [c_leader,c_at,c_rifleman,c_engineer,c_autorifleman,c_marksman,c_medic];
 
 loadoutSaveName = "RPG_%1_%2_%3";

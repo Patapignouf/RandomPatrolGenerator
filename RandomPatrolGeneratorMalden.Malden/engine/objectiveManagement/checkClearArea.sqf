@@ -38,14 +38,14 @@ if (!([_thisObjectiveToComplete,[]] call BIS_fnc_areEqual)) then
 	missionNamespace setVariable ["completedObjectives",_completedObjectives,true];	
 
 	//Call respawn
-	if (["Respawn",1] call BIS_fnc_getParamValue) then 
+	if (["Respawn",1] call BIS_fnc_getParamValue == 1) then 
 	{
 		[[], "engine\respawnManagement\respawnManager.sqf"] remoteExec ['BIS_fnc_execVM', 0];
 	};
 };
 
 //Check FOB clear
-_thisFOBCheck = _thisTrigger getVariable ["isFOBAssociated",false];
+_thisFOBCheck = _thisTrigger getVariable ["isFOBAssociated", false];
 if (_thisFOBCheck) then 
 {
 	//Hint players for cleared FOB
