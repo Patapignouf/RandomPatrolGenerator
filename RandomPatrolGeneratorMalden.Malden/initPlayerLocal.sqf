@@ -369,7 +369,7 @@ if (hasInterface) then
 							
 							//Reduce avalaible spawn counter
 							missionNamespace setVariable ["bluforAdvancedVehicleAvalaibleSpawn", bluforAdvancedVehicleAvalaibleSpawnCounter-1, true];
-							hint format ["A %2 has spawned, %1 avdvanced spawn credit left.", bluforAdvancedVehicleAvalaibleSpawnCounter-1, getText (configFile >> "cfgVehicles" >> _avalaibleVehicle >> "displayName")];
+							hint format ["A %2 has spawned, %1 avdvanced spawn credit left.", bluforAdvancedVehicleAvalaibleSpawnCounter-1, getText (configFile >> "cfgVehicles" >> _avalaibleAicraft >> "displayName")];
 						};
 					} else 
 					{
@@ -396,7 +396,7 @@ if (hasInterface) then
 					_caller setPos selectedHaloLoc;
 					[_caller,1500] call BIS_fnc_halo;
 				};
-			},o,1.5,true,false,"","_target distance _this <5"];
+			},[],1.5,true,false,"","_target distance _this <5"];
 		};
 
 		waituntil {!isNil "isBluforAttacked" && !isNil "isIndAttacked"};

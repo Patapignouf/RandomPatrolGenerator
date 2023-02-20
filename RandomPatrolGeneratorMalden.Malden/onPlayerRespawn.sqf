@@ -51,7 +51,7 @@ if ((["Respawn",1] call BIS_fnc_getParamValue) == 0 ) then
   } else 
   {
     ["Initialize", [player, [], true ]] call BIS_fnc_EGSpectator;
-    [1,["You will respawn on the next objective completion", "PLAIN", 5]] remoteExec ["cutText", _caller];	
+    [1,["You will respawn on the next objective completion", "PLAIN", 5]] remoteExec ["cutText", player];	
   };
 } else 
 {
