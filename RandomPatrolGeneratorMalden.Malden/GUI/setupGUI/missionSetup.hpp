@@ -288,7 +288,7 @@ class DialogSetupParams
 			idc = 6011;
 			style = ST_MULTI;
 			lineSpacing = 1;
-			text = "Mission difficutly selection"; //--- ToDo: Localize;
+			text = "Number of opfor"; //--- ToDo: Localize;
 			x = 0.551406 * safezoneW + safezoneX;
 			y = 0.31 * safezoneH + safezoneY;
 			w = 0.211441 * safezoneW;
