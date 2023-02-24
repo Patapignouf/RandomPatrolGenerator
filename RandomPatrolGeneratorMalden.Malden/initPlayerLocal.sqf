@@ -419,14 +419,32 @@ if (didJIP) then
 	_deadPlayerList = missionNamespace getVariable "deadPlayer";
 	if (count (_deadPlayerList select { _x == (name player) }) == 0) then 
 	{
-		player setPos [0,0,10000];
-		player allowdamage false;
-		player enableSimulationGlobal false;
-		[[], 'GUI\respawnGUI\initPlayerRespawnMenu.sqf'] remoteExec ['BIS_fnc_execVM', player];
+
+		//Disable specific respawn menu
+		// player setPos [0,0,10000];
+		// player allowdamage false;
+		// player enableSimulationGlobal false;
+		// player setVariable ["isDead", true, true];
+		//[[], 'GUI\respawnGUI\initPlayerRespawnMenu.sqf'] remoteExec ['BIS_fnc_execVM', player];
+		player allowdamage true;
+		player enableSimulationGlobal true;
+		cutText ["", "BLACK IN", 5];
+
+		if (player getVariable "sideBeforeDeath" == "independent") then 
+		{
+			//Independent
+			player setPos ([getPos initCityLocation, 1, 5, 3, 0, 20, 0] call BIS_fnc_findSafePos);
+		} else 
+		{
+			//Blufor
+			player setPos ([initBlueforLocation, 1, 5, 3, 0, 20, 0] call BIS_fnc_findSafePos);
+		};
+
 	} else 
 	{
 		player setPos [0,0];
 		player setDamage 1;
+		player setVariable ["isDead",true, true];
 	};
 } else {
 	//Let's get it started !
