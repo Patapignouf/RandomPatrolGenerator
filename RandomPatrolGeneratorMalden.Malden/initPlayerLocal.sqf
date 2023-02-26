@@ -429,17 +429,6 @@ if (didJIP) then
 		player allowdamage true;
 		player enableSimulationGlobal true;
 		cutText ["", "BLACK IN", 5];
-
-		if (player getVariable "sideBeforeDeath" == "independent") then 
-		{
-			//Independent
-			player setPos ([getPos initCityLocation, 1, 5, 3, 0, 20, 0] call BIS_fnc_findSafePos);
-		} else 
-		{
-			//Blufor
-			player setPos ([initBlueforLocation, 1, 5, 3, 0, 20, 0] call BIS_fnc_findSafePos);
-		};
-
 	} else 
 	{
 		player setPos [0,0];
