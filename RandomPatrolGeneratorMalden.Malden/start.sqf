@@ -855,8 +855,10 @@ if (enableCampaignMode) then
 			PossibleObjectivePosition = [avalaibleTypeOfObj, PossibleObjectivePosition, missionDifficultyParam] call generateObjective;
 
 			//Reveal objective to the player
-			//[objNull, [], _mainPlayerSide] execVM 'engine\objectiveManagement\revealObjective.sqf';
-			//Force player to get intel from civilian to have tasks
+			if (startIntel == 2) then 
+			{
+				[objNull, [], _mainPlayerSide] execVM 'engine\objectiveManagement\revealObjective.sqf';
+			};
 
 			//Update objective complete counter
 			_completedObjectives = missionNamespace getVariable ["completedObjectives",[]];
