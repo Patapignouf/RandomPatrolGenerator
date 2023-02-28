@@ -233,6 +233,101 @@ generateObjectiveObject =
 					};
 				},_thisObjective,1.5,true,true,"","_target distance _this <3"]] remoteExec ["addAction", 0, true];
 			};
+		case "captureFlag":
+			{
+				//Generate objective object
+				_objectiveObject = createVehicle ["Flag_Red_F", _currentRandomPos, [], 0, "NONE"];
+				_objectiveObject setVariable ["isObjectiveObject", true, true];
+				_thisObjective = [_objectiveObject, _thisObjectiveType] call generateObjectiveTracker;
+
+				//Search safe position around objective position
+				_objectiveObject setPos ([( _thisObjectivePosition), 1, 25, 5, 0, 20, 0] call BIS_fnc_findSafePos);
+
+				//Add capture action to the flag
+				[
+					_objectiveObject, 
+					"Capture the flag", 
+					"\a3\ui_f_orange\Data\CfgOrange\Missions\action_fragment_back_ca.paa", 
+					"\a3\ui_f_orange\Data\CfgOrange\Missions\action_fragment_back_ca.paa", 
+					"_this distance _target < 5", 
+					"_caller distance _target < 5", 
+					{
+						// Action start code
+						params ["_object","_caller","_ID","_objectParams"];
+						{
+							//Check every opfor group near the flag
+							if ((_object distance (leader _x)) < 150 ) then 
+							{
+								//Remove current opfor group action if LAMBS is enable
+								if (isClass (configFile >> "CfgPatches" >> "lambs_danger")) then 
+								{
+									[_x] call lambs_wp_fnc_taskReset; //reset current task
+								};
+								
+								//Ask opfor group to go to the flag
+								[_x, getPos _object] execVM 'enemyManagement\behaviorEngine\doAttack.sqf';
+							};
+						} foreach (allGroups select {side _x == opfor});
+					}, 
+					{
+						// Action on going code
+					},  
+					{
+						// Action successfull code
+						params ["_object","_caller","_ID","_objectParams","_progress","_maxProgress"];
+						_thisObjective = _objectParams select 0;
+
+						// Old flag position and rotation
+						_flagPos = getPosASL _object;
+						_flagVectorDir = vectorDir _object;
+						_flagVectorUp = vectorUp _object;
+
+						// Create new flag
+						_newFlag = createVehicle ["Flag_NATO_F", _flagPos];
+						// createVehicle is a bit random so need to reset position after creation
+						_newFlag setPosASL _flagPos;
+						// Set flag rotation
+						_newFlag setVectorDir _flagVectorDir;
+						_newFlag setVectorUp _flagVectorUp;
+
+						// Olg flag removed
+						deleteVehicle (_object);
+
+						//Manage Completed Objective
+						_completedObjectives = missionNamespace getVariable ["completedObjectives",[]];
+						_completedObjectives pushBack _thisObjective;
+						missionNamespace setVariable ["completedObjectives",_completedObjectives,true];	
+						//Manage UncompletedObjective
+						_missionUncompletedObjectives = missionNamespace getVariable ["missionUncompletedObjectives",[]];
+						_missionUncompletedObjectives = _missionUncompletedObjectives - [_thisObjective];
+						missionNamespace setVariable ["missionUncompletedObjectives",_missionUncompletedObjectives,true];
+						//Manage player's feedback
+						if ("RealismMode" call BIS_fnc_getParamValue == 1) then 
+						{
+							[] call doIncrementVehicleSpawnCounter;	
+							[_thisObjective] execVM 'engine\objectiveManagement\completeObjective.sqf'; 
+							
+						};
+						//Manage respawn and remove actions from NPC
+						removeAllActions _object;
+						[_object] remoteExec ["removeAllActions", 0, true];
+						if (["Respawn",1] call BIS_fnc_getParamValue == 1) then 
+						{
+							[[], "engine\respawnManagement\respawnManager.sqf"] remoteExec ['BIS_fnc_execVM', 0];
+						};
+					}, 
+					{
+						// Action failed code
+					}, 
+					[_thisObjective],  
+					30,
+					0, 
+					true, 
+					false
+				] remoteExec ["BIS_fnc_holdActionAdd", 0, true];
+
+			};
+
 		case "informant":
 			{
 				//Generate objective object

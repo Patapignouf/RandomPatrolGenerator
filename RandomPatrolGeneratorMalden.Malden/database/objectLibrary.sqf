@@ -85,7 +85,8 @@ avalaibleTypeOfObjectives = [
 	["vip", "VIP", "Support", true],
 	["informant", "Informant", "Support", true],
 	["collectIntel", "Collect Intel", "Support", true],
-	["steal", "Steal vehicle", "Support", true]
+	["steal", "Steal vehicle", "Support", true],
+	["captureFlag", "Capture city", "Attack", true]
 ];
 
 

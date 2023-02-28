@@ -78,6 +78,11 @@ if ((count _revealedObjectives != count _tempMissionObjectives)) then
 							_currentObjectiveDescription = format ["I drop my %1 with a lot of intel about enemy's location in %2. Can you pick it up ?", getText (configFile >> "cfgVehicles" >> typeOf _thisObject >> "displayName"),text _nearestLoc];
 							[_side, _objectiveToReveal select 2, [_currentObjectiveDescription, "Collect intel", "cookiemarker2"], objNull, 1, 3, true] call BIS_fnc_taskCreate;
 						};
+					case "captureFlag":
+						{
+							_currentObjectiveDescription = format ["You have to capture the flag of the location %2, this place has to be conquered !", getText (configFile >> "cfgVehicles" >> typeOf _thisObject >> "displayName"),text _nearestLoc];
+							[_side, _objectiveToReveal select 2, [_currentObjectiveDescription, "Capture the location", "cookiemarker2"], objNull, 1, 3, true] call BIS_fnc_taskCreate;
+						};
 					default { hint "default" };
 				};
 
