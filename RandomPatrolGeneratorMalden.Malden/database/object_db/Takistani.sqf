@@ -23,7 +23,14 @@ civilian_big_group_taki = ["CUP_C_TK_Man_06_Coat",
 "CUP_C_TK_Man_02"
 ];
 
-civilianTruck_taki = ["CUP_I_V3S_Open_TKG"];
+civilianTruck_taki = [
+	"CUP_C_Lada_TK_CIV", 
+	"CUP_C_V3S_Open_TKC", 
+	"CUP_C_LR_Transport_CTK", 
+	"CUP_C_S1203_CIV", 
+	"CUP_C_Volha_Limo_TKCIV", 
+	"CUP_C_Ural_Civ_01"
+];
 
 
 

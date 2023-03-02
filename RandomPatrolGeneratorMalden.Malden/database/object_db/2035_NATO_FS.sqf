@@ -289,7 +289,8 @@ itemList_2035_NATO_FS = [
 	"ACE_SpraypaintBlack",
 	"ACE_SpraypaintBlue",
 	"ACE_SpraypaintGreen",
-	"ACE_SpraypaintRed"
+	"ACE_SpraypaintRed",
+	"ACE_RangeCard"
 ];
 
 //item avalaible for all engineer

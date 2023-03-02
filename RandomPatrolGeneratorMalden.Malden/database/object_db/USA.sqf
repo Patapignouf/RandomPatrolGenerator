@@ -293,7 +293,8 @@ itemList_USA = [
 	"ACE_SpraypaintBlue",
 	"ACE_SpraypaintGreen",
 	"ACE_SpraypaintRed",
-	"ACE_IR_Strobe_Item"
+	"ACE_IR_Strobe_Item",
+	"ACE_RangeCard"
 	];
 
 itemEngineerList_USA = [
