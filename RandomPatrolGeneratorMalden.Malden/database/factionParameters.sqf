@@ -18,6 +18,7 @@ _Russian_Winter = 16;
 _PMC = 17;
 _2035_Rebels = 18;
 _2035_NATO_FS = 19;
+_Taki_Army = 20;
 
 #include "object_db\USA.sqf"
 #include "object_db\French.sqf"
@@ -39,6 +40,7 @@ _2035_NATO_FS = 19;
 #include "object_db\Russian_Winter.sqf"
 #include "object_db\PMC.sqf"
 #include "object_db\2035_Rebels.sqf"
+#include "object_db\Takistani_army.sqf"
 
 //Define faction prefix
 c_db = "_db";
@@ -62,6 +64,7 @@ c_USA_2000_DF = "_USA_2000_DF";
 c_Russian_Winter = "_Russian_Winter";
 c_PMC = "_PMC";
 c_2035_Rebels = "_2035_Rebels";
+c_Taki_Army = "_Taki_Army";
 
 factionInfos = [
 	[c_USA,_USA,"US Army [CUP]"],
@@ -83,7 +86,8 @@ factionInfos = [
 	[c_2035_Rebels,_2035_Rebels,"2035 Rebels"],
 	[c_USA_2000_DF,_USA_2000_DF,"1993 USA Delta Force [CUP][ACE]"],
 	[c_Russian_Winter, _Russian_Winter, "Russian Winter [CUP]"],
-	[c_PMC, _PMC, "PMC Modern [CUP]"]
+	[c_PMC, _PMC, "PMC Modern [CUP]"],
+	[c_Taki_Army, _Taki_Army, "Takistani Army [CUP]"]
 ];
 
 //Define global constant
