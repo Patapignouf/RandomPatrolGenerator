@@ -411,6 +411,16 @@ if (hasInterface) then
 //Generate civilian dialogs
 [] spawn _generateCivDialogs;
 
+//Show a special message when there is a teamkill
+player addEventHandler ["Killed", {
+	params ["_unit", "_killer", "_instigator", "_useEffects"];
+	diag_log format ["%1 has been killed by : %2", name _unit, name _killer];
+	if (isPlayer _killer) then 
+	{
+		[[format ["%1 has been killed by his teammate %2",name _unit, name _killer],side _killer], 'engine\doGenerateMessage.sqf'] remoteExec ['BIS_fnc_execVM', 0];
+	};	
+}];
+
 //If a player join in progress he will be teleported to his teamleader (WIP feature)
 if (didJIP) then 
 {
