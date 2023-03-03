@@ -80,22 +80,25 @@ avalaibleTypeOfObjectives = [
 	["ammo", "Ammo cache", "Attack", true],
 	["hvt", "HVT", "Attack", true],
 	["clearArea", "Clear Area", "Attack", true],
-	["defendArea", "Defend Area", "Attack", true],	
-	["supply", "Supply box", "Support", true],
-	["vip", "VIP", "Support", true],
+	["defendArea", "Defend Area", "Attack", true],
 	["informant", "Informant", "Support", true],
 	["collectIntel", "Collect Intel", "Support", true],
 	["steal", "Steal vehicle", "Support", true],
 	["captureFlag", "Capture city", "Attack", true]
 ];
 
+//If ACE is enable on the server, specific objectives are avalaible
+if (isClass (configFile >> "CfgPatches" >> "ace_medical")) then 
+{
+	avalaibleTypeOfObjectives pushBack ["vip", "VIP", "Support", true];
+	avalaibleTypeOfObjectives pushBack ["supply", "Supply box", "Support", true];
+};
+
 
 // avalaibleTypeOfObjectives = [
 // 	// [Technical Objective name, Display name, type of objective]
 // 	["hvt", "HVT", "Attack", true]
 // ];
-
-//avalaibleTypeOfObj = ["ammo"]; //Line use to debug a specific objective
 
 //FOB description from DRO
 //Waiting for a PANY FOB
