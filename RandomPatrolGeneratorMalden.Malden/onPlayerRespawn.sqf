@@ -1,3 +1,4 @@
+player hideObjectGlobal true;
 player setPos [0,0,10000];
 
 diag_log format ["Player %1 is dead", name player];

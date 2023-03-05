@@ -32,6 +32,7 @@ _buttonRespawnStart ctrlAddEventHandler[ "ButtonClick",
 		player setVariable ["isDead", false, true];
 		player allowdamage true;
 		player enableSimulationGlobal true;
+		player hideObjectGlobal false;
 		cutText ["", "BLACK IN", 5];
 
 		//Remove player name from the dead player's list
@@ -74,6 +75,7 @@ _buttonRespawnLeader ctrlAddEventHandler[ "ButtonClick",
 		player setVariable ["isDead", false, true];
 		player allowdamage true;
 		player enableSimulationGlobal true;
+		player hideObjectGlobal false;
 		cutText ["", "BLACK IN", 5];
 
 		//Remove player name from the dead player's list
