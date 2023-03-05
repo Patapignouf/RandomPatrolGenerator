@@ -77,6 +77,8 @@ publicVariable "bluforHQVehicle";
 bluforBoat = bluforBoat_db select {_x select 1  == bluFaction} select 0 select 0;
 publicVariable "bluforBoat";
 
+bluforMagazineList = magazineList_db select {_x select 1  == bluFaction} select 0 select 0;
+
 //CivilianGroupDefinition
 civilian_group = civilian_group_db select {_x select 1  == civFaction} select 0 select 0;
 civilian_big_group = civilian_big_group_db select {_x select 1  == civFaction} select 0 select 0;
@@ -571,7 +573,21 @@ publicvariable "deployableFOBItem";
 	clearMagazineCargoGlobal _tempBox;
 	clearItemCargoGlobal _tempBox;
 	clearBackpackCargoGlobal _tempBox;
-} foreach ["Box_NATO_Uniforms_F", "Box_NATO_Grenades_F"];
+} foreach ["Box_NATO_Grenades_F"];
+
+//Place a box with ammo to blufor camp
+{
+	_tempBox = createVehicle [_x, [ initBlueforLocation, 1, 15, 2, 0, 20, 0] call BIS_fnc_findSafePos, [], 0, "NONE"];
+	clearWeaponCargoGlobal _tempBox;
+	clearMagazineCargoGlobal _tempBox;
+	clearItemCargoGlobal _tempBox;
+	clearBackpackCargoGlobal _tempBox;
+
+	//Add magazines according to avalaible magazine in the faction
+	{
+		_tempBox addItemCargoGlobal [_x, 20];
+	}	foreach bluforMagazineList;
+} foreach ["Box_NATO_Uniforms_F"];
 
 //Place empty box with ACE medical stuff
 _tempBox = createVehicle ["Box_NATO_Equip_F", [ initBlueforLocation, 1, 15, 2, 0, 20, 0] call BIS_fnc_findSafePos, [], 0, "NONE"];
