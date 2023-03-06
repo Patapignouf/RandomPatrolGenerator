@@ -283,7 +283,7 @@ generateObjectiveObject =
 						_flagVectorUp = vectorUp _object;
 
 						// Create new flag
-						_newFlag = createVehicle ["Flag_NATO_F", _flagPos];
+						_newFlag = createVehicle ["Flag_Blue_F", _flagPos];
 						// createVehicle is a bit random so need to reset position after creation
 						_newFlag setPosASL _flagPos;
 						// Set flag rotation
