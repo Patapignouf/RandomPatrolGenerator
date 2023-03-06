@@ -225,7 +225,7 @@ currentObj = objNull;
 currentRandObj = objNull;
 
 //Generate objectives according to the mission's length parameter
-for [{_i = 0}, {_i <= missionLength max(count PossibleObjectivePosition)}, {_i = _i + 1}] do //Peut être optimisé
+for [{_i = 0}, {_i <= missionLength min(count PossibleObjectivePosition)}, {_i = _i + 1}] do //Peut être optimisé
 {
 	PossibleObjectivePosition = [avalaibleTypeOfObj, PossibleObjectivePosition, missionDifficultyParam] call generateObjective;
 };

@@ -105,7 +105,7 @@ doGenerateVehicleForFOB =
 
 						//UAV spawn is only avalaible for blufor
 						_tempPos = [[_thisPosition select 0, _thisPosition select 1],1,60,10,0] call BIS_fnc_findSafePos;
-						_tempPos pushBack ((_thisPosition select 2)+400); //Set 3 dimension position
+						_tempPos pushBack ((_thisPosition select 2)+1400); //Set 3 dimension position
 						_currentUAVArray = [_tempPos, 0, _vehicleClass, blufor] call BIS_fnc_spawnVehicle;
 						_currentVehicle = _currentUAVArray select 0;
 						_currentUAVGroup = _currentUAVArray select 2;
