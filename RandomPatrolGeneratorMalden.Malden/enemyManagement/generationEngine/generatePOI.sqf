@@ -14,7 +14,7 @@ if (_tempAvailablePosition distance _thisAvailablePosition < 200) then
 //Generate enemy infantry on AO
 diag_log format ["Infantry generation start on AO %1",_thisAvailablePosition];
 _baseRadius = 60;
-for [{_i = 0}, {_i < _thisDifficulty+2}, {_i = _i + 1}] do 
+for [{_i = 0}, {_i < _thisDifficulty+3}, {_i = _i + 1}] do 
 {
 	currentRandomGroup = selectRandom _thisAvailableOpforGroup;
 	currentGroup = [currentRandomGroup, _thisAvailablePosition, east, "DefenseInfantry"] call doGenerateEnemyGroup;
