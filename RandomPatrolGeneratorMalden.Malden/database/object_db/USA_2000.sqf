@@ -160,7 +160,8 @@ grenadeLauncherList_USA_2000 = [
 
 launcherList_USA_2000 = [		
 	"CUP_launch_M136",
-	"CUP_launch_FIM92Stinger"
+	"CUP_launch_FIM92Stinger",
+	"CUP_launch_Javelin"
 ];	
 
 
@@ -170,7 +171,8 @@ autorifleList_USA_2000 = [
 ];	
 
 marksmanrifleList_USA_2000 = [		
-	"CUP_srifle_DMR_LeupoldMk4"
+	"CUP_srifle_DMR_LeupoldMk4",
+	"CUP_srifle_M107_LeupoldVX3"
 ];
 
 smgList_USA_2000 = [		
@@ -288,14 +290,15 @@ itemMedicList_USA_2000 = [
 backPackList_USA_2000 = [
 	"B_Mortar_01_weapon_F",
 	"B_Mortar_01_support_F",
-	"CUP_B_USMC_MOLLE_MG"
+	"B_Kitbag_cbr"
 	];
 
 
 //Uniform, vest, headgear, avalaible for all unit
 uniformList_USA_2000 = [
 	"CUP_H_LWHv2_MARPAT_des_cov_fr",
-	"CUP_U_B_USMC_MCCUU_des_gloves"
+	"CUP_U_B_USMC_MCCUU_des_gloves",
+	"CUP_V_B_RRV_Scout3"
 	];
 
 //Magazine avalaible for all unit
@@ -308,7 +311,8 @@ magazineList_USA_2000 = [
 	"CUP_15Rnd_9x19_M9",
 	"CUP_200Rnd_TE4_Red_Tracer_556x45_M249",
 	"CUP_100Rnd_TE4_LRT4_White_Tracer_762x51_Belt_M",
-	"CUP_8Rnd_B_Beneli_74Pellets"
+	"CUP_8Rnd_B_Beneli_74Pellets",
+	"CUP_10Rnd_127x99_M107"
 	];
 
 //Get magazine with following command
