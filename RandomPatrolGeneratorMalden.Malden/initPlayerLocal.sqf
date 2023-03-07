@@ -165,7 +165,9 @@ if (hasInterface) then
 		waitUntil {!isNil "missionGenerated"};
 
 		player setVariable ["sideBeforeDeath","independent"];
-		player setPos ([getPos initCityLocation, 1, 5, 3, 0, 20, 0] call BIS_fnc_findSafePos);
+		_spawnPos = [getPos initCityLocation, 1, 5, 3, 0, 20, 0] call BIS_fnc_findSafePos;
+		_spawnPos append [0]; //Force altitude 0 to fix spawn on the air
+		player setPos (_spawnPos);
 
 		//Manage loadout
 		[player, indFaction] call doInitializeLoadout;
@@ -216,7 +218,9 @@ if (hasInterface) then
 
 
 		player setVariable ["sideBeforeDeath","blufor"];
-		player setPos ([initBlueforLocation, 1, 5, 3, 0, 20, 0] call BIS_fnc_findSafePos);
+		_spawnPos = [initBlueforLocation, 1, 5, 3, 0, 20, 0] call BIS_fnc_findSafePos;
+		_spawnPos append [0]; //Force altitude 0 to fix spawn on the air
+		player setPos (_spawnPos);
 		[player, bluFaction] call doInitializeLoadout;
 		player setVariable ["spawnLoadout", getUnitLoadout player];
 
