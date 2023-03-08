@@ -267,7 +267,7 @@ for [{_i = 0}, {_i <= 2}, {_i = _i + 1}] do
 
 
 //Init VA
-VA1 = createVehicle ["Box_IND_Wps_F", [getPos initCityLocation, 1, 5, 3, 0, 20, 0] call BIS_fnc_findSafePos, [], 0, "NONE"];
+VA1 = createVehicle ["Box_IND_Wps_F", [getPos initCityLocation, 1, 10, 3, 0, 20, 0] call BIS_fnc_findSafePos, [], 0, "NONE"];
 clearWeaponCargoGlobal VA1;
 clearMagazineCargoGlobal VA1;
 clearItemCargoGlobal VA1;
@@ -448,7 +448,7 @@ if (count bluforHQVehicle >0) then
 
 
 //Init VA
-VA2 = createVehicle ["Box_NATO_WpsSpecial_F", [initBlueforLocation, 1, 5, 3, 0, 20, 0] call BIS_fnc_findSafePos, [], 0, "NONE"];
+VA2 = createVehicle ["Box_NATO_WpsSpecial_F", [initBlueforLocation, 1, 10, 3, 0, 20, 0] call BIS_fnc_findSafePos, [], 0, "NONE"];
 clearWeaponCargoGlobal VA2;
 clearMagazineCargoGlobal VA2;
 clearItemCargoGlobal VA2;
@@ -491,7 +491,7 @@ publicvariable "deployableFOBItem";
 			//Spawn outpost
 			_spawnFOBObjects = [getPos _object, (random 360), _avalaibleOutpost] call BIS_fnc_ObjectsMapper;
 
-			TPFlag2 = createVehicle ["Flag_Blue_F", [getPos _object, 1, 5, 3, 0, 20, 0] call BIS_fnc_findSafePos, [], 0, "NONE"];
+			TPFlag2 = createVehicle ["Flag_Blue_F", [getPos _object, 1, 10, 3, 0, 20, 0] call BIS_fnc_findSafePos, [], 0, "NONE"];
 			
 			missionNamespace setVariable ["advancedBlueforLocation", getPos TPFlag2, true];
 
@@ -618,7 +618,7 @@ if (isClass (configFile >> "CfgPatches" >> "ace_medical")) then
 };
 
 //Setup view distance changer
-SettingsComputer =  createVehicle ["Land_MultiScreenComputer_01_olive_F", [initBlueforLocation, 1, 5, 3, 0, 20, 0] call BIS_fnc_findSafePos, [], 0, "NONE"];
+SettingsComputer =  createVehicle ["Land_MultiScreenComputer_01_olive_F", [initBlueforLocation, 1, 10, 3, 0, 20, 0] call BIS_fnc_findSafePos, [], 0, "NONE"];
 {
 	[SettingsComputer, [format ["Set view distance to %1",_x],{
 				params ["_object","_caller","_ID","_viewDistance"];
@@ -627,7 +627,7 @@ SettingsComputer =  createVehicle ["Land_MultiScreenComputer_01_olive_F", [initB
 			},_x,1.5,true,true,"","_target distance _this <5"]] remoteExec ["addAction", 0, true];
 } foreach [-1,300,500,1000,1500,2000,2500];
 
-TPFlag1 = createVehicle ["Flag_Blue_F", [initBlueforLocation, 1, 5, 3, 0, 20, 0] call BIS_fnc_findSafePos, [], 0, "NONE"];
+TPFlag1 = createVehicle ["Flag_Blue_F", [initBlueforLocation, 1, 10, 3, 0, 20, 0] call BIS_fnc_findSafePos, [], 0, "NONE"];
 publicvariable "TPFlag1";
 
 //Add action to make all player respawn

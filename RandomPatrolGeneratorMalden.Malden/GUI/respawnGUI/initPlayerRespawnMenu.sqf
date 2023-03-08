@@ -21,11 +21,11 @@ _buttonRespawnStart ctrlAddEventHandler[ "ButtonClick",
 		if (player getVariable "sideBeforeDeath" == "independent") then 
 		{
 			//Independent
-			player setPos ([getPos initCityLocation, 1, 5, 3, 0, 20, 0] call BIS_fnc_findSafePos);
+			player setPos ([getPos initCityLocation, 1, 10, 3, 0, 20, 0] call BIS_fnc_findSafePos);
 		} else 
 		{
 			//Blufor
-			player setPos ([initBlueforLocation, 1, 5, 3, 0, 20, 0] call BIS_fnc_findSafePos);
+			player setPos ([initBlueforLocation, 1, 10, 3, 0, 20, 0] call BIS_fnc_findSafePos);
 		};
 
 		//Enable gameplay for player
