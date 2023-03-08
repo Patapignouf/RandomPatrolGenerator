@@ -705,7 +705,6 @@ saveCustomLoadout = {
 				};
 		};
 
-
 		//Save personnal loadout
 		if (_currentPlayer getVariable "sideBeforeDeath" == "independent") then 
 		{
@@ -719,4 +718,134 @@ saveCustomLoadout = {
 
 		diag_log format ["Loadout saved on : RPG_%1_%2_%3 = %4", name player, indFaction, player getVariable "role", _defaultStuff];
 		saveProfileNamespace;
+};
+
+//Validate current loadout with a referenced loadout
+validateLoadout = 
+{
+	params ["_currentLoadout", "_referenceLoadout"];
+	diag_log format ["Validating loadout : %1 with loadout %2 ", _currentLoadout, _referenceLoadout];
+
+	//Check primary weapon
+	_currentLoadout set [0, [_currentLoadout#0, _referenceLoadout#0] call validateWeapons];
+
+	//Check secondary weapon
+	_currentLoadout set [1, [_currentLoadout#1, _referenceLoadout#1] call validateWeapons];
+
+	//Check handgun weapon
+	_currentLoadout set [2, [_currentLoadout#2, _referenceLoadout#2] call validateWeapons];
+
+	//Check uniform
+	_currentLoadout set [3, [_currentLoadout#3, _referenceLoadout#3] call validateContainer];
+
+	//Check vest
+	_currentLoadout set [4, [_currentLoadout#4, _referenceLoadout#4] call validateContainer];
+
+	//Check backpack
+	_currentLoadout set [5, [_currentLoadout#5, _referenceLoadout#5] call validateContainer];
+
+	//Check headgear
+	_currentLoadout set [6, _referenceLoadout#6];
+
+	//Check Goggles/Facewear
+	_currentLoadout set [7, _referenceLoadout#7];
+
+	//Check binocular
+	_currentLoadout set [8, _referenceLoadout#8];
+
+	//Check Assigned Items
+	_currentLoadout set [9, _referenceLoadout#9];
+
+	diag_log format ["%1 loadout has been fixed ", _currentLoadout];
+	_currentLoadout;
+};
+
+//Validate current weapon with a referenced weapon
+validateWeapons = 
+{
+	params ["_currentWeapon", "_referenceWeapon"];
+	_fixedWeapon = _currentWeapon;
+
+	diag_log format ["Validating weapon : %1 with weapon %2", _currentWeapon, _referenceWeapon];
+
+	//Check if the weapon is the same
+	if (_currentWeapon select  0 == _referenceWeapon select 0 ) then 
+	{
+		{
+			_currentWeaponPart = _x;
+
+			diag_log format ["Searching %1 in %2",_currentWeaponPart, _referenceWeapon];
+
+			//Case type string
+			if (typeName _currentWeaponPart == "STRING") then 
+			{
+				//Position of checked weapon part
+				_currenWeaponPartPos = (_referenceWeapon select {typeName _x == "STRING"}) findIf {_x == _currentWeaponPart };
+				//Check if current item exists in the reference container
+				if (_currenWeaponPartPos == -1) then 
+				{
+					//Remove this weapon part
+					_fixedWeapon set [_fixedWeapon findIf {_x == _currentWeaponPart }, ""];
+					hint format ["%1 has been removed by loadout restriction", _currentWeaponPart];
+					diag_log format ["%1 has been removed from %2",_currentWeaponPart, _currentWeapon];
+				};
+			};
+
+			//Case type array
+			if (typeName _currentWeaponPart == "ARRAY") then 
+			{
+				//Position of checked weapon part
+				_currenWeaponPartPos = (_referenceWeapon select {typeName _x == "ARRAY"}) findIf {[_x,_currentWeaponPart] call BIS_fnc_areEqual };
+				//Check if current item exists in the reference container
+				if (_currenWeaponPartPos == -1) then 
+				{
+					//Remove this weapon part
+					_fixedWeapon set [_fixedWeapon findIf {[_x,_currentWeaponPart] call BIS_fnc_areEqual}, []];
+					hint format ["%1 has been removed by loadout restriction", _currentWeaponPart];
+					diag_log format ["%1 has been removed from %2",_currentWeaponPart, _currentWeapon];
+				};
+			};
+		}
+		foreach _currentWeapon;
+	} else 
+	{
+		_fixedWeapon = _currentWeapon;
+	};
+
+	diag_log format ["%1 weapon has been fixed ", _fixedWeapon];
+	_fixedWeapon;
+};
+
+//Validate current container with a referenced container
+validateContainer = 
+{
+	params ["_currentContainer", "_referenceContainer"];
+	_fixedContainer = _currentContainer;
+	diag_log format ["Validating container : %1 with container %2", _currentContainer, _referenceContainer];
+
+	//Check if the root container is the same
+	if (_currentContainer # 0 == _referenceContainer # 0 ) then 
+	{
+		{
+			_currentItemArray = _x;
+
+			diag_log format ["Searching %1 in %2",_currentItemArray, _referenceContainer];
+
+			//Check if current item exists in the reference container
+			if (((_referenceContainer # 1) apply {_x # 0}) findIf {[_currentItemArray#0, _x]  call BIS_fnc_areEqual} == -1) then 
+			{
+				//Remove item
+				_fixedContainer set [1, _fixedContainer # 1 - [_currentItemArray]];
+				hint format ["%1 has been removed by loadout restriction", _currentItemArray # 0];
+				diag_log format ["%1 has been removed from %2",_currentItemArray, _currentContainer];
+			};
+		}
+		foreach (_currentContainer # 1);
+	} else 
+	{
+		_fixedContainer = _referenceContainer;
+	};
+
+	diag_log format ["%1 container has been fixed ", _fixedContainer];
+	_fixedContainer;
 };

@@ -27,7 +27,8 @@ firstOpen = true;
 //Load default loadout when player open loadout screen if there isn't ironMan mode enabled
 if (!ironMan) then 
 {
-	player setUnitLoadout (player getVariable ["spawnLoadout", []]);
+	//Loadout validated loadout (compared with spawn loadout)
+	player setUnitLoadout ([getUnitLoadout player, player getVariable ["spawnLoadout", []]] call validateLoadout);
 };
 
 //Specify button's names in ironMan mode 
@@ -185,7 +186,14 @@ _keyDown = (findDisplay 7000) displayAddEventHandler ["KeyDown", {
 	private _handled = false;
 
 	switch (_dikCode) do {
-		case 1;
+		case 1: 
+		{
+			//Save default stuff on close when ironMan mode is disable
+			if (!ironMan) then 
+			{
+				player setVariable ["spawnLoadout", getUnitLoadout player];
+			};
+		};
 		case 57: {
 			// case 1 for ESC -> https://community.bistudio.com/wiki/DIK_KeyCodes
 			// open your dialog
