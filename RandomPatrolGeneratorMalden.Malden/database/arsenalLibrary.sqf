@@ -769,7 +769,7 @@ validateWeapons =
 	diag_log format ["Validating weapon : %1 with weapon %2", _currentWeapon, _referenceWeapon];
 
 	//Check if the weapon is the same
-	if (_currentWeapon select  0 == _referenceWeapon select 0 ) then 
+	if ([_currentWeapon select  0 , _referenceWeapon select 0 ] call BIS_fnc_areEqual) then 
 	{
 		{
 			_currentWeaponPart = _x;
@@ -809,7 +809,7 @@ validateWeapons =
 		foreach _currentWeapon;
 	} else 
 	{
-		_fixedWeapon = _currentWeapon;
+		_fixedWeapon = _referenceWeapon;
 	};
 
 	diag_log format ["%1 weapon has been fixed ", _fixedWeapon];
@@ -824,23 +824,29 @@ validateContainer =
 	diag_log format ["Validating container : %1 with container %2", _currentContainer, _referenceContainer];
 
 	//Check if the root container is the same
-	if (_currentContainer # 0 == _referenceContainer # 0 ) then 
+	if ([_currentContainer # 0 , _referenceContainer # 0] call BIS_fnc_areEqual) then 
 	{
+		if (count _referenceContainer >1) then 
 		{
-			_currentItemArray = _x;
-
-			diag_log format ["Searching %1 in %2",_currentItemArray, _referenceContainer];
-
-			//Check if current item exists in the reference container
-			if (((_referenceContainer # 1) apply {_x # 0}) findIf {[_currentItemArray#0, _x]  call BIS_fnc_areEqual} == -1) then 
 			{
-				//Remove item
-				_fixedContainer set [1, _fixedContainer # 1 - [_currentItemArray]];
-				hint format ["%1 has been removed by loadout restriction", _currentItemArray # 0];
-				diag_log format ["%1 has been removed from %2",_currentItemArray, _currentContainer];
-			};
-		}
-		foreach (_currentContainer # 1);
+				_currentItemArray = _x;
+
+				diag_log format ["Searching %1 in %2",_currentItemArray, _referenceContainer];
+
+				//Check if current item exists in the reference container
+				if (((_referenceContainer # 1) apply {_x # 0}) findIf {[_currentItemArray#0, _x]  call BIS_fnc_areEqual} == -1) then 
+				{
+					//Remove item
+					_fixedContainer set [1, _fixedContainer # 1 - [_currentItemArray]];
+					hint format ["%1 has been removed by loadout restriction", _currentItemArray # 0];
+					diag_log format ["%1 has been removed from %2",_currentItemArray, _currentContainer];
+				};
+			}
+			foreach (_currentContainer # 1);
+		} else 
+		{
+			_fixedContainer = _referenceContainer;
+		};
 	} else 
 	{
 		_fixedContainer = _referenceContainer;
