@@ -147,6 +147,13 @@ bluforFixedWing_2035_NATO_FS = [
 	"B_Plane_Fighter_01_Stealth_F"
 ];
 
+
+//Vehicule able to do HQ features (Loadout management and more)
+bluforHQVehicle_2035_NATO_FS = [
+	"B_APC_Tracked_01_rcws_F"
+];
+
+
 ////////////////////////
 //Loadout management////
 ////////////////////////
@@ -208,7 +215,8 @@ marksmanrifleList_2035_NATO_FS = [
 	"srifle_LRR_F",
 	"arifle_SPAR_03_snd_F",
 	"srifle_EBR_F",
-	"CUP_arifle_HK417_20_Desert"
+	"CUP_arifle_HK417_20_Desert",
+	"srifle_DMR_02_F"
 ];
 
 //Smg avalaible for all unit
@@ -322,6 +330,7 @@ itemMedicList_2035_NATO_FS = [
 //backpack avalaible for all unit
 backPackList_2035_NATO_FS = [
 	"B_TacticalPack_mcamo",
+	"B_Carryall_mcamo",
 	"B_AssaultPack_rgr",
 	"B_AssaultPack_cbr",
 	"B_Kitbag_cbr"
@@ -335,7 +344,9 @@ uniformList_2035_NATO_FS = [
 	"H_HelmetSpecB_sand",
 	"U_BG_Guerilla2_1",
 	"U_BG_Guerilla2_3",
-	"U_I_G_resistanceLeader_F"
+	"U_I_G_resistanceLeader_F",
+	"V_PlateCarrier2_rgr_noflag_F",
+	"G_Bandanna_khk"
 ];
 
 //Magazine avalaible for all unit
@@ -356,14 +367,11 @@ magazineList_2035_NATO_FS = [
 	"NLAW_F",
 	"MRAWS_HEAT_F",
 	"HandGrenade",
-	"MiniGrenade",
 	"SmokeShell",
 	"SmokeShellBlue",
 	"SmokeShellGreen",
-	"SmokeShellOrange",
-	"SmokeShellPurple",
 	"SmokeShellRed",
-	"SmokeShellYellow"
+	"10Rnd_338_Mag"
 ];
 
 //Get magazine with following command
