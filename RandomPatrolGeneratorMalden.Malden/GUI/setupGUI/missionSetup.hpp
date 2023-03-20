@@ -13,6 +13,16 @@ class DialogSetupParams
 			h = 30 * GUI_GRID_CENTER_H;
 			colorBackground[] = {1,1,1,0.5};
 		};
+
+		class Background2: RscText
+		{
+			idc = -1;
+			x = 0.229686 * safezoneW + safezoneX;
+			y = 0.117436 * safezoneH + safezoneY;
+			w = 45 * GUI_GRID_CENTER_W;
+			h = 1.5 * GUI_GRID_CENTER_H;
+			colorBackground[] = {0.2,0.2,0.2,1};
+		};
 	};
 	class Controls
 	{
