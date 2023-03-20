@@ -114,18 +114,7 @@ doGenerateVehicleForFOB =
 						_wp = _currentUAVGroup addWaypoint [_tempPos, 0];
 
 						//Set unlimited fuel to the UAV
-						_h = [_currentVehicle] spawn
-						{
-							while {true} do
-							{
-								if ((fuel (_this select 0)) < 0.8) then
-								{
-									(_this select 0) setFuel 1;
-									diag_log "UAV has been refueled !";
-								};
-								sleep 120;
-							};
-						};
+						[[_currentVehicle], 'objectGenerator\setUnlimitedFuel.sqf'] remoteExec ['BIS_fnc_execVM', 2];
 					};
 					if (_isUAV) then 
 					{
