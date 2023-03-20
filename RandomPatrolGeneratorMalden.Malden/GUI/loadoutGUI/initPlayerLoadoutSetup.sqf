@@ -29,6 +29,7 @@ if (!ironMan) then
 {
 	//Loadout validated loadout (compared with spawn loadout)
 	player setUnitLoadout ([getUnitLoadout player, player getVariable ["spawnLoadout", []]] call validateLoadout);
+	[] call refreshCustomLoadoutDisplay;
 };
 
 //Specify button's names in ironMan mode 
@@ -48,7 +49,7 @@ _comboBoxClassSelection ctrlAddEventHandler[ "LBSelChanged",
 			_comboBoxClassSelection = _mainDisplay displayCtrl 7100;
 
 			_listOfAvalaibleRole =[];
-		
+
 			if (player getVariable "sideBeforeDeath" == "independent") then 
 			{
 				//Independent
@@ -62,6 +63,9 @@ _comboBoxClassSelection ctrlAddEventHandler[ "LBSelChanged",
 				_role = (_listOfAvalaibleRole select parseNumber ((_comboBoxClassSelection lbData (lbCurSel _comboBoxClassSelection))));
 				[VA2, player, bluFaction , _role, false] call switchToRole;
 			};
+
+			//Refresh load button
+			[] call refreshCustomLoadoutDisplay;
 		}
 		else 
 		{
@@ -104,6 +108,8 @@ _buttonSave ctrlAddEventHandler[ "ButtonClick",
 			cutText ["Loadout saved\nLoading default loadout", "PLAIN", 0.3];
 		} else 
 		{
+			//Refresh load button
+			[] call refreshCustomLoadoutDisplay;
 			cutText ["Loadout saved", "PLAIN", 0.3];
 		};
 	}];
@@ -203,3 +209,30 @@ _keyDown = (findDisplay 7000) displayAddEventHandler ["KeyDown", {
 	};
 	_handled
 }];
+
+
+
+refreshCustomLoadoutDisplay = {
+		_buttonLoad = (findDisplay 7000) displayCtrl 7203;
+		_loadableLoadout = [];
+
+		//Save personnal loadout
+		if (player getVariable "sideBeforeDeath" == "independent") then 
+		{
+			//Independent
+			_loadableLoadout = profileNamespace getVariable [format [loadoutSaveName, name player, indFaction, player getVariable "role"], []];
+		} else 
+		{
+			//Blufor
+			_loadableLoadout = profileNamespace getVariable [format [loadoutSaveName, name player, bluFaction, player getVariable "role"], []];
+		};
+
+
+		if (count _loadableLoadout == 0) then 
+		{
+			_buttonLoad ctrlShow false;
+		} else 
+		{
+			_buttonLoad ctrlShow true;
+		};
+};
