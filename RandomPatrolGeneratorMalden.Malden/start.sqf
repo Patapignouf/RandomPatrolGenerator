@@ -9,7 +9,6 @@
 enableInitAttack = "EnableInitAttack" call BIS_fnc_getParamValue;
 enableInitBluAttack = "EnableInitBluAttack" call BIS_fnc_getParamValue;
 initBluforBase = "InitBluforBase" call BIS_fnc_getParamValue;
-missionInitSetup = "MissionInitSetup" call BIS_fnc_getParamValue;
 chooseStartPos = "ChooseStartPos" call BIS_fnc_getParamValue;
 timeOfDay = "TimeOfDay" call BIS_fnc_getParamValue;
 respawnSettings = "Respawn" call BIS_fnc_getParamValue;
@@ -37,6 +36,7 @@ enableArmoredVehicle = missionNamespace getVariable "enableArmoredVehicle"; //De
 enableCampaignMode = missionNamespace getVariable "enableCampaignMode"; //Default disable
 missionLength = missionNamespace getVariable "missionLength"; //Default 2 missions + 1 optional
 missionDifficultyParam = missionNamespace getVariable "missionDifficultyParam"; //Default medium
+startIntel = missionNamespace getVariable "startIntel"; //Default medium
 
 /////////////////////////
 ////Setup IA Opti////////
@@ -76,6 +76,8 @@ publicVariable "bluforHQVehicle";
 
 bluforBoat = bluforBoat_db select {_x select 1  == bluFaction} select 0 select 0;
 publicVariable "bluforBoat";
+
+bluforMagazineList = magazineList_db select {_x select 1  == bluFaction} select 0 select 0;
 
 //CivilianGroupDefinition
 civilian_group = civilian_group_db select {_x select 1  == civFaction} select 0 select 0;
@@ -164,12 +166,12 @@ if (initCityLocationPosition isEqualType []) then
 };
 
 publicvariable "initCityLocation";
-possiblePOILocation = ([initCityLocation, 2500] call getLocationsAroundWithBuilding) - [initCityLocation];
+possiblePOILocation = ([initCityLocation, 3000] call getLocationsAroundWithBuilding) - [initCityLocation];
 dangerAreaList = [];
 
 if ( count possiblePOILocation < missionLength + 1) then 
 {
-	possiblePOILocation = ([initCityLocation, 4000] call getLocationsAroundWithBuilding) - [initCityLocation];
+	possiblePOILocation = ([initCityLocation, 5000] call getLocationsAroundWithBuilding) - [initCityLocation];
 };
 
 //Search road around AO
@@ -223,7 +225,7 @@ currentObj = objNull;
 currentRandObj = objNull;
 
 //Generate objectives according to the mission's length parameter
-for [{_i = 0}, {_i <= missionLength}, {_i = _i + 1}] do //Peut être optimisé
+for [{_i = 0}, {_i <= missionLength min(count PossibleObjectivePosition)}, {_i = _i + 1}] do //Peut être optimisé
 {
 	PossibleObjectivePosition = [avalaibleTypeOfObj, PossibleObjectivePosition, missionDifficultyParam] call generateObjective;
 };
@@ -258,17 +260,20 @@ for [{_i = 0}, {_i <= 2}, {_i = _i + 1}] do
 	diag_log format ["Generation of civilian group : %1 on position %2 has been completed", currentCivGroup, initCityLocation];
 };
 
-[civsGroup, false] execVM 'enemyManagement\behaviorEngine\doGarrison.sqf';
+//Garrison or camp every civ group
+{
+	[_x, getPos (leader _x), 80, true] execVM 'enemyManagement\behaviorEngine\doGarrison.sqf';
+} foreach civsGroup;
+
 
 //Init VA
-VA1 = createVehicle ["Box_IND_Wps_F", [getPos initCityLocation, 1, 5, 3, 0, 20, 0] call BIS_fnc_findSafePos, [], 0, "NONE"];
+VA1 = createVehicle ["Box_IND_Wps_F", [getPos initCityLocation, 1, 10, 3, 0, 20, 0] call BIS_fnc_findSafePos, [], 0, "NONE"];
 clearWeaponCargoGlobal VA1;
 clearMagazineCargoGlobal VA1;
 clearItemCargoGlobal VA1;
 clearBackpackCargoGlobal VA1;
 VA1 allowDamage false; 
 publicvariable "VA1";
-
 
 /////////////////////////
 ////Generate Ind/////////
@@ -289,7 +294,10 @@ if ( count AvalaibleInitAttackPositions != 0 && (enableInitAttack == 1 || ((enab
 };
 
 //Generate items on VA1 box 
-VA1 addItemCargoGlobal ["ACE_key_indp", 5];
+if (isClass (configFile >> "CfgPatches" >> "ace_medical")) then 
+{
+	VA1 addItemCargoGlobal ["ACE_key_indp", 5];
+};
 
 //Init perma harass on player
 [[baseEnemyGroup,baseEnemyATGroup,baseEnemyDemoGroup],baseEnemyVehicleGroup, baseEnemyLightArmoredVehicleGroup, baseEnemyHeavyArmoredVehicleGroup, missionDifficultyParam] execVM 'enemyManagement\generationEngine\generateHarass.sqf'; 
@@ -440,7 +448,7 @@ if (count bluforHQVehicle >0) then
 
 
 //Init VA
-VA2 = createVehicle ["Box_NATO_WpsSpecial_F", [initBlueforLocation, 1, 5, 3, 0, 20, 0] call BIS_fnc_findSafePos, [], 0, "NONE"];
+VA2 = createVehicle ["Box_NATO_WpsSpecial_F", [initBlueforLocation, 1, 10, 3, 0, 20, 0] call BIS_fnc_findSafePos, [], 0, "NONE"];
 clearWeaponCargoGlobal VA2;
 clearMagazineCargoGlobal VA2;
 clearItemCargoGlobal VA2;
@@ -483,7 +491,7 @@ publicvariable "deployableFOBItem";
 			//Spawn outpost
 			_spawnFOBObjects = [getPos _object, (random 360), _avalaibleOutpost] call BIS_fnc_ObjectsMapper;
 
-			TPFlag2 = createVehicle ["Flag_Blue_F", [getPos _object, 1, 5, 3, 0, 20, 0] call BIS_fnc_findSafePos, [], 0, "NONE"];
+			TPFlag2 = createVehicle ["Flag_Blue_F", [getPos _object, 1, 10, 3, 0, 20, 0] call BIS_fnc_findSafePos, [], 0, "NONE"];
 			
 			missionNamespace setVariable ["advancedBlueforLocation", getPos TPFlag2, true];
 
@@ -565,7 +573,21 @@ publicvariable "deployableFOBItem";
 	clearMagazineCargoGlobal _tempBox;
 	clearItemCargoGlobal _tempBox;
 	clearBackpackCargoGlobal _tempBox;
-} foreach ["Box_NATO_Uniforms_F", "ACE_Box_82mm_Mo_Combo"];
+} foreach ["Box_NATO_Grenades_F"];
+
+//Place a box with ammo to blufor camp
+{
+	_tempBox = createVehicle [_x, [ initBlueforLocation, 1, 15, 2, 0, 20, 0] call BIS_fnc_findSafePos, [], 0, "NONE"];
+	clearWeaponCargoGlobal _tempBox;
+	clearMagazineCargoGlobal _tempBox;
+	clearItemCargoGlobal _tempBox;
+	clearBackpackCargoGlobal _tempBox;
+
+	//Add magazines according to avalaible magazine in the faction
+	{
+		_tempBox addItemCargoGlobal [_x, 20];
+	}	foreach bluforMagazineList;
+} foreach ["Box_NATO_Uniforms_F"];
 
 //Place empty box with ACE medical stuff
 _tempBox = createVehicle ["Box_NATO_Equip_F", [ initBlueforLocation, 1, 15, 2, 0, 20, 0] call BIS_fnc_findSafePos, [], 0, "NONE"];
@@ -596,7 +618,7 @@ if (isClass (configFile >> "CfgPatches" >> "ace_medical")) then
 };
 
 //Setup view distance changer
-SettingsComputer =  createVehicle ["Land_MultiScreenComputer_01_olive_F", [initBlueforLocation, 1, 5, 3, 0, 20, 0] call BIS_fnc_findSafePos, [], 0, "NONE"];
+SettingsComputer =  createVehicle ["Land_MultiScreenComputer_01_olive_F", [initBlueforLocation, 1, 10, 3, 0, 20, 0] call BIS_fnc_findSafePos, [], 0, "NONE"];
 {
 	[SettingsComputer, [format ["Set view distance to %1",_x],{
 				params ["_object","_caller","_ID","_viewDistance"];
@@ -605,7 +627,7 @@ SettingsComputer =  createVehicle ["Land_MultiScreenComputer_01_olive_F", [initB
 			},_x,1.5,true,true,"","_target distance _this <5"]] remoteExec ["addAction", 0, true];
 } foreach [-1,300,500,1000,1500,2000,2500];
 
-TPFlag1 = createVehicle ["Flag_Blue_F", [initBlueforLocation, 1, 5, 3, 0, 20, 0] call BIS_fnc_findSafePos, [], 0, "NONE"];
+TPFlag1 = createVehicle ["Flag_Blue_F", [initBlueforLocation, 1, 10, 3, 0, 20, 0] call BIS_fnc_findSafePos, [], 0, "NONE"];
 publicvariable "TPFlag1";
 
 //Add action to make all player respawn
@@ -683,12 +705,28 @@ for [{_i = 0}, {_i <= missionLength}, {_i = _i + 1}] do //Peut être optimisé
 
 //Case where blufor has objective on start
 
-switch (missionInitSetup) do
+switch (startIntel) do
 {
 	case 1:
 		{
 			//Setup init Civ city
-			[[text initCityLocation,"ColorBlue","loc_help",getPos initCityLocation, "All"], 'objectGenerator\doGenerateMarker.sqf'] remoteExec ['BIS_fnc_execVM', 0];
+			//Init task for blufor to get informations
+			[blufor, "taskContactCiv", [format ["Contact civilians at %1 to get tasks", text initCityLocation], "Contact civilians", ""], objNull, 1, 3, true] call BIS_fnc_taskCreate;
+			initCityLocationTrigger = createTrigger ["EmptyDetector", getPos initCityLocation]; //create a trigger area created at object with variable name my_object
+			initCityLocationTrigger setTriggerArea [100, 100, 0, false]; // trigger area with a radius of 100m.
+			
+			//Setup task completion
+			[] spawn {
+				_hasContactCivilian = false;
+				while {sleep 10; !_hasContactCivilian} do 
+				{
+					if (count((allPlayers select {alive _x && side _x == blufor && _x getVariable "isDead" == false} ) inAreaArray initCityLocationTrigger) >0) then 
+					{
+						_hasContactCivilian = true;
+						["taskContactCiv","SUCCEEDED"] call BIS_fnc_taskSetState;
+					};
+				};
+			};
 		};
 	case 2:
 		{
@@ -833,7 +871,10 @@ if (enableCampaignMode) then
 			PossibleObjectivePosition = [avalaibleTypeOfObj, PossibleObjectivePosition, missionDifficultyParam] call generateObjective;
 
 			//Reveal objective to the player
-			[objNull, [], _mainPlayerSide] execVM 'engine\objectiveManagement\revealObjective.sqf';
+			if (startIntel == 2) then 
+			{
+				[objNull, [], _mainPlayerSide] execVM 'engine\objectiveManagement\revealObjective.sqf';
+			};
 
 			//Update objective complete counter
 			_completedObjectives = missionNamespace getVariable ["completedObjectives",[]];

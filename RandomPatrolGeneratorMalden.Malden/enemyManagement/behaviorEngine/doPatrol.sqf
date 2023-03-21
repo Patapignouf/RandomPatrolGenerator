@@ -1,20 +1,14 @@
-_thisGroup = _this select 0;
+params ["_thisGroup", "_position", "_distance"];
 
 currentGroup = nil;
 
+if (isClass (configFile >> "CfgPatches" >> "lambs_danger")) then 
+{
+	diag_log "Task_Patrol [LAMBS]!";
+	[_thisGroup, _position, _distance] call lambs_wp_fnc_taskPatrol;
 
-if (typeName _thisGroup == "GROUP") then
+} else 
 {
 	diag_log "Task_Patrol !";
-	[_thisGroup, [], 250] call lambs_wp_fnc_taskPatrol;
-} else {
-	{
-		if (!isNil _x) then
-		{
-			currentGroup = missionNamespace getVariable _x;
-			diag_log "Task_Patrol !";
-			[_x, [], 250] call lambs_wp_fnc_taskPatrol;
-
-		};
-	} forEach _thisGroup;
+	[_thisGroup, _position, _distance] call BIS_fnc_taskPatrol;
 };

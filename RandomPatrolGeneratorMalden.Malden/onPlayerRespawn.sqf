@@ -1,3 +1,4 @@
+player hideObjectGlobal true;
 player setPos [0,0,10000];
 
 diag_log format ["Player %1 is dead", name player];
@@ -46,19 +47,19 @@ if ((["Respawn",1] call BIS_fnc_getParamValue) == 0 ) then
   if (isClass (configFile >> "CfgPatches" >> "ace_medical")) then 
   {
     [true, true, false] call ace_spectator_fnc_setSpectator;
-    [allPlayers, []] call ace_spectator_fnc_updateUnits;
+    [allPlayers, allPlayers select {alive _x == false || _x getVariable "isDead" == true}] call ace_spectator_fnc_updateUnits;
     [[0,1,2], []] call ace_spectator_fnc_updateCameraModes;
   } else 
   {
     ["Initialize", [player, [], true ]] call BIS_fnc_EGSpectator;
-    [1,["You will respawn on the next objective completion", "PLAIN", 5]] remoteExec ["cutText", _caller];	
+    [1,["You will respawn on the next objective completion", "PLAIN", 5]] remoteExec ["cutText", player];	
   };
 } else 
 {
   if (isClass (configFile >> "CfgPatches" >> "ace_medical")) then 
   {
     [true, true, false] call ace_spectator_fnc_setSpectator;
-    [allPlayers, []] call ace_spectator_fnc_updateUnits;
+    [allPlayers, allPlayers select {alive _x == false || _x getVariable "isDead" == true}] call ace_spectator_fnc_updateUnits;
     [[1,2], [0]] call ace_spectator_fnc_updateCameraModes;
   } else 
   {

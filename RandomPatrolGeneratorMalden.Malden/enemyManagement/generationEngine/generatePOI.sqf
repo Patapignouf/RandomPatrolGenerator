@@ -14,13 +14,13 @@ if (_tempAvailablePosition distance _thisAvailablePosition < 200) then
 //Generate enemy infantry on AO
 diag_log format ["Infantry generation start on AO %1",_thisAvailablePosition];
 _baseRadius = 60;
-for [{_i = 0}, {_i < _thisDifficulty+2}, {_i = _i + 1}] do 
+for [{_i = 0}, {_i < _thisDifficulty+3}, {_i = _i + 1}] do 
 {
 	currentRandomGroup = selectRandom _thisAvailableOpforGroup;
 	currentGroup = [currentRandomGroup, _thisAvailablePosition, east, "DefenseInfantry"] call doGenerateEnemyGroup;
 	
 	//Spawn group
-	[currentGroup, currentGroup, _baseRadius, [], true, (round random 3 == 0), -2, true] call lambs_wp_fnc_taskGarrison;
+	[currentGroup, getPos (leader currentGroup), _baseRadius, false] execVM 'enemyManagement\behaviorEngine\doGarrison.sqf';
 	_baseRadius = _baseRadius + 30;
 };
 
@@ -76,17 +76,7 @@ if (round (random 3) == 0 && count _thisAvailableCivGroup > 0) then
 	for [{_i = 0}, {_i < _thisDifficulty+1}, {_i = _i + 1}] do 
 	{
 		currentGroup = [_thisAvailableCivGroup, _thisAvailablePosition, civilian, "Civilian"] call doGenerateEnemyGroup;
-		if (round (random 2) != 0) then 
-		{
-			diag_log "Task_Garrison civilian !";
-			[currentGroup, currentGroup, 75, [], true, false, -2, true] call lambs_wp_fnc_taskGarrison;
-			
-		} 
-		else 
-		{
-			diag_log "Task_Camp civilian !";
-			[currentGroup, getPos (leader currentGroup), 75, [], true, true] call lambs_wp_fnc_taskCamp;
-		};
+		[currentGroup, getPos (leader currentGroup), 80, true] execVM 'enemyManagement\behaviorEngine\doGarrison.sqf';
 	};
 };
 

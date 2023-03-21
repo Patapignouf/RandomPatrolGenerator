@@ -216,7 +216,8 @@ itemList_2035_AAF = [
 	"ACE_SpraypaintBlue",
 	"ACE_SpraypaintGreen",
 	"ACE_SpraypaintRed",
-	"ACE_IR_Strobe_Item"
+	"ACE_IR_Strobe_Item",
+	"ACE_RangeCard"
 	];
 
 itemEngineerList_2035_AAF = [

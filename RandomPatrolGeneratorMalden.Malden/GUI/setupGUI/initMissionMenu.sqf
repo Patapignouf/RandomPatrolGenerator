@@ -1,6 +1,7 @@
 disableSerialization;
 #include "..\..\database\factionParameters.sqf"
 #include "..\..\database\missionParameters.sqf"
+#include "loadSettings.sqf"
 
 //Create GUI
 createDialog "DialogSetupParams";
@@ -18,6 +19,11 @@ private _comboBoxEnableArmoredVehicle = _mainDisplay displayCtrl 6106;
 private _comboBoxEnableCampaignMode = _mainDisplay displayCtrl 6107;
 private _comboBoxMissionLength = _mainDisplay displayCtrl 6108;
 private _comboBoxMissionDifficulty = _mainDisplay displayCtrl 6109;
+private _comboBoxIronman = _mainDisplay displayCtrl 6110;
+private _comboBoxStartIntel = _mainDisplay displayCtrl 6112;
+private _comboBoxIASkill = _mainDisplay displayCtrl 6113;
+
+
 
 //Specify all GUI content 
 //Populate faction comboBox
@@ -36,14 +42,6 @@ _currentComboBox = _comboBoxWarEra;
 	_currentComboBox lbSetData [(lbSize _currentComboBox)-1, format ["%1",_x select 0]];
 } foreach warEraSelection;
 
-
-//Default faction 
-_comboBoxBlufor lbSetCurSel (14); //Otan 2035
-_comboBoxOpfor lbSetCurSel (3); //Syndikat
-_comboBoxIndependent lbSetCurSel (3); //Syndikat
-_comboBoxCivilian lbSetCurSel (3); //Syndikat
-_comboBoxWarEra lbSetCurSel (3); //Actual Warfare
-
 //Populate Missions vehicle settings
 {
 	_currentComboBox = _x;
@@ -51,16 +49,9 @@ _comboBoxWarEra lbSetCurSel (3); //Actual Warfare
 		_currentComboBox lbAdd format ["%1", _x];
 		_currentComboBox lbSetData [(lbSize _currentComboBox)-1, format ["%1",_x]];
 	} foreach booleanSelection;
-} foreach [_comboBoxEnableArmedAicraft, _comboBoxEnableArmoredVehicle];
-
-
-//Default values
-_comboBoxEnableArmedAicraft lbSetCurSel (0); //Disable
-_comboBoxEnableArmoredVehicle lbSetCurSel (0); //Disable
-
+} foreach [_comboBoxEnableArmedAicraft, _comboBoxEnableArmoredVehicle, _comboBoxIronman];
 
 //Populate mission configuration
-
 //Campaign
 _currentComboBox = _comboBoxEnableCampaignMode;
 {
@@ -82,10 +73,37 @@ _currentComboBox = _comboBoxMissionDifficulty;
 	_currentComboBox lbSetData [(lbSize _currentComboBox)-1, format ["%1",_x select 0]];
 } foreach missionDifficultySelection;
 
+//Mission start intel
+_currentComboBox = _comboBoxStartIntel;
+{
+	_currentComboBox lbAdd format ["%1", _x select 1];
+	_currentComboBox lbSetData [(lbSize _currentComboBox)-1, format ["%1",_x select 0]];
+} foreach missionStartIntelSelection;
+
+//Mission IA Skill
+_currentComboBox = _comboBoxIASkill;
+{
+	_currentComboBox lbAdd format ["%1", _x select 1];
+	_currentComboBox lbSetData [(lbSize _currentComboBox)-1, format ["%1",_x select 0]];
+} foreach missionIASkill;
+
+
+
+//Default faction 
+_comboBoxBlufor lbSetCurSel (factionInfos apply {_x select 1} find (bluforFaction_loaded));
+_comboBoxOpfor lbSetCurSel (factionInfos apply {_x select 1} find (opforFaction_loaded));
+_comboBoxIndependent lbSetCurSel (factionInfos apply {_x select 1} find (independentFaction_loaded));
+_comboBoxCivilian lbSetCurSel (factionInfos apply {_x select 1} find (civilianFaction_loaded));
+_comboBoxWarEra lbSetCurSel (warEraSelection apply {_x select 0} find (warEra_loaded));
+
+//Default values
+_comboBoxEnableArmedAicraft lbSetCurSel (booleanSelection find enableArmedAicraft_loaded); //Disable
+_comboBoxEnableArmoredVehicle lbSetCurSel (booleanSelection find enableArmoredVehicle_loaded); //Disable
+_comboBoxIronman lbSetCurSel (booleanSelection find ironMan_loaded); 
+
 //Default values 
-_comboBoxEnableCampaignMode lbSetCurSel (0); //Syndikat
-_comboBoxMissionLength lbSetCurSel (1); //Syndikat
-_comboBoxMissionDifficulty lbSetCurSel (1); //Syndikat
-
-
-
+_comboBoxEnableCampaignMode lbSetCurSel (booleanSelection find enableCampaignMode_loaded); //Syndikat
+_comboBoxMissionLength lbSetCurSel (missionLengthSelection apply {_x select 0} find (missionLength_loaded)); //Syndikat
+_comboBoxMissionDifficulty lbSetCurSel (missionDifficultySelection apply {_x select 0} find (missionDifficultyParam_loaded)); //Syndikat
+_comboBoxStartIntel lbSetCurSel (missionStartIntelSelection apply {_x select 0} find (startIntel_loaded)); //Blufor must take intel
+_comboBoxIASkill lbSetCurSel (missionIASkill apply {_x select 0} find (missionIASkill_loaded)); //IA Skill default value : Balanced

@@ -24,10 +24,10 @@ class EditorData
 	};
 	class Camera
 	{
-		pos[]={5582.8457,130.65634,2501.5449};
-		dir[]={-0.44293022,-0.75136501,0.48914564};
-		up[]={-0.50433236,0.65988684,0.5569545};
-		aside[]={0.74125689,-1.4901161e-008,0.67122149};
+		pos[]={5488.5264,113.57412,2621.5725};
+		dir[]={0.33110315,-0.66027027,-0.67411649};
+		up[]={0.29108843,0.75101984,-0.59264994};
+		aside[]={-0.89758474,4.9173832e-007,-0.4408626};
 	};
 };
 binarizationWanted=0;
@@ -55,8 +55,8 @@ class DynamicSimulation
 	saturateByObjectDistance=0;
 	class EnableRadiuses
 	{
-		Vehicle=2500;
-		Group=2000;
+		Vehicle=2000;
+		Group=1500;
 	};
 };
 randomSeed=1466210;
@@ -278,7 +278,7 @@ class CustomAttributes
 				class data
 				{
 					singleType="STRING";
-					value="Complétez 2 des 3 objectifs pour aider votre population.";
+					value="";
 				};
 			};
 		};
@@ -291,7 +291,7 @@ class CustomAttributes
 				class data
 				{
 					singleType="STRING";
-					value="Vous êtes le seigneur de guerre d'une petite ville. Vos relations avec les villages environants sont compliquées et la tension est palpable." \n "Pourquoi ne pas accepter l'aide de l'OTAN qui vient quotidiennement aider la population et en profiter pour aller faire taire vos ennemis.";
+					value="";
 				};
 			};
 		};

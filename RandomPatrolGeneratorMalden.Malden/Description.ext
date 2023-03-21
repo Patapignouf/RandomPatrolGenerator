@@ -4,8 +4,7 @@
 #include "GUI\setupGUI\missionSetupObjectives.hpp"
 #include "GUI\loadoutGUI\playerLoadoutSetup.hpp"
 #include "GUI\respawnGUI\playerRespawnMenu.hpp"
-
-
+#include "GUI\dialogGUI\dialogCivilian.hpp"
 
 respawnDialog = 0;
 respawnOnStart = -1;
@@ -17,6 +16,24 @@ respawnTemplates[] = {"Tickets"};
 
 class Params
 {
+	class ReviveMode
+	{
+		title = $STR_A3_ReviveMode;
+		isGlobal = 1;
+		values[] = {-100,0,1};
+		texts[] = {$STR_A3_MissionDefault, $STR_A3_Disabled, $STR_A3_EnabledForAllPlayers};
+		default = 0;
+		function = "bis_fnc_paramReviveMode";
+	};
+	class ReviveRequiredTrait
+	{
+		title = $STR_A3_RequiredTrait;
+		isGlobal = 1;
+		values[] = {-100,0,1};
+		texts[] = {$STR_A3_MissionDefault,$STR_A3_None,$STR_A3_Medic};
+		default = 1;
+		function = "bis_fnc_paramReviveRequiredTrait";
+	};
 	class Respawn
 	{
 		title = "Respawn management (WIP)";
@@ -51,13 +68,6 @@ class Params
 		values[] = {0,1};
 		texts[] = {"Default","Force blufor"};
 		default = 0;
-	};
-	class MissionInitSetup
-	{
-		title = "Mission Init Setup";
-		values[] = {1,2};
-		texts[] = {"Blufor must contact civilian to take objectives","Blufor has objective on spawn"};
-		default = 1;
 	};
 	class EnableInitAttack
 	{

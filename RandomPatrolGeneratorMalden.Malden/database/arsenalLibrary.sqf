@@ -1,7 +1,26 @@
 //Import mission params
 warEra = missionNamespace getVariable "warEra"; // Default actual warfare
 
+c_leader = "leader";
+c_at = "at";
+c_rifleman = "rifleman";
+c_engineer = "engineer";
+c_autorifleman = "autorifleman";
+c_marksman = "marksman"; 
+c_medic = "medic";
+c_radioman = "radioman";
+c_grenadier = "grenadier";
+c_ammobearer = "ammobearer";
+
 c_listOfRoles = [c_leader,c_at,c_rifleman,c_engineer,c_autorifleman,c_marksman,c_medic];
+
+loadoutSaveName = "RPG_%1_%2_%3";
+
+if (ironMan) then 
+{
+	loadoutSaveName = "RPG_ironMan_%1_%2_%3";
+};
+
 
 getLoadoutByRole = {
 	currentPlayer = _this select 0;
@@ -115,7 +134,7 @@ getItembyWarEra = {
 		//Future Warfare
 		case 4:
 		{
-			_itemList = ["ACE_DAGR", "ACE_microDAGR","ACE_EntrenchingTool","ACE_WaterBottle","ACE_CableTie","ACE_MapTools","ItemCompass","ItemMap","ItemWatch","ACE_RangeTable_82mm","Binocular","ACE_SpraypaintRed","ACE_EarPlugs"];
+			_itemList = ["ACE_DAGR", "ACE_microDAGR","B_UavTerminal","ACE_EntrenchingTool","ACE_WaterBottle","ACE_CableTie","ACE_MapTools","ItemCompass","ItemMap","ItemWatch","ACE_RangeTable_82mm","Binocular","ACE_SpraypaintRed","ACE_EarPlugs"];
 			if (isClass (configFile >> "CfgPatches" >> "task_force_radio")) then {
 				_itemList pushBack "TFAR_anprc152";
 			} ;
@@ -246,6 +265,23 @@ getVirtualBackPack = {
 	virtualBackpackList
 };
 
+getVirtualMagazine = {
+	currentPlayer = _this select 0;
+	currentFaction = _this select 1;
+	currentPlayerClass = currentPlayer getVariable "role";
+	virtualMagazineList = [];
+
+	switch (currentPlayerClass) do
+	{
+		default 
+			{ 
+				//Default Magazine list
+				virtualMagazineList = virtualMagazineList + (magazineList_db select {_x select 1  == currentFaction} select 0 select 0);
+			};
+	};
+	diag_log format ["Player %1 with role %2 has access to items %3", name currentPlayer, currentPlayerClass, virtualMagazineList ];
+	virtualMagazineList
+};
 
 setupArsenalToItem = {
 	//InitParam
@@ -253,7 +289,6 @@ setupArsenalToItem = {
 
 	//Process
 	//Clean arsenal
-	//["AmmoboxExit", itemToAttachArsenal] call BIS_fnc_arsenal;	
 	[_itemToAttachArsenal,_itemToAttachArsenal call BIS_fnc_getVirtualWeaponCargo,false] call BIS_fnc_removeVirtualWeaponCargo;
 	[_itemToAttachArsenal,_itemToAttachArsenal call BIS_fnc_getVirtualItemCargo,false] call BIS_fnc_removeVirtualItemCargo;
 	[_itemToAttachArsenal,_itemToAttachArsenal call BIS_fnc_getVirtualMagazineCargo,false] call BIS_fnc_removeVirtualMagazineCargo;
@@ -265,10 +300,21 @@ setupArsenalToItem = {
 	//Add backpack to arsenal
 	[_itemToAttachArsenal, ([_currentPlayer, _currentFaction] call getVirtualBackPack ), false, false] call BIS_fnc_addVirtualBackpackCargo;
 
-	//[VA2,((itemCargo VA2) + _availableHeadgear + _availableUniforms + _availableVests)] call BIS_fnc_addVirtualItemCargo;
-	[_itemToAttachArsenal,true, false, false] call BIS_fnc_addVirtualMagazineCargo;
+	//Add magazine to arsenal
+	_currentMagazineItems = [_currentPlayer,_currentFaction] call getVirtualMagazine;
+	if (count _currentMagazineItems == 0) then 
+	{
+		[_itemToAttachArsenal,true, false, false] call BIS_fnc_addVirtualMagazineCargo;
+	} else {
+		[_itemToAttachArsenal, _currentMagazineItems, false, false] call BIS_fnc_addVirtualMagazineCargo;
+	};
+
+	//Add items, uniforms and optics to arsenal
 	[_itemToAttachArsenal,([_currentPlayer,_currentFaction] call getVirtualAttachement ) + ([_currentPlayer,_currentFaction] call getVirtualItemList ) + ([_currentPlayer,_currentFaction] call getVirtualUniform ),false, false] call BIS_fnc_addVirtualItemCargo;
-	//["AmmoboxInit",[_itemToAttachArsenal,false,{true}]] call BIS_fnc_arsenal;
+
+	//Remove action Arsenal
+	_itemToAttachArsenal call RemoveArsenalActionFromGivenObject;
+
 	_itemToAttachArsenal;
 };
 
@@ -301,7 +347,7 @@ doInitializeLoadout = {
 
 switchToRole = {
 	//Init params
-	params ["_arsenalItem", "_caller", "_faction", "_role"];
+	params ["_arsenalItem", "_caller", "_faction", "_role", "_allowCustomLoad"];
 
 	//Switch to role
 	diag_log format ["Player %1 has switch to role %2 in faction %3", name _caller, _role, _faction];
@@ -332,8 +378,8 @@ switchToRole = {
 	_caller setVariable ["role", _role, true];
 
 	//Manage default stuff
-	_personalLoadout = profileNamespace getVariable [format ["RPG_%1_%2_%3",name _caller, _faction , _role], []];
-	if (count _personalLoadout != 0) then 
+	_personalLoadout = profileNamespace getVariable [format [loadoutSaveName,name _caller, _faction , _role], []];
+	if (count _personalLoadout != 0 && _allowCustomLoad) then 
 	{
 		//Personal loadout 
 		_caller setUnitLoadout _personalLoadout;
@@ -534,8 +580,9 @@ adjustTFARRadio = {
 		//Seems not working
 		if (side _currentPlayer == blufor) then
 		{
-			[(call TFAR_fnc_activeSwRadio), 1, format ["%1",bluforShortFrequencyTFAR]] call TFAR_fnc_setChannelFrequency;
-			[(call TFAR_fnc_activeLrRadio), 1, format ["%1",bluforShortFrequencyTFAR]] call TFAR_fnc_SetChannelFrequency;
+			// Comment TFAR function
+			// [(call TFAR_fnc_activeSwRadio), 1, format ["%1",bluforShortFrequencyTFAR]] call TFAR_fnc_setChannelFrequency;
+			// [(call TFAR_fnc_activeLrRadio), 1, format ["%1",bluforShortFrequencyTFAR]] call TFAR_fnc_SetChannelFrequency;
 		};
 	};
 };
@@ -625,6 +672,186 @@ adjustLoadout = {
 	diag_log format ["Player %1 loadout adjust", name _currentPlayer];
 };
 
+RemoveArsenalActionFromGivenObject = {
+	{if (_this actionParams _x select 0 == "Arsenal") exitWith {_this removeAction _x}} forEach actionIDs _this;
+};
 
 
+saveCustomLoadout = {
+		params ["_currentPlayer", "_defaultParam"];
 
+		//Case where no player's is given as parameter
+		if (isNull _currentPlayer) then 
+		{
+			_currentPlayer = player;
+		};
+
+		_defaultStuff = [];
+
+		//Determine default loadout
+		switch (_defaultParam) do
+			{
+			case "personal":
+				{
+					_defaultStuff = getUnitLoadout _currentPlayer;
+				};
+			case "spawnLoadout":
+				{
+					_defaultStuff = _currentPlayer getVariable ["spawnLoadout", []];
+				};
+			default
+				{
+					//Do nothing
+				};
+		};
+
+		//Save personnal loadout
+		if (_currentPlayer getVariable "sideBeforeDeath" == "independent") then 
+		{
+			//Independent
+			profileNamespace setVariable [format [loadoutSaveName, name _currentPlayer, indFaction, _currentPlayer getVariable "role"], _defaultStuff];
+		} else 
+		{
+			//Blufor
+			profileNamespace setVariable [format [loadoutSaveName, name _currentPlayer, bluFaction, _currentPlayer getVariable "role"], _defaultStuff];
+		};
+
+		diag_log format ["Loadout saved on : RPG_%1_%2_%3 = %4", name player, indFaction, player getVariable "role", _defaultStuff];
+		saveProfileNamespace;
+};
+
+//Validate current loadout with a referenced loadout
+validateLoadout = 
+{
+	params ["_currentLoadout", "_referenceLoadout"];
+	diag_log format ["Validating loadout : %1 with loadout %2 ", _currentLoadout, _referenceLoadout];
+
+	//Check primary weapon
+	_currentLoadout set [0, [_currentLoadout#0, _referenceLoadout#0] call validateWeapons];
+
+	//Check secondary weapon
+	_currentLoadout set [1, [_currentLoadout#1, _referenceLoadout#1] call validateWeapons];
+
+	//Check handgun weapon
+	_currentLoadout set [2, [_currentLoadout#2, _referenceLoadout#2] call validateWeapons];
+
+	//Check uniform
+	_currentLoadout set [3, [_currentLoadout#3, _referenceLoadout#3] call validateContainer];
+
+	//Check vest
+	_currentLoadout set [4, [_currentLoadout#4, _referenceLoadout#4] call validateContainer];
+
+	//Check backpack
+	_currentLoadout set [5, [_currentLoadout#5, _referenceLoadout#5] call validateContainer];
+
+	//Check headgear
+	_currentLoadout set [6, _referenceLoadout#6];
+
+	//Check Goggles/Facewear
+	_currentLoadout set [7, _referenceLoadout#7];
+
+	//Check binocular
+	_currentLoadout set [8, _referenceLoadout#8];
+
+	//Check Assigned Items
+	_currentLoadout set [9, _referenceLoadout#9];
+
+	diag_log format ["%1 loadout has been fixed ", _currentLoadout];
+	_currentLoadout;
+};
+
+//Validate current weapon with a referenced weapon
+validateWeapons = 
+{
+	params ["_currentWeapon", "_referenceWeapon"];
+	_fixedWeapon = _currentWeapon;
+
+	diag_log format ["Validating weapon : %1 with weapon %2", _currentWeapon, _referenceWeapon];
+
+	//Check if the weapon is the same
+	if ([_currentWeapon select  0 , _referenceWeapon select 0 ] call BIS_fnc_areEqual) then 
+	{
+		{
+			_currentWeaponPart = _x;
+
+			diag_log format ["Searching %1 in %2",_currentWeaponPart, _referenceWeapon];
+
+			//Case type string
+			if (typeName _currentWeaponPart == "STRING") then 
+			{
+				//Position of checked weapon part
+				_currenWeaponPartPos = (_referenceWeapon select {typeName _x == "STRING"}) findIf {_x == _currentWeaponPart };
+				//Check if current item exists in the reference container
+				if (_currenWeaponPartPos == -1) then 
+				{
+					//Remove this weapon part
+					_fixedWeapon set [_fixedWeapon findIf {_x == _currentWeaponPart }, ""];
+					hint format ["%1 has been removed by loadout restriction", _currentWeaponPart];
+					diag_log format ["%1 has been removed from %2",_currentWeaponPart, _currentWeapon];
+				};
+			};
+
+			//Case type array
+			if (typeName _currentWeaponPart == "ARRAY") then 
+			{
+				//Position of checked weapon part
+				_currenWeaponPartPos = (_referenceWeapon select {typeName _x == "ARRAY"}) findIf {[_x,_currentWeaponPart] call BIS_fnc_areEqual };
+				//Check if current item exists in the reference container
+				if (_currenWeaponPartPos == -1) then 
+				{
+					//Remove this weapon part
+					_fixedWeapon set [_fixedWeapon findIf {[_x,_currentWeaponPart] call BIS_fnc_areEqual}, []];
+					hint format ["%1 has been removed by loadout restriction", _currentWeaponPart];
+					diag_log format ["%1 has been removed from %2",_currentWeaponPart, _currentWeapon];
+				};
+			};
+		}
+		foreach _currentWeapon;
+	} else 
+	{
+		_fixedWeapon = _referenceWeapon;
+	};
+
+	diag_log format ["%1 weapon has been fixed ", _fixedWeapon];
+	_fixedWeapon;
+};
+
+//Validate current container with a referenced container
+validateContainer = 
+{
+	params ["_currentContainer", "_referenceContainer"];
+	_fixedContainer = _currentContainer;
+	diag_log format ["Validating container : %1 with container %2", _currentContainer, _referenceContainer];
+
+	//Check if the root container is the same
+	if ([_currentContainer # 0 , _referenceContainer # 0] call BIS_fnc_areEqual) then 
+	{
+		if (count _referenceContainer >1) then 
+		{
+			{
+				_currentItemArray = _x;
+
+				diag_log format ["Searching %1 in %2",_currentItemArray, _referenceContainer];
+
+				//Check if current item exists in the reference container
+				if (((_referenceContainer # 1) apply {_x # 0}) findIf {[_currentItemArray#0, _x]  call BIS_fnc_areEqual} == -1) then 
+				{
+					//Remove item
+					_fixedContainer set [1, _fixedContainer # 1 - [_currentItemArray]];
+					hint format ["%1 has been removed by loadout restriction", _currentItemArray # 0];
+					diag_log format ["%1 has been removed from %2",_currentItemArray, _currentContainer];
+				};
+			}
+			foreach (_currentContainer # 1);
+		} else 
+		{
+			_fixedContainer = _referenceContainer;
+		};
+	} else 
+	{
+		_fixedContainer = _referenceContainer;
+	};
+
+	diag_log format ["%1 container has been fixed ", _fixedContainer];
+	_fixedContainer;
+};

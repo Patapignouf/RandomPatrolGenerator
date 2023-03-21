@@ -13,6 +13,16 @@ class DialogSetupParams
 			h = 30 * GUI_GRID_CENTER_H;
 			colorBackground[] = {1,1,1,0.5};
 		};
+
+		class Background2: RscText
+		{
+			idc = -1;
+			x = 0.229686 * safezoneW + safezoneX;
+			y = 0.117436 * safezoneH + safezoneY;
+			w = 45 * GUI_GRID_CENTER_W;
+			h = 1.5 * GUI_GRID_CENTER_H;
+			colorBackground[] = {0.2,0.2,0.2,1};
+		};
 	};
 	class Controls
 	{
@@ -161,6 +171,30 @@ class DialogSetupParams
 			h = 0.0219952 * safezoneH;
 		};
 
+
+		//Faction civ select
+		class RscText_6012: RscText
+		{
+			idc = 6012;
+			style = ST_MULTI;
+			lineSpacing = 1;
+			text = "Ironman mode"; //--- ToDo: Localize;
+			x = 0.261406 * safezoneW + safezoneX;
+			y = 0.36 * safezoneH + safezoneY;
+			w = 0.211441 * safezoneW;
+			h = 0.241947 * safezoneH;
+		};
+
+		class RscCombo_6110: RscCombo
+		{
+			idc = 6110;
+			text = "Ironman Select Combo"; //--- ToDo: Localize;
+			x = 0.261406 * safezoneW + safezoneX;
+			y = 0.50 * safezoneH + safezoneY;
+			w = 0.154713 * safezoneW;
+			h = 0.0219952 * safezoneH;
+		};
+
 		////////////////////
 		//Mission settings//
 		////////////////////
@@ -264,7 +298,7 @@ class DialogSetupParams
 			idc = 6011;
 			style = ST_MULTI;
 			lineSpacing = 1;
-			text = "Mission difficutly selection"; //--- ToDo: Localize;
+			text = "Number of opfor"; //--- ToDo: Localize;
 			x = 0.551406 * safezoneW + safezoneX;
 			y = 0.31 * safezoneH + safezoneY;
 			w = 0.211441 * safezoneW;
@@ -281,6 +315,51 @@ class DialogSetupParams
 			h = 0.0219952 * safezoneH;
 		};
 
+		//Starting intel
+		class RscText_6013: RscText
+		{
+			idc = -1;
+			style = ST_MULTI;
+			lineSpacing = 1;
+			text = "Starting intel"; //--- ToDo: Localize;
+			x = 0.551406 * safezoneW + safezoneX;
+			y = 0.36 * safezoneH + safezoneY;
+			w = 0.211441 * safezoneW;
+			h = 0.241947 * safezoneH;
+		};
+
+		class RscCombo_6112: RscCombo
+		{
+			idc = 6112;
+			text = "Starting intel Combo"; //--- ToDo: Localize;
+			x = 0.551406 * safezoneW + safezoneX;
+			y = 0.50 * safezoneH + safezoneY;
+			w = 0.154713 * safezoneW;
+			h = 0.0219952 * safezoneH;
+		};
+
+		//Starting IA Difficulty
+		class RscText_6014: RscText
+		{
+			idc = -1;
+			style = ST_MULTI;
+			lineSpacing = 1;
+			text = "IA Skills"; //--- ToDo: Localize;
+			x = 0.551406 * safezoneW + safezoneX;
+			y = 0.41 * safezoneH + safezoneY;
+			w = 0.211441 * safezoneW;
+			h = 0.241947 * safezoneH;
+		};
+
+		class RscCombo_6115: RscCombo
+		{
+			idc = 6113;
+			text = "IA Skills"; //--- ToDo: Localize;
+			x = 0.551406 * safezoneW + safezoneX;
+			y = 0.55 * safezoneH + safezoneY;
+			w = 0.154713 * safezoneW;
+			h = 0.0219952 * safezoneH;
+		};
 	};
 
 };

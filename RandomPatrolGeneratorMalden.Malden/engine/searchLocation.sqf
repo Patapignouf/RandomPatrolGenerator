@@ -84,3 +84,23 @@ getListOfPositionsAroundTarget =
 	AvalaiblePositions
 };
 
+isLocationOnMap = {
+	params ["_testedLocation"];
+	_isLocationOnMap = false;
+
+	//Test default location
+	if (!([_testedLocation , [0,0,0]] call BIS_fnc_areEqual)) then 
+	{
+
+		//Test out of bound location
+		if (_testedLocation select 0 > worldSize || _testedLocation select 1 > worldSize || _testedLocation select 1 < 0 || _testedLocation select 1 < 0) then 
+		{
+			_isLocationOnMap = true;
+		};
+	} else 
+	{
+		_isLocationOnMap = true;
+	};
+
+	_isLocationOnMap
+};

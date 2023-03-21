@@ -1,5 +1,6 @@
 disableSerialization;
 #include "..\..\database\objectLibrary.sqf"
+#include "loadSettings.sqf"
 
 //Create GUI
 createDialog "DialogSetupObjectivesParams";
@@ -26,6 +27,9 @@ _buttonLoad ctrlAddEventHandler[ "ButtonClick",
 		//Publish avalaible objectives types
 		publicVariable "avalaibleTypeOfObj";
 
+		//Save player's settings
+		[[], 'GUI\setupGUI\saveSettings.sqf'] remoteExec ['BIS_fnc_execVM', player];
+
 		//Begin mission generation
 		missionNamespace setVariable ["generationSetup", true, true]; 
 	}];
@@ -41,8 +45,16 @@ _coordinateButtonRatioY = 0.20;
 
 	_RcsButtonObjective = _mainDisplay ctrlCreate ["RscButton", -1];
 	_RcsButtonObjective ctrlSetText _currentObjectiveName;
-	_RcsButtonObjective ctrlSetTextColor [0.5, 1, 0.5, 0.8]; //Green seems enable
-	avalaibleTypeOfObj pushBack _currentObjectiveKey; //Add objective to avalaible objective
+
+	//Precheck with loaded settings
+	if (avalaibleTypeOfObj_loaded find _currentObjectiveKey != -1) then 
+	{
+		_RcsButtonObjective ctrlSetTextColor [0.5, 1, 0.5, 0.8]; //Green seems enable
+		avalaibleTypeOfObj pushBack _currentObjectiveKey; //Add objective to avalaible objective
+	} else 
+	{
+		_RcsButtonObjective ctrlSetTextColor [1, 1, 1, 1]; //White seems disable
+	};
 
 	//Position and size
 	_coordinateX = 0.30 * safezoneW + safezoneX;

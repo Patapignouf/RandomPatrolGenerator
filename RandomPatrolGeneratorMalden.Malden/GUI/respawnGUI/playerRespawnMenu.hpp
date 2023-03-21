@@ -10,7 +10,17 @@ class playerRespawnMenu
 			y = 0.117436 * safezoneH + safezoneY;
 			w = 45 * GUI_GRID_CENTER_W;
 			h = 15 * GUI_GRID_CENTER_H;
-			colorBackground[] = {0,0.5,0,0.5};
+			colorBackground[] = {0.5,0.5,0.5,0.8};
+		};
+
+		class Background2: RscText
+		{
+			idc = -1;
+			x = 0.229686 * safezoneW + safezoneX;
+			y = 0.117436 * safezoneH + safezoneY;
+			w = 45 * GUI_GRID_CENTER_W;
+			h = 1.5 * GUI_GRID_CENTER_H;
+			colorBackground[] = {0.5,0.5,0.5,1};
 		};
 	};
 	class Controls

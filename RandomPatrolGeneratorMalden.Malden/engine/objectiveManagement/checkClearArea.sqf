@@ -14,7 +14,7 @@ for [{_i = 0}, {_i < missionDifficultyParam+1}, {_i = _i + 1}] do
 	currentGroup = [currentRandomGroup, getPos _thisTrigger, east, "DefenseInfantry"] call doGenerateEnemyGroup;
 	
 	//Spawn group
-	[currentGroup, currentGroup, _baseRadius, [], true, (round random 3 == 0), -2, true] call lambs_wp_fnc_taskGarrison;
+	[currentGroup, getPos (leader currentGroup), _baseRadius, false] execVM 'enemyManagement\behaviorEngine\doGarrison.sqf';
 	_baseRadius = _baseRadius + 20;
 };
 
@@ -36,12 +36,22 @@ if (!([_thisObjectiveToComplete,[]] call BIS_fnc_areEqual)) then
 	_completedObjectives = missionNamespace getVariable ["completedObjectives",[]];
 	_completedObjectives pushBack _thisObjectiveToComplete;
 	missionNamespace setVariable ["completedObjectives",_completedObjectives,true];	
+
+	//Call respawn
+	if (["Respawn",1] call BIS_fnc_getParamValue == 1) then 
+	{
+		[[], "engine\respawnManagement\respawnManager.sqf"] remoteExec ['BIS_fnc_execVM', 0];
+	};
 };
 
 //Check FOB clear
-_thisFOBCheck = _thisTrigger getVariable ["isFOBAssociated",false];
+_thisFOBCheck = _thisTrigger getVariable ["isFOBAssociated", false];
 if (_thisFOBCheck) then 
 {
+	//Hint players for cleared FOB
+	[format ["The FOB at position %1 has been cleared", getPos _thisTrigger]] remoteExec ["hint", 0, true];	
+
+	//Add this FOB to cleared FOB
 	_OpforFOBCleared = missionNamespace getVariable ["OpforFOBCleared", 0];
 	missionNamespace setVariable ["OpforFOBCleared", _OpforFOBCleared+1, true];	
 };

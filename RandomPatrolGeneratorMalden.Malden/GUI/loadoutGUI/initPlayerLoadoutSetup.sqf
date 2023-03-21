@@ -14,6 +14,8 @@ private _buttonClose = _mainDisplay displayCtrl 7200;
 private _buttonArsenal = _mainDisplay displayCtrl 7201;
 private _buttonSave = _mainDisplay displayCtrl 7202;
 private _buttonLoad = _mainDisplay displayCtrl 7203;
+private _buttonClearItems = _mainDisplay displayCtrl 7204;
+
 
 //Faction params
 bluFaction = missionNamespace getVariable "bluforFaction";
@@ -22,8 +24,21 @@ indFaction = missionNamespace getVariable "independentFaction";
 //Function params
 firstOpen = true;
 
-//Load default loadout when player open loadout screen
-player setUnitLoadout (player getVariable ["spawnLoadout", []]);
+//Load default loadout when player open loadout screen if there isn't ironMan mode enabled
+if (!ironMan) then 
+{
+	//Loadout validated loadout (compared with spawn loadout)
+	player setUnitLoadout ([getUnitLoadout player, player getVariable ["spawnLoadout", []]] call validateLoadout);
+	[] call refreshCustomLoadoutDisplay;
+};
+
+//Specify button's names in ironMan mode 
+if (ironMan) then 
+{
+	_buttonSave ctrlSetText "Place loadout in the box"; 
+	_buttonLoad ctrlSetText "Get back loadout from the box";
+};
+
 
 //Specify all GUI content and button actions
 _comboBoxClassSelection ctrlAddEventHandler[ "LBSelChanged", 
@@ -34,20 +49,23 @@ _comboBoxClassSelection ctrlAddEventHandler[ "LBSelChanged",
 			_comboBoxClassSelection = _mainDisplay displayCtrl 7100;
 
 			_listOfAvalaibleRole =[];
-		
+
 			if (player getVariable "sideBeforeDeath" == "independent") then 
 			{
 				//Independent
 				_listOfAvalaibleRole = [indFaction] call setupRoleSwitchToList;
 				_role = (_listOfAvalaibleRole select parseNumber ((_comboBoxClassSelection lbData (lbCurSel _comboBoxClassSelection))));
-				[VA1, player, indFaction ,_role] call switchToRole;
+				[VA1, player, indFaction , _role, false] call switchToRole;
 			} else 
 			{
 				//Blufor
 				_listOfAvalaibleRole = [bluFaction] call setupRoleSwitchToList;
 				_role = (_listOfAvalaibleRole select parseNumber ((_comboBoxClassSelection lbData (lbCurSel _comboBoxClassSelection))));
-				[VA2, player, bluFaction , _role] call switchToRole;
+				[VA2, player, bluFaction , _role, false] call switchToRole;
 			};
+
+			//Refresh load button
+			[] call refreshCustomLoadoutDisplay;
 		}
 		else 
 		{
@@ -64,26 +82,36 @@ _buttonArsenal ctrlAddEventHandler[ "ButtonClick",
 		[] execVM 'database\openArsenal.sqf';
 	}];
 
+//Open arsenal
+_buttonClearItems ctrlAddEventHandler[ "ButtonClick", 
+	{ 
+			hint "Stuff cleared";
+			removeAllItemsWithMagazines player;
+	}];
+
 //Save loadout
 _buttonSave ctrlAddEventHandler[ "ButtonClick", 
 	{ 
-		//Manage default stuff
-		player setVariable ["spawnLoadout", getUnitLoadout player];
-
-		//Save personnal loadout
-		if (player getVariable "sideBeforeDeath" == "independent") then 
+		//Save default stuff when ironMan mode is disable
+		if (!ironMan) then 
 		{
-			//Independent
-			profileNamespace setVariable [format ["RPG_%1_%2_%3", name player, indFaction, player getVariable "role"], getUnitLoadout player];
+			player setVariable ["spawnLoadout", getUnitLoadout player];
+		};
+
+		//Save current loadout
+		[player, "personal"] call saveCustomLoadout;
+
+		//Load default faction stuff in ironMan mode
+		if (ironMan) then 
+		{
+			player setUnitLoadout (player getVariable ["spawnLoadout", []]);
+			cutText ["Loadout saved\nLoading default loadout", "PLAIN", 0.3];
 		} else 
 		{
-			//Blufor
-			profileNamespace setVariable [format ["RPG_%1_%2_%3", name player, bluFaction, player getVariable "role"], getUnitLoadout player];
+			//Refresh load button
+			[] call refreshCustomLoadoutDisplay;
+			cutText ["Loadout saved", "PLAIN", 0.3];
 		};
-		diag_log format ["Loadout saved on : RPG_%1_%2_%3", name player, indFaction, player getVariable "role"];
-		saveProfileNamespace;
-
-		cutText ["Loadout saved", "PLAIN", 0.3];
 	}];
 
 //Load loadout
@@ -94,16 +122,26 @@ _buttonLoad ctrlAddEventHandler[ "ButtonClick",
 		if (player getVariable "sideBeforeDeath" == "independent") then 
 		{
 			//Independent
-			_loadableLoadout = profileNamespace getVariable [format ["RPG_%1_%2_%3", name player, indFaction, player getVariable "role"], player getVariable "spawnLoadout"];
+			_loadableLoadout = profileNamespace getVariable [format [loadoutSaveName, name player, indFaction, player getVariable "role"], player getVariable "spawnLoadout"];
 		} else 
 		{
 			//Blufor
-			_loadableLoadout = profileNamespace getVariable [format ["RPG_%1_%2_%3", name player, bluFaction, player getVariable "role"], player getVariable "spawnLoadout"];
+			_loadableLoadout = profileNamespace getVariable [format [loadoutSaveName, name player, bluFaction, player getVariable "role"], player getVariable "spawnLoadout"];
 		};
 		
 		player setUnitLoadout _loadableLoadout;
+		
 
-		cutText ["Loadout loaded", "PLAIN", 0.3];
+		//Wipe saved loadout in Ironman mode
+		if (ironMan) then 
+		{
+			//Wipe loadout according to player faction
+			[player, "empty"] call saveCustomLoadout;
+			cutText ["Loadout loaded\nWipe custom loadout", "PLAIN", 0.3];
+		} else 
+		{
+			cutText ["Loadout loaded", "PLAIN", 0.3];
+		};
 	}];
 
 //Close display
@@ -114,8 +152,11 @@ _buttonClose ctrlAddEventHandler[ "ButtonClick",
 		_display = ctrlParent _ctrl;
 		_display closeDisplay 1;
 
-		//Save default stuff on close
-		player setVariable ["spawnLoadout", getUnitLoadout player];
+		//Save default stuff on close when ironMan mode is disable
+		if (!ironMan) then 
+		{
+			player setVariable ["spawnLoadout", getUnitLoadout player];
+		};
 	}
 ];
 
@@ -151,6 +192,14 @@ _keyDown = (findDisplay 7000) displayAddEventHandler ["KeyDown", {
 	private _handled = false;
 
 	switch (_dikCode) do {
+		case 1: 
+		{
+			//Save default stuff on close when ironMan mode is disable
+			if (!ironMan) then 
+			{
+				player setVariable ["spawnLoadout", getUnitLoadout player];
+			};
+		};
 		case 57: {
 			// case 1 for ESC -> https://community.bistudio.com/wiki/DIK_KeyCodes
 			// open your dialog
@@ -158,6 +207,32 @@ _keyDown = (findDisplay 7000) displayAddEventHandler ["KeyDown", {
 			[[], 'GUI\loadoutGUI\initPlayerLoadoutSetup.sqf'] remoteExec ['BIS_fnc_execVM', player];
 		};
 	};
-
 	_handled
 }];
+
+
+
+refreshCustomLoadoutDisplay = {
+		_buttonLoad = (findDisplay 7000) displayCtrl 7203;
+		_loadableLoadout = [];
+
+		//Save personnal loadout
+		if (player getVariable "sideBeforeDeath" == "independent") then 
+		{
+			//Independent
+			_loadableLoadout = profileNamespace getVariable [format [loadoutSaveName, name player, indFaction, player getVariable "role"], []];
+		} else 
+		{
+			//Blufor
+			_loadableLoadout = profileNamespace getVariable [format [loadoutSaveName, name player, bluFaction, player getVariable "role"], []];
+		};
+
+
+		if (count _loadableLoadout == 0) then 
+		{
+			_buttonLoad ctrlShow false;
+		} else 
+		{
+			_buttonLoad ctrlShow true;
+		};
+};

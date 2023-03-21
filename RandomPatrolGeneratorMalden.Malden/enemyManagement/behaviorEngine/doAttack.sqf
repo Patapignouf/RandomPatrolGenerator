@@ -3,12 +3,16 @@ _thisTarget = _this select 1;
 
 currentGroup = nil;
 
+if (isClass (configFile >> "CfgPatches" >> "lambs_danger")) then 
 {
-	if (!isNil _x) then
+	if (!isNil "_thisGroup") then
 	{
-		currentGroup = missionNamespace getVariable _x;
-		diag_log "Task_CQB !";
-		[_x, getPos _thisTarget,100] spawn lambs_wp_fnc_taskCQB;;
+		diag_log "Task ATTACK [LAMBS]!";
+		[_thisGroup, _thisTarget] spawn lambs_wp_fnc_taskAssault;;
 
 	};
-} forEach _thisGroup;
+} else 
+{
+	diag_log "Task ATTACK !";
+	[_thisGroup, _thisTarget] call BIS_fnc_taskAttack;
+};

@@ -3,11 +3,8 @@
 doGenerateVehicleForFOB = 
 {
 	//Define parameters
-	_thisPosition = _this select 0;
-	_thisVehicleList = _this select 1;
-	_thisMinRadius = _this select 2;
-	_thisMaxRadius = _this select 3;
-
+	params ["_thisPosition","_thisVehicleList","_thisMinRadius","_thisMaxRadius"];
+	
 	_vehicleSpawned = [];
 
 	//Define process 
@@ -71,7 +68,7 @@ doGenerateVehicleForFOB =
 								"Nudge",  
 								{  
 									_dir = [(_this select 1), (_this select 0)] call BIS_fnc_dirTo;  
-									_nudgePos = [(getPos (_this select 0)), 2, _dir] call dro_extendPos;  
+									//_nudgePos = [(getPos (_this select 0)), 2, _dir] call dro_extendPos;  
 									(_this select 0) setVelocity [(sin _dir)*3, (cos _dir)*3, 0.5];	
 								},  
 								nil,  
@@ -108,7 +105,7 @@ doGenerateVehicleForFOB =
 
 						//UAV spawn is only avalaible for blufor
 						_tempPos = [[_thisPosition select 0, _thisPosition select 1],1,60,10,0] call BIS_fnc_findSafePos;
-						_tempPos pushBack ((_thisPosition select 2)+400); //Set 3 dimension position
+						_tempPos pushBack ((_thisPosition select 2)+1400); //Set 3 dimension position
 						_currentUAVArray = [_tempPos, 0, _vehicleClass, blufor] call BIS_fnc_spawnVehicle;
 						_currentVehicle = _currentUAVArray select 0;
 						_currentUAVGroup = _currentUAVArray select 2;
@@ -117,17 +114,7 @@ doGenerateVehicleForFOB =
 						_wp = _currentUAVGroup addWaypoint [_tempPos, 0];
 
 						//Set unlimited fuel to the UAV
-						_h = [_currentVehicle] spawn
-						{
-							while {true} do
-							{
-								if ((fuel (_this select 0)) < 0.8) then
-								{
-									(_this select 0) setFuel 1;
-								};
-								sleep 120;
-							};
-						};
+						[[_currentVehicle], 'objectGenerator\setUnlimitedFuel.sqf'] remoteExec ['BIS_fnc_execVM', 2];
 					};
 					if (_isUAV) then 
 					{

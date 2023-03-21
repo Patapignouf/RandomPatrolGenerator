@@ -139,13 +139,13 @@ listOfRoles_PMC = [c_leader,c_at,c_rifleman,c_engineer,c_autorifleman,c_marksman
 //PMC
 loadout_PMC = [		
 	[c_leader,"CUP_I_PMC_Soldier_M4A3"],
-	[c_at,[["CUP_arifle_X95_Grippod_mars","","","CUP_optic_MARS",["CUP_30Rnd_556x45_X95",30],[],""],["CUP_launch_M136","","","",[],[],""],[],["CUP_I_B_PMC_Unit_1",[["FirstAidKit",1],["CUP_NVG_PVS7",1],["CUP_30Rnd_556x45_X95",3,30],["CUP_HandGrenade_M67",1,1]]],["CUP_V_PMC_IOTV_Coyote_Patrol",[["CUP_HandGrenade_M67",1,1]]],[],"CUP_H_PMC_Cap_EP_Grey","",[],["ItemMap","","ItemRadio","ItemCompass","ItemWatch",""]]],
+	[c_at,"CUP_I_PMC_Soldier_AT"],
 	[c_rifleman,"CUP_I_PMC_Contractor1"],//Default stuff
 	[c_engineer,"CUP_I_PMC_Engineer"],
 	[c_autorifleman,"CUP_I_PMC_Soldier_MG_PKM"],
 	[c_marksman,"CUP_I_PMC_Sniper"],
 	[c_medic,"CUP_I_PMC_Medic"],
-	[c_grenadier,[["CUP_arifle_Mk16_STD_EGLM_Specter","","","CUP_optic_Elcan_SpecterDR",["CUP_30Rnd_556x45_Stanag_Mk16",30],["CUP_1Rnd_HEDP_M203",1],""],[],[],["CUP_I_B_PMC_Unit_40",[["FirstAidKit",1],["CUP_NVG_PVS7",1],["CUP_30Rnd_556x45_Stanag_Mk16",4,30]]],["CUP_V_B_Ciras_Olive4",[["CUP_30Rnd_556x45_Stanag_Mk16",3,30],["CUP_HandGrenade_M67",2,1],["SmokeShell",2,1]]],["CUP_B_PMC_Backpack_GL",[["CUP_1Rnd_HEDP_M203",7,1]]],"CUP_H_PMC_Cap_Grey","CUP_G_Shades_Black",[],["ItemMap","","ItemRadio","ItemCompass","ItemWatch",""]]]
+	[c_grenadier,"CUP_I_PMC_Soldier_GL"]
 ];
 
 ////////////////////////

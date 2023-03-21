@@ -1,3 +1,5 @@
+#include "..\..\engine\searchLocation.sqf"
+
 //Generate Opfor small FOB
 //Protect player from nearby spawn
 _trgAOC = createTrigger ["EmptyDetector", initBlueforLocation];
@@ -5,12 +7,12 @@ _trgAOC setTriggerArea [200, 200, 0, true];
 
 _spawnAttempts = 0;
 _OpforFobLocation = [getPos initCityLocation, 400, (aoSize+1500), 30, 0, 0.15, 0, [_trgAOC], [[0,0,0],[0,0,0]]] call BIS_fnc_findSafePos;
-while {(([_OpforFobLocation , [0,0,0]] call BIS_fnc_areEqual)) && _spawnAttempts <10} do 
+while {([_OpforFobLocation] call isLocationOnMap) && _spawnAttempts <10} do 
 {
 	_OpforFobLocation = [getPos initCityLocation, 400, (aoSize+1500), 30, 0, 0.15, 0, [_trgAOC], [[0,0,0],[0,0,0]]] call BIS_fnc_findSafePos;
 	_spawnAttempts = _spawnAttempts +1;
 };
-if (!([_OpforFobLocation , [0,0,0]] call BIS_fnc_areEqual)) then
+if (!([_OpforFobLocation] call isLocationOnMap)) then
 {
 	
 	//Spawn FOB
