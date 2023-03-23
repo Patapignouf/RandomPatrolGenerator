@@ -24,6 +24,33 @@ indFaction = missionNamespace getVariable "independentFaction";
 //Function params
 firstOpen = true;
 
+refreshCustomLoadoutDisplay = {
+		_buttonLoad = (findDisplay 7000) displayCtrl 7203;
+		_loadableLoadout = [];
+
+		//Save personnal loadout
+		if (player getVariable "sideBeforeDeath" == "independent") then 
+		{
+			//Independent
+			_loadableLoadout = profileNamespace getVariable [format [loadoutSaveName, name player, indFaction, player getVariable "role"], []];
+		} else 
+		{
+			//Blufor
+			_loadableLoadout = profileNamespace getVariable [format [loadoutSaveName, name player, bluFaction, player getVariable "role"], []];
+		};
+
+
+		if (count _loadableLoadout == 0) then 
+		{
+			_buttonLoad ctrlShow false;
+		} else 
+		{
+			_buttonLoad ctrlShow true;
+		};
+};
+
+
+
 //Load default loadout when player open loadout screen if there isn't ironMan mode enabled
 if (!ironMan) then 
 {
@@ -212,27 +239,3 @@ _keyDown = (findDisplay 7000) displayAddEventHandler ["KeyDown", {
 
 
 
-refreshCustomLoadoutDisplay = {
-		_buttonLoad = (findDisplay 7000) displayCtrl 7203;
-		_loadableLoadout = [];
-
-		//Save personnal loadout
-		if (player getVariable "sideBeforeDeath" == "independent") then 
-		{
-			//Independent
-			_loadableLoadout = profileNamespace getVariable [format [loadoutSaveName, name player, indFaction, player getVariable "role"], []];
-		} else 
-		{
-			//Blufor
-			_loadableLoadout = profileNamespace getVariable [format [loadoutSaveName, name player, bluFaction, player getVariable "role"], []];
-		};
-
-
-		if (count _loadableLoadout == 0) then 
-		{
-			_buttonLoad ctrlShow false;
-		} else 
-		{
-			_buttonLoad ctrlShow true;
-		};
-};
