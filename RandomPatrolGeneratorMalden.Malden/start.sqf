@@ -856,6 +856,24 @@ if (enableCampaignMode) then
 			};
 		},missionLength,1.5,true,true,"","_target distance _this <5"]] remoteExec ["addAction", 0, true];
 
+	//Add reinforcement action on independent box
+	[VA1, ["Call Reinforcements",{
+		params ["_object","_caller","_ID","_param"];
+		
+		if (!(missionNamespace getVariable ["usedRespawnFewTimeAgo",false])) then 
+		{
+			//set morning
+			skipTime 24;
+			[[], "engine\respawnManagement\respawnManager.sqf"] remoteExec ['BIS_fnc_execVM', 0];
+			[format ["%1 needs reinforcement", name _caller]] remoteExec ["hint",0,true];
+			missionNamespace setVariable ["usedRespawnFewTimeAgo",true,true];
+			sleep 1200;
+			missionNamespace setVariable ["usedRespawnFewTimeAgo",false,true];
+		} else {
+			hint "You must wait before call reinforcements";
+		};
+	},[respawnSettings],1.5,true,false,"","_target distance _this <5"]] remoteExec [ "addAction", 0, true ];
+
 	//Loop until maximum number of possible objective are generated
 	while {sleep 10; (!_maxObjectivesGenerated)} do 
 	{
