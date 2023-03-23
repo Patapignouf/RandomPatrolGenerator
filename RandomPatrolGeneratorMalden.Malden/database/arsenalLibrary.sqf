@@ -499,7 +499,7 @@ isAreaEligibleForArsenal = {
 	};
 	if (side _caller == independent) then 
 	{
-		_controlDistance = "(_this distance _target < 3) && (_target distance (getPos initCityLocation) < 30)";
+		_controlDistance = "(_this distance _target < 3) && (_target distance (getPos initCityLocation) < 1000)";
 	};
 	_controlDistance;
 };
