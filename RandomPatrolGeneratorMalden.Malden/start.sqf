@@ -336,9 +336,18 @@ if (initBluforBase == 0 || (initBluforBase == 2 && (round random 1 == 0))) then
 	if ([initBlueforLocation, [0,0,0]] call BIS_fnc_areEqual) then 
 	{
 		initBlueforLocation = [getPos initCityLocation, (aoSize+400), (aoSize+700), 3, 0, 0.25, 0, [areaOfOperation], [[0,0,0],[0,0,0]]] call BIS_fnc_findSafePos;
-		if ([initBlueforLocation , [0,0,0]] call BIS_fnc_areEqual) then
+		//Test avalaible position (not in water and not default)
+		_spawnAttempts = 0;
+		while {(!([initBlueforLocation , [0,0,0]] call BIS_fnc_areEqual) && !surfaceIsWater initBlueforLocation) && _spawnAttempts <10} do 
 		{
-			initBlueforLocation = [getPos initCityLocation, (aoSize+400), (aoSize+1500), 3, 0, 0.25, 0, [areaOfOperation], [[0,0,0],[0,0,0]]] call BIS_fnc_findSafePos;
+			initBlueforLocation = [getPos initCityLocation, (aoSize+400), (aoSize+700), 3, 0, 0.25, 0, [areaOfOperation], [[0,0,0],[0,0,0]]] call BIS_fnc_findSafePos;
+			_spawnAttempts = _spawnAttempts +1;
+		};
+
+		//If no locations are avalaible in close range, try to search farer
+		if ([initBlueforLocation , [0,0,0]] call BIS_fnc_areEqual || surfaceIsWater initBlueforLocation) then
+		{
+			initBlueforLocation = [getPos initCityLocation, (aoSize+400), (aoSize+3000), 3, 0, 0.25, 0, [areaOfOperation], [[0,0,0],[0,0,0]]] call BIS_fnc_findSafePos;
 		};
 		
 		//Safe position
@@ -358,10 +367,22 @@ if (initBluforBase == 0 || (initBluforBase == 2 && (round random 1 == 0))) then
 	//Check if position is already determine by player
 	if ([initBlueforLocation, [0,0,0]] call BIS_fnc_areEqual) then 
 	{
+		//Test avalaible position (not in water and not default)
 		initBlueforLocation = [getPos initCityLocation, (aoSize+2000), (aoSize+4000), 3, 0, 0.25, 0, [areaOfOperation], [[0,0,0],[0,0,0]]] call BIS_fnc_findSafePos;
+		_spawnAttempts = 0;
+		while {(!([initBlueforLocation , [0,0,0]] call BIS_fnc_areEqual) && !surfaceIsWater initBlueforLocation) && _spawnAttempts <10} do 
+		{
+			initBlueforLocation = [getPos initCityLocation, (aoSize+2000), (aoSize+4000), 3, 0, 0.25, 0, [areaOfOperation], [[0,0,0],[0,0,0]]] call BIS_fnc_findSafePos;
+			_spawnAttempts = _spawnAttempts +1;
+		};
+
 		//Safe position
 		initBlueforLocation = [selectMax [selectMin [initBlueforLocation select 0, worldSize-100 ],100],selectMax [selectMin [initBlueforLocation select 1, worldSize-100],100]]; 
 	};
+
+
+
+
 	//Generate FOB
 	spawnFOBObjects = [initBlueforLocation, (random 360), selectRandom avalaibleFOB] call BIS_fnc_ObjectsMapper;
 	sleep 3;
