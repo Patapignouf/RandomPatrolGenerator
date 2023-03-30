@@ -338,7 +338,7 @@ if (initBluforBase == 0 || (initBluforBase == 2 && (round random 1 == 0))) then
 		initBlueforLocation = [getPos initCityLocation, (aoSize+400), (aoSize+700), 3, 0, 0.25, 0, [areaOfOperation], [[0,0,0],[0,0,0]]] call BIS_fnc_findSafePos;
 		//Test avalaible position (not in water and not default)
 		_spawnAttempts = 0;
-		while {(!([initBlueforLocation , [0,0,0]] call BIS_fnc_areEqual) && !surfaceIsWater initBlueforLocation) && _spawnAttempts <10} do 
+		while {(([initBlueforLocation , [0,0,0]] call BIS_fnc_areEqual) || surfaceIsWater initBlueforLocation) && _spawnAttempts <10} do 
 		{
 			initBlueforLocation = [getPos initCityLocation, (aoSize+400), (aoSize+700), 3, 0, 0.25, 0, [areaOfOperation], [[0,0,0],[0,0,0]]] call BIS_fnc_findSafePos;
 			_spawnAttempts = _spawnAttempts +1;
@@ -370,7 +370,7 @@ if (initBluforBase == 0 || (initBluforBase == 2 && (round random 1 == 0))) then
 		//Test avalaible position (not in water and not default)
 		initBlueforLocation = [getPos initCityLocation, (aoSize+2000), (aoSize+4000), 3, 0, 0.25, 0, [areaOfOperation], [[0,0,0],[0,0,0]]] call BIS_fnc_findSafePos;
 		_spawnAttempts = 0;
-		while {(!([initBlueforLocation , [0,0,0]] call BIS_fnc_areEqual) && !surfaceIsWater initBlueforLocation) && _spawnAttempts <10} do 
+		while {(([initBlueforLocation , [0,0,0]] call BIS_fnc_areEqual) && surfaceIsWater initBlueforLocation) && _spawnAttempts <10} do 
 		{
 			initBlueforLocation = [getPos initCityLocation, (aoSize+2000), (aoSize+4000), 3, 0, 0.25, 0, [areaOfOperation], [[0,0,0],[0,0,0]]] call BIS_fnc_findSafePos;
 			_spawnAttempts = _spawnAttempts +1;
