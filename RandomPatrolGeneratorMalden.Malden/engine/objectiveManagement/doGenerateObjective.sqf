@@ -264,6 +264,13 @@ generateObjectiveObject =
 								{
 									[_x] call lambs_wp_fnc_taskReset; //reset current task
 								};
+
+								//Enable MOVE and PATH for all opfor units in the area
+								{
+									_x enableAI "PATH";
+									_x enableAI "MOVE";
+								}
+								foreach (units _x);
 								
 								//Ask opfor group to go to the flag
 								[_x, getPos _object] execVM 'enemyManagement\behaviorEngine\doAttack.sqf';
