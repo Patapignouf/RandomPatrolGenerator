@@ -337,6 +337,17 @@ uniformList_USA = [
 	];
 
 //Magazine avalaible for all unit
-magazineList_USA = [
-
-	];
+magazineList_USA = 	[
+	"30Rnd_556x45_Stanag_Tracer_Green",
+	"CUP_1Rnd_HEDP_M203",
+	"CUP_FlareWhite_M203",
+	"CUP_Javelin_M",
+	"CUP_Stinger_M",
+	"CUP_MAAWS_HEAT_M",
+	"CUP_100Rnd_TE4_LRT4_White_Tracer_762x51_Belt_M",
+	"CUP_200Rnd_TE4_Red_Tracer_556x45_M249",
+	"CUP_20Rnd_556x45_Stanag",
+	"CUP_5Rnd_762x51_M24",
+	"CUP_20Rnd_762x51_B_M110",
+	"CUP_40Rnd_46x30_MP7"
+];
