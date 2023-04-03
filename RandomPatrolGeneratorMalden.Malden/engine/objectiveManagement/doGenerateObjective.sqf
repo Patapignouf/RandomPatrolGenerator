@@ -102,6 +102,7 @@ generateObjectiveObject =
 			{
 				//Generate objective object
 				_objectiveObject = leader ([_currentRandomPos, east, [selectRandom avalaibleHVT],[],[],[],[],[], random 360] call BIS_fnc_spawnGroup);
+				_objectiveObject disableAI "PATH";
 				diag_log format ["HVT %2 _thisObjectivePosition : %1",_thisObjectivePosition, _objectiveObject];
 				currentObj setVariable ["isObjectiveObject", true, true];
 				_objectiveObject setVariable ["isObjectiveObject", true, true];
@@ -334,6 +335,7 @@ generateObjectiveObject =
 				_objectiveObject = leader ([_currentRandomPos, civilian, [selectRandom avalaibleVIP],[],[],[],[],[], random 360] call BIS_fnc_spawnGroup);
 				_objectiveObject setVariable ["isObjectiveObject", true, true];
 				_thisObjective = [_objectiveObject, _thisObjectiveType] call generateObjectiveTracker;
+				_objectiveObject disableAI "PATH";
 				
 				//Add dialog to the informant
 				diag_log format ["VIP task setup ! : %1", _objectiveObject];
