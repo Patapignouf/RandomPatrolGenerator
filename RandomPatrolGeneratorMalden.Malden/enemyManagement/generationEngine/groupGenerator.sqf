@@ -107,7 +107,7 @@ doSetGroupSkills =
 			{
 				 {
 					_unit = _x;
-					_unit setSkill ["aimingAccuracy", random [0.50, 0.55, 0.60]];
+					_unit setSkill ["aimingAccuracy", random [0.55, 0.60, 0.70]];
 					_unit setSkill ["aimingShake", random [0.10, 0.15, 0.2]];
 					_unit setSkill ["aimingSpeed", random [0.40, 0.45, 0.50]];
 					_unit setSkill ["spotDistance", random [0.75, 0.8, 0.85]];
