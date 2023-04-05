@@ -35,7 +35,20 @@ sleep 3; //Wait player load correctly the mission
 //Independent leader can choose mission
 if (!didJIP) then 
 {
-	if ({isPlayer _x && side _x == independent} count allPlayers != 0 && forceBluforSetup == 0) then 
+	_adminExist = false;
+	//Check if there is an admin to setup the mission
+	if (isMultiplayer) then 
+	{
+		{
+			if (admin (owner _x) != 0) then 
+			{
+				_adminExist = true;
+				[[], 'GUI\setupGUI\initMissionMenu.sqf'] remoteExec ['BIS_fnc_execVM', player];
+			};
+		} foreach allPlayers;
+	};
+
+	if (!_adminExist && ({isPlayer _x && side _x == independent} count allPlayers != 0 && forceBluforSetup == 0)) then 
 	{
 		if (side player == independent && player == (leader (group player))) then 
 		{
