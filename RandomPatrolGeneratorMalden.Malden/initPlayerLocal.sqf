@@ -410,6 +410,12 @@ if (side player == blufor) then
 	};
 };
 
+//Disable revive if ACE medic is enable
+if (isClass (configFile >> "CfgPatches" >> "ace_medical")) then 
+{
+	[player] call BIS_fnc_disableRevive;
+};
+
 
 //Generate civilian dialogs
 [] spawn _generateCivDialogs;
