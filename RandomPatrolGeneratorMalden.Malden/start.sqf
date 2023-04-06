@@ -802,6 +802,22 @@ if (_mainPlayerSide == independent) then
 	};
 };
 
+//Adjust some ACE parameters 
+if (isClass (configFile >> "CfgPatches" >> "ace_common")) then 
+{
+	_ace_settings = [
+	
+		//ACE setting
+		["ACE_maxWeightDrag", 8000, true], 
+		["ACE_maxWeightCarry", 4000, true]
+	];
+	
+	//Do all settings
+	{
+		missionNamespace setVariable _x;
+	} forEach _ace_settings;
+};
+
 
 //Init garbage collector
 [] execVM 'engine\garbageCollector.sqf'; 
