@@ -357,7 +357,6 @@ magazineList_2035_NATO_FS = [
 	"30Rnd_556x45_Stanag_Sand_Tracer_Green",
 	"130Rnd_338_Mag",
 	"200Rnd_65x39_cased_Box_Tracer",
-	"20Rnd_762x51_Mag",
 	"7Rnd_408_Mag",
 	"20Rnd_762x51_Mag",
 	"11Rnd_45ACP_Mag",
