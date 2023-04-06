@@ -18,6 +18,22 @@ bluforVehicleSpawnType = "BluforVehicleSpawnType" call BIS_fnc_getParamValue;
 _handleEnvironmentInitialization = [] execVM 'initEnvironment.sqf'; 
 waitUntil {isNull _handleEnvironmentInitialization};
 
+//Clean area WIP
+waitUntil {count allPlayers != 0};
+
+adminExist = false;
+//Check if there is an admin to setup the mission
+if (isMultiplayer) then 
+{
+	{
+		if (admin (owner _x) != 0) then 
+		{
+			adminExist = true;
+		};
+	} foreach allPlayers;
+};
+publicVariable "adminExist";
+
 //Mission settings waiting
 waitUntil {missionNamespace getVariable "generationSetup" == true};
 
@@ -104,9 +120,6 @@ publicvariable "EnemyWaveGroups";
 ///////////////////////////
 ///Define player settings//
 ///////////////////////////
-
-//Clean area WIP
-waitUntil {count allPlayers != 0};
 
 //Determine main player side
 _mainPlayerSide = blufor;

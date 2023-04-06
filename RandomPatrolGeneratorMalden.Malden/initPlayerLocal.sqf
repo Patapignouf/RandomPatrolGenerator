@@ -33,34 +33,34 @@ sleep 3; //Wait player load correctly the mission
 
 //Define player who configure mission
 //Independent leader can choose mission
+waitUntil {!isNil "adminExist"};
 if (!didJIP) then 
 {
-	_adminExist = false;
+	
 	//Check if there is an admin to setup the mission
-	if (isMultiplayer) then 
+	if (isMultiplayer && adminExist) then 
 	{
+		if (call BIS_fnc_admin != 0) then 
 		{
-			if (admin (owner _x) != 0) then 
+				[[], 'GUI\setupGUI\initMissionMenu.sqf'] remoteExec ['BIS_fnc_execVM', player];
+		};
+	} else 
+	{
+		//Solo setup or game without  admin setup
+		if ( ({isPlayer _x && side _x == independent} count allPlayers != 0 && forceBluforSetup == 0)) then 
+		{
+			if (side player == independent && player == (leader (group player))) then 
 			{
-				_adminExist = true;
+				//Display setup menu
 				[[], 'GUI\setupGUI\initMissionMenu.sqf'] remoteExec ['BIS_fnc_execVM', player];
 			};
-		} foreach allPlayers;
-	};
-
-	if (!_adminExist && ({isPlayer _x && side _x == independent} count allPlayers != 0 && forceBluforSetup == 0)) then 
-	{
-		if (side player == independent && player == (leader (group player))) then 
-		{
-			//Display setup menu
-			[[], 'GUI\setupGUI\initMissionMenu.sqf'] remoteExec ['BIS_fnc_execVM', player];
-		};
-	} else {
-		//If there is no independent, blufor leader can choose mission
-		if (side player == blufor && player == (leader (group player))) then 
-		{
-			//Display setup menu
-			[[], 'GUI\setupGUI\initMissionMenu.sqf'] remoteExec ['BIS_fnc_execVM', player];
+		} else {
+			//If there is no independent, blufor leader can choose mission
+			if (side player == blufor && player == (leader (group player))) then 
+			{
+				//Display setup menu
+				[[], 'GUI\setupGUI\initMissionMenu.sqf'] remoteExec ['BIS_fnc_execVM', player];
+			};
 		};
 	};
 };
