@@ -345,7 +345,7 @@ generateObjectiveObject =
 				_objectiveObject disableAI "PATH";
 				
 				//Add dialog to the informant
-				diag_log format ["VIP task setup ! : %1", _objectiveObject];
+				diag_log format ["Informant task setup ! : %1", _objectiveObject];
 				_objectiveObject setPos ( _thisObjectivePosition);
 				
 				[

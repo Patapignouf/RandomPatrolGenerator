@@ -43,7 +43,7 @@ if (!([_OpforFobLocation] call isLocationOnMap)) then
 			_turret = createVehicle ["B_G_HMG_02_high_F", getPosASL _randomAvalaiblePos, [], 0, "NONE"];
 			_turret setDir (getDir _randomAvalaiblePos);
 			_x moveInAny _turret;
-			_x disableAI "MOVE";
+			_x disableAI "PATH";
 			deleteVehicle _randomAvalaiblePos;
 			_OpforFobTurretOpforLocation = _OpforFobTurretOpforLocation - [_randomAvalaiblePos];
 		};
