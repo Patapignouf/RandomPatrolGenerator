@@ -9,6 +9,7 @@ diag_log format ["Setup Player %1 at position 0", name player];
 //init tp to be able to spawn on the ground on each map
 player setPos [0,0];
 player allowdamage false;
+disableUserInput true;
 //player enableSimulationGlobal false;
 player setVariable ["role", player getVariable ["initRole","rifleman"]];
 player setVariable ["isDead", false, true];
@@ -42,7 +43,8 @@ if (!didJIP) then
 	{
 		if (call BIS_fnc_admin != 0) then 
 		{
-				[[], 'GUI\setupGUI\initMissionMenu.sqf'] remoteExec ['BIS_fnc_execVM', player];
+			disableUserInput false;
+			[[], 'GUI\setupGUI\initMissionMenu.sqf'] remoteExec ['BIS_fnc_execVM', player];
 		};
 	} else 
 	{
@@ -52,6 +54,7 @@ if (!didJIP) then
 			if (side player == independent && player == (leader (group player))) then 
 			{
 				//Display setup menu
+				disableUserInput false;
 				[[], 'GUI\setupGUI\initMissionMenu.sqf'] remoteExec ['BIS_fnc_execVM', player];
 			};
 		} else {
@@ -59,6 +62,7 @@ if (!didJIP) then
 			if (side player == blufor && player == (leader (group player))) then 
 			{
 				//Display setup menu
+				disableUserInput false;
 				[[], 'GUI\setupGUI\initMissionMenu.sqf'] remoteExec ['BIS_fnc_execVM', player];
 			};
 		};
@@ -449,6 +453,7 @@ if (didJIP) then
 	diag_log format ["Player %1 has arrived on JIP", name player];
 	//Check if player is trying to respawn by deco/reco method
 	_deadPlayerList = missionNamespace getVariable "deadPlayer";
+	disableUserInput false;
 	if (count (_deadPlayerList select { _x == (name player) }) == 0) then 
 	{
 
@@ -467,6 +472,7 @@ if (didJIP) then
 } else {
 	//Let's get it started !
 	player allowdamage true;
+	disableUserInput false;
 	player enableSimulationGlobal true;
 	cutText ["", "BLACK IN", 5];
 };
