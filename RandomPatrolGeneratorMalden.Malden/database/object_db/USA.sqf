@@ -122,7 +122,8 @@ bluforFixedWing_USA = [
 
 //Vehicule able to do HQ features (Loadout management and more)
 bluforHQVehicle_USA = [
-	"CUP_B_M113A1_HQ_desert_USA"
+	"CUP_B_M113A1_HQ_desert_USA",
+	"CUP_B_AAV_Unarmed_USMC"
 ];
 
 
@@ -152,20 +153,24 @@ loadout_USA = [
 rifleList_USA = [		
 	"CUP_arifle_mk18_black",
 	"CUP_arifle_SBR_black",
-	"CUP_arifle_M4A1_SOMMOD_Grip_black"
+	"CUP_arifle_M4A1_SOMMOD_Grip_black",
+	"CUP_arifle_mk18_tan_holo_laserflash",
+	"CUP_hgun_M9"
 ];	
 
 //Grenade launcher or weapon with grenade launcher option
 grenadeLauncherList_USA = [		
 	"CUP_arifle_mk18_m203_tan_holo_laserflash",
-	"CUP_arifle_mk18_m203_black"
+	"CUP_arifle_mk18_m203_black",
+	"CUP_arifle_M4A1_M203_CCO_Laser"
 ];
 
 launcherList_USA = [		
 	"CUP_launch_Javelin",
 	"CUP_launch_FIM92Stinger",
 	"CUP_launch_MAAWS",
-	"CUP_launch_MAAWS_Scope"
+	"CUP_launch_MAAWS_Scope",
+	"CUP_launch_M136"
 ];	
 
 autorifleList_USA = [			
@@ -178,7 +183,8 @@ autorifleList_USA = [
 marksmanrifleList_USA = [		
 	"CUP_srifle_Mk12SPR",
 	"CUP_srifle_M40A3",
-	"CUP_srifle_M110_black"
+	"CUP_srifle_M110_black",
+	"CUP_srifle_M110"
 ];
 
 smgList_USA = [		
@@ -250,7 +256,8 @@ attachmentShortList_USA	= [
 	"CUP_muzzle_snds_KZRZP_AK545",
 	"CUP_muzzle_snds_KZRZP_PK",
 	"CUP_optic_LeupoldMk4_CQ_T",
-	"CUP_optic_SB_11_4x20_PM_pip"
+	"CUP_optic_SB_11_4x20_PM_pip",
+	"CUP_acc_ANPEQ_2_grey"
 ];
 
 attachmentLongList_USA	= [
@@ -261,7 +268,11 @@ attachmentLongList_USA	= [
 	"CUP_optic_LeupoldMk4",
 	"CUP_optic_CWS",
 	"CUP_optic_CWS_NV",
-	"CUP_optic_CWS_NV_RDS"
+	"CUP_optic_CWS_NV_RDS",
+	"CUP_U_CRYE_G3C_MC_US",
+	"CUP_V_CPC_tlbelt_mc",
+	"CUP_B_USArmy_MG_SpecOp",
+	"CUP_H_OpsCore_Tan_SF"
 ];
 
 ////////////////////////
@@ -332,7 +343,11 @@ uniformList_USA = [
 	"CUP_H_USArmy_HelmetACH_ESS_Headset_OCP",
 	"CUP_V_B_IOTV_OCP_Rifleman_USArmy",
 	"CUP_H_USArmy_Boonie_hs_OCP",
-	"CUP_PMC_Facewrap_Tropical"
+	"CUP_PMC_Facewrap_Tropical",
+	"CUP_H_OpsCore_Black_SF",
+	"CUP_G_White_Scarf_GPS",
+	"CUP_V_CPC_communicationsbelt_mc",
+	"CUP_U_CRYE_G3C_RGR_MC_US"
 
 	];
 
@@ -349,5 +364,6 @@ magazineList_USA = 	[
 	"CUP_20Rnd_556x45_Stanag",
 	"CUP_5Rnd_762x51_M24",
 	"CUP_20Rnd_762x51_B_M110",
-	"CUP_40Rnd_46x30_MP7"
+	"CUP_40Rnd_46x30_MP7",
+	"CUP_15Rnd_9x19_M9"
 ];
