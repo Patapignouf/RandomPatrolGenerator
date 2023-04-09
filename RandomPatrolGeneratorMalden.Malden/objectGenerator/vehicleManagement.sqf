@@ -4,7 +4,8 @@ doGenerateVehicleForFOB =
 {
 	//Define parameters
 	params ["_thisPosition","_thisVehicleList","_thisMinRadius","_thisMaxRadius"];
-	
+
+	_dummyVehicle = "Land_HelipadCircle_F"; // Specific vehicle class which work great with findEmptyPosition
 	_vehicleSpawned = [];
 
 	//Define process 
@@ -20,10 +21,10 @@ doGenerateVehicleForFOB =
 			case (_vehicleClass isKindOf "Car"): {
 						_kind = "Car";
 						_spawnAttempts = 0;
-						_vehicleGoodPosition = _thisPosition findEmptyPosition [_thisMinRadius, _thisMaxRadius,_vehicleClass];
+						_vehicleGoodPosition = _thisPosition findEmptyPosition [_thisMinRadius, _thisMaxRadius,_dummyVehicle];
 						while {(isNil "_vehicleGoodPosition" || count _vehicleGoodPosition==0) && _spawnAttempts <10} do 
 						{
-							_vehicleGoodPosition = _thisPosition findEmptyPosition [_thisMinRadius, _thisMaxRadius,_vehicleClass];
+							_vehicleGoodPosition = _thisPosition findEmptyPosition [_thisMinRadius, _thisMaxRadius,_dummyVehicle];
 							_spawnAttempts = _spawnAttempts +1;
 						};
 						if (!isNil "_vehicleGoodPosition" && count _vehicleGoodPosition>0) then 
