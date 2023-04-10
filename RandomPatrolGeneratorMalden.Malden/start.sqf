@@ -217,7 +217,7 @@ PossibleObjectivePosition = possiblePOILocation;
 for [{_i = 0}, {_i <= 2}, {_i = _i + 1}] do //Peut être optimisé
 {
 	_currentTruckType = selectRandom civilianTruck;
-	[getPos initCityLocation, [_currentTruckType], 30, 100] call doGenerateVehicleForFOB;	
+	[getPos initCityLocation, [[_currentTruckType, false]], 30, 100] call doGenerateVehicleForFOB;	
 };
 
 /////////////////////////
