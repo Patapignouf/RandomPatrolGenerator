@@ -55,7 +55,7 @@ refreshCustomLoadoutDisplay = {
 if (!ironMan) then 
 {
 	//Loadout validated loadout (compared with spawn loadout)
-	player setUnitLoadout ([getUnitLoadout player, player getVariable ["spawnLoadout", []]] call validateLoadout);
+	[player] call validateLoadout;
 	[] call refreshCustomLoadoutDisplay;
 };
 

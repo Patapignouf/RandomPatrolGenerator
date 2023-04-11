@@ -293,10 +293,12 @@ setupArsenalToItem = {
 	[_itemToAttachArsenal,_itemToAttachArsenal call BIS_fnc_getVirtualBackpackCargo,false] call BIS_fnc_removeVirtualBackpackCargo;
 
 	//Add Weapon to arsenal
-	[_itemToAttachArsenal, ([_currentPlayer, _currentFaction] call getVirtualWeaponList ), false, false] call BIS_fnc_addVirtualWeaponCargo;
+	_currentWeaponItems = [_currentPlayer, _currentFaction] call getVirtualWeaponList;
+	[_itemToAttachArsenal, _currentWeaponItems, false, false] call BIS_fnc_addVirtualWeaponCargo;
 
 	//Add backpack to arsenal
-	[_itemToAttachArsenal, ([_currentPlayer, _currentFaction] call getVirtualBackPack ), false, false] call BIS_fnc_addVirtualBackpackCargo;
+	_currentBackpackItems = [_currentPlayer, _currentFaction] call getVirtualBackPack;
+	[_itemToAttachArsenal, _currentBackpackItems, false, false] call BIS_fnc_addVirtualBackpackCargo;
 
 	//Add magazine to arsenal
 	_currentMagazineItems = [_currentPlayer,_currentFaction] call getVirtualMagazine;
@@ -308,10 +310,15 @@ setupArsenalToItem = {
 	};
 
 	//Add items, uniforms and optics to arsenal
-	[_itemToAttachArsenal,([_currentPlayer,_currentFaction] call getVirtualAttachement ) + ([_currentPlayer,_currentFaction] call getVirtualItemList ) + ([_currentPlayer,_currentFaction] call getVirtualUniform ),false, false] call BIS_fnc_addVirtualItemCargo;
+	_currentItems = ([_currentPlayer, _currentFaction] call getVirtualAttachement ) + ([_currentPlayer,_currentFaction] call getVirtualItemList ) + ([_currentPlayer,_currentFaction] call getVirtualUniform );
+	[_itemToAttachArsenal, _currentItems,false, false] call BIS_fnc_addVirtualItemCargo;
 
 	//Remove action Arsenal
 	_itemToAttachArsenal call RemoveArsenalActionFromGivenObject;
+
+	//Save avalaible item list
+	_whitelistOfArsenalItems = _currentWeaponItems+_currentBackpackItems+_currentMagazineItems+_currentItems + (_currentPlayer getVariable ["avalaibleItemsInArsenal", []]);
+	_currentPlayer setVariable ["avalaibleItemsInArsenal", _whitelistOfArsenalItems, true];
 
 	_itemToAttachArsenal;
 };
@@ -340,6 +347,8 @@ doInitializeLoadout = {
 		};
 	};
 	
+	//Whitelist current player loadout
+	_player setVariable ["avalaibleItemsInArsenal", [_player, getUnitLoadout _player, []] call listCurrentItemsLoadout, true];
 };
 
 
@@ -535,6 +544,15 @@ setupPlayerLoadout = {
 			false, 
 			false
 		] call BIS_fnc_holdActionAdd;
+
+		//Setup initArsenal whitelist items
+		if (side player == independent) then 
+		{
+			[_itemToAttachArsenal, player, indFaction] call setupArsenalToItem;
+		} else 
+		{
+			[_itemToAttachArsenal, player, bluFaction] call setupArsenalToItem;
+		};
 };
 
 setupSaveAndLoadRole = {
@@ -718,138 +736,144 @@ saveCustomLoadout = {
 		saveProfileNamespace;
 };
 
-//Validate current loadout with a referenced loadout
 validateLoadout = 
 {
-	params ["_currentLoadout", "_referenceLoadout"];
-	diag_log format ["Validating loadout : %1 with loadout %2 ", _currentLoadout, _referenceLoadout];
+	params ["_currentPlayer"];
 
-	//Check primary weapon
-	_currentLoadout set [0, [_currentLoadout#0, _referenceLoadout#0] call validateWeapons];
-
-	//Check secondary weapon
-	_currentLoadout set [1, [_currentLoadout#1, _referenceLoadout#1] call validateWeapons];
-
-	//Check handgun weapon
-	_currentLoadout set [2, [_currentLoadout#2, _referenceLoadout#2] call validateWeapons];
-
-	//Check uniform
-	_currentLoadout set [3, [_currentLoadout#3, _referenceLoadout#3] call validateContainer];
-
-	//Check vest
-	_currentLoadout set [4, [_currentLoadout#4, _referenceLoadout#4] call validateContainer];
-
-	//Check backpack
-	_currentLoadout set [5, [_currentLoadout#5, _referenceLoadout#5] call validateContainer];
-
-	//Check headgear
-	_currentLoadout set [6, _referenceLoadout#6];
-
-	//Check Goggles/Facewear
-	_currentLoadout set [7, _referenceLoadout#7];
-
-	//Check binocular
-	_currentLoadout set [8, _referenceLoadout#8];
-
-	//Check Assigned Items
-	_currentLoadout set [9, _referenceLoadout#9];
-
-	diag_log format ["%1 loadout has been fixed ", _currentLoadout];
-	_currentLoadout;
+	_playerLoadout = getUnitLoadout _currentPlayer;
+	_playerRestrictedItemsList = _currentPlayer getVariable ["avalaibleItemsInArsenal", []];
+	if (count _playerRestrictedItemsList != 0) then 
+	{
+		[_currentPlayer, _playerLoadout, _playerRestrictedItemsList] call validateSpecificItem;
+	};
 };
 
-//Validate current weapon with a referenced weapon
-validateWeapons = 
+validateSpecificItem = 
 {
-	params ["_currentWeapon", "_referenceWeapon"];
-	_fixedWeapon = _currentWeapon;
+	params ["_currentPlayer", "_itemToVerify", "_restrictedItemsList"];
 
-	diag_log format ["Validating weapon : %1 with weapon %2", _currentWeapon, _referenceWeapon];
-
-	//Check if the weapon is the same
-	if ([_currentWeapon select  0 , _referenceWeapon select 0 ] call BIS_fnc_areEqual) then 
+	if (!isNil "_itemToVerify" && !isNil "_restrictedItemsList") then 
 	{
-		{
-			_currentWeaponPart = _x;
-
-			diag_log format ["Searching %1 in %2",_currentWeaponPart, _referenceWeapon];
-
-			//Case type string
-			if (typeName _currentWeaponPart == "STRING") then 
-			{
-				//Position of checked weapon part
-				_currenWeaponPartPos = (_referenceWeapon select {typeName _x == "STRING"}) findIf {_x == _currentWeaponPart };
-				//Check if current item exists in the reference container
-				if (_currenWeaponPartPos == -1) then 
+		switch (typeName _itemToVerify) do
 				{
-					//Remove this weapon part
-					_fixedWeapon set [_fixedWeapon findIf {_x == _currentWeaponPart }, ""];
-					hint format ["%1 has been removed by loadout restriction", _currentWeaponPart];
-					diag_log format ["%1 has been removed from %2",_currentWeaponPart, _currentWeapon];
-				};
-			};
+				case "ARRAY":
+					{
+						if (count _itemToVerify != 0 ) then 
+						{
+							{
+								[_currentPlayer, _x, _restrictedItemsList] call validateSpecificItem;
+							} foreach _itemToVerify;
+						};
+					};
+				case "STRING":
+					{
+						//Test if it's a magazine
+						diag_log format ["validateSpecificItem testing item  %1 ",_itemToVerify];
+						if (([getText (configFile >>  "cfgMagazines" >> _itemToVerify >> "Displayname"), ""] call BIS_fnc_areEqual ) && !([_itemToVerify, ""] call BIS_fnc_areEqual)) then 
+						{
+							//Test if the item exist in avalaible items list
+							_currenItemPos = (_restrictedItemsList) findIf {_x == _itemToVerify };
+							if (_currenItemPos == -1) then 
+							{
+								//If it is a vest then remove
+								if ([vest _currentPlayer, _itemToVerify] call BIS_fnc_areEqual) then 
+								{	
+									removeVest _currentPlayer;
+								};
 
-			//Case type array
-			if (typeName _currentWeaponPart == "ARRAY") then 
-			{
-				//Position of checked weapon part
-				_currenWeaponPartPos = (_referenceWeapon select {typeName _x == "ARRAY"}) findIf {[_x,_currentWeaponPart] call BIS_fnc_areEqual };
-				//Check if current item exists in the reference container
-				if (_currenWeaponPartPos == -1) then 
-				{
-					//Remove this weapon part
-					_fixedWeapon set [_fixedWeapon findIf {[_x,_currentWeaponPart] call BIS_fnc_areEqual}, []];
-					hint format ["%1 has been removed by loadout restriction", _currentWeaponPart];
-					diag_log format ["%1 has been removed from %2",_currentWeaponPart, _currentWeapon];
-				};
+								//If it is a headgear  then remove
+								if ([headgear  _currentPlayer, _itemToVerify] call BIS_fnc_areEqual) then 
+								{	
+									removeHeadgear  _currentPlayer;
+								};
+
+								//If it is a uniform then remove
+								if ([uniform _currentPlayer, _itemToVerify] call BIS_fnc_areEqual) then 
+								{	
+									removeUniform _currentPlayer;
+								};
+
+								//If it is a backpack then remove
+								if ([backpack  _currentPlayer, _itemToVerify] call BIS_fnc_areEqual) then 
+								{	
+									removeBackpack _currentPlayer;
+								};
+
+								//If it is a weapon then remove
+								if ((weapons _currentPlayer) findIf {_x == _itemToVerify } != -1) then 
+								{	
+									_currentPlayer removeWeaponGlobal _itemToVerify;
+								};
+
+								//If it is a secondaryWeaponItems then remove
+								if ((secondaryWeaponItems _currentPlayer) findIf {_x == _itemToVerify } != -1) then 
+								{	
+									_currentPlayer removesecondaryWeaponItem _itemToVerify;
+								};
+
+								//If it is a primaryWeaponItems then remove
+								if ((primaryWeaponItems _currentPlayer) findIf {_x == _itemToVerify } != -1) then 
+								{	
+									_currentPlayer removeprimaryWeaponItem _itemToVerify;
+								};
+
+								//Remove this specific item
+								_currentPlayer unassignItem _itemToVerify;
+								_currentPlayer removeItems _itemToVerify;
+
+								//Log this restriction
+								hint format ["%1 has been removed by loadout restriction", _itemToVerify];
+								diag_log format ["%1 has been removed from %2 loadout due to loadout restriction %3",_itemToVerify, name _currentPlayer, _restrictedItemsList];
+							};
+						};
+					};
+				default
+					{
+						//Usually quantity of items
+					};
 			};
-		}
-		foreach _currentWeapon;
 	} else 
 	{
-		_fixedWeapon = _referenceWeapon;
+		diag_log "RPG_ERROR : validateSpecificItem";
 	};
-
-	diag_log format ["%1 weapon has been fixed ", _fixedWeapon];
-	_fixedWeapon;
 };
 
-//Validate current container with a referenced container
-validateContainer = 
+
+listCurrentItemsLoadout = 
 {
-	params ["_currentContainer", "_referenceContainer"];
-	_fixedContainer = _currentContainer;
-	diag_log format ["Validating container : %1 with container %2", _currentContainer, _referenceContainer];
-
-	//Check if the root container is the same
-	if ([_currentContainer # 0 , _referenceContainer # 0] call BIS_fnc_areEqual) then 
-	{
-		if (count _referenceContainer >1) then 
+	params ["_currentPlayer","_currentItemToTest","_listOfItems"];
+	switch (typeName _currentItemToTest) do
 		{
+		case "ARRAY":
 			{
-				_currentItemArray = _x;
-
-				diag_log format ["Searching %1 in %2",_currentItemArray, _referenceContainer];
-
-				//Check if current item exists in the reference container
-				if (((_referenceContainer # 1) apply {_x # 0}) findIf {[_currentItemArray#0, _x]  call BIS_fnc_areEqual} == -1) then 
+				if (count _currentItemToTest != 0 ) then 
 				{
-					//Remove item
-					_fixedContainer set [1, _fixedContainer # 1 - [_currentItemArray]];
-					hint format ["%1 has been removed by loadout restriction", _currentItemArray # 0];
-					diag_log format ["%1 has been removed from %2",_currentItemArray, _currentContainer];
+					{
+						[_currentPlayer, _x, _listOfItems] call listCurrentItemsLoadout;
+					} foreach _currentItemToTest;
 				};
-			}
-			foreach (_currentContainer # 1);
-		} else 
-		{
-			_fixedContainer = _referenceContainer;
-		};
-	} else 
-	{
-		_fixedContainer = _referenceContainer;
+			};
+		case "STRING":
+			{
+				//Test if it's a magazine
+				diag_log format ["listCurrentItemsLoadout testing item  %1 ",_currentItemToTest];
+				//Test if the item exist in avalaible items list
+				_currenItemPos = (_listOfItems) findIf {_x == _currentItemToTest };
+				if (_currenItemPos == -1) then 
+				{
+					//Remove this specific item
+					_listOfItems pushBack _currentItemToTest;
+
+					//Log this addition
+					diag_log format ["%1 has been added to %2 loadout basic items",_currentItemToTest, name _currentPlayer];
+				};
+			};
+		default
+			{
+				//Usually quantity of items
+			};
 	};
 
-	diag_log format ["%1 container has been fixed ", _fixedContainer];
-	_fixedContainer;
+	diag_log format ["list of whitelist items by listCurrentItemsLoadout %1", _listOfItems];
+	_listOfItems
 };

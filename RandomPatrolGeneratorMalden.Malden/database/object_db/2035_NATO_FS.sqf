@@ -359,7 +359,6 @@ magazineList_2035_NATO_FS = [
 	"200Rnd_65x39_cased_Box_Tracer",
 	"7Rnd_408_Mag",
 	"20Rnd_762x51_Mag",
-	"11Rnd_45ACP_Mag",
 	"30Rnd_9x21_Mag_SMG_02_Tracer_Yellow",
 	"Titan_AT",
 	"Titan_AP",
