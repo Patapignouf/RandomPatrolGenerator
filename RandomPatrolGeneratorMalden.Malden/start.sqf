@@ -829,7 +829,7 @@ if (isClass (configFile >> "CfgPatches" >> "ace_common")) then
 ];
 } forEach playableUnits;
 
-//Setup weather and time 
+//Setup time 
 switch (timeOfDay) do
 {
 	case 1:
@@ -859,6 +859,9 @@ switch (timeOfDay) do
 		};
 };
 
+//Setup weather
+86400 setOvercast (random 1);
+forceWeatherChange;
 
 
 //Init checkdeath
