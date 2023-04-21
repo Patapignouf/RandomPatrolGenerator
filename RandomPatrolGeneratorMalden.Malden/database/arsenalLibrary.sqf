@@ -769,7 +769,7 @@ validateSpecificItem =
 					{
 						//Test if it's a magazine
 						diag_log format ["validateSpecificItem testing item  %1 ",_itemToVerify];
-						if (([getText (configFile >>  "cfgMagazines" >> _itemToVerify >> "Displayname"), ""] call BIS_fnc_areEqual ) && !([_itemToVerify, ""] call BIS_fnc_areEqual)) then 
+						if (([getText (configFile >>  "cfgMagazines" >> _itemToVerify >> "Displayname"), ""] call BIS_fnc_areEqual ) && !([_itemToVerify, ""] call BIS_fnc_areEqual) && !(["TFAR_",_itemToVerify] call BIS_fnc_inString)) then 
 						{
 							//Test if the item exist in avalaible items list
 							_currenItemPos = (_restrictedItemsList) findIf {_x == _itemToVerify };
