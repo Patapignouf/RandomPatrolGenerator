@@ -57,7 +57,7 @@ missionNamespace setVariable ["startIntel", parseNumber missionStartIntel, true]
 missionNamespace setVariable ["missionIASkill", parseNumber missionIASkill, true]; //Default disable ironman mode
 
 //Go to objective selection
-[[], 'GUI\setupGUI\startGUIMenuObjectives.sqf'] remoteExec ['BIS_fnc_execVM', player];
+[[], 'GUI\setupGUI\startGUIMenuLocation.sqf'] remoteExec ['BIS_fnc_execVM', player];
 
 //Close setup menu
 _mainDisplay closeDisplay 1;

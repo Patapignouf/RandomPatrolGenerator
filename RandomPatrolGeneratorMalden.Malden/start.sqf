@@ -9,7 +9,6 @@
 enableInitAttack = "EnableInitAttack" call BIS_fnc_getParamValue;
 enableInitBluAttack = "EnableInitBluAttack" call BIS_fnc_getParamValue;
 initBluforBase = "InitBluforBase" call BIS_fnc_getParamValue;
-chooseStartPos = "ChooseStartPos" call BIS_fnc_getParamValue;
 timeOfDay = "TimeOfDay" call BIS_fnc_getParamValue;
 respawnSettings = "Respawn" call BIS_fnc_getParamValue;
 bluforVehicleSpawnType = "BluforVehicleSpawnType" call BIS_fnc_getParamValue;
@@ -131,36 +130,6 @@ if ({isPlayer _x && side _x == independent} count allPlayers != 0) then
 /////////////////////////
 /////Find locations//////
 /////////////////////////
-
-initCityLocationPosition = objNull;
-publicVariable "initCityLocationPosition";
-initBlueforLocationPosition = objNull;
-publicVariable "initBlueforLocationPosition";
-
-
-switch (chooseStartPos) do
-{
-	case 1:
-		{
-			//If independent are avalaible server is waiting for independent init position
-			if (_mainPlayerSide == independent) then 
-			{
-				waitUntil {initCityLocationPosition isEqualType []};
-			};
-			
-			//Wait for blufor leader to choose a start position
-			if ({isPlayer _x && side _x == blufor} count allUnits != 0) then 
-			{
-				waitUntil {initBlueforLocationPosition isEqualType []};
-			};
-		};
-	default
-		{
-			//Do nothing
-		};
-};
-
-
 
 //Initilize independent starting position 
 if (initCityLocationPosition isEqualType []) then 

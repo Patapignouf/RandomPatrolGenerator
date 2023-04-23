@@ -2,13 +2,14 @@
 #include "GUI\BaseControls.hpp"
 #include "GUI\setupGUI\missionSetup.hpp"
 #include "GUI\setupGUI\missionSetupObjectives.hpp"
+#include "GUI\setupGUI\missionSetupLocation.hpp"
 #include "GUI\loadoutGUI\playerLoadoutSetup.hpp"
 #include "GUI\respawnGUI\playerRespawnMenu.hpp"
 #include "GUI\dialogGUI\dialogCivilian.hpp"
 
 respawnDialog = 0;
 respawnOnStart = -1;
-respawnDelay = 1; 
+respawnDelay = 5; 
 
 enableDebugConsole = 1;
 briefing = 0;
@@ -96,13 +97,6 @@ class Params
 		values[] = {0,1,2,3};
 		texts[] = {"Nobody can recruit civilian","Only indepedent can recruit civilian","Only blufor can recruit civilian", "Both independent and blufor can recruit civilian"};
 		default = 1;             
-	};
-	class ChooseStartPos
-	{
-		title = "Choose initial bases positions";
-		values[] = {0,1};
-		texts[] = {"Random positions","Leaders can choose start positions"};
-		default = 0;             
 	};
 	class BluforVehicleSpawnType
 	{

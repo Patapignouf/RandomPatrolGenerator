@@ -9,7 +9,7 @@ diag_log format ["Setup Player %1 at position 0", name player];
 //init tp to be able to spawn on the ground on each map
 player setPos [0,0];
 player allowdamage false;
-disableUserInput true;
+//disableUserInput true;
 //player enableSimulationGlobal false;
 player setVariable ["role", player getVariable ["initRole","rifleman"]];
 player setVariable ["isDead", false, true];
@@ -79,7 +79,6 @@ waitUntil {missionNamespace getVariable "generationSetup" == true};
 enableThermal = "EnableThermal" call BIS_fnc_getParamValue;
 enableHalo = "EnableHALO" call BIS_fnc_getParamValue;
 initBluforBase = "InitBluforBase" call BIS_fnc_getParamValue;
-chooseStartPos = "ChooseStartPos" call BIS_fnc_getParamValue;
 
 bluFaction = missionNamespace getVariable "bluforFaction";
 indFaction = missionNamespace getVariable "independentFaction";
@@ -144,22 +143,6 @@ if (side player == independent) then
 
 	if (player == (leader (group player))) then
 	{	
-		if (chooseStartPos == 1) then 
-		{
-			if (!didJIP) then 
-			{
-				sleep 5;
-				titleCut ["", "BLACK IN", 5];
-				initCityLocationPosition = objNull;
-				openMap true;
-				sleep 1;
-				hint "Click on map to select a starting area";
-				onMapSingleClick "initCityLocationPosition = _pos; onMapSingleClick ''; openMap false; true;";
-				waitUntil{!(visibleMap)}; 
-				publicVariable "initCityLocationPosition";
-				titleCut ["Please wait while mission is generating", "BLACK FADED", 5];
-			};
-		};
 
 		if (!didJIP) then 
 		{
@@ -212,22 +195,6 @@ if (side player == blufor) then
 	player createDiaryRecord ["RPG", ["RPG vehicles", "You can deploy use the blue flag on the main FOB to spawn vehicules. Each vehicle spawned use one specific credit. You have 10 credits for basic vehicle and 2 for advanced ones.<br/>Complete a mission to earn credits.<br/><br/> Note : Only the team leader can spawn vehicles."]];
 	
 	diag_log format ["Setup Player %1 at position 2", name player];
-	if (player == (leader (group player)) && chooseStartPos == 1) then
-	{	
-		if (!didJIP) then 
-		{
-			sleep 5;
-			titleCut ["", "BLACK IN", 5];
-			openMap true;
-			sleep 1;
-			hint "Click on map to select a starting area";
-			onMapSingleClick "initBlueforLocationPosition = _pos; onMapSingleClick ''; openMap false; true;";
-			waitUntil{!visibleMap}; 
-			publicVariable "initBlueforLocationPosition";
-			titleCut ["Please wait while mission is generating", "BLACK FADED", 5];
-		};
-	};
-	diag_log format ["Setup Player %1 at position 3", name player];
 
 	//Wait for the player to choose position
 	waitUntil {!isNil "missionGenerated"};
