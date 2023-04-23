@@ -9,7 +9,7 @@ diag_log format ["Setup Player %1 at position 0", name player];
 //init tp to be able to spawn on the ground on each map
 player setPos [0,0];
 player allowdamage false;
-//disableUserInput true;
+disableUserInput true;
 //player enableSimulationGlobal false;
 player setVariable ["role", player getVariable ["initRole","rifleman"]];
 player setVariable ["isDead", false, true];

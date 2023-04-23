@@ -189,6 +189,14 @@ for [{_i = 0}, {_i <= 2}, {_i = _i + 1}] do //Peut être optimisé
 	[getPos initCityLocation, [[_currentTruckType, false]], 30, 100] call doGenerateVehicleForFOB;	
 };
 
+//Init enemy forces in the main civilian city if there's no independent player
+if ((round (random 1))==0 && (count (allPlayers select {side _x == independent})== 0)) then 
+{
+	//Generate enemy forces on main civilian city environement
+	_handlePOIGeneration = [EnemyWaveLevel_1, baseEnemyVehicleGroup, [], [], [], getPos initCityLocation, missionDifficultyParam] execVM 'enemyManagement\generationEngine\generatePOI.sqf'; 
+	waitUntil {isNull _handlePOIGeneration};
+};
+
 /////////////////////////
 ///Generate Objectives///
 /////////////////////////
