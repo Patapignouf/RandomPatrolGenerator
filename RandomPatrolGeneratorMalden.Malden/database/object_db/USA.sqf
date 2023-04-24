@@ -173,10 +173,10 @@ grenadeLauncherList_USA = [
 
 launcherList_USA = [		
 	"CUP_launch_Javelin",
-	"CUP_launch_FIM92Stinger",
+	"CUP_launch_FIM92Stinger_Loaded",
 	"CUP_launch_MAAWS",
 	"CUP_launch_MAAWS_Scope",
-	"CUP_launch_M136"
+	"CUP_launch_M136_Loaded"
 ];	
 
 autorifleList_USA = [			

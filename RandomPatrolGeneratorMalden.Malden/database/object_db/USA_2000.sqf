@@ -159,8 +159,8 @@ grenadeLauncherList_USA_2000 = [
 ];
 
 launcherList_USA_2000 = [		
-	"CUP_launch_M136",
-	"CUP_launch_FIM92Stinger",
+	"CUP_launch_M136_Loaded",
+	"CUP_launch_FIM92Stinger_Loaded",
 	"CUP_launch_Javelin"
 ];	
 
