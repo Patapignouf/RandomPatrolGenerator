@@ -77,10 +77,11 @@ baseEnemyHeavyArmoredVehicleGroup_USA = ["CUP_B_M1126_ICV_M2_Desert",
 ////////////////////////
 //USA
 bluforUnarmedVehicle_USA = [
-	"CUP_B_M1151_USA",
-	"CUP_B_nM1037sc_DF_USMC_DES", 
-	"CUP_B_nM1038_DF_USMC_DES", 
-	"CUP_B_M1152_DSRT_USMC"
+	"CUP_B_nM1025_Unarmed_DF_USA_DES",
+	"CUP_B_MTVR_USMC",
+	"CUP_B_MTVR_USA",
+	"CUP_B_nM1025_Unarmed_DF_USA_WDL",
+	"CUP_B_M1030_USMC"
 ];
 
 bluforArmedVehicle_USA = [
@@ -89,7 +90,11 @@ bluforArmedVehicle_USA = [
 	"CUP_B_nM1025_M240_USA_DES",
 	"CUP_B_M1165_GMV_DSRT_USMC",
 	"CUP_B_RG31_M2_USMC", 
-	"CUP_B_RG31E_M2_USMC"
+	"CUP_B_RG31E_M2_USMC",
+	"CUP_B_nM1025_SOV_M2_USA_DES",
+	"CUP_B_nM1025_SOV_M2_USA_WDL",
+	"CUP_B_nM1025_M2_USA_WDL",
+	"CUP_B_M1151_M2_WDL_USA"
 ];
 
 bluforUnarmedVehicleChopper_USA = [
@@ -123,7 +128,8 @@ bluforFixedWing_USA = [
 //Vehicule able to do HQ features (Loadout management and more)
 bluforHQVehicle_USA = [
 	"CUP_B_M113A1_HQ_desert_USA",
-	"CUP_B_AAV_Unarmed_USMC"
+	"CUP_B_AAV_Unarmed_USMC",
+	"CUP_B_M113A3_HQ_USA"
 ];
 
 
@@ -329,8 +335,11 @@ itemMedicList_USA = [
 //backpack avalaible for all unit
 backPackList_USA = [
 	"CUP_B_US_IIID_OEFCP",
-	"CUP_B_US_IIID_OCP"
-	];
+	"CUP_B_US_IIID_OCP",
+	"CUP_B_AssaultPack_Coyote",
+	"B_Mortar_01_weapon_F",
+	"B_Mortar_01_support_F"
+];
 
 
 //Uniform, vest, headgear, avalaible for all unit
@@ -341,14 +350,16 @@ uniformList_USA = [
 	"CUP_V_B_IOTV_OEFCP_SL_USArmy",
 	"CUP_U_B_USArmy_ACU_Kneepad_Rolled_OCP",
 	"CUP_H_USArmy_HelmetACH_ESS_Headset_OCP",
+	"CUP_H_USArmy_HelmetACH_GCOVERED_Headset_OCP",
 	"CUP_V_B_IOTV_OCP_Rifleman_USArmy",
 	"CUP_H_USArmy_Boonie_hs_OCP",
 	"CUP_PMC_Facewrap_Tropical",
 	"CUP_H_OpsCore_Black_SF",
 	"CUP_G_White_Scarf_GPS",
 	"CUP_V_CPC_communicationsbelt_mc",
-	"CUP_U_CRYE_G3C_RGR_MC_US"
-
+	"CUP_U_CRYE_G3C_RGR_MC_US",
+	"CUP_V_B_IOTV_OCP_TL_USArmy",
+	"CUP_U_B_USArmy_ACU_Gloves_OCP"
 	];
 
 //Magazine avalaible for all unit
