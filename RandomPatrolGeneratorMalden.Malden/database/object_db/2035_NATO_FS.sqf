@@ -308,7 +308,8 @@ itemEngineerList_2035_NATO_FS = [
 	"ACE_wirecutter",
 	"ACE_Fortify",
 	"ACE_DefusalKit",
-	"ACE_DeadManSwitch"
+	"ACE_DeadManSwitch",
+	"ACE_Clacker"
 ];
 
 //item avalaible for all medic
