@@ -29,16 +29,16 @@ while {alive _thisUnit && (side _thisUnit == civilian)} do {
 			_thisUnit removeAllEventHandlers "Killed";
 			[_thisUnit] remoteExec ["removeAllActions", 0, true];
 			_thisUnit switchMove "";
+			
+			//Join enemy group
+			_tempGroup = createGroup east;
+			[_thisUnit] joinSilent _tempGroup;
 
 			//If lambs is enabled, disable unit task
 			if (isClass (configFile >> "CfgPatches" >> "lambs_danger")) then 
 			{
-				[_thisUnit] call lambs_wp_fnc_taskReset; //reset current task
+				[_tempGroup] call lambs_wp_fnc_taskReset; //reset current task
 			};
-
-			//Join enemy group
-			_tempGroup = createGroup east;
-			[_thisUnit] joinSilent _tempGroup;
 			
 			//Manage loadout
 			_thisUnit addVest "V_BandollierB_rgr";
