@@ -168,7 +168,7 @@ listOfRoles_2035_Spetsnaz = [c_leader,c_at,c_rifleman,c_engineer,c_autorifleman,
 loadout_2035_Spetsnaz = [		
 	[c_leader,"O_R_Patrol_Soldier_TL_F"],
 	[c_at,"O_R_Patrol_Soldier_LAT_F"],
-	[c_rifleman,"O_R_Soldier_TL_F"],//Default stuff
+	[c_rifleman,"O_R_JTAC_F"],//Default stuff
 	[c_engineer,"O_R_Patrol_Soldier_Engineer_F"],
 	[c_autorifleman,"O_R_Patrol_Soldier_AR_F"],
 	[c_marksman,"O_R_Patrol_Soldier_M2_F"],
