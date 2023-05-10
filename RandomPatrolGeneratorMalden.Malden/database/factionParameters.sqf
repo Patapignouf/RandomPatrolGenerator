@@ -20,6 +20,7 @@ _2035_Rebels = 18;
 _2035_NATO_FS = 19;
 _Taki_Army = 20;
 _2035_FIA = 21;
+_2035_Spetsnaz = 22;
 
 #include "object_db\USA.sqf"
 #include "object_db\French.sqf"
@@ -37,6 +38,7 @@ _2035_FIA = 21;
 #include "object_db\2035_AAF.sqf"
 #include "object_db\2035_NATO.sqf"
 #include "object_db\2035_NATO_FS.sqf"
+#include "object_db\2035_Spetsnaz.sqf"
 #include "object_db\USA_2000_DF.sqf"
 #include "object_db\Russian_Winter.sqf"
 #include "object_db\PMC.sqf"
@@ -68,6 +70,7 @@ c_Russian_Winter = "_Russian_Winter";
 c_PMC = "_PMC";
 c_2035_Rebels = "_2035_Rebels";
 c_Taki_Army = "_Taki_Army";
+c_2035_Spetsnaz = "_2035_Spetsnaz";
 
 //Setup basic ArmA 3 Factions
 factionInfos = [
@@ -75,6 +78,7 @@ factionInfos = [
 	[c_2035_AAF,_2035_AAF,"2035 AAF"],
 	[c_2035_NATO,_2035_NATO,"2035 NATO [ACE]"],
 	[c_2035_NATO_FS,_2035_NATO_FS,"2035 NATO Special Forces"],
+	[c_2035_Spetsnaz,_2035_Spetsnaz,"2035 Spetsnaz"],
 	[c_2035_FIA,_2035_FIA,"FIA"],
 	[c_2035_Rebels,_2035_Rebels,"2035 Rebels"]
 ];
