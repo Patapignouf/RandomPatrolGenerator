@@ -101,13 +101,14 @@ private _generateCivDialogs = compile preprocessFileLineNumbers "enemyManagement
 	{(_display displayCtrl _x) ctrlShow false} forEach [44151, 44150, 44146, 44147, 44148, 44149, 44346];
 }] call BIS_fnc_addScriptedEventHandler;
 
-//Remove Body on respawn 
-// player addEventHandler ["Respawn",{ 
+//Hide native Arsenal action
+inGameUISetEventHandler ["Action", "
+	if (_this select 4 == 'Arsenal') then {
+		{if ((_this#0) actionParams _x select 0 == 'Arsenal') exitWith {(_this#0) removeAction _x}} forEach actionIDs (_this#0);		
+		true
+	};
+"];
 
-// 	params ["_newObject","_oldObject"];
-// 	deleteVehicle _oldObject; 
-
-// }];
 
 //Init disableThermal
 if (enableThermal==0) then 
@@ -173,9 +174,6 @@ if (side player == independent) then
 	player setVariable ["spawnLoadout", getUnitLoadout player];
 
 	//Manage arsenal	
-	// [VA1, player, indFaction] call setupArsenalToItem;
-	// [VA1, player, indFaction] call setupRoleSwitchToItem;
-	// [VA1, player] call setupSaveAndLoadRole;
 	[VA1] call setupPlayerLoadout;
 
 	waituntil {!isNil "isBluforAttacked" && !isNil "isIndAttacked"};
