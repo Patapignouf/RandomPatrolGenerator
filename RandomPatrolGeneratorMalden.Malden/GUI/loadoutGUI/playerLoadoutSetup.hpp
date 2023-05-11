@@ -41,9 +41,9 @@ class PlayerLoadoutSetup
 		{
 			idc = 7201;
 			text = "Arsenal";
-			x = 0.551406 * safezoneW + safezoneX;
+			x = GUI_GRID_CENTER_X + 25 * GUI_GRID_CENTER_W;
 			y = 0.25 * safezoneH + safezoneY;
-			w = 0.104713 * safezoneW;
+			w = 10 * GUI_GRID_CENTER_W;
 			h = 0.0219952 * safezoneH;
 		};
 
@@ -89,7 +89,19 @@ class PlayerLoadoutSetup
 			text = "Clear items";
 			x = 0.701406 * safezoneW + safezoneX;
 			y = 0.25 * safezoneH + safezoneY;
-			w = 0.054713 * safezoneW;
+			w = 5 * GUI_GRID_CENTER_W;
+			h = 0.0219952 * safezoneH;
+		};
+
+
+		//Clear button
+		class 3DForceOpticsButton: RscButton
+		{
+			idc = 7205;
+			text = "3D Optics";
+			x = 0.701406 * safezoneW + safezoneX;
+			y = GUI_GRID_CENTER_Y + 5 * GUI_GRID_CENTER_H;
+			w = 5 * GUI_GRID_CENTER_W;
 			h = 0.0219952 * safezoneH;
 		};
 

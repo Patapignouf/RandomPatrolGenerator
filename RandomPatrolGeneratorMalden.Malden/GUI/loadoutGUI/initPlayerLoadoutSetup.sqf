@@ -15,6 +15,7 @@ private _buttonArsenal = _mainDisplay displayCtrl 7201;
 private _buttonSave = _mainDisplay displayCtrl 7202;
 private _buttonLoad = _mainDisplay displayCtrl 7203;
 private _buttonClearItems = _mainDisplay displayCtrl 7204;
+private _button3DItems = _mainDisplay displayCtrl 7205;
 
 
 //Faction params
@@ -115,6 +116,26 @@ _buttonClearItems ctrlAddEventHandler[ "ButtonClick",
 			hint "Stuff cleared";
 			removeAllItemsWithMagazines player;
 	}];
+
+//Force 3D Optics
+_button3DItems ctrlAddEventHandler[ "ButtonClick", 
+	{ 
+		player addEventHandler ["OpticsSwitch", {
+			params ["_unit", "_isADS"];
+			
+			_currentOptics = (weaponsItems _unit)#0#3;	
+			if (["_PIP", _currentOptics] call BIS_fnc_inString) then 
+			{
+				_opticsStringRework = _currentOptics regexReplace ["_PIP", "_3D"];
+				if (getText (configFile >> "cfgWeapons" >> _opticsStringRework >> "displayName")!="") then 
+				{
+						_unit removePrimaryWeaponItem _currentOptics;
+						_unit addPrimaryWeaponItem _opticsStringRework;
+				};
+			};
+		}];
+	}];
+
 
 //Save loadout
 _buttonSave ctrlAddEventHandler[ "ButtonClick", 
