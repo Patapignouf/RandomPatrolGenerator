@@ -149,13 +149,19 @@ loadout_USA_2000 = [
 ////////////////////////
 //USA
 rifleList_USA_2000 = [		
-	"CUP_arifle_M16A4_Aim_Laser",
-	"CUP_arifle_M4A1_Aim"
+	"CUP_arifle_M16A4_Base",
+	"CUP_arifle_M4A1_Aim",
+	"CUP_arifle_M16A4_Grip",
+	"CUP_arifle_M16A1E1",
+	"CUP_arifle_M4A1_standard_short_black",
+	"CUP_arifle_M4A1",
+	"CUP_arifle_M4A3_black"
 
 ];	
 
 grenadeLauncherList_USA_2000 = [
-	"CUP_arifle_M16A4_GL"
+	"CUP_arifle_M16A4_GL",
+	"CUP_arifle_M4A1_BUIS_GL"
 ];
 
 launcherList_USA_2000 = [		
@@ -172,7 +178,9 @@ autorifleList_USA_2000 = [
 
 marksmanrifleList_USA_2000 = [		
 	"CUP_srifle_DMR_LeupoldMk4",
-	"CUP_srifle_M107_LeupoldVX3"
+	"CUP_srifle_M107_LeupoldVX3",
+	"CUP_srifle_M14_DMR",
+	"CUP_srifle_M40A3"
 ];
 
 smgList_USA_2000 = [		
@@ -320,7 +328,9 @@ magazineList_USA_2000 = [
 	"CUP_200Rnd_TE4_Red_Tracer_556x45_M249",
 	"CUP_100Rnd_TE4_LRT4_White_Tracer_762x51_Belt_M",
 	"CUP_8Rnd_B_Beneli_74Pellets",
-	"CUP_10Rnd_127x99_M107"
+	"CUP_10Rnd_127x99_M107",
+	"CUP_20Rnd_762x51_DMR",
+	"CUP_5Rnd_762x51_M24"
 	];
 
 //Get magazine with following command

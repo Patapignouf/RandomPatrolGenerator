@@ -188,7 +188,6 @@ rifleList_2035_Spetsnaz = [
 
 grenadeLauncherList_2035_Spetsnaz = [
 	"arifle_AK12_GL_lush_F"
-
 ];
 
 
