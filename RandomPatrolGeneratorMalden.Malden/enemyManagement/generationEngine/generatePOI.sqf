@@ -53,7 +53,7 @@ for [{_i = 0}, {_i < _thisDifficulty+4}, {_i = _i + 1}] do
 								[_object] remoteExec ["removeAllActions", 0, true];
 
 								//25% chance to give intel to the player
-								if ((round (random 3))==0) then 
+								if ((round (random 3))==0 && !([format ["%1%2",_objectiveParam # 0 # 2 ,"_Intel"]] call BIS_fnc_taskExists)) then 
 								{
 									//Search the nearestLocation from the intel
 									_side = side _caller;
