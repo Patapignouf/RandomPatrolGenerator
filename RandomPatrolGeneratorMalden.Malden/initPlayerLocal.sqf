@@ -104,7 +104,8 @@ private _generateCivDialogs = compile preprocessFileLineNumbers "enemyManagement
 //Hide native Arsenal action
 inGameUISetEventHandler ["Action", "
 	if (_this select 4 == 'Arsenal') then {
-		{if ((_this#0) actionParams _x select 0 == 'Arsenal') exitWith {(_this#0) removeAction _x}} forEach actionIDs (_this#0);		
+		{if ((_this#0) actionParams _x select 0 == 'Arsenal') exitWith {(_this#0) removeAction _x}} forEach actionIDs (_this#0);	
+		hint 'Basic arsenal action removed';
 		true
 	};
 "];
