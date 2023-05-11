@@ -177,8 +177,8 @@ autorifleList_USA_2000 = [
 ];	
 
 marksmanrifleList_USA_2000 = [		
-	"CUP_srifle_DMR_LeupoldMk4",
-	"CUP_srifle_M107_LeupoldVX3",
+	"CUP_srifle_DMR",
+	"CUP_srifle_M107_Base",
 	"CUP_srifle_M14_DMR",
 	"CUP_srifle_M40A3"
 ];
@@ -329,7 +329,6 @@ magazineList_USA_2000 = [
 	"CUP_100Rnd_TE4_LRT4_White_Tracer_762x51_Belt_M",
 	"CUP_8Rnd_B_Beneli_74Pellets",
 	"CUP_10Rnd_127x99_M107",
-	"CUP_20Rnd_762x51_DMR",
 	"CUP_5Rnd_762x51_M24"
 	];
 
