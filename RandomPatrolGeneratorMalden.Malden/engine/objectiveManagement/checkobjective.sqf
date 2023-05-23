@@ -68,6 +68,7 @@ while {sleep 10; !RTBComplete} do
 						{
 							[] call doIncrementVehicleSpawnCounter;	
 							[current_obj] execVM 'engine\objectiveManagement\completeObjective.sqf'; 
+							[[50], "engine\rankManagement\rankUpdater.sqf"] remoteExec ['BIS_fnc_execVM', 0];
 						};
 						if (respawnSettings == 1) then 
 						{
@@ -91,6 +92,7 @@ while {sleep 10; !RTBComplete} do
 						{
 							[] call doIncrementVehicleSpawnCounter;	
 							[current_obj] execVM 'engine\objectiveManagement\completeObjective.sqf'; 
+							[[50], "engine\rankManagement\rankUpdater.sqf"] remoteExec ['BIS_fnc_execVM', 0];
 						};
 						if (respawnSettings == 1) then 
 						{
@@ -114,6 +116,7 @@ while {sleep 10; !RTBComplete} do
 						{
 							[] call doIncrementVehicleSpawnCounter;	
 							[current_obj] execVM 'engine\objectiveManagement\completeObjective.sqf'; 
+							[[50], "engine\rankManagement\rankUpdater.sqf"] remoteExec ['BIS_fnc_execVM', 0];
 						};
 						if (respawnSettings == 1) then 
 						{
@@ -137,6 +140,7 @@ while {sleep 10; !RTBComplete} do
 						{
 							[] call doIncrementVehicleSpawnCounter;	
 							[current_obj] execVM 'engine\objectiveManagement\completeObjective.sqf'; 
+							[[50], "engine\rankManagement\rankUpdater.sqf"] remoteExec ['BIS_fnc_execVM', 0];
 						};
 						if (respawnSettings == 1) then 
 						{
@@ -159,6 +163,7 @@ while {sleep 10; !RTBComplete} do
 						{
 							[] call doIncrementVehicleSpawnCounter;	
 							[current_obj] execVM 'engine\objectiveManagement\completeObjective.sqf'; 
+							[[50], "engine\rankManagement\rankUpdater.sqf"] remoteExec ['BIS_fnc_execVM', 0];
 						};
 						[[format ["L'objectif %1 est terminé", getText (configFile >> "cfgVehicles" >> typeOf (current_obj select 0) >> "displayName")],independent], 'engine\doGenerateMessage.sqf'] remoteExec ['BIS_fnc_execVM', 0];
 						if (respawnSettings == 1) then 

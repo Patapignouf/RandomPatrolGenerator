@@ -30,6 +30,7 @@ switch (_objectiveType) do
 		{
 			[] call doIncrementVehicleSpawnCounter;	
 			[_objective] execVM 'engine\objectiveManagement\completeObjective.sqf'; 
+			[[50], "engine\rankManagement\rankUpdater.sqf"] remoteExec ['BIS_fnc_execVM', 0];
 		};
 
 		//Respawn
