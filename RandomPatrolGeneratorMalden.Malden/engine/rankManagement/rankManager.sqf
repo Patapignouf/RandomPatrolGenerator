@@ -17,7 +17,7 @@ _unit addEventHandler ["HandleScore", {
 	_objectSide = side _object;
 	
 	//Check friendly attack
-	if (_objectSide == side _unit || _objectSide == civilian) then 
+	if (_score < 0) then 
 	{
 		[] call addPenalty;
 	} else 
