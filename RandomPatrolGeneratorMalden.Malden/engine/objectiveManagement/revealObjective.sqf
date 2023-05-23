@@ -93,7 +93,9 @@ if ((count _revealedObjectives != count _tempMissionObjectives)) then
 							[_side, _objectiveToReveal select 2, [_currentObjectiveDescription, "Capture the location", "cookiemarker2"], objNull, 1, 3, true] call BIS_fnc_taskCreate;
 							[_objectiveToReveal select 2,"map"] call BIS_fnc_taskSetType;
 						};
-					default { hint "default" };
+					default { 
+						//hint "default" 
+						};
 				};
 
 				//Display dialog on screen if necessary

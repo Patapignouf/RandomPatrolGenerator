@@ -423,7 +423,9 @@ generateObjectiveObject =
 					};
 				}];
 			};
-		default { hint "default" };
+		default { 
+			//hint "default" 
+			};
 	};
 	currentMissionObjectives = missionNamespace getVariable ["MissionObjectives",[]];
 	currentMissionObjectives pushBack _thisObjective;

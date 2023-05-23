@@ -121,7 +121,9 @@ for [{_i = 0}, {_i < _thisDifficulty+4}, {_i = _i + 1}] do
 												{
 													_currentObjectiveDescription = format ["The flag to capture %1 is at %2", getText (configFile >> "cfgVehicles" >> typeOf _thisObject >> "displayName"), getPos _thisObject];
 												};
-											default { hint "default" };
+											default { 
+													//hint "default" 
+												};
 										};
 
 										//Create child task associated to main task

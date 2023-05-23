@@ -42,7 +42,9 @@ obj_must_be_alive = [];
 				obj_vip pushBack (_x select 0);
 				obj_must_be_alive pushBack (_x select 0);
 			};
-		default { hint "default" };
+		default { 
+			//hint "default" 
+			};
 	};
 } foreach SupplyObjects;
 

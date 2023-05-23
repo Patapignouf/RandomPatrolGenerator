@@ -47,5 +47,7 @@ switch (_objectiveType) do
 	// case "clearArea":
 	// case "collectIntel":
 	// case "informant":
-	default { hint "default" };
+	default { 
+		//hint "default" 
+		};
 };

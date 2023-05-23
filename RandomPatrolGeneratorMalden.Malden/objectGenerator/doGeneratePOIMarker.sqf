@@ -64,7 +64,9 @@ if (!isDedicated) then
 					_markerstr setMarkerColorLocal "ColorPink";
 					_markerstr setMarkerTextLocal format ["Récupérez l'information cruciale auprès de %1", getText (configFile >> "cfgVehicles" >> typeOf _thisObject >> "displayName")];
 					};
-				default { hint "default" };
+				default { 
+					//hint "default" 
+					};
 			};
 			
 		};

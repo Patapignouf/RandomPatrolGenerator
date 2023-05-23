@@ -172,7 +172,9 @@ while {sleep 10; !RTBComplete} do
 						};
 					};
 				};
-			default { hint "default" };
+			default { 
+				//hint "default" 
+				};
 		};
 	} foreach _missionUncompletedObjectives;
 	missionComplete = count _completedObjectives + 1 >= count _missionObjectives;
