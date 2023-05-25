@@ -68,7 +68,7 @@ if (isClass (configFile >> "CfgPatches" >> "ace_medical")) then
 	["ace_treatmentSucceded", {
 		params ["_caller", "_target", "_selectionName", "_className", "_itemUser", "_usedItem"];
 
-		hint format ["Use item : %1 from %2 with classname : %3",_usedItem, name _caller, _className];
+		//hint format ["Use item : %1 from %2 with classname : %3",_usedItem, name _caller, _className];
 		if ([_usedItem,"ACE_epinephrine"] call BIS_fnc_areEqual) then 
 		{
 			[[1], 'engine\rankManagement\rankUpdater.sqf'] remoteExec ['BIS_fnc_execVM', _caller];
@@ -100,5 +100,12 @@ if (isClass (configFile >> "CfgPatches" >> "ace_medical")) then
 		};
 	};
 	"];
+
+
+	//Explore actions
+	// inGameUISetEventHandler ["Action", " 
+	// 	hint format ['%1',_this];
+	// };
+	// "];
 };
 

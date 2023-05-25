@@ -59,7 +59,6 @@ adjustRank = {
 		hint parseText format ["<img image='%1'/><br/><br/><t size='1.2'>You have been demoted to %2</t>", _rankTexture, _rankName];
 		if (!_isInit) then 
 		{
-			//["Hello"] remoteExec ["hint", -clientOwner];
 			[(parseText format ["<img image='%1'/><br/><br/><t size='1.2'>%3 has been demoted to %2</t>", _rankTexture, _rankName, name _unit])] remoteExec ["hint", -clientOwner];
 		};
 	};
