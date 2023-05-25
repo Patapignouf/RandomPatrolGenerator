@@ -200,6 +200,7 @@ grenadeLauncherList_2035_NATO_FS = [
 launcherList_2035_NATO_FS = [
 	"launch_I_Titan_short_F",
 	"launch_NLAW_F",
+	"ACE_launch_NLAW_ready_F",
 	"launch_MRAWS_olive_F"
 ];	
 
