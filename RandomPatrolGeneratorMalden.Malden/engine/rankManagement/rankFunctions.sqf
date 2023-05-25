@@ -23,9 +23,18 @@ adjustRank = {
 	//Unit current experience
 	_unitExperience = profileNamespace getVariable ["RPG_ranking", 0];
 
-	//Get current unit rank
-	_unitFloorRank = (rankList select {_x#1 <= _unitExperience}) #-1;
+	//Get future unit rank
+	_unitFloorRank = "";
+	if (_unitExperience<0) then 
+	{
+		//A negative experience give the first rank
+		_unitFloorRank = rankList#0;
+	} else 
+	{
+		_unitFloorRank = (rankList select {_x#1 <= _unitExperience}) #-1;
+	};
 	_currentRankId = rankId _unit;
+
 
 	//update rank
 	_unit setRank _unitFloorRank#0;
