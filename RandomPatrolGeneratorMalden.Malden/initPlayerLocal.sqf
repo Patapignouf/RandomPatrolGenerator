@@ -69,6 +69,9 @@ if (!didJIP) then
 	};
 };
 
+//Start custom hint engine
+[[], 'engine\hintManagement\customHintManager.sqf'] remoteExec ['BIS_fnc_execVM', player];
+
 //Wait mission setup
 waitUntil {missionNamespace getVariable "generationSetup" == true};
 
