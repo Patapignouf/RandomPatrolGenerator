@@ -196,6 +196,8 @@ while {sleep 10; !RTBComplete} do
 		if (nbBluePlayer == nbBluePlayerBack && nbIndPlayer == nbIndPlayerBack) then 
 		{
 			["taskRTB","SUCCEEDED"] call BIS_fnc_taskSetState;
+			//Reward player for RTB
+			[[50], "engine\rankManagement\rankUpdater.sqf"] remoteExec ['BIS_fnc_execVM', 0];
 			RTBComplete = true;
 
 			//Save current loadout

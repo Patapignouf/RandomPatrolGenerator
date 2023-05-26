@@ -23,30 +23,31 @@ _unit addEventHandler ["HandleScore", {
 	} else 
 	{
 		//Increase player experience
-		switch (true) do {   
+		switch (true) do 
+		{   
 			case (_objectClass isKindOf "Man"):
 				{
 					[1] call addExperience;
 				};
 			case (_objectClass isKindOf "Tank"):
 				{
-					[3] call addExperience;
+					[10] call addExperience;
 				};
 			case (_objectClass isKindOf "Car"): 
 				{
-					[2] call addExperience;
+					[5] call addExperience;
 				};   
 			case (_objectClass isKindOf "Ship"): 
 				{
-					[2] call addExperience;
+					[5] call addExperience;
 				};    
 			case (_objectClass isKindOf "Helicopter"): 
 				{
-					[3] call addExperience;
+					[10] call addExperience;
 				};   
 			case (_objectClass isKindOf "Plane"): 
 				{
-					[3] call addExperience;
+					[10] call addExperience;
 				};
 			default 
 				{
@@ -65,13 +66,30 @@ _unit addEventHandler ["HandleScore", {
 if (isClass (configFile >> "CfgPatches" >> "ace_medical")) then 
 {
 	//ACE medic reward
+	//List of ace medic items which give experience points
+	experiencedMedicItems = [
+		"ACE_fieldDressing",
+		"ACE_packingBandage",
+		"ACE_elasticBandage",
+		"ACE_quikclot"
+	];
+
 	["ace_treatmentSucceded", {
 		params ["_caller", "_target", "_selectionName", "_className", "_itemUser", "_usedItem"];
 
 		//hint format ["Use item : %1 from %2 with classname : %3",_usedItem, name _caller, _className];
-		if ([_usedItem,"ACE_epinephrine"] call BIS_fnc_areEqual) then 
+		if (experiencedMedicItems findIf { [_usedItem,_x] call BIS_fnc_areEqual} > -1) then 
 		{
-			[[1], 'engine\rankManagement\rankUpdater.sqf'] remoteExec ['BIS_fnc_execVM', _caller];
+
+			//Check the number of bandage used, 5 bandages -> 1 exp point
+			if (_caller getVariable ["numberOfBandageUsed",0] >= 5 ) then 
+			{
+				[[1], 'engine\rankManagement\rankUpdater.sqf'] remoteExec ['BIS_fnc_execVM', _caller];
+				_caller setVariable ["numberOfBandageUsed", 0];
+			} else 
+			{
+				_caller setVariable ["numberOfBandageUsed", (_caller getVariable ["numberOfBandageUsed",0])+1];
+			};
 		};
 		if ([_className,"surgicalKit"] call BIS_fnc_areEqual) then 
 		{
