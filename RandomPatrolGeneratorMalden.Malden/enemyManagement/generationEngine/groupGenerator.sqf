@@ -64,7 +64,7 @@ doGenerateEnemyGroup =
 					};
 
 					diag_log format ["Civilian has been killed by : %1 on side %2", name _killer, side _killer];
-					[[format ["Civilian has been killed by : %1", name _killer],side _killer], 'engine\doGenerateMessage.sqf'] remoteExec ['BIS_fnc_execVM', 0];
+					[format ["Civilian has been killed by : %1", name _killer], 'engine\hintManagement\addCustomHint.sqf'] remoteExec ['BIS_fnc_execVM', side _killer]; 
 				}; 
 			}];
 		} foreach (units _currentGroupPatrol);

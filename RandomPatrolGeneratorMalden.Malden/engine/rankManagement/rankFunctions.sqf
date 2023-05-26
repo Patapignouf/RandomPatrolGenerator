@@ -81,7 +81,7 @@ addPenalty = {
 	//Unit current experience
 	_unitExperience = profileNamespace getVariable ["RPG_ranking", 0];
 
-	[_unitExperience - 25] call saveRank;
+	[_unitExperience - 50] call saveRank;
 
 	true
 };
