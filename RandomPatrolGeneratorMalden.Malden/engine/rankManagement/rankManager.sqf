@@ -77,23 +77,27 @@ if (isClass (configFile >> "CfgPatches" >> "ace_medical")) then
 	["ace_treatmentSucceded", {
 		params ["_caller", "_target", "_selectionName", "_className", "_itemUser", "_usedItem"];
 
-		//hint format ["Use item : %1 from %2 with classname : %3",_usedItem, name _caller, _className];
-		if (experiencedMedicItems findIf { [_usedItem,_x] call BIS_fnc_areEqual} > -1) then 
+		//Only reward heal on others 
+		if (_caller != _target) then 
 		{
+			//hint format ["Use item : %1 from %2 with classname : %3",_usedItem, name _caller, _className];
+			if (experiencedMedicItems findIf { [_usedItem,_x] call BIS_fnc_areEqual} > -1) then 
+			{
 
-			//Check the number of bandage used, 5 bandages -> 1 exp point
-			if (_caller getVariable ["numberOfBandageUsed",0] >= 5 ) then 
+				//Check the number of bandage used, 5 bandages -> 1 exp point
+				if (_caller getVariable ["numberOfBandageUsed",0] >= 5 ) then 
+				{
+					[[1], 'engine\rankManagement\rankUpdater.sqf'] remoteExec ['BIS_fnc_execVM', _caller];
+					_caller setVariable ["numberOfBandageUsed", 0];
+				} else 
+				{
+					_caller setVariable ["numberOfBandageUsed", (_caller getVariable ["numberOfBandageUsed",0])+1];
+				};
+			};
+			if ([_className,"surgicalKit"] call BIS_fnc_areEqual) then 
 			{
 				[[1], 'engine\rankManagement\rankUpdater.sqf'] remoteExec ['BIS_fnc_execVM', _caller];
-				_caller setVariable ["numberOfBandageUsed", 0];
-			} else 
-			{
-				_caller setVariable ["numberOfBandageUsed", (_caller getVariable ["numberOfBandageUsed",0])+1];
 			};
-		};
-		if ([_className,"surgicalKit"] call BIS_fnc_areEqual) then 
-		{
-			[[1], 'engine\rankManagement\rankUpdater.sqf'] remoteExec ['BIS_fnc_execVM', _caller];
 		};
 	}] call CBA_fnc_addEventHandler;
 } else 
