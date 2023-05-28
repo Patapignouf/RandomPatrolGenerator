@@ -72,6 +72,12 @@ baseEnemyHeavyArmoredVehicleGroup_USA = ["CUP_B_M1126_ICV_M2_Desert",
 "CUP_B_M1A2SEP_TUSK_II_Desert_US_Army", 
 "CUP_B_M1A1SA_Desert_US_Army"];
 
+baseEnemyUnarmedChopperGroup_USA = [
+	"CUP_B_UH60M_Unarmed_US",
+	"CUP_B_MH6M_OBS_USA",
+	"CUP_B_MH6M_USA"
+];
+
 ////////////////////////
 //Vehicle management////
 ////////////////////////

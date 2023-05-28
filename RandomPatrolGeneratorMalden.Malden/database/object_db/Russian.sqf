@@ -87,6 +87,11 @@ baseEnemyHeavyArmoredVehicleGroup_Russian = [
 	"CUP_O_T90_RU"
 ];
 
+
+baseEnemyUnarmedChopperGroup_Russian = [
+	"CUP_O_Mi8AMT_RU"
+];
+
 ////////////////////////
 //Vehicle management////
 ////////////////////////

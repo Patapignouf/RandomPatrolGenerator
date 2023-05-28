@@ -89,6 +89,12 @@ baseEnemyHeavyArmoredVehicleGroup_PMC = [
 	"CUP_I_BTR80_ION"
 ];
 
+baseEnemyUnarmedChopperGroup_PMC = [
+	"CUP_B_UH60M_Unarmed_US",
+	"CUP_B_MH6M_OBS_USA",
+	"CUP_B_MH6M_USA"
+];
+
 ////////////////////////
 //Vehicle management////
 ////////////////////////

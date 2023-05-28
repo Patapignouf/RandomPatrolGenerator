@@ -95,6 +95,12 @@ baseEnemyHeavyArmoredVehicleGroup_Taki_Army = [
 	"CUP_O_T72_TKA"
 ];
 
+baseEnemyUnarmedChopperGroup_Taki_Army = [
+	"CUP_O_UH1H_TKA",
+	"CUP_O_MI6T_TKA"
+];
+
+
 ////////////////////////
 //Vehicle management////
 ////////////////////////

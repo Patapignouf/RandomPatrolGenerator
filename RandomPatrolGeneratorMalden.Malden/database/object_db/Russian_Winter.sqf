@@ -68,6 +68,13 @@ baseEnemyHeavyArmoredVehicleGroup_Russian_Winter = [
 "CUP_O_BTR60_Winter_RU", 
 "CUP_O_BTR80_WINTER_RU"];
 
+
+baseEnemyUnarmedChopperGroup_Russian_Winter = [
+	"CUP_O_Mi8AMT_RU"
+];
+
+
+
 ////////////////////////
 //Vehicle management////
 ////////////////////////

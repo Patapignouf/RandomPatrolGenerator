@@ -82,7 +82,12 @@ baseChopperGroup_2035_NATO_FS = ["I_C_Offroad_02_LMG_F",
 "I_C_Offroad_02_AT_F"];
 
 //Basic enemy aircraft avalaible
-baseFixedWingGroup_2035_NATO_FS = ["I_C_Offroad_02_LMG_F", 
+baseFixedWingGroup_2035_NATO_FS = [	"B_Heli_Transport_03_unarmed_F",
+	"B_Heli_Light_01_F",
+	"B_Heli_Transport_01_F"];
+
+//Basic enemy chopper avalaible
+baseEnemyUnarmedChopperGroup_NATO_FS = ["I_C_Offroad_02_LMG_F", 
 "I_C_Offroad_02_AT_F"];
 
 ////////////////////////

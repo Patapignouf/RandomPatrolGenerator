@@ -86,15 +86,16 @@ baseEnemyHeavyArmoredVehicleGroup_2035_Spetsnaz = [
 	"O_T_APC_Wheeled_02_rcws_v2_ghex_F"
 ];
 
-//Basic enemy chopper avalaible
-baseChopperGroup_2035_Spetsnaz = [
-	
-];
-
 //Basic enemy aircraft avalaible
 baseFixedWingGroup_2035_Spetsnaz = [
 	
 ];
+
+
+baseEnemyUnarmedChopperGroup_2035_Spetsnaz = [
+	"O_Heli_Light_02_unarmed_F"
+];
+
 
 ////////////////////////
 //Vehicle management////

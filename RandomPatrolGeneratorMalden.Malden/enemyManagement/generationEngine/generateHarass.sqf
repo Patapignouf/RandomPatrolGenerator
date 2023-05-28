@@ -1,4 +1,4 @@
-params ["_thisAvailableOpforGroup","_thisAvailableOpforCars","_thisAvailableOpforLightArmoredVehicle","_thisAvailableOpforHeavyArmoredVehicle","_thisDifficulty"];
+params ["_thisAvailableOpforGroup","_thisAvailableOpforCars","_thisAvailableOpforLightArmoredVehicle","_thisAvailableOpforHeavyArmoredVehicle", "_thisAvailableOpforUnarmedChopperVehicle","_thisDifficulty"];
 
 nb_ind_player_alive = 0;
 nb_blu_player_alive = 0;
@@ -22,6 +22,8 @@ if (isServer) then
 		//Test if IA are already in combat mode to simulate reinforcement
 		if (({alive _x && side _x == opfor} count allUnits) <=150 && {side _x == opfor && behaviour _x == "COMBAT"} count allUnits > 5) then
 		{
+			diag_log "RPG : Reinforcement wave begin !";
+
 			//Prioritize attack on independent 
 			if (nb_blu_player_alive != 0) then
 			{
@@ -66,6 +68,12 @@ if (isServer) then
 				// };
 			};
 
+			//Chopper reinforcement
+			if (count _thisAvailableOpforUnarmedChopperVehicle != 0 &&  round random 1 == 0) then 
+			{
+				//Generate enemy wave
+				[_thisAvailableOpforGroup#0, selectRandom _thisAvailableOpforUnarmedChopperVehicle, positionToAttack] execVM 'enemyManagement\behaviorEngine\doVehicleReinforcement.sqf'; 
+			};
 
 			AvalaibleInitAttackPositions = [];
 			AvalaibleInitAttackPositions = [positionToAttack, 1200, 2000, round((_thisDifficulty-0.5)/2)+1] call getListOfPositionsAroundTarget;

@@ -83,6 +83,11 @@ baseEnemyHeavyArmoredVehicleGroup_2035_AAF = [
 "I_APC_Wheeled_03_cannon_F", 
 "I_APC_tracked_03_cannon_F"];
 
+baseEnemyUnarmedChopperGroup_2035_AAF = [
+	"I_Heli_Transport_02_F", 
+	"I_Heli_light_03_unarmed_F"
+];
+
 ////////////////////////
 //Vehicle management////
 ////////////////////////

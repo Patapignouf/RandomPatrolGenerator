@@ -60,6 +60,10 @@ baseEnemyVehicleGroup_Syndikat = ["I_C_Offroad_02_LMG_F",
 baseEnemyLightArmoredVehicleGroup_Syndikat = ["CUP_I_Hilux_zu23_IND_G_F", 
 "CUP_I_Hilux_armored_DSHKM_IND_G_F"];
 
+baseEnemyUnarmedChopperGroup_Syndikat = [
+	"I_C_Heli_Light_01_civil_F"
+];
+
 baseEnemyHeavyArmoredVehicleGroup_Syndikat = ["CUP_I_MTLB_pk_SYNDIKAT"];
 
 ////////////////////////
