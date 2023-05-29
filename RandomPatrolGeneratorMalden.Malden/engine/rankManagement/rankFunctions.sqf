@@ -1,6 +1,6 @@
 rankList = [
 	["PRIVATE",0],
-	["CORPORAL",100],
+	["CORPORAL",200],
 	["SERGEANT",500],	
 	["LIEUTENANT",1000],
 	["CAPTAIN",2000],

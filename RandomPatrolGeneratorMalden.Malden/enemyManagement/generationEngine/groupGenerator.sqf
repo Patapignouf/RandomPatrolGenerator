@@ -29,6 +29,23 @@ doGenerateEnemyGroup =
 		[_currentGroupPatrol] call doAdjustACEMedic;
 	};
 
+	//Opfor group
+	if (_thisFaction == opfor) then 
+	{
+		{		
+			//Add eventhandler killed
+			_x addEventHandler ["Killed", {
+				params ["_unit", "_killer", "_instigator", "_useEffects"];
+
+				if (isPlayer _killer) then 
+				{
+					[[1], 'engine\rankManagement\rankUpdater.sqf'] remoteExec ['BIS_fnc_execVM', _killer];
+				}; 
+			}];
+		} foreach (units _currentGroupPatrol);
+	};
+
+
 	//Manage civilian specific feature
 	if (_thisFaction == civilian) then 
 	{
@@ -65,10 +82,12 @@ doGenerateEnemyGroup =
 
 					diag_log format ["Civilian has been killed by : %1 on side %2", name _killer, side _killer];
 					[format ["Civilian has been killed by : %1", name _killer], 'engine\hintManagement\addCustomHint.sqf'] remoteExec ['BIS_fnc_execVM', side _killer]; 
+					[[-50], 'engine\rankManagement\rankUpdater.sqf'] remoteExec ['BIS_fnc_execVM', _killer];
 				}; 
 			}];
 		} foreach (units _currentGroupPatrol);
 	};
+
 
 	//Return spawned group
 	_currentGroupPatrol

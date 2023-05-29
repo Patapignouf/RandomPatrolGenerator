@@ -6,60 +6,62 @@ _unit setRank "PRIVATE";
 _unitRanking = profileNamespace getVariable ["RPG_ranking", 0]; //Default armed aircraft are disabled
 [_unit, true] call adjustRank;
 
-//Kill ranking reward management
-// unit: Object - object the event handler is assigned to
-// object: Object - object for which score was awarded
-// score: Number - score to be added
-_unit addEventHandler ["HandleScore", { 
-	params ["_unit", "_object", "_score"];
+// //Kill ranking reward management
+// // unit: Object - object the event handler is assigned to
+// // object: Object - object for which score was awarded
+// // score: Number - score to be added
+// _unit addEventHandler ["HandleScore", { 
+// 	params ["_unit", "_object", "_score"];
 
-	_objectClass = typeOf _object;
-	_objectSide = side _object;
+// 	_objectClass = typeOf _object;
+// 	_objectSide = side _object;
+
+// 	//hint format ["%1 %2 %3",_unit, _object, _score];
 	
-	//Check friendly attack
-	if (_score < 0) then 
-	{
-		[] call addPenalty;
-	} else 
-	{
-		//Increase player experience
-		switch (true) do 
-		{   
-			case (_objectClass isKindOf "Man"):
-				{
-					[1] call addExperience;
-				};
-			case (_objectClass isKindOf "Tank"):
-				{
-					[10] call addExperience;
-				};
-			case (_objectClass isKindOf "Car"): 
-				{
-					[5] call addExperience;
-				};   
-			case (_objectClass isKindOf "Ship"): 
-				{
-					[5] call addExperience;
-				};    
-			case (_objectClass isKindOf "Helicopter"): 
-				{
-					[10] call addExperience;
-				};   
-			case (_objectClass isKindOf "Plane"): 
-				{
-					[10] call addExperience;
-				};
-			default 
-				{
-					//Do nothing
-				};   
-		};
-	};
+// 	//Check friendly attack
+// 	if (_score < 0) then 
+// 	{
+// 		[] call addPenalty;
+// 	} else 
+// 	{
+// 		//Increase player experience
+// 		switch (true) do 
+// 		{   
+// 			case (_objectClass isKindOf "Man"):
+// 				{
+// 					[1] call addExperience;
+// 				};
+// 			case (_objectClass isKindOf "Tank"):
+// 				{
+// 					[10] call addExperience;
+// 				};
+// 			case (_objectClass isKindOf "Car"): 
+// 				{
+// 					[5] call addExperience;
+// 				};   
+// 			case (_objectClass isKindOf "Ship"): 
+// 				{
+// 					[5] call addExperience;
+// 				};    
+// 			case (_objectClass isKindOf "Helicopter"): 
+// 				{
+// 					[10] call addExperience;
+// 				};   
+// 			case (_objectClass isKindOf "Plane"): 
+// 				{
+// 					[10] call addExperience;
+// 				};
+// 			default 
+// 				{
+// 					//Do nothing
+// 				};   
+// 		};
+// 	};
 
-	[_unit, false] call adjustRank;
+// 	[_unit, false] call adjustRank;
 
-	true
-}];
+// 	true
+// }];
 
 
 //Medical ranking reward management
