@@ -93,7 +93,7 @@ baseEnemyHeavyArmoredVehicleGroup_2035_FIA = [
 
 //Basic enemy chopper avalaible
 baseChopperGroup_2035_FIA = [
-	
+	"I_Heli_light_03_unarmed_F"
 ];
 
 //Basic enemy aircraft avalaible
