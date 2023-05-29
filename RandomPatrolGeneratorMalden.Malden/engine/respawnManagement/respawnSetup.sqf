@@ -24,3 +24,6 @@ independentRespawn = "respawn_guerrila" setMarkerPos (getPos initCityLocation);
 // 		independentRespawn = [independent, getPos (_independentAliveTeam select 0), "Independent respawn"] call  BIS_fnc_addRespawnPosition;
 // 	};
 // };
+
+//Setup basic respawn marker
+[missionNamespace, [0,0,0],"Basic respawn marker"] call BIS_fnc_addRespawnPosition;
