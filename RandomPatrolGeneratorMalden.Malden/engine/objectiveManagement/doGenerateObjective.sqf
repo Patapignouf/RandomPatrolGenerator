@@ -70,6 +70,9 @@ generateObjectiveObject =
 				//Search safe position around objective position
 				_objectiveObject setPos ([( _thisObjectivePosition), 1, 25, 5, 0, 20, 0] call BIS_fnc_findSafePos);
 
+				//Manage objective completion
+				[_thisObjective] execVM 'engine\objectiveManagement\checkObjectInArea.sqf';  
+
 				//Objective failed
 				_objectiveObject setVariable ["thisTask", _thisObjective select 2, true];
 				_objectiveObject addEventHandler ["Killed", {
@@ -94,8 +97,12 @@ generateObjectiveObject =
 				_objectiveObject setVariable ["isObjectiveObject", true, true];
 				_thisObjective = [_objectiveObject, _thisObjectiveType] call generateObjectiveTracker;
 
+
 				_objectiveObject setPos ([( _thisObjectivePosition), 1, 25, 5, 0, 20, 0] call BIS_fnc_findSafePos);
 				_objectiveObject setVariable ["thisTask", _thisObjective select 2, true];
+
+				//Manage objective completion
+				[_thisObjective] execVM 'engine\objectiveManagement\checkObjectInArea.sqf';
 				[_thisObjective] execVM 'engine\objectiveManagement\checkDeadVehicle.sqf';  
 			};
 		case "hvt":
@@ -109,6 +116,37 @@ generateObjectiveObject =
 				_thisObjective = [_objectiveObject, _thisObjectiveType] call generateObjectiveTracker;
 				diag_log format ["HVT %2 _thisObjectivePosition : %1",_thisObjectivePosition, _objectiveObject];
 				_objectiveObject setPos _thisObjectivePosition;
+
+				_objectiveObject setVariable ["thisObjective", _thisObjective, true];
+
+				_objectiveObject addEventHandler ["Killed", {
+					params ["_unit", "_killer", "_instigator", "_useEffects"];
+
+					//Manage Completed Objective
+					_thisObjectiveToComplete = _unit getVariable "thisObjective";
+					hint format ["%1", _thisObjectiveToComplete];
+					_completedObjectives = missionNamespace getVariable ["completedObjectives",[]];
+					_completedObjectives pushBack _thisObjectiveToComplete;
+					missionNamespace setVariable ["completedObjectives",_completedObjectives,true];	
+					//Manage UncompletedObjective
+					_missionUncompletedObjectives = missionNamespace getVariable ["missionUncompletedObjectives",[]];
+					_missionUncompletedObjectives = _missionUncompletedObjectives - [_thisObjectiveToComplete];
+					missionNamespace setVariable ["missionUncompletedObjectives",_missionUncompletedObjectives,true];
+					//Manage player's feedback
+					if ("RealismMode" call BIS_fnc_getParamValue == 1) then 
+					{
+						[] call doIncrementVehicleSpawnCounter;	
+						[_thisObjectiveToComplete] execVM 'engine\objectiveManagement\completeObjective.sqf'; 
+						[[50], "engine\rankManagement\rankUpdater.sqf"] remoteExec ['BIS_fnc_execVM', 0];
+					};
+					//Manage respawn 
+					if (["Respawn",1] call BIS_fnc_getParamValue == 1) then 
+					{
+						[[], "engine\respawnManagement\respawnManager.sqf"] remoteExec ['BIS_fnc_execVM', 0];
+					};
+				}];
+
+
 			};
 		case "vip":
 			{
@@ -128,6 +166,10 @@ generateObjectiveObject =
 				
 				//Objective failed
 				_objectiveObject setVariable ["thisTask", _thisObjective select 2, true];
+				
+				//Manage objective completion
+				[_thisObjective] execVM 'engine\objectiveManagement\checkObjectInArea.sqf';  
+				
 				_objectiveObject addEventHandler ["Killed", {
 					params ["_unit", "_killer", "_instigator", "_useEffects"];
 					//get task associated to the object
@@ -157,6 +199,9 @@ generateObjectiveObject =
 
 				diag_log format ["Steal task setup ! : %1", _objectiveObject];
 				_objectiveObject setPos ([( _thisObjectivePosition), 1, 100, 7, 0, 20, 0] call BIS_fnc_findSafePos);
+
+				//Manage objective completion
+				[_thisObjective] execVM 'engine\objectiveManagement\checkObjectInArea.sqf';  
 
 				//Objective failed
 				_objectiveObject setVariable ["thisTask", _thisObjective select 2, true];

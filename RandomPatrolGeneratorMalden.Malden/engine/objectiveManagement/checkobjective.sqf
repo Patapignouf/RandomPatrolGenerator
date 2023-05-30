@@ -52,7 +52,7 @@ while {sleep 10; !RTBComplete} do
 		
 		switch (current_obj select 1) do
 		{
-			case "steal":
+			case "stealOLD":
 				{
 					if (current_obj select 0 in objectReturnedToCity || current_obj select 0 in objectReturnedToFOB) then
 					{
@@ -76,7 +76,7 @@ while {sleep 10; !RTBComplete} do
 						};
 					};
 				};
-			case "supply":
+			case "supplyOld":
 				{
 					if (current_obj select 0 in objectReturnedToCity || current_obj select 0 in objectReturnedToFOB) then
 					{
@@ -100,7 +100,7 @@ while {sleep 10; !RTBComplete} do
 						};
 					};
 				};
-			case "ammo":
+			case "ammoOLD":
 				{
 					if (current_obj select 0 in objectReturnedToCity || current_obj select 0 in objectReturnedToFOB) then
 					{
@@ -124,7 +124,7 @@ while {sleep 10; !RTBComplete} do
 						};
 					};
 				};
-			case "hvt":
+			case "hvtOld":
 				{
 					if (!alive (current_obj select 0)) then 
 					{	
@@ -148,7 +148,7 @@ while {sleep 10; !RTBComplete} do
 						};
 					};
 				};
-			case "vip":
+			case "vipOLD":
 				{
 					if (current_obj select 0 in objectReturnedToCity || current_obj select 0 in objectReturnedToFOB) then
 					{
