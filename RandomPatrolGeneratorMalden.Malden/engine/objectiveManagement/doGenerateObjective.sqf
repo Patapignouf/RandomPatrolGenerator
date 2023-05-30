@@ -124,7 +124,6 @@ generateObjectiveObject =
 
 					//Manage Completed Objective
 					_thisObjectiveToComplete = _unit getVariable "thisObjective";
-					hint format ["%1", _thisObjectiveToComplete];
 					_completedObjectives = missionNamespace getVariable ["completedObjectives",[]];
 					_completedObjectives pushBack _thisObjectiveToComplete;
 					missionNamespace setVariable ["completedObjectives",_completedObjectives,true];	
