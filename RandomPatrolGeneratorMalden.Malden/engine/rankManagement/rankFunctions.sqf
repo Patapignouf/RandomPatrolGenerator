@@ -40,29 +40,25 @@ adjustRank = {
 	_unit setRank _unitFloorRank#0;
 	_newRankId = rankId _unit;
 
-	//Unit has been promoted
-	if (_newRankId>_currentRankId) then 
+	if (!_isInit) then 
 	{
-		_rankTexture = [_unit, "texture"] call BIS_fnc_rankParams;
-		_rankName = [_unit, "displayName"] call BIS_fnc_rankParams;
-		[[parseText format ["<img image='%1'/><br/><br/><t size='1.2'>You have been promoted to %2</t>", _rankTexture, _rankName]], 'engine\hintManagement\addCustomHint.sqf'] remoteExec ['BIS_fnc_execVM', _unit]; 
-		if (!_isInit) then 
+		//Unit has been promoted
+		if (_newRankId>_currentRankId) then 
 		{
+			_rankTexture = [_unit, "texture"] call BIS_fnc_rankParams;
+			_rankName = [_unit, "displayName"] call BIS_fnc_rankParams;
+			[[parseText format ["<img image='%1'/><br/><br/><t size='1.2'>You have been promoted to %2</t>", _rankTexture, _rankName]], 'engine\hintManagement\addCustomHint.sqf'] remoteExec ['BIS_fnc_execVM', _unit]; 
 			[[parseText format ["<img image='%1'/><br/><br/><t size='1.2'>%3 has been promoted to %2</t>", _rankTexture, _rankName, name _unit]], 'engine\hintManagement\addCustomHint.sqf'] remoteExec ['BIS_fnc_execVM', -clientOwner]; 
 		};
-	};
 
-	//Unit has been demoted
-	if (_newRankId<_currentRankId) then {
-		_rankTexture = [_unit, "texture"] call BIS_fnc_rankParams;
-		_rankName = [_unit, "displayName"] call BIS_fnc_rankParams;
-		[[parseText format ["<img image='%1'/><br/><br/><t size='1.2'>You have been demoted to %2</t>", _rankTexture, _rankName]], 'engine\hintManagement\addCustomHint.sqf'] remoteExec ['BIS_fnc_execVM', _unit]; 
-		if (!_isInit) then 
-		{
+		//Unit has been demoted
+		if (_newRankId<_currentRankId) then {
+			_rankTexture = [_unit, "texture"] call BIS_fnc_rankParams;
+			_rankName = [_unit, "displayName"] call BIS_fnc_rankParams;
+			[[parseText format ["<img image='%1'/><br/><br/><t size='1.2'>You have been demoted to %2</t>", _rankTexture, _rankName]], 'engine\hintManagement\addCustomHint.sqf'] remoteExec ['BIS_fnc_execVM', _unit]; 
 			[[parseText format ["<img image='%1'/><br/><br/><t size='1.2'>%3 has been demoted to %2</t>", _rankTexture, _rankName, name _unit]], 'engine\hintManagement\addCustomHint.sqf'] remoteExec ['BIS_fnc_execVM', -clientOwner]; 
 		};
 	};
-
 	true
 };
 
@@ -84,4 +80,29 @@ addPenalty = {
 	[_unitExperience - 50] call saveRank;
 
 	true
+};
+
+displayCurrentRank = {
+	params ["_unit"];
+
+	//Unit current experience
+	_unitExperience = profileNamespace getVariable ["RPG_ranking", 0];
+	_unitFloorRank = (rankList select {_x#1 <= _unitExperience}) #-1;
+	_unitNextRankList = (rankList select {_x#1 > _unitExperience});
+	
+	if (count _unitNextRankList == 0) then 
+	{
+		_unitNextRankList = [rankList#-1];
+	};
+
+	//Get next rank informations
+	_unitNextRank = _unitNextRankList#0;
+	_unitExperienceNextFloor = _unitNextRank#1;
+
+	//Get rank informations
+	_rankTexture = [_unit, "texture"] call BIS_fnc_rankParams;
+	_rankName = [_unit, "displayName"] call BIS_fnc_rankParams;
+	
+	//Display current rank 
+	[[parseText format ["<img image='%1'/><br/><br/><t size='1.2'>Your current rank is %2</t><br/><br/><t size='1.2'>Experience to the next rank  %3/%4</t>", _rankTexture, _rankName, _unitExperience, _unitExperienceNextFloor]], 'engine\hintManagement\addCustomHint.sqf'] remoteExec ['BIS_fnc_execVM', _unit]; 
 };

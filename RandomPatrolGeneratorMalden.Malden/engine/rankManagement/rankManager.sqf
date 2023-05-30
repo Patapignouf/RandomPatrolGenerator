@@ -5,6 +5,7 @@ params ["_unit"];
 _unit setRank "PRIVATE";
 _unitRanking = profileNamespace getVariable ["RPG_ranking", 0]; //Default armed aircraft are disabled
 [_unit, true] call adjustRank;
+[_unit] call displayCurrentRank;
 
 // //Kill ranking reward management
 // // unit: Object - object the event handler is assigned to
