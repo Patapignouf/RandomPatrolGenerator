@@ -7,6 +7,7 @@ c_marksman = "marksman";
 c_medic = "medic";
 c_grenadier = "grenadier";
 c_drone = "UAV opérator";
+c_pilot = "pilot";
 
 //////////////////////////////
 ////Define civ group data/////
@@ -114,7 +115,10 @@ bluforArmedChopper_USA = [
 	"CUP_B_AH64_DL_USA", 
 	"CUP_B_AH6M_USA", 
 	"CUP_B_UH60M_US", 
-	"CUP_B_AH1Z_Dynamic_USMC"
+	"CUP_B_AH1Z_Dynamic_USMC",
+	"CUP_B_AH6J_USA",
+	"CUP_B_CH47F_USA", 
+	"CUP_B_MH47E_USA"
 ];
 
 bluforDrone_USA = [
@@ -143,7 +147,7 @@ bluforHQVehicle_USA = [
 //Loadout management////
 ////////////////////////
 
-listOfRoles_USA = [c_leader,c_at,c_rifleman,c_engineer,c_autorifleman,c_marksman,c_medic,c_grenadier,c_drone];
+listOfRoles_USA = [c_leader,c_at,c_rifleman,c_engineer,c_autorifleman,c_marksman,c_medic,c_grenadier,c_drone,c_pilot];
 
 //USA
 loadout_USA = [		
@@ -155,7 +159,8 @@ loadout_USA = [
 	[c_marksman,"CUP_B_US_Soldier_Marksman_EBR_OEFCP"],
 	[c_medic,"CUP_B_US_Medic_OEFCP"],
 	[c_grenadier, "CUP_B_US_Soldier_GL_OEFCP"],//Default stuff
-	[c_drone,"CUP_B_US_Soldier_UAV_OEFCP"]
+	[c_drone,"CUP_B_US_Soldier_UAV_OEFCP"],
+	[c_pilot,"CUP_B_US_Pilot"]
 ];
 
 ////////////////////////
