@@ -96,7 +96,7 @@ _comboBoxClassSelection ctrlAddEventHandler[ "LBSelChanged",
 			[] call refreshCustomLoadoutDisplay;
 
 			//Hint switch role
-			[[format ["%1 has switch to role %2", name player, player getVariable "role"]], 'engine\hintManagement\addCustomHint.sqf'] remoteExec ['BIS_fnc_execVM', 0]; 
+			[[format ["%1 has switch to role %2", name player, player getVariable "role"]], 'engine\hintManagement\addCustomHint.sqf'] remoteExec ['BIS_fnc_execVM', -clientOwner]; 
 		}
 		else 
 		{
