@@ -6,7 +6,7 @@ currentPosition = [];
 if (isServer) then
 {
 	_numberOfVehicleSpawned = 0;
-	_waveHaveVehicle = round random 1 == 0;
+	_waveHaveVehicle = random 100 > 50;
 	diag_log format ["Avalaible spawn position %1", _thisAvailablePosition ];
 	for [{_k = 0}, {_k < (count _thisAvailablePosition)}, {_k = _k + 1}] do 
 	{

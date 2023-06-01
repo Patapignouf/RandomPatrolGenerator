@@ -62,7 +62,7 @@ if (!([_OpforFobLocation] call isLocationOnMap)) then
 	_objectiveObject setVariable ["isFOBAssociated", true, true];
 
 	//Randomize if enemy FOB will received reinforcement
-	if (round random 2 == 0) then 
+	if (random 100 < 50) then 
 	{
 		//33%
 		[_objectiveObject] execVM 'engine\objectiveManagement\checkClearArea.sqf';

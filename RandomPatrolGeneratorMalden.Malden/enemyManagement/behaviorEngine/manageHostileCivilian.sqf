@@ -18,7 +18,7 @@ while {alive _thisUnit && (side _thisUnit == civilian)} do {
 	if (count _targets > 0) then 
 	{
 		//10% chance to become hostile
-		if (round random 9 == 0) then 
+		if (random 100 < 10) then 
 		{
 			//Randomize time before becoming hostile	
 			sleep (10 + random (120));

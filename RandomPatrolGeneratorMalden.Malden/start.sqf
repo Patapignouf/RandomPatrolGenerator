@@ -335,7 +335,7 @@ if (initBlueforLocationPosition isEqualType []) then
 };
 
 //TODO create the random option
-if (initBluforBase == 0 || (initBluforBase == 2 && (round random 1 == 0))) then
+if (initBluforBase == 0 || (initBluforBase == 2 && (random 100 < 50))) then
 {
 	//Check if position is already determine by player
 	if ([initBlueforLocation, [0,0,0]] call BIS_fnc_areEqual) then 

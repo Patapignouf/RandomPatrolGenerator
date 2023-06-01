@@ -9,20 +9,20 @@ positionToAttack = [];
 
 //Init sleep before spawn
 diag_log "Init harass !";
-sleep 1000;
+sleep 300;
 
 if (isServer) then
 {
 	while {sleep 20; true} do  
 	{
-		nb_ind_player_alive = {isPlayer _x && side _x == independent && _x getVariable "isDead" == false} count allUnits;
-		nb_blu_player_alive = {isPlayer _x && side _x == blufor && _x getVariable "isDead" == false} count allUnits;
-		
 		//Test if there are too much IA
 		//Test if IA are already in combat mode to simulate reinforcement
-		if (({alive _x && side _x == opfor} count allUnits) <=150 && {side _x == opfor && behaviour _x == "COMBAT"} count allUnits > 5) then
+		if (({alive _x && side _x == opfor} count allUnits) <=175 && {side _x == opfor && behaviour _x == "COMBAT"} count allUnits > 5) then
 		{
 			diag_log "RPG : Reinforcement wave begin !";
+
+			nb_ind_player_alive = {side _x == independent && _x getVariable "isDead" == false} count allPlayers;
+			nb_blu_player_alive = {side _x == blufor && _x getVariable "isDead" == false} count allPlayers;
 
 			//Prioritize attack on independent 
 			if (nb_blu_player_alive != 0) then
@@ -49,7 +49,7 @@ if (isServer) then
 			_tempVehicleGroup = [];
 
 			//Generate light vehicle 33% chance to spawn
-			if (count _thisAvailableOpforCars != 0 &&	 round random 2 == 0) then 
+			if (count _thisAvailableOpforCars != 0 && random 100 < 33) then 
 			{
 				_tempVehicleGroup pushBack [selectRandom _thisAvailableOpforCars];
 			};
@@ -62,16 +62,18 @@ if (isServer) then
 
 				//Heavy armored vehicle spawn chance 17%
 				//Remove heavy armor enemy reinforcement to balance gameplay
-				// if (count _thisAvailableOpforHeavyArmoredVehicle != 0 && round random 1 == 0) then 
+				// if (count _thisAvailableOpforHeavyArmoredVehicle != 0 && random 100 < 50) then 
 				// {
 				// 	_tempVehicleGroup pushBack [selectRandom _thisAvailableOpforHeavyArmoredVehicle];
 				// };
 			};
 
-			//Chopper reinforcement
-			if (count _thisAvailableOpforUnarmedChopperVehicle != 0 &&  round random 1 == 0) then 
+			//Chopper reinforcement 65%
+			hint format ["%1",_thisAvailableOpforUnarmedChopperVehicle];
+			if (count _thisAvailableOpforUnarmedChopperVehicle != 0 &&  random 100 < 65) then 
 			{
 				//Generate enemy wave
+				diag_log "Begin chopper landing on operation area !";
 				[_thisAvailableOpforGroup#0, selectRandom _thisAvailableOpforUnarmedChopperVehicle, positionToAttack] execVM 'enemyManagement\behaviorEngine\doVehicleReinforcement.sqf'; 
 			};
 
