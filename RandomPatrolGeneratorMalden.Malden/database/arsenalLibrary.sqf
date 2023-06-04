@@ -502,13 +502,29 @@ isAreaEligibleForArsenal = {
 	_controlDistance = "";
 	if (side _caller == blufor) then 
 	{
-		_controlDistance = "(_this distance _target < 3) && ((_target distance initBlueforLocation < 30) || (_target distance (missionNamespace getVariable ""advancedBlueforLocation"") < 30))"
+		_controlDistance = "(_this distance _target < 3) && ((_target distance initBlueforLocation < 30) || (_target distance (missionNamespace getVariable 'advancedBlueforLocation') < 30))"
 	};
 	if (side _caller == independent) then 
 	{
 		_controlDistance = "(_this distance _target < 3) && (_target distance (getPos initCityLocation) < 1000)";
 	};
 	_controlDistance;
+};
+
+
+getPlayerFaction = {
+	params ["_unit"];
+
+	_faction = "";
+	if (side _unit == independent) then 
+	{
+		_faction = indFaction;
+	} else 
+	{
+		_faction = bluFaction;
+	};
+
+	_faction;
 };
 
 setupPlayerLoadout = {
@@ -546,13 +562,7 @@ setupPlayerLoadout = {
 		] call BIS_fnc_holdActionAdd;
 
 		//Setup initArsenal whitelist items
-		if (side player == independent) then 
-		{
-			[_itemToAttachArsenal, player, indFaction] call setupArsenalToItem;
-		} else 
-		{
-			[_itemToAttachArsenal, player, bluFaction] call setupArsenalToItem;
-		};
+		[_itemToAttachArsenal, player, player call getPlayerFaction] call setupArsenalToItem;
 };
 
 setupSaveAndLoadRole = {
@@ -722,17 +732,9 @@ saveCustomLoadout = {
 		};
 
 		//Save personnal loadout
-		if (_currentPlayer getVariable "sideBeforeDeath" == "independent") then 
-		{
-			//Independent
-			profileNamespace setVariable [format [loadoutSaveName, name _currentPlayer, indFaction, _currentPlayer getVariable "role"], _defaultStuff];
-		} else 
-		{
-			//Blufor
-			profileNamespace setVariable [format [loadoutSaveName, name _currentPlayer, bluFaction, _currentPlayer getVariable "role"], _defaultStuff];
-		};
+		profileNamespace setVariable [format [loadoutSaveName, name _currentPlayer, _currentPlayer call getPlayerFaction, _currentPlayer getVariable "role"], _defaultStuff];
 
-		diag_log format ["Loadout saved on : RPG_%1_%2_%3 = %4", name player, indFaction, player getVariable "role", _defaultStuff];
+		//diag_log format ["Loadout saved on : RPG_%1_%2_%3 = %4", name player, indFaction, player getVariable "role", _defaultStuff];
 		saveProfileNamespace;
 };
 

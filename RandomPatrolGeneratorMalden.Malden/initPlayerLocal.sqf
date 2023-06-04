@@ -9,7 +9,7 @@ diag_log format ["Setup Player %1 at position 0", name player];
 //init tp to be able to spawn on the ground on each map
 player setPos [0,0];
 player allowdamage false;
-disableUserInput true;
+
 //player enableSimulationGlobal false;
 player setVariable ["role", player getVariable ["initRole","rifleman"]];
 player setVariable ["isDead", false, true];
@@ -43,7 +43,6 @@ if (!didJIP) then
 	{
 		if (call BIS_fnc_admin != 0) then 
 		{
-			disableUserInput false;
 			[[], 'GUI\setupGUI\initMissionMenu.sqf'] remoteExec ['BIS_fnc_execVM', player];
 		};
 	} else 
@@ -54,7 +53,6 @@ if (!didJIP) then
 			if (side player == independent && player == (leader (group player))) then 
 			{
 				//Display setup menu
-				disableUserInput false;
 				[[], 'GUI\setupGUI\initMissionMenu.sqf'] remoteExec ['BIS_fnc_execVM', player];
 			};
 		} else {
@@ -62,7 +60,6 @@ if (!didJIP) then
 			if (side player == blufor && player == (leader (group player))) then 
 			{
 				//Display setup menu
-				disableUserInput false;
 				[[], 'GUI\setupGUI\initMissionMenu.sqf'] remoteExec ['BIS_fnc_execVM', player];
 			};
 		};
@@ -96,22 +93,26 @@ private _generateCivDialogs = compile preprocessFileLineNumbers "enemyManagement
 ////Event Handler/////////
 //////////////////////////
 
-//Arsenal without save/load
-[missionNamespace, "arsenalOpened", {
+//Arsenal without save/load when ironMan mode
+if (ironMan) then 
+{
+	[missionNamespace, "arsenalOpened", {
+		disableSerialization;
+		params ["_display"];
+		_display displayAddEventHandler ["keydown", "_this select 3"];
+		{(_display displayCtrl _x) ctrlShow false} forEach [44151, 44150, 44146, 44147, 44148, 44149, 44346];
+	}] call BIS_fnc_addScriptedEventHandler;
+};
+
+
+//Validate current player's stuff
+[missionNamespace, "arsenalClosed", {
 	disableSerialization;
 	params ["_display"];
-	_display displayAddEventHandler ["keydown", "_this select 3"];
-	{(_display displayCtrl _x) ctrlShow false} forEach [44151, 44150, 44146, 44147, 44148, 44149, 44346];
-}] call BIS_fnc_addScriptedEventHandler;
 
-//Hide native Arsenal action
-inGameUISetEventHandler ["Action", "
-	if (_this select 4 == 'Arsenal') then {
-		{if ((_this#0) actionParams _x select 0 == 'Arsenal') exitWith {(_this#0) removeAction _x}} forEach actionIDs (_this#0);	
-		hint 'Basic arsenal action removed';
-		true
-	};
-"];
+	//Check loadout
+	[player] call validateLoadout;
+}] call BIS_fnc_addScriptedEventHandler;
 
 
 //Init disableThermal
@@ -287,7 +288,7 @@ if (side player == blufor) then
 			{
 				hint "You don't have enough advanced vehicle spawned credit left.";
 			};
-		},_x,1.5,true,false,"","(_target distance _this <5) && (_this getVariable 'role' == 'leader')"];
+		},_x,1.5,true,false,"","(_target distance _this <5) && ((_this getVariable 'role' == 'leader') || (_this getVariable 'role' == 'pilot'))"];
 	} foreach bluforUnarmedVehicleChopper; 
 
 	//Armed Chopper
@@ -310,7 +311,7 @@ if (side player == blufor) then
 				{
 					hint "You don't have enough advanced vehicle spawned credit left.";
 				};
-			},_x,1.5,true,false,"","(_target distance _this <5) && (_this getVariable 'role' == 'leader')"];
+			},_x,1.5,true,false,"","(_target distance _this <5) && ((_this getVariable 'role' == 'leader') || (_this getVariable 'role' == 'pilot'))"];
 		} foreach bluforArmedChopper; 
 	};
 
@@ -426,7 +427,7 @@ if (didJIP) then
 	diag_log format ["Player %1 has arrived on JIP", name player];
 	//Check if player is trying to respawn by deco/reco method
 	_deadPlayerList = missionNamespace getVariable "deadPlayer";
-	disableUserInput false;
+
 	if (count (_deadPlayerList select { _x == (name player) }) == 0) then 
 	{
 
@@ -445,7 +446,7 @@ if (didJIP) then
 } else {
 	//Let's get it started !
 	player allowdamage true;
-	disableUserInput false;
+
 	player enableSimulationGlobal true;
 	cutText ["", "BLACK IN", 5];
 };
