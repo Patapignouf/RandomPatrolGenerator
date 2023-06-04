@@ -279,6 +279,7 @@ itemList_2035_NATO_FS = [
 	"ItemWatch",
 	"NVGoggles",
 	"B_UavTerminal",
+	"ItemGPS",
 	"Binocular",
 	"Rangefinder",
 	"ACE_MapTools",

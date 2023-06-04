@@ -265,6 +265,7 @@ itemList_2035_FIA = [
 	"ItemWatch",
 	"NVGoggles",
 	"B_UavTerminal",
+	"ItemGPS",
 	"Binocular",
 	"Rangefinder",
 	"ACE_MapTools",

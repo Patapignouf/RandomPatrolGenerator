@@ -263,6 +263,7 @@ itemList_2035_Spetsnaz = [
 	"ItemWatch",
 	"NVGoggles",
 	"B_UavTerminal",
+	"ItemGPS",
 	"Binocular",
 	"Rangefinder",
 	"ACE_MapTools",

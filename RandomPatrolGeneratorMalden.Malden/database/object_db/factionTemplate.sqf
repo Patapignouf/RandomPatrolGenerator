@@ -234,6 +234,7 @@ itemList_newFaction = [
 	"ItemWatch",
 	"NVGoggles",
 	"B_UavTerminal",
+	"ItemGPS",
 	"Binocular",
 	"Rangefinder",
 	"ACE_MapTools",

@@ -116,7 +116,7 @@ getItembyWarEra = {
 		//Modern Warfare
 		case 2:
 		{
-			_itemList = ["ACE_DAGR","ACE_EntrenchingTool","ACE_WaterBottle","ACE_CableTie","ACE_MapTools","ItemCompass","ItemMap","ItemWatch","ACE_RangeTable_82mm","Binocular","ACE_SpraypaintRed","ACE_EarPlugs"];
+			_itemList = ["ItemGPS","ACE_DAGR","ACE_EntrenchingTool","ACE_WaterBottle","ACE_CableTie","ACE_MapTools","ItemCompass","ItemMap","ItemWatch","ACE_RangeTable_82mm","Binocular","ACE_SpraypaintRed","ACE_EarPlugs"];
 			if (isClass (configFile >> "CfgPatches" >> "task_force_radio")) then {
 				_itemList pushBack "TFAR_anprc152";
 			} ;
@@ -124,7 +124,7 @@ getItembyWarEra = {
 		//Actual Warfare
 		case 3:
 		{
-			_itemList = ["ACE_DAGR", "ACE_microDAGR","B_UavTerminal","ACE_EntrenchingTool","ACE_WaterBottle","ACE_CableTie","ACE_MapTools","ItemCompass","ItemMap","ItemWatch","ACE_RangeTable_82mm","Binocular","ACE_SpraypaintRed","ACE_EarPlugs"];
+			_itemList = ["ItemGPS", "ACE_DAGR", "ACE_microDAGR","B_UavTerminal","ACE_EntrenchingTool","ACE_WaterBottle","ACE_CableTie","ACE_MapTools","ItemCompass","ItemMap","ItemWatch","ACE_RangeTable_82mm","Binocular","ACE_SpraypaintRed","ACE_EarPlugs"];
 			if (isClass (configFile >> "CfgPatches" >> "task_force_radio")) then {
 				_itemList pushBack "TFAR_anprc152";
 			} ;
@@ -132,7 +132,7 @@ getItembyWarEra = {
 		//Future Warfare
 		case 4:
 		{
-			_itemList = ["ACE_DAGR", "ACE_microDAGR","B_UavTerminal","ACE_EntrenchingTool","ACE_WaterBottle","ACE_CableTie","ACE_MapTools","ItemCompass","ItemMap","ItemWatch","ACE_RangeTable_82mm","Binocular","ACE_SpraypaintRed","ACE_EarPlugs"];
+			_itemList = ["ItemGPS","ACE_DAGR", "ACE_microDAGR","B_UavTerminal","ACE_EntrenchingTool","ACE_WaterBottle","ACE_CableTie","ACE_MapTools","ItemCompass","ItemMap","ItemWatch","ACE_RangeTable_82mm","Binocular","ACE_SpraypaintRed","ACE_EarPlugs"];
 			if (isClass (configFile >> "CfgPatches" >> "task_force_radio")) then {
 				_itemList pushBack "TFAR_anprc152";
 			} ;
