@@ -217,7 +217,8 @@ if (side player == blufor) then
 	[VA2] call setupPlayerLoadout;	
 	if (!isNil "bluformobilehq") then
 	{
-		[bluforMobileHQ] call setupPlayerLoadout;
+		//TODO FIX Mobile HQ Arsenal action
+		//[bluforMobileHQ] call setupPlayerLoadout;
 	};
 
 

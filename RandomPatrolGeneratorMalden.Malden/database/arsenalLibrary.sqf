@@ -537,7 +537,7 @@ setupPlayerLoadout = {
 			"\a3\missions_f_oldman\data\img\holdactions\holdAction_box_ca.paa", 
 			"\a3\missions_f_oldman\data\img\holdactions\holdAction_box_ca.paa", 
 			[player] call isAreaEligibleForArsenal,						// Condition for the action to be shown
-			"_caller distance _target < 3",						// Condition for the action to progress
+			"_caller distance _target < 10",						// Condition for the action to progress
 			{
 				// Action start code
 			}, 

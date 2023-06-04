@@ -469,6 +469,27 @@ if (count bluforHQVehicle >0) then
 		createVehicle ["Flag_Blue_F", getPos (_bluforHQVehicleSpawned select 0) , [], 0, "NONE"];
 		bluforMobileHQ = _bluforHQVehicleSpawned select 0;
 		publicVariable "bluforMobileHQ";
+
+		//Add action to make all player respawn
+		if (respawnSettings == 1) then 
+		{
+			[bluforMobileHQ, ["Call Reinforcements",{
+				params ["_object","_caller","_ID","_param"];
+				
+				if (!(missionNamespace getVariable ["usedRespawnFewTimeAgo",false])) then 
+				{
+					//set morning
+					skipTime 24;
+					[[], "engine\respawnManagement\respawnManager.sqf"] remoteExec ['BIS_fnc_execVM', 0];
+					[format ["%1 needs reinforcement", name _caller]] remoteExec ["hint",0,true];
+					missionNamespace setVariable ["usedRespawnFewTimeAgo",true,true];
+					sleep 1200;
+					missionNamespace setVariable ["usedRespawnFewTimeAgo",false,true];
+				} else {
+					hint "You must wait before call reinforcements";
+				};
+			},[],1.5,true,false,"","_target distance _this <10 && side _this == blufor"]] remoteExec [ "addAction", 0, true ];
+		};
 	};
 };
 
