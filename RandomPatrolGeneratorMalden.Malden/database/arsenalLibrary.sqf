@@ -319,6 +319,10 @@ setupArsenalToItem = {
 	//Save avalaible item list
 	_whitelistOfArsenalItems = _currentWeaponItems+_currentBackpackItems+_currentMagazineItems+_currentItems + (_currentPlayer getVariable ["avalaibleItemsInArsenal", []]);
 	_currentPlayer setVariable ["avalaibleItemsInArsenal", _whitelistOfArsenalItems, true];
+	
+	//Remove arsenal action
+	{if (player actionParams _x select 0 == "Arsenal") exitWith {player removeAction _x}} forEach actionIDs player;
+	["AmmoboxExit", _itemToAttachArsenal] call BIS_fnc_arsenal;
 
 	_itemToAttachArsenal;
 };
@@ -398,9 +402,6 @@ switchToRole = {
 
 	_caller setVariable ["spawnLoadout", getUnitLoadout _caller];
 
-	//Manage arsenal stuff
-	[_arsenalItem, _caller, _faction] call setupArsenalToItem;
-
 	titleCut ["", "BLACK IN", 5];
 };
 
@@ -451,9 +452,6 @@ setupRoleSwitchToItem = {
 				[_caller,(_params select 1)] call doInitializeLoadout;
 
 				_caller setVariable ["spawnLoadout", getUnitLoadout _caller];
-
-				//Manage arsenal stuff
-				[_target, _caller, (_params select 1)] call setupArsenalToItem;
 
 				titleCut ["", "BLACK IN", 5];
 			},[_x,currentFaction]];
@@ -562,7 +560,9 @@ setupPlayerLoadout = {
 		] call BIS_fnc_holdActionAdd;
 
 		//Setup initArsenal whitelist items
-		[_itemToAttachArsenal, player, player call getPlayerFaction] call setupArsenalToItem;
+		[player, player, player call getPlayerFaction] call setupArsenalToItem;
+		sleep 1;
+		{if (player actionParams _x select 0 == "Arsenal") exitWith {player removeAction _x}} forEach actionIDs player;
 };
 
 setupSaveAndLoadRole = {

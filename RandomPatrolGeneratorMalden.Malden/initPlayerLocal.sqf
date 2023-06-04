@@ -112,6 +112,7 @@ if (ironMan) then
 
 	//Check loadout
 	[player] call validateLoadout;
+	["AmmoboxExit", player] call BIS_fnc_arsenal;
 }] call BIS_fnc_addScriptedEventHandler;
 
 
@@ -218,7 +219,7 @@ if (side player == blufor) then
 	if (!isNil "bluformobilehq") then
 	{
 		//TODO FIX Mobile HQ Arsenal action
-		//[bluforMobileHQ] call setupPlayerLoadout;
+		[bluforMobileHQ] call setupPlayerLoadout;
 	};
 
 
@@ -406,7 +407,6 @@ if (isClass (configFile >> "CfgPatches" >> "ace_medical")) then
 {
 	[player] call BIS_fnc_disableRevive;
 };
-
 
 //Generate civilian dialogs
 [] spawn _generateCivDialogs;

@@ -27,19 +27,7 @@ firstOpen = true;
 
 refreshCustomLoadoutDisplay = {
 		_buttonLoad = (findDisplay 7000) displayCtrl 7203;
-		_loadableLoadout = [];
-
-		//Save personnal loadout
-		if (player getVariable "sideBeforeDeath" == "independent") then 
-		{
-			//Independent
-			_loadableLoadout = profileNamespace getVariable [format [loadoutSaveName, name player, indFaction, player getVariable "role"], []];
-		} else 
-		{
-			//Blufor
-			_loadableLoadout = profileNamespace getVariable [format [loadoutSaveName, name player, bluFaction, player getVariable "role"], []];
-		};
-
+		_loadableLoadout = profileNamespace getVariable [format [loadoutSaveName, name player, player call getPlayerFaction, player getVariable "role"], []];
 
 		if (count _loadableLoadout == 0) then 
 		{
@@ -76,21 +64,10 @@ _comboBoxClassSelection ctrlAddEventHandler[ "LBSelChanged",
 			_mainDisplay = (findDisplay 7000);
 			_comboBoxClassSelection = _mainDisplay displayCtrl 7100;
 
-			_listOfAvalaibleRole =[];
-
-			if (player getVariable "sideBeforeDeath" == "independent") then 
-			{
-				//Independent
-				_listOfAvalaibleRole = [indFaction] call setupRoleSwitchToList;
-				_role = (_listOfAvalaibleRole select parseNumber ((_comboBoxClassSelection lbData (lbCurSel _comboBoxClassSelection))));
-				[VA1, player, indFaction , _role, false] call switchToRole;
-			} else 
-			{
-				//Blufor
-				_listOfAvalaibleRole = [bluFaction] call setupRoleSwitchToList;
-				_role = (_listOfAvalaibleRole select parseNumber ((_comboBoxClassSelection lbData (lbCurSel _comboBoxClassSelection))));
-				[VA2, player, bluFaction , _role, false] call switchToRole;
-			};
+			//Setup arsenal loadout
+			_listOfAvalaibleRole = [player call getPlayerFaction] call setupRoleSwitchToList;
+			_role = (_listOfAvalaibleRole select parseNumber ((_comboBoxClassSelection lbData (lbCurSel _comboBoxClassSelection))));
+			[player, player, player call getPlayerFaction , _role, false] call switchToRole;
 
 			//Refresh load button
 			[] call refreshCustomLoadoutDisplay;
@@ -168,21 +145,19 @@ _buttonSave ctrlAddEventHandler[ "ButtonClick",
 //Load loadout
 _buttonLoad ctrlAddEventHandler[ "ButtonClick", 
 	{ 
-		_loadableLoadout = [];
 		//Save personnal loadout
-		if (player getVariable "sideBeforeDeath" == "independent") then 
+		_loadableLoadout = profileNamespace getVariable [format [loadoutSaveName, name player, player call getPlayerFaction, player getVariable "role"], player getVariable "spawnLoadout"];
+		player setUnitLoadout _loadableLoadout;
+
+		//Fix TFAR link 
+		if (isClass (configFile >> "CfgPatches" >> "task_force_radio")) then 
 		{
-			//Independent
-			_loadableLoadout = profileNamespace getVariable [format [loadoutSaveName, name player, indFaction, player getVariable "role"], player getVariable "spawnLoadout"];
-		} else 
-		{
-			//Blufor
-			_loadableLoadout = profileNamespace getVariable [format [loadoutSaveName, name player, bluFaction, player getVariable "role"], player getVariable "spawnLoadout"];
+			player unassignItem "TFAR_anprc152";
+			player removeItem "TFAR_anprc152";
+			player addItem "TFAR_anprc152";
+			player assignItem "TFAR_anprc152";
 		};
 		
-		player setUnitLoadout _loadableLoadout;
-		
-
 		//Wipe saved loadout in Ironman mode
 		if (ironMan) then 
 		{
