@@ -24,10 +24,10 @@ class EditorData
 	};
 	class Camera
 	{
-		pos[]={5544.7788,96.001022,2536.7649};
-		dir[]={-0.097999811,-0.78501642,0.61167431};
-		up[]={-0.12418815,0.61947489,0.77513105};
-		aside[]={0.98740745,7.4505806e-009,0.15819816};
+		pos[]={5578.2412,81.599335,2576.3193};
+		dir[]={-0.6012212,-0.79670656,0.061971247};
+		up[]={-0.79251057,0.60435915,0.08168821};
+		aside[]={0.10253375,-2.9715011e-007,0.99475461};
 	};
 };
 binarizationWanted=0;
@@ -445,6 +445,9 @@ class Mission
 						init="this setVariable [""initRole"",""leader""];";
 						description="Leader (setup)";
 						isPlayer=1;
+						class Inventory
+						{
+						};
 					};
 					id=2281;
 					type="B_Soldier_unarmed_F";
@@ -493,6 +496,9 @@ class Mission
 						init="this setVariable [""initRole"",""rifleman""];";
 						description="2: Rifleman";
 						isPlayable=1;
+						class Inventory
+						{
+						};
 					};
 					id=2282;
 					type="B_Soldier_F";
@@ -542,6 +548,9 @@ class Mission
 						init="this setVariable [""initRole"",""rifleman""];";
 						description="3: Rifleman";
 						isPlayable=1;
+						class Inventory
+						{
+						};
 					};
 					id=2283;
 					type="B_Soldier_F";
@@ -591,6 +600,9 @@ class Mission
 						init="this setVariable [""initRole"",""marksman""];";
 						description="4: Marksman";
 						isPlayable=1;
+						class Inventory
+						{
+						};
 					};
 					id=2284;
 					type="B_soldier_M_F";
@@ -639,6 +651,9 @@ class Mission
 						init="this setVariable [""initRole"",""engineer""];";
 						description="5: Engineer";
 						isPlayable=1;
+						class Inventory
+						{
+						};
 					};
 					id=2285;
 					type="B_engineer_F";
@@ -687,6 +702,9 @@ class Mission
 						init="this setVariable [""initRole"",""autorifleman""];";
 						description="6: Autorifleman";
 						isPlayable=1;
+						class Inventory
+						{
+						};
 					};
 					id=2286;
 					type="B_soldier_AR_F";
@@ -735,6 +753,9 @@ class Mission
 						init="this setVariable [""initRole"",""medic""];";
 						description="7: Combat Life Saver";
 						isPlayable=1;
+						class Inventory
+						{
+						};
 					};
 					id=2287;
 					type="B_medic_F";
@@ -783,6 +804,9 @@ class Mission
 						init="this setVariable [""initRole"",""at""];";
 						description="8: Rifleman (AT)";
 						isPlayable=1;
+						class Inventory
+						{
+						};
 					};
 					id=2288;
 					type="B_soldier_LAT_F";
@@ -831,6 +855,9 @@ class Mission
 						init="this setVariable [""initRole"",""rifleman""];";
 						description="9: Rifleman";
 						isPlayable=1;
+						class Inventory
+						{
+						};
 					};
 					id=2289;
 					type="B_Soldier_F";
@@ -880,6 +907,9 @@ class Mission
 						init="this setVariable [""initRole"",""rifleman""];";
 						description="10: Rifleman";
 						isPlayable=1;
+						class Inventory
+						{
+						};
 					};
 					id=2290;
 					type="B_Soldier_F";
@@ -929,6 +959,9 @@ class Mission
 						init="this setVariable [""initRole"",""marksman""];";
 						description="11: Marksman";
 						isPlayable=1;
+						class Inventory
+						{
+						};
 					};
 					id=2291;
 					type="B_soldier_M_F";
@@ -977,6 +1010,9 @@ class Mission
 						init="this setVariable [""initRole"",""engineer""];";
 						description="12: Engineer";
 						isPlayable=1;
+						class Inventory
+						{
+						};
 					};
 					id=2292;
 					type="B_engineer_F";
@@ -1025,6 +1061,9 @@ class Mission
 						init="this setVariable [""initRole"",""autorifleman""];";
 						description="13: Autorifleman";
 						isPlayable=1;
+						class Inventory
+						{
+						};
 					};
 					id=2293;
 					type="B_soldier_AR_F";
@@ -1073,6 +1112,9 @@ class Mission
 						init="this setVariable [""initRole"",""medic""];";
 						description="14: Combat Life Saver";
 						isPlayable=1;
+						class Inventory
+						{
+						};
 					};
 					id=2294;
 					type="B_medic_F";
@@ -1121,6 +1163,9 @@ class Mission
 						init="this setVariable [""initRole"",""at""];";
 						description="15: Rifleman (AT)";
 						isPlayable=1;
+						class Inventory
+						{
+						};
 					};
 					id=2295;
 					type="B_soldier_LAT_F";
@@ -1182,6 +1227,9 @@ class Mission
 						init="this setVariable [""initRole"",""leader""];";
 						description="Leader (setup)";
 						isPlayable=1;
+						class Inventory
+						{
+						};
 					};
 					id=2297;
 					type="B_Soldier_unarmed_F";
@@ -1230,6 +1278,9 @@ class Mission
 						init="this setVariable [""initRole"",""rifleman""];";
 						description="1: Rifleman";
 						isPlayable=1;
+						class Inventory
+						{
+						};
 					};
 					id=2298;
 					type="B_Soldier_F";
@@ -1279,6 +1330,9 @@ class Mission
 						init="this setVariable [""initRole"",""rifleman""];";
 						description="3: Rifleman";
 						isPlayable=1;
+						class Inventory
+						{
+						};
 					};
 					id=2299;
 					type="B_Soldier_F";
@@ -1328,6 +1382,9 @@ class Mission
 						init="this setVariable [""initRole"",""marksman""];";
 						description="4: Marksman";
 						isPlayable=1;
+						class Inventory
+						{
+						};
 					};
 					id=2300;
 					type="B_soldier_M_F";
@@ -1377,6 +1434,9 @@ class Mission
 						init="this setVariable [""initRole"",""engineer""];";
 						description="5: Engineer";
 						isPlayable=1;
+						class Inventory
+						{
+						};
 					};
 					id=2301;
 					type="B_engineer_F";
@@ -1426,6 +1486,9 @@ class Mission
 						init="this setVariable [""initRole"",""autorifleman""];";
 						description="6: Autorifleman";
 						isPlayable=1;
+						class Inventory
+						{
+						};
 					};
 					id=2302;
 					type="B_soldier_AR_F";
@@ -1475,6 +1538,9 @@ class Mission
 						init="this setVariable [""initRole"",""medic""];";
 						description="7: Combat Life Saver";
 						isPlayable=1;
+						class Inventory
+						{
+						};
 					};
 					id=2303;
 					type="B_medic_F";
@@ -1524,6 +1590,9 @@ class Mission
 						init="this setVariable [""initRole"",""at""];";
 						description="8: Rifleman (AT)";
 						isPlayable=1;
+						class Inventory
+						{
+						};
 					};
 					id=2304;
 					type="B_soldier_LAT_F";
@@ -1573,6 +1642,9 @@ class Mission
 						init="this setVariable [""initRole"",""rifleman""];";
 						description="9: Rifleman";
 						isPlayable=1;
+						class Inventory
+						{
+						};
 					};
 					id=2305;
 					type="B_Soldier_F";
@@ -1622,6 +1694,9 @@ class Mission
 						init="this setVariable [""initRole"",""rifleman""];";
 						description="10: Rifleman";
 						isPlayable=1;
+						class Inventory
+						{
+						};
 					};
 					id=2306;
 					type="B_Soldier_F";
@@ -1671,6 +1746,9 @@ class Mission
 						init="this setVariable [""initRole"",""marksman""];";
 						description="11: Marksman";
 						isPlayable=1;
+						class Inventory
+						{
+						};
 					};
 					id=2307;
 					type="B_soldier_M_F";
@@ -1720,6 +1798,9 @@ class Mission
 						init="this setVariable [""initRole"",""engineer""];";
 						description="12: Engineer";
 						isPlayable=1;
+						class Inventory
+						{
+						};
 					};
 					id=2308;
 					type="B_engineer_F";
@@ -1769,6 +1850,9 @@ class Mission
 						init="this setVariable [""initRole"",""autorifleman""];";
 						description="13: Autorifleman";
 						isPlayable=1;
+						class Inventory
+						{
+						};
 					};
 					id=2309;
 					type="B_soldier_AR_F";
@@ -1818,6 +1902,9 @@ class Mission
 						init="this setVariable [""initRole"",""medic""];";
 						description="14: Combat Life Saver";
 						isPlayable=1;
+						class Inventory
+						{
+						};
 					};
 					id=2310;
 					type="B_medic_F";
@@ -1867,6 +1954,9 @@ class Mission
 						init="this setVariable [""initRole"",""at""];";
 						description="15: Rifleman (AT)";
 						isPlayable=1;
+						class Inventory
+						{
+						};
 					};
 					id=2311;
 					type="B_soldier_LAT_F";
