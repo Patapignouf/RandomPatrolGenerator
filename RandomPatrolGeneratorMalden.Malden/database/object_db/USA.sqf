@@ -107,7 +107,6 @@ bluforArmedVehicle_USA = [
 bluforUnarmedVehicleChopper_USA = [
 	"CUP_B_MH6J_USA",
 	"CUP_B_UH60M_Unarmed_US",
-	"B_Heli_Transport_03_unarmed_F",
 	"CUP_B_CH53E_USMC"
 ];
 
@@ -151,15 +150,15 @@ listOfRoles_USA = [c_leader,c_at,c_rifleman,c_engineer,c_autorifleman,c_marksman
 
 //USA
 loadout_USA = [		
-	[c_leader, "CUP_B_US_Soldier_SL_OEFCP"],
-	[c_at, "CUP_B_US_Soldier_LAT_OEFCP"],
-	[c_rifleman,"CUP_B_US_Soldier_OEFCP"],//Default stuff
-	[c_engineer,"CUP_B_US_Soldier_Engineer_OEFCP"],
-	[c_autorifleman, "CUP_B_US_Soldier_MG_OEFCP"],
-	[c_marksman,"CUP_B_US_Soldier_Marksman_EBR_OEFCP"],
-	[c_medic,"CUP_B_US_Medic_OEFCP"],
-	[c_grenadier, "CUP_B_US_Soldier_GL_OEFCP"],//Default stuff
-	[c_drone,"CUP_B_US_Soldier_UAV_OEFCP"],
+	[c_leader, "CUP_B_US_SpecOps_TL"],
+	[c_at, [["CUP_arifle_mk18_tan_holo_laserflash","CUP_muzzle_snds_M16","CUP_acc_ANPEQ_15_Top_Flashlight_Tan_L","optic_Holosight",["CUP_30Rnd_556x45_Stanag",30],[],""],["CUP_launch_M136","","","",[],[],""],["CUP_hgun_M9","","","",["CUP_15Rnd_9x19_M9",15],[],""],["CUP_U_CRYE_G3C_MC_US",[["FirstAidKit",1],["CUP_30Rnd_556x45_Stanag",3,30],["SmokeShellRed",1,1]]],["CUP_V_CPC_Fastbelt_mc",[["CUP_30Rnd_556x45_Stanag",4,30],["CUP_HandGrenade_M67",1,1],["B_IR_Grenade",1,1],["SmokeShellGreen",1,1],["CUP_15Rnd_9x19_M9",1,15]]],["CUP_B_USPack_Coyote_Specops",[["CUP_20Rnd_762x51_B_SCAR",4,20],["CUP_PipeBomb_M",1,1],["CUP_HandGrenade_M67",2,1],["SmokeShellRed",1,1],["SmokeShellGreen",1,1],["CUP_15Rnd_9x19_M9",2,15]]],"CUP_H_OpsCore_Covered_MCAM_US_SF","CUP_G_WatchGPSCombo",["CUP_Vector21Nite","","","",[],[],""],["ItemMap","ItemGPS","ItemRadio","ItemCompass","ItemWatch","CUP_NVG_PVS15_Hide"]]],
+	[c_rifleman,"CUP_B_US_SpecOps"],//Default stuff
+	[c_engineer,[["CUP_arifle_mk18_tan_holo_laserflash","CUP_muzzle_snds_M16","CUP_acc_ANPEQ_15_Top_Flashlight_Tan_L","optic_Holosight",["CUP_30Rnd_556x45_Stanag",30],[],""],[],["CUP_hgun_M9","","","",["CUP_15Rnd_9x19_M9",15],[],""],["CUP_U_CRYE_G3C_MC_US",[["FirstAidKit",1],["CUP_30Rnd_556x45_Stanag",3,30],["SmokeShellRed",1,1]]],["CUP_V_CPC_Fastbelt_mc",[["CUP_30Rnd_556x45_Stanag",4,30],["CUP_HandGrenade_M67",1,1],["B_IR_Grenade",1,1],["SmokeShellGreen",1,1],["CUP_15Rnd_9x19_M9",1,15]]],["CUP_B_USMC_MOLLE_WDL",[["ToolKit",1],["CUP_20Rnd_762x51_B_SCAR",4,20],["CUP_PipeBomb_M",1,1],["CUP_HandGrenade_M67",2,1],["SmokeShellRed",1,1],["SmokeShellGreen",1,1],["CUP_15Rnd_9x19_M9",2,15]]],"CUP_H_OpsCore_Covered_MCAM_US_SF","CUP_G_WatchGPSCombo",["CUP_Vector21Nite","","","",[],[],""],["ItemMap","ItemGPS","ItemRadio","ItemCompass","ItemWatch","CUP_NVG_PVS15_Hide"]]],
+	[c_autorifleman, "CUP_B_US_SpecOps_MG"],
+	[c_marksman,"CUP_B_US_SpecOps_M"],
+	[c_medic,"CUP_B_US_SpecOps_Medic"],
+	[c_grenadier, [["CUP_arifle_mk18_m203_tan_holo_laserflash","CUP_muzzle_snds_M16","CUP_acc_ANPEQ_15_Top_Flashlight_Tan_L","optic_Holosight",["CUP_30Rnd_556x45_Stanag",30],["CUP_1Rnd_HEDP_M203",1],""],[],["CUP_hgun_M9","","","",["CUP_15Rnd_9x19_M9",15],[],""],["CUP_U_CRYE_G3C_MC_US",[["FirstAidKit",1],["CUP_30Rnd_556x45_Stanag",3,30]]],["CUP_V_CPC_weaponsbelt_mc",[["CUP_30Rnd_556x45_Stanag",2,30],["CUP_1Rnd_HEDP_M203",3,1],["CUP_15Rnd_9x19_M9",1,15],["B_IR_Grenade",1,1],["CUP_HandGrenade_M67",1,1],["SmokeShellRed",1,1],["SmokeShellGreen",1,1]]],["CUP_B_AssaultPack_Coyote_Specops_GL",[["CUP_20Rnd_762x51_B_SCAR",4,20],["CUP_1Rnd_HEDP_M203",6,1],["CUP_1Rnd_SmokeRed_M203",2,1],["CUP_1Rnd_SmokeGreen_M203",2,1],["CUP_HandGrenade_M67",1,1],["CUP_15Rnd_9x19_M9",2,15]]],"CUP_H_OpsCore_Covered_MCAM_US","CUP_G_Oakleys_Drk",["CUP_Vector21Nite","","","",[],[],""],["ItemMap","ItemGPS","ItemRadio","ItemCompass","ItemWatch","CUP_NVG_PVS15_Hide"]]],//Default stuff
+	[c_drone,"CUP_B_US_SpecOps_UAV"],
 	[c_pilot,"CUP_B_US_Pilot"]
 ];
 
@@ -171,15 +170,18 @@ rifleList_USA = [
 	"CUP_arifle_mk18_black",
 	"CUP_arifle_SBR_black",
 	"CUP_arifle_M4A1_SOMMOD_Grip_black",
-	"CUP_arifle_mk18_tan_holo_laserflash",
-	"CUP_hgun_M9"
+	"CUP_hgun_M9",
+	"CUP_arifle_M16A4_Base",
+	"CUP_arifle_M4A1_black"
 ];	
+
 
 //Grenade launcher or weapon with grenade launcher option
 grenadeLauncherList_USA = [		
 	"CUP_arifle_mk18_m203_tan_holo_laserflash",
 	"CUP_arifle_mk18_m203_black",
-	"CUP_arifle_M4A1_M203_CCO_Laser"
+	"CUP_arifle_M4A1_M203_CCO_Laser",
+	"CUP_arifle_Colt727_M203"
 ];
 
 launcherList_USA = [		
@@ -193,15 +195,17 @@ launcherList_USA = [
 autorifleList_USA = [			
 	"CUP_lmg_Mk48",
 	"CUP_lmg_m249_pip2",
-	"CUP_lmg_M240_B_ElcanM143_ANPEQ15"
+	"CUP_lmg_M240_B"
 ];	
-
 
 marksmanrifleList_USA = [		
 	"CUP_srifle_Mk12SPR",
 	"CUP_srifle_M40A3",
 	"CUP_srifle_M110_black",
-	"CUP_srifle_M110"
+	"CUP_srifle_M110",
+	"CUP_srifle_Mk18_blk_LP4",
+	"CUP_srifle_M14",
+	"CUP_arifle_Mk20"
 ];
 
 smgList_USA = [		
@@ -289,7 +293,8 @@ attachmentLongList_USA	= [
 	"CUP_U_CRYE_G3C_MC_US",
 	"CUP_V_CPC_tlbelt_mc",
 	"CUP_B_USArmy_MG_SpecOp",
-	"CUP_H_OpsCore_Tan_SF"
+	"CUP_H_OpsCore_Tan_SF",
+	"CUP_optic_LeupoldMk4_MRT_tan"
 ];
 
 ////////////////////////
@@ -395,5 +400,7 @@ magazineList_USA = 	[
 	"CUP_5Rnd_762x51_M24",
 	"CUP_20Rnd_762x51_B_M110",
 	"CUP_40Rnd_46x30_MP7",
-	"CUP_15Rnd_9x19_M9"
+	"CUP_15Rnd_9x19_M9",
+	"20Rnd_762x51_Mag",
+	"CUP_20Rnd_762x51_B_SCAR"
 ];
