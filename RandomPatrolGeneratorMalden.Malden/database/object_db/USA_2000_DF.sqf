@@ -118,6 +118,10 @@ bluforFixedWing_USA_2000_DF = [
 	"CUP_B_A10_DYN_USA"
 ];
 
+bluforHQVehicle_USA_2000_DF = [
+	"CUP_B_M113A1_HQ_desert_USA"
+];
+
 ////////////////////////
 //Loadout management////
 ////////////////////////

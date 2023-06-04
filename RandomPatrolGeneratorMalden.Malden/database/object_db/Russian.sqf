@@ -121,6 +121,10 @@ bluforBoat_Russian = [
 	"CUP_O_PBX_RU"
 ];
 
+bluforHQVehicle_USA_2000 = [
+	"CUP_O_BRDM2_HQ_RUS"
+];
+
 ////////////////////////
 //Loadout management////
 ////////////////////////

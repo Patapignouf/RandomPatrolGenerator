@@ -155,7 +155,7 @@ bluforFixedWing_2035_NATO_FS = [
 
 //Vehicule able to do HQ features (Loadout management and more)
 bluforHQVehicle_2035_NATO_FS = [
-	"B_APC_Tracked_01_rcws_F"
+	"B_Truck_01_box_F"
 ];
 
 

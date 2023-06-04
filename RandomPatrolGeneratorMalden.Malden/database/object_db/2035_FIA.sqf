@@ -152,8 +152,7 @@ bluforBoat_2035_FIA = [
 
 //FixedWing vehicle avalaible for blufor
 bluforFixedWing_2035_FIA = [
-
-
+	"B_G_Van_01_transport_F"
 ];
 
 

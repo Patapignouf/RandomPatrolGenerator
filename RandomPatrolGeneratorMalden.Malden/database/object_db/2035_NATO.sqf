@@ -147,6 +147,11 @@ bluforFixedWing_2035_NATO = [
 	"B_Plane_Fighter_01_Stealth_F"
 ];
 
+//Vehicule able to do HQ features (Loadout management and more)
+bluforHQVehicle_2035_NATO = [
+	"B_Truck_01_box_F"
+];
+
 ////////////////////////
 //Loadout management////
 ////////////////////////

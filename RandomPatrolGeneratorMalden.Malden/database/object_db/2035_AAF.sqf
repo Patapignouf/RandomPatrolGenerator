@@ -125,6 +125,10 @@ bluforFixedWing_2035_AAF = [
 	"I_Plane_Fighter_04_F"
 	];
 
+bluforHQVehicle_2035_FIA = [
+	"I_Truck_02_covered_F"
+];
+
 
 ////////////////////////
 //Loadout management////
