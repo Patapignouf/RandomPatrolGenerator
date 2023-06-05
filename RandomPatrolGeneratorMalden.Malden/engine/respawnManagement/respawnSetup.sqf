@@ -26,4 +26,5 @@ independentRespawn = "respawn_guerrila" setMarkerPos (getPos initCityLocation);
 // };
 
 //Setup basic respawn marker
-[missionNamespace, [0,0,0],"Basic respawn marker"] call BIS_fnc_addRespawnPosition;
+[missionNamespace, [0,0,0],"respawn"] call BIS_fnc_addRespawnPosition;
+_marker = createMarker ["respawn", [0,0,0]]; // Not visible yet.
