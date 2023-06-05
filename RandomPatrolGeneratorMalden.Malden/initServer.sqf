@@ -34,5 +34,15 @@ missionNamespace setVariable ["missionDifficultyParam", 1, true]; //Default armo
 //Blufor Initilization 
 missionNamespace setVariable ["advancedBlueforLocation", [0,0], true]; //Default armored vehicle are disabled
 
+//Spawn bloc to avoid player swimming
+_spawnBloc = createVehicle ["BlockConcrete_F", [0,0,0], [], 0, "NONE"];
+_spawnBloc setPos [0,0,0];
+
 //Init scenario scripts
 [] execVM 'start.sqf'; 
+
+//Clean bloc
+[_spawnBloc] spawn {
+	sleep 50;
+	deleteVehicle _this#0;
+};

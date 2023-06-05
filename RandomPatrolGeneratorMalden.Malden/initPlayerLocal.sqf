@@ -7,7 +7,7 @@ waitUntil {!isNull player && (getClientStateNumber>=10||!isMultiplayer)};
 diag_log format ["Setup Player %1 at position 0", name player];
 
 //init tp to be able to spawn on the ground on each map
-player setPos [0,0];
+player setPos [0,0,1];
 player allowdamage false;
 
 //player enableSimulationGlobal false;
@@ -29,7 +29,7 @@ showHUD [
   false  // showIcon3D
 ];
 
-cutText ["Please wait while mission is generating", "BLACK FADED", 100];
+cutText [format ["<t size='1.2'>Please wait while mission is generating</t><br/><br/><img size=20 align='bottom' valign='bottom' image='%1'/>",format ["a3\missions_f_aow\data\img\artwork\landscape\showcase_aow_picture_%1_co.paa",selectRandom [16,59,118,106,98,62,76,93,75,64,122,87,70,14,04,108,111,123,20]]], "BLACK FADED", 100, true, true];
 sleep 3; //Wait player load correctly the mission
 
 //Define player who configure mission
@@ -43,6 +43,7 @@ if (!didJIP) then
 	{
 		if (call BIS_fnc_admin != 0) then 
 		{
+			cutText ["", "BLACK FADED", 100];
 			[[], 'GUI\setupGUI\initMissionMenu.sqf'] remoteExec ['BIS_fnc_execVM', player];
 		};
 	} else 
@@ -53,6 +54,7 @@ if (!didJIP) then
 			if (side player == independent && player == (leader (group player))) then 
 			{
 				//Display setup menu
+				cutText ["", "BLACK FADED", 100];
 				[[], 'GUI\setupGUI\initMissionMenu.sqf'] remoteExec ['BIS_fnc_execVM', player];
 			};
 		} else {
@@ -60,6 +62,7 @@ if (!didJIP) then
 			if (side player == blufor && player == (leader (group player))) then 
 			{
 				//Display setup menu
+				cutText ["", "BLACK FADED", 100];
 				[[], 'GUI\setupGUI\initMissionMenu.sqf'] remoteExec ['BIS_fnc_execVM', player];
 			};
 		};
@@ -71,6 +74,16 @@ if (!didJIP) then
 
 //Wait mission setup
 waitUntil {missionNamespace getVariable "generationSetup" == true};
+
+//Show loading message
+[] spawn {
+	while {isNil "missionGenerated"} do 
+	{
+		cutText [format ["<t size='1.2'>Please wait while mission is generating</t><br/><br/><img size=20 align='bottom' valign='bottom' image='%1'/>",format ["a3\missions_f_aow\data\img\artwork\landscape\showcase_aow_picture_%1_co.paa",selectRandom [16,59,118,106,98,62,76,93,75,64,122,87,70,14,04,108,111,123,20]]], "BLACK FADED", 100, true, true];
+		sleep 5;
+	};
+};
+
 
 //Load every mission settings dependencies
 #include "database\arsenalLibrary.sqf"
