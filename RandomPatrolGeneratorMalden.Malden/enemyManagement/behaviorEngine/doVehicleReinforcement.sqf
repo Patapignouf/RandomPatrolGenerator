@@ -22,7 +22,8 @@ _currentEnemyGroup enableDynamicSimulation false;
 forEach (units _currentEnemyGroup);
 
 //Go to landing pos
-_lz =  createVehicle ["Land_HelipadEmpty_F", ([[[_destinationPos, 300]], []] call BIS_fnc_randomPos), [], 0, "NONE"];
+_lzPos = _destinationPos findEmptyPosition [0, 300,"Land_HelipadCircle_F"];
+_lz =  createVehicle ["Land_HelipadEmpty_F", _lzPos, [], 0, "NONE"];
 wp1 = _vehicleTransportGroup addWaypoint [_lz, 0];
 wp1 setwaypointtype"TR UNLOAD"; 
 wp1 setWaypointBehaviour "CARELESS";
@@ -30,6 +31,7 @@ wp1 setWaypointCombatMode "BLUE";
 wp1 setWaypointSpeed "FULL";
 wp1 setWaypointStatements ["true", "(vehicle this) LAND 'LAND';"]; 
 waitUntil {isTouchingGround (_heli)};
+
 
 //Attack specific pos
 _currentEnemyGroup leaveVehicle _heli;
