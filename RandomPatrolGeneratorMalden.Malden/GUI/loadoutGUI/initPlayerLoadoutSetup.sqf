@@ -2,6 +2,8 @@ disableSerialization;
 #include "..\..\database\factionParameters.sqf"
 #include "..\..\database\missionParameters.sqf"
 #include "..\..\database\arsenalLibrary.sqf"
+#include "..\..\database\arsenalLibrary.sqf"
+#include "..\..\engine\rankManagement\rankFunctions.sqf"
 
 //Create GUI
 createDialog "PlayerLoadoutSetup";
@@ -16,7 +18,8 @@ private _buttonSave = _mainDisplay displayCtrl 7202;
 private _buttonLoad = _mainDisplay displayCtrl 7203;
 private _buttonClearItems = _mainDisplay displayCtrl 7204;
 private _button3DItems = _mainDisplay displayCtrl 7205;
-
+private _buttonRank = _mainDisplay displayCtrl 7206;
+private _nameTag = _mainDisplay displayCtrl 7002;
 
 //Faction params
 bluFaction = missionNamespace getVariable "bluforFaction";
@@ -24,6 +27,9 @@ indFaction = missionNamespace getVariable "independentFaction";
 
 //Function params
 firstOpen = true;
+
+//Setup player's name
+_nameTag ctrlSetText (name player);
 
 refreshCustomLoadoutDisplay = {
 		_buttonLoad = (findDisplay 7000) displayCtrl 7203;
@@ -90,11 +96,17 @@ _buttonArsenal ctrlAddEventHandler[ "ButtonClick",
 		[] execVM 'database\openArsenal.sqf';
 	}];
 
-//Open arsenal
+//clear item 
 _buttonClearItems ctrlAddEventHandler[ "ButtonClick", 
 	{ 
-			hint "Stuff cleared";
-			removeAllItemsWithMagazines player;
+		hint "Stuff cleared";
+		removeAllItemsWithMagazines player;
+	}];
+
+//show rank
+_buttonRank ctrlAddEventHandler[ "ButtonClick", 
+	{ 
+		player call displayCurrentRank;
 	}];
 
 //Force 3D Optics

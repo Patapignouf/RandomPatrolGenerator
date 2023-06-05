@@ -105,6 +105,30 @@ class PlayerLoadoutSetup
 			h = 0.0219952 * safezoneH;
 		};
 
+		//Rank button
+		class RankButton: RscButton
+		{
+			idc = 7206;
+			text = "Show rank";
+			x = GUI_GRID_CENTER_X + 20 * GUI_GRID_CENTER_W;
+			y = 0.18 * safezoneH + safezoneY;
+			w = 5 * GUI_GRID_CENTER_W;
+			h = 0.0219952 * safezoneH;
+		};		
+		
+		//Name of player
+		class RscText_7002: RscText
+		{
+			idc = 7002;
+			style = ST_MULTI;
+			lineSpacing = 1;
+			text = "PlayerName"; //--- ToDo: Localize;
+			x = GUI_GRID_CENTER_X + 15 * GUI_GRID_CENTER_W;
+			y = 0.07 * safezoneH + safezoneY;
+			w = 0.211441 * safezoneW;
+			h = 0.241947 * safezoneH;
+		};
+
 		////////////////////
 		//Faction settings//
 		////////////////////
