@@ -107,7 +107,6 @@ if (isClass (configFile >> "CfgPatches" >> "ace_medical")) then
 {
 	//Non ACE medic reward
 	inGameUISetEventHandler ["Action", " 
-	
 	if (([_this#3, 'HealSoldier'] call BIS_fnc_areEqual) || ([_this#4, 'Revive        Space     '] call BIS_fnc_areEqual)) then  
 	{ 
 		_healer = _this#1;

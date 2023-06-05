@@ -69,7 +69,6 @@ if (isServer) then
 			};
 
 			//Chopper reinforcement 65%
-			hint format ["%1",_thisAvailableOpforUnarmedChopperVehicle];
 			if (count _thisAvailableOpforUnarmedChopperVehicle != 0 &&  random 100 < 65) then 
 			{
 				//Generate enemy wave

@@ -43,6 +43,7 @@ _spawnBloc setPos [0,0,0];
 
 //Clean bloc
 [_spawnBloc] spawn {
+	params ["_spawnBloc"];
 	sleep 50;
-	deleteVehicle _this#0;
+	deleteVehicle _spawnBloc;
 };

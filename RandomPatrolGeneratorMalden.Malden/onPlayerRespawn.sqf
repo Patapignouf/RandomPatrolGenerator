@@ -16,6 +16,9 @@ player enableSimulationGlobal false;
 if (isClass (configFile >> "CfgPatches" >> "ace_medical")) then 
 {
   [objNull, player] call ace_medical_treatment_fnc_fullHeal;
+} else 
+{
+  player setDamage 0;
 };
 
 

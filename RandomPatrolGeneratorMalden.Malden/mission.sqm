@@ -24,10 +24,10 @@ class EditorData
 	};
 	class Camera
 	{
-		pos[]={5512.7144,108.8838,2565.1516};
-		dir[]={0.36637411,-0.8760581,0.3135159};
-		up[]={0.6656186,0.48220554,0.56958729};
-		aside[]={0.65017068,1.4901161e-008,-0.75978822};
+		pos[]={5611.3945,134.72552,2630.7654};
+		dir[]={-0.62494874,-0.65773815,-0.42049924};
+		up[]={-0.54570788,0.75324672,-0.36718172};
+		aside[]={-0.55824912,0,0.82967347};
 	};
 };
 binarizationWanted=0;
@@ -88,14 +88,41 @@ class CustomAttributes
 		name="Multiplayer";
 		class Attribute0
 		{
-			property="ENH_respawnTickets_west";
-			expression="if (!is3DEN && isMultiplayer && isServer) then {[west, _value] call BIS_fnc_respawnTickets}";
+			property="RespawnTemplates";
+			expression="true";
 			class Value
 			{
 				class data
 				{
-					singleType="SCALAR";
-					value=0;
+					singleType="ARRAY";
+					class value
+					{
+						items=3;
+						class Item0
+						{
+							class data
+							{
+								singleType="STRING";
+								value="EndMission";
+							};
+						};
+						class Item1
+						{
+							class data
+							{
+								singleType="STRING";
+								value="Tickets";
+							};
+						};
+						class Item2
+						{
+							class data
+							{
+								singleType="STRING";
+								value="TicketsSpawn";
+							};
+						};
+					};
 				};
 			};
 		};
@@ -221,45 +248,57 @@ class CustomAttributes
 		};
 		class Attribute2
 		{
-			property="RespawnTemplates";
-			expression="true";
+			property="ReviveMode";
+			expression="false";
 			class Value
 			{
 				class data
 				{
-					singleType="ARRAY";
-					class value
-					{
-						items=3;
-						class Item0
-						{
-							class data
-							{
-								singleType="STRING";
-								value="EndMission";
-							};
-						};
-						class Item1
-						{
-							class data
-							{
-								singleType="STRING";
-								value="Tickets";
-							};
-						};
-						class Item2
-						{
-							class data
-							{
-								singleType="STRING";
-								value="TicketsSpawn";
-							};
-						};
-					};
+					singleType="SCALAR";
+					value=1;
 				};
 			};
 		};
 		class Attribute3
+		{
+			property="ReviveMedicSpeedMultiplier";
+			expression="false";
+			class Value
+			{
+				class data
+				{
+					singleType="SCALAR";
+					value=3;
+				};
+			};
+		};
+		class Attribute4
+		{
+			property="ReviveDelay";
+			expression="false";
+			class Value
+			{
+				class data
+				{
+					singleType="SCALAR";
+					value=30.000002;
+				};
+			};
+		};
+		class Attribute5
+		{
+			property="ReviveRequiredItems";
+			expression="false";
+			class Value
+			{
+				class data
+				{
+					singleType="SCALAR";
+					value=2;
+				};
+			};
+		};
+		class Attribute6
 		{
 			property="ENH_respawnTickets_independent";
 			expression="if (!is3DEN && isMultiplayer && isServer) then {[independent, _value] call BIS_fnc_respawnTickets}";
@@ -272,7 +311,20 @@ class CustomAttributes
 				};
 			};
 		};
-		nAttributes=4;
+		class Attribute7
+		{
+			property="ENH_respawnTickets_west";
+			expression="if (!is3DEN && isMultiplayer && isServer) then {[west, _value] call BIS_fnc_respawnTickets}";
+			class Value
+			{
+				class data
+				{
+					singleType="SCALAR";
+					value=0;
+				};
+			};
+		};
+		nAttributes=8;
 	};
 	class Category1
 	{
