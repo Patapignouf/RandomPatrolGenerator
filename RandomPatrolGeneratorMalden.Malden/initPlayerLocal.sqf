@@ -29,7 +29,7 @@ showHUD [
   false  // showIcon3D
 ];
 
-cutText [format ["<t size='1.2'>Please wait while mission is generating</t><br/><br/><img size=20 align='bottom' valign='bottom' image='%1'/>",format ["a3\missions_f_aow\data\img\artwork\landscape\showcase_aow_picture_%1_co.paa",selectRandom [16,59,118,106,98,62,76,93,75,64,122,87,70,14,04,108,111,123,20]]], "BLACK FADED", 100, true, true];
+cutText [format ["<t size='1.2'>Please wait while mission is generating</t><br/><br/><img size=20 align='bottom' valign='bottom' image='%1'/>",format ["a3\missions_f_aow\data\img\artwork\landscape\showcase_aow_picture_%1_co.paa",selectRandom [16,59,118,106,98,62,76,93,75,64,122,87,70,14,104,108,111,123,20]]], "BLACK FADED", 100, true, true];
 sleep 3; //Wait player load correctly the mission
 
 //Define player who configure mission
@@ -79,7 +79,7 @@ waitUntil {missionNamespace getVariable "generationSetup" == true};
 [] spawn {
 	while {isNil "missionGenerated"} do 
 	{
-		cutText [format ["<t size='1.2'>Please wait while mission is generating</t><br/><br/><img size=20 align='bottom' valign='bottom' image='%1'/>",format ["a3\missions_f_aow\data\img\artwork\landscape\showcase_aow_picture_%1_co.paa",selectRandom [16,59,118,106,98,62,76,93,75,64,122,87,70,14,04,108,111,123,20]]], "BLACK FADED", 100, true, true];
+		cutText [format ["<t size='1.2'>Please wait while mission is generating</t><br/><br/><img size=20 align='bottom' valign='bottom' image='%1'/>",format ["a3\missions_f_aow\data\img\artwork\landscape\showcase_aow_picture_%1_co.paa",selectRandom [16,59,118,106,98,62,76,93,75,64,122,87,70,14,104,108,111,123,20]]], "BLACK FADED", 100, true, true];
 		sleep 5;
 	};
 };
