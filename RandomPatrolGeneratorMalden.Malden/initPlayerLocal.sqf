@@ -15,21 +15,6 @@ enableSentences false;
 player setVariable ["role", player getVariable ["initRole","rifleman"]];
 player setVariable ["isDead", false, true];
 
-//Hide HUD group to debug the UI 
-showHUD [
-  true, // scriptedHUD
-  true, // info
-  true, // radar
-  true, // compass
-  true, // direction
-  true, // menu
-  false, // group
-  true, // cursors
-  true, // panels
-  false, // kills
-  false  // showIcon3D
-];
-
 cutText [format ["<t size='1.2'>Please wait while mission is generating</t><br/><br/><img size=20 align='bottom' valign='bottom' image='%1'/>",format ["a3\missions_f_aow\data\img\artwork\landscape\showcase_aow_picture_%1_co.paa",selectRandom [16,59,118,106,98,62,76,93,75,64,122,87,70,14,104,108,111,123,20]]], "BLACK FADED", 100, true, true];
 sleep 3; //Wait player load correctly the mission
 
@@ -136,6 +121,21 @@ if (enableThermal==0) then
 	[] spawn _disableThermal;
 };
 
+//Hide HUD group to debug the UI 
+showHUD [
+  true, // scriptedHUD
+  true, // info
+  true, // radar
+  true, // compass
+  true, // direction
+  true, // menu
+  false, // group
+  true, // cursors
+  true, // panels
+  false, // kills
+  false  // showIcon3D
+];
+
 //Disable miniMap GPS for ACE Player (use microDAGR instead)
 if (isClass (configFile >> "CfgPatches" >> "ace_medical")) then 
 {
@@ -149,6 +149,16 @@ if (isClass (configFile >> "CfgPatches" >> "ace_medical")) then
 //Init player respawn ticket
 [player, -1, true] call BIS_fnc_respawnTickets;
 
+//Corpse manager
+player addEventHandler ["Respawn",{ 
+	params ["_unit", "_corpse"];
+	_corpse setVariable ["isPlayerObject",true, true];
+	[_corpse] spawn {
+		params ["_corpse"];
+		sleep 500;
+		deleteVehicle _corpse;
+	};
+}];
 
 diag_log format ["Setup Player %1 at position 1", name player];
 
