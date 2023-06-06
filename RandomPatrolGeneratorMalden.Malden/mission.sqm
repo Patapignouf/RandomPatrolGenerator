@@ -24,10 +24,10 @@ class EditorData
 	};
 	class Camera
 	{
-		pos[]={5611.3945,134.72552,2630.7654};
-		dir[]={-0.62494874,-0.65773815,-0.42049924};
-		up[]={-0.54570788,0.75324672,-0.36718172};
-		aside[]={-0.55824912,0,0.82967347};
+		pos[]={5552.5234,66.359154,2621.2271};
+		dir[]={0.29681236,-0.6213097,0.72518271};
+		up[]={0.23534976,0.7835623,0.57501435};
+		aside[]={0.92548537,2.4132896e-007,-0.37879601};
 	};
 };
 binarizationWanted=0;
@@ -75,7 +75,7 @@ class ScenarioData
 	respawnDialog=0;
 	disabledAI=1;
 	respawn=3;
-	respawnDelay=5;
+	respawnDelay=300;
 	wreckRemovalMaxTime=3600;
 	corpseManagerMode=1;
 	corpseLimit=30;
@@ -281,7 +281,7 @@ class CustomAttributes
 				class data
 				{
 					singleType="SCALAR";
-					value=30.000002;
+					value=15.000001;
 				};
 			};
 		};
