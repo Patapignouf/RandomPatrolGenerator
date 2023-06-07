@@ -76,7 +76,7 @@ c_2035_Spetsnaz = "_2035_Spetsnaz";
 factionInfos = [
 	[c_Syndikat,_Syndikat,"Syndikat"],
 	[c_2035_AAF,_2035_AAF,"2035 AAF"],
-	[c_2035_NATO,_2035_NATO,"2035 NATO [ACE]"],
+	[c_2035_NATO,_2035_NATO,"2035 NATO"],
 	[c_2035_NATO_FS,_2035_NATO_FS,"2035 NATO Special Forces"],
 	[c_2035_Spetsnaz,_2035_Spetsnaz,"2035 Spetsnaz"],
 	[c_2035_FIA,_2035_FIA,"FIA"],
