@@ -2,6 +2,7 @@ disableSerialization;
 #include "..\..\database\factionParameters.sqf"
 
 //Create GUI
+cutText ["", "BLACK FADED", 100];
 createDialog "playerRespawnMenu";
 
 //Specify all GUI items
@@ -41,13 +42,13 @@ _buttonRespawnStart ctrlAddEventHandler[ "ButtonClick",
 		missionNamespace setVariable ["deadPlayer", _deadPlayerList, true];
 		
 		//Exit spectator mode
-		if (isClass (configFile >> "CfgPatches" >> "ace_medical")) then 
-		{
-			[false] call ace_spectator_fnc_setSpectator;
-		} else 
-		{
-			["Terminate"] call BIS_fnc_EGSpectator;
-		};
+		// if (isClass (configFile >> "CfgPatches" >> "ace_medical")) then 
+		// {
+		// 	[false] call ace_spectator_fnc_setSpectator;
+		// } else 
+		// {
+		// 	["Terminate"] call BIS_fnc_EGSpectator;
+		// };
 
 		//Close dialog
 		(findDisplay 8000) closeDisplay 1;
@@ -84,13 +85,13 @@ _buttonRespawnLeader ctrlAddEventHandler[ "ButtonClick",
 		missionNamespace setVariable ["deadPlayer", _deadPlayerList, true];
 		
 		//Exit spectator mode
-		if (isClass (configFile >> "CfgPatches" >> "ace_medical")) then 
-		{
-			[false] call ace_spectator_fnc_setSpectator;
-		} else 
-		{
-			["Terminate"] call BIS_fnc_EGSpectator;
-		};
+		// if (isClass (configFile >> "CfgPatches" >> "ace_medical")) then 
+		// {
+		// 	[false] call ace_spectator_fnc_setSpectator;
+		// } else 
+		// {
+		// 	["Terminate"] call BIS_fnc_EGSpectator;
+		// };
 
 		//Close dialog
 		(findDisplay 8000) closeDisplay 1;
