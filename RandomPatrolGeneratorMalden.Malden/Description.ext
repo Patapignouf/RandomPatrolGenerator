@@ -6,6 +6,7 @@
 #include "GUI\loadoutGUI\playerLoadoutSetup.hpp"
 #include "GUI\respawnGUI\playerRespawnMenu.hpp"
 #include "GUI\dialogGUI\dialogCivilian.hpp"
+#include "GUI\setupGUI\loadingBackground.hpp"
 
 respawnDialog = 0;
 respawnOnStart = -1;
