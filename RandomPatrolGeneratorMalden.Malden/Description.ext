@@ -15,6 +15,20 @@ enableDebugConsole = 1;
 briefing = 0;
 respawnTemplates[] = {"Tickets", "Spectator"};
 
+
+author			= "Pata";
+onLoadName		= "Random Patrol Generator";
+onLoadMission	= "Plan, Execute, Extract. Be ready to adapt any plan to any situation.";
+loadScreen		= "Images\Loading.paa";
+
+class Header
+{
+	gameType =  Coop;	// Game type
+	minPlayers =  1;	// minimum number of players the mission supports
+	maxPlayers = 10;	// maximum number of players the mission supports
+};
+
+
 class Params
 {
 	class Space0 {
