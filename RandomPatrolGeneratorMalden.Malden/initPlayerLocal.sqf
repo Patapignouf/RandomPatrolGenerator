@@ -63,15 +63,24 @@ waitUntil {missionNamespace getVariable "generationSetup" == true};
 
 //Show loading message
 [] spawn {
-	createDialog "setupLoading";
+	_randomPos = [nil, ["water"]] call BIS_fnc_randomPos;
+	_randomPos set [2,_randomPos#2+20];
+	_camera = "camera" camCreate (_randomPos);
+	_camera cameraEffect ["internal", "back"];
+
 	while {isNil "missionGenerated"} do 
 	{
-		cutText [format ["<t size='1.2'>Please wait while mission is generating</t><br/><br/><img size=20 align='bottom' valign='bottom' image='%1'/>",format ["a3\missions_f_aow\data\img\artwork\landscape\showcase_aow_picture_%1_co.paa",selectRandom [16,59,118,106,98,62,76,93,75,64,122,87,70,14,104,108,111,123,20,92,63,41,65,68,22,91,72,30,31,80,32,47,27,18,46,121]]], "BLACK FADED", 100, true, true];
+		_camera camPrepareTarget ([nil, ["water"]] call BIS_fnc_randomPos);
+		_randomPos = [nil, ["water"]] call BIS_fnc_randomPos;
+		_randomPos set [2,_randomPos#2+20];
+		_camera camPreparePos (_randomPos);
+		_camera camPreload 3;
+		_camera camCommitPrepared 400;
+		cutText [format ["<t size='1.2'>Please wait while mission is generating</t><br/><br/><img size=20 align='bottom' valign='bottom' image='%1'/>",format ["a3\missions_f_aow\data\img\artwork\landscape\showcase_aow_picture_%1_co.paa",selectRandom [16,59,118,106,98,62,76,93,75,64,122,87,70,14,104,108,111,123,20,92,63,41,65,68,22,91,72,30,31,80,32,47,27,18,46,121]]], "PLAIN", 0.5, true, true];
 		sleep 4;
 	};
-
-	//Close loading screen
-	(findDisplay 11000) closeDisplay 1;
+	_camera cameraEffect ["terminate", "back"];
+	camDestroy _camera;
 };
 
 
@@ -492,6 +501,5 @@ if (didJIP) then
 	player allowdamage true;
 
 	player enableSimulationGlobal true;
-	cutText ["", "BLACK IN", 5];
 };
 

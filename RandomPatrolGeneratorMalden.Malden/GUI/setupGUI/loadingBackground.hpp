@@ -7,11 +7,11 @@ class setupLoading
 		class Background: RscText
 		{
 			idc = -1;
-			x = 0.229686 * safezoneW + safezoneX;
-			y = 0.117436 * safezoneH + safezoneY;
-			w = 100 * GUI_GRID_CENTER_W;
-			h = 100 * GUI_GRID_CENTER_H;
-			colorBackground[] = {1,1,1,0};
+			x = 0;
+			y = 0;
+			w = 200 * GUI_GRID_CENTER_W;
+			h = 200 * GUI_GRID_CENTER_H;
+			colorBackground[] = {0,0,0,1};
 		};
 	};
 };
