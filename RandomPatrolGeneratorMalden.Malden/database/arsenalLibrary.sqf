@@ -361,7 +361,7 @@ switchToRole = {
 	params ["_arsenalItem", "_caller", "_faction", "_role", "_allowCustomLoad"];
 
 	//Switch to role
-	diag_log format ["Player %1 has switch to role %2 in faction %3", name _caller, _role, _faction];
+	diag_log format ["Player %1 has switched to role %2 in faction %3", name _caller, _role, _faction];
 	titleCut [format ["Switching to role %1", _role], "BLACK FADED", 5];
 
 	//Manage Unit trait
@@ -427,7 +427,7 @@ setupRoleSwitchToItem = {
 			{
 				//Define params
 				params ["_target","_caller","_ID","_params"];
-				diag_log format ["Player %1 has switch to role %2 in faction %3", name _caller, _params select 0, _params select 1];
+				diag_log format ["Player %1 has switched to role %2 in faction %3", name _caller, _params select 0, _params select 1];
 
 				titleCut [format ["Switching to role %1",(_params select 1)], "BLACK FADED", 5];
 

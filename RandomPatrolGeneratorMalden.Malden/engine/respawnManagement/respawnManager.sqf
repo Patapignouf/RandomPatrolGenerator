@@ -10,5 +10,6 @@
 
 if (player getVariable "isDead") then 
 {
+    setPlayerRespawnTime 1;
 	[[], 'GUI\respawnGUI\initPlayerRespawnMenu.sqf'] remoteExec ['BIS_fnc_execVM', player];
 };

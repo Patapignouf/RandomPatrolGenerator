@@ -143,6 +143,18 @@ if (isClass (configFile >> "CfgPatches" >> "ace_medical")) then
 	player enableInfoPanelComponent ["right", "MinimapDisplay", false];
 };
 
+//Prevent players from instant death
+if !(isClass (configFile >> "CfgPatches" >> "ace_medical")) then 
+{
+	player addEventHandler ["HandleDamage",{
+		private["_damage"];
+		if ((lifeState player == "INCAPACITATED")||(lifeState player == "SHOOTING")) then {
+			_damage = 0;
+		};    
+		_damage    
+	}];
+};
+
 //Init player rank
 [[player], 'engine\rankManagement\rankManager.sqf'] remoteExec ['BIS_fnc_execVM', player];
 
