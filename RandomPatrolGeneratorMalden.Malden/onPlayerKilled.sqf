@@ -7,9 +7,6 @@ if (isMultiplayer) then {
 	};
 };
 
-if (isClass (configFile >> "CfgPatches" >> "task_force_radio")) then {
-	[player, true] call TFAR_fnc_forceSpectator;
-};
 	
 //Add player to a dead player base | This will block disconnection/connection method to respawn 
 _deadPlayerList = missionNamespace getVariable "deadPlayer";
@@ -23,6 +20,10 @@ player setVariable ["isDead", true, true];
 ["Terminate"] call BIS_fnc_EGSpectator;
 ["Initialize", [player, [] , false, false ]] call BIS_fnc_EGSpectator;
 
+if (isClass (configFile >> "CfgPatches" >> "task_force_radio")) then {
+	[player, true] call TFAR_fnc_forceSpectator;
+	player setVariable ["tf_voiceVolume",1,true];
+};
 
 //["Initialize", [player , [side player] , false, false ]] call BIS_fnc_EGSpectator;
 
