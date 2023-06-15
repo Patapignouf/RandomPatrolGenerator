@@ -47,27 +47,27 @@ params ["_currentGroup", "_thisObjective"];
 								{
 									case "supply":
 										{	
-											_currentObjectiveDescription = format ["The supply %1 is at %2", getText (configFile >> "cfgVehicles" >> typeOf _thisObject >> "displayName"), getPos _thisObject];
+											_currentObjectiveDescription = format ["The supply %1 is at %2", getText (configFile >> "cfgVehicles" >> typeOf _thisObject >> "displayName"), mapGridPosition (getPos _thisObject)];
 										};
 									case "ammo":
 										{
-											_currentObjectiveDescription = format ["The %1 is at %2", getText (configFile >> "cfgVehicles" >> typeOf _thisObject >> "displayName"), getPos _thisObject];
+											_currentObjectiveDescription = format ["The %1 is at %2", getText (configFile >> "cfgVehicles" >> typeOf _thisObject >> "displayName"), mapGridPosition (getPos _thisObject)];
 										};
 									case "hvt":
 										{
-											_currentObjectiveDescription = format ["The enemy HVT %1 is at %2", getText (configFile >> "cfgVehicles" >> typeOf _thisObject >> "displayName"), getPos _thisObject];
+											_currentObjectiveDescription = format ["The enemy HVT %1 is at %2", getText (configFile >> "cfgVehicles" >> typeOf _thisObject >> "displayName"), mapGridPosition (getPos _thisObject)];
 										};
 									case "vip":
 										{
-											_currentObjectiveDescription = format ["The friendly VIP %1 is at %2", getText (configFile >> "cfgVehicles" >> typeOf _thisObject >> "displayName"), getPos _thisObject];
+											_currentObjectiveDescription = format ["The friendly VIP %1 is at %2", getText (configFile >> "cfgVehicles" >> typeOf _thisObject >> "displayName"), mapGridPosition (getPos _thisObject)];
 										};
 									case "steal":
 										{
-											_currentObjectiveDescription = format ["The %1 to steal is at %2", getText (configFile >> "cfgVehicles" >> typeOf _thisObject >> "displayName"), getPos _thisObject];
+											_currentObjectiveDescription = format ["The %1 to steal is at %2", getText (configFile >> "cfgVehicles" >> typeOf _thisObject >> "displayName"), mapGridPosition (getPos _thisObject)];
 										};
 									case "informant":
 										{
-											_currentObjectiveDescription = format ["The informant %1 is at %2", getText (configFile >> "cfgVehicles" >> typeOf _thisObject >> "displayName"), getPos _thisObject];
+											_currentObjectiveDescription = format ["The informant %1 is at %2", getText (configFile >> "cfgVehicles" >> typeOf _thisObject >> "displayName"), mapGridPosition (getPos _thisObject)];
 										};
 									case "clearArea":
 										{
@@ -93,11 +93,11 @@ params ["_currentGroup", "_thisObjective"];
 										};
 									case "collectIntel":
 										{
-											_currentObjectiveDescription = format ["The intel %1 is at %2", getText (configFile >> "cfgVehicles" >> typeOf _thisObject >> "displayName"), getPos _thisObject];
+											_currentObjectiveDescription = format ["The intel %1 is at %2", getText (configFile >> "cfgVehicles" >> typeOf _thisObject >> "displayName"), mapGridPosition (getPos _thisObject)];
 										};
 									case "captureFlag":
 										{
-											_currentObjectiveDescription = format ["The flag to capture %1 is at %2", getText (configFile >> "cfgVehicles" >> typeOf _thisObject >> "displayName"), getPos _thisObject];
+											_currentObjectiveDescription = format ["The flag to capture %1 is at %2", getText (configFile >> "cfgVehicles" >> typeOf _thisObject >> "displayName"), mapGridPosition (getPos _thisObject)];
 										};
 									default { 
 											//hint "default" 
