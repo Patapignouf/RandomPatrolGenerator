@@ -21,6 +21,8 @@ _2035_NATO_FS = 19;
 _Taki_Army = 20;
 _2035_FIA = 21;
 _2035_Spetsnaz = 22;
+_HorizonIsland = 23;
+_HorizonIslandSF = 24;
 
 #include "object_db\USA.sqf"
 #include "object_db\French.sqf"
@@ -45,6 +47,8 @@ _2035_Spetsnaz = 22;
 #include "object_db\2035_Rebels.sqf"
 #include "object_db\Takistani_army.sqf"
 #include "object_db\2035_FIA.sqf"
+#include "object_db\HorizonIsland.sqf"
+#include "object_db\HorizonIslandSF.sqf"
 
 //Define faction prefix
 c_db = "_db";
@@ -71,6 +75,8 @@ c_PMC = "_PMC";
 c_2035_Rebels = "_2035_Rebels";
 c_Taki_Army = "_Taki_Army";
 c_2035_Spetsnaz = "_2035_Spetsnaz";
+c_HorizonIsland = "_HorizonIsland";
+c_HorizonIslandSF =  "_HorizonIslandSF";
 
 //Setup basic ArmA 3 Factions
 factionInfos = [
@@ -107,6 +113,8 @@ if (isClass (configFile >> "CfgPatches" >> "CUP_BaseData")) then
 	factionInfos pushBack [c_PMC, _PMC, "PMC Modern [CUP]"];	
 	factionInfos pushBack [c_Russian_Winter, _Russian_Winter, "Russian Winter [CUP]"];	
 	factionInfos pushBack [c_Taki_Army, _Taki_Army, "Takistani Army [CUP]"];
+	factionInfos pushBack [c_HorizonIsland, _HorizonIsland, "Horizon Island [CUP]"];
+	factionInfos pushBack [c_HorizonIslandSF, _HorizonIslandSF, "Horizon Island Special Forces [CUP]"];
 };
 
 //Add specific UNSUNG factions
