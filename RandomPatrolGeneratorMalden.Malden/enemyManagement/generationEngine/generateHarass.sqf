@@ -21,14 +21,14 @@ if (isServer) then
 		{
 			diag_log "RPG : Reinforcement wave begin !";
 
-			nb_ind_player_alive = {side _x == independent && _x getVariable "isDead" == false} count allPlayers;
-			nb_blu_player_alive = {side _x == blufor && _x getVariable "isDead" == false} count allPlayers;
+			nb_ind_player_alive = {side _x == independent} count allPlayers;
+			nb_blu_player_alive = {side _x == blufor} count allPlayers;
 
 			//Prioritize attack on independent 
 			if (nb_blu_player_alive != 0) then
 			{
 				{
-					if (isPlayer _x && alive _x && side _x == blufor && _x getVariable "isDead" == false) exitWith
+					if (isPlayer _x && alive _x && side _x == blufor) exitWith
 					{
 						positionToAttack = getPos _x;
 					};
@@ -37,7 +37,7 @@ if (isServer) then
 			if (nb_ind_player_alive != 0) then
 			{
 				{
-					if (isPlayer _x && alive _x && side _x == independent && _x getVariable "isDead" == false) exitWith
+					if (isPlayer _x && alive _x && side _x == independent) exitWith
 					{
 						positionToAttack = getPos _x;
 					};

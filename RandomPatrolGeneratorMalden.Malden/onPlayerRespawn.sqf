@@ -1,16 +1,14 @@
 player hideObjectGlobal true;
 player setPos [0,0,10000];
 
-diag_log format ["Player %1 is dead", name player];
-
 waitUntil {!isNull player};
 
 player setUnitLoadout (player getVariable "spawnLoadout");
 player allowdamage false;
 player enableSimulationGlobal false;
 
-//Respawn on side spawn position location
-// player setPos (((side player) call BIS_fnc_getRespawnPositions) select 0);
+//Setup respawn GUI
+[[], 'GUI\respawnGUI\initPlayerRespawnMenu.sqf'] remoteExec ['BIS_fnc_execVM', player];
 
 // Fix player damaged on respawn 
 if (isClass (configFile >> "CfgPatches" >> "ace_medical")) then 

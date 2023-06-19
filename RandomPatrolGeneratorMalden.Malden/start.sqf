@@ -767,7 +767,7 @@ switch (startIntel) do
 				_hasContactCivilian = false;
 				while {sleep 10; !_hasContactCivilian} do 
 				{
-					if (count((allPlayers select {alive _x && side _x == blufor && _x getVariable "isDead" == false} ) inAreaArray initCityLocationTrigger) >0) then 
+					if (count((allPlayers select {alive _x && side _x == blufor} ) inAreaArray initCityLocationTrigger) >0) then 
 					{
 						_hasContactCivilian = true;
 						["taskContactCiv","SUCCEEDED"] call BIS_fnc_taskSetState;

@@ -18,7 +18,7 @@ if (isServer) then
 
 			//Check distance from nearest player
 			//[TEMPHOTFIX] not a clean fix to enemy spawn near player
-			_players = allPlayers select {_x getVariable "isDead" == false} apply {[_x distance currentPosition,_x]};
+			_players = allPlayers apply {[_x distance currentPosition,_x]};
 			_players sort true;
 			
 			if (((_players apply {_x#1})#0) distance currentPosition >= 300) then 

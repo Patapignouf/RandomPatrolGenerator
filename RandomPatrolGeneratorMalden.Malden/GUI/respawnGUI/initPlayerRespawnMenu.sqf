@@ -30,7 +30,6 @@ _buttonRespawnStart ctrlAddEventHandler[ "ButtonClick",
 		};
 
 		//Enable gameplay for player
-		player setVariable ["isDead", false, true];
 		player allowdamage true;
 		player enableSimulationGlobal true;
 		player hideObjectGlobal false;
@@ -60,12 +59,12 @@ _buttonRespawnLeader ctrlAddEventHandler[ "ButtonClick",
 
 		//teleport player to another player with same side
 		//Respawn on teamleader
-		_tempLeader = ((allPlayers - [player]) select {alive _x && side _x isEqualTo (side player) && _x getVariable "isDead" == false && _x getVariable "role" == "leader"});
+		_tempLeader = ((allPlayers - [player]) select {alive _x && side _x isEqualTo (side player) && _x getVariable "role" == "leader"});
 		
 		//If no teamleader is avalaible respawn on another player
 		if (count _tempLeader == 0) then 
 		{
-			_tempLeader = ((allPlayers - [player]) select {alive _x && side _x isEqualTo (side player) && _x getVariable "isDead" == false});
+			_tempLeader = ((allPlayers - [player]) select {alive _x && side _x isEqualTo (side player)});
 		};
 
 		//SetPlayer position
@@ -73,7 +72,6 @@ _buttonRespawnLeader ctrlAddEventHandler[ "ButtonClick",
 		player setPos [_tempPos select 0, _tempPos select 1];
 
 		//Enable gameplay for player
-		player setVariable ["isDead", false, true];
 		player allowdamage true;
 		player enableSimulationGlobal true;
 		player hideObjectGlobal false;

@@ -189,10 +189,10 @@ while {sleep 10; !RTBComplete} do
 			isRTBMissionGenerated = true;
 		};
 
-		nbBluePlayer = {alive _x && side _x == blufor && _x getVariable "isDead" == false} count allPlayers;
-		nbIndPlayer = {alive _x && side _x == independent && _x getVariable "isDead" == false} count allPlayers;
-		nbBluePlayerBack = count ((allPlayers select {alive _x && side _x == blufor && _x getVariable "isDead" == false} ) inAreaArray bluforTrigger); //vehicles (all vehicles) inAreaArray (Returns list of Objects or Positions that are in the area _independantTrigger.)  
-		nbIndPlayerBack = count ((allPlayers select {alive _x && side _x == independent && _x getVariable "isDead" == false} ) inAreaArray independantTrigger);
+		nbBluePlayer = {alive _x && side _x == blufor} count allPlayers;
+		nbIndPlayer = {alive _x && side _x == independent} count allPlayers;
+		nbBluePlayerBack = count ((allPlayers select {alive _x && side _x == blufor} ) inAreaArray bluforTrigger); //vehicles (all vehicles) inAreaArray (Returns list of Objects or Positions that are in the area _independantTrigger.)  
+		nbIndPlayerBack = count ((allPlayers select {alive _x && side _x == independent} ) inAreaArray independantTrigger);
 		if (nbBluePlayer == nbBluePlayerBack && nbIndPlayer == nbIndPlayerBack) then 
 		{
 			["taskRTB","SUCCEEDED"] call BIS_fnc_taskSetState;

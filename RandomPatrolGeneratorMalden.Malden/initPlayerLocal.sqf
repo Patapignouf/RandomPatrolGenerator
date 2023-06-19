@@ -13,7 +13,6 @@ enableSentences false;
 
 //player enableSimulationGlobal false;
 player setVariable ["role", player getVariable ["initRole","rifleman"]];
-player setVariable ["isDead", false, true];
 
 cutText [format ["<t size='1.2'>Please wait while mission is generating</t><br/><br/><img size=20 align='bottom' valign='bottom' image='%1'/>",format ["a3\missions_f_aow\data\img\artwork\landscape\showcase_aow_picture_%1_co.paa",selectRandom [16,59,118,106,98,62,76,93,75,64,122,87,70,14,104,108,111,123,20,92,63,41,65,68,22,91,72,30,31,80,32,47,27,18,46,121]]], "BLACK FADED", 100, true, true];
 sleep 3; //Wait player load correctly the mission
@@ -488,13 +487,11 @@ if (didJIP) then
 		//player setPos [0,0,10000];
 		player allowdamage false;
 		// player enableSimulationGlobal false;
-		player setVariable ["isDead", true, true];
 		[[], 'GUI\respawnGUI\initPlayerRespawnMenu.sqf'] remoteExec ['BIS_fnc_execVM', player];
 	} else 
 	{
 		player setPos [0,0];
 		player setDamage 1;
-		player setVariable ["isDead",true, true];
 	};
 } else {
 	//Let's get it started !
