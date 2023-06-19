@@ -363,7 +363,8 @@ backPackList_USA = [
 	"CUP_B_US_IIID_OCP",
 	"CUP_B_AssaultPack_Coyote",
 	"B_Mortar_01_weapon_F",
-	"B_Mortar_01_support_F"
+	"B_Mortar_01_support_F",
+	"CUP_B_US_Assault_UCP"
 ];
 
 
@@ -384,7 +385,15 @@ uniformList_USA = [
 	"CUP_V_CPC_communicationsbelt_mc",
 	"CUP_U_CRYE_G3C_RGR_MC_US",
 	"CUP_V_B_IOTV_OCP_TL_USArmy",
-	"CUP_U_B_USArmy_ACU_Gloves_OCP"
+	"CUP_U_B_USArmy_ACU_Gloves_OCP",
+	"CUP_U_B_USArmy_ACU_Kneepad_Gloves_UCP",
+	"CUP_V_B_IOTV_UCP_SL_USArmy",
+	"CUP_H_USArmy_HelmetACH_ESS_Headset_UCP",
+	"CUP_H_USArmy_HelmetACH_UCP",
+	"CUP_V_B_IOTV_UCP_Rifleman_Deltoid_USArmy",
+	"CUP_V_B_IOTV_UCP_Rifleman_USArmy",
+	"CUP_U_B_USArmy_ACU_Kneepad_Rolled_UCP",
+	"CUP_U_B_USArmy_ACU_Kneepad_UCP"
 	];
 
 //Magazine avalaible for all unit
