@@ -77,33 +77,21 @@ while {sleep 10; !missionOver} do
 	{
 		missionOver = true;
 		diag_log format ["Mission end !"];
-		if (isMultiplayer) then {
-			'IND_DEAD' call BIS_fnc_endMissionServer;
-		} else {
-			'IND_DEAD' call BIS_fnc_endMission;
-		};
+		[['IND_DEAD'], 'engine\objectiveManagement\endMission.sqf'] remoteExec ['BIS_fnc_execVM', 2];
 	};
 	//TODO : Improve failed condition to match with the future campaign feature
 	if (count _missionFailedObjectives > 1 ) then 
 	{
 		missionOver = true;
 		diag_log format ["Mission end !"];
-		if (isMultiplayer) then {
-			'OBJ_DEAD' call BIS_fnc_endMissionServer;
-		} else {
-			'OBJ_DEAD' call BIS_fnc_endMission;
-		};
+		[['OBJ_DEAD'], 'engine\objectiveManagement\endMission.sqf'] remoteExec ['BIS_fnc_execVM', 2];
 	};
 	if ((nb_blu_alive < round(nb_blu_init/2) && respawnSettings == 0) || ((nb_blu_alive == 0)&&(nb_blu_init!=0))) then
 	{ 
 		missionOver = true;
 		diag_log format ["Counter blufor alive %1 vs blufor min count %2",nb_blu_alive,round(nb_blu_init/2)];
 		diag_log format ["Mission end !"];
-		if (isMultiplayer) then {
-			'BLUFOR_DEAD' call BIS_fnc_endMissionServer;
-		} else {
-			'BLUFOR_DEAD' call BIS_fnc_endMission;
-		};
+		[['BLUFOR_DEAD'], 'engine\objectiveManagement\endMission.sqf'] remoteExec ['BIS_fnc_execVM', 2];
 	} else 
 	{
 		nb_blu_alive = {isPlayer _x && side _x == blufor} count allUnits;

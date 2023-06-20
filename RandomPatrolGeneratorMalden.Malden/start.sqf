@@ -930,11 +930,7 @@ if (enableCampaignMode) then
 			//End mission
 			if (_missionLength <= (count _completedObjectives)) then 
 			{
-				if (isMultiplayer) then {
-					['OBJ_OK'] remoteExec ["BIS_fnc_endMissionServer", 2];
-				} else {
-					['OBJ_OK'] remoteExec ["BIS_fnc_endMission", 2];
-				}; 
+				[['OBJ_OK'], 'engine\objectiveManagement\endMission.sqf'] remoteExec ['BIS_fnc_execVM', 2];
 			} else 
 			{
 				hint "Not enough mission completed";
@@ -950,11 +946,7 @@ if (enableCampaignMode) then
 			//End mission
 			if (_missionLength <= (count _completedObjectives)) then 
 			{
-				if (isMultiplayer) then {
-					['OBJ_OK'] remoteExec ["BIS_fnc_endMissionServer", 2];
-				} else {
-					['OBJ_OK'] remoteExec ["BIS_fnc_endMission", 2];
-				}; 
+				[['OBJ_OK'], 'engine\objectiveManagement\endMission.sqf'] remoteExec ['BIS_fnc_execVM', 2];
 			} else 
 			{
 				hint "Not enough mission completed";

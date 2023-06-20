@@ -73,11 +73,7 @@ doGenerateEnemyGroup =
 					if (missionNamespace getVariable "civKilled" > missionNamespace getVariable "maxCivKilled") then 
 					{
 						diag_log "END MISSION";
-						if (isMultiplayer) then {
-							['CIV_DEAD'] remoteExec ["BIS_fnc_endMissionServer", 2];
-						} else {
-							['CIV_DEAD'] remoteExec ["BIS_fnc_endMission", 2];
-						}; 
+						[['CIV_DEAD'], 'engine\objectiveManagement\endMission.sqf'] remoteExec ['BIS_fnc_execVM', 2];
 					};
 
 					diag_log format ["Civilian has been killed by : %1 on side %2", name _killer, side _killer];

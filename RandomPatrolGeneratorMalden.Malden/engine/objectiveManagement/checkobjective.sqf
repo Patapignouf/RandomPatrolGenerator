@@ -211,9 +211,5 @@ while {sleep 10; !RTBComplete} do
 
 
 diag_log format ["All objectives completed !"];
-if (isMultiplayer) then {
-	'OBJ_OK' call BIS_fnc_endMissionServer;
-} else {
-	'OBJ_OK' call BIS_fnc_endMission;
-};
+[['OBJ_OK'], 'engine\objectiveManagement\endMission.sqf'] remoteExec ['BIS_fnc_execVM', 2];
 

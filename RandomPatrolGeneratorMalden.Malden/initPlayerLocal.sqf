@@ -209,11 +209,7 @@ if (side player == independent) then
 				params ["_unit", "_killer", "_instigator", "_useEffects"];
 				diag_log format ["Warlord has been killed by : %1", _killer];
 				diag_log format ["Mission end !"];
-				if (isMultiplayer) then {
-					['IND_DEAD'] remoteExec ["BIS_fnc_endMission"];
-				} else {
-					'IND_DEAD' call BIS_fnc_endMission;
-				};
+				[['IND_DEAD'], 'engine\objectiveManagement\endMission.sqf'] remoteExec ['BIS_fnc_execVM', 2];
 			}];
 		};
 	};

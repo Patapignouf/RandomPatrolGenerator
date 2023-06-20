@@ -40,6 +40,9 @@ adjustRank = {
 	_unit setRank _unitFloorRank#0;
 	_newRankId = rankId _unit;
 
+	//Update experience analytics
+	_unit setVariable ["currentXP", _unitExperience, true];
+
 	if (!_isInit) then 
 	{
 		//Unit has been promoted
