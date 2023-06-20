@@ -828,6 +828,47 @@ if (isClass (configFile >> "CfgPatches" >> "ace_common")) then
 ];
 } forEach playableUnits;
 
+//Setup date
+switch (warEra) do
+{
+	//2nd War
+	case 0:
+	{
+		setDate [1944, 2, 25, 16, 0];
+	};
+	//Cold War
+	case 1:
+	{
+		setDate [1970, 2, 25, 16, 0];
+	};
+	//Modern Warfare
+	case 2:
+	{
+		setDate [2000, 2, 25, 16, 0];
+	};
+	//Actual Warfare
+	case 3:
+	{
+		waitUntil { time > 0 };
+		if (isMultiplayer) then 
+		{
+			setDate (missionStart select [0,5]);
+		} else 
+		{
+			setDate [2020, 2, 25, 16, 0];
+		};
+	};
+	//Future Warfare
+	case 4:
+	{
+		setDate [2035, 2, 25, 16, 0];
+	};
+	default
+	{
+		
+	};
+};
+
 //Setup time 
 switch (timeOfDay) do
 {
@@ -868,8 +909,6 @@ forceWeatherChange;
 
 missionGenerated = true;
 publicvariable "missionGenerated";
-
-
 
 /////////////////////////
 ///Init Campaign mode////

@@ -496,7 +496,11 @@ if (didJIP) then
 } else {
 	//Let's get it started !
 	player allowdamage true;
-
 	player enableSimulationGlobal true;
 };
 
+//Display welcome message
+sleep 5;
+[parseText "<t font='PuristaBold' size='1.6'>Welcome to <br />Random Patrol Generator</t><br />by Patapignouf", true, nil, 7, 0.7, 0] spawn BIS_fnc_textTiles;
+sleep 10;
+[format ["Somewhere on %1",worldName], format ["Year %1", date select 0], mapGridPosition player] spawn BIS_fnc_infoText;
