@@ -18,7 +18,6 @@ indFaction = missionNamespace getVariable "independentFaction";
 //Function params
 _buttonRespawnStart ctrlAddEventHandler[ "ButtonClick", 
 	{ 
-		hint "Respawn on start position";
 		if (player getVariable "sideBeforeDeath" == "independent") then 
 		{
 			//Independent
@@ -28,35 +27,18 @@ _buttonRespawnStart ctrlAddEventHandler[ "ButtonClick",
 			//Blufor
 			player setPos ([initBlueforLocation, 1, 10, 3, 0, 20, 0] call BIS_fnc_findSafePos);
 		};
+		["Respawn on start position", format ["Year %1", date select 0], mapGridPosition player] spawn BIS_fnc_infoText;
 
-		//Enable gameplay for player
-		player allowdamage true;
-		player enableSimulationGlobal true;
-		player hideObjectGlobal false;
-		cutText ["", "BLACK IN", 5];
-
-		//Remove player name from the dead player's list
-		_deadPlayerList = missionNamespace getVariable "deadPlayer";
-		_deadPlayerList = _deadPlayerList - [name player];
-		missionNamespace setVariable ["deadPlayer", _deadPlayerList, true];
+		//Initialize player
+		[] call doInitializePlayer;
 		
-		//Exit spectator mode
-		// if (isClass (configFile >> "CfgPatches" >> "ace_medical")) then 
-		// {
-		// 	[false] call ace_spectator_fnc_setSpectator;
-		// } else 
-		// {
-		// 	["Terminate"] call BIS_fnc_EGSpectator;
-		// };
-
 		//Close dialog
 		(findDisplay 8000) closeDisplay 1;
 	}];
 
 _buttonRespawnLeader ctrlAddEventHandler[ "ButtonClick", 
 	{ 
-		hint "Respawn on teamleader";
-
+		
 		//teleport player to another player with same side
 		//Respawn on teamleader
 		_tempLeader = ((allPlayers - [player]) select {alive _x && side _x isEqualTo (side player) && _x getVariable "role" == "leader"});
@@ -70,27 +52,11 @@ _buttonRespawnLeader ctrlAddEventHandler[ "ButtonClick",
 		//SetPlayer position
 		_tempPos = getPos (_tempLeader select 0);
 		player setPos [_tempPos select 0, _tempPos select 1];
+		["Respawn on teamleader", format ["Year %1", date select 0], mapGridPosition player] spawn BIS_fnc_infoText;
 
-		//Enable gameplay for player
-		player allowdamage true;
-		player enableSimulationGlobal true;
-		player hideObjectGlobal false;
-		cutText ["", "BLACK IN", 5];
-
-		//Remove player name from the dead player's list
-		_deadPlayerList = missionNamespace getVariable "deadPlayer";
-		_deadPlayerList = _deadPlayerList - [name player];
-		missionNamespace setVariable ["deadPlayer", _deadPlayerList, true];
+		//Initialize player
+		[] call doInitializePlayer;
 		
-		//Exit spectator mode
-		// if (isClass (configFile >> "CfgPatches" >> "ace_medical")) then 
-		// {
-		// 	[false] call ace_spectator_fnc_setSpectator;
-		// } else 
-		// {
-		// 	["Terminate"] call BIS_fnc_EGSpectator;
-		// };
-
 		//Close dialog
 		(findDisplay 8000) closeDisplay 1;
 	}];
@@ -109,9 +75,36 @@ _keyDown = (findDisplay 8000) displayAddEventHandler ["KeyDown", {
 			// case 57 for SPACE -> https://community.bistudio.com/wiki/DIK_KeyCodes
 			// open your dialog
 			_control closeDisplay 1;
-			[[], 'GUI\respawnGUI\initPlayerRespawnMenu.sqf'] remoteExec ['BIS_fnc_execVM', player];
+			
+			//Respawn on start position by default
+			if (player getVariable "sideBeforeDeath" == "independent") then 
+			{
+				//Independent
+				player setPos ([getPos initCityLocation, 1, 10, 3, 0, 20, 0] call BIS_fnc_findSafePos);
+			} else 
+			{
+				//Blufor
+				player setPos ([initBlueforLocation, 1, 10, 3, 0, 20, 0] call BIS_fnc_findSafePos);
+			};
+			["Respawn on start position", format ["Year %1", date select 0], mapGridPosition player] spawn BIS_fnc_infoText;
+
+			//Initialize player
+			[] call doInitializePlayer;
 		};
 	};
 
 	_handled
 }];
+
+doInitializePlayer = {
+		//Enable gameplay for player
+		player allowdamage true;
+		player enableSimulationGlobal true;
+		player hideObjectGlobal false;
+		cutText ["", "BLACK IN", 5];
+
+		//Remove player name from the dead player's list
+		_deadPlayerList = missionNamespace getVariable "deadPlayer";
+		_deadPlayerList = _deadPlayerList - [name player];
+		missionNamespace setVariable ["deadPlayer", _deadPlayerList, true];
+};
