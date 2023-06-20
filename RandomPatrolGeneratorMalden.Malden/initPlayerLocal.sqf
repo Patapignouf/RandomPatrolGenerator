@@ -431,7 +431,7 @@ if (side player == blufor) then
 			selectedHaloLoc = [0,0,0];
 			openMap true;
 			sleep 1;
-			hint "Click on map to sapwn Halo jump\n Your backpack will be saved";
+			hint "Click on map to spawn Halo jump\n Your backpack will be saved";
 			onMapSingleClick "selectedHaloLoc = _pos; onMapSingleClick ''; openMap false; true;";
 			waitUntil{!(visibleMap)};  
 			if (!([selectedHaloLoc, [0,0,0]] call BIS_fnc_areEqual)) then 

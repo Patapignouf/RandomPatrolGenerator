@@ -29,20 +29,26 @@ if (isServer) then
 		{
 			diag_log format ["Wave start : %1", waveCounter ];
 			
-			if (  waveCounter < count _thisAvailableWaveGroups) then
+			//Randomize attack on independent city (50%)
+			if (random 100 >50) then 
 			{
-				_thisAvailableGroups = _thisAvailableWaveGroups select waveCounter;
-			} else 
-			{
-				_thisAvailableGroups = _thisAvailableWaveGroups select ((count _thisAvailableWaveGroups)-1);
+				if (  waveCounter < count _thisAvailableWaveGroups) then
+				{
+					_thisAvailableGroups = _thisAvailableWaveGroups select waveCounter;
+				} else 
+				{
+					_thisAvailableGroups = _thisAvailableWaveGroups select ((count _thisAvailableWaveGroups)-1);
+				};
+				
+				[EnemyWaveSpawnPositions,getPos initCityLocation,_thisAvailableGroups,[], _thisDifficulty] execVM 'enemyManagement\behaviorEngine\doAmbush.sqf'; 
+				
+				diag_log format ["Wave end : %1", waveCounter ];
+				
+				sleep 120;
+				[["Vos informateurs vous signalent qu'une attaque est en cours sur votre ville",independent], 'engine\doGenerateMessage.sqf'] remoteExec ['BIS_fnc_execVM', 0];
 			};
-			
-			[EnemyWaveSpawnPositions,getPos initCityLocation,_thisAvailableGroups,[], _thisDifficulty] execVM 'enemyManagement\behaviorEngine\doAmbush.sqf'; 
-			
-			diag_log format ["Wave end : %1", waveCounter ];
-			
-			sleep 120;
-			[["Vos informateurs vous signalent qu'une attaque est en cours sur votre ville",independent], 'engine\doGenerateMessage.sqf'] remoteExec ['BIS_fnc_execVM', 0];
+
+			//Increase attack counter
 			CompletedObjectivesWave = CompletedObjectivesWave + 1;
 			waveCounter = waveCounter + 1;
 		};
