@@ -22,7 +22,8 @@ _currentEnemyGroup enableDynamicSimulation false;
 forEach (units _currentEnemyGroup);
 
 //Go to landing pos
-_lzPos = _destinationPos findEmptyPosition [0, 300,"Land_HelipadCircle_F"];
+_randomPosAroundDest = [[[_destinationPos, 400]], []] call BIS_fnc_randomPos;
+_lzPos = _randomPosAroundDest findEmptyPosition [0, 150,"Land_HelipadCircle_F"];
 _lz =  createVehicle ["Land_HelipadEmpty_F", _lzPos, [], 0, "NONE"];
 wp1 = _vehicleTransportGroup addWaypoint [_lz, 0];
 wp1 setwaypointtype"TR UNLOAD"; 

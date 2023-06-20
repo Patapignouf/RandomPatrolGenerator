@@ -63,7 +63,7 @@ waitUntil {missionNamespace getVariable "generationSetup" == true};
 //Show loading message
 [] spawn {
 	_randomPos = [nil, ["water"]] call BIS_fnc_randomPos;
-	_randomPos set [2,_randomPos#2+20];
+	_randomPos set [2,_randomPos#2+100];
 	_camera = "camera" camCreate (_randomPos);
 	_camera cameraEffect ["internal", "back"];
 
@@ -71,7 +71,7 @@ waitUntil {missionNamespace getVariable "generationSetup" == true};
 	{
 		_camera camPrepareTarget ([nil, ["water"]] call BIS_fnc_randomPos);
 		_randomPos = [nil, ["water"]] call BIS_fnc_randomPos;
-		_randomPos set [2,_randomPos#2+20];
+		_randomPos set [2,_randomPos#2+100];
 		_camera camPreparePos (_randomPos);
 		_camera camPreload 3;
 		_camera camCommitPrepared 400;
