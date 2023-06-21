@@ -771,17 +771,24 @@ for [{_i = 0}, {_i <= missionLength}, {_i = _i + 1}] do //Peut être optimisé
 //Manage carrier 
 if (!isNil "USS_FREEDOM_CARRIER") then 
 {
+	//Spawn basic items on Carrier
 	VA2 setPosASLW [initBlueforLocation#0+2, initBlueforLocation#1, initBlueforLocation#2];
 	TPFlag1 setPosASLW [initBlueforLocation#0+4, initBlueforLocation#1, initBlueforLocation#2-2];
-	deployableFOBItem setPosASLW [initBlueforLocation#0+4, initBlueforLocation#1, initBlueforLocation#2];
+	deployableFOBItem setPosASLW [initBlueforLocation#0+10, initBlueforLocation#1, initBlueforLocation#2];
 
+	//Try to spawn chopper on carrier (WIP)
 	_baseSpawnChopper = [initBlueforLocation#0-40, initBlueforLocation#1+20, initBlueforLocation#2];
 	{
 		_baseSpawnChopper = [_baseSpawnChopper#0+30, _baseSpawnChopper#1, _baseSpawnChopper#2];
 		_chopper = createVehicle [_x,  (getPos initCityLocation) findEmptyPosition [0 , 300, "Land_HelipadCircle_F" ], [], 0, "NONE"];
+		_chopper setPosASLW _baseSpawnChopper;
+		sleep 0.5;
 		_chopper setfuel 1;
 		_chopper setdamage 0;
-		_chopper setPosASLW _baseSpawnChopper;
+		if (!(alive _chopper)) then 
+		{
+			deleteVehicle _chopper;
+		}; 
 	} foreach bluforUnarmedVehicleChopper;
 };
 
