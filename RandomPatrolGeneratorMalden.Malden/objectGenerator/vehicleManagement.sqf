@@ -37,27 +37,17 @@ doGenerateVehicleForFOB =
 					_kind = "Ship";
 					_spawnAttempts = 0;
 					//In the specific case of boat, max radius is replaced by 1000 to find water inArea
-					if (count _shipGoodPosition == 0 || ([_shipGoodPosition , [0,0,0]] call BIS_fnc_areEqual)) then 
+
+					_shipShorePosition = ([[[_thisPosition, 2000]], [], { !(_this isFlatEmpty  [-1, -1, -1, -1, 0, true] isEqualTo []) }] call BIS_fnc_randomPos);
+					_shipGoodPosition = ([[[_shipShorePosition, 30]], [], { !(_this isFlatEmpty  [-1, -1, -1, -1, 2, false] isEqualTo []) }] call BIS_fnc_randomPos);
+
+					while {([_shipShorePosition , [0,0]] call BIS_fnc_areEqual) && _spawnAttempts <10} do 
 					{
-						_shipGoodPosition = [_thisPosition, _thisMinRadius, 1000, 20, 2, 0, 1, [], [[0,0,0],[0,0,0]]] call BIS_fnc_findSafePos;
-					}
-					else 
-					{
-						_shipGoodPosition = [_shipGoodPosition, 10, 20, 20, 2, 0, 1, [], [[0,0,0],[0,0,0]]] call BIS_fnc_findSafePos;	
-					};
-					while {(isNil "_shipGoodPosition" || count _shipGoodPosition==0) && _spawnAttempts <10} do 
-					{
-						if (count _shipGoodPosition == 0 || ([_shipGoodPosition , [0,0,0]] call BIS_fnc_areEqual)) then 
-						{
-							_shipGoodPosition = [_thisPosition, _thisMinRadius, 1000, 20, 2, 0, 1, [], [[0,0,0],[0,0,0]]] call BIS_fnc_findSafePos;
-						}
-						else 
-						{
-							_shipGoodPosition = [_shipGoodPosition, 10, 20, 20, 2, 0, 1, [], [[0,0,0],[0,0,0]]] call BIS_fnc_findSafePos;	
-						};
+						_shipShorePosition = ([[[_thisPosition, 2000]], [], { !(_this isFlatEmpty  [-1, -1, -1, -1, 0, true] isEqualTo []) }] call BIS_fnc_randomPos);
+						_shipGoodPosition = ([[[_shipShorePosition, 30]], [], { !(_this isFlatEmpty  [-1, -1, -1, -1, 2, false] isEqualTo []) }] call BIS_fnc_randomPos);
 						_spawnAttempts = _spawnAttempts +1;
 					};
-					if (!isNil "_shipGoodPosition" && count _shipGoodPosition>0 && !([_shipGoodPosition , [0,0,0]] call BIS_fnc_areEqual)) then 
+					if (!isNil "_shipGoodPosition" && count _shipGoodPosition>0 && !([_shipShorePosition , [0,0]] call BIS_fnc_areEqual)) then 
 					{
 						diag_log format ["Position to spawn vehicle is not Nil %1",_shipGoodPosition];
 						_currentVehicle = createVehicle [_vehicleClass, _shipGoodPosition , [], 0, "NONE"];
