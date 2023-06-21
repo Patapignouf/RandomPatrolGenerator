@@ -311,6 +311,7 @@ if (isClass (configFile >> "CfgPatches" >> "ace_medical")) then
 // Get smallest distance to an AO
 areaOfOperation = [possiblePOILocation] call getAreaOfMission;
 aoSize = 1500;
+publicVariable "areaOfOperation";
 
 /////////////////////////
 ////Generate Blufor//////

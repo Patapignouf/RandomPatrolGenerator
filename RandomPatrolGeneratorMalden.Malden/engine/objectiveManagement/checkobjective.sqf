@@ -180,20 +180,35 @@ while {sleep 10; !RTBComplete} do
 	missionComplete = count _completedObjectives + 1 >= count _missionObjectives;
 
 	//Check if mission is complete
+	extendedTriggerArea = createTrigger ["EmptyDetector", getPos areaOfOperation];
+	extendedTriggerArea setTriggerArea [triggerArea areaOfOperation #0+500, triggerArea areaOfOperation #1+500, 0, true];
+
 	if (missionComplete && !enableCampaignMode) then 
 	{
 		//Generate RTB mission
 		if (!isRTBMissionGenerated) then 
 		{
-			[true, "taskRTB", ["Return to your initial base", "RTB", ""], objNull, 1, 3, true] call BIS_fnc_taskCreate;
+			[true, "taskRTB", ["Return to your initial base or exctract  area of operation", "RTB or Extract", ""], objNull, 1, 3, true] call BIS_fnc_taskCreate;
 			isRTBMissionGenerated = true;
+			
+			//Display area of operation
+			[(findDisplay 12 displayCtrl 51),["Draw",{
+					(_this select 0) drawRectangle [
+					getPos extendedTriggerArea,
+					(triggerArea extendedTriggerArea #0),
+					(triggerArea extendedTriggerArea #1),
+					0,
+					[0,0,1,1],
+					""
+				];
+			}]] remoteExec ["ctrlAddEventHandler", 0, true];
 		};
 
 		nbBluePlayer = {alive _x && side _x == blufor} count allPlayers;
 		nbIndPlayer = {alive _x && side _x == independent} count allPlayers;
 		nbBluePlayerBack = count ((allPlayers select {alive _x && side _x == blufor} ) inAreaArray bluforTrigger); //vehicles (all vehicles) inAreaArray (Returns list of Objects or Positions that are in the area _independantTrigger.)  
 		nbIndPlayerBack = count ((allPlayers select {alive _x && side _x == independent} ) inAreaArray independantTrigger);
-		if (nbBluePlayer == nbBluePlayerBack && nbIndPlayer == nbIndPlayerBack) then 
+		if (((nbBluePlayer == nbBluePlayerBack && nbIndPlayer == nbIndPlayerBack) && (nbBluePlayerBack != 0 || nbIndPlayerBack != 0))||(count (allPlayers inAreaArray extendedTriggerArea) == 0)) then 
 		{
 			["taskRTB","SUCCEEDED"] call BIS_fnc_taskSetState;
 			//Reward player for RTB
