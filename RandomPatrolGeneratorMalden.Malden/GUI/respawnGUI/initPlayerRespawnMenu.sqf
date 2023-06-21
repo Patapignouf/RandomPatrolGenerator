@@ -84,7 +84,16 @@ _keyDown = (findDisplay 8000) displayAddEventHandler ["KeyDown", {
 			} else 
 			{
 				//Blufor
-				player setPos ([initBlueforLocation, 1, 10, 3, 0, 20, 0] call BIS_fnc_findSafePos);
+					if (isNil "USS_FREEDOM_CARRIER") then 
+					{
+						_spawnPos = [initBlueforLocation, 1, 15, 3, 0, 20, 0] call BIS_fnc_findSafePos;
+						player setPos (_spawnPos);
+					} else 
+					{
+						_spawnPos = initBlueforLocation;
+						[USS_FREEDOM_CARRIER] call BIS_fnc_Carrier01Init;
+						player setPosASLW _spawnPos;
+					};
 			};
 			["Respawn on start position", format ["Year %1", date select 0], mapGridPosition player] spawn BIS_fnc_infoText;
 

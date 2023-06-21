@@ -252,8 +252,21 @@ if (side player == blufor) then
 
 
 	player setVariable ["sideBeforeDeath","blufor"];
-	_spawnPos = [initBlueforLocation, 1, 15, 3, 0, 20, 0] call BIS_fnc_findSafePos;
-	player setPos (_spawnPos);
+	
+	//manage carrier spawn
+	//Move player
+	_spawnPos = [];
+	if (isNil "USS_FREEDOM_CARRIER") then 
+	{
+		_spawnPos = [initBlueforLocation, 1, 15, 3, 0, 20, 0] call BIS_fnc_findSafePos;
+		player setPos (_spawnPos);
+	} else 
+	{
+		_spawnPos = initBlueforLocation;
+		[USS_FREEDOM_CARRIER] call BIS_fnc_Carrier01Init;
+		player setPosASLW _spawnPos;
+	};
+
 	[player, bluFaction] call doInitializeLoadout;
 	diag_log format ["Player %1 has spawn on position %2", name player, _spawnPos];
 	player setVariable ["spawnLoadout", getUnitLoadout player];
