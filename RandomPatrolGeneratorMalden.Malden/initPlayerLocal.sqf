@@ -427,13 +427,14 @@ if (side player == blufor) then
 			selectedHaloLoc = [0,0,0];
 			openMap true;
 			sleep 1;
-			hint "Click on map to spawn Halo jump\n Your backpack will be saved";
+			["<t color='#ffffff' size='.8'>Click on map to spawn Halo jump<br />Your backpack will be saved</t>",0,0,4,1,0,789] spawn BIS_fnc_dynamicText;
 			onMapSingleClick "selectedHaloLoc = _pos; onMapSingleClick ''; openMap false; true;";
 			waitUntil{!(visibleMap)};  
 			if (!([selectedHaloLoc, [0,0,0]] call BIS_fnc_areEqual)) then 
 			{
 				_caller setPos selectedHaloLoc;
 				[_caller,1500] call BIS_fnc_halo;
+				[format ["In the %1 airspace", worldName], format ["Year %1", date select 0], mapGridPosition player] spawn BIS_fnc_infoText;
 			};
 		},[],1.5,true,false,"","_target distance _this <5"];
 	};
