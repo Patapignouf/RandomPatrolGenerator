@@ -415,7 +415,7 @@ if (initBluforBase == 0 || (initBluforBase == 2 && (random 100 < 50))) then
 		selectedBluforVehicle pushBack [(selectRandom bluforDrone), true];
 	};
 };
-[["FOB","ColorBlue","loc_Fortress",initBlueforLocation, blufor], 'objectGenerator\doGenerateMarker.sqf'] remoteExec ['BIS_fnc_execVM', 0];
+[["FOB","ColorBlue","loc_Fortress",initBlueforLocation, blufor], 'objectGenerator\doGenerateMarker.sqf'] remoteExec ['BIS_fnc_execVM', 0, true];
 	
 //Clean area WIP
 [initBlueforLocation, 150] execVM 'objectGenerator\doCleanArea.sqf'; 				
@@ -587,7 +587,7 @@ publicvariable "deployableFOBItem";
 					{
 						//set morning
 						skipTime 24;
-						[[], "engine\respawnManagement\respawnManager.sqf"] remoteExec ['BIS_fnc_execVM', 0];
+						[[], "engine\respawnManagement\respawnManager.sqf"] remoteExec ['BIS_fnc_execVM', 0, true];
 						[format ["%1 needs reinforcement", name _caller]] remoteExec ["hint",0,true];
 						missionNamespace setVariable ["usedRespawnFewTimeAgo",true,true];
 						sleep 1200;
@@ -688,7 +688,7 @@ if (respawnSettings == 1) then
 		{
 			//set morning
 			skipTime 24;
-			[[], "engine\respawnManagement\respawnManager.sqf"] remoteExec ['BIS_fnc_execVM', 0];
+			[[], "engine\respawnManagement\respawnManager.sqf"] remoteExec ['BIS_fnc_execVM', 0, true];
 			[format ["%1 needs reinforcement", name _caller]] remoteExec ["hint",0,true];
 			missionNamespace setVariable ["usedRespawnFewTimeAgo",true,true];
 			sleep 1200;
