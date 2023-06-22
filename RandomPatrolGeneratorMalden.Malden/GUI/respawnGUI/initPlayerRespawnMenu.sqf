@@ -14,6 +14,7 @@ private _buttonRespawnLeader = _mainDisplay displayCtrl 8201;
 //Faction params
 bluFaction = missionNamespace getVariable "bluforFaction";
 indFaction = missionNamespace getVariable "independentFaction";
+normalClose = false;
 
 //Function params
 _buttonRespawnStart ctrlAddEventHandler[ "ButtonClick", 
@@ -39,7 +40,9 @@ _buttonRespawnStart ctrlAddEventHandler[ "ButtonClick",
 
 		//Initialize player
 		[] call doInitializePlayer;
-		
+
+		normalClose = true;	
+
 		//Close dialog
 		(findDisplay 8000) closeDisplay 1;
 	}];
@@ -70,6 +73,8 @@ _buttonRespawnLeader ctrlAddEventHandler[ "ButtonClick",
 		//Initialize player
 		[] call doInitializePlayer;
 		
+		normalClose = true;
+
 		//Close dialog
 		(findDisplay 8000) closeDisplay 1;
 	}];
@@ -77,46 +82,34 @@ _buttonRespawnLeader ctrlAddEventHandler[ "ButtonClick",
 
 //Disable space button in dialog
 waituntil {!(IsNull (findDisplay 8000))};
-_keyDown = (findDisplay 8000) displayAddEventHandler ["KeyDown", {
-	params ["_control", "_dikCode", "_shift", "_ctrl", "_alt"];
-
-	private _handled = false;
-
-	switch (_dikCode) do {
-		case 1;
-		case 57: {
-			// case 57 for SPACE -> https://community.bistudio.com/wiki/DIK_KeyCodes
-			// open your dialog
-			_control closeDisplay 1;
 			
-			//Respawn on start position by default
-			if (player getVariable "sideBeforeDeath" == "independent") then 
-			{
-				//Independent
-				player setPos ([getPos initCityLocation, 1, 10, 3, 0, 20, 0] call BIS_fnc_findSafePos);
-			} else 
-			{
-				//Blufor
-				if (isNil "USS_FREEDOM_CARRIER") then 
-				{
-					_spawnPos = [initBlueforLocation, 1, 15, 3, 0, 20, 0] call BIS_fnc_findSafePos;
-					player setPos (_spawnPos);
-				} else 
-				{
-					_spawnPos = initBlueforLocation;
-					[USS_FREEDOM_CARRIER] call BIS_fnc_Carrier01Init;
-					player setPosASLW _spawnPos;
-				};
-			};
-			["Respawn on start position", format ["Year %1", date select 0], mapGridPosition player] spawn BIS_fnc_infoText;
-
-			//Initialize player
-			[] call doInitializePlayer;
+//If the control is closed by bug, set normal respawn
+if (!normalClose) then 
+{
+	//Respawn on start position by default
+	if (player getVariable "sideBeforeDeath" == "independent") then 
+	{
+		//Independent
+		player setPos ([getPos initCityLocation, 1, 10, 3, 0, 20, 0] call BIS_fnc_findSafePos);
+	} else 
+	{
+		//Blufor
+		if (isNil "USS_FREEDOM_CARRIER") then 
+		{
+			_spawnPos = [initBlueforLocation, 1, 15, 3, 0, 20, 0] call BIS_fnc_findSafePos;
+			player setPos (_spawnPos);
+		} else 
+		{
+			_spawnPos = initBlueforLocation;
+			[USS_FREEDOM_CARRIER] call BIS_fnc_Carrier01Init;
+			player setPosASLW _spawnPos;
 		};
 	};
+	["Respawn on start position", format ["Year %1", date select 0], mapGridPosition player] spawn BIS_fnc_infoText;
 
-	_handled
-}];
+	//Initialize player
+	[] call doInitializePlayer;
+};
 
 doInitializePlayer = {
 		//Enable gameplay for player
