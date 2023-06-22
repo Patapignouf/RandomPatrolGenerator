@@ -278,7 +278,8 @@ attachmentShortList_USA	= [
 	"CUP_muzzle_snds_KZRZP_PK",
 	"CUP_optic_LeupoldMk4_CQ_T",
 	"CUP_optic_SB_11_4x20_PM_pip",
-	"CUP_acc_ANPEQ_2_grey"
+	"CUP_acc_ANPEQ_2_grey",
+	"CUP_optic_MAAWS_Scope"
 ];
 
 attachmentLongList_USA	= [

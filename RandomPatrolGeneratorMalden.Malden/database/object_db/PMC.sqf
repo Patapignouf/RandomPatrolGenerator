@@ -260,7 +260,8 @@ attachmentShortList_PMC	= [
 	"CUP_muzzle_snds_KZRZP_AK545",
 	"CUP_muzzle_snds_KZRZP_PK",
 	"CUP_optic_LeupoldMk4_CQ_T",
-	"CUP_optic_SB_11_4x20_PM_pip"
+	"CUP_optic_SB_11_4x20_PM_pip",
+	"CUP_optic_MAAWS_Scope"
 ];
 
 attachmentLongList_PMC	= [
