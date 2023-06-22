@@ -181,7 +181,8 @@ while {sleep 10; !RTBComplete} do
 
 	//Check if mission is complete
 	extendedTriggerArea = createTrigger ["EmptyDetector", getPos areaOfOperation];
-	extendedTriggerArea setTriggerArea [triggerArea areaOfOperation #0+500, triggerArea areaOfOperation #1+500, 0, true];
+	extendedTriggerArea setTriggerArea [(triggerArea areaOfOperation #0)*2+500, (triggerArea areaOfOperation #1)*2+500, 0, true];
+	publicVariable "extendedTriggerArea";
 
 	if (missionComplete && !enableCampaignMode) then 
 	{
