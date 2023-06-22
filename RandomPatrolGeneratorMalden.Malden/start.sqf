@@ -339,7 +339,7 @@ if (initBlueforLocationPosition isEqualType []) then
 if !(_isOnWater) then 
 	{
 		//TODO create the random option
-		_minBluforCityRadius = aoSize+700;
+		_minBluforCityRadius = aoSize+300;
 		_maxBluforCityRadius = aoSize+2000;
 		//Check if position is already determine by player
 		if ([initBlueforLocation, [0,0,0]] call BIS_fnc_areEqual) then 
