@@ -14,6 +14,7 @@ enableSentences false;
 //player enableSimulationGlobal false;
 player setVariable ["role", player getVariable ["initRole","rifleman"]];
 
+[selectRandom ["LeadTrack01_F","LeadTrack01a_F","LeadTrack01b_F","LeadTrack03_F","LeadTrack01_F_Heli","LeadTrack04_F_EXP","LeadTrack01_F_Mark"], 10, 0.2] call BIS_fnc_playMusic;
 cutText [format ["<t size='1.2'>Please wait while mission is generating</t><br/><br/><img size=20 align='bottom' valign='bottom' image='%1'/>",format ["a3\missions_f_aow\data\img\artwork\landscape\showcase_aow_picture_%1_co.paa",selectRandom [16,59,118,106,98,62,76,93,75,64,122,87,70,14,104,108,111,123,20,92,63,41,65,68,22,91,72,30,31,80,32,47,27,18,46,121]]], "BLACK FADED", 100, true, true];
 sleep 3; //Wait player load correctly the mission
 
@@ -69,7 +70,7 @@ waitUntil {missionNamespace getVariable "generationSetup" == true};
 
 	while {isNil "missionGenerated"} do 
 	{
-		_camera camPrepareTarget ([nil, ["water"]] call BIS_fnc_randomPos);
+		_camera camPrepareTarget ([[[_randomPos, 200]], []] call BIS_fnc_randomPos);
 		_randomPos = [nil, ["water"]] call BIS_fnc_randomPos;
 		_randomPos set [2,_randomPos#2+100];
 		_camera camPreparePos (_randomPos);
@@ -409,7 +410,7 @@ if (side player == blufor) then
 					selectedLoc = [0,0,0];
 					openMap true;
 					sleep 1;
-					
+
 					["<t color='#ffffff' size='.8'>Click on map to sapwn an aircraft and teleport<br />The aircraft will spawn oriented on the north</t>",0,0,4,1,0,789] spawn BIS_fnc_dynamicText;
 					onMapSingleClick "selectedLoc = _pos; onMapSingleClick ''; openMap false; true;";
 					waitUntil{!(visibleMap)};  
@@ -510,6 +511,7 @@ if (didJIP) then
 };
 
 //Display welcome message
+5 fadeMusic 0;
 sleep 5;
 [parseText "<t font='PuristaBold' size='1.6'>Welcome to <br />Random Patrol Generator</t><br />by Patapignouf", true, nil, 7, 0.7, 0] spawn BIS_fnc_textTiles;
 sleep 20;
