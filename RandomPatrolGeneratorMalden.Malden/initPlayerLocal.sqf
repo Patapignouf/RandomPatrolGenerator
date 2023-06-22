@@ -89,7 +89,6 @@ waitUntil {missionNamespace getVariable "generationSetup" == true};
 
 enableThermal = "EnableThermal" call BIS_fnc_getParamValue;
 enableHalo = "EnableHALO" call BIS_fnc_getParamValue;
-initBluforBase = "InitBluforBase" call BIS_fnc_getParamValue;
 
 bluFaction = missionNamespace getVariable "bluforFaction";
 indFaction = missionNamespace getVariable "independentFaction";
@@ -352,7 +351,7 @@ if (side player == blufor) then
 
 	//Armed Chopper
 	waitUntil {!isNil "bluforArmedChopper"};
-	if (initBluforBase == 1 && enableArmedAicraft) then 
+	if (enableArmedAicraft) then 
 	{	
 		{
 			_IDVehicleSpawn = TPFlag1 addAction [format ["Spawn a %1 (%2 credits)", getText (configFile >> "cfgVehicles" >> _x >> "displayName"), 500],{
@@ -400,17 +399,18 @@ if (side player == blufor) then
 	if (enableArmedAicraft) then 
 	{	
 		{
-			_IDVehicleSpawn = TPFlag1 addAction [format ["Spawn an %1 (this will open the map to choose a position)", getText (configFile >> "cfgVehicles" >> _x >> "displayName")],{
+			_IDVehicleSpawn = TPFlag1 addAction [format ["Spawn a %1 (%2 credits) (you will be teleported)", getText (configFile >> "cfgVehicles" >> _x >> "displayName"),600],{
 				params ["_object","_caller","_ID","_avalaibleAicraft"];
 
 				bluforVehicleAvalaibleSpawnCounter = missionNamespace getVariable "bluforVehicleAvalaibleSpawn";
-				if (bluforVehicleAvalaibleSpawnCounter > 0) then 
+				if (bluforVehicleAvalaibleSpawnCounter >= 600) then 
 				{
 					//Click on map to spawn
 					selectedLoc = [0,0,0];
 					openMap true;
 					sleep 1;
-					hint "Click on map to sapwn an aircraft and teleport\n The aircraft will spawn oriented on the north";
+					
+					["<t color='#ffffff' size='.8'>Click on map to sapwn an aircraft and teleport<br />The aircraft will spawn oriented on the north</t>",0,0,4,1,0,789] spawn BIS_fnc_dynamicText;
 					onMapSingleClick "selectedLoc = _pos; onMapSingleClick ''; openMap false; true;";
 					waitUntil{!(visibleMap)};  
 					if (!([selectedLoc, [0,0,0]] call BIS_fnc_areEqual)) then 
@@ -420,8 +420,8 @@ if (side player == blufor) then
 						[_object,_ID] remoteExec [ "removeAction", 0, true ];
 						
 						//Reduce avalaible spawn counter
-						missionNamespace setVariable ["bluforVehicleAvalaibleSpawn", bluforVehicleAvalaibleSpawnCounter-1, true];
-						hint format ["A %2 has spawned, %1 avdvanced spawn credit left.", bluforVehicleAvalaibleSpawnCounter-1, getText (configFile >> "cfgVehicles" >> _avalaibleAicraft >> "displayName")];
+						missionNamespace setVariable ["bluforVehicleAvalaibleSpawn", bluforVehicleAvalaibleSpawnCounter-600, true];
+						hint format ["A %2 has spawned, %1 avdvanced spawn credit left.", bluforVehicleAvalaibleSpawnCounter-600, getText (configFile >> "cfgVehicles" >> _avalaibleAicraft >> "displayName")];
 					};
 				} else 
 				{

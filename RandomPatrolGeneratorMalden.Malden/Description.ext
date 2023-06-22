@@ -149,26 +149,12 @@ class Params
 		texts[] = {"No","Yes","Random"};
 		default = 0;
 	};
-	class InitBluforBase
-	{
-		title = "Start position of blufor";
-		values[] = {0,1,2};
-		texts[] = {"Close to AO","Far to AO","Random"};
-		default = 0;
-	};
 	class CivJoinableFaction
 	{
 		title = "Allow player to recruit civilian";
 		values[] = {0,1,2,3};
 		texts[] = {"Nobody can recruit civilian","Only indepedent can recruit civilian","Only blufor can recruit civilian", "Both independent and blufor can recruit civilian"};
 		default = 1;             
-	};
-	class BluforVehicleSpawnType
-	{
-		title = "Choose blufor vehicle spawn condition (WIP)";
-		values[] = {0,1};
-		texts[] = {"Spawn with credits","Spawn on mission start"};
-		default = 0;             
 	};
 	class TimeOfDay
 	{

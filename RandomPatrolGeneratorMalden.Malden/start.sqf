@@ -8,10 +8,8 @@
 //Init base mission parameters 
 enableInitAttack = "EnableInitAttack" call BIS_fnc_getParamValue;
 enableInitBluAttack = "EnableInitBluAttack" call BIS_fnc_getParamValue;
-initBluforBase = "InitBluforBase" call BIS_fnc_getParamValue;
 timeOfDay = "TimeOfDay" call BIS_fnc_getParamValue;
 respawnSettings = "Respawn" call BIS_fnc_getParamValue;
-bluforVehicleSpawnType = "BluforVehicleSpawnType" call BIS_fnc_getParamValue;
 
 //Init all environement database variable
 _handleEnvironmentInitialization = [] execVM 'initEnvironment.sqf'; 
@@ -340,11 +338,9 @@ if (initBlueforLocationPosition isEqualType []) then
 //Check if base is on water
 if !(_isOnWater) then 
 	{
-	//TODO create the random option
-	if (initBluforBase == 0 || (initBluforBase == 2 && (random 100 < 50))) then
-	{
-		_minBluforCityRadius = aoSize+400;
-		_maxBluforCityRadius = aoSize+700;
+		//TODO create the random option
+		_minBluforCityRadius = aoSize+700;
+		_maxBluforCityRadius = aoSize+2000;
 		//Check if position is already determine by player
 		if ([initBlueforLocation, [0,0,0]] call BIS_fnc_areEqual) then 
 		{
@@ -369,56 +365,6 @@ if !(_isOnWater) then
 		initBlueforLocation = getPos (spawnFOBObjects select 0);	
 		publicvariable "initBlueforLocation";
 		waitUntil {!isNil "spawnFOBObjects"};
-	} else 
-	{
-		_minBluforCityRadius = aoSize+2000;
-		_maxBluforCityRadius = aoSize+4000;
-		//Check if position is already determine by player
-		if ([initBlueforLocation, [0,0,0]] call BIS_fnc_areEqual) then 
-		{
-			initBlueforLocation = [getPos initCityLocation,_minBluforCityRadius, _maxBluforCityRadius, 3, 0, 0.25, 0, [areaOfOperation], [[0,0,0],[0,0,0]]] call BIS_fnc_findSafePos;
-			//Test avalaible position (not in water and not default)
-			_spawnAttempts = 0;
-			while {(([initBlueforLocation , [0,0,0]] call BIS_fnc_areEqual) || surfaceIsWater initBlueforLocation) && _spawnAttempts <10} do 
-			{
-				_maxBluforCityRadius = _maxBluforCityRadius +200;
-				initBlueforLocation = [getPos initCityLocation, _minBluforCityRadius, _maxBluforCityRadius, 3, 0, 0.25, 0, [areaOfOperation], [[0,0,0],[0,0,0]]] call BIS_fnc_findSafePos;
-				_spawnAttempts = _spawnAttempts +1;
-			};
-			
-			//Safe position
-			initBlueforLocation = [selectMax [selectMin [initBlueforLocation select 0, worldSize-50 ],50],selectMax [selectMin [initBlueforLocation select 1, worldSize-50],50]];  
-		};
-
-
-
-
-		//Generate FOB
-		spawnFOBObjects = [initBlueforLocation, (random 360), selectRandom avalaibleFOB] call BIS_fnc_ObjectsMapper;
-		sleep 3;
-			
-		initBlueforLocation = getPos (spawnFOBObjects select 0);
-		publicvariable "initBlueforLocation";
-		waitUntil {!isNil "spawnFOBObjects"};
-		
-		//Generate air vehicle
-		if (bluforVehicleSpawnType == 1) then 
-		{
-			if (0 < count bluforUnarmedVehicleChopper ) then 
-			{
-				for [{_i = 0}, {_i < 2}, {_i = _i + 1}] do
-				{
-					selectedBluforVehicle pushBack [(selectRandom bluforUnarmedVehicleChopper), false];
-				};
-			};
-		};
-			
-		//Generate air drone vehicle
-		if (0 < count bluforDrone ) then 
-		{
-			selectedBluforVehicle pushBack [(selectRandom bluforDrone), true];
-		};
-	};
 } else 
 {
 	//Spawn carrier on water 
@@ -454,16 +400,15 @@ if (0 < count bluforUnarmedVehicle ) then
 };
 
 
-if (bluforVehicleSpawnType == 1) then 
+
+if (0 < count bluforArmedVehicle ) then 
 {
-	if (0 < count bluforArmedVehicle ) then 
+	for [{_i = 0}, {_i < 1}, {_i = _i + 1}] do
 	{
-		for [{_i = 0}, {_i < 1}, {_i = _i + 1}] do
-		{
-			selectedBluforVehicle pushBack [(selectRandom bluforArmedVehicle), false];
-		};
+		selectedBluforVehicle pushBack [(selectRandom bluforArmedVehicle), false];
 	};
 };
+
 
 //Generate Boat
 if (0 < count bluforBoat ) then 
@@ -772,12 +717,12 @@ for [{_i = 0}, {_i <= missionLength}, {_i = _i + 1}] do //Peut être optimisé
 if (!isNil "USS_FREEDOM_CARRIER") then 
 {
 	//Spawn basic items on Carrier
-	VA2 setPosASLW [initBlueforLocation#0-20, initBlueforLocation#1, initBlueforLocation#2];
-	TPFlag1 setPosASLW [initBlueforLocation#0-30, initBlueforLocation#1, initBlueforLocation#2-2];
-	deployableFOBItem setPosASLW [initBlueforLocation#0+10, initBlueforLocation#1, initBlueforLocation#2];
+	VA2 setPosASLW [initBlueforLocation#0-20, initBlueforLocation#1-30, initBlueforLocation#2];
+	TPFlag1 setPosASLW [initBlueforLocation#0-30, initBlueforLocation#1-30, initBlueforLocation#2-1];
+	deployableFOBItem setPosASLW [initBlueforLocation#0+10, initBlueforLocation#1-30, initBlueforLocation#2];
 
 	//Try to spawn chopper on carrier (WIP)
-	_baseSpawnChopper = [initBlueforLocation#0-40, initBlueforLocation#1+20, initBlueforLocation#2];
+	_baseSpawnChopper = [initBlueforLocation#0-40, initBlueforLocation#1, initBlueforLocation#2];
 	{
 		_baseSpawnChopper = [_baseSpawnChopper#0+30, _baseSpawnChopper#1, _baseSpawnChopper#2];
 		_chopper = createVehicle [_x,  (getPos initCityLocation) findEmptyPosition [0 , 300, "Land_HelipadCircle_F" ], [], 0, "NONE"];
@@ -796,7 +741,6 @@ if (!isNil "USS_FREEDOM_CARRIER") then
 	{
 		_baseSpawnShip = [_baseSpawnShip#0+30, _baseSpawnShip#1, 0];
 		_ship = createVehicle [_x,  _baseSpawnShip, [], 0, "NONE"];
-		_ship setPos _baseSpawnShip;
 		sleep 0.5;
 		_ship setfuel 1;
 		_ship setdamage 0;
@@ -805,6 +749,21 @@ if (!isNil "USS_FREEDOM_CARRIER") then
 			deleteVehicle _ship;
 		}; 
 	} foreach bluforBoat;
+
+	_baseSpawnPlane = [initBlueforLocation#0-70, initBlueforLocation#1-30, initBlueforLocation#2];
+	{
+		_baseSpawnPlane = [_baseSpawnPlane#0, _baseSpawnPlane#1+30, _baseSpawnPlane#2];
+		_plane = createVehicle [_x,  (getPos initCityLocation) findEmptyPosition [0 , 300, "Land_HelipadCircle_F" ], [], 0, "NONE"];
+		_plane setPosASLW _baseSpawnPlane;
+		_plane setDir 90;
+		sleep 0.5;
+		_plane setfuel 1;
+		_plane setdamage 0;
+		if (!(alive _plane)) then 
+		{
+			deleteVehicle _plane;
+		}; 
+	} foreach bluforFixedWing;
 };
 
 
