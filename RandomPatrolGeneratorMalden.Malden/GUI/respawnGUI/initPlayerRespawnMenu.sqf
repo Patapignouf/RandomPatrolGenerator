@@ -57,9 +57,14 @@ _buttonRespawnLeader ctrlAddEventHandler[ "ButtonClick",
 			_tempLeader = ((allPlayers - [player]) select {alive _x && side _x isEqualTo (side player)});
 		};
 
-		//SetPlayer position
-		_tempPos = getPos (_tempLeader select 0);
-		player setPos [_tempPos select 0, _tempPos select 1];
+		//SetPlayer position on leader position if it is on vehicle
+		if !(player moveInAny (vehicle (_tempLeader select 0))) then 
+		{
+			//Leader on vehicle with empty space
+			_tempPos = getPosASLW (_tempLeader select 0);
+			player setPosASLW _tempPos;
+		};
+
 		["Respawn on teamleader", format ["Year %1", date select 0], mapGridPosition player] spawn BIS_fnc_infoText;
 
 		//Initialize player

@@ -434,7 +434,7 @@ if !(_isOnWater) then
 	missionNamespace setVariable ["USS_FREEDOM_CARRIER",_object]; publicVariable "USS_FREEDOM_CARRIER";
 
 	// Broadcast carrier position as blufor init base
-	initBlueforLocation = [_spawnPos#0, _spawnPos#1, 25];
+	initBlueforLocation = [_spawnPos#0, _spawnPos#1, 24];
 	publicVariable "initBlueforLocation";
 };
 
@@ -772,8 +772,8 @@ for [{_i = 0}, {_i <= missionLength}, {_i = _i + 1}] do //Peut être optimisé
 if (!isNil "USS_FREEDOM_CARRIER") then 
 {
 	//Spawn basic items on Carrier
-	VA2 setPosASLW [initBlueforLocation#0+2, initBlueforLocation#1, initBlueforLocation#2];
-	TPFlag1 setPosASLW [initBlueforLocation#0+4, initBlueforLocation#1, initBlueforLocation#2-2];
+	VA2 setPosASLW [initBlueforLocation#0-20, initBlueforLocation#1, initBlueforLocation#2];
+	TPFlag1 setPosASLW [initBlueforLocation#0-30, initBlueforLocation#1, initBlueforLocation#2-2];
 	deployableFOBItem setPosASLW [initBlueforLocation#0+10, initBlueforLocation#1, initBlueforLocation#2];
 
 	//Try to spawn chopper on carrier (WIP)
@@ -790,6 +790,21 @@ if (!isNil "USS_FREEDOM_CARRIER") then
 			deleteVehicle _chopper;
 		}; 
 	} foreach bluforUnarmedVehicleChopper;
+
+
+	_baseSpawnShip = [initBlueforLocation#0-40, initBlueforLocation#1+70, initBlueforLocation#2];
+	{
+		_baseSpawnShip = [_baseSpawnShip#0+30, _baseSpawnShip#1, 0];
+		_ship = createVehicle [_x,  _baseSpawnShip, [], 0, "NONE"];
+		_ship setPos _baseSpawnShip;
+		sleep 0.5;
+		_ship setfuel 1;
+		_ship setdamage 0;
+		if (!(alive _ship)) then 
+		{
+			deleteVehicle _ship;
+		}; 
+	} foreach bluforBoat;
 };
 
 
