@@ -294,7 +294,8 @@ attachmentLongList_USA	= [
 	"CUP_V_CPC_tlbelt_mc",
 	"CUP_B_USArmy_MG_SpecOp",
 	"CUP_H_OpsCore_Tan_SF",
-	"CUP_optic_LeupoldMk4_MRT_tan"
+	"CUP_optic_LeupoldMk4_MRT_tan",
+	"CUP_optic_LeupoldMk4_MRT_tan_pip"
 ];
 
 ////////////////////////
@@ -400,6 +401,7 @@ uniformList_USA = [
 magazineList_USA = 	[
 	"30Rnd_556x45_Stanag_Tracer_Green",
 	"CUP_1Rnd_HEDP_M203",
+	"CUP_1Rnd_HE_M203",
 	"CUP_FlareWhite_M203",
 	"CUP_Javelin_M",
 	"CUP_Stinger_M",

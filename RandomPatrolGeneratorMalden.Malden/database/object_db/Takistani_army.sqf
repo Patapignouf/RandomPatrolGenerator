@@ -304,6 +304,7 @@ magazineList_Taki_Army = [
 	"CUP_PG7VL_M",
 	"CUP_30Rnd_556x45_Stanag",
 	"CUP_1Rnd_HEDP_M203",
+	"CUP_1Rnd_HE_M203",
 	"CUP_30Rnd_545x39_AK_M",
 	"CUP_10Rnd_762x54_SVD_M",
 	"CUP_5Rnd_127x108_KSVK_M"

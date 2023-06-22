@@ -296,10 +296,10 @@ magazineList_HorizonIsland = 	[
 	"CUP_25Rnd_556x45_Famas",
 	"CUP_Javelin_M",
 	"CUP_20Rnd_762x51_DMR",
-	"CUP_6Rnd_HE_M203",
 	"CUP_100Rnd_TE4_LRT4_Red_Tracer_762x51_Belt_M",
 	"CUP_100Rnd_TE4_LRT4_Red_Tracer_762x51_Belt_M",
 	"CUP_1Rnd_HEDP_M203",
+	"CUP_1Rnd_HE_M203",
 	"CUP_40Rnd_46x30_MP7",
 	"CUP_SMAW_HEAA_M"
 ];

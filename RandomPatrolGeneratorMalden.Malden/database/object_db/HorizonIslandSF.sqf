@@ -285,6 +285,7 @@ magazineList_HorizonIslandSF = 	[
 	"CUP_30Rnd_556x45_Stanag_Mk16_woodland",
 	"CUP_12Rnd_45ACP_mk23",
 	"CUP_1Rnd_HE_M203",
+	"CUP_1Rnd_HE_M203",
 	"CUP_40Rnd_46x30_MP7",
 	"CUP_20Rnd_762x51_B_SCAR_wdl",
 	"CUP_SMAW_HEAA_M",
