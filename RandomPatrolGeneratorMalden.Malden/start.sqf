@@ -729,11 +729,13 @@ if (!isNil "USS_FREEDOM_CARRIER") then
 	_baseSpawnChopper = [initBlueforLocation#0-40, initBlueforLocation#1, initBlueforLocation#2];
 	{
 		_baseSpawnChopper = [_baseSpawnChopper#0+30, _baseSpawnChopper#1, _baseSpawnChopper#2];
-		_chopper = createVehicle [_x,  (getPos initCityLocation) findEmptyPosition [0 , 300, "Land_HelipadCircle_F" ], [], 0, "NONE"];
+		_chopper = createVehicle [_x,  _baseSpawnChopper, [], 0, "NONE"];
+		_chopper enableSimulationGlobal false;
 		_chopper setPosASLW _baseSpawnChopper;
 		sleep 0.5;
 		_chopper setfuel 1;
 		_chopper setdamage 0;
+		_chopper enableSimulationGlobal true;
 		if (!(alive _chopper)) then 
 		{
 			deleteVehicle _chopper;
@@ -757,12 +759,14 @@ if (!isNil "USS_FREEDOM_CARRIER") then
 	_baseSpawnPlane = [initBlueforLocation#0-70, initBlueforLocation#1-30, initBlueforLocation#2];
 	{
 		_baseSpawnPlane = [_baseSpawnPlane#0, _baseSpawnPlane#1+30, _baseSpawnPlane#2];
-		_plane = createVehicle [_x,  (getPos initCityLocation) findEmptyPosition [0 , 300, "Land_HelipadCircle_F" ], [], 0, "NONE"];
+		_plane = createVehicle [_x,  _baseSpawnPlane, [], 0, "NONE"];
+		_plane enableSimulationGlobal false;
 		_plane setPosASLW _baseSpawnPlane;
 		_plane setDir 90;
 		sleep 0.5;
 		_plane setfuel 1;
 		_plane setdamage 0;
+		_plane enableSimulationGlobal false;
 		if (!(alive _plane)) then 
 		{
 			deleteVehicle _plane;
