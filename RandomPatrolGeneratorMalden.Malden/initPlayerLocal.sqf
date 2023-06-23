@@ -23,7 +23,6 @@ sleep 3; //Wait player load correctly the mission
 waitUntil {!isNil "adminExist"};
 if (!didJIP) then 
 {
-	
 	//Check if there is an admin to setup the mission
 	if (isMultiplayer && adminExist) then 
 	{
@@ -263,8 +262,34 @@ if (side player == blufor) then
 	} else 
 	{
 		_spawnPos = initBlueforLocation;
-		[USS_FREEDOM_CARRIER] call BIS_fnc_Carrier01Init;
-		player setPosASLW _spawnPos;
+
+		//Fix catapult on carrier
+		[] spawn {
+				waitUntil { !(isNull (missionNamespace getVariable ["USS_FREEDOM_CARRIER",objNull])) };
+
+				["Carrier %1 Found. Client Initilising.",USS_FREEDOM_CARRIER] call BIS_fnc_logFormatServer;
+				if (count (USS_FREEDOM_CARRIER getVariable ["bis_carrierParts", []]) == 0) then {
+					["Carrier %1 is empty. Client Fixing.",str "bis_carrierParts"] call BIS_fnc_logFormatServer;
+					private _carrierPartsArray = (configFile >> "CfgVehicles" >> typeOf USS_FREEDOM_CARRIER >> "multiStructureParts") call BIS_fnc_getCfgDataArray;
+					private _partClasses = _carrierPartsArray apply {_x select 0};
+					private _nearbyCarrierParts = nearestObjects [USS_FREEDOM_CARRIER,_partClasses,500];
+					{
+						private _carrierPart = _x;
+						private _index = _forEachIndex;
+						{
+							if ((_carrierPart select 0) isEqualTo typeOf _x) exitWith { _carrierPart set [0,_x]; };
+						} forEach _nearbyCarrierParts;
+						_carrierPartsArray set [_index,_carrierPart];
+					} forEach _carrierPartsArray;
+					USS_FREEDOM_CARRIER setVariable ["bis_carrierParts",_nearbyCarrierParts];
+					["Carrier %1 was empty. Now contains %2.",str "bis_carrierParts",USS_FREEDOM_CARRIER getVariable ["bis_carrierParts", []]] call BIS_fnc_logFormatServer;
+				};
+				[USS_FREEDOM_CARRIER] spawn { sleep 1; _this call BIS_fnc_Carrier01Init};
+			};
+
+			//Tp player on carrier
+			player setPosASLW [_spawnPos#0,_spawnPos#1,_spawnPos#2+0.5];
+
 	};
 
 	[player, bluFaction] call doInitializeLoadout;
@@ -509,6 +534,16 @@ if (didJIP) then
 	player allowdamage true;
 	player enableSimulationGlobal true;
 };
+
+//Heal player if mission's setup wasn't safe 
+if (isClass (configFile >> "CfgPatches" >> "ace_medical")) then 
+{
+  [objNull, player] call ace_medical_treatment_fnc_fullHeal;
+} else 
+{
+  player setDamage 0;
+};
+
 
 //Display welcome message
 5 fadeMusic 0;
