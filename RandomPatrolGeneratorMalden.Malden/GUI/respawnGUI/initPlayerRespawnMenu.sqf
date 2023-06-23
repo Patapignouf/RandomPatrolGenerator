@@ -80,8 +80,21 @@ _buttonRespawnLeader ctrlAddEventHandler[ "ButtonClick",
 	}];
 
 
+doInitializePlayer = {
+		//Enable gameplay for player
+		player allowdamage true;
+		player enableSimulationGlobal true;
+		player hideObjectGlobal false;
+		cutText ["", "BLACK IN", 5];
+
+		//Remove player name from the dead player's list
+		_deadPlayerList = missionNamespace getVariable "deadPlayer";
+		_deadPlayerList = _deadPlayerList - [name player];
+		missionNamespace setVariable ["deadPlayer", _deadPlayerList, true];
+};
+
 //Disable space button in dialog
-waituntil {!(IsNull (findDisplay 8000))};
+waituntil {(IsNull (findDisplay 8000))};
 			
 //If the control is closed by bug, set normal respawn
 if (!normalClose) then 
@@ -111,15 +124,3 @@ if (!normalClose) then
 	[] call doInitializePlayer;
 };
 
-doInitializePlayer = {
-		//Enable gameplay for player
-		player allowdamage true;
-		player enableSimulationGlobal true;
-		player hideObjectGlobal false;
-		cutText ["", "BLACK IN", 5];
-
-		//Remove player name from the dead player's list
-		_deadPlayerList = missionNamespace getVariable "deadPlayer";
-		_deadPlayerList = _deadPlayerList - [name player];
-		missionNamespace setVariable ["deadPlayer", _deadPlayerList, true];
-};
