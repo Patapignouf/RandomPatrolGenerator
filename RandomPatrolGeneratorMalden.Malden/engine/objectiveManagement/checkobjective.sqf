@@ -52,16 +52,7 @@ while {sleep 10; !RTBComplete} do
 			extractExtendedTriggerArea setTriggerArea [(extendedTriggerArea #0)*2+500, (extendedTriggerArea #1)*2+500, 0, false]; // trigger area with a radius of 100m.
 			
 			//Display area of operation
-			[(findDisplay 12 displayCtrl 51),["Draw",{
-					(_this select 0) drawRectangle [
-					areaOfOperationPosition,
-					(extendedTriggerArea #0)+500,
-					(extendedTriggerArea #1)+500,
-					0,
-					[0,0,1,1],
-					""
-				];
-			}]] remoteExec ["ctrlAddEventHandler", 0, true];
+			[[areaOfOperationPosition,[(extendedTriggerArea #0)+500,(extendedTriggerArea #1)+500]], "engine\objectiveManagement\drawAORectangle.sqf"] remoteExec ['BIS_fnc_execVM', 0, true];
 		};
 
 		nbBluePlayer = {alive _x && side _x == blufor} count allPlayers;
