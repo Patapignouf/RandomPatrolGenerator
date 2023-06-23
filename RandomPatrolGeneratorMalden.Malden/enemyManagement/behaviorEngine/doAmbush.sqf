@@ -23,7 +23,7 @@ if (isServer) then
 			
 			if (((_players apply {_x#1})#0) distance currentPosition >= 300) then 
 			{
-			_currentGroup = [([currentPosition,1,60,10,0] call BIS_fnc_findSafePos), east, currentAttackGroup,[],[],[],[],[],0] call BIS_fnc_spawnGroup;
+			_currentGroup =	[currentAttackGroup, ([currentPosition,1,60,10,0] call BIS_fnc_findSafePos), east, ""] call doGenerateEnemyGroup;
 			diag_log format ["Create group : %1 at position %2 and assault to position %3", _currentGroup, getPos (leader _currentGroup), _thisTargetPosition];
 
 			//Assault for infantry
@@ -50,7 +50,7 @@ if (isServer) then
 				
 				if (((_players apply {_x#1})#0) distance currentPosition >= 300) then 
 				{
-					currentVehicleGroup = [([currentPosition,1,60,10,0] call BIS_fnc_findSafePos), east, currentAttackVehicleGroup,[],[],[],[],[],0] call BIS_fnc_spawnGroup;
+					currentVehicleGroup =[currentAttackVehicleGroup, ([currentPosition,1,60,10,0] call BIS_fnc_findSafePos), east, ""] call doGenerateEnemyGroup;
 					diag_log format ["Create group : %1 at position %2 and assault to position %3", currentVehicleGroup, getPos (leader currentVehicleGroup), _thisTargetPosition];
 
 					//Assault for vehicle
