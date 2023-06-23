@@ -49,7 +49,7 @@ while {sleep 10; !RTBComplete} do
 			isRTBMissionGenerated = true;
 
 			extractExtendedTriggerArea = createTrigger ["EmptyDetector", areaOfOperationPosition]; //create a trigger area created at object with variable name my_object
-			extractExtendedTriggerArea setTriggerArea [(extendedTriggerArea #0)*2+500, (extendedTriggerArea #1)*2+500, 0, false]; // trigger area with a radius of 100m.
+			extractExtendedTriggerArea setTriggerArea [(extendedTriggerArea #0)*2+250, (extendedTriggerArea #1)*2+250, 0, false]; // trigger area with a radius of 100m.
 			
 			//Display area of operation
 			[[areaOfOperationPosition,[(extendedTriggerArea #0)+500,(extendedTriggerArea #1)+500]], "engine\objectiveManagement\drawAORectangle.sqf"] remoteExec ['BIS_fnc_execVM', 0, true];
