@@ -226,10 +226,8 @@ for [{_i = 0}, {_i < numberOfSpawnWave}, {_i = _i + 1}] do
 	EnemyWaveSpawnPositions pushBack (getPos (selectRandom possibleEnemyWaveSpawnPositions));
 };
 
-
 //Init checkobjective
-[SelectedObjectives, initCityLocation] execVM 'engine\objectiveManagement\checkobjective.sqf';
-
+[initCityLocation] execVM 'engine\objectiveManagement\checkobjective.sqf';
 
 /////////////////////////
 ////Generate Civ/////////
@@ -310,6 +308,12 @@ if (isClass (configFile >> "CfgPatches" >> "ace_medical")) then
 areaOfOperation = [possiblePOILocation] call getAreaOfMission;
 aoSize = 1500;
 publicVariable "areaOfOperation";
+areaOfOperationPosition = getPos areaOfOperation;
+publicVariable "areaOfOperationPosition";
+
+//Define extended operation Of area
+extendedTriggerArea = [(triggerArea areaOfOperation #0), (triggerArea areaOfOperation #1)];
+publicVariable "extendedTriggerArea";
 
 /////////////////////////
 ////Generate Blufor//////
