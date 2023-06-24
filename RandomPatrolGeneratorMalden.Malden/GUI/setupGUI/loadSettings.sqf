@@ -17,6 +17,7 @@ missionDifficultyParam_loaded = profileNamespace getVariable ["RPG_missionDiffic
 ironMan_loaded = profileNamespace getVariable ["RPG_ironMan", false]; //Default disable ironman mode
 startIntel_loaded = profileNamespace getVariable ["RPG_startIntel", 1]; //Default disable ironman mode
 missionIASkill_loaded = profileNamespace getVariable ["RPG_missionIASkill", 1]; //Default disable ironman mode
+missionRespawnParam_loaded = profileNamespace getVariable ["RPG_missionRespawnParam", 99999999999999]; //Default disable ironman mode
 
 //Mission objectives
 avalaibleTypeOfObj_loaded = profileNamespace getVariable ["RPG_avalaibleTypeOfObj", []]; //Default disable ironman mode

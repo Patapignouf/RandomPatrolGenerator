@@ -17,6 +17,7 @@ profileNamespace setVariable ["RPG_missionDifficultyParam", missionDifficultyPar
 profileNamespace setVariable ["RPG_ironMan", ironMan]; //Default disable ironman mode
 profileNamespace setVariable ["RPG_startIntel", startIntel]; //Default disable ironman mode
 profileNamespace setVariable ["RPG_missionIASkill", missionIASkill]; //Default disable ironman mode
+profileNamespace setVariable ["RPG_missionRespawnParam", missionRespawnParam]; //Default disable ironman mode
 
 //Mission objectives
 profileNamespace setVariable ["RPG_avalaibleTypeOfObj", avalaibleTypeOfObj]; //Default disable ironman mode

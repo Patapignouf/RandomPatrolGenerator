@@ -766,7 +766,7 @@ if (!isNil "USS_FREEDOM_CARRIER") then
 		sleep 0.5;
 		_plane setfuel 1;
 		_plane setdamage 0;
-		_plane enableSimulationGlobal false;
+		_plane enableSimulationGlobal true;
 		if (!(alive _plane)) then 
 		{
 			deleteVehicle _plane;

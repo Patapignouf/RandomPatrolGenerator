@@ -15,13 +15,13 @@ playersXPProgress = "";
 } foreach allPlayers;
 
 //Thanks player
-[format ["<t color='#ffffff' size='1.5'>Random Patrol Generator</t><br /><t color='#ffffff' size='0.8'> Starring <br />%1</t>", playersNames],-1,-1,3,1,0,789] remoteExec ['BIS_fnc_dynamicText', -2];
+[format ["<t color='#ffffff' size='1.5'>Random Patrol Generator</t><br /><t color='#ffffff' size='0.8'> Starring <br />%1</t>", playersNames],-1,-1,3,1,0,789] remoteExec ['BIS_fnc_dynamicText', 0];
 
 //Wait
 sleep 10;
 
 //Display rank
-[format ["<t color='#ffffff' size='1'>Player's progression :</t><t color='#ffffff' size='.7'><br />%1</t>", playersXPProgress],0,0,6,1,0,789] remoteExec ['BIS_fnc_dynamicText', -2];
+[format ["<t color='#ffffff' size='1'>Player's progression :</t><t color='#ffffff' size='.7'><br />%1</t>", playersXPProgress],0,0,6,1,0,789] remoteExec ['BIS_fnc_dynamicText', 0];
 
 //Wait
 sleep 5;

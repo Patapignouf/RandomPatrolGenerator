@@ -6,6 +6,7 @@ waitUntil {!isNull player};
 player setUnitLoadout (player getVariable "spawnLoadout");
 player allowdamage false;
 player enableSimulationGlobal false;
+setPlayerRespawnTime missionRespawnParam;
 
 //Setup respawn GUI
 [[], 'GUI\respawnGUI\initPlayerRespawnMenu.sqf'] remoteExec ['BIS_fnc_execVM', player];

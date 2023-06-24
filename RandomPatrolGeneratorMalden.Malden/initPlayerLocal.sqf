@@ -492,6 +492,9 @@ if (isClass (configFile >> "CfgPatches" >> "ace_medical")) then
 	[player] call BIS_fnc_disableRevive;
 };
 
+//Respawn setup 
+setPlayerRespawnTime missionRespawnParam;
+
 //Generate civilian dialogs
 [] spawn _generateCivDialogs;
 
