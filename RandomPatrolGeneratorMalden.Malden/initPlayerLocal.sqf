@@ -318,6 +318,20 @@ if (side player == blufor) then
 		[bluforMobileHQ] call setupPlayerLoadout;
 	};
 
+	//Add heal action to VA2
+	private _actionId = player addAction ["Heal", {
+		
+		//Heal player if mission's setup wasn't safe 
+		if (isClass (configFile >> "CfgPatches" >> "ace_medical")) then 
+		{
+			[objNull, player] call ace_medical_treatment_fnc_fullHeal;
+		} else 
+		{
+			player setDamage 0;
+		};
+	}];
+	player setUserActionText [_actionId, "Heal", "<img size='2' image='\a3\ui_f\data\IGUI\Cfg\Actions\heal_ca'/>"];
+
 
 	//Manage vehicle spawn options 
 	if (enableArmoredVehicle) then 
