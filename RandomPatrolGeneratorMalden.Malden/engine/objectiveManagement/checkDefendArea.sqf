@@ -31,7 +31,7 @@ if (!([_thisObjectiveToComplete,[]] call BIS_fnc_areEqual)) then
 _thisFOBCheck = _thisTrigger getVariable ["isFOBAssociated", false];
 if (_thisFOBCheck) then 
 {
-	[format ["An opfor reinforcement is coming to %1, be ready to defend the FOB", getPos _thisTrigger]] remoteExec ["hint", 0, true];
+	[format ["An opfor reinforcement is coming to %1, be ready to defend the FOB", mapGridPosition (getPos _thisTrigger)]] remoteExec ["hint", 0, true];
 };
 
 //Wait enemy reinforcement

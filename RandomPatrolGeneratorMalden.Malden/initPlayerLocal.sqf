@@ -1,3 +1,5 @@
+#include "engine\modManager.sqf"
+
 forceBluforSetup = "ForceBluforSetup" call BIS_fnc_getParamValue;
 
 //Wait player load
@@ -131,6 +133,9 @@ if (enableThermal==0) then
 {
 	[] spawn _disableThermal;
 };
+
+//Validate mods 
+[] call doCheckRunningModsOnClient;
 
 //Hide HUD group to debug the UI 
 showHUD [

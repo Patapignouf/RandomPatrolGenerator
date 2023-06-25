@@ -4,6 +4,7 @@
 #include "database\objectLibrary.sqf"
 #include "objectGenerator\vehicleManagement.sqf"
 #include "enemyManagement\generationEngine\groupGenerator.sqf"
+#include "engine\modManager.sqf"
 
 //Init base mission parameters 
 enableInitAttack = "EnableInitAttack" call BIS_fnc_getParamValue;
@@ -17,6 +18,9 @@ waitUntil {isNull _handleEnvironmentInitialization};
 
 //Clean area WIP
 waitUntil {count allPlayers != 0};
+
+//Check server mods
+[] call doCheckRunningModsOnServer;
 
 adminExist = false;
 //Check if there is an admin to setup the mission
