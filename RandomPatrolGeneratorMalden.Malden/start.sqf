@@ -255,7 +255,7 @@ for [{_i = 0}, {_i <= 2}, {_i = _i + 1}] do
 
 
 //Init VA
-VA1 = createVehicle ["Box_IND_Wps_F", [getPos initCityLocation, 1, 10, 3, 0, 20, 0] call BIS_fnc_findSafePos, [], 0, "NONE"];
+VA1 = createVehicle ["CargoNet_01_box_F", [getPos initCityLocation, 1, 10, 3, 0, 20, 0] call BIS_fnc_findSafePos, [], 0, "NONE"];
 clearWeaponCargoGlobal VA1;
 clearMagazineCargoGlobal VA1;
 clearItemCargoGlobal VA1;
@@ -472,7 +472,7 @@ if (count bluforHQVehicle >0) then
 
 
 //Init VA
-VA2 = createVehicle ["Box_NATO_WpsSpecial_F", [initBlueforLocation, 1, 10, 3, 0, 20, 0] call BIS_fnc_findSafePos, [], 0, "NONE"];
+VA2 = createVehicle ["B_CargoNet_01_ammo_F", [initBlueforLocation, 1, 10, 3, 0, 20, 0] call BIS_fnc_findSafePos, [], 0, "NONE"];
 clearWeaponCargoGlobal VA2;
 clearMagazineCargoGlobal VA2;
 clearItemCargoGlobal VA2;
