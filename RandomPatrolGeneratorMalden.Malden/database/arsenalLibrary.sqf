@@ -500,7 +500,7 @@ isAreaEligibleForArsenal = {
 	_controlDistance = "";
 	if (side _caller == blufor) then 
 	{
-		_controlDistance = "(_this distance _target < 3) && ((_target distance initBlueforLocation < 30) || (_target distance (missionNamespace getVariable 'advancedBlueforLocation') < 30))"
+		_controlDistance = "(_this distance _target < 3) && ((_target distance initBlueforLocation < 150) || (_target distance (missionNamespace getVariable 'advancedBlueforLocation') < 30))"
 	};
 	if (side _caller == independent) then 
 	{
@@ -561,8 +561,6 @@ setupPlayerLoadout = {
 
 		//Setup initArsenal whitelist items
 		[player, player, player call getPlayerFaction] call setupArsenalToItem;
-		sleep 1;
-		{if (player actionParams _x select 0 == "Arsenal") exitWith {player removeAction _x}} forEach actionIDs player;
 };
 
 setupSaveAndLoadRole = {
