@@ -319,7 +319,7 @@ if (side player == blufor) then
 	};
 
 	//Add heal action to VA2
-	private _actionId = player addAction ["Heal", {
+	private _actionId = VA2 addAction ["Heal", {
 		
 		//Heal player if mission's setup wasn't safe 
 		if (isClass (configFile >> "CfgPatches" >> "ace_medical")) then 
