@@ -23,6 +23,7 @@ _2035_FIA = 21;
 _2035_Spetsnaz = 22;
 _HorizonIsland = 23;
 _HorizonIslandSF = 24;
+_2035_CSAT = 25;
 
 #include "object_db\USA.sqf"
 #include "object_db\French.sqf"
@@ -49,6 +50,7 @@ _HorizonIslandSF = 24;
 #include "object_db\2035_FIA.sqf"
 #include "object_db\HorizonIsland.sqf"
 #include "object_db\HorizonIslandSF.sqf"
+#include "object_db\2035_CSAT.sqf"
 
 //Define faction prefix
 c_db = "_db";
@@ -77,6 +79,7 @@ c_Taki_Army = "_Taki_Army";
 c_2035_Spetsnaz = "_2035_Spetsnaz";
 c_HorizonIsland = "_HorizonIsland";
 c_HorizonIslandSF =  "_HorizonIslandSF";
+c_2035_CSAT ="_2035_CSAT";
 
 //Setup basic ArmA 3 Factions
 factionInfos = [
@@ -85,15 +88,11 @@ factionInfos = [
 	[c_2035_NATO,_2035_NATO,"2035 NATO"],
 	[c_2035_NATO_FS,_2035_NATO_FS,"2035 NATO Special Forces"],
 	[c_2035_Spetsnaz,_2035_Spetsnaz,"2035 Spetsnaz"],
-	[c_2035_FIA,_2035_FIA,"FIA"],
-	[c_2035_Rebels,_2035_Rebels,"2035 Rebels"]
+	[c_2035_FIA,_2035_FIA,"2035 FIA"],
+	[c_2035_Rebels,_2035_Rebels,"2035 Rebels"],
+	[c_2035_CSAT,_2035_CSAT,"2035 CSAT"]
 ];
 
-//[ACE] specific NATO faction
-// if (isClass (configFile >> "CfgPatches" >> "ace_common")) then 
-// {
-// 	factionInfos pushBack [c_2035_NATO,_2035_NATO,"2035 NATO [ACE]"];
-// };
 
 //Add specific AMF factions
 if (isClass (configFile >> "CfgPatches" >> "AMF_Patches")) then 

@@ -93,7 +93,7 @@ _currentComboBox = _comboBoxRespawnParam;
 {
 	_currentComboBox lbAdd format ["%1", _x select 1];
 	_currentComboBox lbSetData [(lbSize _currentComboBox)-1, format ["%1",_x select 0]];
-} foreach missionRespawnParam;
+} foreach missionRespawnParamSettings;
 
 
 //Default faction 
@@ -114,4 +114,4 @@ _comboBoxMissionLength lbSetCurSel (missionLengthSelection apply {_x select 0} f
 _comboBoxMissionDifficulty lbSetCurSel (missionDifficultySelection apply {_x select 0} find (missionDifficultyParam_loaded)); //Syndikat
 _comboBoxStartIntel lbSetCurSel (missionStartIntelSelection apply {_x select 0} find (startIntel_loaded)); //Blufor must take intel
 _comboBoxIASkill lbSetCurSel (missionIASkill apply {_x select 0} find (missionIASkill_loaded)); //IA Skill default value : Balanced
-_comboBoxRespawnParam lbSetCurSel (missionRespawnParam apply {_x select 0} find (missionRespawnParam_loaded)); //IA Skill default value : Balanced
+_comboBoxRespawnParam lbSetCurSel (missionRespawnParamSettings apply {_x select 0} find (missionRespawnParam_loaded)); //IA Skill default value : Balanced
