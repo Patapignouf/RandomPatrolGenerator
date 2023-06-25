@@ -2,14 +2,7 @@
 //Log player's death
 diag_log format ["Player %1 is dead", name player];
 	
-if (isMultiplayer) then {
-	if (("Respawn" call BIS_fnc_getParamValue) == 0) then {
-		[player, 0, false] call BIS_fnc_respawnTickets;
-		diag_log ([player, 0, true] call BIS_fnc_respawnTickets);
-		[missionNamespace, 0] call BIS_fnc_respawnTickets;
-		//setPlayerRespawnTime 0;
-	};
-};
+setPlayerRespawnTime (missionNamespace getVariable "missionRespawnParam");
 
 //Add player to a dead player base | This will block disconnection/connection method to respawn 
 _deadPlayerList = missionNamespace getVariable "deadPlayer";

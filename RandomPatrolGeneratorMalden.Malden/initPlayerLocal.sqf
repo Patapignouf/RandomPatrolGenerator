@@ -507,7 +507,7 @@ if (isClass (configFile >> "CfgPatches" >> "ace_medical")) then
 };
 
 //Respawn setup 
-setPlayerRespawnTime missionRespawnParam;
+setPlayerRespawnTime (missionNamespace getVariable "missionRespawnParam");
 
 //Generate civilian dialogs
 [] spawn _generateCivDialogs;
@@ -560,7 +560,6 @@ if (isClass (configFile >> "CfgPatches" >> "ace_medical")) then
 {
   player setDamage 0;
 };
-
 
 //Display welcome message
 5 fadeMusic 0;
