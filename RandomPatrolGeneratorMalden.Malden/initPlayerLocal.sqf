@@ -566,6 +566,9 @@ if (didJIP) then
 	player enableSimulationGlobal true;
 };
 
+//Remove arsenal from player 
+player call RemoveArsenalActionFromGivenObject;
+
 //Heal player if mission's setup wasn't safe 
 if (isClass (configFile >> "CfgPatches" >> "ace_medical")) then 
 {

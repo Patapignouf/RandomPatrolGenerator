@@ -10,7 +10,7 @@ class DialogSetupLocationParams
 			x = 0.229686 * safezoneW + safezoneX;
 			y = 0.117436 * safezoneH + safezoneY;
 			w = 45 * GUI_GRID_CENTER_W;
-			h = 8 * GUI_GRID_CENTER_H;
+			h = 30 * GUI_GRID_CENTER_H;
 			colorBackground[] = {1,1,1,0.5};
 		};
 
@@ -46,7 +46,7 @@ class DialogSetupLocationParams
 			idc = 10200;
 			text = "Next";
 			x = GUI_GRID_CENTER_X + 10 * GUI_GRID_CENTER_W;
-			y = GUI_GRID_CENTER_Y + 1.1 * GUI_GRID_CENTER_H;
+			y = GUI_GRID_CENTER_Y + 22 * GUI_GRID_CENTER_H;
 			w = 20 * GUI_GRID_CENTER_W;
 			h = 1 * GUI_GRID_CENTER_H;
 		};

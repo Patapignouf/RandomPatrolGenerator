@@ -25,10 +25,10 @@ generateObjective =
 	diag_log format ["Objective generation started : %1 on position %2", currentObjType, _selectedObjectivePosition];
 
 	//Generate mission objectives
-	_objectiveCreated = [currentObjType, getPos _selectedObjectivePosition] call generateObjectiveObject; 
+	_objectiveCreated = [currentObjType, _selectedObjectivePosition] call generateObjectiveObject; 
 	
 	//Generate mission environement
-	_handlePOIGeneration = [EnemyWaveLevel_1, baseEnemyVehicleGroup, baseEnemyLightArmoredVehicleGroup, baseEnemyHeavyArmoredVehicleGroup, civilian_group, getPos _selectedObjectivePosition, _missionDifficulty, _objectiveCreated] execVM 'enemyManagement\generationEngine\generatePOI.sqf'; 
+	_handlePOIGeneration = [EnemyWaveLevel_1, baseEnemyVehicleGroup, baseEnemyLightArmoredVehicleGroup, baseEnemyHeavyArmoredVehicleGroup, civilian_group, _selectedObjectivePosition, _missionDifficulty, _objectiveCreated] execVM 'enemyManagement\generationEngine\generatePOI.sqf'; 
 	waitUntil {isNull _handlePOIGeneration};
 
 	//Return objective selected location

@@ -185,7 +185,11 @@ for [{_i = 0}, {_i < numberOfAmbush}, {_i = _i + 1}] do
 	AmbushPositions pushBack (selectRandom possibleAmbushPosition);
 	possibleAmbushPosition = possibleAmbushPosition - [AmbushPositions select ((count AmbushPositions)-1)];
 };
-PossibleObjectivePosition = possiblePOILocation;
+
+if (typeName PossibleObjectivePosition != "ARRAY") then 
+{
+	PossibleObjectivePosition = possiblePOILocation;
+};
 
 for [{_i = 0}, {_i <= 2}, {_i = _i + 1}] do //Peut être optimisé
 {
