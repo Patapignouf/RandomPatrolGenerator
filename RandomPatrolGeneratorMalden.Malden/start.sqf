@@ -194,6 +194,8 @@ if (typeName PossibleObjectivePosition != "ARRAY") then
 	}	foreach possiblePOILocation;
 };
 
+AllPossibleObjectivePosition = PossibleObjectivePosition;
+
 for [{_i = 0}, {_i <= 2}, {_i = _i + 1}] do //Peut être optimisé
 {
 	_currentTruckType = selectRandom civilianTruck;
@@ -316,7 +318,7 @@ if (isClass (configFile >> "CfgPatches" >> "ace_medical")) then
 [[baseEnemyGroup,baseEnemyATGroup,baseEnemyDemoGroup],baseEnemyVehicleGroup, baseEnemyLightArmoredVehicleGroup, baseEnemyHeavyArmoredVehicleGroup, baseEnemyUnarmedChopperGroup, missionDifficultyParam] execVM 'enemyManagement\generationEngine\generateHarass.sqf'; 
 
 // Get smallest distance to an AO
-areaOfOperation = [possiblePOILocation] call getAreaOfMission;
+areaOfOperation = [AllPossibleObjectivePosition] call getAreaOfMission;
 aoSize = 1500;
 publicVariable "areaOfOperation";
 areaOfOperationPosition = getPos areaOfOperation;

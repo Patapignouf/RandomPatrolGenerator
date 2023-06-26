@@ -51,15 +51,15 @@ getAreaOfMission =
 {
 	_listOfPOI = _this select 0;
 	
-	_leftmostPoints = [_listOfPOI, [], {(getPos _x) select 0}, "ASCEND"] call BIS_fnc_sortBy;
+	_leftmostPoints = [_listOfPOI, [], {(_x) select 0}, "ASCEND"] call BIS_fnc_sortBy;
 	_leftmostPoint = _leftmostPoints select 0;
 	_rightmostPoint = _leftmostPoints select ((count _leftmostPoints)-1);
-	_topmostPoints = [_listOfPOI, [], {(getPos _x) select 1}, "DESCEND"] call BIS_fnc_sortBy;
+	_topmostPoints = [_listOfPOI, [], {(_x) select 1}, "DESCEND"] call BIS_fnc_sortBy;
 	_topmostPoint = _topmostPoints select 0;
 	_bottommostPoint = _topmostPoints select ((count _topmostPoints)-1);
-	_xDist =  (getPos _rightmostPoint select 0) - (getPos _leftmostPoint select 0);
-	_yDist = (getPos _topmostPoint select 1) - (getPos _bottommostPoint select 1);
-	_centerTrue = [(getPos _rightmostPoint select 0)- (_xDist/2), (getPos _topmostPoint select 1) - (_yDist/2)];
+	_xDist =  (_rightmostPoint select 0) - (_leftmostPoint select 0);
+	_yDist = (_topmostPoint select 1) - (_bottommostPoint select 1);
+	_centerTrue = [(_rightmostPoint select 0)- (_xDist/2), (_topmostPoint select 1) - (_yDist/2)];
 
 	_trgAOC = createTrigger ["EmptyDetector", _centerTrue];
 	_trgAOC setTriggerArea [_xDist/1.5, _yDist/1.5, 0, true];
