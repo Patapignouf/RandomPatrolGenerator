@@ -188,7 +188,10 @@ for [{_i = 0}, {_i < numberOfAmbush}, {_i = _i + 1}] do
 
 if (typeName PossibleObjectivePosition != "ARRAY") then 
 {
-	PossibleObjectivePosition = possiblePOILocation;
+	PossibleObjectivePosition = [];
+	{
+		PossibleObjectivePosition pushBack (getPos (_x));
+	}	foreach possiblePOILocation;
 };
 
 for [{_i = 0}, {_i <= 2}, {_i = _i + 1}] do //Peut être optimisé
