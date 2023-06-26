@@ -730,22 +730,26 @@ if (!isNil "USS_FREEDOM_CARRIER") then
 	deployableFOBItem setPosASLW [initBlueforLocation#0+10, initBlueforLocation#1-30, initBlueforLocation#2];
 
 	//Try to spawn chopper on carrier (WIP)
-	_baseSpawnChopper = [initBlueforLocation#0-40, initBlueforLocation#1, initBlueforLocation#2];
+	_baseSpawnChopper = [initBlueforLocation#0-40, initBlueforLocation#1-10, initBlueforLocation#2];
 	{
 		_baseSpawnChopper = [_baseSpawnChopper#0+30, _baseSpawnChopper#1, _baseSpawnChopper#2];
-		_chopper = createVehicle [_x,  _baseSpawnChopper, [], 0, "NONE"];
+		_chopper = createVehicle [_x,  [_baseSpawnChopper#0+30, _baseSpawnChopper#1, _baseSpawnChopper#2+1], [], 0, "NONE"];
 		_chopper enableSimulationGlobal false;
 		_chopper setPosASLW _baseSpawnChopper;
-		sleep 0.5;
-		_chopper setfuel 1;
-		_chopper setdamage 0;
-		_chopper enableSimulationGlobal true;
-		if (!(alive _chopper)) then 
-		{
-			deleteVehicle _chopper;
-		}; 
-	} foreach bluforUnarmedVehicleChopper;
 
+		//Repair vehicle
+		[_chopper] spawn {
+			params ["_vehicle"];
+			sleep 1;
+			_vehicle setfuel 1;
+			_vehicle setdamage 0;
+			_vehicle enableSimulationGlobal true;
+			if (!(alive _vehicle)) then 
+			{
+				deleteVehicle _vehicle;
+			}; 
+		};
+	} foreach bluforUnarmedVehicleChopper;
 
 	_baseSpawnShip = [initBlueforLocation#0-40, initBlueforLocation#1+70, initBlueforLocation#2];
 	{
@@ -760,21 +764,26 @@ if (!isNil "USS_FREEDOM_CARRIER") then
 		}; 
 	} foreach bluforBoat;
 
-	_baseSpawnPlane = [initBlueforLocation#0-70, initBlueforLocation#1-30, initBlueforLocation#2];
+	_baseSpawnPlane = [initBlueforLocation#0-70, initBlueforLocation#1-30, initBlueforLocation#2+1];
 	{
 		_baseSpawnPlane = [_baseSpawnPlane#0, _baseSpawnPlane#1+30, _baseSpawnPlane#2];
 		_plane = createVehicle [_x,  _baseSpawnPlane, [], 0, "NONE"];
 		_plane enableSimulationGlobal false;
 		_plane setPosASLW _baseSpawnPlane;
 		_plane setDir 90;
-		sleep 0.5;
-		_plane setfuel 1;
-		_plane setdamage 0;
-		_plane enableSimulationGlobal true;
-		if (!(alive _plane)) then 
-		{
-			deleteVehicle _plane;
-		}; 
+
+		//Repair vehicle
+		[_plane] spawn {
+			params ["_vehicle"];
+			sleep 1;
+			_vehicle setfuel 1;
+			_vehicle setdamage 0;
+			_vehicle enableSimulationGlobal true;
+			if (!(alive _vehicle)) then 
+			{
+				deleteVehicle _vehicle;
+			}; 
+		};
 	} foreach bluforFixedWing;
 };
 
