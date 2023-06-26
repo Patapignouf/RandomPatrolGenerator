@@ -219,7 +219,8 @@ autorifleList_2035_NATO = [
 	"MMG_02_camo_F",
 	"arifle_MX_SW_F",
 	"arifle_MX_SW_Black_F",
-	"arifle_MX_SW_khk_F"
+	"arifle_MX_SW_khk_F",
+	"LMG_Zafir_F"
 ];	
 
 //Rifle avalaible for marksman
@@ -369,7 +370,10 @@ backPackList_2035_NATO = [
 uniformList_2035_NATO = [
 	"G_Combat",
 	"G_Combat_Goggles_tna_F",
-	"U_B_CombatUniform_mcam_tshirt"
+	"U_B_CombatUniform_mcam_tshirt",
+	"G_Tactical_Clear",
+	"H_HelmetB_camo",
+	"V_PlateCarrier2_rgr"
 	];
 
 //Magazine avalaible for all unit
