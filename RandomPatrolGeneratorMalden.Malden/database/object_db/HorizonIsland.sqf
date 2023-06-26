@@ -271,7 +271,8 @@ itemMedicList_HorizonIsland = [
 backPackList_HorizonIsland = [
 	"B_Mortar_01_weapon_F",
 	"B_Mortar_01_support_F",
-	"CUP_B_HIL_TacticalPack_CCE"
+	"CUP_B_HIL_TacticalPack_CCE",
+	"TFAR_rt1523g"
 ];
 
 

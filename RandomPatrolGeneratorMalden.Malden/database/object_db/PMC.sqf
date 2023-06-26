@@ -337,7 +337,8 @@ itemMedicList_PMC = [
 
 //backpack avalaible for all unit
 backPackList_PMC = [
-	"CUP_B_AlicePack_Khaki"
+	"CUP_B_AlicePack_Khaki",
+	"TFAR_rt1523g"
 	];
 
 

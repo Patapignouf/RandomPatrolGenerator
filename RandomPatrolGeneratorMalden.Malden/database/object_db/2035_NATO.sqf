@@ -362,7 +362,8 @@ backPackList_2035_NATO = [
 	"B_TacticalPack_mcamo",
 	"B_AssaultPack_rgr",
 	"B_Mortar_01_weapon_F",
-	"B_Mortar_01_support_F"
+	"B_Mortar_01_support_F",
+	"TFAR_rt1523g"
 	];
 
 

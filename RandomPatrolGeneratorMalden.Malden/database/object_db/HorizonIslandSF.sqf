@@ -266,7 +266,8 @@ itemMedicList_HorizonIslandSF = [
 backPackList_HorizonIslandSF = [
 	"B_Mortar_01_weapon_F",
 	"B_Mortar_01_support_F",
-	"B_TacticalPack_oli"
+	"B_TacticalPack_oli",
+	"TFAR_rt1523g"
 ];
 
 

@@ -341,7 +341,8 @@ backPackList_2035_NATO_FS = [
 	"B_Carryall_mcamo",
 	"B_AssaultPack_rgr",
 	"B_AssaultPack_cbr",
-	"B_Kitbag_cbr"
+	"B_Kitbag_cbr",
+	"TFAR_rt1523g"
 ];
 
 

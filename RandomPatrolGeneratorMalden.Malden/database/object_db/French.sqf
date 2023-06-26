@@ -311,7 +311,8 @@ backPackList_French = [
 	"AMF_MMP_support",
 	"CUP_B_M2_Gun_Bag",
 	"CUP_B_M2_Tripod_Bag",
-	"AMF_rush24_01_TDF"
+	"AMF_rush24_01_TDF",
+	"TFAR_rt1523g"
 	];
 
 

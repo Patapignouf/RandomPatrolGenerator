@@ -366,7 +366,8 @@ backPackList_USA = [
 	"CUP_B_AssaultPack_Coyote",
 	"B_Mortar_01_weapon_F",
 	"B_Mortar_01_support_F",
-	"CUP_B_US_Assault_UCP"
+	"CUP_B_US_Assault_UCP",
+	"TFAR_rt1523g"
 ];
 
 
