@@ -321,7 +321,7 @@ setupArsenalToItem = {
 	_currentPlayer setVariable ["avalaibleItemsInArsenal", _whitelistOfArsenalItems, true];
 	
 	//Remove arsenal action
-	{if (player actionParams _x select 0 == "Arsenal") exitWith {player removeAction _x}} forEach actionIDs player;
+	player call RemoveArsenalActionFromGivenObject;
 	["AmmoboxExit", _itemToAttachArsenal] call BIS_fnc_arsenal;
 
 	_itemToAttachArsenal;
