@@ -464,7 +464,7 @@ if (side player == blufor) then
 					openMap true;
 					sleep 1;
 
-					["<t color='#ffffff' size='.8'>Click on map to sapwn an aircraft and teleport<br />The aircraft will spawn oriented on the north</t>",0,0,4,1,0,789] spawn BIS_fnc_dynamicText;
+					["<t color='#ffffff' size='.8'>Click on map to spawn an aircraft and teleport<br />The aircraft will spawn oriented on the north</t>",0,0,4,1,0,789] spawn BIS_fnc_dynamicText;
 					onMapSingleClick "selectedLoc = _pos; onMapSingleClick ''; openMap false; true;";
 					waitUntil{!(visibleMap)};  
 					if (!([selectedLoc, [0,0,0]] call BIS_fnc_areEqual)) then 
