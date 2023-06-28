@@ -146,13 +146,14 @@ bluforDrone_WWII_UK = [
 ];
 
 bluforBoat_WWII_UK = [
-	// nope
+	"LIB_UK_LCA",
+	"LIB_UK_LCA"
 ];
 
 bluforFixedWing_WWII_UK = [
 	"LIB_RAF_P39",
-	"LIB_HORSA_RAF",
 	"LIB_C47_RAF",
+	"LIB_HORSA_RAF",
 	"LIB_MKI_HADRIAN",
 	"LIB_MKI_HADRIAN_raf2",
 	"LIB_MKI_HADRIAN_raf3"

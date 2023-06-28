@@ -146,11 +146,14 @@ bluforDrone_WWII_USA = [
 ];
 
 bluforBoat_WWII_USA = [
-	// nope
+	"LIB_LCA", 
+	"LIB_LCM3_Armed", 
+	"LIB_LCVP"
 ];
 
 bluforFixedWing_WWII_USA = [
 	"LIB_RAF_P39",
+	"LIB_P47",
 	"LIB_HORSA_RAF",
 	"LIB_C47_RAF",
 	"LIB_MKI_HADRIAN",
@@ -323,7 +326,6 @@ magazineList_WWII_USA = [
 	"LIB_7Rnd_45ACP_DeLisle",
 	"LIB_30Rnd_45ACP",
 	"LIB_30Rnd_45ACP_t",
-	"LIB_50Rnd_45ACP",
 	"LIB_10Rnd_770x56",
 	"LIB_10Rnd_770x56_MkVIII",
 	"LIB_1Rnd_89m_PIAT",

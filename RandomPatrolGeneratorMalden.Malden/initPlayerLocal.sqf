@@ -296,14 +296,24 @@ if (side player == blufor) then
 			player setPosASLW [_spawnPos#0 - random 20,_spawnPos#1-random 20,_spawnPos#2+0.5];
 
 			//Add Action for TP on the carrier
-			private _actionId = player addAction ["Move to the carrier",{
+			_actionIdCarrier = player addAction ["Move to the carrier",{
 				//Define parameters
 				params ["_object","_caller","_ID","_spawnPos"];
 
 				_caller setPosASLW [_spawnPos#0,_spawnPos#1,_spawnPos#2+0.5];
 
 			},_spawnPos,1.5,true,false,"","(initBlueforLocation distance _this <150)"];
-			player setUserActionText [_actionId, "Move to the carrier", "<img size='3' image='\a3\ui_f_oldman\data\IGUI\Cfg\holdactions\map_ca.paa'/>"];
+			player setUserActionText [_actionIdCarrier, "Move to the carrier", "<img size='3' image='\a3\ui_f_oldman\data\IGUI\Cfg\holdactions\map_ca.paa'/>"];
+
+			//Add action moving to boat
+			_actionIdBoat = player addAction ["Move to the boat",{
+				//Define parameters
+				params ["_object","_caller","_ID","_spawnPos"];
+
+				_caller setPosASLW [(_spawnPos#0)-40, (_spawnPos#1)+70,0];
+
+			},_spawnPos,1.5,true,false,"","(initBlueforLocation distance _this <150)"];
+			player setUserActionText [_actionIdBoat, "Move to the boat", "<img size='3' image='\a3\ui_f\data\igui\cfg\actions\loadvehicle_ca.paa'/>"];
 	};
 
 	[player, bluFaction] call doInitializeLoadout;
@@ -319,7 +329,7 @@ if (side player == blufor) then
 	};
 
 	//Add heal action to VA2
-	private _actionId = VA2 addAction ["Heal", {
+	_actionIdHeal = VA2 addAction ["Heal", {
 		
 		//Heal player if mission's setup wasn't safe 
 		if (isClass (configFile >> "CfgPatches" >> "ace_medical")) then 
@@ -329,8 +339,19 @@ if (side player == blufor) then
 		{
 			player setDamage 0;
 		};
-	}];
-	player setUserActionText [_actionId, "Heal", "<img size='2' image='\a3\ui_f\data\IGUI\Cfg\Actions\heal_ca'/>"];
+	},
+	nil,		// arguments
+	1.5,		// priority
+	true,		// showWindow
+	false,		// hideOnUse
+	"",			// shortcut
+	"true",		// condition
+	50,			// radius
+	false,		// unconscious
+	"",			// selection
+	""			// memoryPoint
+	];
+	//player setUserActionText [_actionIdHeal, "Heal", "<img size='2' image='\a3\ui_f\data\IGUI\Cfg\Actions\heal_ca'/>"];
 
 
 	//Manage vehicle spawn options 
