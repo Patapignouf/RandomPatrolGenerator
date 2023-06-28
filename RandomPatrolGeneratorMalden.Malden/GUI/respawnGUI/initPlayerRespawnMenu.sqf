@@ -33,7 +33,7 @@ _buttonRespawnStart ctrlAddEventHandler[ "ButtonClick",
 			} else 
 			{
 				_spawnPos = initBlueforLocation;
-				player setPosASLW _spawnPos;
+				player setPosASL _spawnPos;
 			};
 		};
 		["Respawn on start position", format ["Year %1", date select 0], mapGridPosition player] spawn BIS_fnc_infoText;
@@ -64,8 +64,8 @@ _buttonRespawnLeader ctrlAddEventHandler[ "ButtonClick",
 		if !(player moveInAny (vehicle (_tempLeader select 0))) then 
 		{
 			//Leader on vehicle with empty space
-			_tempPos = getPosASLW (_tempLeader select 0);
-			player setPosASLW _tempPos;
+			_tempPos = getPosASL (_tempLeader select 0);
+			player setPosASL _tempPos;
 		};
 
 		["Respawn on teamleader", format ["Year %1", date select 0], mapGridPosition player] spawn BIS_fnc_infoText;
@@ -115,7 +115,7 @@ if (!normalClose) then
 		{
 			_spawnPos = initBlueforLocation;
 			[USS_FREEDOM_CARRIER] call BIS_fnc_Carrier01Init;
-			player setPosASLW [_spawnPos#0,_spawnPos#1,_spawnPos#2+0.5];
+			player setPosASL [_spawnPos#0,_spawnPos#1,_spawnPos#2+0.5];
 		};
 	};
 	["Respawn on start position", format ["Year %1", date select 0], mapGridPosition player] spawn BIS_fnc_infoText;
