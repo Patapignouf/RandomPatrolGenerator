@@ -305,7 +305,10 @@ itemList_2035_NATO_FS = [
 	"ACE_SpraypaintBlue",
 	"ACE_SpraypaintGreen",
 	"ACE_SpraypaintRed",
-	"ACE_RangeCard"
+	"ACE_RangeCard",
+	"NVGogglesB_blk_F",
+	"NVGogglesB_grn_F",
+	"NVGogglesB_gry_F"
 ];
 
 //item avalaible for all engineer

@@ -58,7 +58,7 @@ baseEnemyATGroup_2035_CSAT = [
 baseEnemyDemoGroup_2035_CSAT = [
 	"O_Soldier_AA_F",
 	"O_soldier_exp_F", 
-	"O_engineer_F", 
+	"O_soldier_UAV_F", 
 	"O_Soldier_AAT_F"
 ];
 
@@ -66,13 +66,15 @@ baseEnemyDemoGroup_2035_CSAT = [
 baseEnemyMortarGroup_2035_CSAT = [
 	"O_Mortar_01_F",
 	"O_sniper_F", 
-	"O_spotter_F"
+	"O_spotter_F",
+	"O_support_AMG_F", 
+	"O_support_MG_F"
 ];
 
 //Basic enemy vehicle avalaible (light) must be destroyed without AT (ex : jeep)
 baseEnemyVehicleGroup_2035_CSAT = [
-	"O_G_Offroad_01_armed_F", 
-	"O_G_Offroad_01_AT_F"
+	"O_LSV_02_AT_F", 
+	"O_LSV_02_armed_F"
 ];
 
 //Basic enemy light armored vehicle avalaible must be destroyed without heavy AT (ex : BMP)
@@ -202,11 +204,19 @@ rifleList_2035_CSAT = [
 	"arifle_Katiba_F",
 	"arifle_Katiba_C_F",
 	"arifle_SDAR_F",
-	"arifle_ARX_hex_F"
+	"arifle_ARX_hex_F",
+	"arifle_ARX_ghex_F",
+	"arifle_ARX_blk_F",
+	"arifle_CTAR_blk_F",
+	"arifle_CTAR_hex_F",
+	"arifle_CTAR_ghex_F"
 ];	
 
 grenadeLauncherList_2035_CSAT = [
-	"arifle_Katiba_GL_F"
+	"arifle_Katiba_GL_F",
+	"arifle_CTAR_GL_blk_F",
+	"arifle_CTAR_GL_hex_F",
+	"arifle_CTAR_GL_ghex_F"
 ];
 
 
@@ -229,7 +239,8 @@ marksmanrifleList_2035_CSAT = [
 	"srifle_DMR_01_F",
 	"srifle_DMR_05_blk_F",
 	"srifle_DMR_04_F",
-	"srifle_GM6_camo_F"
+	"srifle_GM6_camo_F",
+	"srifle_DMR_07_blk_F"
 ];
 
 //Smg avalaible for all unit
@@ -387,6 +398,7 @@ uniformList_2035_CSAT = [
 //Special note throwing items must be placed here too
 magazineList_2035_CSAT = [
 	"16Rnd_9x21_Mag",
+	"30Rnd_580x42_Mag_F",
 	"RPG32_F",
 	"1Rnd_HE_Grenade_shell",
 	"1Rnd_Smoke_Grenade_shell",
@@ -404,7 +416,8 @@ magazineList_2035_CSAT = [
 	"5Rnd_127x108_Mag",
 	"20Rnd_556x45_UW_mag",
 	"30Rnd_65x39_caseless_green",
-	"10Rnd_50BW_Mag_F"
+	"10Rnd_50BW_Mag_F",
+	"20Rnd_650x39_Cased_Mag_F"
 ];
 
 //Get magazine with following command

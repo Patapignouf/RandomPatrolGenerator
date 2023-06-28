@@ -374,7 +374,9 @@ uniformList_2035_NATO = [
 	"U_B_CombatUniform_mcam_tshirt",
 	"G_Tactical_Clear",
 	"H_HelmetB_camo",
-	"V_PlateCarrier2_rgr"
+	"V_PlateCarrier2_rgr",
+	"H_HelmetB_grass",
+	"G_Combat"
 	];
 
 //Magazine avalaible for all unit

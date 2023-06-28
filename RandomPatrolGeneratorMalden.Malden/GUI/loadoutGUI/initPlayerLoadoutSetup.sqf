@@ -164,10 +164,17 @@ _buttonLoad ctrlAddEventHandler[ "ButtonClick",
 		//Fix TFAR link 
 		if (isClass (configFile >> "CfgPatches" >> "task_force_radio")) then 
 		{
-			player unassignItem "TFAR_anprc152";
-			player removeItem "TFAR_anprc152";
-			player addItem "TFAR_anprc152";
-			player assignItem "TFAR_anprc152";
+
+			_currentRadios = player call TFAR_fnc_radiosList;
+
+			if (count _currentRadios >= 1) then
+			{
+				_currentRadio = _currentRadios#0;
+				player unassignItem _currentRadio;
+				player removeItem _currentRadio;
+				player addItem "TFAR_anprc152";
+				player assignItem "TFAR_anprc152";
+			};
 		};
 		
 		//Wipe saved loadout in Ironman mode

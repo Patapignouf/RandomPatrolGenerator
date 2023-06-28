@@ -617,10 +617,16 @@ publicvariable "deployableFOBItem";
 	clearBackpackCargoGlobal _tempBox;
 
 	//Add magazines according to avalaible magazine in the faction
+	for [{_i = 0}, {_i < 10}, {_i = _i + 1}] do
 	{
-		_tempBox addItemCargoGlobal [_x, 20];
-	}	foreach bluforMagazineList;
-} foreach ["Box_NATO_Uniforms_F"];
+		{
+			if (load _tempBox < 1) then 
+			{
+				_tempBox addItemCargoGlobal [_x, 2];
+			};
+		}	foreach bluforMagazineList;
+	};
+} foreach ["Box_NATO_Uniforms_F","Box_NATO_Wps_F"];
 
 //Place empty box with ACE medical stuff
 _tempBox = createVehicle ["Box_NATO_Equip_F", [ initBlueforLocation, 1, 15, 2, 0, 20, 0] call BIS_fnc_findSafePos, [], 0, "NONE"];
@@ -648,6 +654,9 @@ if (isClass (configFile >> "CfgPatches" >> "ace_medical")) then
 
 	//Setup fortification ACE mod
 	[blufor, 150, [["Land_BagFence_Long_F", 20], ["Land_BagBunker_Small_F", 50]]] call ace_fortify_fnc_registerObjects;
+} else 
+{
+	_tempBox addItemCargoGlobal ["FirstAidKit", 20];
 };
 
 //Setup view distance changer
