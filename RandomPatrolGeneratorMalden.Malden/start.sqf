@@ -743,9 +743,9 @@ for [{_i = 0}, {_i <= missionLength}, {_i = _i + 1}] do //Peut être optimisé
 if (!isNil "USS_FREEDOM_CARRIER") then 
 {
 	//Spawn basic items on Carrier
-	VA2 setPosASLW [initBlueforLocation#0-20, initBlueforLocation#1-30, initBlueforLocation#2];
-	TPFlag1 setPosASLW [initBlueforLocation#0-30, initBlueforLocation#1-30, initBlueforLocation#2-1];
-	deployableFOBItem setPosASLW [initBlueforLocation#0+10, initBlueforLocation#1-30, initBlueforLocation#2];
+	VA2 setPosASL [initBlueforLocation#0-20, initBlueforLocation#1-30, initBlueforLocation#2];
+	TPFlag1 setPosASL [initBlueforLocation#0-30, initBlueforLocation#1-30, initBlueforLocation#2-1];
+	deployableFOBItem setPosASL [initBlueforLocation#0+10, initBlueforLocation#1-30, initBlueforLocation#2];
 
 	//Try to spawn chopper on carrier (WIP)
 	_baseSpawnChopper = [initBlueforLocation#0-40, initBlueforLocation#1-10, initBlueforLocation#2];
@@ -753,7 +753,7 @@ if (!isNil "USS_FREEDOM_CARRIER") then
 		_baseSpawnChopper = [_baseSpawnChopper#0+30, _baseSpawnChopper#1, _baseSpawnChopper#2];
 		_chopper = createVehicle [_x,  [_baseSpawnChopper#0+30, _baseSpawnChopper#1, _baseSpawnChopper#2+1], [], 0, "NONE"];
 		_chopper enableSimulationGlobal false;
-		_chopper setPosASLW _baseSpawnChopper;
+		_chopper setPosASL _baseSpawnChopper;
 
 		//Repair vehicle
 		[_chopper] spawn {
@@ -787,7 +787,7 @@ if (!isNil "USS_FREEDOM_CARRIER") then
 		_baseSpawnPlane = [_baseSpawnPlane#0, _baseSpawnPlane#1+30, _baseSpawnPlane#2];
 		_plane = createVehicle [_x,  _baseSpawnPlane, [], 0, "NONE"];
 		_plane enableSimulationGlobal false;
-		_plane setPosASLW _baseSpawnPlane;
+		_plane setPosASL _baseSpawnPlane;
 		_plane setDir 90;
 
 		//Repair vehicle

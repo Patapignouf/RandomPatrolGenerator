@@ -293,14 +293,14 @@ if (side player == blufor) then
 			};
 
 			//Tp player on carrier
-			player setPosASLW [_spawnPos#0 - random 20,_spawnPos#1-random 20,_spawnPos#2+0.5];
+			player setPosASL [_spawnPos#0 - random 20,_spawnPos#1-random 20,_spawnPos#2+0.5];
 
 			//Add Action for TP on the carrier
 			_actionIdCarrier = player addAction ["Move to the carrier",{
 				//Define parameters
 				params ["_object","_caller","_ID","_spawnPos"];
 
-				_caller setPosASLW [_spawnPos#0,_spawnPos#1,_spawnPos#2+0.5];
+				_caller setPosASL [_spawnPos#0,_spawnPos#1,_spawnPos#2+0.5];
 
 			},_spawnPos,1.5,true,false,"","(initBlueforLocation distance _this <150)"];
 			player setUserActionText [_actionIdCarrier, "Move to the carrier", "<img size='3' image='\a3\ui_f_oldman\data\IGUI\Cfg\holdactions\map_ca.paa'/>"];
@@ -310,7 +310,7 @@ if (side player == blufor) then
 				//Define parameters
 				params ["_object","_caller","_ID","_spawnPos"];
 
-				_caller setPosASLW [(_spawnPos#0)-40, (_spawnPos#1)+70,0];
+				_caller setPosASL [(_spawnPos#0)-40, (_spawnPos#1)+70,0];
 
 			},_spawnPos,1.5,true,false,"","(initBlueforLocation distance _this <150)"];
 			player setUserActionText [_actionIdBoat, "Move to the boat", "<img size='3' image='\a3\ui_f\data\igui\cfg\actions\loadvehicle_ca.paa'/>"];
