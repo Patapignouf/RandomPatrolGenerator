@@ -293,7 +293,7 @@ if (side player == blufor) then
 			};
 
 			//Tp player on carrier
-			player setPosASLW [_spawnPos#0,_spawnPos#1,_spawnPos#2+0.5];
+			player setPosASLW [_spawnPos#0 - random 20,_spawnPos#1-random 20,_spawnPos#2+0.5];
 
 			//Add Action for TP on the carrier
 			private _actionId = player addAction ["Move to the carrier",{
