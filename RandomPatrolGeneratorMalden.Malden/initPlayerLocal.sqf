@@ -269,8 +269,9 @@ if (side player == blufor) then
 		_spawnPos = initBlueforLocation;
 
 		//Fix catapult on carrier
-		[] spawn {
-				waitUntil { !(isNull (missionNamespace getVariable ["USS_FREEDOM_CARRIER",objNull])) };
+		[_spawnPos] spawn {
+				params ["_spawnPos"];
+				waitUntil { !(isNull (missionNamespace getVariable ["USS_FREEDOM_CARRIER",objNull])) };				
 
 				["Carrier %1 Found. Client Initilising.",USS_FREEDOM_CARRIER] call BIS_fnc_logFormatServer;
 				if (count (USS_FREEDOM_CARRIER getVariable ["bis_carrierParts", []]) == 0) then {
@@ -289,11 +290,19 @@ if (side player == blufor) then
 					USS_FREEDOM_CARRIER setVariable ["bis_carrierParts",_nearbyCarrierParts];
 					["Carrier %1 was empty. Now contains %2.",str "bis_carrierParts",USS_FREEDOM_CARRIER getVariable ["bis_carrierParts", []]] call BIS_fnc_logFormatServer;
 				};
-				[USS_FREEDOM_CARRIER] spawn { sleep 1; _this call BIS_fnc_Carrier01Init};
+
+				//End init
+				[USS_FREEDOM_CARRIER,_spawnPos] spawn { 
+					params ["_USSCarrier","_spawnPos"];
+					sleep 1; 
+					_USSCarrier call BIS_fnc_Carrier01Init;
+
+					//Tp player on carrier
+					player setPosASL [_spawnPos#0 - random 20,_spawnPos#1-random 20,_spawnPos#2];
+				};
 			};
 
-			//Tp player on carrier
-			player setPosASL [_spawnPos#0 - random 20,_spawnPos#1-random 20,_spawnPos#2+0.5];
+			
 
 			//Add Action for TP on the carrier
 			_actionIdCarrier = player addAction ["Move to the carrier",{

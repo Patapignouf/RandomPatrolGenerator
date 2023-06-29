@@ -744,7 +744,7 @@ if (!isNil "USS_FREEDOM_CARRIER") then
 {
 	//Spawn basic items on Carrier
 	VA2 setPosASL [initBlueforLocation#0-105, initBlueforLocation#1-18, initBlueforLocation#2];
-	TPFlag1 setPosASL [initBlueforLocation#0-115, initBlueforLocation#1-18, initBlueforLocation#2];
+	TPFlag1 setPosASL [initBlueforLocation#0-115, initBlueforLocation#1-18, initBlueforLocation#2-1];
 	deployableFOBItem setPosASL [initBlueforLocation#0-50, initBlueforLocation#1-15, initBlueforLocation#2];
 
 	//Try to spawn chopper on carrier (WIP)
