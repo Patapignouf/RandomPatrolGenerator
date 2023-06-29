@@ -121,7 +121,8 @@ bluforBoat_USA_2000 = [
 
 //FixedWing vehicle avalaible for blufor
 bluforFixedWing_USA_2000 = [
-	"CUP_B_A10_DYN_USA"
+	"CUP_B_A10_DYN_USA",
+	"CUP_B_AV8B_DYN_USMC"
 ];
 
 //Vehicule able to do HQ features (Loadout management and more)

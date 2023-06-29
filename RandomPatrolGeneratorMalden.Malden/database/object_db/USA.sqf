@@ -131,7 +131,9 @@ bluforBoat_USA = [
 
 //FixedWing vehicle avalaible for blufor
 bluforFixedWing_USA = [
-	"CUP_B_A10_DYN_USA"
+	"CUP_B_A10_DYN_USA",
+	"CUP_B_AV8B_DYN_USMC",
+	"CUP_B_F35B_Stealth_USMC"
 ];
 
 //Vehicule able to do HQ features (Loadout management and more)
