@@ -743,15 +743,15 @@ for [{_i = 0}, {_i <= missionLength}, {_i = _i + 1}] do //Peut être optimisé
 if (!isNil "USS_FREEDOM_CARRIER") then 
 {
 	//Spawn basic items on Carrier
-	VA2 setPosASL [initBlueforLocation#0-20, initBlueforLocation#1-30, initBlueforLocation#2];
-	TPFlag1 setPosASL [initBlueforLocation#0-30, initBlueforLocation#1-30, initBlueforLocation#2-1];
-	deployableFOBItem setPosASL [initBlueforLocation#0+10, initBlueforLocation#1-30, initBlueforLocation#2];
+	VA2 setPosASL [initBlueforLocation#0-105, initBlueforLocation#1-18, initBlueforLocation#2];
+	TPFlag1 setPosASL [initBlueforLocation#0-115, initBlueforLocation#1-18, initBlueforLocation#2];
+	deployableFOBItem setPosASL [initBlueforLocation#0-50, initBlueforLocation#1-15, initBlueforLocation#2];
 
 	//Try to spawn chopper on carrier (WIP)
-	_baseSpawnChopper = [initBlueforLocation#0-40, initBlueforLocation#1-10, initBlueforLocation#2];
+	_baseSpawnChopper = [initBlueforLocation#0-90, initBlueforLocation#1-30, initBlueforLocation#2];
 	{
-		_baseSpawnChopper = [_baseSpawnChopper#0+30, _baseSpawnChopper#1, _baseSpawnChopper#2];
-		_chopper = createVehicle [_x,  [_baseSpawnChopper#0+30, _baseSpawnChopper#1, _baseSpawnChopper#2+1], [], 0, "NONE"];
+		_baseSpawnChopper = [_baseSpawnChopper#0+25, _baseSpawnChopper#1, _baseSpawnChopper#2];
+		_chopper = createVehicle [_x,  [_baseSpawnChopper#0, _baseSpawnChopper#1, _baseSpawnChopper#2+100], [], 0, "NONE"];
 		_chopper enableSimulationGlobal false;
 		_chopper setPosASL _baseSpawnChopper;
 
@@ -769,6 +769,32 @@ if (!isNil "USS_FREEDOM_CARRIER") then
 		};
 	} foreach bluforUnarmedVehicleChopper;
 
+
+
+	//Try to spawn armed chopper on carrier (WIP)
+	_baseSpawnChopper = [initBlueforLocation#0-110, initBlueforLocation#1-30, initBlueforLocation#2];
+	{
+		_baseSpawnChopper = [_baseSpawnChopper#0-20, _baseSpawnChopper#1, _baseSpawnChopper#2];
+		_chopper = createVehicle [_x,  [_baseSpawnChopper#0, _baseSpawnChopper#1, _baseSpawnChopper#2+100], [], 0, "NONE"];
+		_chopper enableSimulationGlobal false;
+		_chopper setPosASL _baseSpawnChopper;
+
+		//Repair vehicle
+		[_chopper] spawn {
+			params ["_vehicle"];
+			sleep 1;
+			_vehicle setfuel 1;
+			_vehicle setdamage 0;
+			_vehicle enableSimulationGlobal true;
+			if (!(alive _vehicle)) then 
+			{
+				deleteVehicle _vehicle;
+			}; 
+		};
+	} foreach bluforArmedChopper;
+
+
+
 	_baseSpawnShip = [initBlueforLocation#0-40, initBlueforLocation#1+70, initBlueforLocation#2];
 	{
 		_baseSpawnShip = [_baseSpawnShip#0+30, _baseSpawnShip#1, 0];
@@ -782,7 +808,7 @@ if (!isNil "USS_FREEDOM_CARRIER") then
 		}; 
 	} foreach bluforBoat;
 
-	_baseSpawnPlane = [initBlueforLocation#0-70, initBlueforLocation#1-30, initBlueforLocation#2+1];
+	_baseSpawnPlane = [initBlueforLocation#0-80, initBlueforLocation#1-30, initBlueforLocation#2+1];
 	{
 		_baseSpawnPlane = [_baseSpawnPlane#0, _baseSpawnPlane#1+30, _baseSpawnPlane#2];
 		_plane = createVehicle [_x,  _baseSpawnPlane, [], 0, "NONE"];
