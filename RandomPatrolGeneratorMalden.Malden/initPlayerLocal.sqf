@@ -298,7 +298,7 @@ if (side player == blufor) then
 					_USSCarrier call BIS_fnc_Carrier01Init;
 
 					//Tp player on carrier
-					player setPosASL [_spawnPos#0 - random 20,_spawnPos#1-random 20,_spawnPos#2];
+					player setPosASL [_spawnPos#0 - random 30,_spawnPos#1-random 30,_spawnPos#2];
 				};
 			};
 

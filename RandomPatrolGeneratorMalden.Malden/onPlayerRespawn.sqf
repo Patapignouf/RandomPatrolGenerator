@@ -59,7 +59,7 @@ if (player getVariable "sideBeforeDeath" == "independent") then
   {
     _spawnPos = initBlueforLocation;
     [USS_FREEDOM_CARRIER] call BIS_fnc_Carrier01Init;
-    player setPosASL [(_spawnPos#0)+random 10, (_spawnPos#1)+random 10,_spawnPos#2];
+    player setPosASL [(_spawnPos#0)+random 30, (_spawnPos#1)+random 30,_spawnPos#2];
   };
 };
 ["Respawn on start position", format ["Year %1", date select 0], mapGridPosition player] spawn BIS_fnc_infoText;
