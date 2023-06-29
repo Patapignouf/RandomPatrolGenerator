@@ -99,12 +99,13 @@ bluforArmedVehicle_HorizonIsland = [
 
 bluforUnarmedVehicleChopper_HorizonIsland = [
 	"CUP_B_AW159_Unarmed_HIL", 
-	"CUP_B_412_Mil_Transport_HIL"
+	"CUP_B_412_Mil_Transport_HIL",
+	"CUP_B_412_Military_Radar_HIL"
 ];
 
 bluforArmedChopper_HorizonIsland = [
-	"CUP_B_CH47F_HIL", 
-	"CUP_B_412_Military_Armed_HIL"
+	"CUP_B_412_Military_Armed_HIL",
+	"CUP_B_CH47F_HIL"
 ];
 
 bluforDrone_HorizonIsland = [
