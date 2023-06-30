@@ -79,6 +79,13 @@ baseEnemyUnarmedChopperGroup_USA_2000 = [
 	"CUP_B_MH6M_USA"
 ];
 
+//Basic enemy aircraft avalaible
+baseFixedWingGroup_USA_2000 = [
+	"CUP_B_A10_DYN_USA",
+	"CUP_B_AV8B_DYN_USMC"
+];
+
+
 ////////////////////////
 //Vehicle management////
 ////////////////////////

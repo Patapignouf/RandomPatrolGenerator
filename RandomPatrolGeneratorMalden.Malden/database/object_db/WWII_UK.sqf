@@ -111,7 +111,9 @@ baseChopperGroup_WWII_UK = [
 
 //Basic enemy aircraft avalaible
 baseFixedWingGroup_WWII_UK = [
-	"LIB_RAF_P39"
+	"LIB_RAF_P39",
+	"LIB_RAAF_P39",
+	"LIB_C47_RAF"
 ];
 
 ////////////////////////

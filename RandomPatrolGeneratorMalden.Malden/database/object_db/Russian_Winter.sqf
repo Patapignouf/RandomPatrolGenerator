@@ -73,7 +73,11 @@ baseEnemyUnarmedChopperGroup_Russian_Winter = [
 	"CUP_O_Mi8AMT_RU"
 ];
 
-
+//Basic enemy aircraft avalaible
+baseFixedWingGroup_Russian_Winter = [
+	"CUP_O_Su25_Dyn_RU", 
+	"CUP_O_SU34_RU"
+];
 
 ////////////////////////
 //Vehicle management////

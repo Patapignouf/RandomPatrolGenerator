@@ -73,6 +73,13 @@ baseEnemyHeavyArmoredVehicleGroup_USA_2000_DF = ["CUP_B_M1126_ICV_M2_Desert",
 "CUP_B_M1A2SEP_TUSK_II_Desert_US_Army", 
 "CUP_B_M1A1SA_Desert_US_Army"];
 
+
+//Basic enemy aircraft avalaible
+baseFixedWingGroup_USA_2000_DF = [
+	"CUP_B_A10_DYN_USA",
+	"CUP_B_AV8B_DYN_USMC"
+];
+
 baseEnemyUnarmedChopperGroup_USA_2000_DF = [
 	"CUP_B_UH60M_Unarmed_US",
 	"CUP_B_MH6M_OBS_USA",

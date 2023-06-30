@@ -35,7 +35,7 @@ civilianTruck_2035_NATO = ["C_SUV_01_F","C_Offroad_01_repair_F"];
 
 //Basic enemy group | 8 men (Leader, Medic, MG, Sniper, Rifleman)
 baseEnemyGroup_2035_NATO = [
-	
+
 ];
 
 //Basic anti tank enemy group | 5 men max (Leader, MG, AT)
@@ -141,7 +141,8 @@ bluforBoat_2035_NATO = [
 //FixedWing vehicle avalaible for blufor
 bluforFixedWing_2035_NATO = [
 	"B_Plane_CAS_01_dynamicLoadout_F",
-	"B_Plane_Fighter_01_Stealth_F"
+	"B_Plane_Fighter_01_Stealth_F",
+	"B_Plane_Fighter_01_F"
 ];
 
 //Vehicule able to do HQ features (Loadout management and more)

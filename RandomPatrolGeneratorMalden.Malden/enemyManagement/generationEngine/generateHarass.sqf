@@ -1,4 +1,4 @@
-params ["_thisAvailableOpforGroup","_thisAvailableOpforCars","_thisAvailableOpforLightArmoredVehicle","_thisAvailableOpforHeavyArmoredVehicle", "_thisAvailableOpforUnarmedChopperVehicle","_thisDifficulty"];
+params ["_thisAvailableOpforGroup","_thisAvailableOpforCars","_thisAvailableOpforLightArmoredVehicle","_thisAvailableOpforHeavyArmoredVehicle", "_thisAvailableOpforUnarmedChopperVehicle","_thisAvailableOpforFixedWing","_thisDifficulty"];
 
 nb_ind_player_alive = 0;
 nb_blu_player_alive = 0;
@@ -74,6 +74,14 @@ if (isServer) then
 				//Generate enemy wave
 				diag_log "Begin chopper landing on operation area !";
 				[_thisAvailableOpforGroup#0, selectRandom _thisAvailableOpforUnarmedChopperVehicle, positionToAttack] execVM 'enemyManagement\behaviorEngine\doVehicleReinforcement.sqf'; 
+			};
+
+			//Plane reinforcement 30%
+			if (missionNamespace getVariable ["enableArmedAicraft", false] && (count _thisAvailableOpforFixedWing != 0 &&  random 30 < 100)) then 
+			{
+				//Generate enemy wave
+				diag_log "Begin plane attack on operation area !";
+				[selectRandom _thisAvailableOpforFixedWing, positionToAttack] execVM 'enemyManagement\behaviorEngine\doVehicleAttackOnPosition.sqf'; 
 			};
 
 			AvalaibleInitAttackPositions = [];

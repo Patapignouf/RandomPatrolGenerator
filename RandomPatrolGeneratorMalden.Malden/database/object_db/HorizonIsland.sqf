@@ -84,6 +84,12 @@ baseEnemyUnarmedChopperGroup_HorizonIsland = [
 	"CUP_B_CH47F_HIL"
 ];
 
+//Basic enemy aircraft avalaible
+baseFixedWingGroup_HorizonIsland = [
+	"CUP_B_JAS39_HIL", 
+	"CUP_I_CESSNA_T41_ARMED_HIL"
+];
+
 ////////////////////////
 //Vehicle management////
 ////////////////////////

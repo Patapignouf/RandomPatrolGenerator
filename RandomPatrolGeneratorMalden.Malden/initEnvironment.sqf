@@ -2,7 +2,7 @@
 
 c_variableToInit = ["listOfRoles","loadout","rifleList","grenadeLauncherList","attachmentLongList","attachmentShortList","smgList","marksmanrifleList","autorifleList","launcherList","itemList","itemEngineerList","itemMedicList",'backPackList','uniformList', "bluforUnarmedVehicle","bluforArmedVehicle","bluforUnarmedVehicleChopper","bluforDrone","bluforBoat","civilian_group",
 "civilian_big_group","civilianTruck","baseEnemyGroup","baseEnemyATGroup","baseEnemyDemoGroup","baseEnemyMortarGroup","baseEnemyVehicleGroup",
-"baseEnemyLightArmoredVehicleGroup","baseEnemyHeavyArmoredVehicleGroup","baseEnemyUnarmedChopperGroup","bluforFixedWing","bluforArmedChopper", "bluforHQVehicle","magazineList"];
+"baseEnemyLightArmoredVehicleGroup","baseEnemyHeavyArmoredVehicleGroup","baseFixedWingGroup","baseEnemyUnarmedChopperGroup","bluforFixedWing","bluforArmedChopper", "bluforHQVehicle","magazineList"];
 
 
 //////////

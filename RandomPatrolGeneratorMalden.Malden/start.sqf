@@ -110,7 +110,7 @@ baseEnemyVehicleGroup = baseEnemyVehicleGroup_db select {_x select 1  == opFacti
 baseEnemyLightArmoredVehicleGroup = baseEnemyLightArmoredVehicleGroup_db select {_x select 1  == opFaction} select 0 select 0;
 baseEnemyHeavyArmoredVehicleGroup = baseEnemyHeavyArmoredVehicleGroup_db select {_x select 1  == opFaction} select 0 select 0;
 baseEnemyUnarmedChopperGroup = baseEnemyUnarmedChopperGroup_db select {_x select 1  == opFaction} select 0 select 0;
-
+baseFixedWingGroup = baseFixedWingGroup_db select {_x select 1  == opFaction} select 0 select 0;
 
 //Enemy Wave Composition, needs to be completely rework
 EnemyWaveLevel_1 = [baseEnemyGroup,baseEnemyATGroup];
@@ -315,7 +315,7 @@ if (isClass (configFile >> "CfgPatches" >> "ace_medical")) then
 },[respawnSettings],1.5,true,false,"","_target distance _this <5 && side _this == independent"]] remoteExec [ "addAction", 0, true ];
 
 //Init perma harass on player
-[[baseEnemyGroup,baseEnemyATGroup,baseEnemyDemoGroup],baseEnemyVehicleGroup, baseEnemyLightArmoredVehicleGroup, baseEnemyHeavyArmoredVehicleGroup, baseEnemyUnarmedChopperGroup, missionDifficultyParam] execVM 'enemyManagement\generationEngine\generateHarass.sqf'; 
+[[baseEnemyGroup,baseEnemyATGroup,baseEnemyDemoGroup],baseEnemyVehicleGroup, baseEnemyLightArmoredVehicleGroup, baseEnemyHeavyArmoredVehicleGroup, baseEnemyUnarmedChopperGroup, baseFixedWingGroup, missionDifficultyParam] execVM 'enemyManagement\generationEngine\generateHarass.sqf'; 
 
 // Get smallest distance to an AO
 areaOfOperation = [AllPossibleObjectivePosition] call getAreaOfMission;
@@ -599,6 +599,8 @@ publicvariable "deployableFOBItem";
 	false
 ] remoteExec ["BIS_fnc_holdActionAdd", 0, true];
 
+_ammoBox = [];
+
 //Place empty box to blufor camp
 {
 	_tempBox = createVehicle [_x, [ initBlueforLocation, 1, 15, 2, 0, 20, 0] call BIS_fnc_findSafePos, [], 0, "NONE"];
@@ -606,6 +608,7 @@ publicvariable "deployableFOBItem";
 	clearMagazineCargoGlobal _tempBox;
 	clearItemCargoGlobal _tempBox;
 	clearBackpackCargoGlobal _tempBox;
+	_ammoBox pushBack _tempBox;
 } foreach ["Box_NATO_Grenades_F"];
 
 //Place a box with ammo to blufor camp
@@ -626,6 +629,7 @@ publicvariable "deployableFOBItem";
 			};
 		}	foreach bluforMagazineList;
 	};
+	_ammoBox pushBack _tempBox;
 } foreach ["Box_NATO_Uniforms_F","Box_NATO_Wps_F"];
 
 //Place empty box with ACE medical stuff
@@ -634,6 +638,7 @@ clearWeaponCargoGlobal _tempBox;
 clearMagazineCargoGlobal _tempBox;
 clearItemCargoGlobal _tempBox;
 clearBackpackCargoGlobal _tempBox;
+_ammoBox pushBack _tempBox;
 
 //Check if ACE is enable on the server
 if (isClass (configFile >> "CfgPatches" >> "ace_medical")) then 
@@ -747,8 +752,15 @@ if (!isNil "USS_FREEDOM_CARRIER") then
 	TPFlag1 setPosASL [initBlueforLocation#0-115, initBlueforLocation#1-18, initBlueforLocation#2-1];
 	deployableFOBItem setPosASL [initBlueforLocation#0-50, initBlueforLocation#1-15, initBlueforLocation#2];
 
+	//Move basic ammo box
+	_baseAmmoBoxSpawn = [initBlueforLocation#0-113, initBlueforLocation#1-25, initBlueforLocation#2];
+	{
+		_baseAmmoBoxSpawn = [_baseAmmoBoxSpawn#0+1, _baseAmmoBoxSpawn#1, _baseAmmoBoxSpawn#2];
+		_x setPosASL [_baseAmmoBoxSpawn#0, _baseAmmoBoxSpawn#1, _baseAmmoBoxSpawn#2];
+	} foreach _ammoBox;
+
 	//Try to spawn chopper on carrier (WIP)
-	_baseSpawnChopper = [initBlueforLocation#0-90, initBlueforLocation#1-30, initBlueforLocation#2];
+	_baseSpawnChopper = [initBlueforLocation#0-100, initBlueforLocation#1-30, initBlueforLocation#2+1];
 	{
 		_baseSpawnChopper = [_baseSpawnChopper#0+25, _baseSpawnChopper#1, _baseSpawnChopper#2];
 		_chopper = createVehicle [_x,  [_baseSpawnChopper#0, _baseSpawnChopper#1, _baseSpawnChopper#2+100], [], 0, "NONE"];
@@ -760,6 +772,7 @@ if (!isNil "USS_FREEDOM_CARRIER") then
 			params ["_vehicle"];
 			sleep 1;
 			_vehicle setfuel 1;
+			_vehicle setVelocity [0, 0, 0];
 			_vehicle setdamage 0;
 			_vehicle enableSimulationGlobal true;
 			if (!(alive _vehicle)) then 
@@ -772,7 +785,7 @@ if (!isNil "USS_FREEDOM_CARRIER") then
 
 
 	//Try to spawn armed chopper on carrier (WIP)
-	_baseSpawnChopper = [initBlueforLocation#0-110, initBlueforLocation#1-30, initBlueforLocation#2];
+	_baseSpawnChopper = [initBlueforLocation#0-110, initBlueforLocation#1-30, initBlueforLocation#2+1];
 	{
 		_baseSpawnChopper = [_baseSpawnChopper#0-20, _baseSpawnChopper#1, _baseSpawnChopper#2];
 		_chopper = createVehicle [_x,  [_baseSpawnChopper#0, _baseSpawnChopper#1, _baseSpawnChopper#2+100], [], 0, "NONE"];
@@ -784,6 +797,7 @@ if (!isNil "USS_FREEDOM_CARRIER") then
 			params ["_vehicle"];
 			sleep 1;
 			_vehicle setfuel 1;
+			_vehicle setVelocity [0, 0, 0];
 			_vehicle setdamage 0;
 			_vehicle enableSimulationGlobal true;
 			if (!(alive _vehicle)) then 
@@ -794,12 +808,34 @@ if (!isNil "USS_FREEDOM_CARRIER") then
 	} foreach bluforArmedChopper;
 
 
+	_baseSpawnVehicle = [initBlueforLocation#0-100, initBlueforLocation#1+30, initBlueforLocation#2];
+	{
+		_baseSpawnVehicle = [_baseSpawnVehicle#0-5, _baseSpawnVehicle#1, _baseSpawnVehicle#2];
+		_vehicle = createVehicle [_x,  [_baseSpawnVehicle#0, _baseSpawnVehicle#1, _baseSpawnVehicle#2+100], [], 180, "NONE"];
+		_vehicle enableSimulationGlobal false;
+		_vehicle setPosASL _baseSpawnVehicle;
+		_vehicle setDir 180;
+
+		//Repair vehicle
+		[_vehicle] spawn {
+			params ["_vehicle"];
+			sleep 1;
+			_vehicle setfuel 1;
+			_vehicle setdamage 0;
+			_vehicle setVelocity [0, 0, 0];
+			_vehicle enableSimulationGlobal true;
+			if (!(alive _vehicle)) then 
+			{
+				deleteVehicle _vehicle;
+			}; 
+		};
+	} foreach bluforUnarmedVehicle;
 
 	_baseSpawnShip = [initBlueforLocation#0-40, initBlueforLocation#1+70, initBlueforLocation#2];
 	{
 		_baseSpawnShip = [_baseSpawnShip#0+30, _baseSpawnShip#1, 0];
 		_ship = createVehicle [_x,  _baseSpawnShip, [], 0, "NONE"];
-		sleep 0.5;
+		sleep 1;
 		_ship setfuel 1;
 		_ship setdamage 0;
 		if (!(alive _ship)) then 
@@ -808,21 +844,38 @@ if (!isNil "USS_FREEDOM_CARRIER") then
 		}; 
 	} foreach bluforBoat;
 
-	_baseSpawnPlane = [initBlueforLocation#0-80, initBlueforLocation#1-30, initBlueforLocation#2+1];
+	_baseSpawnPlane = [initBlueforLocation#0-78, initBlueforLocation#1+70, initBlueforLocation#2+2];
+	_planeNumber = 0;
 	{
-		_baseSpawnPlane = [_baseSpawnPlane#0, _baseSpawnPlane#1+30, _baseSpawnPlane#2];
-		_plane = createVehicle [_x,  _baseSpawnPlane, [], 0, "NONE"];
+		//Manage case where there are more than 2 planes
+		if (_planeNumber==2) then 
+		{
+			_baseSpawnPlane = [initBlueforLocation#0+37, initBlueforLocation#1+40, initBlueforLocation#2+2];
+		};
+		_baseSpawnPlane = [_baseSpawnPlane#0, _baseSpawnPlane#1-30, _baseSpawnPlane#2];
+		_plane = createVehicle [_x,  [_baseSpawnPlane#0, _baseSpawnPlane#1, _baseSpawnPlane#2+100], [], 0, "NONE"];
 		_plane enableSimulationGlobal false;
-		_plane setPosASL _baseSpawnPlane;
+		_plane allowDamage false;
+
+		_bbr = boundingBoxReal vehicle _plane;
+		_p1 = _bbr select 0;
+		_p2 = _bbr select 1;
+		_maxHeight = abs ((_p2 select 2) - (_p1 select 2));
+
+		_plane setPosASL [_baseSpawnPlane#0, _baseSpawnPlane#1, _baseSpawnPlane#2];
 		_plane setDir 90;
+		_planeNumber = _planeNumber+1;
 
 		//Repair vehicle
 		[_plane] spawn {
 			params ["_vehicle"];
-			sleep 1;
-			_vehicle setfuel 1;
-			_vehicle setdamage 0;
 			_vehicle enableSimulationGlobal true;
+			waitUntil {(getPos _vehicle)#2<1};
+			_vehicle setfuel 1;
+			_vehicle setVelocity [0, 0, 0];
+			_vehicle setdamage 0;
+			_vehicle setDir 90;
+			_vehicle allowDamage true;
 			if (!(alive _vehicle)) then 
 			{
 				deleteVehicle _vehicle;

@@ -78,17 +78,21 @@ baseEnemyHeavyArmoredVehicleGroup_2035_NATO_FS = ["I_C_Offroad_02_LMG_F",
 "I_C_Offroad_02_AT_F"];
 
 //Basic enemy chopper avalaible
-baseChopperGroup_2035_NATO_FS = ["I_C_Offroad_02_LMG_F", 
-"I_C_Offroad_02_AT_F"];
+baseChopperGroup_2035_NATO_FS = [
+	
+];
 
 //Basic enemy aircraft avalaible
-baseFixedWingGroup_2035_NATO_FS = [	"B_Heli_Transport_03_unarmed_F",
-	"B_Heli_Light_01_F",
-	"B_Heli_Transport_01_F"];
+baseFixedWingGroup_2035_NATO_FS = [
+	
+];
 
 //Basic enemy chopper avalaible
-baseEnemyUnarmedChopperGroup_NATO_FS = ["I_C_Offroad_02_LMG_F", 
-"I_C_Offroad_02_AT_F"];
+baseEnemyUnarmedChopperGroup_NATO_FS = [
+	"B_Heli_Transport_03_unarmed_F",
+	"B_Heli_Light_01_F",
+	"B_Heli_Transport_01_F"
+	];
 
 ////////////////////////
 //Vehicle management////
@@ -149,7 +153,8 @@ bluforBoat_2035_NATO_FS = [
 //FixedWing vehicle avalaible for blufor
 bluforFixedWing_2035_NATO_FS = [
 	"B_Plane_CAS_01_dynamicLoadout_F",
-	"B_Plane_Fighter_01_Stealth_F"
+	"B_Plane_Fighter_01_Stealth_F",
+	"B_Plane_Fighter_01_F"
 ];
 
 
