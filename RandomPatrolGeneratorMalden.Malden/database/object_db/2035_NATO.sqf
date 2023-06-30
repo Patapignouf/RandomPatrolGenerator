@@ -34,53 +34,49 @@ civilianTruck_2035_NATO = ["C_SUV_01_F","C_Offroad_01_repair_F"];
 //////////////////////////////
 
 //Basic enemy group | 8 men (Leader, Medic, MG, Sniper, Rifleman)
-baseEnemyGroup_2035_NATO = ["I_C_Soldier_Bandit_4_F", 
-"I_C_Soldier_Bandit_3_F", 
-"I_C_Soldier_Bandit_7_F", 
-"I_C_Soldier_Bandit_5_F", 
-"I_C_Soldier_Bandit_6_F", 
-"I_C_Soldier_Bandit_2_F", 
-"I_C_Soldier_Bandit_8_F", 
-"I_C_Soldier_Bandit_1_F"];
+baseEnemyGroup_2035_NATO = [
+	
+];
 
 //Basic anti tank enemy group | 5 men max (Leader, MG, AT)
-baseEnemyATGroup_2035_NATO = ["I_C_Soldier_Bandit_6_F", 
-"I_C_Soldier_Bandit_2_F", 
-"I_C_Soldier_Bandit_2_F",
-"I_C_Soldier_Bandit_7_F", 
-"I_C_Soldier_Bandit_8_F"];
+baseEnemyATGroup_2035_NATO = [
+
+];
 
 //Basic demolition enemy group | 8 men max (Leader, Explosive)
-baseEnemyDemoGroup_2035_NATO = ["I_C_Soldier_Bandit_2_F", 
-"I_C_Soldier_Bandit_8_F",
-"I_C_Soldier_Bandit_8_F", 
-"I_C_Soldier_Bandit_6_F"];
+baseEnemyDemoGroup_2035_NATO = [
+	"B_soldier_UAV_F"
+	];
 
 //Basic Mortar enemy group | 8 men max (Mortar, Rifleman)
-baseEnemyMortarGroup_2035_NATO = ["I_G_Mortar_01_F", 
-"I_C_Soldier_Bandit_8_F", 
-"I_C_Soldier_Bandit_6_F"];
+baseEnemyMortarGroup_2035_NATO = [
+	
+];
 
 //Basic enemy vehicle avalaible (light) must be destroyed without AT (ex : jeep)
-baseEnemyVehicleGroup_2035_NATO = ["I_C_Offroad_02_LMG_F", 
-"I_C_Offroad_02_AT_F"];
+baseEnemyVehicleGroup_2035_NATO = [
+	
+];
 
 //Basic enemy light armored vehicle avalaible must be destroyed without heavy AT (ex : BMP)
-baseEnemyLightArmoredVehicleGroup_2035_NATO = ["I_C_Offroad_02_LMG_F", 
-"I_C_Offroad_02_AT_F"];
+baseEnemyLightArmoredVehicleGroup_2035_NATO = [
+	
+];
 
 //Basic enemy heavy armored vehicle avalaible must be destroyed with other vehicle or heavy AT (ex : tank)
-baseEnemyHeavyArmoredVehicleGroup_2035_NATO = ["I_C_Offroad_02_LMG_F", 
-"I_C_Offroad_02_AT_F"];
+baseEnemyHeavyArmoredVehicleGroup_2035_NATO = [
+	
+];
 
 //Basic enemy chopper avalaible
-baseEnemyUnarmedChopperGroup_2035_NATO = [	"B_Heli_Transport_03_unarmed_F",
-	"B_Heli_Light_01_F",
-	"B_Heli_Transport_01_F"];
+baseEnemyUnarmedChopperGroup_2035_NATO = [
+	
+];
 
 //Basic enemy aircraft avalaible
-baseFixedWingGroup_2035_NATO = ["I_C_Offroad_02_LMG_F", 
-"I_C_Offroad_02_AT_F"];
+baseFixedWingGroup_2035_NATO = [
+	
+];
 
 
 

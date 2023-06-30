@@ -51,7 +51,9 @@ baseEnemyATGroup_2035_CSAT = [
 	"O_Soldier_TL_F", 
 	"O_Soldier_HAT_F", 
 	"O_Soldier_HAT_F",
-	"O_Soldier_AHAT_F"
+	"O_Soldier_AHAT_F",
+	"O_support_AMG_F", 
+	"O_support_MG_F"
 ];
 
 //Basic demolition enemy group | 8 men max (Leader, Explosive)
