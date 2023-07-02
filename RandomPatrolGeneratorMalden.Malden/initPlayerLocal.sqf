@@ -296,7 +296,7 @@ if (side player == blufor) then
 					params ["_USSCarrier","_spawnPos"];
 					sleep 1; 
 					_USSCarrier call BIS_fnc_Carrier01Init;
-
+					sleep 1;
 					//Tp player on carrier
 					player setPosASL [_spawnPos#0 + random 30,_spawnPos#1+random 30,_spawnPos#2];
 				};
