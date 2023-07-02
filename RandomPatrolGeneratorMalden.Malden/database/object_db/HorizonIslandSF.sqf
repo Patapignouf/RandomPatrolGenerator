@@ -296,5 +296,12 @@ magazineList_HorizonIslandSF = 	[
 	"CUP_40Rnd_46x30_MP7",
 	"CUP_20Rnd_762x51_B_SCAR_wdl",
 	"CUP_SMAW_HEAA_M",
-	"CUP_100Rnd_TE4_LRT4_Red_Tracer_762x51_Belt_M"
+	"CUP_100Rnd_TE4_LRT4_Red_Tracer_762x51_Belt_M",
+	"SmokeShell",
+	"SmokeShellBlue",
+	"SmokeShellGreen",
+	"SmokeShellOrange",
+	"SmokeShellPurple",
+	"SmokeShellRed",
+	"SmokeShellYellow"
 ];

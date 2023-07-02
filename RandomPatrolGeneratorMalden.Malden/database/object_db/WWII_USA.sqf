@@ -336,5 +336,12 @@ magazineList_WWII_USA = [
 	"LIB_50Rnd_762x63_M1",
 	"LIB_5Rnd_762x63",
 	"LIB_5Rnd_762x63_M1",
-	"LIB_5Rnd_762x63_t"
+	"LIB_5Rnd_762x63_t",
+	"SmokeShell",
+	"SmokeShellBlue",
+	"SmokeShellGreen",
+	"SmokeShellOrange",
+	"SmokeShellPurple",
+	"SmokeShellRed",
+	"SmokeShellYellow"
 ];

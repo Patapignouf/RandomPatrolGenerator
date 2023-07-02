@@ -309,5 +309,12 @@ magazineList_HorizonIsland = 	[
 	"CUP_1Rnd_HEDP_M203",
 	"CUP_1Rnd_HE_M203",
 	"CUP_40Rnd_46x30_MP7",
-	"CUP_SMAW_HEAA_M"
+	"CUP_SMAW_HEAA_M",
+	"SmokeShell",
+	"SmokeShellBlue",
+	"SmokeShellGreen",
+	"SmokeShellOrange",
+	"SmokeShellPurple",
+	"SmokeShellRed",
+	"SmokeShellYellow"
 ];

@@ -418,5 +418,12 @@ magazineList_USA = 	[
 	"CUP_40Rnd_46x30_MP7",
 	"CUP_15Rnd_9x19_M9",
 	"20Rnd_762x51_Mag",
-	"CUP_20Rnd_762x51_B_SCAR"
+	"CUP_20Rnd_762x51_B_SCAR",
+	"SmokeShell",
+	"SmokeShellBlue",
+	"SmokeShellGreen",
+	"SmokeShellOrange",
+	"SmokeShellPurple",
+	"SmokeShellRed",
+	"SmokeShellYellow"
 ];

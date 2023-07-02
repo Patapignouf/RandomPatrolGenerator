@@ -301,5 +301,12 @@ magazineList_WWII_UK = [
 	"LIB_1Rnd_89m_PIAT",
 	"LIB_1Rnd_89m_G_PIAT",
 	"LIB_32Rnd_9x19_Sten",
-	"LIB_1Rnd_G_MillsBomb"
+	"LIB_1Rnd_G_MillsBomb",
+	"SmokeShell",
+	"SmokeShellBlue",
+	"SmokeShellGreen",
+	"SmokeShellOrange",
+	"SmokeShellPurple",
+	"SmokeShellRed",
+	"SmokeShellYellow"
 ];

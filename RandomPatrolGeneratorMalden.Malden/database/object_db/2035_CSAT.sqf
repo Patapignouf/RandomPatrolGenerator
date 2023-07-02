@@ -419,7 +419,14 @@ magazineList_2035_CSAT = [
 	"20Rnd_556x45_UW_mag",
 	"30Rnd_65x39_caseless_green",
 	"10Rnd_50BW_Mag_F",
-	"20Rnd_650x39_Cased_Mag_F"
+	"20Rnd_650x39_Cased_Mag_F",
+	"SmokeShell",
+	"SmokeShellBlue",
+	"SmokeShellGreen",
+	"SmokeShellOrange",
+	"SmokeShellPurple",
+	"SmokeShellRed",
+	"SmokeShellYellow"
 ];
 
 //Get magazine with following command
