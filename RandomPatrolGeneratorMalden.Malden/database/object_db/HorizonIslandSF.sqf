@@ -163,7 +163,7 @@ loadout_HorizonIslandSF = [
 //USA
 rifleList_HorizonIslandSF = [		
 	"CUP_arifle_Mk16_CQC_FG_woodland",
-	"CUP_hgun_mk23_snds_lam"
+	"CUP_hgun_mk23"
 ];	
 
 
@@ -173,7 +173,9 @@ grenadeLauncherList_HorizonIslandSF = [
 ];
 
 launcherList_HorizonIslandSF = [		
-	"CUP_launch_Mk153Mod0_SMAWOptics"
+	"CUP_launch_Mk153Mod0_SMAWOptics",
+	"CUP_launch_APILAS",
+	"CUP_launch_FIM92Stinger"
 ];	
 
 autorifleList_HorizonIslandSF = [			
@@ -197,8 +199,10 @@ smgList_HorizonIslandSF = [
 attachmentShortList_HorizonIslandSF	= [
 	"CUP_acc_ANPEQ_15_OD",
 	"CUP_optic_G33_HWS_OD",
+	"CUP_optic_G33_HWS_OD_DWN",
 	"CUP_optic_MicroT1_OD",
-	"CUP_optic_Eotech553_OD"
+	"CUP_optic_Eotech553_OD",
+	"CUP_muzzle_snds_mk23"
 ];
 
 attachmentLongList_HorizonIslandSF	= [
@@ -303,5 +307,6 @@ magazineList_HorizonIslandSF = 	[
 	"SmokeShellOrange",
 	"SmokeShellPurple",
 	"SmokeShellRed",
-	"SmokeShellYellow"
+	"SmokeShellYellow",
+	"CUP_HandGrenade_M67"
 ];

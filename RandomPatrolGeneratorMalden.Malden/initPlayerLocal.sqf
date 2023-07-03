@@ -295,8 +295,8 @@ if (side player == blufor) then
 				[USS_FREEDOM_CARRIER,_spawnPos] spawn { 
 					params ["_USSCarrier","_spawnPos"];
 					sleep 1; 
-					_USSCarrier call BIS_fnc_Carrier01Init;
-					sleep 1;
+					_handleScirpt = _USSCarrier call BIS_fnc_Carrier01Init;
+					waitUntil {isNull _handleScirpt};
 					//Tp player on carrier
 					player setPosASL [_spawnPos#0 + random 30,_spawnPos#1+random 30,_spawnPos#2];
 				};

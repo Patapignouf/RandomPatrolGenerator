@@ -163,9 +163,11 @@ loadout_HorizonIsland = [
 //USA
 rifleList_HorizonIsland = [	
 	"CUP_Famas_F1_Rail_Wood",
+	"CUP_Famas_F1_Wood",
 	"CUP_Famas_F1_Rail",
 	"CUP_Famas_F1",
-	"CUP_hgun_M9_snds",
+	"CUP_Famas_F1_Rail_Arid",
+	"CUP_Famas_F1_Arid",
 	"CUP_hgun_M9"
 ];	
 
@@ -178,7 +180,8 @@ grenadeLauncherList_HorizonIsland = [
 
 launcherList_HorizonIsland = [		
 	"CUP_launch_Javelin",
-	"CUP_SMAW_HEAA_M"
+	"CUP_SMAW_HEAA_M",
+	"CUP_launch_FIM92Stinger"
 ];	
 
 autorifleList_HorizonIsland = [			
@@ -204,7 +207,11 @@ attachmentShortList_HorizonIsland	= [
 	"CUP_optic_Eotech553_OD",
 	"CUP_optic_CompM2_low",
 	"CUP_optic_G33_HWS_OD",
-	"CUP_optic_Eotech553_Black"
+	"CUP_optic_G33_HWS_OD_DWN",
+	"CUP_optic_Eotech553_Black",
+	"CUP_optic_G33_HWS_BLK",
+	"CUP_optic_G33_HWS_BLK_DWN",
+	"CUP_optic_ZeissZPoint"
 ];
 
 attachmentLongList_HorizonIsland	= [
@@ -294,7 +301,8 @@ uniformList_HorizonIsland = [
 	"CUP_V_B_PASGT_CCE",
 	"CUP_U_B_BDUv2_roll2_OD",
 	"CUP_U_B_HIL_ACU_Rolled_CCE",
-	"CUP_H_HIL_HelmetACH_GCovered_Headset_CCE"
+	"CUP_H_HIL_HelmetACH_GCovered_Headset_CCE",
+	"CUP_H_HIL_HelmetACH_Headset_CCE"
 	];
 
 //Magazine avalaible for all unit
@@ -316,5 +324,6 @@ magazineList_HorizonIsland = 	[
 	"SmokeShellOrange",
 	"SmokeShellPurple",
 	"SmokeShellRed",
-	"SmokeShellYellow"
+	"SmokeShellYellow",
+	"CUP_HandGrenade_M67"
 ];
