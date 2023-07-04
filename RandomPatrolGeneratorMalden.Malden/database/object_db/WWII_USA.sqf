@@ -216,7 +216,9 @@ smgList_WWII_USA = [
 attachmentShortList_WWII_USA	= [
 	"lib_acc_gl_enfield_cup_empty",
 	"lib_acc_p1903_bayo",
-	"lib_acc_no4_mk2_bayo"
+	"lib_acc_no4_mk2_bayo",
+	"LIB_ACC_M1_Bayo",
+	"LIB_ACC_GL_M7"
 ];
 
 attachmentLongList_WWII_USA	= [
