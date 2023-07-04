@@ -183,7 +183,7 @@ loadout_WWII_USA = [
 //WWII_USA
 rifleList_WWII_USA = [		
 	"LIB_M1_Carbine",
-	"LIB_M1_Garand_M7",
+	"LIB_M1_Garand",
 	"LIB_M1903A3_Springfield",
 	"LIB_M1903A4_Springfield"
 ];	
