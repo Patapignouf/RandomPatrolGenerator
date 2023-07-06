@@ -161,6 +161,12 @@ bluforFixedWing_WWII_UK = [
 	"LIB_MKI_HADRIAN_raf3"
 ];
 
+//Vehicule able to do HQ features (Loadout management and more)
+bluforHQVehicle_WWII_UK = [
+	"LIB_UniversalCarrier", 
+	"LIB_UK_Willys_MB_Hood"
+];
+
 ////////////////////////
 //Loadout management////
 ////////////////////////

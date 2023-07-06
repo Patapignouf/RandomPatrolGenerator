@@ -159,6 +159,12 @@ bluforFixedWing_WWII_USA = [
 	"LIB_C47_RAF"
 ];
 
+//Vehicule able to do HQ features (Loadout management and more)
+bluforHQVehicle_WWII_USA = [
+	"LIB_US_Scout_M3",
+	"LIB_US_GMC_Open"
+];
+
 ////////////////////////
 //Loadout management////
 ////////////////////////
