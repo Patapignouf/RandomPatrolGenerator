@@ -144,7 +144,7 @@ listOfRoles_HorizonIslandSF = [c_leader,c_at,c_rifleman,c_engineer,c_autoriflema
 
 //USA
 loadout_HorizonIslandSF = [		
-	[c_leader, [["CUP_arifle_Mk16_STD_EGLM_woodland_Elcan_Laser_snds","CUP_muzzle_snds_SCAR_L","CUP_acc_ANPEQ_15_OD","CUP_optic_Eotech553_OD",["CUP_30Rnd_556x45_Stanag_Mk16_woodland",30],["CUP_1Rnd_HE_M203",1],""],[],["CUP_hgun_mk23_snds_lam","CUP_muzzle_snds_mk23","CUP_acc_mk23_lam_l","",["CUP_12Rnd_45ACP_mk23",12],[],""],["CUP_U_B_HIL_ACU_Kneepad_Rolled_Gloves_TTS",[["FirstAidKit",1],["CUP_30Rnd_556x45_Stanag_Mk16_woodland",3,30]]],["CUP_V_PMC_CIRAS_OD_Grenadier",[["CUP_30Rnd_556x45_Stanag_Mk16_woodland",4,30],["CUP_1Rnd_HE_M203",5,1],["CUP_HandGrenade_M67",2,1],["SmokeShellRed",1,1],["CUP_12Rnd_45ACP_mk23",3,12]]],[],"CUP_H_HIL_HelmetACH_ESS_Headset_TTS","",["Rangefinder","","","",[],[],""],["ItemMap","ItemGPS","ItemRadio","ItemCompass","ItemWatch","CUP_NVG_PVS15_Hide"]]],
+	[c_leader, [["CUP_arifle_Mk16_STD_EGLM_woodland","CUP_muzzle_snds_SCAR_L","CUP_acc_ANPEQ_15_OD","CUP_optic_Eotech553_OD",["CUP_30Rnd_556x45_Stanag_Mk16_woodland",30],["CUP_1Rnd_HE_M203",1],""],[],["CUP_hgun_mk23_snds_lam","CUP_muzzle_snds_mk23","CUP_acc_mk23_lam_l","",["CUP_12Rnd_45ACP_mk23",12],[],""],["CUP_U_B_HIL_ACU_Kneepad_Rolled_Gloves_TTS",[["FirstAidKit",1],["CUP_30Rnd_556x45_Stanag_Mk16_woodland",3,30]]],["CUP_V_PMC_CIRAS_OD_Grenadier",[["CUP_30Rnd_556x45_Stanag_Mk16_woodland",4,30],["CUP_1Rnd_HE_M203",5,1],["CUP_HandGrenade_M67",2,1],["SmokeShellRed",1,1],["CUP_12Rnd_45ACP_mk23",3,12]]],[],"CUP_H_HIL_HelmetACH_ESS_Headset_TTS","",["Rangefinder","","","",[],[],""],["ItemMap","ItemGPS","ItemRadio","ItemCompass","ItemWatch","CUP_NVG_PVS15_Hide"]]],
 	[c_at, "CUP_B_HIL_Soldier_MAT_SF"],
 	[c_rifleman,"CUP_B_HIL_Soldier_SF"],//Default stuff
 	[c_engineer,"CUP_B_HIL_Engineer_SF"],
@@ -198,16 +198,25 @@ smgList_HorizonIslandSF = [
 //////////////////////////
 attachmentShortList_HorizonIslandSF	= [
 	"CUP_acc_ANPEQ_15_OD",
+	"CUP_optic_CompM2_low",
 	"CUP_optic_G33_HWS_OD",
 	"CUP_optic_G33_HWS_OD_DWN",
 	"CUP_optic_MicroT1_OD",
 	"CUP_optic_Eotech553_OD",
-	"CUP_muzzle_snds_mk23"
+	"CUP_optic_Eotech553_Black",
+	"CUP_muzzle_snds_mk23",
+	"CUP_muzzle_snds_SCAR_L",
+	"CUP_acc_mk23_lam_l",
+	"CUP_muzzle_snds_MP7"
 ];
 
 attachmentLongList_HorizonIslandSF	= [
 	"CUP_optic_SB_11_4x20_PM_od",
-	"CUP_optic_SB_11_4x20_PM_od_PIP"
+	"CUP_optic_SB_11_4x20_PM_od_PIP",
+	"CUP_optic_LeupoldMk4_10x40_LRT_Woodland",
+	"CUP_optic_LeupoldMk4_10x40_LRT_Woodland_pip",
+	"CUP_muzzle_snds_SCAR_H",
+	"CUP_bipod_VLTOR_Modpod_od"
 ];
 
 ////////////////////////
