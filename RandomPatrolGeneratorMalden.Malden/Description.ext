@@ -21,6 +21,9 @@ onLoadName		= "Random Patrol Generator";
 onLoadMission	= "Plan, Execute, Extract. Be ready to adapt any plan to any situation.";
 loadScreen      = __EVAL(["\A3\Structures_F_Argo\Commercial\Billboards\Data\Advertisements\bill_action_co.paa","\A3\Structures_F_Argo\Commercial\Billboards\Data\Advertisements\bill_mars_co.paa","\A3\Structures_F_Argo\Commercial\Billboards\Data\Advertisements\bill_maskrtnik_co.paa","\A3\Structures_F_Argo\Commercial\Billboards\Data\Advertisements\bill_olives_co.paa","\A3\Structures_F_Argo\Commercial\Billboards\Data\Advertisements\bill_pate_co.paa","\A3\Structures_F_Argo\Commercial\Billboards\Data\Advertisements\bill_pills_co.paa","\A3\Structures_F_Argo\Commercial\Billboards\Data\Advertisements\bill_plane_co.paa","\A3\Structures_F_Argo\Commercial\Billboards\Data\Advertisements\bill_supermarket_co.paa","\A3\Structures_F_Argo\Commercial\Billboards\Data\Advertisements\bill_winery_co.paa"] select floor random 9);
 overviewpicture = "a3\Missions_F_AoW\Data\Img\Artwork\Standard\showcase_aow_picture_17_co.paa";
+overviewText    = "Plan, Execute, Extract. Be ready to adapt any plan to any situation.";
+briefingName    = "RPG Briefing";
+
 class Header
 {
 	gameType =  Coop;	// Game type
