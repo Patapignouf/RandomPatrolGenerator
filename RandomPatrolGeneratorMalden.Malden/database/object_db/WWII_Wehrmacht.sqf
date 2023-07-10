@@ -29,7 +29,8 @@ civilian_big_group_WWII_Wehrmacht = [
 ];
 
 civilianTruck_WWII_Wehrmacht = [
-//	"LIB_GazM1"
+	"LIB_GazM1", 
+	"LIB_GazM1_dirty"
 ];
 
 //////////////////////////////
