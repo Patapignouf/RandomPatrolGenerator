@@ -412,7 +412,32 @@ if (side player == blufor) then
 					hint "You don't have enough advanced vehicle spawned credit left.";
 				};
 			},_x,1.5,true,false,"","(_target distance _this <5) && (_this getVariable 'role' == 'leader')"];
-		} foreach bluforArmedVehicle; 
+		} foreach bluforArmedVehicle;
+
+		//Add armored vehicle for blufor
+		if (enableArmoredVehicle) then 
+		{
+			waitUntil {!isNil "bluforArmoredVehicle"};
+			{
+				_IDVehicleSpawn = TPFlag1 addAction [format ["Spawn a %1 (%2 credits)", getText (configFile >> "cfgVehicles" >> _x >> "displayName"), 700],{
+					//Define parameters
+					params ["_object","_caller","_ID","_avalaibleVehicle"];
+
+					//Check players credit
+					bluforVehicleAvalaibleSpawnCounter = missionNamespace getVariable "bluforVehicleAvalaibleSpawn";
+					if (bluforVehicleAvalaibleSpawnCounter >= 700) then 
+					{
+						[initBlueforLocation, [[_avalaibleVehicle, false]], 30, 100] call doGenerateVehicleForFOB;	
+						missionNamespace setVariable ["bluforVehicleAvalaibleSpawn", bluforVehicleAvalaibleSpawnCounter-700, true];
+						hint format ["A %2 has spawned, %1 avdvanced spawn credit left.", bluforVehicleAvalaibleSpawnCounter-700, getText (configFile >> "cfgVehicles" >> _avalaibleVehicle >> "displayName")];
+					} else 
+					{
+						hint "You don't have enough advanced vehicle spawned credit left.";
+					};
+				},_x,1.5,true,false,"","(_target distance _this <5) && (_this getVariable 'role' == 'leader')"];
+			} foreach bluforArmoredVehicle;
+		};
+		 
 
 		//Unarmed Chopper
 		waitUntil {!isNil "bluforUnarmedVehicleChopper"};
