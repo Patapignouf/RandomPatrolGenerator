@@ -77,7 +77,7 @@ if (isServer) then
 			};
 
 			//Plane reinforcement 30%
-			if (missionNamespace getVariable ["enableArmedAicraft", false] && (count _thisAvailableOpforFixedWing != 0 &&  random 30 < 100)) then 
+			if (missionNamespace getVariable ["enableArmedAicraft", false] && (count _thisAvailableOpforFixedWing != 0 &&  random 100 < 30)) then 
 			{
 				//Generate enemy wave
 				diag_log "Begin plane attack on operation area !";
