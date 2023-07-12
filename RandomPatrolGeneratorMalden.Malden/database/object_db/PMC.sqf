@@ -89,6 +89,12 @@ baseEnemyHeavyArmoredVehicleGroup_PMC = [
 	"CUP_I_BTR80_ION"
 ];
 
+baseEnemyUnarmedChopperGroup_PMC = [
+	"CUP_B_UH60M_Unarmed_US",
+	"CUP_B_MH6M_OBS_USA",
+	"CUP_B_MH6M_USA"
+];
+
 ////////////////////////
 //Vehicle management////
 ////////////////////////
@@ -167,8 +173,8 @@ grenadeLauncherList_PMC = [
 ];
 
 launcherList_PMC = [		
-	"CUP_launch_M136",
-	"CUP_launch_FIM92Stinger",
+	"CUP_launch_M136_Loaded",
+	"CUP_launch_FIM92Stinger_Loaded",
 	"CUP_launch_MAAWS"
 ];	
 
@@ -254,7 +260,8 @@ attachmentShortList_PMC	= [
 	"CUP_muzzle_snds_KZRZP_AK545",
 	"CUP_muzzle_snds_KZRZP_PK",
 	"CUP_optic_LeupoldMk4_CQ_T",
-	"CUP_optic_SB_11_4x20_PM_pip"
+	"CUP_optic_SB_11_4x20_PM_pip",
+	"CUP_optic_MAAWS_Scope"
 ];
 
 attachmentLongList_PMC	= [
@@ -278,6 +285,7 @@ itemList_PMC = [
 	"ItemWatch",
 	"NVGoggles",
 	"B_UavTerminal",
+	"ItemGPS",
 	"Binocular",
 	"Rangefinder",
 	"ACE_MapTools",
@@ -307,7 +315,15 @@ itemEngineerList_PMC = [
 	"ToolKit",
 	"MineDetector",
 	"ACE_wirecutter", 
-	"ACE_Fortify"
+	"ACE_Fortify",
+	"ACE_DefusalKit",
+	"ACE_Clacker",
+	"ACE_M26_Clacker",
+	"ace_marker_flags_white",
+	"ace_marker_flags_yellow",
+	"ace_marker_flags_purple",
+	"ace_marker_flags_orange",
+	"ace_marker_flags_red"
 ];
 	
 itemMedicList_PMC = [
@@ -321,7 +337,8 @@ itemMedicList_PMC = [
 
 //backpack avalaible for all unit
 backPackList_PMC = [
-	"CUP_B_AlicePack_Khaki"
+	"CUP_B_AlicePack_Khaki",
+	"TFAR_rt1523g"
 	];
 
 

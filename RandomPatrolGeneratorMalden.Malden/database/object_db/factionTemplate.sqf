@@ -71,6 +71,11 @@ baseChopperGroup_newFaction = ["I_C_Offroad_02_LMG_F",
 baseFixedWingGroup_newFaction = ["I_C_Offroad_02_LMG_F", 
 "I_C_Offroad_02_AT_F"];
 
+//Basic enemy chopper avalaible
+baseChopperGroup_newFaction = [
+	"I_Heli_light_03_unarmed_F"
+];
+
 ////////////////////////
 //Vehicle management////
 ////////////////////////
@@ -229,6 +234,7 @@ itemList_newFaction = [
 	"ItemWatch",
 	"NVGoggles",
 	"B_UavTerminal",
+	"ItemGPS",
 	"Binocular",
 	"Rangefinder",
 	"ACE_MapTools",

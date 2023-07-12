@@ -73,6 +73,19 @@ baseEnemyHeavyArmoredVehicleGroup_USA_2000_DF = ["CUP_B_M1126_ICV_M2_Desert",
 "CUP_B_M1A2SEP_TUSK_II_Desert_US_Army", 
 "CUP_B_M1A1SA_Desert_US_Army"];
 
+
+//Basic enemy aircraft avalaible
+baseFixedWingGroup_USA_2000_DF = [
+	"CUP_B_A10_DYN_USA",
+	"CUP_B_AV8B_DYN_USMC"
+];
+
+baseEnemyUnarmedChopperGroup_USA_2000_DF = [
+	"CUP_B_UH60M_Unarmed_US",
+	"CUP_B_MH6M_OBS_USA",
+	"CUP_B_MH6M_USA"
+];
+
 ////////////////////////
 //Vehicle management////
 ////////////////////////
@@ -109,7 +122,12 @@ bluforBoat_USA_2000_DF = [
 
 //FixedWing vehicle avalaible for blufor
 bluforFixedWing_USA_2000_DF = [
-	"CUP_B_A10_DYN_USA"
+	"CUP_B_A10_DYN_USA",
+	"CUP_B_AV8B_DYN_USMC"
+];
+
+bluforHQVehicle_USA_2000_DF = [
+	"CUP_B_M113A1_HQ_desert_USA"
 ];
 
 ////////////////////////
@@ -120,14 +138,14 @@ bluforFixedWing_USA_2000_DF = [
 listOfRoles_USA_2000_DF = [c_leader,c_at,c_rifleman,c_engineer,c_autorifleman,c_marksman,c_grenadier,c_medic,c_pilot];
 
 loadout_USA_2000_DF = [		
-	[c_leader,[["CUP_arifle_Colt727","","CUP_acc_Flashlight","CUP_optic_CompM4",["CUP_30Rnd_556x45_Stanag",30],[],""],[],["CUP_hgun_Colt1911","","","",["CUP_7Rnd_45ACP_1911",7],[],""],["CUP_U_B_BDUv2_roll2_DCU",[["ACE_fieldDressing",1],["ACE_packingBandage",1],["ACE_morphine",1],["ACE_tourniquet",1],["Chemlight_green",1,1],["CUP_30Rnd_556x45_Stanag",1,30]]],["CUP_V_PMC_CIRAS_Black_TL",[["HandGrenade",1,1],["SmokeShell",1,1],["SmokeShellGreen",1,1],["CUP_7Rnd_45ACP_1911",2,7],["CUP_30Rnd_556x45_Stanag",6,30]]],[],"CUP_H_Ger_M92_Black_GG_CB","",["Binocular","","","",[],[],""],["ItemMap","ItemGPS","","ItemCompass","TFAR_microdagr",""]],[]],
-	[c_at,[["CUP_arifle_Colt727","","CUP_acc_Flashlight","CUP_optic_CompM4",["CUP_30Rnd_556x45_Stanag",30],[],""],["CUP_launch_M136_Loaded","","","",["CUP_M136_M",1],[],""],["CUP_hgun_Colt1911","","","",["CUP_7Rnd_45ACP_1911",7],[],""],["CUP_U_B_BDUv2_roll2_DCU",[["ACE_fieldDressing",1],["ACE_packingBandage",1],["ACE_morphine",1],["ACE_tourniquet",1],["Chemlight_green",1,1],["CUP_30Rnd_556x45_Stanag",1,30]]],["CUP_V_PMC_CIRAS_Black_TL",[["HandGrenade",1,1],["SmokeShell",1,1],["SmokeShellGreen",1,1],["CUP_7Rnd_45ACP_1911",2,7],["CUP_30Rnd_556x45_Stanag",6,30]]],[],"CUP_H_Ger_M92_Black_GG_CB","",["Binocular","","","",[],[],""],["ItemMap","ItemGPS","","ItemCompass","TFAR_microdagr",""]],[]],
-	[c_rifleman,[["CUP_arifle_Colt727","","CUP_acc_Flashlight","CUP_optic_CompM4",["CUP_30Rnd_556x45_Stanag",30],[],""],[],["CUP_hgun_Colt1911","","","",["CUP_7Rnd_45ACP_1911",7],[],""],["CUP_U_B_BDUv2_roll2_DCU",[["ACE_fieldDressing",1],["ACE_packingBandage",1],["ACE_morphine",1],["ACE_tourniquet",1],["Chemlight_green",1,1],["CUP_30Rnd_556x45_Stanag",1,30]]],["CUP_V_PMC_CIRAS_Black_TL",[["HandGrenade",1,1],["SmokeShell",1,1],["SmokeShellGreen",1,1],["CUP_7Rnd_45ACP_1911",2,7],["CUP_30Rnd_556x45_Stanag",6,30]]],[],"CUP_H_Ger_M92_Black_GG_CB","",["Binocular","","","",[],[],""],["ItemMap","ItemGPS","","ItemCompass","TFAR_microdagr",""]],[]],//Default stuff
-	[c_engineer,[["CUP_arifle_Colt727","","CUP_acc_Flashlight","CUP_optic_CompM4",["CUP_30Rnd_556x45_Stanag",30],[],""],[],["CUP_hgun_Colt1911","","","",["CUP_7Rnd_45ACP_1911",7],[],""],["CUP_U_B_BDUv2_roll2_DCU",[["ACE_fieldDressing",1],["ACE_packingBandage",1],["ACE_morphine",1],["ACE_tourniquet",1],["Chemlight_green",1,1],["CUP_30Rnd_556x45_Stanag",1,30]]],["CUP_V_PMC_CIRAS_Black_TL",[["HandGrenade",1,1],["SmokeShell",1,1],["SmokeShellGreen",1,1],["CUP_7Rnd_45ACP_1911",2,7],["CUP_30Rnd_556x45_Stanag",6,30]]],["CUP_B_USPack_Black",[["ACE_packingBandage",15],["ACE_elasticBandage",15],["ACE_DefusalKit",1],["MineDetector",1],["ToolKit",1],["ACE_Flashlight_XL50",1],["ACE_Fortify",1]]],"CUP_H_Ger_M92_Black_GG_CB","",["Binocular","","","",[],[],""],["ItemMap","ItemGPS","","ItemCompass","TFAR_microdagr",""]],[]],
-	[c_autorifleman,[["CUP_lmg_M249_E2","","","",["CUP_200Rnd_TE4_Red_Tracer_556x45_M249",200],[],""],[],["CUP_hgun_Colt1911","","","",["CUP_7Rnd_45ACP_1911",7],[],""],["CUP_U_B_BDUv2_roll2_DCU",[["ACE_fieldDressing",1],["ACE_packingBandage",1],["ACE_morphine",1],["ACE_tourniquet",1],["Chemlight_green",1,1],["CUP_7Rnd_45ACP_1911",2,7]]],["CUP_V_PMC_CIRAS_Black_TL",[["HandGrenade",1,1],["SmokeShell",1,1],["SmokeShellGreen",1,1],["CUP_200Rnd_TE4_Green_Tracer_556x45_M249",2,200]]],["CUP_B_AssaultPack_Black",[["200Rnd_556x45_Box_Red_F",3,200]]],"CUP_H_Ger_M92_Black_GG_CB","",["Binocular","","","",[],[],""],["ItemMap","ItemGPS","","ItemCompass","TFAR_microdagr",""]],[]],
+	[c_leader,[["CUP_arifle_Colt727","","CUP_acc_Flashlight","CUP_optic_CompM4",["CUP_30Rnd_556x45_Stanag",30],[],""],[],["CUP_hgun_Colt1911","","","",["CUP_7Rnd_45ACP_1911",7],[],""],["CUP_U_B_BDUv2_roll2_DCU",[["ACE_fieldDressing",1],["ACE_packingBandage",1],["ACE_morphine",1],["ACE_tourniquet",1],["Chemlight_green",1,1],["CUP_30Rnd_556x45_Stanag",1,30]]],["CUP_V_PMC_CIRAS_Black_TL",[["HandGrenade",1,1],["SmokeShell",1,1],["SmokeShellGreen",1,1],["CUP_7Rnd_45ACP_1911",2,7],["CUP_30Rnd_556x45_Stanag",6,30]]],[],"CUP_H_Ger_M92_Black_GG_CB","",["Binocular","","","",[],[],""],["ItemMap","ItemGPS","","ItemCompass","TFAR_microdagr",""]]],
+	[c_at,[["CUP_arifle_Colt727","","CUP_acc_Flashlight","CUP_optic_CompM4",["CUP_30Rnd_556x45_Stanag",30],[],""],["CUP_launch_M136_Loaded","","","",["CUP_M136_M",1],[],""],["CUP_hgun_Colt1911","","","",["CUP_7Rnd_45ACP_1911",7],[],""],["CUP_U_B_BDUv2_roll2_DCU",[["ACE_fieldDressing",1],["ACE_packingBandage",1],["ACE_morphine",1],["ACE_tourniquet",1],["Chemlight_green",1,1],["CUP_30Rnd_556x45_Stanag",1,30]]],["CUP_V_PMC_CIRAS_Black_TL",[["HandGrenade",1,1],["SmokeShell",1,1],["SmokeShellGreen",1,1],["CUP_7Rnd_45ACP_1911",2,7],["CUP_30Rnd_556x45_Stanag",6,30]]],[],"CUP_H_Ger_M92_Black_GG_CB","",["Binocular","","","",[],[],""],["ItemMap","ItemGPS","","ItemCompass","TFAR_microdagr",""]]],
+	[c_rifleman,[["CUP_arifle_Colt727","","CUP_acc_Flashlight","CUP_optic_CompM4",["CUP_30Rnd_556x45_Stanag",30],[],""],[],["CUP_hgun_Colt1911","","","",["CUP_7Rnd_45ACP_1911",7],[],""],["CUP_U_B_BDUv2_roll2_DCU",[["ACE_fieldDressing",1],["ACE_packingBandage",1],["ACE_morphine",1],["ACE_tourniquet",1],["Chemlight_green",1,1],["CUP_30Rnd_556x45_Stanag",1,30]]],["CUP_V_PMC_CIRAS_Black_TL",[["HandGrenade",1,1],["SmokeShell",1,1],["SmokeShellGreen",1,1],["CUP_7Rnd_45ACP_1911",2,7],["CUP_30Rnd_556x45_Stanag",6,30]]],[],"CUP_H_Ger_M92_Black_GG_CB","",["Binocular","","","",[],[],""],["ItemMap","ItemGPS","","ItemCompass","TFAR_microdagr",""]]],//Default stuff
+	[c_engineer,[["CUP_arifle_Colt727","","CUP_acc_Flashlight","CUP_optic_CompM4",["CUP_30Rnd_556x45_Stanag",30],[],""],[],["CUP_hgun_Colt1911","","","",["CUP_7Rnd_45ACP_1911",7],[],""],["CUP_U_B_BDUv2_roll2_DCU",[["ACE_fieldDressing",1],["ACE_packingBandage",1],["ACE_morphine",1],["ACE_tourniquet",1],["Chemlight_green",1,1],["CUP_30Rnd_556x45_Stanag",1,30]]],["CUP_V_PMC_CIRAS_Black_TL",[["HandGrenade",1,1],["SmokeShell",1,1],["SmokeShellGreen",1,1],["CUP_7Rnd_45ACP_1911",2,7],["CUP_30Rnd_556x45_Stanag",6,30]]],["CUP_B_USPack_Black",[["ACE_packingBandage",15],["ACE_elasticBandage",15],["ACE_DefusalKit",1],["MineDetector",1],["ToolKit",1],["ACE_Flashlight_XL50",1],["ACE_Fortify",1]]],"CUP_H_Ger_M92_Black_GG_CB","",["Binocular","","","",[],[],""],["ItemMap","ItemGPS","","ItemCompass","TFAR_microdagr",""]]],
+	[c_autorifleman,[["CUP_lmg_M249_E2","","","",["CUP_200Rnd_TE4_Red_Tracer_556x45_M249",200],[],""],[],["CUP_hgun_Colt1911","","","",["CUP_7Rnd_45ACP_1911",7],[],""],["CUP_U_B_BDUv2_roll2_DCU",[["ACE_fieldDressing",1],["ACE_packingBandage",1],["ACE_morphine",1],["ACE_tourniquet",1],["Chemlight_green",1,1],["CUP_7Rnd_45ACP_1911",2,7]]],["CUP_V_PMC_CIRAS_Black_TL",[["HandGrenade",1,1],["SmokeShell",1,1],["SmokeShellGreen",1,1],["CUP_200Rnd_TE4_Green_Tracer_556x45_M249",2,200]]],["CUP_B_AssaultPack_Black",[["200Rnd_556x45_Box_Red_F",3,200]]],"CUP_H_Ger_M92_Black_GG_CB","",["Binocular","","","",[],[],""],["ItemMap","ItemGPS","","ItemCompass","TFAR_microdagr",""]]],
 	[c_marksman,[["CUP_srifle_M14_DMR","","","CUP_optic_CompM4",["CUP_20Rnd_762x51_DMR",20],[],""],[],["CUP_hgun_Colt1911","","","",["CUP_7Rnd_45ACP_1911",7],[],""],["CUP_U_B_BDUv2_roll2_DCU",[["Chemlight_green",1,1],["CUP_20Rnd_TE1_Yellow_Tracer_762x51_DMR",2,20]]],["CUP_V_PMC_CIRAS_Black_TL",[["HandGrenade",1,1],["SmokeShell",1,1],["SmokeShellGreen",1,1],["CUP_7Rnd_45ACP_1911",3,7],["CUP_20Rnd_TE1_Yellow_Tracer_762x51_DMR",5,20]]],[],"CUP_H_Ger_M92_Black_GG_CB","",["Binocular","","","",[],[],""],["ItemMap","ItemGPS","","ItemCompass","",""]]],
-	[c_medic,[["CUP_arifle_Colt727","","CUP_acc_Flashlight","CUP_optic_CompM4",["CUP_30Rnd_556x45_Stanag",30],[],""],[],["CUP_hgun_Colt1911","","","",["CUP_7Rnd_45ACP_1911",7],[],""],["CUP_U_B_BDUv2_roll2_DCU",[["ACE_fieldDressing",1],["ACE_packingBandage",1],["ACE_morphine",1],["ACE_tourniquet",1],["Chemlight_green",1,1],["CUP_30Rnd_556x45_Stanag",1,30]]],["CUP_V_PMC_CIRAS_Black_TL",[["HandGrenade",1,1],["SmokeShell",1,1],["SmokeShellGreen",1,1],["CUP_7Rnd_45ACP_1911",2,7],["CUP_30Rnd_556x45_Stanag",6,30]]],["CUP_B_USPack_Black",[["ACE_packingBandage",15],["ACE_elasticBandage",15]]],"CUP_H_Ger_M92_Black_GG_CB","",["Binocular","","","",[],[],""],["ItemMap","ItemGPS","","ItemCompass","TFAR_microdagr",""]],[]],
-	[c_grenadier,[["CUP_arifle_Colt727_M203","","","CUP_optic_CompM4",["CUP_30Rnd_556x45_Stanag",30],[],""],[],["CUP_hgun_Colt1911","","","",["CUP_7Rnd_45ACP_1911",7],[],""],["CUP_U_B_BDUv2_roll2_DCU",[["ACE_fieldDressing",1],["ACE_packingBandage",1],["ACE_morphine",1],["ACE_tourniquet",1],["Chemlight_green",1,1],["CUP_30Rnd_556x45_Stanag",1,30]]],["CUP_V_PMC_CIRAS_Black_TL",[["HandGrenade",1,1],["SmokeShell",1,1],["SmokeShellGreen",1,1],["CUP_7Rnd_45ACP_1911",2,7],["CUP_30Rnd_556x45_Stanag",6,30],["1Rnd_HE_Grenade_shell",5,1]]],[],"CUP_H_Ger_M92_Black_GG_CB","",["Binocular","","","",[],[],""],["ItemMap","ItemGPS","","ItemCompass","TFAR_microdagr",""]],[]],
+	[c_medic,[["CUP_arifle_Colt727","","CUP_acc_Flashlight","CUP_optic_CompM4",["CUP_30Rnd_556x45_Stanag",30],[],""],[],["CUP_hgun_Colt1911","","","",["CUP_7Rnd_45ACP_1911",7],[],""],["CUP_U_B_BDUv2_roll2_DCU",[["ACE_fieldDressing",1],["ACE_packingBandage",1],["ACE_morphine",1],["ACE_tourniquet",1],["Chemlight_green",1,1],["CUP_30Rnd_556x45_Stanag",1,30]]],["CUP_V_PMC_CIRAS_Black_TL",[["HandGrenade",1,1],["SmokeShell",1,1],["SmokeShellGreen",1,1],["CUP_7Rnd_45ACP_1911",2,7],["CUP_30Rnd_556x45_Stanag",6,30]]],["CUP_B_USPack_Black",[["ACE_packingBandage",15],["ACE_elasticBandage",15]]],"CUP_H_Ger_M92_Black_GG_CB","",["Binocular","","","",[],[],""],["ItemMap","ItemGPS","","ItemCompass","TFAR_microdagr",""]]],
+	[c_grenadier,[["CUP_arifle_Colt727_M203","","","CUP_optic_CompM4",["CUP_30Rnd_556x45_Stanag",30],[],""],[],["CUP_hgun_Colt1911","","","",["CUP_7Rnd_45ACP_1911",7],[],""],["CUP_U_B_BDUv2_roll2_DCU",[["ACE_fieldDressing",1],["ACE_packingBandage",1],["ACE_morphine",1],["ACE_tourniquet",1],["Chemlight_green",1,1],["CUP_30Rnd_556x45_Stanag",1,30]]],["CUP_V_PMC_CIRAS_Black_TL",[["HandGrenade",1,1],["SmokeShell",1,1],["SmokeShellGreen",1,1],["CUP_7Rnd_45ACP_1911",2,7],["CUP_30Rnd_556x45_Stanag",6,30],["1Rnd_HE_Grenade_shell",5,1]]],[],"CUP_H_Ger_M92_Black_GG_CB","",["Binocular","","","",[],[],""],["ItemMap","ItemGPS","","ItemCompass","TFAR_microdagr",""]]],
 	[c_pilot,"CUP_B_US_Pilot"]
 ];
 
@@ -142,8 +160,8 @@ rifleList_USA_2000_DF = [
 ];	
 
 launcherList_USA_2000_DF = [		
-	"CUP_launch_M136",
-	"CUP_launch_FIM92Stinger"
+	"CUP_launch_M136_Loaded",
+	"CUP_launch_FIM92Stinger_Loaded"
 ];	
 
 
@@ -223,7 +241,15 @@ itemEngineerList_USA_2000_DF = [
 	"ACE_wirecutter",
 	"ACE_Fortify",
 	"ACE_DefusalKit",
-	"ACE_DeadManSwitch"
+	"ACE_DeadManSwitch",
+	"ACE_DefusalKit",
+	"ACE_Clacker",
+	"ACE_M26_Clacker",
+	"ace_marker_flags_white",
+	"ace_marker_flags_yellow",
+	"ace_marker_flags_purple",
+	"ace_marker_flags_orange",
+	"ace_marker_flags_red"
 	];
 	
 itemMedicList_USA_2000_DF = [

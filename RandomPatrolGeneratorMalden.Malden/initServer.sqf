@@ -5,8 +5,7 @@ missionNamespace setVariable ["maxCivKilled", 10, true];
 missionNamespace setVariable ["civKilled", 0, true];
 
 //Blufor vehcile spawn counter
-missionNamespace setVariable ["bluforAdvancedVehicleAvalaibleSpawn", 2, true];
-missionNamespace setVariable ["bluforVehicleAvalaibleSpawn", 10, true];
+missionNamespace setVariable ["bluforVehicleAvalaibleSpawn", 1000, true];
 
 //Dead player base
 missionNamespace setVariable ["deadPlayer", [], true];
@@ -30,9 +29,23 @@ missionNamespace setVariable ["ironMan", false, true]; //Default disable ironman
 missionNamespace setVariable ["enableCampaignMode", false, true]; //Default armored vehicle are disabled
 missionNamespace setVariable ["missionLength", 2, true]; //Default armored vehicle are disabled
 missionNamespace setVariable ["missionDifficultyParam", 1, true]; //Default armored vehicle are disabled
+missionNamespace setVariable ["missionIASkill", 1, true]; //Default armored vehicle are disabled
+missionNamespace setVariable ["missionRespawnParam", 99999999999999, true]; //Default armored vehicle are disabled
+
 
 //Blufor Initilization 
 missionNamespace setVariable ["advancedBlueforLocation", [0,0], true]; //Default armored vehicle are disabled
 
+//Spawn bloc to avoid player swimming
+_spawnBloc = createVehicle ["BlockConcrete_F", [0,0,0], [], 0, "NONE"];
+_spawnBloc setPos [0,0,0];
+
 //Init scenario scripts
 [] execVM 'start.sqf'; 
+
+//Clean bloc
+[_spawnBloc] spawn {
+	params ["_spawnBloc"];
+	sleep 50;
+	deleteVehicle _spawnBloc;
+};

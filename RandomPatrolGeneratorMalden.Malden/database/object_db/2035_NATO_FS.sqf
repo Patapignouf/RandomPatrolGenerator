@@ -78,12 +78,21 @@ baseEnemyHeavyArmoredVehicleGroup_2035_NATO_FS = ["I_C_Offroad_02_LMG_F",
 "I_C_Offroad_02_AT_F"];
 
 //Basic enemy chopper avalaible
-baseChopperGroup_2035_NATO_FS = ["I_C_Offroad_02_LMG_F", 
-"I_C_Offroad_02_AT_F"];
+baseChopperGroup_2035_NATO_FS = [
+	
+];
 
 //Basic enemy aircraft avalaible
-baseFixedWingGroup_2035_NATO_FS = ["I_C_Offroad_02_LMG_F", 
-"I_C_Offroad_02_AT_F"];
+baseFixedWingGroup_2035_NATO_FS = [
+	
+];
+
+//Basic enemy chopper avalaible
+baseEnemyUnarmedChopperGroup_NATO_FS = [
+	"B_Heli_Transport_03_unarmed_F",
+	"B_Heli_Light_01_F",
+	"B_Heli_Transport_01_F"
+	];
 
 ////////////////////////
 //Vehicle management////
@@ -144,13 +153,14 @@ bluforBoat_2035_NATO_FS = [
 //FixedWing vehicle avalaible for blufor
 bluforFixedWing_2035_NATO_FS = [
 	"B_Plane_CAS_01_dynamicLoadout_F",
-	"B_Plane_Fighter_01_Stealth_F"
+	"B_Plane_Fighter_01_Stealth_F",
+	"B_Plane_Fighter_01_F"
 ];
 
 
 //Vehicule able to do HQ features (Loadout management and more)
 bluforHQVehicle_2035_NATO_FS = [
-	"B_APC_Tracked_01_rcws_F"
+	"B_Truck_01_box_F"
 ];
 
 
@@ -200,6 +210,7 @@ grenadeLauncherList_2035_NATO_FS = [
 launcherList_2035_NATO_FS = [
 	"launch_I_Titan_short_F",
 	"launch_NLAW_F",
+	"ACE_launch_NLAW_ready_F",
 	"launch_MRAWS_olive_F"
 ];	
 
@@ -273,6 +284,7 @@ itemList_2035_NATO_FS = [
 	"ItemWatch",
 	"NVGoggles",
 	"B_UavTerminal",
+	"ItemGPS",
 	"Binocular",
 	"Rangefinder",
 	"ACE_MapTools",
@@ -298,7 +310,10 @@ itemList_2035_NATO_FS = [
 	"ACE_SpraypaintBlue",
 	"ACE_SpraypaintGreen",
 	"ACE_SpraypaintRed",
-	"ACE_RangeCard"
+	"ACE_RangeCard",
+	"NVGogglesB_blk_F",
+	"NVGogglesB_grn_F",
+	"NVGogglesB_gry_F"
 ];
 
 //item avalaible for all engineer
@@ -308,7 +323,8 @@ itemEngineerList_2035_NATO_FS = [
 	"ACE_wirecutter",
 	"ACE_Fortify",
 	"ACE_DefusalKit",
-	"ACE_DeadManSwitch"
+	"ACE_DeadManSwitch",
+	"ACE_Clacker"
 ];
 
 //item avalaible for all medic
@@ -333,7 +349,8 @@ backPackList_2035_NATO_FS = [
 	"B_Carryall_mcamo",
 	"B_AssaultPack_rgr",
 	"B_AssaultPack_cbr",
-	"B_Kitbag_cbr"
+	"B_Kitbag_cbr",
+	"TFAR_rt1523g"
 ];
 
 
@@ -357,10 +374,8 @@ magazineList_2035_NATO_FS = [
 	"30Rnd_556x45_Stanag_Sand_Tracer_Green",
 	"130Rnd_338_Mag",
 	"200Rnd_65x39_cased_Box_Tracer",
-	"20Rnd_762x51_Mag",
 	"7Rnd_408_Mag",
 	"20Rnd_762x51_Mag",
-	"11Rnd_45ACP_Mag",
 	"30Rnd_9x21_Mag_SMG_02_Tracer_Yellow",
 	"Titan_AT",
 	"Titan_AP",

@@ -73,6 +73,19 @@ baseEnemyHeavyArmoredVehicleGroup_USA_2000 = ["CUP_B_M1126_ICV_M2_Desert",
 "CUP_B_M1A2SEP_TUSK_II_Desert_US_Army", 
 "CUP_B_M1A1SA_Desert_US_Army"];
 
+baseEnemyUnarmedChopperGroup_USA_2000 = [
+	"CUP_B_UH60M_Unarmed_US",
+	"CUP_B_MH6M_OBS_USA",
+	"CUP_B_MH6M_USA"
+];
+
+//Basic enemy aircraft avalaible
+baseFixedWingGroup_USA_2000 = [
+	"CUP_B_A10_DYN_USA",
+	"CUP_B_AV8B_DYN_USMC"
+];
+
+
 ////////////////////////
 //Vehicle management////
 ////////////////////////
@@ -115,7 +128,8 @@ bluforBoat_USA_2000 = [
 
 //FixedWing vehicle avalaible for blufor
 bluforFixedWing_USA_2000 = [
-	"CUP_B_A10_DYN_USA"
+	"CUP_B_A10_DYN_USA",
+	"CUP_B_AV8B_DYN_USMC"
 ];
 
 //Vehicule able to do HQ features (Loadout management and more)
@@ -149,18 +163,24 @@ loadout_USA_2000 = [
 ////////////////////////
 //USA
 rifleList_USA_2000 = [		
-	"CUP_arifle_M16A4_Aim_Laser",
-	"CUP_arifle_M4A1_Aim"
+	"CUP_arifle_M16A4_Base",
+	"CUP_arifle_M4A1_Aim",
+	"CUP_arifle_M16A4_Grip",
+	"CUP_arifle_M16A1E1",
+	"CUP_arifle_M4A1_standard_short_black",
+	"CUP_arifle_M4A1",
+	"CUP_arifle_M4A3_black"
 
 ];	
 
 grenadeLauncherList_USA_2000 = [
-	"CUP_arifle_M16A4_GL"
+	"CUP_arifle_M16A4_GL",
+	"CUP_arifle_M4A1_BUIS_GL"
 ];
 
 launcherList_USA_2000 = [		
-	"CUP_launch_M136",
-	"CUP_launch_FIM92Stinger",
+	"CUP_launch_M136_Loaded",
+	"CUP_launch_FIM92Stinger_Loaded",
 	"CUP_launch_Javelin"
 ];	
 
@@ -171,8 +191,10 @@ autorifleList_USA_2000 = [
 ];	
 
 marksmanrifleList_USA_2000 = [		
-	"CUP_srifle_DMR_LeupoldMk4",
-	"CUP_srifle_M107_LeupoldVX3"
+	"CUP_srifle_DMR",
+	"CUP_srifle_M107_Base",
+	"CUP_srifle_M14_DMR",
+	"CUP_srifle_M40A3"
 ];
 
 smgList_USA_2000 = [		
@@ -268,7 +290,15 @@ itemEngineerList_USA_2000 = [
 	"ACE_wirecutter",
 	"ACE_Fortify",
 	"ACE_DefusalKit",
-	"ACE_DeadManSwitch"
+	"ACE_DeadManSwitch",
+	"ACE_DefusalKit",
+	"ACE_Clacker",
+	"ACE_M26_Clacker",
+	"ace_marker_flags_white",
+	"ace_marker_flags_yellow",
+	"ace_marker_flags_purple",
+	"ace_marker_flags_orange",
+	"ace_marker_flags_red"
 	];
 	
 itemMedicList_USA_2000 = [
@@ -312,7 +342,8 @@ magazineList_USA_2000 = [
 	"CUP_200Rnd_TE4_Red_Tracer_556x45_M249",
 	"CUP_100Rnd_TE4_LRT4_White_Tracer_762x51_Belt_M",
 	"CUP_8Rnd_B_Beneli_74Pellets",
-	"CUP_10Rnd_127x99_M107"
+	"CUP_10Rnd_127x99_M107",
+	"CUP_5Rnd_762x51_M24"
 	];
 
 //Get magazine with following command

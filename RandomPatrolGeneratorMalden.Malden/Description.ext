@@ -2,27 +2,51 @@
 #include "GUI\BaseControls.hpp"
 #include "GUI\setupGUI\missionSetup.hpp"
 #include "GUI\setupGUI\missionSetupObjectives.hpp"
+#include "GUI\setupGUI\missionSetupLocation.hpp"
 #include "GUI\loadoutGUI\playerLoadoutSetup.hpp"
 #include "GUI\respawnGUI\playerRespawnMenu.hpp"
 #include "GUI\dialogGUI\dialogCivilian.hpp"
 
 respawnDialog = 0;
 respawnOnStart = -1;
-respawnDelay = 1; 
+respawnDelay = 9999999; 
 
 enableDebugConsole = 1;
 briefing = 0;
-respawnTemplates[] = {"Tickets"};
+respawnTemplates[] = {"Tickets", "Spectator"};
+
+
+author			= "Pata";
+onLoadName		= "Random Patrol Generator";
+onLoadMission	= "Plan, Execute, Extract. Be ready to adapt any plan to any situation.";
+loadScreen      = __EVAL(["\A3\Structures_F_Argo\Commercial\Billboards\Data\Advertisements\bill_action_co.paa","\A3\Structures_F_Argo\Commercial\Billboards\Data\Advertisements\bill_mars_co.paa","\A3\Structures_F_Argo\Commercial\Billboards\Data\Advertisements\bill_maskrtnik_co.paa","\A3\Structures_F_Argo\Commercial\Billboards\Data\Advertisements\bill_olives_co.paa","\A3\Structures_F_Argo\Commercial\Billboards\Data\Advertisements\bill_pate_co.paa","\A3\Structures_F_Argo\Commercial\Billboards\Data\Advertisements\bill_pills_co.paa","\A3\Structures_F_Argo\Commercial\Billboards\Data\Advertisements\bill_plane_co.paa","\A3\Structures_F_Argo\Commercial\Billboards\Data\Advertisements\bill_supermarket_co.paa","\A3\Structures_F_Argo\Commercial\Billboards\Data\Advertisements\bill_winery_co.paa"] select floor random 9);
+overviewpicture = "a3\Missions_F_AoW\Data\Img\Artwork\Landscape\showcase_aow_picture_18_co.paa";
+overviewText    = "Plan, Execute, Extract. Be ready to adapt any plan to any situation.";
+briefingName    = "[COOP] Random Patrol Generator";
+
+class Header
+{
+	gameType =  Coop;	// Game type
+	minPlayers =  1;	// minimum number of players the mission supports
+	maxPlayers = 10;	// maximum number of players the mission supports
+};
+
 
 class Params
 {
+	class Space0 {
+		title = "NATIVE SETTINGS";
+		values[] = { "" };
+		texts[] = { "" };
+		default = "";
+	};
 	class ReviveMode
 	{
 		title = $STR_A3_ReviveMode;
 		isGlobal = 1;
 		values[] = {-100,0,1};
 		texts[] = {$STR_A3_MissionDefault, $STR_A3_Disabled, $STR_A3_EnabledForAllPlayers};
-		default = 0;
+		default = -100;
 		function = "bis_fnc_paramReviveMode";
 	};
 	class ReviveRequiredTrait
@@ -31,12 +55,57 @@ class Params
 		isGlobal = 1;
 		values[] = {-100,0,1};
 		texts[] = {$STR_A3_MissionDefault,$STR_A3_None,$STR_A3_Medic};
-		default = 1;
+		default = -100;
 		function = "bis_fnc_paramReviveRequiredTrait";
+	};
+	class ReviveRequiredItems {
+		title = $STR_A3_RequiredItems;
+		isGlobal = 1;
+		values[] = {-100,0,1,2};
+		texts[] = {$STR_A3_MissionDefault,$STR_A3_None,$STR_A3_Medikit,$STR_A3_FirstAidKitOrMedikit};
+		default = -100;
+		function = "bis_fnc_paramReviveRequiredItems";
+	};
+	class ReviveMedicSpeedMultiplier {
+		title = $STR_A3_RequiredTrait_MedicSpeedMultiplier;
+		isGlobal = 1;
+		values[] = {-100,1,1.5,2,2.5,3};
+		texts[] = {$STR_A3_MissionDefault,"1x","1.5x","2x","2.5x","3x"};
+		default = -100;
+		function = "bis_fnc_paramReviveMedicSpeedMultiplier";
+	};
+	class ReviveDuration {
+		title = $STR_A3_ReviveDuration;
+		isGlobal = 1;
+		values[] = {-100,6,8,10,12,15,20,25,30};
+		texts[] = {$STR_A3_MissionDefault,6,8,10,12,15,20,25,30};
+		default = -100;
+		function = "bis_fnc_paramReviveDuration";
+	};
+	class UnconsciousStateMode {
+		title = $STR_A3_IncapacitationMode;
+		isGlobal = 1;
+		values[] = {-100,0,1,2};
+		texts[] = {$STR_A3_MissionDefault,$STR_A3_Basic,$STR_A3_Advanced,$STR_A3_Realistic};
+		default = -100;
+		function = "bis_fnc_paramReviveUnconsciousStateMode";
+	};
+	class Space1 {
+		title = "";
+		values[] = { "" };
+		texts[] = { "" };
+		default = "";
+	};
+
+	class Space2 {
+		title = "RPG SETTINGS";
+		values[] = { "" };
+		texts[] = { "" };
+		default = "";
 	};
 	class Respawn
 	{
-		title = "Respawn management (WIP)";
+		title = "Respawn management (DO NOT USE)";
 		values[] = {0,1};
 		texts[] = {"No respawn","Respawn on objective success"};
 		default = 1;
@@ -83,33 +152,12 @@ class Params
 		texts[] = {"No","Yes","Random"};
 		default = 0;
 	};
-	class InitBluforBase
-	{
-		title = "Start position of blufor";
-		values[] = {0,1,2};
-		texts[] = {"Close to AO","Far to AO","Random"};
-		default = 0;
-	};
 	class CivJoinableFaction
 	{
 		title = "Allow player to recruit civilian";
 		values[] = {0,1,2,3};
 		texts[] = {"Nobody can recruit civilian","Only indepedent can recruit civilian","Only blufor can recruit civilian", "Both independent and blufor can recruit civilian"};
 		default = 1;             
-	};
-	class ChooseStartPos
-	{
-		title = "Choose initial bases positions";
-		values[] = {0,1};
-		texts[] = {"Random positions","Leaders can choose start positions"};
-		default = 0;             
-	};
-	class BluforVehicleSpawnType
-	{
-		title = "Choose blufor vehicle spawn condition (WIP)";
-		values[] = {0,1};
-		texts[] = {"Spawn with credits","Spawn on mission start"};
-		default = 0;             
 	};
 	class TimeOfDay
 	{
@@ -122,10 +170,10 @@ class Params
 
 class CfgDebriefing
 {  
-   class BLUFOR_DEAD
+   class PLY_DEAD
    {
 		title = "Mission Failed";
-		subtitle = "TOO MANY BLUFOR DEAD";
+		subtitle = "PLAYERS ALL DEAD";
 		description = "";
 		picture = "";
 		pictureColor[] = {0.5,0.4,0.4,1};

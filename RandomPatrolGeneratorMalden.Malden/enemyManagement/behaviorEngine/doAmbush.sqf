@@ -6,7 +6,7 @@ currentPosition = [];
 if (isServer) then
 {
 	_numberOfVehicleSpawned = 0;
-	_waveHaveVehicle = round random 1 == 0;
+	_waveHaveVehicle = random 100 > 50;
 	diag_log format ["Avalaible spawn position %1", _thisAvailablePosition ];
 	for [{_k = 0}, {_k < (count _thisAvailablePosition)}, {_k = _k + 1}] do 
 	{
@@ -18,12 +18,12 @@ if (isServer) then
 
 			//Check distance from nearest player
 			//[TEMPHOTFIX] not a clean fix to enemy spawn near player
-			_players = allPlayers select {_x getVariable "isDead" == false} apply {[_x distance currentPosition,_x]};
+			_players = allPlayers apply {[_x distance currentPosition,_x]};
 			_players sort true;
 			
 			if (((_players apply {_x#1})#0) distance currentPosition >= 300) then 
 			{
-			_currentGroup = [([currentPosition,1,60,10,0] call BIS_fnc_findSafePos), east, currentAttackGroup,[],[],[],[],[],0] call BIS_fnc_spawnGroup;
+			_currentGroup =	[currentAttackGroup, ([currentPosition,1,60,10,0] call BIS_fnc_findSafePos), east, ""] call doGenerateEnemyGroup;
 			diag_log format ["Create group : %1 at position %2 and assault to position %3", _currentGroup, getPos (leader _currentGroup), _thisTargetPosition];
 
 			//Assault for infantry
@@ -50,7 +50,7 @@ if (isServer) then
 				
 				if (((_players apply {_x#1})#0) distance currentPosition >= 300) then 
 				{
-					currentVehicleGroup = [([currentPosition,1,60,10,0] call BIS_fnc_findSafePos), east, currentAttackVehicleGroup,[],[],[],[],[],0] call BIS_fnc_spawnGroup;
+					currentVehicleGroup =[currentAttackVehicleGroup, ([currentPosition,1,60,10,0] call BIS_fnc_findSafePos), east, ""] call doGenerateEnemyGroup;
 					diag_log format ["Create group : %1 at position %2 and assault to position %3", currentVehicleGroup, getPos (leader currentVehicleGroup), _thisTargetPosition];
 
 					//Assault for vehicle

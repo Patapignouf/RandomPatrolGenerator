@@ -6,6 +6,7 @@ c_engineer = "engineer";
 c_autorifleman = "autorifleman";
 c_marksman = "marksman"; 
 c_medic = "medic";
+c_pilot = "pilot";
 
 //////////////////////////////
 ////Define civ group data/////
@@ -33,52 +34,51 @@ civilianTruck_2035_NATO = ["C_SUV_01_F","C_Offroad_01_repair_F"];
 //////////////////////////////
 
 //Basic enemy group | 8 men (Leader, Medic, MG, Sniper, Rifleman)
-baseEnemyGroup_2035_NATO = ["I_C_Soldier_Bandit_4_F", 
-"I_C_Soldier_Bandit_3_F", 
-"I_C_Soldier_Bandit_7_F", 
-"I_C_Soldier_Bandit_5_F", 
-"I_C_Soldier_Bandit_6_F", 
-"I_C_Soldier_Bandit_2_F", 
-"I_C_Soldier_Bandit_8_F", 
-"I_C_Soldier_Bandit_1_F"];
+baseEnemyGroup_2035_NATO = [
+
+];
 
 //Basic anti tank enemy group | 5 men max (Leader, MG, AT)
-baseEnemyATGroup_2035_NATO = ["I_C_Soldier_Bandit_6_F", 
-"I_C_Soldier_Bandit_2_F", 
-"I_C_Soldier_Bandit_2_F",
-"I_C_Soldier_Bandit_7_F", 
-"I_C_Soldier_Bandit_8_F"];
+baseEnemyATGroup_2035_NATO = [
+
+];
 
 //Basic demolition enemy group | 8 men max (Leader, Explosive)
-baseEnemyDemoGroup_2035_NATO = ["I_C_Soldier_Bandit_2_F", 
-"I_C_Soldier_Bandit_8_F",
-"I_C_Soldier_Bandit_8_F", 
-"I_C_Soldier_Bandit_6_F"];
+baseEnemyDemoGroup_2035_NATO = [
+	"B_soldier_UAV_F"
+	];
 
 //Basic Mortar enemy group | 8 men max (Mortar, Rifleman)
-baseEnemyMortarGroup_2035_NATO = ["I_G_Mortar_01_F", 
-"I_C_Soldier_Bandit_8_F", 
-"I_C_Soldier_Bandit_6_F"];
+baseEnemyMortarGroup_2035_NATO = [
+	
+];
 
 //Basic enemy vehicle avalaible (light) must be destroyed without AT (ex : jeep)
-baseEnemyVehicleGroup_2035_NATO = ["I_C_Offroad_02_LMG_F", 
-"I_C_Offroad_02_AT_F"];
+baseEnemyVehicleGroup_2035_NATO = [
+	
+];
 
 //Basic enemy light armored vehicle avalaible must be destroyed without heavy AT (ex : BMP)
-baseEnemyLightArmoredVehicleGroup_2035_NATO = ["I_C_Offroad_02_LMG_F", 
-"I_C_Offroad_02_AT_F"];
+baseEnemyLightArmoredVehicleGroup_2035_NATO = [
+	
+];
 
 //Basic enemy heavy armored vehicle avalaible must be destroyed with other vehicle or heavy AT (ex : tank)
-baseEnemyHeavyArmoredVehicleGroup_2035_NATO = ["I_C_Offroad_02_LMG_F", 
-"I_C_Offroad_02_AT_F"];
+baseEnemyHeavyArmoredVehicleGroup_2035_NATO = [
+	
+];
 
 //Basic enemy chopper avalaible
-baseChopperGroup_2035_NATO = ["I_C_Offroad_02_LMG_F", 
-"I_C_Offroad_02_AT_F"];
+baseEnemyUnarmedChopperGroup_2035_NATO = [
+	
+];
 
 //Basic enemy aircraft avalaible
-baseFixedWingGroup_2035_NATO = ["I_C_Offroad_02_LMG_F", 
-"I_C_Offroad_02_AT_F"];
+baseFixedWingGroup_2035_NATO = [
+	
+];
+
+
 
 ////////////////////////
 //Vehicle management////
@@ -141,28 +141,52 @@ bluforBoat_2035_NATO = [
 //FixedWing vehicle avalaible for blufor
 bluforFixedWing_2035_NATO = [
 	"B_Plane_CAS_01_dynamicLoadout_F",
-	"B_Plane_Fighter_01_Stealth_F"
+	"B_Plane_Fighter_01_Stealth_F",
+	"B_Plane_Fighter_01_F"
+];
+
+//Vehicule able to do HQ features (Loadout management and more)
+bluforHQVehicle_2035_NATO = [
+	"B_Truck_01_box_F"
 ];
 
 ////////////////////////
 //Loadout management////
 ////////////////////////
 
-listOfRoles_2035_NATO = [c_leader,c_at,c_rifleman,c_engineer,c_autorifleman,c_marksman,c_medic,c_grenadier];
+listOfRoles_2035_NATO = [c_leader,c_at,c_rifleman,c_engineer,c_autorifleman,c_marksman,c_medic,c_grenadier,c_pilot];
 
 //Two options : 
 // - ACE Arsenal : [["AMF_Samas_VALO_01_F","","","AMF_Aimpoint_CompM5",["25Rnd_samas_f1_mag",25],[],""],[],["AMF_Glock_17","","","",["16Rnd_9x21_Mag",17],[],""],["amf_uniform_02_CE",[["ACE_EarPlugs",1],["16Rnd_9x21_Mag",2,17]]],["amf_smb_tlb_famas_grn",[["ACE_MapTools",1],["ACE_CableTie",1],["25Rnd_samas_f1_mag",10,25],["CUP_HandGrenade_M67",2,1],["SmokeShellBlue",2,1],["SmokeShell",2,1]]],[],"AMF_FELIN_MOUNT_EARPROT_OD","",["Laserdesignator","","","",["Laserbatteries",1],[],""],["ItemMap","ItemGPS","","ItemCompass","TFAR_microdagr",""]]
 // - Game unit : "I_C_Soldier_Bandit_4_F"
-loadout_2035_NATO = [		
-	[c_leader,[["arifle_MX_GL_F","","ACE_acc_pointer_green","optic_Arco",["30Rnd_65x39_caseless_mag",30],["3Rnd_Smoke_Grenade_shell",3],""],[],["hgun_P07_F","","","",["16Rnd_9x21_Mag",17],[],""],["U_B_CombatUniform_mcam",[["ACE_elasticBandage",10],["ACE_CableTie",5],["ACE_EarPlugs",1],["ACE_morphine",1],["ACE_splint",2],["ACE_tourniquet",3],["ACE_WaterBottle",1],["ACE_MapTools",1],["16Rnd_9x21_Mag",1,17],["SmokeShellBlue",1,1]]],["V_PlateCarrier1_rgr",[["muzzle_snds_H_snd_F",1],["30Rnd_65x39_caseless_mag_Tracer",1,30],["30Rnd_65x39_caseless_mag",6,30],["SmokeShell",1,1],["MiniGrenade",2,1],["3Rnd_Smoke_Grenade_shell",1,3],["HandGrenade",2,1]]],[],"H_HelmetB","",["Rangefinder","","","",[],[],""],["ItemMap","ItemGPS","TFAR_anprc152","ItemCompass","ItemWatch",""]], true],
-	[c_at,[["arifle_MX_F","","ACE_acc_pointer_green","optic_Arco",["30Rnd_65x39_caseless_mag",30],[],""],["launch_I_Titan_short_F","","","",["Titan_AT",1],[],""],["hgun_P07_F","","","",["16Rnd_9x21_Mag",17],[],""],["U_B_CombatUniform_mcam",[["ACE_Banana",1],["ACE_elasticBandage",10],["ACE_CableTie",5],["ACE_EarPlugs",1],["ACE_morphine",1],["ACE_splint",2],["ACE_tourniquet",3],["ACE_WaterBottle",1],["16Rnd_9x21_Mag",1,17],["SmokeShellBlue",1,1]]],["V_PlateCarrier1_rgr",[["muzzle_snds_H_snd_F",1],["MiniGrenade",2,1],["SmokeShell",1,1],["30Rnd_65x39_caseless_mag_Tracer",1,30],["30Rnd_65x39_caseless_mag",6,30],["HandGrenade",2,1]]],["B_TacticalPack_mcamo",[["Titan_AT",2,1]]],"H_HelmetB","",[],["ItemMap","ItemGPS","TFAR_anprc152","ItemCompass","ItemWatch",""]], true],
-	[c_rifleman,[["arifle_MX_F","","ACE_acc_pointer_green","optic_Arco",["30Rnd_65x39_caseless_mag",30],[],""],[],["hgun_P07_F","","","",["16Rnd_9x21_Mag",17],[],""],["U_B_CombatUniform_mcam",[["ACE_Banana",1],["ACE_elasticBandage",10],["ACE_CableTie",5],["ACE_EarPlugs",1],["ACE_morphine",1],["ACE_splint",2],["ACE_tourniquet",3],["ACE_WaterBottle",1],["16Rnd_9x21_Mag",1,17],["SmokeShellBlue",1,1]]],["V_PlateCarrier1_rgr",[["muzzle_snds_H_snd_F",1],["MiniGrenade",2,1],["SmokeShell",1,1],["30Rnd_65x39_caseless_mag_Tracer",1,30],["30Rnd_65x39_caseless_mag",6,30],["HandGrenade",2,1]]],[],"H_HelmetB","",[],["ItemMap","ItemGPS","TFAR_anprc152","ItemCompass","ItemWatch",""]], true],//Default stuff
-	[c_grenadier,[["arifle_MX_GL_F","","ACE_acc_pointer_green","optic_Arco",["30Rnd_65x39_caseless_mag",30],["1Rnd_HE_Grenade_shell",1],""],[],["hgun_P07_F","","","",["16Rnd_9x21_Mag",17],[],""],["U_B_CombatUniform_mcam",[["ACE_Banana",1],["ACE_elasticBandage",10],["ACE_CableTie",5],["ACE_EarPlugs",1],["ACE_morphine",1],["ACE_splint",2],["ACE_tourniquet",3],["ACE_WaterBottle",1],["16Rnd_9x21_Mag",1,17],["SmokeShellBlue",1,1]]],["V_PlateCarrierSpec_rgr",[["muzzle_snds_H_snd_F",1],["30Rnd_65x39_caseless_mag_Tracer",1,30],["30Rnd_65x39_caseless_mag",5,30],["SmokeShell",1,1],["HandGrenade",2,1]]],["B_AssaultPack_rgr",[["1Rnd_HE_Grenade_shell",15,1],["3Rnd_Smoke_Grenade_shell",4,3],["30Rnd_65x39_caseless_mag",1,30]]],"H_HelmetB","",["Rangefinder","","","",[],[],""],["ItemMap","ItemGPS","TFAR_anprc152","ItemCompass","ItemWatch",""]], true],
-	[c_engineer,[["arifle_MX_F","","ACE_acc_pointer_green","optic_Arco",["30Rnd_65x39_caseless_mag",30],[],""],[],["hgun_P07_F","","","",["16Rnd_9x21_Mag",17],[],""],["U_B_CombatUniform_mcam",[["ACE_Banana",1],["ACE_elasticBandage",10],["ACE_CableTie",5],["ACE_EarPlugs",1],["ACE_morphine",1],["ACE_splint",2],["ACE_tourniquet",3],["ACE_WaterBottle",1],["16Rnd_9x21_Mag",1,17],["SmokeShellBlue",1,1]]],["V_PlateCarrierGL_rgr",[["muzzle_snds_H_snd_F",1],["MiniGrenade",2,1],["SmokeShell",1,1],["30Rnd_65x39_caseless_mag_Tracer",1,30],["30Rnd_65x39_caseless_mag",6,30],["HandGrenade",2,1]]],["B_TacticalPack_mcamo",[["ACE_DefusalKit",1],["ACE_EntrenchingTool",1],["ACE_Fortify",1],["ACE_M26_Clacker",1],["MineDetector",1],["ACE_SpraypaintRed",1],["ToolKit",1],["ACE_wirecutter",1],["DemoCharge_Remote_Mag",2,1]]],"H_HelmetB","",[],["ItemMap","ItemGPS","TFAR_anprc152","ItemCompass","ItemWatch",""]], true],
-	[c_autorifleman,[["LMG_Mk200_F","","ACE_acc_pointer_green","optic_Arco",["200Rnd_65x39_cased_Box",200],[],"bipod_01_F_snd"],[],["hgun_P07_F","","","",["16Rnd_9x21_Mag",17],[],""],["U_B_CombatUniform_mcam",[["ACE_Banana",1],["ACE_elasticBandage",10],["ACE_CableTie",5],["ACE_EarPlugs",1],["ACE_morphine",1],["ACE_splint",2],["ACE_tourniquet",3],["ACE_WaterBottle",1],["16Rnd_9x21_Mag",1,17],["SmokeShellBlue",1,1]]],["V_PlateCarrier1_rgr",[["muzzle_snds_H_snd_F",1],["MiniGrenade",2,1],["SmokeShell",1,1],["200Rnd_65x39_cased_Box_Tracer_Red",1,200],["HandGrenade",2,1]]],["B_AssaultPack_rgr",[["200Rnd_65x39_cased_Box",2,200]]],"H_HelmetB","",[],["ItemMap","ItemGPS","TFAR_anprc152","ItemCompass","ItemWatch",""]], true],
-	[c_marksman,[["arifle_MXM_F","","ACE_acc_pointer_green","optic_DMS_weathered_Kir_F",["30Rnd_65x39_caseless_mag",30],[],"bipod_01_F_snd"],[],["hgun_P07_F","","","",["16Rnd_9x21_Mag",17],[],""],["U_B_CombatUniform_mcam",[["ACE_Banana",1],["ACE_elasticBandage",10],["ACE_CableTie",5],["ACE_EarPlugs",1],["ACE_morphine",1],["ACE_splint",2],["ACE_tourniquet",3],["ACE_WaterBottle",1],["16Rnd_9x21_Mag",1,17],["SmokeShellBlue",1,1]]],["V_PlateCarrier1_rgr",[["muzzle_snds_H_snd_F",1],["MiniGrenade",2,1],["SmokeShell",1,1],["30Rnd_65x39_caseless_mag_Tracer",2,30],["30Rnd_65x39_caseless_mag",5,30],["HandGrenade",2,1]]],[],"H_HelmetB","",[],["ItemMap","ItemGPS","TFAR_anprc152","ItemCompass","ItemWatch",""]], true],
-	[c_medic,[["arifle_MX_F","","ACE_acc_pointer_green","optic_Arco",["30Rnd_65x39_caseless_mag",30],[],""],[],["hgun_P07_F","","","",["16Rnd_9x21_Mag",17],[],""],["U_B_CombatUniform_mcam",[["ACE_Banana",1],["ACE_elasticBandage",10],["ACE_CableTie",5],["ACE_EarPlugs",1],["ACE_morphine",1],["ACE_splint",2],["ACE_tourniquet",3],["ACE_WaterBottle",1],["16Rnd_9x21_Mag",1,17],["SmokeShellBlue",1,1]]],["V_PlateCarrier1_rgr",[["muzzle_snds_H_snd_F",1],["MiniGrenade",2,1],["30Rnd_65x39_caseless_mag_Tracer",1,30],["30Rnd_65x39_caseless_mag",6,30],["SmokeShell",6,1],["HandGrenade",2,1]]],["B_TacticalPack_mcamo",[["ACE_elasticBandage",40],["ACE_bloodIV",5],["ACE_bloodIV_500",4],["ACE_bloodIV_250",5],["ACE_epinephrine",10],["ACE_morphine",15],["ACE_splint",10],["ACE_tourniquet",10],["ACE_surgicalKit",1]]],"H_HelmetB","",[],["ItemMap","ItemGPS","TFAR_anprc152","ItemCompass","ItemWatch",""]], true]
-];
+if (isClass (configFile >> "CfgPatches" >> "ace_medical")) then 
+{
+	loadout_2035_NATO = [		
+		[c_leader,[["arifle_MX_GL_F","","ACE_acc_pointer_green","optic_Arco",["30Rnd_65x39_caseless_mag",30],["3Rnd_Smoke_Grenade_shell",3],""],[],["hgun_P07_F","","","",["16Rnd_9x21_Mag",17],[],""],["U_B_CombatUniform_mcam",[["ACE_elasticBandage",10],["ACE_CableTie",5],["ACE_EarPlugs",1],["ACE_morphine",1],["ACE_splint",2],["ACE_tourniquet",3],["ACE_WaterBottle",1],["ACE_MapTools",1],["16Rnd_9x21_Mag",1,17],["SmokeShellBlue",1,1]]],["V_PlateCarrier1_rgr",[["muzzle_snds_H_snd_F",1],["30Rnd_65x39_caseless_mag_Tracer",1,30],["30Rnd_65x39_caseless_mag",6,30],["SmokeShell",1,1],["MiniGrenade",2,1],["3Rnd_Smoke_Grenade_shell",1,3],["HandGrenade",2,1]]],[],"H_HelmetB","",["Rangefinder","","","",[],[],""],["ItemMap","ItemGPS","TFAR_anprc152","ItemCompass","ItemWatch",""]], true],
+		[c_at,[["arifle_MX_F","","ACE_acc_pointer_green","optic_Arco",["30Rnd_65x39_caseless_mag",30],[],""],["launch_I_Titan_short_F","","","",["Titan_AT",1],[],""],["hgun_P07_F","","","",["16Rnd_9x21_Mag",17],[],""],["U_B_CombatUniform_mcam",[["ACE_Banana",1],["ACE_elasticBandage",10],["ACE_CableTie",5],["ACE_EarPlugs",1],["ACE_morphine",1],["ACE_splint",2],["ACE_tourniquet",3],["ACE_WaterBottle",1],["16Rnd_9x21_Mag",1,17],["SmokeShellBlue",1,1]]],["V_PlateCarrier1_rgr",[["muzzle_snds_H_snd_F",1],["MiniGrenade",2,1],["SmokeShell",1,1],["30Rnd_65x39_caseless_mag_Tracer",1,30],["30Rnd_65x39_caseless_mag",6,30],["HandGrenade",2,1]]],["B_TacticalPack_mcamo",[["Titan_AT",2,1]]],"H_HelmetB","",[],["ItemMap","ItemGPS","TFAR_anprc152","ItemCompass","ItemWatch",""]], true],
+		[c_rifleman,[["arifle_MX_F","","ACE_acc_pointer_green","optic_Arco",["30Rnd_65x39_caseless_mag",30],[],""],[],["hgun_P07_F","","","",["16Rnd_9x21_Mag",17],[],""],["U_B_CombatUniform_mcam",[["ACE_Banana",1],["ACE_elasticBandage",10],["ACE_CableTie",5],["ACE_EarPlugs",1],["ACE_morphine",1],["ACE_splint",2],["ACE_tourniquet",3],["ACE_WaterBottle",1],["16Rnd_9x21_Mag",1,17],["SmokeShellBlue",1,1]]],["V_PlateCarrier1_rgr",[["muzzle_snds_H_snd_F",1],["MiniGrenade",2,1],["SmokeShell",1,1],["30Rnd_65x39_caseless_mag_Tracer",1,30],["30Rnd_65x39_caseless_mag",6,30],["HandGrenade",2,1]]],[],"H_HelmetB","",[],["ItemMap","ItemGPS","TFAR_anprc152","ItemCompass","ItemWatch",""]], true],//Default stuff
+		[c_grenadier,[["arifle_MX_GL_F","","ACE_acc_pointer_green","optic_Arco",["30Rnd_65x39_caseless_mag",30],["1Rnd_HE_Grenade_shell",1],""],[],["hgun_P07_F","","","",["16Rnd_9x21_Mag",17],[],""],["U_B_CombatUniform_mcam",[["ACE_Banana",1],["ACE_elasticBandage",10],["ACE_CableTie",5],["ACE_EarPlugs",1],["ACE_morphine",1],["ACE_splint",2],["ACE_tourniquet",3],["ACE_WaterBottle",1],["16Rnd_9x21_Mag",1,17],["SmokeShellBlue",1,1]]],["V_PlateCarrierSpec_rgr",[["muzzle_snds_H_snd_F",1],["30Rnd_65x39_caseless_mag_Tracer",1,30],["30Rnd_65x39_caseless_mag",5,30],["SmokeShell",1,1],["HandGrenade",2,1]]],["B_AssaultPack_rgr",[["1Rnd_HE_Grenade_shell",15,1],["3Rnd_Smoke_Grenade_shell",4,3],["30Rnd_65x39_caseless_mag",1,30]]],"H_HelmetB","",["Rangefinder","","","",[],[],""],["ItemMap","ItemGPS","TFAR_anprc152","ItemCompass","ItemWatch",""]], true],
+		[c_engineer,[["arifle_MX_F","","ACE_acc_pointer_green","optic_Arco",["30Rnd_65x39_caseless_mag",30],[],""],[],["hgun_P07_F","","","",["16Rnd_9x21_Mag",17],[],""],["U_B_CombatUniform_mcam",[["ACE_Banana",1],["ACE_elasticBandage",10],["ACE_CableTie",5],["ACE_EarPlugs",1],["ACE_morphine",1],["ACE_splint",2],["ACE_tourniquet",3],["ACE_WaterBottle",1],["16Rnd_9x21_Mag",1,17],["SmokeShellBlue",1,1]]],["V_PlateCarrierGL_rgr",[["muzzle_snds_H_snd_F",1],["MiniGrenade",2,1],["SmokeShell",1,1],["30Rnd_65x39_caseless_mag_Tracer",1,30],["30Rnd_65x39_caseless_mag",6,30],["HandGrenade",2,1]]],["B_TacticalPack_mcamo",[["ACE_DefusalKit",1],["ACE_EntrenchingTool",1],["ACE_Fortify",1],["ACE_M26_Clacker",1],["MineDetector",1],["ACE_SpraypaintRed",1],["ToolKit",1],["ACE_wirecutter",1],["DemoCharge_Remote_Mag",2,1]]],"H_HelmetB","",[],["ItemMap","ItemGPS","TFAR_anprc152","ItemCompass","ItemWatch",""]], true],
+		[c_autorifleman,[["LMG_Mk200_F","","ACE_acc_pointer_green","optic_Arco",["200Rnd_65x39_cased_Box",200],[],"bipod_01_F_snd"],[],["hgun_P07_F","","","",["16Rnd_9x21_Mag",17],[],""],["U_B_CombatUniform_mcam",[["ACE_Banana",1],["ACE_elasticBandage",10],["ACE_CableTie",5],["ACE_EarPlugs",1],["ACE_morphine",1],["ACE_splint",2],["ACE_tourniquet",3],["ACE_WaterBottle",1],["16Rnd_9x21_Mag",1,17],["SmokeShellBlue",1,1]]],["V_PlateCarrier1_rgr",[["muzzle_snds_H_snd_F",1],["MiniGrenade",2,1],["SmokeShell",1,1],["200Rnd_65x39_cased_Box_Tracer_Red",1,200],["HandGrenade",2,1]]],["B_AssaultPack_rgr",[["200Rnd_65x39_cased_Box",2,200]]],"H_HelmetB","",[],["ItemMap","ItemGPS","TFAR_anprc152","ItemCompass","ItemWatch",""]], true],
+		[c_marksman,[["arifle_MXM_F","","ACE_acc_pointer_green","optic_DMS_weathered_Kir_F",["30Rnd_65x39_caseless_mag",30],[],"bipod_01_F_snd"],[],["hgun_P07_F","","","",["16Rnd_9x21_Mag",17],[],""],["U_B_CombatUniform_mcam",[["ACE_Banana",1],["ACE_elasticBandage",10],["ACE_CableTie",5],["ACE_EarPlugs",1],["ACE_morphine",1],["ACE_splint",2],["ACE_tourniquet",3],["ACE_WaterBottle",1],["16Rnd_9x21_Mag",1,17],["SmokeShellBlue",1,1]]],["V_PlateCarrier1_rgr",[["muzzle_snds_H_snd_F",1],["MiniGrenade",2,1],["SmokeShell",1,1],["30Rnd_65x39_caseless_mag_Tracer",2,30],["30Rnd_65x39_caseless_mag",5,30],["HandGrenade",2,1]]],[],"H_HelmetB","",[],["ItemMap","ItemGPS","TFAR_anprc152","ItemCompass","ItemWatch",""]], true],
+		[c_medic,[["arifle_MX_F","","ACE_acc_pointer_green","optic_Arco",["30Rnd_65x39_caseless_mag",30],[],""],[],["hgun_P07_F","","","",["16Rnd_9x21_Mag",17],[],""],["U_B_CombatUniform_mcam",[["ACE_Banana",1],["ACE_elasticBandage",10],["ACE_CableTie",5],["ACE_EarPlugs",1],["ACE_morphine",1],["ACE_splint",2],["ACE_tourniquet",3],["ACE_WaterBottle",1],["16Rnd_9x21_Mag",1,17],["SmokeShellBlue",1,1]]],["V_PlateCarrier1_rgr",[["muzzle_snds_H_snd_F",1],["MiniGrenade",2,1],["30Rnd_65x39_caseless_mag_Tracer",1,30],["30Rnd_65x39_caseless_mag",6,30],["SmokeShell",6,1],["HandGrenade",2,1]]],["B_TacticalPack_mcamo",[["ACE_elasticBandage",40],["ACE_bloodIV",5],["ACE_bloodIV_500",4],["ACE_bloodIV_250",5],["ACE_epinephrine",10],["ACE_morphine",15],["ACE_splint",10],["ACE_tourniquet",10],["ACE_surgicalKit",1]]],"H_HelmetB","",[],["ItemMap","ItemGPS","TFAR_anprc152","ItemCompass","ItemWatch",""]], true],
+		[c_pilot, "B_Pilot_F"]
+	];
+} else 
+{
+	loadout_2035_NATO = [		
+		[c_leader, "B_Soldier_SL_F"],
+		[c_at, "B_soldier_LAT_F"],
+		[c_rifleman, "B_Soldier_F"],//Default stuff
+		[c_grenadier, "B_Soldier_GL_F"],
+		[c_engineer, "B_engineer_F"],
+		[c_autorifleman, "B_soldier_AR_F"],
+		[c_marksman, "B_soldier_M_F"],
+		[c_medic, "B_medic_F"],
+		[c_pilot, "B_Pilot_F"]
+	];
+};
+
 
 ////////////////////////
 ///Weapon management////
@@ -171,20 +195,29 @@ loadout_2035_NATO = [
 //Rifle avalaible for all unit
 rifleList_2035_NATO = [		
 	"arifle_MX_F",
-	"arifle_MXC_F"
+	"arifle_MXC_F",
+	"arifle_MX_khk_F",
+	"arifle_MXC_khk_F",
+	"arifle_MX_Black_F",
+	"arifle_MXC_Black_F"
 ];	
 
 //Launcher avalaible for AT
 launcherList_2035_NATO = [
 	"launch_I_Titan_short_F",
 	"launch_NLAW_F",
+	"ACE_launch_NLAW_ready_F",
 	"launch_MRAWS_olive_F"
 ];	
 
 //Autorifle avalaible for autorifleman
 autorifleList_2035_NATO = [
 	"LMG_Mk200_F",
-	"MMG_02_camo_F"
+	"MMG_02_camo_F",
+	"arifle_MX_SW_F",
+	"arifle_MX_SW_Black_F",
+	"arifle_MX_SW_khk_F",
+	"LMG_Zafir_F"
 ];	
 
 //Rifle avalaible for marksman
@@ -196,6 +229,8 @@ marksmanrifleList_2035_NATO = [
 
 //Smg avalaible for all unit
 smgList_2035_NATO = [
+	"hgun_P07_F",
+	"SMG_01_F"
 ];
 
 //////////////////////////
@@ -205,6 +240,7 @@ smgList_2035_NATO = [
 //Short range scope for all unit
 attachmentShortList_2035_NATO	= [
 	"optic_Arco",
+	"optic_Arco_blk_F",
 	"ACE_optic_Arco_2D",
 	"optic_Hamr",
 	"optic_Holosight",
@@ -220,6 +256,8 @@ attachmentShortList_2035_NATO	= [
 	"optic_ACO_grn",
 	"optic_ACO_grn_smg",
 	"optic_erco_snd_f",
+	"optic_ERCO_blk_F",
+	"optic_ERCO_khk_F",
 	"optic_mrco"
 ];
 
@@ -244,6 +282,7 @@ itemList_2035_NATO = [
 	"ItemWatch",
 	"NVGoggles",
 	"B_UavTerminal",
+	"ItemGPS",
 	"Binocular",
 	"Rangefinder",
 	"ACE_MapTools",
@@ -264,13 +303,6 @@ itemList_2035_NATO = [
 	"ACE_RangeTable_82mm",
 	"acc_flashlight",
 	"ACE_Banana",
-	"SmokeShell",
-	"SmokeShellBlue",
-	"SmokeShellGreen",
-	"SmokeShellOrange",
-	"SmokeShellPurple",
-	"SmokeShellRed",
-	"SmokeShellYellow",
 	"muzzle_snds_H_snd_F",
 	"HandGrenade",
 	"MiniGrenade",
@@ -288,7 +320,15 @@ itemEngineerList_2035_NATO = [
 	"ACE_wirecutter",
 	"ACE_Fortify",
 	"ACE_DefusalKit",
-	"ACE_DeadManSwitch"
+	"ACE_DeadManSwitch",
+	"ACE_DefusalKit",
+	"ACE_Clacker",
+	"ACE_M26_Clacker",
+	"ace_marker_flags_white",
+	"ace_marker_flags_yellow",
+	"ace_marker_flags_purple",
+	"ace_marker_flags_orange",
+	"ace_marker_flags_red"
 	];
 
 //item avalaible for all medic
@@ -312,14 +352,21 @@ backPackList_2035_NATO = [
 	"B_TacticalPack_mcamo",
 	"B_AssaultPack_rgr",
 	"B_Mortar_01_weapon_F",
-	"B_Mortar_01_support_F"
+	"B_Mortar_01_support_F",
+	"TFAR_rt1523g"
 	];
 
 
 //Uniform, vest, headgear, avalaible for all unit
 uniformList_2035_NATO = [
 	"G_Combat",
-	"G_Combat_Goggles_tna_F"
+	"G_Combat_Goggles_tna_F",
+	"U_B_CombatUniform_mcam_tshirt",
+	"G_Tactical_Clear",
+	"H_HelmetB_camo",
+	"V_PlateCarrier2_rgr",
+	"H_HelmetB_grass",
+	"G_Combat"
 	];
 
 //Magazine avalaible for all unit

@@ -34,22 +34,22 @@ baseEnemyGroup_Syndikat = ["I_C_Soldier_Bandit_4_F",
 "I_C_Soldier_Bandit_5_F", 
 "I_C_Soldier_Bandit_6_F", 
 "I_C_Soldier_Bandit_2_F", 
-"I_C_Soldier_Bandit_8_F", 
+"I_C_Soldier_Bandit_1_F", 
 "I_C_Soldier_Bandit_1_F"];
 
 baseEnemyATGroup_Syndikat = ["I_C_Soldier_Bandit_6_F", 
 "I_C_Soldier_Bandit_2_F", 
 "I_C_Soldier_Bandit_2_F",
 "I_C_Soldier_Bandit_7_F", 
-"I_C_Soldier_Bandit_8_F"];
+"I_C_Soldier_Bandit_1_F"];
 
 baseEnemyDemoGroup_Syndikat = ["I_C_Soldier_Bandit_2_F", 
-"I_C_Soldier_Bandit_8_F",
+"I_C_Soldier_Bandit_1_F",
 "I_C_Soldier_Bandit_8_F", 
 "I_C_Soldier_Bandit_6_F"];
 
 baseEnemyMortarGroup_Syndikat = ["I_G_Mortar_01_F", 
-"I_C_Soldier_Bandit_8_F", 
+"I_C_Soldier_Para_8_F", 
 "I_C_Soldier_Bandit_6_F"];
 
 baseEnemyVehicleGroup_Syndikat = ["I_C_Offroad_02_LMG_F", 
@@ -59,6 +59,10 @@ baseEnemyVehicleGroup_Syndikat = ["I_C_Offroad_02_LMG_F",
 
 baseEnemyLightArmoredVehicleGroup_Syndikat = ["CUP_I_Hilux_zu23_IND_G_F", 
 "CUP_I_Hilux_armored_DSHKM_IND_G_F"];
+
+baseEnemyUnarmedChopperGroup_Syndikat = [
+	"I_C_Heli_Light_01_civil_F"
+];
 
 baseEnemyHeavyArmoredVehicleGroup_Syndikat = ["CUP_I_MTLB_pk_SYNDIKAT"];
 

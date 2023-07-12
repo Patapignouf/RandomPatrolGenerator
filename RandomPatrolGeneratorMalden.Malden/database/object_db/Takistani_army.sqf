@@ -13,16 +13,18 @@ c_pilot = "pilot";
 ///////////////////////////
 
 //Taki
-civilian_group_Taki_Army = ["CUP_C_TK_Man_06_Coat", 
-"CUP_C_TK_Man_05_Coat", 
-"CUP_C_TK_Man_08"];
+civilian_group_Taki_Army = [
+	"CUP_C_TK_Man_06_Coat", 
+	"CUP_C_TK_Man_05_Coat", 
+	"CUP_C_TK_Man_08"
+];
 
 civilian_big_group_Taki_Army = ["CUP_C_TK_Man_06_Coat", 
-"CUP_C_TK_Man_05_Coat", 
-"CUP_C_TK_Man_08", 
-"CUP_C_TK_Man_04", 
-"CUP_C_TK_Man_03_Jack", 
-"CUP_C_TK_Man_02"
+	"CUP_C_TK_Man_05_Coat", 
+	"CUP_C_TK_Man_08", 
+	"CUP_C_TK_Man_04", 
+	"CUP_C_TK_Man_03_Jack", 
+	"CUP_C_TK_Man_02"
 ];
 
 civilianTruck_Taki_Army = [
@@ -92,8 +94,15 @@ baseEnemyLightArmoredVehicleGroup_Taki_Army = [
 baseEnemyHeavyArmoredVehicleGroup_Taki_Army = [
 	"CUP_O_T34_TKA", 
 	"CUP_O_T55_TK", 
-	"CUP_O_T72_TKA"
+	"CUP_O_T72_TKA",
+	"CUP_O_ZSU23_TK"
 ];
+
+baseEnemyUnarmedChopperGroup_Taki_Army = [
+	"CUP_O_UH1H_TKA",
+	"CUP_O_MI6T_TKA"
+];
+
 
 ////////////////////////
 //Vehicle management////
@@ -295,6 +304,7 @@ magazineList_Taki_Army = [
 	"CUP_PG7VL_M",
 	"CUP_30Rnd_556x45_Stanag",
 	"CUP_1Rnd_HEDP_M203",
+	"CUP_1Rnd_HE_M203",
 	"CUP_30Rnd_545x39_AK_M",
 	"CUP_10Rnd_762x54_SVD_M",
 	"CUP_5Rnd_127x108_KSVK_M"

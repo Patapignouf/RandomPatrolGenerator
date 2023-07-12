@@ -18,7 +18,7 @@ while {alive _thisUnit && (side _thisUnit == civilian)} do {
 	if (count _targets > 0) then 
 	{
 		//10% chance to become hostile
-		if (round random 9 == 0) then 
+		if (random 100 < 10) then 
 		{
 			//Randomize time before becoming hostile	
 			sleep (10 + random (120));
@@ -29,16 +29,16 @@ while {alive _thisUnit && (side _thisUnit == civilian)} do {
 			_thisUnit removeAllEventHandlers "Killed";
 			[_thisUnit] remoteExec ["removeAllActions", 0, true];
 			_thisUnit switchMove "";
+			
+			//Join enemy group
+			_tempGroup = createGroup east;
+			[_thisUnit] joinSilent _tempGroup;
 
 			//If lambs is enabled, disable unit task
 			if (isClass (configFile >> "CfgPatches" >> "lambs_danger")) then 
 			{
-				[_thisUnit] call lambs_wp_fnc_taskReset; //reset current task
+				[_tempGroup] call lambs_wp_fnc_taskReset; //reset current task
 			};
-
-			//Join enemy group
-			_tempGroup = createGroup east;
-			[_thisUnit] joinSilent _tempGroup;
 			
 			//Manage loadout
 			_thisUnit addVest "V_BandollierB_rgr";

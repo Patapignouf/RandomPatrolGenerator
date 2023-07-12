@@ -172,7 +172,7 @@ class DialogSetupParams
 		};
 
 
-		//Faction civ select
+		//IronMan  select
 		class RscText_6012: RscText
 		{
 			idc = 6012;
@@ -194,6 +194,30 @@ class DialogSetupParams
 			w = 0.154713 * safezoneW;
 			h = 0.0219952 * safezoneH;
 		};
+
+		//Reespawn param  select
+		class RscText_6016: RscText
+		{
+			idc = -1;
+			style = ST_MULTI;
+			lineSpacing = 1;
+			text = "Respawn"; //--- ToDo: Localize;
+			x = 0.261406 * safezoneW + safezoneX;
+			y = 0.41 * safezoneH + safezoneY;
+			w = 0.211441 * safezoneW;
+			h = 0.241947 * safezoneH;
+		};
+		
+		class RscCombo_6116: RscCombo
+		{
+			idc = 6114;
+			text = "Respawn param"; //--- ToDo: Localize;
+			x = 0.261406 * safezoneW + safezoneX;
+			y = 0.55 * safezoneH + safezoneY;
+			w = 0.154713 * safezoneW;
+			h = 0.0219952 * safezoneH;
+		};
+
 
 		////////////////////
 		//Mission settings//

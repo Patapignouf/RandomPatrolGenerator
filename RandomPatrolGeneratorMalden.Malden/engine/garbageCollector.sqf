@@ -1,6 +1,6 @@
 while {sleep 1000; true} do {
 	{
-		if (!(_x getVariable ["isObjectiveObject", false])) then 
+		if (!(_x getVariable ["isObjectiveObject", false]) && !(_x getVariable ["isPlayerObject", false])) then 
 		{
 			deleteVehicle _x;
 			sleep 0.01;

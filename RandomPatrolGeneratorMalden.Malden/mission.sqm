@@ -12,7 +12,7 @@ class EditorData
 	};
 	class ItemIDProvider
 	{
-		nextID=1928;
+		nextID=2312;
 	};
 	class MarkerIDProvider
 	{
@@ -24,27 +24,35 @@ class EditorData
 	};
 	class Camera
 	{
-		pos[]={5488.5264,113.57412,2621.5725};
-		dir[]={0.33110315,-0.66027027,-0.67411649};
-		up[]={0.29108843,0.75101984,-0.59264994};
-		aside[]={-0.89758474,4.9173832e-007,-0.4408626};
+		pos[]={5552.5234,66.359154,2621.2271};
+		dir[]={0.29681236,-0.6213097,0.72518271};
+		up[]={0.23534976,0.7835623,0.57501435};
+		aside[]={0.92548537,2.4132896e-007,-0.37879601};
 	};
 };
 binarizationWanted=0;
 sourceName="RandomPatrolGeneratorMalden";
 addons[]=
 {
-	"A3_Characters_F"
+	"A3_Characters_F",
+	"A3_Weapons_F"
 };
 class AddonsMetaData
 {
 	class List
 	{
-		items=1;
+		items=2;
 		class Item0
 		{
 			className="A3_Characters_F";
 			name="Arma 3 Alpha - Characters and Clothing";
+			author="Bohemia Interactive";
+			url="https://www.arma3.com";
+		};
+		class Item1
+		{
+			className="A3_Weapons_F";
+			name="Arma 3 Alpha - Weapons and Accessories";
 			author="Bohemia Interactive";
 			url="https://www.arma3.com";
 		};
@@ -67,7 +75,7 @@ class ScenarioData
 	respawnDialog=0;
 	disabledAI=1;
 	respawn=3;
-	respawnDelay=5;
+	respawnDelay=300;
 	wreckRemovalMaxTime=3600;
 	corpseManagerMode=1;
 	corpseLimit=30;
@@ -80,14 +88,41 @@ class CustomAttributes
 		name="Multiplayer";
 		class Attribute0
 		{
-			property="ENH_respawnTickets_west";
-			expression="if (!is3DEN && isMultiplayer && isServer) then {[west, _value] call BIS_fnc_respawnTickets}";
+			property="RespawnTemplates";
+			expression="true";
 			class Value
 			{
 				class data
 				{
-					singleType="SCALAR";
-					value=0;
+					singleType="ARRAY";
+					class value
+					{
+						items=3;
+						class Item0
+						{
+							class data
+							{
+								singleType="STRING";
+								value="EndMission";
+							};
+						};
+						class Item1
+						{
+							class data
+							{
+								singleType="STRING";
+								value="Tickets";
+							};
+						};
+						class Item2
+						{
+							class data
+							{
+								singleType="STRING";
+								value="TicketsSpawn";
+							};
+						};
+					};
 				};
 			};
 		};
@@ -213,45 +248,57 @@ class CustomAttributes
 		};
 		class Attribute2
 		{
-			property="RespawnTemplates";
-			expression="true";
+			property="ReviveMode";
+			expression="false";
 			class Value
 			{
 				class data
 				{
-					singleType="ARRAY";
-					class value
-					{
-						items=3;
-						class Item0
-						{
-							class data
-							{
-								singleType="STRING";
-								value="EndMission";
-							};
-						};
-						class Item1
-						{
-							class data
-							{
-								singleType="STRING";
-								value="Tickets";
-							};
-						};
-						class Item2
-						{
-							class data
-							{
-								singleType="STRING";
-								value="TicketsSpawn";
-							};
-						};
-					};
+					singleType="SCALAR";
+					value=1;
 				};
 			};
 		};
 		class Attribute3
+		{
+			property="ReviveMedicSpeedMultiplier";
+			expression="false";
+			class Value
+			{
+				class data
+				{
+					singleType="SCALAR";
+					value=3;
+				};
+			};
+		};
+		class Attribute4
+		{
+			property="ReviveDelay";
+			expression="false";
+			class Value
+			{
+				class data
+				{
+					singleType="SCALAR";
+					value=15.000001;
+				};
+			};
+		};
+		class Attribute5
+		{
+			property="ReviveRequiredItems";
+			expression="false";
+			class Value
+			{
+				class data
+				{
+					singleType="SCALAR";
+					value=2;
+				};
+			};
+		};
+		class Attribute6
 		{
 			property="ENH_respawnTickets_independent";
 			expression="if (!is3DEN && isMultiplayer && isServer) then {[independent, _value] call BIS_fnc_respawnTickets}";
@@ -264,7 +311,20 @@ class CustomAttributes
 				};
 			};
 		};
-		nAttributes=4;
+		class Attribute7
+		{
+			property="ENH_respawnTickets_west";
+			expression="if (!is3DEN && isMultiplayer && isServer) then {[west, _value] call BIS_fnc_respawnTickets}";
+			class Value
+			{
+				class data
+				{
+					singleType="SCALAR";
+					value=0;
+				};
+			};
+		};
+		nAttributes=8;
 	};
 	class Category1
 	{
@@ -430,22 +490,27 @@ class Mission
 			side="West";
 			class Entities
 			{
-				items=19;
+				items=15;
 				class Item0
 				{
 					dataType="Object";
 					class PositionInfo
 					{
-						position[]={5535,36.283443,2618.05};
+						position[]={5536,37.359432,2589.05};
 					};
 					side="West";
 					flags=7;
 					class Attributes
 					{
-						description="Rifleman (setup)";
+						init="this setVariable [""initRole"",""leader""];";
+						description="Leader (setup)";
 						isPlayer=1;
+						class Inventory
+						{
+							map="ItemMap";
+						};
 					};
-					id=1876;
+					id=2281;
 					type="B_Soldier_unarmed_F";
 					class CustomAttributes
 					{
@@ -483,17 +548,23 @@ class Mission
 					dataType="Object";
 					class PositionInfo
 					{
-						position[]={5536,36.458637,2608.05};
+						position[]={5532.7891,36.603111,2610.5571};
 					};
 					side="West";
 					flags=5;
 					class Attributes
 					{
-						description="Rifleman";
+						init="this setVariable [""initRole"",""rifleman""];";
+						description="2: Rifleman";
 						isPlayable=1;
+						class Inventory
+						{
+							map="ItemMap";
+						};
 					};
-					id=1878;
-					type="B_Soldier_unarmed_F";
+					id=2282;
+					type="B_Soldier_F";
+					atlOffset=3.8146973e-006;
 					class CustomAttributes
 					{
 						class Attribute0
@@ -505,7 +576,7 @@ class Mission
 								class data
 								{
 									singleType="STRING";
-									value="Male10ENG";
+									value="Male09ENG";
 								};
 							};
 						};
@@ -518,7 +589,7 @@ class Mission
 								class data
 								{
 									singleType="SCALAR";
-									value=0.95999998;
+									value=0.97000003;
 								};
 							};
 						};
@@ -530,18 +601,23 @@ class Mission
 					dataType="Object";
 					class PositionInfo
 					{
-						position[]={5539.0854,36.195297,2608.0044};
-						angles[]={0,6.0407553,0};
+						position[]={5536.6001,36.354259,2610.5129};
 					};
 					side="West";
 					flags=5;
 					class Attributes
 					{
-						description="Rifleman";
+						init="this setVariable [""initRole"",""rifleman""];";
+						description="3: Rifleman";
 						isPlayable=1;
+						class Inventory
+						{
+							map="ItemMap";
+						};
 					};
-					id=1880;
-					type="B_Soldier_unarmed_F";
+					id=2283;
+					type="B_Soldier_F";
+					atlOffset=3.8146973e-006;
 					class CustomAttributes
 					{
 						class Attribute0
@@ -566,7 +642,7 @@ class Mission
 								class data
 								{
 									singleType="SCALAR";
-									value=0.95999998;
+									value=1.02;
 								};
 							};
 						};
@@ -578,17 +654,22 @@ class Mission
 					dataType="Object";
 					class PositionInfo
 					{
-						position[]={5546.9277,35.429581,2610.6985};
+						position[]={5540.8789,35.957096,2611.198};
 					};
 					side="West";
 					flags=5;
 					class Attributes
 					{
-						description="Rifleman";
+						init="this setVariable [""initRole"",""marksman""];";
+						description="4: Marksman";
 						isPlayable=1;
+						class Inventory
+						{
+							map="ItemMap";
+						};
 					};
-					id=1882;
-					type="B_Soldier_unarmed_F";
+					id=2284;
+					type="B_soldier_M_F";
 					class CustomAttributes
 					{
 						class Attribute0
@@ -600,7 +681,7 @@ class Mission
 								class data
 								{
 									singleType="STRING";
-									value="Male10ENG";
+									value="Male03ENG";
 								};
 							};
 						};
@@ -613,7 +694,7 @@ class Mission
 								class data
 								{
 									singleType="SCALAR";
-									value=0.95999998;
+									value=1.03;
 								};
 							};
 						};
@@ -625,18 +706,22 @@ class Mission
 					dataType="Object";
 					class PositionInfo
 					{
-						position[]={5550.0132,35.158562,2610.6528};
-						angles[]={0,6.0407553,0};
+						position[]={5547.9639,35.327717,2616.21};
 					};
 					side="West";
 					flags=5;
 					class Attributes
 					{
-						description="Rifleman";
+						init="this setVariable [""initRole"",""engineer""];";
+						description="5: Engineer";
 						isPlayable=1;
+						class Inventory
+						{
+							map="ItemMap";
+						};
 					};
-					id=1883;
-					type="B_Soldier_unarmed_F";
+					id=2285;
+					type="B_engineer_F";
 					class CustomAttributes
 					{
 						class Attribute0
@@ -648,7 +733,7 @@ class Mission
 								class data
 								{
 									singleType="STRING";
-									value="Male10ENG";
+									value="Male12ENG";
 								};
 							};
 						};
@@ -661,7 +746,7 @@ class Mission
 								class data
 								{
 									singleType="SCALAR";
-									value=0.95999998;
+									value=1.04;
 								};
 							};
 						};
@@ -673,17 +758,22 @@ class Mission
 					dataType="Object";
 					class PositionInfo
 					{
-						position[]={5542.3525,35.913017,2605.728};
+						position[]={5543.877,35.724072,2607.99};
 					};
 					side="West";
 					flags=5;
 					class Attributes
 					{
-						description="Rifleman";
+						init="this setVariable [""initRole"",""autorifleman""];";
+						description="6: Autorifleman";
 						isPlayable=1;
+						class Inventory
+						{
+							map="ItemMap";
+						};
 					};
-					id=1885;
-					type="B_Soldier_unarmed_F";
+					id=2286;
+					type="B_soldier_AR_F";
 					class CustomAttributes
 					{
 						class Attribute0
@@ -695,7 +785,7 @@ class Mission
 								class data
 								{
 									singleType="STRING";
-									value="Male10ENG";
+									value="Male09ENG";
 								};
 							};
 						};
@@ -708,7 +798,7 @@ class Mission
 								class data
 								{
 									singleType="SCALAR";
-									value=0.95999998;
+									value=1.01;
 								};
 							};
 						};
@@ -720,18 +810,22 @@ class Mission
 					dataType="Object";
 					class PositionInfo
 					{
-						position[]={5545.438,35.608822,2605.6824};
-						angles[]={0,6.0407553,0};
+						position[]={5537.7129,36.403667,2605.5601};
 					};
 					side="West";
 					flags=5;
 					class Attributes
 					{
-						description="Rifleman";
+						init="this setVariable [""initRole"",""medic""];";
+						description="7: Combat Life Saver";
 						isPlayable=1;
+						class Inventory
+						{
+							map="ItemMap";
+						};
 					};
-					id=1886;
-					type="B_Soldier_unarmed_F";
+					id=2287;
+					type="B_medic_F";
 					class CustomAttributes
 					{
 						class Attribute0
@@ -743,7 +837,7 @@ class Mission
 								class data
 								{
 									singleType="STRING";
-									value="Male10ENG";
+									value="Male05ENG";
 								};
 							};
 						};
@@ -756,7 +850,7 @@ class Mission
 								class data
 								{
 									singleType="SCALAR";
-									value=0.95999998;
+									value=0.98000002;
 								};
 							};
 						};
@@ -768,17 +862,22 @@ class Mission
 					dataType="Object";
 					class PositionInfo
 					{
-						position[]={5537.0444,36.532494,2602.658};
+						position[]={5541.3809,36.094257,2602.72};
 					};
 					side="West";
 					flags=5;
 					class Attributes
 					{
-						description="Rifleman";
+						init="this setVariable [""initRole"",""at""];";
+						description="8: Rifleman (AT)";
 						isPlayable=1;
+						class Inventory
+						{
+							map="ItemMap";
+						};
 					};
-					id=1888;
-					type="B_Soldier_unarmed_F";
+					id=2288;
+					type="B_soldier_LAT_F";
 					class CustomAttributes
 					{
 						class Attribute0
@@ -790,7 +889,7 @@ class Mission
 								class data
 								{
 									singleType="STRING";
-									value="Male10ENG";
+									value="Male02ENG";
 								};
 							};
 						};
@@ -815,18 +914,23 @@ class Mission
 					dataType="Object";
 					class PositionInfo
 					{
-						position[]={5540.1299,36.228191,2602.6123};
-						angles[]={0,6.0407553,0};
+						position[]={5546.125,35.544949,2606.0388};
 					};
 					side="West";
 					flags=5;
 					class Attributes
 					{
-						description="Rifleman";
+						init="this setVariable [""initRole"",""rifleman""];";
+						description="9: Rifleman";
 						isPlayable=1;
+						class Inventory
+						{
+							map="ItemMap";
+						};
 					};
-					id=1889;
-					type="B_Soldier_unarmed_F";
+					id=2289;
+					type="B_Soldier_F";
+					atlOffset=3.8146973e-006;
 					class CustomAttributes
 					{
 						class Attribute0
@@ -838,7 +942,7 @@ class Mission
 								class data
 								{
 									singleType="STRING";
-									value="Male10ENG";
+									value="Male09ENG";
 								};
 							};
 						};
@@ -851,7 +955,7 @@ class Mission
 								class data
 								{
 									singleType="SCALAR";
-									value=0.95999998;
+									value=0.97000003;
 								};
 							};
 						};
@@ -863,17 +967,23 @@ class Mission
 					dataType="Object";
 					class PositionInfo
 					{
-						position[]={5541.9819,35.851624,2612.072};
+						position[]={5549.936,35.210011,2605.9946};
 					};
 					side="West";
 					flags=5;
 					class Attributes
 					{
-						description="Rifleman";
+						init="this setVariable [""initRole"",""rifleman""];";
+						description="10: Rifleman";
 						isPlayable=1;
+						class Inventory
+						{
+							map="ItemMap";
+						};
 					};
-					id=1891;
-					type="B_Soldier_unarmed_F";
+					id=2290;
+					type="B_Soldier_F";
+					atlOffset=3.8146973e-006;
 					class CustomAttributes
 					{
 						class Attribute0
@@ -898,7 +1008,7 @@ class Mission
 								class data
 								{
 									singleType="SCALAR";
-									value=0.95999998;
+									value=1.02;
 								};
 							};
 						};
@@ -910,18 +1020,22 @@ class Mission
 					dataType="Object";
 					class PositionInfo
 					{
-						position[]={5545.0674,35.580551,2612.0264};
-						angles[]={0,6.0407553,0};
+						position[]={5554.2148,34.843742,2606.6797};
 					};
 					side="West";
 					flags=5;
 					class Attributes
 					{
-						description="Rifleman";
+						init="this setVariable [""initRole"",""marksman""];";
+						description="11: Marksman";
 						isPlayable=1;
+						class Inventory
+						{
+							map="ItemMap";
+						};
 					};
-					id=1892;
-					type="B_Soldier_unarmed_F";
+					id=2291;
+					type="B_soldier_M_F";
 					class CustomAttributes
 					{
 						class Attribute0
@@ -933,7 +1047,7 @@ class Mission
 								class data
 								{
 									singleType="STRING";
-									value="Male10ENG";
+									value="Male03ENG";
 								};
 							};
 						};
@@ -946,7 +1060,7 @@ class Mission
 								class data
 								{
 									singleType="SCALAR";
-									value=0.95999998;
+									value=1.03;
 								};
 							};
 						};
@@ -958,17 +1072,22 @@ class Mission
 					dataType="Object";
 					class PositionInfo
 					{
-						position[]={5551.0342,35.12838,2604.8616};
+						position[]={5561.2998,34.760159,2611.6917};
 					};
 					side="West";
 					flags=5;
 					class Attributes
 					{
-						description="Rifleman";
+						init="this setVariable [""initRole"",""engineer""];";
+						description="12: Engineer";
 						isPlayable=1;
+						class Inventory
+						{
+							map="ItemMap";
+						};
 					};
-					id=1894;
-					type="B_Soldier_unarmed_F";
+					id=2292;
+					type="B_engineer_F";
 					class CustomAttributes
 					{
 						class Attribute0
@@ -980,7 +1099,7 @@ class Mission
 								class data
 								{
 									singleType="STRING";
-									value="Male10ENG";
+									value="Male12ENG";
 								};
 							};
 						};
@@ -993,7 +1112,7 @@ class Mission
 								class data
 								{
 									singleType="SCALAR";
-									value=0.95999998;
+									value=1.04;
 								};
 							};
 						};
@@ -1005,18 +1124,22 @@ class Mission
 					dataType="Object";
 					class PositionInfo
 					{
-						position[]={5554.1196,34.869644,2604.8159};
-						angles[]={0,6.0407553,0};
+						position[]={5557.2129,34.622711,2603.4717};
 					};
 					side="West";
 					flags=5;
 					class Attributes
 					{
-						description="Rifleman";
+						init="this setVariable [""initRole"",""autorifleman""];";
+						description="13: Autorifleman";
 						isPlayable=1;
+						class Inventory
+						{
+							map="ItemMap";
+						};
 					};
-					id=1895;
-					type="B_Soldier_unarmed_F";
+					id=2293;
+					type="B_soldier_AR_F";
 					class CustomAttributes
 					{
 						class Attribute0
@@ -1028,7 +1151,7 @@ class Mission
 								class data
 								{
 									singleType="STRING";
-									value="Male10ENG";
+									value="Male09ENG";
 								};
 							};
 						};
@@ -1041,7 +1164,7 @@ class Mission
 								class data
 								{
 									singleType="SCALAR";
-									value=0.95999998;
+									value=1.01;
 								};
 							};
 						};
@@ -1053,17 +1176,22 @@ class Mission
 					dataType="Object";
 					class PositionInfo
 					{
-						position[]={5546.7544,35.590271,2600.478};
+						position[]={5551.0488,35.16383,2601.0417};
 					};
 					side="West";
 					flags=5;
 					class Attributes
 					{
-						description="Rifleman";
+						init="this setVariable [""initRole"",""medic""];";
+						description="14: Combat Life Saver";
 						isPlayable=1;
+						class Inventory
+						{
+							map="ItemMap";
+						};
 					};
-					id=1897;
-					type="B_Soldier_unarmed_F";
+					id=2294;
+					type="B_medic_F";
 					class CustomAttributes
 					{
 						class Attribute0
@@ -1075,7 +1203,7 @@ class Mission
 								class data
 								{
 									singleType="STRING";
-									value="Male10ENG";
+									value="Male05ENG";
 								};
 							};
 						};
@@ -1088,7 +1216,7 @@ class Mission
 								class data
 								{
 									singleType="SCALAR";
-									value=0.95999998;
+									value=0.98000002;
 								};
 							};
 						};
@@ -1100,18 +1228,22 @@ class Mission
 					dataType="Object";
 					class PositionInfo
 					{
-						position[]={5549.8398,35.271866,2600.4324};
-						angles[]={0,6.0407553,0};
+						position[]={5554.7168,34.86525,2598.2017};
 					};
 					side="West";
 					flags=5;
 					class Attributes
 					{
-						description="Rifleman";
+						init="this setVariable [""initRole"",""at""];";
+						description="15: Rifleman (AT)";
 						isPlayable=1;
+						class Inventory
+						{
+							map="ItemMap";
+						};
 					};
-					id=1898;
-					type="B_Soldier_unarmed_F";
+					id=2295;
+					type="B_soldier_LAT_F";
 					class CustomAttributes
 					{
 						class Attribute0
@@ -1123,197 +1255,7 @@ class Mission
 								class data
 								{
 									singleType="STRING";
-									value="Male10ENG";
-								};
-							};
-						};
-						class Attribute1
-						{
-							property="pitch";
-							expression="_this setpitch _value;";
-							class Value
-							{
-								class data
-								{
-									singleType="SCALAR";
-									value=0.95999998;
-								};
-							};
-						};
-						nAttributes=2;
-					};
-				};
-				class Item15
-				{
-					dataType="Object";
-					class PositionInfo
-					{
-						position[]={5539.3716,36.746914,2593.6658};
-					};
-					side="West";
-					flags=5;
-					class Attributes
-					{
-						description="Rifleman";
-						isPlayable=1;
-					};
-					id=1900;
-					type="B_Soldier_unarmed_F";
-					class CustomAttributes
-					{
-						class Attribute0
-						{
-							property="speaker";
-							expression="_this setspeaker _value;";
-							class Value
-							{
-								class data
-								{
-									singleType="STRING";
-									value="Male10ENG";
-								};
-							};
-						};
-						class Attribute1
-						{
-							property="pitch";
-							expression="_this setpitch _value;";
-							class Value
-							{
-								class data
-								{
-									singleType="SCALAR";
-									value=0.95999998;
-								};
-							};
-						};
-						nAttributes=2;
-					};
-				};
-				class Item16
-				{
-					dataType="Object";
-					class PositionInfo
-					{
-						position[]={5542.457,36.440983,2593.6201};
-						angles[]={0,6.0407553,0};
-					};
-					side="West";
-					flags=5;
-					class Attributes
-					{
-						description="Rifleman";
-						isPlayable=1;
-					};
-					id=1901;
-					type="B_Soldier_unarmed_F";
-					class CustomAttributes
-					{
-						class Attribute0
-						{
-							property="speaker";
-							expression="_this setspeaker _value;";
-							class Value
-							{
-								class data
-								{
-									singleType="STRING";
-									value="Male10ENG";
-								};
-							};
-						};
-						class Attribute1
-						{
-							property="pitch";
-							expression="_this setpitch _value;";
-							class Value
-							{
-								class data
-								{
-									singleType="SCALAR";
-									value=0.95999998;
-								};
-							};
-						};
-						nAttributes=2;
-					};
-				};
-				class Item17
-				{
-					dataType="Object";
-					class PositionInfo
-					{
-						position[]={5544.8618,36.093498,2595.2847};
-					};
-					side="West";
-					flags=5;
-					class Attributes
-					{
-						description="Rifleman";
-						isPlayable=1;
-					};
-					id=1903;
-					type="B_Soldier_unarmed_F";
-					class CustomAttributes
-					{
-						class Attribute0
-						{
-							property="speaker";
-							expression="_this setspeaker _value;";
-							class Value
-							{
-								class data
-								{
-									singleType="STRING";
-									value="Male10ENG";
-								};
-							};
-						};
-						class Attribute1
-						{
-							property="pitch";
-							expression="_this setpitch _value;";
-							class Value
-							{
-								class data
-								{
-									singleType="SCALAR";
-									value=0.95999998;
-								};
-							};
-						};
-						nAttributes=2;
-					};
-				};
-				class Item18
-				{
-					dataType="Object";
-					class PositionInfo
-					{
-						position[]={5547.9473,35.772923,2595.239};
-						angles[]={0,6.0407553,0};
-					};
-					side="West";
-					flags=5;
-					class Attributes
-					{
-						description="Rifleman";
-						isPlayable=1;
-					};
-					id=1904;
-					type="B_Soldier_unarmed_F";
-					class CustomAttributes
-					{
-						class Attribute0
-						{
-							property="speaker";
-							expression="_this setspeaker _value;";
-							class Value
-							{
-								class data
-								{
-									singleType="STRING";
-									value="Male10ENG";
+									value="Male02ENG";
 								};
 							};
 						};
@@ -1337,7 +1279,7 @@ class Mission
 			class Attributes
 			{
 			};
-			id=1875;
+			id=2280;
 		};
 		class Item1
 		{
@@ -1345,23 +1287,27 @@ class Mission
 			side="Independent";
 			class Entities
 			{
-				items=17;
+				items=15;
 				class Item0
 				{
 					dataType="Object";
 					class PositionInfo
 					{
-						position[]={5522,40.355057,2544.05};
-						angles[]={0,6.0407586,0};
+						position[]={5522.3169,39.370342,2574.0901};
 					};
 					side="Independent";
 					flags=7;
 					class Attributes
 					{
-						description="Rifleman (setup)";
+						init="this setVariable [""initRole"",""leader""];";
+						description="Leader (setup)";
 						isPlayable=1;
+						class Inventory
+						{
+							map="ItemMap";
+						};
 					};
-					id=1908;
+					id=2297;
 					type="B_Soldier_unarmed_F";
 					class CustomAttributes
 					{
@@ -1374,7 +1320,7 @@ class Mission
 								class data
 								{
 									singleType="STRING";
-									value="Male10ENG";
+									value="Male04ENG";
 								};
 							};
 						};
@@ -1387,7 +1333,7 @@ class Mission
 								class data
 								{
 									singleType="SCALAR";
-									value=0.95999998;
+									value=1;
 								};
 							};
 						};
@@ -1399,17 +1345,23 @@ class Mission
 					dataType="Object";
 					class PositionInfo
 					{
-						position[]={5527.7388,39.858528,2535.0681};
+						position[]={5522.189,39.731358,2565.0942};
 					};
 					side="Independent";
 					flags=5;
 					class Attributes
 					{
-						description="Rifleman";
+						init="this setVariable [""initRole"",""rifleman""];";
+						description="1: Rifleman";
 						isPlayable=1;
+						class Inventory
+						{
+							map="ItemMap";
+						};
 					};
-					id=1909;
-					type="B_Soldier_unarmed_F";
+					id=2298;
+					type="B_Soldier_F";
+					atlOffset=0.13632965;
 					class CustomAttributes
 					{
 						class Attribute0
@@ -1421,7 +1373,7 @@ class Mission
 								class data
 								{
 									singleType="STRING";
-									value="Male10ENG";
+									value="Male09ENG";
 								};
 							};
 						};
@@ -1434,7 +1386,7 @@ class Mission
 								class data
 								{
 									singleType="SCALAR";
-									value=0.95999998;
+									value=0.97000003;
 								};
 							};
 						};
@@ -1446,18 +1398,23 @@ class Mission
 					dataType="Object";
 					class PositionInfo
 					{
-						position[]={5530.8242,39.428226,2535.022};
-						angles[]={0,6.0407586,0};
+						position[]={5526,40.001438,2565.05};
 					};
 					side="Independent";
-					flags=5;
+					flags=1;
 					class Attributes
 					{
-						description="Rifleman";
+						init="this setVariable [""initRole"",""rifleman""];";
+						description="3: Rifleman";
 						isPlayable=1;
+						class Inventory
+						{
+							map="ItemMap";
+						};
 					};
-					id=1910;
-					type="B_Soldier_unarmed_F";
+					id=2299;
+					type="B_Soldier_F";
+					atlOffset=0.6223793;
 					class CustomAttributes
 					{
 						class Attribute0
@@ -1482,7 +1439,7 @@ class Mission
 								class data
 								{
 									singleType="SCALAR";
-									value=0.95999998;
+									value=1.02;
 								};
 							};
 						};
@@ -1494,17 +1451,23 @@ class Mission
 					dataType="Object";
 					class PositionInfo
 					{
-						position[]={5523.1636,40.502487,2530.0977};
+						position[]={5530.2788,38.975201,2565.7351};
 					};
 					side="Independent";
 					flags=5;
 					class Attributes
 					{
-						description="Rifleman";
+						init="this setVariable [""initRole"",""marksman""];";
+						description="4: Marksman";
 						isPlayable=1;
+						class Inventory
+						{
+							map="ItemMap";
+						};
 					};
-					id=1911;
-					type="B_Soldier_unarmed_F";
+					id=2300;
+					type="B_soldier_M_F";
+					atlOffset=0.13632584;
 					class CustomAttributes
 					{
 						class Attribute0
@@ -1516,7 +1479,7 @@ class Mission
 								class data
 								{
 									singleType="STRING";
-									value="Male10ENG";
+									value="Male03ENG";
 								};
 							};
 						};
@@ -1529,7 +1492,7 @@ class Mission
 								class data
 								{
 									singleType="SCALAR";
-									value=0.95999998;
+									value=1.03;
 								};
 							};
 						};
@@ -1541,18 +1504,23 @@ class Mission
 					dataType="Object";
 					class PositionInfo
 					{
-						position[]={5526.249,40.126598,2530.052};
-						angles[]={0,6.0407553,0};
+						position[]={5537.3638,38.103783,2570.7471};
 					};
 					side="Independent";
 					flags=5;
 					class Attributes
 					{
-						description="Rifleman";
+						init="this setVariable [""initRole"",""engineer""];";
+						description="5: Engineer";
 						isPlayable=1;
+						class Inventory
+						{
+							map="ItemMap";
+						};
 					};
-					id=1912;
-					type="B_Soldier_unarmed_F";
+					id=2301;
+					type="B_engineer_F";
+					atlOffset=0.13632584;
 					class CustomAttributes
 					{
 						class Attribute0
@@ -1564,7 +1532,7 @@ class Mission
 								class data
 								{
 									singleType="STRING";
-									value="Male10ENG";
+									value="Male12ENG";
 								};
 							};
 						};
@@ -1577,7 +1545,7 @@ class Mission
 								class data
 								{
 									singleType="SCALAR";
-									value=0.95999998;
+									value=1.04;
 								};
 							};
 						};
@@ -1589,17 +1557,23 @@ class Mission
 					dataType="Object";
 					class PositionInfo
 					{
-						position[]={5517.8555,41.27951,2527.0276};
+						position[]={5533.2769,38.685349,2562.5271};
 					};
 					side="Independent";
 					flags=5;
 					class Attributes
 					{
-						description="Rifleman";
+						init="this setVariable [""initRole"",""autorifleman""];";
+						description="6: Autorifleman";
 						isPlayable=1;
+						class Inventory
+						{
+							map="ItemMap";
+						};
 					};
-					id=1913;
-					type="B_Soldier_unarmed_F";
+					id=2302;
+					type="B_soldier_AR_F";
+					atlOffset=0.13632202;
 					class CustomAttributes
 					{
 						class Attribute0
@@ -1611,7 +1585,7 @@ class Mission
 								class data
 								{
 									singleType="STRING";
-									value="Male10ENG";
+									value="Male09ENG";
 								};
 							};
 						};
@@ -1624,7 +1598,7 @@ class Mission
 								class data
 								{
 									singleType="SCALAR";
-									value=0.95999998;
+									value=1.01;
 								};
 							};
 						};
@@ -1636,18 +1610,23 @@ class Mission
 					dataType="Object";
 					class PositionInfo
 					{
-						position[]={5520.9409,40.837788,2526.9819};
-						angles[]={0,6.0407553,0};
+						position[]={5527.1128,39.514179,2560.0972};
 					};
 					side="Independent";
 					flags=5;
 					class Attributes
 					{
-						description="Rifleman";
+						init="this setVariable [""initRole"",""medic""];";
+						description="7: Combat Life Saver";
 						isPlayable=1;
+						class Inventory
+						{
+							map="ItemMap";
+						};
 					};
-					id=1914;
-					type="B_Soldier_unarmed_F";
+					id=2303;
+					type="B_medic_F";
+					atlOffset=0.13632202;
 					class CustomAttributes
 					{
 						class Attribute0
@@ -1659,7 +1638,7 @@ class Mission
 								class data
 								{
 									singleType="STRING";
-									value="Male10ENG";
+									value="Male05ENG";
 								};
 							};
 						};
@@ -1672,7 +1651,7 @@ class Mission
 								class data
 								{
 									singleType="SCALAR";
-									value=0.95999998;
+									value=0.98000002;
 								};
 							};
 						};
@@ -1684,17 +1663,23 @@ class Mission
 					dataType="Object";
 					class PositionInfo
 					{
-						position[]={5522.793,40.496891,2536.4417};
+						position[]={5530.7808,39.142632,2557.2571};
 					};
 					side="Independent";
 					flags=5;
 					class Attributes
 					{
-						description="Rifleman";
+						init="this setVariable [""initRole"",""at""];";
+						description="8: Rifleman (AT)";
 						isPlayable=1;
+						class Inventory
+						{
+							map="ItemMap";
+						};
 					};
-					id=1915;
-					type="B_Soldier_unarmed_F";
+					id=2304;
+					type="B_soldier_LAT_F";
+					atlOffset=0.13631821;
 					class CustomAttributes
 					{
 						class Attribute0
@@ -1706,7 +1691,7 @@ class Mission
 								class data
 								{
 									singleType="STRING";
-									value="Male10ENG";
+									value="Male02ENG";
 								};
 							};
 						};
@@ -1731,18 +1716,23 @@ class Mission
 					dataType="Object";
 					class PositionInfo
 					{
-						position[]={5525.8784,40.146214,2536.396};
-						angles[]={0,6.0407553,0};
+						position[]={5535.5249,38.466389,2560.5759};
 					};
 					side="Independent";
 					flags=5;
 					class Attributes
 					{
-						description="Rifleman";
+						init="this setVariable [""initRole"",""rifleman""];";
+						description="9: Rifleman";
 						isPlayable=1;
+						class Inventory
+						{
+							map="ItemMap";
+						};
 					};
-					id=1916;
-					type="B_Soldier_unarmed_F";
+					id=2305;
+					type="B_Soldier_F";
+					atlOffset=0.13632584;
 					class CustomAttributes
 					{
 						class Attribute0
@@ -1754,7 +1744,7 @@ class Mission
 								class data
 								{
 									singleType="STRING";
-									value="Male10ENG";
+									value="Male09ENG";
 								};
 							};
 						};
@@ -1767,7 +1757,7 @@ class Mission
 								class data
 								{
 									singleType="SCALAR";
-									value=0.95999998;
+									value=0.97000003;
 								};
 							};
 						};
@@ -1779,17 +1769,23 @@ class Mission
 					dataType="Object";
 					class PositionInfo
 					{
-						position[]={5531.8452,39.223038,2529.2312};
+						position[]={5539.3359,37.935131,2560.5317};
 					};
 					side="Independent";
 					flags=5;
 					class Attributes
 					{
-						description="Rifleman";
+						init="this setVariable [""initRole"",""rifleman""];";
+						description="10: Rifleman";
 						isPlayable=1;
+						class Inventory
+						{
+							map="ItemMap";
+						};
 					};
-					id=1917;
-					type="B_Soldier_unarmed_F";
+					id=2306;
+					type="B_Soldier_F";
+					atlOffset=0.13632965;
 					class CustomAttributes
 					{
 						class Attribute0
@@ -1814,7 +1810,7 @@ class Mission
 								class data
 								{
 									singleType="SCALAR";
-									value=0.95999998;
+									value=1.02;
 								};
 							};
 						};
@@ -1826,18 +1822,23 @@ class Mission
 					dataType="Object";
 					class PositionInfo
 					{
-						position[]={5534.9307,38.758602,2529.1855};
-						angles[]={0,6.0407553,0};
+						position[]={5543.6147,37.321766,2561.2168};
 					};
 					side="Independent";
 					flags=5;
 					class Attributes
 					{
-						description="Rifleman";
+						init="this setVariable [""initRole"",""marksman""];";
+						description="11: Marksman";
 						isPlayable=1;
+						class Inventory
+						{
+							map="ItemMap";
+						};
 					};
-					id=1918;
-					type="B_Soldier_unarmed_F";
+					id=2307;
+					type="B_soldier_M_F";
+					atlOffset=0.13632965;
 					class CustomAttributes
 					{
 						class Attribute0
@@ -1849,7 +1850,7 @@ class Mission
 								class data
 								{
 									singleType="STRING";
-									value="Male10ENG";
+									value="Male03ENG";
 								};
 							};
 						};
@@ -1862,7 +1863,7 @@ class Mission
 								class data
 								{
 									singleType="SCALAR";
-									value=0.95999998;
+									value=1.03;
 								};
 							};
 						};
@@ -1874,17 +1875,23 @@ class Mission
 					dataType="Object";
 					class PositionInfo
 					{
-						position[]={5527.5654,39.948059,2524.8477};
+						position[]={5550.6997,36.35952,2566.2288};
 					};
 					side="Independent";
 					flags=5;
 					class Attributes
 					{
-						description="Rifleman";
+						init="this setVariable [""initRole"",""engineer""];";
+						description="12: Engineer";
 						isPlayable=1;
+						class Inventory
+						{
+							map="ItemMap";
+						};
 					};
-					id=1919;
-					type="B_Soldier_unarmed_F";
+					id=2308;
+					type="B_engineer_F";
+					atlOffset=0.13632584;
 					class CustomAttributes
 					{
 						class Attribute0
@@ -1896,7 +1903,7 @@ class Mission
 								class data
 								{
 									singleType="STRING";
-									value="Male10ENG";
+									value="Male12ENG";
 								};
 							};
 						};
@@ -1909,7 +1916,7 @@ class Mission
 								class data
 								{
 									singleType="SCALAR";
-									value=0.95999998;
+									value=1.04;
 								};
 							};
 						};
@@ -1921,18 +1928,23 @@ class Mission
 					dataType="Object";
 					class PositionInfo
 					{
-						position[]={5530.6509,39.447735,2524.802};
-						angles[]={0,6.0407553,0};
+						position[]={5546.6128,36.935585,2558.0088};
 					};
 					side="Independent";
 					flags=5;
 					class Attributes
 					{
-						description="Rifleman";
+						init="this setVariable [""initRole"",""autorifleman""];";
+						description="13: Autorifleman";
 						isPlayable=1;
+						class Inventory
+						{
+							map="ItemMap";
+						};
 					};
-					id=1920;
-					type="B_Soldier_unarmed_F";
+					id=2309;
+					type="B_soldier_AR_F";
+					atlOffset=0.13632965;
 					class CustomAttributes
 					{
 						class Attribute0
@@ -1944,7 +1956,7 @@ class Mission
 								class data
 								{
 									singleType="STRING";
-									value="Male10ENG";
+									value="Male09ENG";
 								};
 							};
 						};
@@ -1957,7 +1969,7 @@ class Mission
 								class data
 								{
 									singleType="SCALAR";
-									value=0.95999998;
+									value=1.01;
 								};
 							};
 						};
@@ -1969,17 +1981,23 @@ class Mission
 					dataType="Object";
 					class PositionInfo
 					{
-						position[]={5520.1826,41.397488,2518.0354};
+						position[]={5540.4487,37.901451,2555.5789};
 					};
 					side="Independent";
 					flags=5;
 					class Attributes
 					{
-						description="Rifleman";
+						init="this setVariable [""initRole"",""medic""];";
+						description="14: Combat Life Saver";
 						isPlayable=1;
+						class Inventory
+						{
+							map="ItemMap";
+						};
 					};
-					id=1921;
-					type="B_Soldier_unarmed_F";
+					id=2310;
+					type="B_medic_F";
+					atlOffset=0.13632584;
 					class CustomAttributes
 					{
 						class Attribute0
@@ -1991,7 +2009,7 @@ class Mission
 								class data
 								{
 									singleType="STRING";
-									value="Male10ENG";
+									value="Male05ENG";
 								};
 							};
 						};
@@ -2004,7 +2022,7 @@ class Mission
 								class data
 								{
 									singleType="SCALAR";
-									value=0.95999998;
+									value=0.98000002;
 								};
 							};
 						};
@@ -2016,18 +2034,23 @@ class Mission
 					dataType="Object";
 					class PositionInfo
 					{
-						position[]={5523.2681,40.955379,2517.9897};
-						angles[]={0,6.0407553,0};
+						position[]={5544.1167,37.402264,2552.7388};
 					};
 					side="Independent";
 					flags=5;
 					class Attributes
 					{
-						description="Rifleman";
+						init="this setVariable [""initRole"",""at""];";
+						description="15: Rifleman (AT)";
 						isPlayable=1;
+						class Inventory
+						{
+							map="ItemMap";
+						};
 					};
-					id=1922;
-					type="B_Soldier_unarmed_F";
+					id=2311;
+					type="B_soldier_LAT_F";
+					atlOffset=0.13632584;
 					class CustomAttributes
 					{
 						class Attribute0
@@ -2039,102 +2062,7 @@ class Mission
 								class data
 								{
 									singleType="STRING";
-									value="Male10ENG";
-								};
-							};
-						};
-						class Attribute1
-						{
-							property="pitch";
-							expression="_this setpitch _value;";
-							class Value
-							{
-								class data
-								{
-									singleType="SCALAR";
-									value=0.95999998;
-								};
-							};
-						};
-						nAttributes=2;
-					};
-				};
-				class Item15
-				{
-					dataType="Object";
-					class PositionInfo
-					{
-						position[]={5525.6729,40.493408,2519.6543};
-					};
-					side="Independent";
-					flags=5;
-					class Attributes
-					{
-						description="Rifleman";
-						isPlayable=1;
-					};
-					id=1923;
-					type="B_Soldier_unarmed_F";
-					class CustomAttributes
-					{
-						class Attribute0
-						{
-							property="speaker";
-							expression="_this setspeaker _value;";
-							class Value
-							{
-								class data
-								{
-									singleType="STRING";
-									value="Male10ENG";
-								};
-							};
-						};
-						class Attribute1
-						{
-							property="pitch";
-							expression="_this setpitch _value;";
-							class Value
-							{
-								class data
-								{
-									singleType="SCALAR";
-									value=0.95999998;
-								};
-							};
-						};
-						nAttributes=2;
-					};
-				};
-				class Item16
-				{
-					dataType="Object";
-					class PositionInfo
-					{
-						position[]={5528.7583,39.893375,2519.6086};
-						angles[]={0,6.0407553,0};
-					};
-					side="Independent";
-					flags=5;
-					class Attributes
-					{
-						description="Rifleman";
-						isPlayable=1;
-					};
-					id=1924;
-					type="B_Soldier_unarmed_F";
-					class CustomAttributes
-					{
-						class Attribute0
-						{
-							property="speaker";
-							expression="_this setspeaker _value;";
-							class Value
-							{
-								class data
-								{
-									singleType="STRING";
-									value="Male10ENG";
+									value="Male02ENG";
 								};
 							};
 						};
@@ -2158,7 +2086,7 @@ class Mission
 			class Attributes
 			{
 			};
-			id=1925;
+			id=2296;
 		};
 	};
 };

@@ -111,7 +111,9 @@ baseChopperGroup_WWII_UK = [
 
 //Basic enemy aircraft avalaible
 baseFixedWingGroup_WWII_UK = [
-	"LIB_RAF_P39"
+	"LIB_RAF_P39",
+	"LIB_RAAF_P39",
+	"LIB_C47_RAF"
 ];
 
 ////////////////////////
@@ -146,16 +148,23 @@ bluforDrone_WWII_UK = [
 ];
 
 bluforBoat_WWII_UK = [
-	// nope
+	"LIB_UK_LCA",
+	"LIB_UK_LCA"
 ];
 
 bluforFixedWing_WWII_UK = [
 	"LIB_RAF_P39",
-	"LIB_HORSA_RAF",
 	"LIB_C47_RAF",
+	"LIB_HORSA_RAF",
 	"LIB_MKI_HADRIAN",
 	"LIB_MKI_HADRIAN_raf2",
 	"LIB_MKI_HADRIAN_raf3"
+];
+
+//Vehicule able to do HQ features (Loadout management and more)
+bluforHQVehicle_WWII_UK = [
+	"LIB_UniversalCarrier", 
+	"LIB_UK_Willys_MB_Hood"
 ];
 
 ////////////////////////
@@ -298,5 +307,12 @@ magazineList_WWII_UK = [
 	"LIB_1Rnd_89m_PIAT",
 	"LIB_1Rnd_89m_G_PIAT",
 	"LIB_32Rnd_9x19_Sten",
-	"LIB_1Rnd_G_MillsBomb"
+	"LIB_1Rnd_G_MillsBomb",
+	"SmokeShell",
+	"SmokeShellBlue",
+	"SmokeShellGreen",
+	"SmokeShellOrange",
+	"SmokeShellPurple",
+	"SmokeShellRed",
+	"SmokeShellYellow"
 ];

@@ -29,7 +29,8 @@ civilian_big_group_WWII_Wehrmacht = [
 ];
 
 civilianTruck_WWII_Wehrmacht = [
-//	"LIB_GazM1"
+	"LIB_GazM1", 
+	"LIB_GazM1_dirty"
 ];
 
 //////////////////////////////
@@ -84,18 +85,22 @@ baseEnemyMortarGroup_WWII_Wehrmacht = [
 
 //Basic enemy vehicle avalaible (light) must be destroyed without AT (ex : jeep)
 baseEnemyVehicleGroup_WWII_Wehrmacht = [
-	"LIB_Kfz1_MG42"
+	"LIB_Kfz1_MG42", 
+	"LIB_Kfz1_MG42_camo", 
+	"LIB_Kfz1_MG42_sernyt"
 ];
 
 //Basic enemy light armored vehicle avalaible must be destroyed without heavy AT (ex : BMP)
 baseEnemyLightArmoredVehicleGroup_WWII_Wehrmacht = [
-	"LIB_SdKfz251"
+	"LIB_SdKfz251", 
+	"LIB_SdKfz251_FFV"
 ];
 
 //Basic enemy heavy armored vehicle avalaible must be destroyed with other vehicle or heavy AT (ex : tank)
 // other choices are commented
 baseEnemyHeavyArmoredVehicleGroup_WWII_Wehrmacht = [
-	"LIB_PzKpfwIV_H"
+	"LIB_PzKpfwIV_H",
+	"LIB_SdKfz124"
 //	"LIB_PzKpfwV"
 //	"LIB_PzKpfwVI"
 //	"LIB_SdKfz124"
@@ -109,7 +114,9 @@ baseChopperGroup_WWII_Wehrmacht = [
 
 //Basic enemy aircraft avalaible
 baseFixedWingGroup_WWII_Wehrmacht = [
-	"LIB_FW190F8"
+	"LIB_Ju87", 
+	"LIB_FW190F8_4", 
+	"LIB_FW190F8_2"
 ];
 
 ////////////////////////

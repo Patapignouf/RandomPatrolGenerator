@@ -34,7 +34,7 @@ if (isClass (configFile >> "CfgPatches" >> "lambs_danger")) then
 	_units = units _thisGroup; 
 	if (count _units > count _allPositions) then {_units resize (count _allPositions);};
 	{
-		_x disableAI "PATH";
+		//_x disableAI "PATH";
 		_x setUnitPos selectRandom ["UP","UP","MIDDLE"];
 		_x setPos (selectRandom _allPositions);
 		_x addEventHandler["Fired",{params ["_unit"];_unit enableAI "PATH";_unit setUnitPos "AUTO";_unit removeEventHandler ["Fired",_thisEventHandler];}];

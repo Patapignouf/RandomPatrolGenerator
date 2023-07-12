@@ -68,6 +68,17 @@ baseEnemyHeavyArmoredVehicleGroup_Russian_Winter = [
 "CUP_O_BTR60_Winter_RU", 
 "CUP_O_BTR80_WINTER_RU"];
 
+
+baseEnemyUnarmedChopperGroup_Russian_Winter = [
+	"CUP_O_Mi8AMT_RU"
+];
+
+//Basic enemy aircraft avalaible
+baseFixedWingGroup_Russian_Winter = [
+	"CUP_O_Su25_Dyn_RU", 
+	"CUP_O_SU34_RU"
+];
+
 ////////////////////////
 //Vehicle management////
 ////////////////////////
@@ -222,7 +233,8 @@ itemList_Russian_Winter = [
 	"ItemCompass",
 	"ItemWatch",
 	"NVGoggles",
-	//"B_UavTerminal",
+	"B_UavTerminal",
+	"ItemGPS",
 	"Binocular",
 	"Rangefinder",
 	"ACE_MapTools",
@@ -251,7 +263,16 @@ itemList_Russian_Winter = [
 itemEngineerList_Russian_Winter = [
 	"ToolKit",
 	"MineDetector",
-	"ACE_wirecutter", "ACE_Fortify"
+	"ACE_wirecutter", 
+	"ACE_Fortify",
+	"ACE_DefusalKit",
+	"ACE_Clacker",
+	"ACE_M26_Clacker",
+	"ace_marker_flags_white",
+	"ace_marker_flags_yellow",
+	"ace_marker_flags_purple",
+	"ace_marker_flags_orange",
+	"ace_marker_flags_red"
 	];
 	
 itemMedicList_Russian_Winter = [

@@ -12,7 +12,7 @@ weaponList = [		"CUP_srifle_Mk12SPR",
 	"CUP_smg_MP7",
 	
 	"CUP_launch_Javelin",
-	"CUP_launch_FIM92Stinger",
+	"CUP_launch_FIM92Stinger_Loaded",
 	"CUP_launch_MAAWS",
 	"CUP_launch_MAAWS_Scope"];
 	

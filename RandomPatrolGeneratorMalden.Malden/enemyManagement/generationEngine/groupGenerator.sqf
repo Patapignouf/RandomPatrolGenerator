@@ -23,6 +23,29 @@ doGenerateEnemyGroup =
 	//Set IA Skills
 	[_currentGroupPatrol, missionIASkill] call doSetGroupSkills;
 
+	//Adjust ACE Medic items 
+	if (isClass (configFile >> "CfgPatches" >> "ace_medical")) then 
+	{
+		[_currentGroupPatrol] call doAdjustACEMedic;
+	};
+
+	//Opfor group
+	if (_thisFaction == opfor) then 
+	{
+		{		
+			//Add eventhandler killed
+			_x addEventHandler ["Killed", {
+				params ["_unit", "_killer", "_instigator", "_useEffects"];
+
+				if (isPlayer _killer) then 
+				{
+					[[1], 'engine\rankManagement\rankUpdater.sqf'] remoteExec ['BIS_fnc_execVM', _killer];
+				}; 
+			}];
+		} foreach (units _currentGroupPatrol);
+	};
+
+
 	//Manage civilian specific feature
 	if (_thisFaction == civilian) then 
 	{
@@ -50,19 +73,17 @@ doGenerateEnemyGroup =
 					if (missionNamespace getVariable "civKilled" > missionNamespace getVariable "maxCivKilled") then 
 					{
 						diag_log "END MISSION";
-						if (isMultiplayer) then {
-							['CIV_DEAD'] remoteExec ["BIS_fnc_endMissionServer", 2];
-						} else {
-							['CIV_DEAD'] remoteExec ["BIS_fnc_endMission", 2];
-						}; 
+						[['CIV_DEAD'], 'engine\objectiveManagement\endMission.sqf'] remoteExec ['BIS_fnc_execVM', 2];
 					};
 
 					diag_log format ["Civilian has been killed by : %1 on side %2", name _killer, side _killer];
-					[[format ["Civilian has been killed by : %1", name _killer],side _killer], 'engine\doGenerateMessage.sqf'] remoteExec ['BIS_fnc_execVM', 0];
+					[format ["Civilian has been killed by : %1", name _killer], 'engine\hintManagement\addCustomHint.sqf'] remoteExec ['BIS_fnc_execVM', side _killer]; 
+					[[-50], 'engine\rankManagement\rankUpdater.sqf'] remoteExec ['BIS_fnc_execVM', _killer];
 				}; 
 			}];
 		} foreach (units _currentGroupPatrol);
 	};
+
 
 	//Return spawned group
 	_currentGroupPatrol
@@ -107,7 +128,7 @@ doSetGroupSkills =
 			{
 				 {
 					_unit = _x;
-					_unit setSkill ["aimingAccuracy", random [0.50, 0.55, 0.60]];
+					_unit setSkill ["aimingAccuracy", random [0.55, 0.60, 0.70]];
 					_unit setSkill ["aimingShake", random [0.10, 0.15, 0.2]];
 					_unit setSkill ["aimingSpeed", random [0.40, 0.45, 0.50]];
 					_unit setSkill ["spotDistance", random [0.75, 0.8, 0.85]];
@@ -132,4 +153,31 @@ doSetGroupSkills =
 				 } forEach (units _thisGroup);
 			};
 	};
+};
+
+
+doAdjustACEMedic = {
+	params ["_thisGroup"];
+
+	//Apply adjust on every group unit
+	{
+		_currentUnit = _x;
+		if ((items _currentUnit)findIf { _x == "Medikit" } > -1) then 
+		{
+			//Remove Medikit
+			_currentUnit removeItem "Medikit";
+
+			//Add Medikit ACE equivalent
+			_currentUnit addItem "ACE_surgicalKit";
+			for "_i" from 0 to 1 do { _currentUnit addItem "ACE_bloodIV_500" };
+			for "_i" from 0 to 1 do { _currentUnit addItem "ACE_bloodIV" };
+			for "_i" from 0 to 3 do { _currentUnit addItem "ACE_epinephrine" };
+			for "_i" from 0 to 1 do { _currentUnit addItem "ACE_splint" };
+			for "_i" from 0 to 11 do { _currentUnit addItem "ACE_elasticBandage" };
+			for "_i" from 0 to 11 do { _currentUnit addItem "ACE_quikclot" };
+			//for "_i" from 0 to 9 do { _currentUnit addItem "ACE_morphine" }; //Basic ACE conversion will give enough morphine
+			//for "_i" from 0 to 5 do { _currentUnit addItem "ACE_tourniquet" };	//Basic ACE conversion will give enough tourniquet
+		};
+	}
+	foreach (units _thisGroup);
 };

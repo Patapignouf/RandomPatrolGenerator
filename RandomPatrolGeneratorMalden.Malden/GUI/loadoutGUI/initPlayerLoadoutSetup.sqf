@@ -2,6 +2,8 @@ disableSerialization;
 #include "..\..\database\factionParameters.sqf"
 #include "..\..\database\missionParameters.sqf"
 #include "..\..\database\arsenalLibrary.sqf"
+#include "..\..\database\arsenalLibrary.sqf"
+#include "..\..\engine\rankManagement\rankFunctions.sqf"
 
 //Create GUI
 createDialog "PlayerLoadoutSetup";
@@ -15,7 +17,9 @@ private _buttonArsenal = _mainDisplay displayCtrl 7201;
 private _buttonSave = _mainDisplay displayCtrl 7202;
 private _buttonLoad = _mainDisplay displayCtrl 7203;
 private _buttonClearItems = _mainDisplay displayCtrl 7204;
-
+private _button3DItems = _mainDisplay displayCtrl 7205;
+private _buttonRank = _mainDisplay displayCtrl 7206;
+private _nameTag = _mainDisplay displayCtrl 7002;
 
 //Faction params
 bluFaction = missionNamespace getVariable "bluforFaction";
@@ -24,11 +28,29 @@ indFaction = missionNamespace getVariable "independentFaction";
 //Function params
 firstOpen = true;
 
+//Setup player's name
+_nameTag ctrlSetText (name player);
+
+refreshCustomLoadoutDisplay = {
+		_buttonLoad = (findDisplay 7000) displayCtrl 7203;
+		_loadableLoadout = profileNamespace getVariable [format [loadoutSaveName, name player, player call getPlayerFaction, player getVariable "role"], []];
+
+		if (count _loadableLoadout == 0) then 
+		{
+			_buttonLoad ctrlShow false;
+		} else 
+		{
+			_buttonLoad ctrlShow true;
+		};
+};
+
+
+
 //Load default loadout when player open loadout screen if there isn't ironMan mode enabled
 if (!ironMan) then 
 {
 	//Loadout validated loadout (compared with spawn loadout)
-	player setUnitLoadout ([getUnitLoadout player, player getVariable ["spawnLoadout", []]] call validateLoadout);
+	[player] call validateLoadout;
 	[] call refreshCustomLoadoutDisplay;
 };
 
@@ -48,24 +70,16 @@ _comboBoxClassSelection ctrlAddEventHandler[ "LBSelChanged",
 			_mainDisplay = (findDisplay 7000);
 			_comboBoxClassSelection = _mainDisplay displayCtrl 7100;
 
-			_listOfAvalaibleRole =[];
-
-			if (player getVariable "sideBeforeDeath" == "independent") then 
-			{
-				//Independent
-				_listOfAvalaibleRole = [indFaction] call setupRoleSwitchToList;
-				_role = (_listOfAvalaibleRole select parseNumber ((_comboBoxClassSelection lbData (lbCurSel _comboBoxClassSelection))));
-				[VA1, player, indFaction , _role, false] call switchToRole;
-			} else 
-			{
-				//Blufor
-				_listOfAvalaibleRole = [bluFaction] call setupRoleSwitchToList;
-				_role = (_listOfAvalaibleRole select parseNumber ((_comboBoxClassSelection lbData (lbCurSel _comboBoxClassSelection))));
-				[VA2, player, bluFaction , _role, false] call switchToRole;
-			};
+			//Setup arsenal loadout
+			_listOfAvalaibleRole = [player call getPlayerFaction] call setupRoleSwitchToList;
+			_role = (_listOfAvalaibleRole select parseNumber ((_comboBoxClassSelection lbData (lbCurSel _comboBoxClassSelection))));
+			[player, player, player call getPlayerFaction , _role, false] call switchToRole;
 
 			//Refresh load button
 			[] call refreshCustomLoadoutDisplay;
+
+			//Hint switch role
+			[[format ["%1 has switched to role %2", name player, player getVariable "role"]], 'engine\hintManagement\addCustomHint.sqf'] remoteExec ['BIS_fnc_execVM', -clientOwner]; 
 		}
 		else 
 		{
@@ -82,12 +96,38 @@ _buttonArsenal ctrlAddEventHandler[ "ButtonClick",
 		[] execVM 'database\openArsenal.sqf';
 	}];
 
-//Open arsenal
+//clear item 
 _buttonClearItems ctrlAddEventHandler[ "ButtonClick", 
 	{ 
-			hint "Stuff cleared";
-			removeAllItemsWithMagazines player;
+		hint "Stuff cleared";
+		removeAllItemsWithMagazines player;
 	}];
+
+//show rank
+_buttonRank ctrlAddEventHandler[ "ButtonClick", 
+	{ 
+		player call displayCurrentRank;
+	}];
+
+//Force 3D Optics
+_button3DItems ctrlAddEventHandler[ "ButtonClick", 
+	{ 
+		player addEventHandler ["OpticsSwitch", {
+			params ["_unit", "_isADS"];
+			
+			_currentOptics = (weaponsItems _unit)#0#3;	
+			if (["_PIP", _currentOptics] call BIS_fnc_inString) then 
+			{
+				_opticsStringRework = _currentOptics regexReplace ["_PIP", "_3D"];
+				if (getText (configFile >> "cfgWeapons" >> _opticsStringRework >> "displayName")!="") then 
+				{
+						_unit removePrimaryWeaponItem _currentOptics;
+						_unit addPrimaryWeaponItem _opticsStringRework;
+				};
+			};
+		}];
+	}];
+
 
 //Save loadout
 _buttonSave ctrlAddEventHandler[ "ButtonClick", 
@@ -117,21 +157,26 @@ _buttonSave ctrlAddEventHandler[ "ButtonClick",
 //Load loadout
 _buttonLoad ctrlAddEventHandler[ "ButtonClick", 
 	{ 
-		_loadableLoadout = [];
 		//Save personnal loadout
-		if (player getVariable "sideBeforeDeath" == "independent") then 
+		_loadableLoadout = profileNamespace getVariable [format [loadoutSaveName, name player, player call getPlayerFaction, player getVariable "role"], player getVariable "spawnLoadout"];
+		player setUnitLoadout _loadableLoadout;
+
+		//Fix TFAR link 
+		if (isClass (configFile >> "CfgPatches" >> "task_force_radio")) then 
 		{
-			//Independent
-			_loadableLoadout = profileNamespace getVariable [format [loadoutSaveName, name player, indFaction, player getVariable "role"], player getVariable "spawnLoadout"];
-		} else 
-		{
-			//Blufor
-			_loadableLoadout = profileNamespace getVariable [format [loadoutSaveName, name player, bluFaction, player getVariable "role"], player getVariable "spawnLoadout"];
+
+			_currentRadios = player call TFAR_fnc_radiosList;
+
+			if (count _currentRadios >= 1) then
+			{
+				_currentRadio = _currentRadios#0;
+				player unassignItem _currentRadio;
+				player removeItem _currentRadio;
+				player addItem "TFAR_anprc152";
+				player assignItem "TFAR_anprc152";
+			};
 		};
 		
-		player setUnitLoadout _loadableLoadout;
-		
-
 		//Wipe saved loadout in Ironman mode
 		if (ironMan) then 
 		{
@@ -212,27 +257,3 @@ _keyDown = (findDisplay 7000) displayAddEventHandler ["KeyDown", {
 
 
 
-refreshCustomLoadoutDisplay = {
-		_buttonLoad = (findDisplay 7000) displayCtrl 7203;
-		_loadableLoadout = [];
-
-		//Save personnal loadout
-		if (player getVariable "sideBeforeDeath" == "independent") then 
-		{
-			//Independent
-			_loadableLoadout = profileNamespace getVariable [format [loadoutSaveName, name player, indFaction, player getVariable "role"], []];
-		} else 
-		{
-			//Blufor
-			_loadableLoadout = profileNamespace getVariable [format [loadoutSaveName, name player, bluFaction, player getVariable "role"], []];
-		};
-
-
-		if (count _loadableLoadout == 0) then 
-		{
-			_buttonLoad ctrlShow false;
-		} else 
-		{
-			_buttonLoad ctrlShow true;
-		};
-};

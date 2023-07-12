@@ -40,48 +40,69 @@ civilianTruck_2035_AAF = ["C_Hatchback_01_sport_F",
 //////////////////////////////
 
 baseEnemyGroup_2035_AAF = [
-"I_soldier_F", 
-"I_Soldier_AR_F", 
-"I_Soldier_GL_F", 
-"I_Soldier_M_F", 
-"I_Soldier_LAT2_F", 
-"I_soldier_F", 
-"I_medic_F"];
+	"I_soldier_F", 
+	"I_Soldier_AR_F", 
+	"I_Soldier_GL_F", 
+	"I_Soldier_M_F", 
+	"I_Soldier_LAT2_F", 
+	"I_soldier_F", 
+	"I_medic_F"
+];
 
 
 baseEnemyATGroup_2035_AAF = [
-"I_soldier_F", 
-"I_Soldier_AT_F", 
-"I_Soldier_LAT2_F"];
+	"I_soldier_F", 
+	"I_Soldier_AT_F", 
+	"I_Soldier_LAT2_F",
+	"I_support_GMG_F", 
+	"I_support_AMG_F"
+];
 
 baseEnemyDemoGroup_2035_AAF = [
-"I_soldier_F", 
-"I_Soldier_AAT_F", 
-"I_Soldier_GL_F", 
-"I_soldier_mine_F"];
+	"I_soldier_F", 
+	"I_Soldier_AAT_F", 
+	"I_Soldier_GL_F", 
+	"I_soldier_mine_F",
+	"I_soldier_UAV_F"
+];
 
 baseEnemyMortarGroup_2035_AAF = [
-"I_Mortar_01_F",
-"I_soldier_F", 
-"I_Soldier_AR_F", 
-"I_Soldier_GL_F"];
+	"I_Mortar_01_F",
+	"I_soldier_F", 
+	"I_Soldier_AR_F", 
+	"I_Soldier_GL_F"
+];
 
 baseEnemyVehicleGroup_2035_AAF = [
-"I_MRAP_03_F", 
-"I_MRAP_03_hmg_F", 
-"I_Truck_02_transport_F", 
-"I_Truck_02_medical_F"];
+	"I_MRAP_03_F", 
+	"I_MRAP_03_hmg_F", 
+	"I_Truck_02_transport_F", 
+	"I_Truck_02_medical_F"
+];
 
 baseEnemyLightArmoredVehicleGroup_2035_AAF = [
-"I_LT_01_AT_F", 
-"I_LT_01_scout_F", 
-"I_LT_01_cannon_F"
+	"I_LT_01_AT_F", 
+	"I_LT_01_scout_F", 
+	"I_LT_01_cannon_F"
  ];
 
 baseEnemyHeavyArmoredVehicleGroup_2035_AAF = [
-"I_MBT_03_cannon_F", 
-"I_APC_Wheeled_03_cannon_F", 
-"I_APC_tracked_03_cannon_F"];
+	"I_MBT_03_cannon_F", 
+	"I_APC_Wheeled_03_cannon_F", 
+	"I_APC_tracked_03_cannon_F"
+];
+
+baseEnemyUnarmedChopperGroup_2035_AAF = [
+	"I_Heli_Transport_02_F", 
+	"I_Heli_light_03_unarmed_F"
+];
+
+//Basic enemy aircraft avalaible
+baseFixedWingGroup_2035_AAF = [
+	"I_Plane_Fighter_03_dynamicLoadout_F", 
+	"I_Plane_Fighter_04_F"
+];
+
 
 ////////////////////////
 //Vehicle management////
@@ -89,7 +110,8 @@ baseEnemyHeavyArmoredVehicleGroup_2035_AAF = [
 bluforUnarmedVehicle_2035_AAF = [
 	"I_Truck_02_transport_F", 
 	"I_Truck_02_covered_F", 
-	"I_MRAP_03_F"
+	"I_MRAP_03_F",
+	"I_Quadbike_01_F"
 ];
 
 bluforArmedVehicle_2035_AAF = [
@@ -120,6 +142,11 @@ bluforFixedWing_2035_AAF = [
 	"I_Plane_Fighter_04_F"
 	];
 
+bluforHQVehicle_2035_FIA = [
+	"I_Truck_02_covered_F",
+	"I_LT_01_scout_F"
+];
+
 
 ////////////////////////
 //Loadout management////
@@ -143,12 +170,15 @@ loadout_2035_AAF = [
 ////////////////////////
 rifleList_2035_AAF = [		
 	"arifle_Mk20_F",
-	"arifle_Mk20C_F"
+	"arifle_Mk20_plain_F",
+	"arifle_Mk20C_F",
+	"arifle_Mk20C_plain_F"
 ];	
 
 //Grenade launcher or weapon with grenade launcher option
 grenadeLauncherList_2035_AAF = [		
-	"arifle_Mk20_GL_F"
+	"arifle_Mk20_GL_F",
+	"arifle_Mk20_GL_plain_F"
 ];
 
 launcherList_2035_AAF = [		
@@ -195,6 +225,7 @@ itemList_2035_AAF = [
 	"ItemWatch",
 	"NVGoggles",
 	"B_UavTerminal",
+	"ItemGPS",
 	"Binocular",
 	"Rangefinder",
 	"ACE_MapTools",
@@ -224,7 +255,15 @@ itemEngineerList_2035_AAF = [
 	"ToolKit",
 	"MineDetector",
 	"ACE_wirecutter", 
-	"ACE_Fortify"
+	"ACE_Fortify",
+	"ACE_DefusalKit",
+	"ACE_Clacker",
+	"ACE_M26_Clacker",
+	"ace_marker_flags_white",
+	"ace_marker_flags_yellow",
+	"ace_marker_flags_purple",
+	"ace_marker_flags_orange",
+	"ace_marker_flags_red"
 	];
 	
 itemMedicList_2035_AAF = [

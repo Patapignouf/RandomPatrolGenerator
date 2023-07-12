@@ -186,6 +186,12 @@ bluforFixedWing_WWII_URSS = [
 	"LIB_Pe2_2_w"
 ];
 
+
+//Vehicule able to do HQ features (Loadout management and more)
+bluforHQVehicle_WWII_URSS = [
+	"LIB_US6_Tent_Cargo"
+];
+
 ////////////////////////
 //Loadout management////
 ////////////////////////

@@ -6,10 +6,10 @@ _trgAOC = createTrigger ["EmptyDetector", initBlueforLocation];
 _trgAOC setTriggerArea [200, 200, 0, true];
 
 _spawnAttempts = 0;
-_OpforFobLocation = [getPos initCityLocation, 400, (aoSize+1500), 30, 0, 0.15, 0, [_trgAOC], [[0,0,0],[0,0,0]]] call BIS_fnc_findSafePos;
+_OpforFobLocation = [getPos initCityLocation, 400, (aoSize+1500), 30, 0, 0.20, 0, [_trgAOC], [[0,0,0],[0,0,0]]] call BIS_fnc_findSafePos;
 while {([_OpforFobLocation] call isLocationOnMap) && _spawnAttempts <10} do 
 {
-	_OpforFobLocation = [getPos initCityLocation, 400, (aoSize+1500), 30, 0, 0.15, 0, [_trgAOC], [[0,0,0],[0,0,0]]] call BIS_fnc_findSafePos;
+	_OpforFobLocation = [getPos initCityLocation, 400, (aoSize+1500), 30, 0, 0.20, 0, [_trgAOC], [[0,0,0],[0,0,0]]] call BIS_fnc_findSafePos;
 	_spawnAttempts = _spawnAttempts +1;
 };
 if (!([_OpforFobLocation] call isLocationOnMap)) then
@@ -43,7 +43,7 @@ if (!([_OpforFobLocation] call isLocationOnMap)) then
 			_turret = createVehicle ["B_G_HMG_02_high_F", getPosASL _randomAvalaiblePos, [], 0, "NONE"];
 			_turret setDir (getDir _randomAvalaiblePos);
 			_x moveInAny _turret;
-			_x disableAI "MOVE";
+			_x disableAI "PATH";
 			deleteVehicle _randomAvalaiblePos;
 			_OpforFobTurretOpforLocation = _OpforFobTurretOpforLocation - [_randomAvalaiblePos];
 		};
@@ -62,7 +62,7 @@ if (!([_OpforFobLocation] call isLocationOnMap)) then
 	_objectiveObject setVariable ["isFOBAssociated", true, true];
 
 	//Randomize if enemy FOB will received reinforcement
-	if (round random 2 == 0) then 
+	if (random 100 < 50) then 
 	{
 		//33%
 		[_objectiveObject] execVM 'engine\objectiveManagement\checkClearArea.sqf';
@@ -73,5 +73,5 @@ if (!([_OpforFobLocation] call isLocationOnMap)) then
 	};
 };
 
-
+deletevehicle _trgAOC;
 

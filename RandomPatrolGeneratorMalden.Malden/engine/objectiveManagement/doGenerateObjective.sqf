@@ -25,10 +25,10 @@ generateObjective =
 	diag_log format ["Objective generation started : %1 on position %2", currentObjType, _selectedObjectivePosition];
 
 	//Generate mission objectives
-	[currentObjType, getPos _selectedObjectivePosition] call generateObjectiveObject; 
+	_objectiveCreated = [currentObjType, _selectedObjectivePosition] call generateObjectiveObject; 
 	
 	//Generate mission environement
-	_handlePOIGeneration = [EnemyWaveLevel_1, baseEnemyVehicleGroup, baseEnemyLightArmoredVehicleGroup, baseEnemyHeavyArmoredVehicleGroup, civilian_group, getPos _selectedObjectivePosition, _missionDifficulty] execVM 'enemyManagement\generationEngine\generatePOI.sqf'; 
+	_handlePOIGeneration = [EnemyWaveLevel_1, baseEnemyVehicleGroup, baseEnemyLightArmoredVehicleGroup, baseEnemyHeavyArmoredVehicleGroup, civilian_group, _selectedObjectivePosition, _missionDifficulty, _objectiveCreated] execVM 'enemyManagement\generationEngine\generatePOI.sqf'; 
 	waitUntil {isNull _handlePOIGeneration};
 
 	//Return objective selected location
@@ -70,6 +70,9 @@ generateObjectiveObject =
 				//Search safe position around objective position
 				_objectiveObject setPos ([( _thisObjectivePosition), 1, 25, 5, 0, 20, 0] call BIS_fnc_findSafePos);
 
+				//Manage objective completion
+				[_thisObjective] execVM 'engine\objectiveManagement\checkObjectInArea.sqf';  
+
 				//Objective failed
 				_objectiveObject setVariable ["thisTask", _thisObjective select 2, true];
 				_objectiveObject addEventHandler ["Killed", {
@@ -94,20 +97,55 @@ generateObjectiveObject =
 				_objectiveObject setVariable ["isObjectiveObject", true, true];
 				_thisObjective = [_objectiveObject, _thisObjectiveType] call generateObjectiveTracker;
 
+
 				_objectiveObject setPos ([( _thisObjectivePosition), 1, 25, 5, 0, 20, 0] call BIS_fnc_findSafePos);
 				_objectiveObject setVariable ["thisTask", _thisObjective select 2, true];
+
+				//Manage objective completion
+				[_thisObjective] execVM 'engine\objectiveManagement\checkObjectInArea.sqf';
 				[_thisObjective] execVM 'engine\objectiveManagement\checkDeadVehicle.sqf';  
 			};
 		case "hvt":
 			{
 				//Generate objective object
 				_objectiveObject = leader ([_currentRandomPos, east, [selectRandom avalaibleHVT],[],[],[],[],[], random 360] call BIS_fnc_spawnGroup);
+				_objectiveObject disableAI "PATH";
 				diag_log format ["HVT %2 _thisObjectivePosition : %1",_thisObjectivePosition, _objectiveObject];
 				currentObj setVariable ["isObjectiveObject", true, true];
 				_objectiveObject setVariable ["isObjectiveObject", true, true];
 				_thisObjective = [_objectiveObject, _thisObjectiveType] call generateObjectiveTracker;
 				diag_log format ["HVT %2 _thisObjectivePosition : %1",_thisObjectivePosition, _objectiveObject];
 				_objectiveObject setPos _thisObjectivePosition;
+
+				_objectiveObject setVariable ["thisObjective", _thisObjective, true];
+
+				_objectiveObject addEventHandler ["Killed", {
+					params ["_unit", "_killer", "_instigator", "_useEffects"];
+
+					//Manage Completed Objective
+					_thisObjectiveToComplete = _unit getVariable "thisObjective";
+					_completedObjectives = missionNamespace getVariable ["completedObjectives",[]];
+					_completedObjectives pushBack _thisObjectiveToComplete;
+					missionNamespace setVariable ["completedObjectives",_completedObjectives,true];	
+					//Manage UncompletedObjective
+					_missionUncompletedObjectives = missionNamespace getVariable ["missionUncompletedObjectives",[]];
+					_missionUncompletedObjectives = _missionUncompletedObjectives - [_thisObjectiveToComplete];
+					missionNamespace setVariable ["missionUncompletedObjectives",_missionUncompletedObjectives,true];
+					//Manage player's feedback
+					if ("RealismMode" call BIS_fnc_getParamValue == 1) then 
+					{
+						[] call doIncrementVehicleSpawnCounter;	
+						[_thisObjectiveToComplete] execVM 'engine\objectiveManagement\completeObjective.sqf'; 
+						[[50], "engine\rankManagement\rankUpdater.sqf"] remoteExec ['BIS_fnc_execVM', 0];
+					};
+					//Manage respawn 
+					if (["Respawn",1] call BIS_fnc_getParamValue == 1) then 
+					{
+						[[], "engine\respawnManagement\respawnManager.sqf"] remoteExec ['BIS_fnc_execVM', 0];
+					};
+				}];
+
+
 			};
 		case "vip":
 			{
@@ -127,6 +165,10 @@ generateObjectiveObject =
 				
 				//Objective failed
 				_objectiveObject setVariable ["thisTask", _thisObjective select 2, true];
+				
+				//Manage objective completion
+				[_thisObjective] execVM 'engine\objectiveManagement\checkObjectInArea.sqf';  
+				
 				_objectiveObject addEventHandler ["Killed", {
 					params ["_unit", "_killer", "_instigator", "_useEffects"];
 					//get task associated to the object
@@ -156,6 +198,9 @@ generateObjectiveObject =
 
 				diag_log format ["Steal task setup ! : %1", _objectiveObject];
 				_objectiveObject setPos ([( _thisObjectivePosition), 1, 100, 7, 0, 20, 0] call BIS_fnc_findSafePos);
+
+				//Manage objective completion
+				[_thisObjective] execVM 'engine\objectiveManagement\checkObjectInArea.sqf';  
 
 				//Objective failed
 				_objectiveObject setVariable ["thisTask", _thisObjective select 2, true];
@@ -224,6 +269,7 @@ generateObjectiveObject =
 					{
 						[] call doIncrementVehicleSpawnCounter;	
 						[_thisObjective] execVM 'engine\objectiveManagement\completeObjective.sqf'; 
+						[[50], "engine\rankManagement\rankUpdater.sqf"] remoteExec ['BIS_fnc_execVM', 0];
 					};
 					//Manage respawn and delete object
 					deleteVehicle _object;
@@ -263,6 +309,13 @@ generateObjectiveObject =
 								{
 									[_x] call lambs_wp_fnc_taskReset; //reset current task
 								};
+
+								//Enable MOVE and PATH for all opfor units in the area
+								{
+									_x enableAI "PATH";
+									_x enableAI "MOVE";
+								}
+								foreach (units _x);
 								
 								//Ask opfor group to go to the flag
 								[_x, getPos _object] execVM 'enemyManagement\behaviorEngine\doAttack.sqf';
@@ -306,6 +359,7 @@ generateObjectiveObject =
 						{
 							[] call doIncrementVehicleSpawnCounter;	
 							[_thisObjective] execVM 'engine\objectiveManagement\completeObjective.sqf'; 
+							[[50], "engine\rankManagement\rankUpdater.sqf"] remoteExec ['BIS_fnc_execVM', 0];
 							
 						};
 						//Manage respawn and remove actions from NPC
@@ -334,9 +388,10 @@ generateObjectiveObject =
 				_objectiveObject = leader ([_currentRandomPos, civilian, [selectRandom avalaibleVIP],[],[],[],[],[], random 360] call BIS_fnc_spawnGroup);
 				_objectiveObject setVariable ["isObjectiveObject", true, true];
 				_thisObjective = [_objectiveObject, _thisObjectiveType] call generateObjectiveTracker;
+				_objectiveObject disableAI "PATH";
 				
 				//Add dialog to the informant
-				diag_log format ["VIP task setup ! : %1", _objectiveObject];
+				diag_log format ["Informant task setup ! : %1", _objectiveObject];
 				_objectiveObject setPos ( _thisObjectivePosition);
 				
 				[
@@ -370,7 +425,7 @@ generateObjectiveObject =
 						{
 							[] call doIncrementVehicleSpawnCounter;	
 							[_thisObjective] execVM 'engine\objectiveManagement\completeObjective.sqf'; 
-							
+							[[50], "engine\rankManagement\rankUpdater.sqf"] remoteExec ['BIS_fnc_execVM', 0];
 						};
 						//Manage respawn and remove actions from NPC
 						removeAllActions _object;
@@ -412,12 +467,15 @@ generateObjectiveObject =
 					};
 				}];
 			};
-		default { hint "default" };
+		default { 
+			//hint "default" 
+			};
 	};
 	currentMissionObjectives = missionNamespace getVariable ["MissionObjectives",[]];
 	currentMissionObjectives pushBack _thisObjective;
 	missionNamespace setVariable ["MissionObjectives",currentMissionObjectives,true];
 	diag_log format ["MissionObjectives setup ! : %1", currentMissionObjectives];
+	_thisObjective;
 };
 
 

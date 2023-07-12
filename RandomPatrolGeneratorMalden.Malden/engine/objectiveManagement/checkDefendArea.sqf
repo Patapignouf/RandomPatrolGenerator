@@ -31,11 +31,15 @@ if (!([_thisObjectiveToComplete,[]] call BIS_fnc_areEqual)) then
 _thisFOBCheck = _thisTrigger getVariable ["isFOBAssociated", false];
 if (_thisFOBCheck) then 
 {
-	[format ["An opfor reinforcement is coming to %1, be ready to defend the FOB", getPos _thisTrigger]] remoteExec ["hint", 0, true];
+	[format ["An opfor reinforcement is coming to %1, be ready to defend the FOB", mapGridPosition (getPos _thisTrigger)]] remoteExec ["hint", 0, true];
 };
 
 //Wait enemy reinforcement
 sleep 500;
+
+_nbBluePlayer = count ((allPlayers select {alive _x && side _x == blufor} ) inAreaArray _thisTrigger);
+_nbIndPlayer = count ((allPlayers select {alive _x && side _x == independent} ) inAreaArray _thisTrigger);
+_nbOpfor = count ((allUnits select {alive _x && side _x == opfor} ) inAreaArray _thisTrigger);
 
 //Check if there's opfor on the area after the attack
 while {sleep 15; _nbBluePlayer + _nbIndPlayer == 0 || _nbOpfor > 2} do 
@@ -49,6 +53,7 @@ while {sleep 15; _nbBluePlayer + _nbIndPlayer == 0 || _nbOpfor > 2} do
 if (!([_thisObjectiveToComplete,[]] call BIS_fnc_areEqual)) then 
 {
 	[_thisObjectiveToComplete] execVM 'engine\objectiveManagement\completeObjective.sqf'; 
+	[[50], "engine\rankManagement\rankUpdater.sqf"] remoteExec ['BIS_fnc_execVM', 0];
 
 	//Manage Completed Objective
 	_completedObjectives = missionNamespace getVariable ["completedObjectives",[]];

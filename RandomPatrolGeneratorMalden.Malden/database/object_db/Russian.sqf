@@ -87,6 +87,19 @@ baseEnemyHeavyArmoredVehicleGroup_Russian = [
 	"CUP_O_T90_RU"
 ];
 
+
+baseEnemyUnarmedChopperGroup_Russian = [
+	"CUP_O_Mi8AMT_RU"
+];
+
+//Basic enemy aircraft avalaible
+baseFixedWingGroup_Russian = [
+	"CUP_O_Su25_Dyn_RU", 
+	"CUP_O_SU34_RU"
+];
+
+
+
 ////////////////////////
 //Vehicle management////
 ////////////////////////
@@ -114,6 +127,10 @@ bluforDrone_Russian = [
 
 bluforBoat_Russian = [
 	"CUP_O_PBX_RU"
+];
+
+bluforHQVehicle_USA_2000 = [
+	"CUP_O_BRDM2_HQ_RUS"
 ];
 
 ////////////////////////
@@ -214,7 +231,8 @@ itemList_Russian = [
 	"ItemCompass",
 	"ItemWatch",
 	"NVGoggles",
-	//"B_UavTerminal",
+	"B_UavTerminal",
+	"ItemGPS",
 	"Binocular",
 	"Rangefinder",
 	"ACE_MapTools",
@@ -245,7 +263,15 @@ itemEngineerList_Russian = [
 	"ToolKit",
 	"MineDetector",
 	"ACE_wirecutter", 
-	"ACE_Fortify"
+	"ACE_Fortify",
+	"ACE_DefusalKit",
+	"ACE_Clacker",
+	"ACE_M26_Clacker",
+	"ace_marker_flags_white",
+	"ace_marker_flags_yellow",
+	"ace_marker_flags_purple",
+	"ace_marker_flags_orange",
+	"ace_marker_flags_red"
 ];
 
 itemMedicList_Russian = [
