@@ -41,10 +41,9 @@ if (random 100 < 75) then
 
 	//Generate vehicle
 	for [{_i = 0}, {_i < _numberOfVehicle}, {_i = _i + 1}] do 
-	{
-		//33% generate heavy vehicle
-		//66% generate light vehicle
-		if (random 100 < 33 && enableArmoredVehicle) then 
+	{	
+		//50% chance to spawn armored vehicle
+		if (random 100 < 50 && enableArmoredVehicle) then 
 		{
 			//50% chance to spawn light armored vehicle
 			if (random 100 < 50) then 
@@ -58,6 +57,7 @@ if (random 100 < 75) then
 					};
 				};
 			} else {
+				//50% generate heavy vehicle
 				if (count _thisAvailableOpforHeavyArmoredVehicle != 0) then 
 				{
 					_safeVehicleSpawn = [_thisAvailablePosition, 2, 200, 7, 10, 1, 0, [], [[0,0,0],[0,0,0]]] call BIS_fnc_findSafePos;
@@ -69,7 +69,7 @@ if (random 100 < 75) then
 			};
 		} else 
 		{
-			//Generate light vehicle
+			//50% generate light vehicle
 			if (count _thisAvailableOpforCars != 0) then 
 			{
 				_safeVehicleSpawn = [_thisAvailablePosition, 2, 200, 7, 10, 1, 0, [], [[0,0,0],[0,0,0]]] call BIS_fnc_findSafePos;

@@ -45,7 +45,6 @@ if (isServer) then
 			};
 
 			//Define harass group 
-			_tempGroup = _thisAvailableOpforGroup; //Init group with basic infantry
 			_tempVehicleGroup = [];
 
 			//Generate light vehicle 33% chance to spawn
@@ -54,25 +53,24 @@ if (isServer) then
 				_tempVehicleGroup pushBack [selectRandom _thisAvailableOpforCars];
 			};
 
-			//Generate heavy vehicle
-			if (count _thisAvailableOpforLightArmoredVehicle != 0 && enableArmoredVehicle) then 
+			//Generate Light armored vehicle spawn chance 
+			if (count _thisAvailableOpforLightArmoredVehicle != 0 && enableArmoredVehicle && random 100 < 20) then 
 			{
-				//Light armored vehicle spawn chance 33%
+				//Light armored vehicle spawn chance 20%
 				_tempVehicleGroup pushBack [selectRandom _thisAvailableOpforLightArmoredVehicle];
+			};
 
-				//Heavy armored vehicle spawn chance 17%
-				//Remove heavy armor enemy reinforcement to balance gameplay
-				// if (count _thisAvailableOpforHeavyArmoredVehicle != 0 && random 100 < 50) then 
-				// {
-				// 	_tempVehicleGroup pushBack [selectRandom _thisAvailableOpforHeavyArmoredVehicle];
-				// };
+			//Generate Light armored vehicle spawn chance
+			if (count _thisAvailableOpforHeavyArmoredVehicle != 0 && enableArmoredVehicle && random 100 < 15) then 
+			{
+				//Heavy armored vehicle spawn chance 15%
+				_tempVehicleGroup pushBack [selectRandom _thisAvailableOpforHeavyArmoredVehicle];
 			};
 
 			//Chopper reinforcement 65%
 			if (count _thisAvailableOpforUnarmedChopperVehicle != 0 &&  random 100 < 65) then 
 			{
 				//Generate enemy wave
-				diag_log "Begin chopper landing on operation area !";
 				[_thisAvailableOpforGroup#0, selectRandom _thisAvailableOpforUnarmedChopperVehicle, positionToAttack] execVM 'enemyManagement\behaviorEngine\doVehicleReinforcement.sqf'; 
 			};
 
@@ -80,13 +78,12 @@ if (isServer) then
 			if (missionNamespace getVariable ["enableArmedAicraft", false] && (count _thisAvailableOpforFixedWing != 0 &&  random 100 < 30)) then 
 			{
 				//Generate enemy wave
-				diag_log "Begin plane attack on operation area !";
 				[selectRandom _thisAvailableOpforFixedWing, positionToAttack] execVM 'enemyManagement\behaviorEngine\doVehicleAttackOnPosition.sqf'; 
 			};
 
 			AvalaibleInitAttackPositions = [];
 			AvalaibleInitAttackPositions = [positionToAttack, 1200, 2000, round((_thisDifficulty-0.5)/2)+1] call getListOfPositionsAroundTarget;
-			[ AvalaibleInitAttackPositions, positionToAttack, _tempGroup,_tempVehicleGroup, round((_thisDifficulty-0.5)/2)+1] execVM 'enemyManagement\behaviorEngine\doAmbush.sqf'; 
+			[ AvalaibleInitAttackPositions, positionToAttack, _thisAvailableOpforGroup, _tempVehicleGroup, round((_thisDifficulty-0.5)/2)+1] execVM 'enemyManagement\behaviorEngine\doAmbush.sqf'; 
 			diag_log format ["Harass start on position %1", positionToAttack];
 		};
 		sleep (600+round (random 300));
