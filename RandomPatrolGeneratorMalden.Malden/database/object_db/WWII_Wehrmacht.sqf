@@ -87,23 +87,24 @@ baseEnemyMortarGroup_WWII_Wehrmacht = [
 baseEnemyVehicleGroup_WWII_Wehrmacht = [
 	"LIB_Kfz1_MG42", 
 	"LIB_Kfz1_MG42_camo", 
-	"LIB_Kfz1_MG42_sernyt"
+	"LIB_Kfz1_MG42_sernyt",
+	"LIB_SdKfz251", 
+	"LIB_SdKfz251_FFV"
 ];
 
 //Basic enemy light armored vehicle avalaible must be destroyed without heavy AT (ex : BMP)
 baseEnemyLightArmoredVehicleGroup_WWII_Wehrmacht = [
-	"LIB_SdKfz251", 
-	"LIB_SdKfz251_FFV"
+	"LIB_SdKfz124",
+	"LIB_FlakPanzerIV_Wirbelwind"
 ];
 
 //Basic enemy heavy armored vehicle avalaible must be destroyed with other vehicle or heavy AT (ex : tank)
 // other choices are commented
 baseEnemyHeavyArmoredVehicleGroup_WWII_Wehrmacht = [
 	"LIB_PzKpfwIV_H",
-	"LIB_SdKfz124"
+	"LIB_T34_76_captured"
 //	"LIB_PzKpfwV"
 //	"LIB_PzKpfwVI"
-//	"LIB_SdKfz124"
 //	"LIB_StuG_III_G"
 ];
 

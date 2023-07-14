@@ -138,6 +138,7 @@ bluforUnarmedVehicleChopper_WWII_USA = [
 bluforArmoredVehicle_WWII_USA = [
 	"LIB_M8_Greyhound", 
 	"LIB_M3A3_Stuart", 
+	"LIB_M5A1_Stuart",
 	"LIB_M4A3_76", 
 	"LIB_M4A3_75"
 ];
