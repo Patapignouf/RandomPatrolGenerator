@@ -24,6 +24,7 @@ _2035_Spetsnaz = 22;
 _HorizonIsland = 23;
 _HorizonIslandSF = 24;
 _2035_CSAT = 25;
+_WWII_FFI = 26;
 
 #include "object_db\USA.sqf"
 #include "object_db\French.sqf"
@@ -35,6 +36,7 @@ _2035_CSAT = 25;
 #include "object_db\WWII_URSS.sqf"
 #include "object_db\WWII_UK.sqf"
 #include "object_db\WWII_USA.sqf"
+#include "object_db\WWII_FFI.sqf"
 #include "object_db\ColdWar_ARVN.sqf"
 #include "object_db\ColdWar_NVA.sqf"
 #include "object_db\ColdWar_USA.sqf"
@@ -64,6 +66,7 @@ c_WWII_UK = "_WWII_UK";
 c_WWII_URSS = "_WWII_URSS";
 c_WWII_Wehrmacht = "_WWII_Wehrmacht";
 c_WWII_USA = "_WWII_USA";
+c_WWII_FFI = "_WWII_FFI";
 c_ColdWar_ARVN = "_ColdWar_ARVN";
 c_ColdWar_NVA = "_ColdWar_NVA";
 c_ColdWar_USA = "_ColdWar_USA";
@@ -80,6 +83,7 @@ c_2035_Spetsnaz = "_2035_Spetsnaz";
 c_HorizonIsland = "_HorizonIsland";
 c_HorizonIslandSF =  "_HorizonIslandSF";
 c_2035_CSAT ="_2035_CSAT";
+
 
 //Setup basic ArmA 3 Factions
 factionInfos = [
@@ -131,6 +135,8 @@ if (isClass (configFile >> "CfgPatches" >> "IFA3_Core")) then
 	factionInfos pushBack [c_WWII_URSS,_WWII_URSS,"WWII URSS [IFA3]"];
 	factionInfos pushBack [c_WWII_Wehrmacht,_WWII_Wehrmacht,"WWII Wehrmacht [IFA3]"];
 	factionInfos pushBack [c_WWII_USA,_WWII_USA,"WWII USA [IFA3]"];
+	factionInfos pushBack [c_WWII_FFI,_WWII_FFI,"WWII FFI [IFA3]"];
+	
 };
 
 //Define global constant
