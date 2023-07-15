@@ -10,7 +10,7 @@ if (isServer) then
 	diag_log format ["Avalaible spawn position %1", _thisAvailablePosition ];
 	for [{_k = 0}, {_k < (count _thisAvailablePosition)}, {_k = _k + 1}] do 
 	{
-		for [{_j = 0}, {_j < 1 + _thisDifficulty}, {_j = _j + 1}] do 
+		for [{_j = 0}, {_j < _thisDifficulty}, {_j = _j + 1}] do 
 		{
 			//Case Infantry
 			currentAttackGroup = selectRandom _thisAvailableInfantryGroups;

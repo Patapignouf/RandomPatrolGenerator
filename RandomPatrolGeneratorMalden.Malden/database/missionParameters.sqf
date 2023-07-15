@@ -16,11 +16,11 @@ missionLengthSelection = [
 ];
 
 missionDifficultySelection = [
-	[0,"A few"],
-	[1,"Normal"],
-	[2,"Many"],
-	[3,"Too many"],
-	[4,"Overrun"]
+	[1,"A few"],
+	[2,"Normal"],
+	[3,"Many"],
+	[4,"Too many"],
+	[5,"Overrun"]
 ];
 
 missionStartIntelSelection = [

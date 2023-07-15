@@ -13,7 +13,7 @@ sleep 300;
 
 if (isServer) then
 {
-	while {sleep 30; true} do  
+	while {sleep 60; true} do  
 	{
 		//Test if there are too much IA
 		//Test if IA are already in combat mode to simulate reinforcement
@@ -85,7 +85,8 @@ if (isServer) then
 			AvalaibleInitAttackPositions = [positionToAttack, 1200, 2000, round((_thisDifficulty-0.5)/2)+1] call getListOfPositionsAroundTarget;
 			[ AvalaibleInitAttackPositions, positionToAttack, _thisAvailableOpforGroup, _tempVehicleGroup, round((_thisDifficulty-0.5)/2)+1] execVM 'enemyManagement\behaviorEngine\doAmbush.sqf'; 
 			diag_log format ["Harass start on position %1", positionToAttack];
+
+			sleep (600+round (random 300));
 		};
-		sleep (600+round (random 600));
 	};
 };

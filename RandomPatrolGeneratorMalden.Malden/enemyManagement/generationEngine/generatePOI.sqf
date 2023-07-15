@@ -14,7 +14,7 @@ if (_tempAvailablePosition distance _thisAvailablePosition < 200) then
 //Generate enemy infantry on AO
 diag_log format ["Infantry generation start on AO %1",_thisAvailablePosition];
 _baseRadius = 60;
-for [{_i = 0}, {_i < _thisDifficulty+4}, {_i = _i + 1}] do 
+for [{_i = 0}, {_i < ((_thisDifficulty-1)*2)+1}, {_i = _i + 1}] do 
 {
 	currentRandomGroup = selectRandom _thisAvailableOpforGroup;
 	currentGroup = [currentRandomGroup, _thisAvailablePosition, east, "DefenseInfantry"] call doGenerateEnemyGroup;
@@ -37,7 +37,7 @@ for [{_i = 0}, {_i < _thisDifficulty+4}, {_i = _i + 1}] do
 //75% chance enemy have vehicle
 if (random 100 < 75) then 
 {
-	_numberOfVehicle = _thisDifficulty + 1;
+	_numberOfVehicle = _thisDifficulty;
 
 	//Generate vehicle
 	for [{_i = 0}, {_i < _numberOfVehicle}, {_i = _i + 1}] do 
@@ -86,7 +86,7 @@ diag_log format ["Civilian generation start on AO %1",_thisAvailablePosition];
 //Add chance to spawn civilian 33%
 if (random 100 < 33 && count _thisAvailableCivGroup > 0) then 
 {
-	for [{_i = 0}, {_i < _thisDifficulty+1}, {_i = _i + 1}] do 
+	for [{_i = 0}, {_i < _thisDifficulty}, {_i = _i + 1}] do 
 	{
 		currentGroup = [_thisAvailableCivGroup, _thisAvailablePosition, civilian, "Civilian"] call doGenerateEnemyGroup;
 		[currentGroup, getPos (leader currentGroup), 80, true] execVM 'enemyManagement\behaviorEngine\doGarrison.sqf';
