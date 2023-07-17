@@ -5,6 +5,7 @@ c_engineer = "engineer";
 c_autorifleman = "autorifleman";
 c_marksman = "marksman"; 
 c_medic = "medic";
+c_radioman = "radioman";
 
 //////////////////////////////
 ////Define civ group data/////
@@ -171,6 +172,8 @@ bluforHQVehicle_WWII_UK = [
 //Loadout management////
 ////////////////////////
 
+listOfRoles_WWII_UK = [c_leader,c_at,c_rifleman,c_engineer,c_autorifleman,c_marksman,c_medic,c_radioman];
+
 //WWII_UK
 loadout_WWII_UK = [		
 	[c_leader, [["LIB_LeeEnfield_No4","","","",["LIB_10Rnd_770x56",10],[],""],[],["LIB_Webley_mk6","","","",["LIB_6Rnd_455",6],[],""],["U_LIB_UK_P37_Sergeant",[["ACE_MapTools",1],["ACE_EarPlugs",1],["LIB_6Rnd_455",3,6]]],["V_LIB_UK_P37_Rifleman_Blanco",[["ACE_EntrenchingTool",1],["LIB_6Rnd_455",4,6],["LIB_MillsBomb",2,1],["LIB_10Rnd_770x56",10,10]]],["B_LIB_UK_HSack",[["LIB_MillsBomb",4,1],["LIB_6Rnd_455",4,6],["LIB_10Rnd_770x56",8,10]]],"H_LIB_UK_Helmet_Mk3_Camo","",["LIB_Binocular_UK","","","",[],[],""],["ItemMap","","","ItemCompass","LIB_GER_ItemWatch",""]]],
@@ -179,7 +182,8 @@ loadout_WWII_UK = [
 	[c_engineer, [["LIB_DELISLE","","","",["LIB_7Rnd_45ACP_DeLisle",7],[],""],[],["LIB_Webley_mk6","","","",["LIB_6Rnd_455",6],[],""],["U_LIB_UK_P37_LanceCorporal",[["ACE_MapTools",1],["ACE_EarPlugs",2],["LIB_6Rnd_455",3,6]]],["V_LIB_UK_P37_Holster_Blanco",[["ACE_EntrenchingTool",1],["LIB_6Rnd_455",4,6],["LIB_MillsBomb",2,1],["LIB_7Rnd_45ACP_DeLisle",10,7]]],["B_LIB_UK_HSack_Blanco_Cape",[["MineDetector",1],["LIB_7Rnd_45ACP_DeLisle",10,7],["LIB_6Rnd_455",5,6],["LIB_Ladung_Small_MINE_mag",2,1]]],"H_LIB_UK_Helmet_Mk3_Camo","",["LIB_Binocular_UK","","","",[],[],""],["ItemMap","","","ItemCompass","LIB_GER_ItemWatch",""]]],
 	[c_autorifleman, [["LIB_Bren_Mk2","","","",["LIB_30Rnd_770x56",30],[],""],[],["LIB_Webley_mk6","","","",["LIB_6Rnd_455",6],[],""],["U_LIB_UK_P37",[["ACE_EarPlugs",2],["ACE_MapTools",1],["LIB_6Rnd_455",3,6]]],["V_LIB_UK_P37_Heavy_Blanco",[["ACE_EntrenchingTool",1],["LIB_6Rnd_455",2,6],["LIB_MillsBomb",2,1],["LIB_30Rnd_770x56",5,30]]],["B_LIB_UK_HSack_Blanco_Tea",[["LIB_MillsBomb",4,1],["LIB_30Rnd_770x56",4,30]]],"H_LIB_UK_Helmet_Mk3_Net","",["LIB_Binocular_UK","","","",[],[],""],["ItemMap","","","ItemCompass","LIB_GER_ItemWatch",""]]],
 	[c_marksman, [["LIB_LeeEnfield_No4_Scoped","","","",["LIB_10Rnd_770x56",10],[],""],[],["LIB_Webley_mk6","","","",["LIB_6Rnd_455",6],[],""],["U_LIB_UK_P37Jerkins",[["ACE_EarPlugs",2],["ACE_MapTools",1],["LIB_6Rnd_455",3,6]]],["V_LIB_UK_P37_Gasmask_Blanco",[["ACE_EntrenchingTool",1],["LIB_6Rnd_455",2,6],["LIB_MillsBomb",2,1],["LIB_10Rnd_770x56",11,10]]],["B_LIB_UK_HSack_Blanco",[["LIB_MillsBomb",4,1],["LIB_10Rnd_770x56",10,10]]],"H_LIB_UK_Helmet_Mk3_Camo","",["LIB_Binocular_UK","","","",[],[],""],["ItemMap","","","ItemCompass","LIB_GER_ItemWatch",""]]],
-	[c_medic, [["LIB_LeeEnfield_No4","","","",["LIB_10Rnd_770x56",10],[],""],[],["LIB_Webley_mk6","","","",["LIB_6Rnd_455",6],[],""],["U_LIB_UK_P37",[["ACE_EarPlugs",2],["ACE_MapTools",1],["LIB_6Rnd_455",3,6],["LIB_10Rnd_770x56",2,10]]],["V_LIB_UK_P37_Rifleman_Blanco",[["LIB_10Rnd_770x56",10,10]]],["B_LIB_US_Backpack_RocketBag_Empty",[]],"H_LIB_UK_Helmet_Mk3_Camo","",["LIB_Binocular_UK","","","",[],[],""],["ItemMap","","","ItemCompass","LIB_GER_ItemWatch",""]]]
+	[c_medic, [["LIB_LeeEnfield_No4","","","",["LIB_10Rnd_770x56",10],[],""],[],["LIB_Webley_mk6","","","",["LIB_6Rnd_455",6],[],""],["U_LIB_UK_P37",[["ACE_EarPlugs",2],["ACE_MapTools",1],["LIB_6Rnd_455",3,6],["LIB_10Rnd_770x56",2,10]]],["V_LIB_UK_P37_Rifleman_Blanco",[["LIB_10Rnd_770x56",10,10]]],["B_LIB_US_Backpack_RocketBag_Empty",[]],"H_LIB_UK_Helmet_Mk3_Camo","",["LIB_Binocular_UK","","","",[],[],""],["ItemMap","","","ItemCompass","LIB_GER_ItemWatch",""]]],
+	[c_radioman,[["LIB_LeeEnfield_No4","","","",["LIB_10Rnd_770x56",10],[],""],[],["LIB_Webley_mk6","","","",["LIB_6Rnd_455",6],[],""],["U_LIB_UK_P37",[["ACE_MapTools",1],["ACE_EarPlugs",1],["LIB_6Rnd_455",3,6]]],["V_LIB_UK_P37_Rifleman_Blanco",[["ACE_EntrenchingTool",1],["LIB_6Rnd_455",4,6],["LIB_MillsBomb",2,1],["LIB_10Rnd_770x56",10,10]]],["B_LIB_US_Radio",[["LIB_MillsBomb",4,1],["LIB_6Rnd_455",4,6],["LIB_10Rnd_770x56",8,10]]],"H_LIB_UK_Helmet_Mk3_Camo","",["LIB_Binocular_UK","","","",[],[],""],["ItemMap","","","ItemCompass","LIB_GER_ItemWatch",""]]]
 ];
 
 ////////////////////////
