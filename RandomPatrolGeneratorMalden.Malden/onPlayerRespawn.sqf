@@ -43,7 +43,9 @@ _deadPlayerList = missionNamespace getVariable "deadPlayer";
 _deadPlayerList = _deadPlayerList - [name player];
 missionNamespace setVariable ["deadPlayer", _deadPlayerList, true];
 
-// //Respawn on start position by default
+//Respawn on start position by default
+//Protect player for 30 sec on spawn
+player allowDamage false;
 if (player getVariable "sideBeforeDeath" == "independent") then 
 {
   //Independent
@@ -63,3 +65,8 @@ if (player getVariable "sideBeforeDeath" == "independent") then
   };
 };
 ["Respawn on start position", format ["Year %1", date select 0], mapGridPosition player] spawn BIS_fnc_infoText;
+
+
+//Allow damage post respawn
+sleep 30;
+player allowDamage true;
