@@ -69,6 +69,7 @@ avalaiblePlayer = player;
 	_RcsButtonObjective ctrlSetPosition [_coordinateX, _coordinateY, _weight, _height];
 	_RcsButtonObjective ctrlCommit 0;
 	_RcsButtonObjective ctrlSetTextColor [1, 1, 1, 1];
+	_RcsButtonObjective setVariable ["playerValue", avalaiblePlayer];
 
 	_coordinateY = _coordinateY + _ypading;
 	
@@ -76,16 +77,17 @@ avalaiblePlayer = player;
 	{
 		params ["_ctrl"];
 		normalClose = true;
+		_currentRespawnPlayer = _ctrl getVariable "playerValue";
 			
 		//SetPlayer position on leader position if it is on vehicle
-		if !(player moveInAny (vehicle avalaiblePlayer)) then 
+		if !(player moveInAny (vehicle _currentRespawnPlayer)) then 
 		{
 			//Leader on vehicle with empty space
-			_tempPos = getPosASL avalaiblePlayer;
+			_tempPos = getPosASL _currentRespawnPlayer;
 			player setPosASL _tempPos;
 		};
 
-		[format ["Respawn on %1", name avalaiblePlayer], format ["Year %1", date select 0], mapGridPosition player] spawn BIS_fnc_infoText;
+		[format ["Respawn on %1", name _currentRespawnPlayer], format ["Year %1", date select 0], mapGridPosition player] spawn BIS_fnc_infoText;
 
 		//Initialize player
 		[] call doInitializePlayer;

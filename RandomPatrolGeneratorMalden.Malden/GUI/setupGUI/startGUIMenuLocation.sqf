@@ -336,6 +336,7 @@ if (typeName PossibleObjectivePosition == "ARRAY") then
 		_RcsButtonObjective ctrlSetPosition [_coordinateX, _coordinateY, _weight, _height];
 		_RcsButtonObjective ctrlCommit 0;
 		_RcsButtonObjective ctrlSetTextColor [1, 0, 0, 1];
+		_RcsButtonObjective setVariable ["objectiveLocation", _currentPossibleLocation];
 
 		_coordinateY = _coordinateY + _ypading;
 		
@@ -347,7 +348,7 @@ if (typeName PossibleObjectivePosition == "ARRAY") then
 			params ["_ctrl"];
 			_display = ctrlParent _ctrl;
 			_display closeDisplay 1;
-			PossibleObjectivePosition = PossibleObjectivePosition - [currentPossibleLocation];
+			PossibleObjectivePosition = PossibleObjectivePosition - [_ctrl getVariable "objectiveLocation"];
 			publicVariable "PossibleObjectivePosition";
 			currentPossibleLocation = [];
 			publicVariable "currentPossibleLocation";
