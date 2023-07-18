@@ -129,7 +129,8 @@ bluforUnarmedVehicle_WWII_USA = [
 
 bluforArmedVehicle_WWII_USA = [
 	"LIB_US_Scout_M3", 
-	"LIB_US_Willys_MB_M1919"
+	"LIB_US_Willys_MB_M1919",
+	"LIB_M8_Greyhound"
 ];
 
 bluforUnarmedVehicleChopper_WWII_USA = [
@@ -137,7 +138,6 @@ bluforUnarmedVehicleChopper_WWII_USA = [
 ];
 
 bluforArmoredVehicle_WWII_USA = [
-	"LIB_M8_Greyhound", 
 	"LIB_M3A3_Stuart", 
 	"LIB_M5A1_Stuart",
 	"LIB_M4A3_76", 
@@ -195,7 +195,8 @@ rifleList_WWII_USA = [
 	"LIB_M1_Garand",
 	"LIB_M1903A3_Springfield",
 	"LIB_M1903A4_Springfield",
-	"LIB_Colt_M1911"
+	"LIB_Colt_M1911",
+	"LIB_M3_GreaseGun"
 ];	
 
 launcherList_WWII_USA = [		
@@ -356,5 +357,6 @@ magazineList_WWII_USA = [
 	"SmokeShellPurple",
 	"SmokeShellRed",
 	"SmokeShellYellow",
-	"LIB_7Rnd_45ACP"
+	"LIB_7Rnd_45ACP",
+	"LIB_30Rnd_M3_GreaseGun_45ACP"
 ];

@@ -46,7 +46,7 @@ baseEnemyGroup_WWII_Wehrmacht = [
 	"LIB_GER_rifleman",
 	"LIB_GER_rifleman",
 	"LIB_GER_rifleman",
-	"LIB_GER_rifleman"
+	"LIB_GER_LAT_Rifleman"
 ];
 
 //Basic anti tank enemy group | 5 men (Leader, MG, AT)
@@ -54,15 +54,13 @@ baseEnemyATGroup_WWII_Wehrmacht = [
 	"LIB_GER_unterofficer",
 	"LIB_GER_mgunner",
 	"LIB_GER_mgunner",
-	"LIB_GER_AT_soldier",
-	"LIB_GER_AT_soldier"
+	"LIB_GER_LAT_Rifleman",
+	"LIB_GER_medic"
 ];
 
 //Basic demolition enemy group | 8 men (Leader, Explosive)
 baseEnemyDemoGroup_WWII_Wehrmacht = [
 	"LIB_GER_unterofficer",
-	"LIB_GER_ober_grenadier",
-	"LIB_GER_ober_grenadier",
 	"LIB_GER_ober_grenadier",
 	"LIB_GER_ober_grenadier",
 	"LIB_GER_ober_grenadier",
@@ -74,10 +72,8 @@ baseEnemyDemoGroup_WWII_Wehrmacht = [
 baseEnemyMortarGroup_WWII_Wehrmacht = [
 	"LIB_GrWr34",
 	"LIB_GER_radioman",
-	"LIB_GER_rifleman",
-	"LIB_GER_rifleman",
-	"LIB_GER_rifleman",
-	"LIB_GER_rifleman",
+	"LIB_GER_stggunner",
+	"LIB_GER_stggunner",
 	"LIB_GER_rifleman",
 	"LIB_GER_rifleman",
 	"LIB_GER_rifleman"

@@ -6,6 +6,7 @@ c_autorifleman = "autorifleman";
 c_marksman = "marksman"; 
 c_medic = "medic";
 c_radioman = "radioman";
+c_pilot = "pilot";
 
 //////////////////////////////
 ////Define civ group data/////
@@ -141,7 +142,9 @@ bluforArmoredVehicle_WWII_UK = [
 	"LIB_UniversalCarrier",
 	"LIB_Churchill_Mk7", 
 	"LIB_M4A4_FIREFLY", 
-	"LIB_Cromwell_Mk4"
+	"LIB_Cromwell_Mk4",
+	"LIB_Churchill_Mk7_desert",
+	"LIB_UK_DR_M4A3_75"
 ];
 
 bluforDrone_WWII_UK = [
@@ -172,7 +175,7 @@ bluforHQVehicle_WWII_UK = [
 //Loadout management////
 ////////////////////////
 
-listOfRoles_WWII_UK = [c_leader,c_at,c_rifleman,c_engineer,c_autorifleman,c_marksman,c_medic,c_radioman];
+listOfRoles_WWII_UK = [c_leader,c_at,c_rifleman,c_engineer,c_autorifleman,c_marksman,c_medic,c_radioman,c_pilot];
 
 //WWII_UK
 loadout_WWII_UK = [		
@@ -183,7 +186,8 @@ loadout_WWII_UK = [
 	[c_autorifleman, [["LIB_Bren_Mk2","","","",["LIB_30Rnd_770x56",30],[],""],[],["LIB_Webley_mk6","","","",["LIB_6Rnd_455",6],[],""],["U_LIB_UK_P37",[["ACE_EarPlugs",2],["ACE_MapTools",1],["LIB_6Rnd_455",3,6]]],["V_LIB_UK_P37_Heavy_Blanco",[["ACE_EntrenchingTool",1],["LIB_6Rnd_455",2,6],["LIB_MillsBomb",2,1],["LIB_30Rnd_770x56",5,30]]],["B_LIB_UK_HSack_Blanco_Tea",[["LIB_MillsBomb",4,1],["LIB_30Rnd_770x56",4,30]]],"H_LIB_UK_Helmet_Mk3_Net","",["LIB_Binocular_UK","","","",[],[],""],["ItemMap","","","ItemCompass","LIB_GER_ItemWatch",""]]],
 	[c_marksman, [["LIB_LeeEnfield_No4_Scoped","","","",["LIB_10Rnd_770x56",10],[],""],[],["LIB_Webley_mk6","","","",["LIB_6Rnd_455",6],[],""],["U_LIB_UK_P37Jerkins",[["ACE_EarPlugs",2],["ACE_MapTools",1],["LIB_6Rnd_455",3,6]]],["V_LIB_UK_P37_Gasmask_Blanco",[["ACE_EntrenchingTool",1],["LIB_6Rnd_455",2,6],["LIB_MillsBomb",2,1],["LIB_10Rnd_770x56",11,10]]],["B_LIB_UK_HSack_Blanco",[["LIB_MillsBomb",4,1],["LIB_10Rnd_770x56",10,10]]],"H_LIB_UK_Helmet_Mk3_Camo","",["LIB_Binocular_UK","","","",[],[],""],["ItemMap","","","ItemCompass","LIB_GER_ItemWatch",""]]],
 	[c_medic, [["LIB_LeeEnfield_No4","","","",["LIB_10Rnd_770x56",10],[],""],[],["LIB_Webley_mk6","","","",["LIB_6Rnd_455",6],[],""],["U_LIB_UK_P37",[["ACE_EarPlugs",2],["ACE_MapTools",1],["LIB_6Rnd_455",3,6],["LIB_10Rnd_770x56",2,10]]],["V_LIB_UK_P37_Rifleman_Blanco",[["LIB_10Rnd_770x56",10,10]]],["B_LIB_US_Backpack_RocketBag_Empty",[]],"H_LIB_UK_Helmet_Mk3_Camo","",["LIB_Binocular_UK","","","",[],[],""],["ItemMap","","","ItemCompass","LIB_GER_ItemWatch",""]]],
-	[c_radioman,[["LIB_LeeEnfield_No4","","","",["LIB_10Rnd_770x56",10],[],""],[],["LIB_Webley_mk6","","","",["LIB_6Rnd_455",6],[],""],["U_LIB_UK_P37",[["ACE_MapTools",1],["ACE_EarPlugs",1],["LIB_6Rnd_455",3,6]]],["V_LIB_UK_P37_Rifleman_Blanco",[["ACE_EntrenchingTool",1],["LIB_6Rnd_455",4,6],["LIB_MillsBomb",2,1],["LIB_10Rnd_770x56",10,10]]],["B_LIB_US_Radio",[["LIB_MillsBomb",4,1],["LIB_6Rnd_455",4,6],["LIB_10Rnd_770x56",8,10]]],"H_LIB_UK_Helmet_Mk3_Camo","",["LIB_Binocular_UK","","","",[],[],""],["ItemMap","","","ItemCompass","LIB_GER_ItemWatch",""]]]
+	[c_radioman,[["LIB_LeeEnfield_No4","","","",["LIB_10Rnd_770x56",10],[],""],[],["LIB_Webley_mk6","","","",["LIB_6Rnd_455",6],[],""],["U_LIB_UK_P37",[["ACE_MapTools",1],["ACE_EarPlugs",1],["LIB_6Rnd_455",3,6]]],["V_LIB_UK_P37_Rifleman_Blanco",[["ACE_EntrenchingTool",1],["LIB_6Rnd_455",4,6],["LIB_MillsBomb",2,1],["LIB_10Rnd_770x56",10,10]]],["B_LIB_US_Radio",[["LIB_MillsBomb",4,1],["LIB_6Rnd_455",4,6],["LIB_10Rnd_770x56",8,10]]],"H_LIB_UK_Helmet_Mk3_Camo","",["LIB_Binocular_UK","","","",[],[],""],["ItemMap","","","ItemCompass","LIB_GER_ItemWatch",""]]],
+	[c_pilot,"LIB_UK_Tank_Crew"]
 ];
 
 ////////////////////////
@@ -193,7 +197,8 @@ loadout_WWII_UK = [
 rifleList_WWII_UK = [		
 	"LIB_DELISLE",
 	"LIB_LeeEnfield_No1",
-	"LIB_LeeEnfield_No4"
+	"LIB_LeeEnfield_No4",
+	"LIB_Webley_mk6"
 ];	
 
 launcherList_WWII_UK = [		
@@ -211,8 +216,6 @@ marksmanrifleList_WWII_UK = [
 smgList_WWII_UK = [
 	"LIB_Sten_Mk2",
 	"LIB_Sten_Mk5"
-	// "LIB_M1A1_Thompson",
-	// "LIB_M1928_Thompson"
 ];
 
 
@@ -282,20 +285,24 @@ backPackList_WWII_UK = [
 ];
 
 uniformList_WWII_UK = [
-	"U_LIB_UK_KhakiDrills",
 	"U_LIB_UK_DenisonSmock",
 	"U_LIB_UK_P37Jerkins",
-	// "U_LIB_UK_P37Jerkins_Corporal",
-	// "U_LIB_UK_P37Jerkins_LanceCorporal",
-	// "U_LIB_UK_P37Jerkins_Sergeant",
+	"U_LIB_UK_P37Jerkins_Corporal",
+	"U_LIB_UK_P37Jerkins_LanceCorporal",
+	"U_LIB_UK_P37Jerkins_Sergeant",
 	"U_LIB_UK_P37",
-	// "U_LIB_UK_P37_Corporal",
-	// "U_LIB_UK_P37_LanceCorporal",
-	// "U_LIB_UK_P37_Sergeant",
+	"U_LIB_UK_P37_Corporal",
+	"U_LIB_UK_P37_LanceCorporal",
+	"U_LIB_UK_P37_Sergeant",
+	"H_LIB_UK_Helmet_Mk2_FAK",
+	"H_LIB_UK_Helmet_Mk2_FAK_Camo",
 // Winter uniforms
 	"U_LIB_UK_DenisonSmock_w",
 	"U_LIB_UK_P37Jerkins_w",
-	"U_LIB_UK_P37_w"
+	"U_LIB_UK_P37_w",
+// Desert
+	"H_LIB_UK_Helmet_Mk2_Desert",
+	"U_LIB_UK_KhakiDrills"
 ];
 
 magazineList_WWII_UK = [
@@ -318,5 +325,6 @@ magazineList_WWII_UK = [
 	"SmokeShellOrange",
 	"SmokeShellPurple",
 	"SmokeShellRed",
-	"SmokeShellYellow"
+	"SmokeShellYellow",
+	"LIB_6Rnd_455"
 ];
