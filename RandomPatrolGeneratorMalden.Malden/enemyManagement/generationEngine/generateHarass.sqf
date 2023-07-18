@@ -86,7 +86,7 @@ if (isServer) then
 			[ AvalaibleInitAttackPositions, positionToAttack, _thisAvailableOpforGroup, _tempVehicleGroup, round((_thisDifficulty-0.5)/2)+1] execVM 'enemyManagement\behaviorEngine\doAmbush.sqf'; 
 			diag_log format ["Harass start on position %1", positionToAttack];
 
-			sleep (600+round (random 300));
+			sleep (600+round (random 600));
 		};
 	};
 };
