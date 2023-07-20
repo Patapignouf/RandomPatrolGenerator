@@ -40,7 +40,7 @@ if (isServer) then
 					_thisAvailableGroups = _thisAvailableWaveGroups select ((count _thisAvailableWaveGroups)-1);
 				};
 				
-				[EnemyWaveSpawnPositions,getPos initCityLocation,_thisAvailableGroups,[], _thisDifficulty] execVM 'enemyManagement\behaviorEngine\doAmbush.sqf'; 
+				[EnemyWaveSpawnPositions, initCityLocation,_thisAvailableGroups,[], _thisDifficulty] execVM 'enemyManagement\behaviorEngine\doAmbush.sqf'; 
 				
 				diag_log format ["Wave end : %1", waveCounter ];
 				

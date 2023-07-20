@@ -36,7 +36,7 @@ if (!didJIP) then
 	} else 
 	{
 		//Solo setup or game without  admin setup
-		if ( ({isPlayer _x && side _x == independent} count allPlayers != 0 && forceBluforSetup == 0)) then 
+		if ( ({isPlayer _x && side _x == independent} count (call BIS_fnc_listPlayers) != 0 && forceBluforSetup == 0)) then 
 		{
 			if (side player == independent && player == (leader (group player))) then 
 			{
@@ -45,6 +45,7 @@ if (!didJIP) then
 				[[], 'GUI\setupGUI\initMissionMenu.sqf'] remoteExec ['BIS_fnc_execVM', player];
 			};
 		} else {
+			
 			//If there is no independent, blufor leader can choose mission
 			if (side player == blufor && player == (leader (group player))) then 
 			{
@@ -205,24 +206,24 @@ if (side player == independent) then
 
 	if (player == (leader (group player))) then
 	{	
-
-		if (!didJIP) then 
-		{
-			diag_log format ["Warlord is set to player : %1", name player];
-			player addEventHandler ["Killed", {
-				params ["_unit", "_killer", "_instigator", "_useEffects"];
-				diag_log format ["Warlord has been killed by : %1", _killer];
-				diag_log format ["Mission end !"];
-				[['IND_DEAD'], 'engine\objectiveManagement\endMission.sqf'] remoteExec ['BIS_fnc_execVM', 2];
-			}];
-		};
+		//Disable ind VIP feature
+		// if (!didJIP) then 
+		// {
+		// 	diag_log format ["Warlord is set to player : %1", name player];
+		// 	player addEventHandler ["Killed", {
+		// 		params ["_unit", "_killer", "_instigator", "_useEffects"];
+		// 		diag_log format ["Warlord has been killed by : %1", _killer];
+		// 		diag_log format ["Mission end !"];
+		// 		[['IND_DEAD'], 'engine\objectiveManagement\endMission.sqf'] remoteExec ['BIS_fnc_execVM', 2];
+		// 	}];
+		// };
 	};
 
 	//Wait for the player to choose position
 	waitUntil {!isNil "missionGenerated"};
 
 	player setVariable ["sideBeforeDeath","independent"];
-	_spawnPos = [getPos initCityLocation, 1, 15, 3, 0, 20, 0] call BIS_fnc_findSafePos;
+	_spawnPos = [initCityLocation, 1, 15, 3, 0, 20, 0] call BIS_fnc_findSafePos;
 	diag_log format ["Player %1 has spawn on position %2", name player, _spawnPos];
 	player setPos (_spawnPos);
 

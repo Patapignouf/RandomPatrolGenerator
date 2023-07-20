@@ -146,23 +146,32 @@ if (initCityLocationPosition isEqualType []) then
 
 	if (!([initCityLocationPosition, [0,0,0]] call BIS_fnc_areEqual)) then 
 	{
-		_nearestCity = nearestLocations [initCityLocationPosition, ["NameLocal","NameVillage","NameCity","NameCityCapital"], 1500] select 0;
-		initCityLocation = _nearestCity;
+		initCityLocation = initCityLocationPosition;
 	};
 }  else 
 {
 	//Select a random position
 	possibleInitLocation = [] call getRandomCenterLocations;
-	initCityLocation = selectRandom possibleInitLocation;
+	initCityLocation = getPos (selectRandom possibleInitLocation);
 };
 
+initCityLocationLocs = nearestLocations [initCityLocation, ["NameLocal","NameVillage","NameCity","NameCityCapital"], 300];
+initCityLocationLoc = objNull;
+initCityLocationName = mapGridPosition initCityLocation;
+if (count initCityLocationLocs >=1) then 
+{
+	initCityLocationLoc = initCityLocationLocs#0;
+	initCityLocationName = text initCityLocationLoc;
+};
+
+
 publicvariable "initCityLocation";
-possiblePOILocation = ([initCityLocation, 3000] call getLocationsAroundWithBuilding) - [initCityLocation];
+possiblePOILocation = ([initCityLocation, 3000] call getLocationsAroundWithBuilding) - [initCityLocationLoc];
 dangerAreaList = [];
 
 if ( count possiblePOILocation < missionLength + 1) then 
 {
-	possiblePOILocation = ([initCityLocation, 5000] call getLocationsAroundWithBuilding) - [initCityLocation];
+	possiblePOILocation = ([initCityLocation, 5000] call getLocationsAroundWithBuilding) - [initCityLocationLoc];
 };
 
 //Search road around AO
@@ -204,14 +213,14 @@ AllPossibleObjectivePosition = PossibleObjectivePosition;
 for [{_i = 0}, {_i <= 2}, {_i = _i + 1}] do //Peut être optimisé
 {
 	_currentTruckType = selectRandom civilianTruck;
-	[getPos initCityLocation, [[_currentTruckType, false]], 30, 100] call doGenerateVehicleForFOB;	
+	[initCityLocation, [[_currentTruckType, false]], 30, 100] call doGenerateVehicleForFOB;	
 };
 
 //Init enemy forces in the main civilian city if there's no independent player
 if ((round (random 3))==0 && (count (allPlayers select {side _x == independent})== 0)) then 
 {
 	//Generate enemy forces on main civilian city environement
-	_handlePOIGeneration = [EnemyWaveLevel_1, baseEnemyVehicleGroup, [], [], [], getPos initCityLocation, missionDifficultyParam, objNull] execVM 'enemyManagement\generationEngine\generatePOI.sqf'; 
+	_handlePOIGeneration = [EnemyWaveLevel_1, baseEnemyVehicleGroup, [], [], [], initCityLocation, missionDifficultyParam, objNull] execVM 'enemyManagement\generationEngine\generatePOI.sqf'; 
 	waitUntil {isNull _handlePOIGeneration};
 };
 
@@ -238,7 +247,7 @@ for [{_i = 0}, {_i <= missionLength min(count AllPossibleObjectivePosition)}, {_
 //check wave spawn 
 EnemyWaveSpawnPositions = [];
 numberOfSpawnWave = 4;
-possibleEnemyWaveSpawnPositions = (([initCityLocation, 2000] call getLocationsAroundWithBuilding) - [initCityLocation]) - SupplyPositions;
+possibleEnemyWaveSpawnPositions = (([initCityLocation, 2000] call getLocationsAroundWithBuilding) - [initCityLocationLoc]) - SupplyPositions;
 
 for [{_i = 0}, {_i < numberOfSpawnWave}, {_i = _i + 1}] do
 {
@@ -258,7 +267,7 @@ currentCivGroup = objNull;
 civsGroup = [];
 for [{_i = 0}, {_i <= 2}, {_i = _i + 1}] do
 { 
-	currentCivGroup = [civilian_big_group, ((getPos initCityLocation) findEmptyPosition [5, 60]), civilian, "Civilian"] call doGenerateEnemyGroup;
+	currentCivGroup = [civilian_big_group, ((initCityLocation) findEmptyPosition [5, 60]), civilian, "Civilian"] call doGenerateEnemyGroup;
 	civsGroup pushBack currentCivGroup;
 	diag_log format ["Generation of civilian group : %1 on position %2 has been completed", currentCivGroup, initCityLocation];
 };
@@ -270,7 +279,7 @@ for [{_i = 0}, {_i <= 2}, {_i = _i + 1}] do
 
 
 //Init VA
-VA1 = createVehicle ["CargoNet_01_box_F", [getPos initCityLocation, 1, 10, 3, 0, 20, 0] call BIS_fnc_findSafePos, [], 0, "NONE"];
+VA1 = createVehicle ["CargoNet_01_box_F", [initCityLocation, 1, 10, 3, 0, 20, 0] call BIS_fnc_findSafePos, [], 0, "NONE"];
 clearWeaponCargoGlobal VA1;
 clearMagazineCargoGlobal VA1;
 clearItemCargoGlobal VA1;
@@ -286,11 +295,11 @@ publicvariable "VA1";
 isIndAttacked = false;
 publicvariable "isIndAttacked";
 AvalaibleInitAttackPositions = [];
-AvalaibleInitAttackPositions = [getPos initCityLocation, 1200,1400, missionDifficultyParam] call getListOfPositionsAroundTarget;
+AvalaibleInitAttackPositions = [initCityLocation, 1200,1400, missionDifficultyParam] call getListOfPositionsAroundTarget;
 if ( count AvalaibleInitAttackPositions != 0 && (enableInitAttack == 1 || ((enableInitAttack == 2) && (round (random 1))==0))) then
 {
 	diag_log "Init attack on independent city";
-	_handleCivGeneration = [AvalaibleInitAttackPositions,getPos initCityLocation,[baseEnemyGroup,baseEnemyATGroup],baseEnemyVehicleGroup, missionDifficultyParam] execVM 'enemyManagement\behaviorEngine\doAmbush.sqf'; 
+	_handleCivGeneration = [AvalaibleInitAttackPositions, initCityLocation,[baseEnemyGroup,baseEnemyATGroup],baseEnemyVehicleGroup, missionDifficultyParam] execVM 'enemyManagement\behaviorEngine\doAmbush.sqf'; 
 	isIndAttacked = true;
 	publicvariable "isIndAttacked";
 	waitUntil {isNull _handleCivGeneration};
@@ -367,13 +376,13 @@ if !(_isOnWater) then
 		//Check if position is already determine by player
 		if ([initBlueforLocation, [0,0,0]] call BIS_fnc_areEqual) then 
 		{
-			initBlueforLocation = [getPos initCityLocation,_minBluforCityRadius, _maxBluforCityRadius, 3, 0, 0.25, 0, [areaOfOperation], [[0,0,0],[0,0,0]]] call BIS_fnc_findSafePos;
+			initBlueforLocation = [initCityLocation,_minBluforCityRadius, _maxBluforCityRadius, 3, 0, 0.25, 0, [areaOfOperation], [[0,0,0],[0,0,0]]] call BIS_fnc_findSafePos;
 			//Test avalaible position (not in water and not default)
 			_spawnAttempts = 0;
 			while {(([initBlueforLocation , [0,0,0]] call BIS_fnc_areEqual) || surfaceIsWater initBlueforLocation) && _spawnAttempts <10} do 
 			{
 				_maxBluforCityRadius = _maxBluforCityRadius +200;
-				initBlueforLocation = [getPos initCityLocation, _minBluforCityRadius, _maxBluforCityRadius, 3, 0, 0.25, 0, [areaOfOperation], [[0,0,0],[0,0,0]]] call BIS_fnc_findSafePos;
+				initBlueforLocation = [initCityLocation, _minBluforCityRadius, _maxBluforCityRadius, 3, 0, 0.25, 0, [areaOfOperation], [[0,0,0],[0,0,0]]] call BIS_fnc_findSafePos;
 				_spawnAttempts = _spawnAttempts +1;
 			};
 			
@@ -736,7 +745,7 @@ if ((round (random 1))==0 ) then
 { 
 	for [{_i = 0}, {_i < 2}, {_i = _i + 1}] do
 	{ 
-		_mortarSpawnPosition = [getPos initCityLocation, (800), (aoSize+700), 3, 10, 0.25, 0, [], [[0,0,0],[0,0,0]]] call BIS_fnc_findSafePos;
+		_mortarSpawnPosition = [initCityLocation, (800), (aoSize+700), 3, 10, 0.25, 0, [], [[0,0,0],[0,0,0]]] call BIS_fnc_findSafePos;
 		if !([_mortarSpawnPosition , [0,0,0]] call BIS_fnc_areEqual) then 
 		{
 			_mortarGroup = [baseEnemyMortarGroup, _mortarSpawnPosition, east, "Mortar"] call doGenerateEnemyGroup;
@@ -903,8 +912,8 @@ switch (startIntel) do
 		{
 			//Setup init Civ city
 			//Init task for blufor to get informations
-			[blufor, "taskContactCiv", [format ["Contact civilians at %1 to get tasks", text initCityLocation], "Contact civilians", ""], objNull, 1, 3, true] call BIS_fnc_taskCreate;
-			initCityLocationTrigger = createTrigger ["EmptyDetector", getPos initCityLocation]; //create a trigger area created at object with variable name my_object
+			[blufor, "taskContactCiv", [format ["Contact civilians at %1 to get tasks", initCityLocationName], "Contact civilians", ""], objNull, 1, 3, true] call BIS_fnc_taskCreate;
+			initCityLocationTrigger = createTrigger ["EmptyDetector", initCityLocation]; //create a trigger area created at object with variable name my_object
 			initCityLocationTrigger setTriggerArea [100, 100, 0, false]; // trigger area with a radius of 100m.
 			
 			//Setup task completion

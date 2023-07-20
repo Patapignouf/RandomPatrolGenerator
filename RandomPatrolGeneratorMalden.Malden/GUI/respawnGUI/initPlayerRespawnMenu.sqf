@@ -22,7 +22,7 @@ _buttonRespawnStart ctrlAddEventHandler[ "ButtonClick",
 		if (player getVariable "sideBeforeDeath" == "independent") then 
 		{
 			//Independent
-			player setPos ([getPos initCityLocation, 1, 10, 3, 0, 20, 0] call BIS_fnc_findSafePos);
+			player setPos ([initCityLocation, 1, 10, 3, 0, 20, 0] call BIS_fnc_findSafePos);
 		} else 
 		{
 			//Blufor
@@ -126,7 +126,7 @@ if (!normalClose) then
 	if (player getVariable "sideBeforeDeath" == "independent") then 
 	{
 		//Independent
-		player setPos ([getPos initCityLocation, 1, 30, 1, 0, 30, 0, [], [getPos initCityLocation, getPos initCityLocation]] call BIS_fnc_findSafePos);
+		player setPos ([initCityLocation, 1, 30, 1, 0, 30, 0, [], [initCityLocation, initCityLocation]] call BIS_fnc_findSafePos);
 	} else 
 	{
 		//Blufor

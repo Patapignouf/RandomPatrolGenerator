@@ -15,7 +15,7 @@ RTBComplete = false;
 isRTBMissionGenerated = false;
 numberOfCompletedObj = 0;
 
-independantTrigger = createTrigger ["EmptyDetector", getPos _objectivesDestinationArea]; //create a trigger area created at object with variable name my_object
+independantTrigger = createTrigger ["EmptyDetector", _objectivesDestinationArea]; //create a trigger area created at object with variable name my_object
 independantTrigger setTriggerArea [60, 60, 0, false]; // trigger area with a radius of 100m.
 
 waitUntil {!isNil "missionGenerated"};

@@ -28,7 +28,7 @@ getLocationsAroundWithBuilding =
 	_thisLocation = _this select 0;
 	_thisRadius = _this select 1;	
 	
-	_LocList = nearestLocations [[(getPos _thisLocation) select 0, (getPos _thisLocation) select 1], ["NameLocal","NameVillage","NameCity","NameCityCapital"], _thisRadius];
+	_LocList = nearestLocations [[(_thisLocation) select 0, (_thisLocation) select 1], ["NameLocal","NameVillage","NameCity","NameCityCapital"], _thisRadius];
 	
 	//Clear location without building
 	{

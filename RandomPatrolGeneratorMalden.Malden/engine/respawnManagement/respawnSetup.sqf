@@ -1,5 +1,5 @@
 bluforRespawn = "respawn_west" setMarkerPos initBlueforLocation;
-independentRespawn = "respawn_guerrila" setMarkerPos (getPos initCityLocation);
+independentRespawn = "respawn_guerrila" setMarkerPos (initCityLocation);
 
 
 //Setup basic respawn marker
