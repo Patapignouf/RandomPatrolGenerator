@@ -223,7 +223,7 @@ if (side player == independent) then
 	waitUntil {!isNil "missionGenerated"};
 
 	player setVariable ["sideBeforeDeath","independent"];
-	_spawnPos = [initCityLocation, 1, 15, 3, 0, 20, 0] call BIS_fnc_findSafePos;
+	_spawnPos = [initCityLocation, 1, 30, 3, 0, 20, 0] call BIS_fnc_findSafePos;
 	diag_log format ["Player %1 has spawn on position %2", name player, _spawnPos];
 	player setPos (_spawnPos);
 
@@ -263,7 +263,7 @@ if (side player == blufor) then
 	_spawnPos = [];
 	if (isNil "USS_FREEDOM_CARRIER") then 
 	{
-		_spawnPos = [initBlueforLocation, 1, 15, 3, 0, 20, 0] call BIS_fnc_findSafePos;
+		_spawnPos = [initBlueforLocation, 1, 30, 1, 0, 30, 0, [], [initBlueforLocation, initBlueforLocation]] call BIS_fnc_findSafePos;
 		player setPos (_spawnPos);
 	} else 
 	{
@@ -611,9 +611,7 @@ if (didJIP) then
 	{
 
 		//Disable specific respawn menu
-		//player setPos [0,0,10000];
 		player allowdamage false;
-		// player enableSimulationGlobal false;
 		[[], 'GUI\respawnGUI\initPlayerRespawnMenu.sqf'] remoteExec ['BIS_fnc_execVM', player];
 	} else 
 	{

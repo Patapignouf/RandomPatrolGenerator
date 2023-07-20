@@ -246,5 +246,5 @@ uniformList_WWII_FFI = [
 ];
 
 magazineList_WWII_FFI = [
-	"U_LIB_CIV_Citizen_4"
+
 ];

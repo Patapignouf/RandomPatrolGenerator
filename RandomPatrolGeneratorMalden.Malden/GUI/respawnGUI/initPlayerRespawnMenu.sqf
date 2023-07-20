@@ -22,13 +22,13 @@ _buttonRespawnStart ctrlAddEventHandler[ "ButtonClick",
 		if (player getVariable "sideBeforeDeath" == "independent") then 
 		{
 			//Independent
-			player setPos ([initCityLocation, 1, 10, 3, 0, 20, 0] call BIS_fnc_findSafePos);
+			player setPos ([initCityLocation, 1, 30, 1, 0, 30, 0, [], [initCityLocation, initCityLocation]] call BIS_fnc_findSafePos);
 		} else 
 		{
 			//Blufor
 			if (isNil "USS_FREEDOM_CARRIER") then 
 			{
-				_spawnPos = [initBlueforLocation, 1, 15, 3, 0, 20, 0] call BIS_fnc_findSafePos;
+				_spawnPos = [initBlueforLocation, 1, 30, 1, 0, 30, 0, [], [initBlueforLocation, initBlueforLocation]] call BIS_fnc_findSafePos;
 				player setPos (_spawnPos);
 			} else 
 			{
