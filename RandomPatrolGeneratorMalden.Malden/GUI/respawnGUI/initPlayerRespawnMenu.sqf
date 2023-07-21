@@ -105,6 +105,7 @@ doInitializePlayer = {
 		player allowdamage true;
 		player enableSimulationGlobal true;
 		player hideObjectGlobal false;
+		player setVelocity [0, 0, 0];
 		cutText ["", "BLACK IN", 5];
 
 		//Remove player name from the dead player's list

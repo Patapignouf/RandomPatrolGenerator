@@ -31,7 +31,7 @@ if (isMultiplayer) then
 		{
 			adminExist = true;
 		};
-	} foreach allPlayers;
+	} foreach (call BIS_fnc_listPlayers);
 };
 publicVariable "adminExist";
 
