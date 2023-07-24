@@ -130,7 +130,8 @@ bluforUnarmedVehicle_WWII_UK = [
 ];
 
 bluforArmedVehicle_WWII_UK = [
-	"LIB_UK_Willys_MB_M1919"
+	"LIB_UK_Willys_MB_M1919",
+	"LIB_UK_DR_M3_Halftrack"
 //	"LIB_UK_M3_Halftrack"
 ];
 
@@ -227,7 +228,8 @@ smgList_WWII_UK = [
 attachmentShortList_WWII_UK	= [
 	"lib_acc_gl_enfield_cup_empty",
 	"lib_acc_p1903_bayo",
-	"lib_acc_no4_mk2_bayo"
+	"lib_acc_no4_mk2_bayo",
+	"LIB_ACC_No4_Mk2_Bayo"
 ];
 
 attachmentLongList_WWII_UK	= [
@@ -261,7 +263,8 @@ itemList_WWII_UK = [
 itemEngineerList_WWII_UK = [
 	"ToolKit",
 	"MineDetector",
-	"ACE_wirecutter", "ACE_Fortify"
+	"ACE_wirecutter", 
+	"ACE_Fortify"
 ];
 	
 itemMedicList_WWII_UK = [
@@ -302,7 +305,10 @@ uniformList_WWII_UK = [
 	"U_LIB_UK_P37_w",
 // Desert
 	"H_LIB_UK_Helmet_Mk2_Desert",
-	"U_LIB_UK_KhakiDrills"
+	"H_LIB_UK_Helmet_Mk2_Desert_Bowed",
+	"H_LIB_UK_Helmet_Mk2_Cover",
+	"U_LIB_UK_KhakiDrills",
+	"H_LIB_UK_Para_Beret"
 ];
 
 magazineList_WWII_UK = [
