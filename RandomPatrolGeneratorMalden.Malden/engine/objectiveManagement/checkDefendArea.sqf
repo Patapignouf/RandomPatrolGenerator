@@ -15,8 +15,8 @@ while {sleep 15; _nbBluePlayer + _nbIndPlayer == 0 || _nbOpfor > 2} do
 
 //Generate enemy attack wave
 AvalaibleInitAttackPositions = [];
-AvalaibleInitAttackPositions = [getPos _thisTrigger, 550, 800, missionDifficultyParam+1] call getListOfPositionsAroundTarget;
-_handleAttackGeneration = [AvalaibleInitAttackPositions, getPos _thisTrigger, [baseEnemyGroup,baseEnemyATGroup], baseEnemyVehicleGroup, round((missionDifficultyParam-0.5)/2)+1] execVM 'enemyManagement\behaviorEngine\doAmbush.sqf'; 
+AvalaibleInitAttackPositions = [getPos _thisTrigger, 550, 800, round (missionDifficultyParam/2)] call getListOfPositionsAroundTarget;
+_handleAttackGeneration = [AvalaibleInitAttackPositions, getPos _thisTrigger, [baseEnemyGroup,baseEnemyATGroup], baseEnemyVehicleGroup, missionDifficultyParam+1] execVM 'enemyManagement\behaviorEngine\doAmbush.sqf'; 
 waitUntil {isNull _handleAttackGeneration};
 
 //Show a message for the opfor reinforcement
