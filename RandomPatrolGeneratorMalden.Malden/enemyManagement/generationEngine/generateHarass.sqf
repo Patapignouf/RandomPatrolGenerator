@@ -17,7 +17,7 @@ if (isServer) then
 	{
 		//Test if there are too much IA
 		//Test if IA are already in combat mode to simulate reinforcement
-		if (({alive _x && side _x == opfor} count allUnits) <=175 && {side _x == opfor && behaviour _x == "COMBAT"} count allUnits > 5) then
+		if (({alive _x && side _x == opfor} count allUnits) < 300 && {side _x == opfor && behaviour _x == "COMBAT"} count allUnits > 5) then
 		{
 			diag_log "RPG : Reinforcement wave begin !";
 

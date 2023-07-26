@@ -64,11 +64,11 @@ if (!([_OpforFobLocation] call isLocationOnMap)) then
 	//Randomize if enemy FOB will received reinforcement
 	if (random 100 < 50) then 
 	{
-		//33%
+		//50%
 		[_objectiveObject] execVM 'engine\objectiveManagement\checkClearArea.sqf';
 	} else 
 	{
-		//66%
+		//50%
 		[_objectiveObject] execVM 'engine\objectiveManagement\checkDefendArea.sqf';
 	};
 };
