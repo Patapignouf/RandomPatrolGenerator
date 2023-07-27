@@ -682,6 +682,18 @@ if (isClass (configFile >> "CfgPatches" >> "ace_medical")) then
 	_tempBox addItemCargoGlobal ["FirstAidKit", 20];
 };
 
+//Create a box with vehicle spare part for ACE engineer
+if (isClass (configFile >> "CfgPatches" >> "ace_medical")) then 
+{
+	_tempBoxSpare = createVehicle ["Land_CargoBox_V1_F", [ initBlueforLocation, 30, 70, 2, 0, 20, 0] call BIS_fnc_findSafePos, [], 0, "NONE"];
+	clearWeaponCargoGlobal _tempBoxSpare;
+	clearMagazineCargoGlobal _tempBoxSpare;
+	clearItemCargoGlobal _tempBoxSpare;
+	clearBackpackCargoGlobal _tempBoxSpare;
+	[_tempBoxSpare, 2, "ACE_Track", true] call ace_repair_fnc_addSpareParts;
+	[_tempBoxSpare, 8, "ACE_Wheel", true] call ace_repair_fnc_addSpareParts;
+};
+
 //Setup view distance changer
 SettingsComputer =  createVehicle ["Land_MultiScreenComputer_01_olive_F", [initBlueforLocation, 1, 10, 3, 0, 20, 0] call BIS_fnc_findSafePos, [], 0, "NONE"];
 {
