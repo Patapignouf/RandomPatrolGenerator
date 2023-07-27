@@ -9,7 +9,7 @@ positionToAttack = [];
 
 //Init sleep before spawn
 diag_log "Init harass !";
-sleep 450;
+sleep 600;
 
 if (isServer) then
 {
