@@ -40,7 +40,7 @@ while {sleep 10; !RTBComplete} do
 	missionComplete = count _completedObjectives + 1 >= count _missionObjectives;
 
 	//Check if mission is complete
-	if (missionComplete && !enableCampaignMode) then 
+	if ((missionComplete && !enableCampaignMode)||(count _completedObjectives >= count AllPossibleObjectivePosition)) then 
 	{
 		//Generate RTB mission
 		if (!isRTBMissionGenerated) then 
