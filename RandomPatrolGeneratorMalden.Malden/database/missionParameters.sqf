@@ -9,18 +9,18 @@ warEraSelection = [
 ];
 
 missionLengthSelection = [
-	[1,"Short"], //Begin at 1
-	[2,"Medium"],
-	[3,"Long"],
-	[4,"Very long"]
+	[1,"Short (2 objectives)"], //Begin at 1
+	[2,"Medium (3 objectives)"],
+	[3,"Long (4 objectives)"],
+	[4,"Very long (5 objectives)"]
 ];
 
 missionDifficultySelection = [
-	[1,"A few"],
-	[2,"Normal"],
-	[3,"Many"],
-	[4,"Too many"],
-	[5,"Overrun"]
+	[1,"A few (2 players)"],
+	[2,"Normal (4 players)"],
+	[3,"Many (8 players)"],
+	[4,"Too many (16 players)"],
+	[5,"Overrun (32 players)"]
 ];
 
 missionStartIntelSelection = [
