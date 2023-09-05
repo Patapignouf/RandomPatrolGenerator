@@ -38,6 +38,18 @@ waitUntil {isTouchingGround (_heli)};
 _currentEnemyGroup leaveVehicle _heli;
 [_currentEnemyGroup, _destinationPos] execVM 'enemyManagement\behaviorEngine\doAttack.sqf'; 
 
+
+//Add Experience
+//Add eventhandler killed
+(leader (_vehicleTransportGroup)) addEventHandler ["Killed", {
+	params ["_unit", "_killer", "_instigator", "_useEffects"];
+
+	if (isPlayer _killer) then 
+	{
+		[[5], 'engine\rankManagement\rankUpdater.sqf'] remoteExec ['BIS_fnc_execVM', _killer];
+	}; 
+}];
+
 //back to map border
 wp2 = _vehicleTransportGroup addWaypoint [[selectRandom [0,worldSize],selectRandom [0,worldSize]], 25];
 wp2 setwaypointtype"MOVE"; 

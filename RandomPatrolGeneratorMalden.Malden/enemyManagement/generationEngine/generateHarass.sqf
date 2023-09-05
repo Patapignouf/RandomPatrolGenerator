@@ -9,7 +9,7 @@ positionToAttack = [];
 
 //Init sleep before spawn
 diag_log "Init harass !";
-sleep 600;
+sleep 800;
 
 if (isServer) then
 {
@@ -67,15 +67,15 @@ if (isServer) then
 				_tempVehicleGroup pushBack [selectRandom _thisAvailableOpforHeavyArmoredVehicle];
 			};
 
-			//Chopper reinforcement 65%
-			if (count _thisAvailableOpforUnarmedChopperVehicle != 0 &&  random 100 < 65) then 
+			//Chopper reinforcement 50%
+			if (count _thisAvailableOpforUnarmedChopperVehicle != 0 &&  random 100 < 50) then 
 			{
 				//Generate enemy wave
 				[_thisAvailableOpforGroup#0, selectRandom _thisAvailableOpforUnarmedChopperVehicle, positionToAttack] execVM 'enemyManagement\behaviorEngine\doVehicleReinforcement.sqf'; 
 			};
 
-			//Plane reinforcement 30%
-			if (missionNamespace getVariable ["enableArmedAicraft", false] && (count _thisAvailableOpforFixedWing != 0 &&  random 100 < 30)) then 
+			//Plane reinforcement 25%
+			if (missionNamespace getVariable ["enableArmedAicraft", false] && (count _thisAvailableOpforFixedWing != 0 &&  random 100 < 25)) then 
 			{
 				//Generate enemy wave
 				[selectRandom _thisAvailableOpforFixedWing, positionToAttack] execVM 'enemyManagement\behaviorEngine\doVehicleAttackOnPosition.sqf'; 
@@ -86,7 +86,7 @@ if (isServer) then
 			[ AvalaibleInitAttackPositions, positionToAttack, _thisAvailableOpforGroup, _tempVehicleGroup, _thisDifficulty] execVM 'enemyManagement\behaviorEngine\doAmbush.sqf'; 
 			diag_log format ["Harass start on position %1", positionToAttack];
 
-			sleep (600+round (random 600));
+			sleep (1200+round (random 600));
 		};
 	};
 };

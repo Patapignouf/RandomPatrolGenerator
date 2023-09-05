@@ -32,16 +32,45 @@ doGenerateEnemyGroup =
 	//Opfor group
 	if (_thisFaction == opfor) then 
 	{
-		{		
-			//Add eventhandler killed
-			_x addEventHandler ["Killed", {
-				params ["_unit", "_killer", "_instigator", "_useEffects"];
+		{	
 
-				if (isPlayer _killer) then 
-				{
-					[[1], 'engine\rankManagement\rankUpdater.sqf'] remoteExec ['BIS_fnc_execVM', _killer];
-				}; 
-			}];
+			if (_thisGroupType == "Car" || _thisGroupType == "LightArmored" || _thisGroupType == "HeavyArmored") then 
+			{
+				//Add eventhandler killed
+				_x addEventHandler ["Killed", {
+					params ["_unit", "_killer", "_instigator", "_useEffects"];
+
+					if (isPlayer _killer) then 
+					{
+						[[5], 'engine\rankManagement\rankUpdater.sqf'] remoteExec ['BIS_fnc_execVM', _killer];
+					}; 
+				}];
+			} else 
+			{
+				//Case infantry
+				//Add eventHandler suppress
+				_x addEventHandler ["Suppressed", {
+					params ["_unit", "_distance", "_shooter", "_instigator", "_ammoObject", "_ammoClassName", "_ammoConfig"];
+
+					if (getSuppression _unit >0.9  && getSuppression _unit < 1.0) then 
+					{
+						//hint format ["_unit : %1 \n_distance : %2 \ninstigator : %3\n suppression level : %4",name _unit, _distance, name _instigator, getSuppression _unit];
+						[[1], 'engine\rankManagement\rankUpdater.sqf'] remoteExec ['BIS_fnc_execVM', _instigator];
+					};
+
+				}];
+
+				//Add eventhandler killed
+				_x addEventHandler ["Killed", {
+					params ["_unit", "_killer", "_instigator", "_useEffects"];
+
+					if (isPlayer _killer) then 
+					{
+						[[1], 'engine\rankManagement\rankUpdater.sqf'] remoteExec ['BIS_fnc_execVM', _killer];
+					}; 
+				}];
+			};
+
 		} foreach (units _currentGroupPatrol);
 	};
 
@@ -78,7 +107,8 @@ doGenerateEnemyGroup =
 
 					diag_log format ["Civilian has been killed by : %1 on side %2", name _killer, side _killer];
 					[format ["Civilian has been killed by : %1", name _killer], 'engine\hintManagement\addCustomHint.sqf'] remoteExec ['BIS_fnc_execVM', side _killer]; 
-					[[-50], 'engine\rankManagement\rankUpdater.sqf'] remoteExec ['BIS_fnc_execVM', _killer];
+					// [[-50], 'engine\rankManagement\rankUpdater.sqf'] remoteExec ['BIS_fnc_execVM', _killer];
+					[[-50,5], 'engine\rankManagement\rankPenalty.sqf'] remoteExec ['BIS_fnc_execVM', _killer];
 				}; 
 			}];
 		} foreach (units _currentGroupPatrol);
