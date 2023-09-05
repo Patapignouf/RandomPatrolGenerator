@@ -202,8 +202,12 @@ for [{_i = 0}, {_i < numberOfAmbush}, {_i = _i + 1}] do
 	possibleAmbushPosition = possibleAmbushPosition - [AmbushPositions select ((count AmbushPositions)-1)];
 };
 
+//Manually Determine objective location will not be randomize
+NeedToRandomizePOI = false;
+
 if (typeName PossibleObjectivePosition != "ARRAY") then 
 {
+	NeedToRandomizePOI = true;
 	PossibleObjectivePosition = [];
 	{
 		PossibleObjectivePosition pushBack (getPos (_x));
@@ -244,7 +248,16 @@ currentRandObj = objNull;
 //Generate objectives according to the mission's length parameter
 for [{_i = 0}, {_i <= missionLength min(count AllPossibleObjectivePosition)}, {_i = _i + 1}] do //Peut être optimisé
 {
-	PossibleObjectivePosition = [avalaibleTypeOfObj, PossibleObjectivePosition, missionDifficultyParam] call generateObjective;
+	//Randomize objective locations or not
+	if (NeedToRandomizePOI) then 
+	{
+		PossibleObjectivePosition = [avalaibleTypeOfObj, PossibleObjectivePosition, missionDifficultyParam] call generateObjective;
+	} else 
+	{
+		[avalaibleTypeOfObj, [PossibleObjectivePosition#0], missionDifficultyParam] call generateObjective;
+		PossibleObjectivePosition = PossibleObjectivePosition - [PossibleObjectivePosition#0];
+	};
+	
 };
 
 //check wave spawn 
@@ -1134,8 +1147,15 @@ if (enableCampaignMode) then
 
 		} else 
 		{
-			//Generate the new objective
-			PossibleObjectivePosition = [avalaibleTypeOfObj, PossibleObjectivePosition, missionDifficultyParam] call generateObjective;
+			//Randomize objective locations or not
+			if (NeedToRandomizePOI) then 
+			{
+				PossibleObjectivePosition = [avalaibleTypeOfObj, PossibleObjectivePosition, missionDifficultyParam] call generateObjective;
+			} else 
+			{
+				[avalaibleTypeOfObj, [PossibleObjectivePosition#0], missionDifficultyParam] call generateObjective;
+				PossibleObjectivePosition = PossibleObjectivePosition - [PossibleObjectivePosition#0];
+			};
 
 			//Reveal objective to the player
 			if (startIntel == 2) then 
