@@ -169,7 +169,8 @@ rifleList_French = [
 	"AMF_Samas_FELIN_01_F",
 	"AMF_Samas_G2_01_F",
 	"AMF_Samas_VALO_01_F",
-	"amf_sig552"
+	"amf_sig552",
+	"AMF_614_short_FS4_TAN"
 ];	
 
 grenadeLauncherList_French =  [		
@@ -223,8 +224,13 @@ attachmentShortList_French	= [
 	"AMF_AN_PEQ_15_tan",
 	"amf_red_dot_sight",
 	"amf_xps3_magnifier_side",
+	"amf_xps3_magnifier_up",
 	"amf_specter",
-	"AMF_EOTECH_553"
+	"AMF_EOTECH_553",
+	"AMF_EOTECH_553_painted",
+	"AMF_xps3",
+	"AMF_exps3_magnifier_side",
+	"AMF_exps3_magnifier_up"
 ];
 
 //Items avalaible only for marksman
@@ -246,7 +252,8 @@ itemList_French = [
 	"ItemMap",
 	"ItemCompass",
 	"ItemWatch",
-	"NVGoggles",
+	"amf_balaclava_sordin_tantan",
+	"AMF_BINYX_BLK_NVG",
 	"B_UavTerminal",
 	"ItemGPS",
 	"Binocular",
@@ -271,7 +278,8 @@ itemList_French = [
 	"ACE_SpraypaintGreen",
 	"ACE_SpraypaintRed",
 	"ACE_IR_Strobe_Item",
-	"ACE_RangeCard"
+	"ACE_RangeCard",
+	"AMF_APX_M241"
 	];
 
 //items avalaible only for engineer
@@ -312,7 +320,9 @@ backPackList_French = [
 	"CUP_B_M2_Gun_Bag",
 	"CUP_B_M2_Tripod_Bag",
 	"AMF_rush24_01_TDF",
-	"TFAR_rt1523g"
+	"amf_tecpack_30L",
+	"TFAR_rt1523g",
+	"AMF_FELIN_BACKPACK_BME"
 	];
 
 
@@ -322,7 +332,26 @@ uniformList_French = [
 	"amf_uniform_05_MTP",
 	"amf_uniform_02_DA",
 	"amf_jpc_02_TAN",
-	"amf_uniform_03_TUNDRA"
+	"amf_uniform_03_TUNDRA",
+	"amf_uniform_01_CE_HS",
+	"AMF_OPSCORE2_GREY_2",
+	"AMF_OPSCORE2_OD1",
+	"AMF_OPSCORE2_OD1_2",
+	"AMF_OPSCORE2_TAN1",
+	"AMF_OPSCORE2_TAN1_2",
+	"AMF_OPSCORE2_BLACK",
+	"AMF_OPSCORE2_BLACK_2",
+	"AMF_OPSCORE_TAN2_2",
+	"AMF_OPSCORE_TAN2",
+	"amf_uniform_01_RE_NG_CE_HS",
+	"amf_uniform_01_CE_MD",
+	"amf_uniform_01_BM_HS",
+	"amf_uniform_01_RE_BM_HX",
+	"amf_DCS_01_MTP",
+	"amf_JPC_01_MTP",
+	"amf_SMB_AUXSAN_FAMAS_TDF",
+	"amf_DCS_04_RG",
+	"amf_balaclava_tan"
 	];
 
 //Magazine avalaible for all unit
