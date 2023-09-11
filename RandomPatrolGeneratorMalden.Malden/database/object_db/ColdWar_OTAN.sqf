@@ -379,5 +379,8 @@ magazineList_ColdWar_OTAN = 	[
 	"SmokeShellYellow",
 	"1Rnd_HE_Grenade_shell",
 	"1Rnd_Smoke_Grenade_shell",
-	"UGL_FlareWhite_F"
+	"UGL_FlareWhite_F",
+	"UGL_FlareGreen_F",
+	"UGL_FlareRed_F",
+	"UGL_FlareCIR_F"
 ];
