@@ -154,7 +154,10 @@ bluforBoat_2035_NATO_FS = [
 bluforFixedWing_2035_NATO_FS = [
 	"B_Plane_CAS_01_dynamicLoadout_F",
 	"B_Plane_Fighter_01_Stealth_F",
-	"B_Plane_Fighter_01_F"
+	"B_Plane_Fighter_01_F",
+	"B_T_VTOL_01_armed_F",
+	"B_T_VTOL_01_infantry_F",
+	"B_T_VTOL_01_vehicle_F"
 ];
 
 
