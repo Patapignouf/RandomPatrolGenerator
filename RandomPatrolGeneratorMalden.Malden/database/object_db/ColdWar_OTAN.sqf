@@ -167,7 +167,8 @@ rifleList_ColdWar_OTAN = [
 	"CUP_arifle_AUG_A1",
 	"CUP_srifle_M14",
 	"CUP_Famas_F1",
-	"CUP_hgun_Colt1911"
+	"CUP_hgun_Colt1911",
+	"CUP_arifle_Gewehr1"
 ];	
 
 
@@ -202,6 +203,7 @@ marksmanrifleList_ColdWar_OTAN = [
 
 smgList_ColdWar_OTAN = [		
 	"CUP_smg_MP5SD6",
+	"CUP_smg_MP5A5",
 	"CUP_smg_M3A1_blk",
 	"CUP_arifle_Colt727",
 	"CUP_sgun_SPAS12"
@@ -345,6 +347,7 @@ magazineList_ColdWar_OTAN = 	[
 	"CUP_100Rnd_TE4_LRT4_White_Tracer_762x51_Belt_M",
 	"CUP_200Rnd_TE4_Red_Tracer_556x45_M249",
 	"CUP_20Rnd_762x51_DMR",
+	"CUP_30Rnd_9x19_MP5",
 	"20Rnd_762x51_Mag",
 	"CUP_25Rnd_556x45_Famas",
 	"CUP_5Rnd_86x70_L115A1",
