@@ -663,6 +663,21 @@ _ammoBox = [];
 	_ammoBox pushBack _tempBox;
 } foreach ["Box_NATO_Uniforms_F","Box_NATO_Wps_F"];
 
+//Spawn vehicle ammobox
+_vehicleAmmoBox = createVehicle ["ACE_fastropingSupplyCrate", [ initBlueforLocation, 20, 50, 2, 0, 20, 0] call BIS_fnc_findSafePos, [], 0, "NONE"];
+clearWeaponCargoGlobal _vehicleAmmoBox;
+clearMagazineCargoGlobal _vehicleAmmoBox;
+clearItemCargoGlobal _vehicleAmmoBox;
+clearBackpackCargoGlobal _vehicleAmmoBox;
+
+//Set the AmmoBox and make it draggable box with ACE
+if (isClass (configFile >> "CfgPatches" >> "ace_medical")) then 
+{
+	[_vehicleAmmoBox, 1200] call ace_rearm_fnc_makeSource;
+	[_vehicleAmmoBox, true, [0, 2, 0], 45] call ace_dragging_fnc_setDraggable;
+};
+ 
+
 //Place empty box with ACE medical stuff
 _tempBox = createVehicle ["Box_NATO_Equip_F", [ initBlueforLocation, 1, 15, 2, 0, 20, 0] call BIS_fnc_findSafePos, [], 0, "NONE"];
 clearWeaponCargoGlobal _tempBox;
@@ -800,7 +815,15 @@ if (!isNil "USS_FREEDOM_CARRIER") then
 	{
 		_baseAmmoBoxSpawn = [_baseAmmoBoxSpawn#0+1, _baseAmmoBoxSpawn#1, _baseAmmoBoxSpawn#2];
 		_x setPosASL [_baseAmmoBoxSpawn#0, _baseAmmoBoxSpawn#1, _baseAmmoBoxSpawn#2];
+		
 	} foreach _ammoBox;
+
+	//Spawn vehicle ammo box ACE Only
+	if (isClass (configFile >> "CfgPatches" >> "ace_medical")) then 
+	{
+		_vehicleAmmoBox setPosASL [initBlueforLocation#0-95, initBlueforLocation#1+40, initBlueforLocation#2+2];
+	};
+
 
 	//Try to spawn chopper on carrier (WIP)
 	_baseSpawnChopper = [initBlueforLocation#0-100, initBlueforLocation#1-30, initBlueforLocation#2+1];
@@ -867,6 +890,7 @@ if (!isNil "USS_FREEDOM_CARRIER") then
 			_vehicle setdamage 0;
 			_vehicle setVelocity [0, 0, 0];
 			_vehicle enableSimulationGlobal true;
+
 			if (!(alive _vehicle)) then 
 			{
 				deleteVehicle _vehicle;
