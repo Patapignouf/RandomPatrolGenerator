@@ -96,7 +96,9 @@ bluforBoat_French = [
 ];
 
 bluforFixedWing_French = [
-	"AMF_RAFALE_B_01_F", 
+	"AMF_RAFALE_M_01_F",
+	"AMF_RAFALE_C_01_F",
+	"AMF_RAFALE_B_01_F",
 	"B_AMF_PLANE_FIGHTER_02_F"
 ];
 
@@ -181,6 +183,8 @@ rifleList_French = [
 	"AMF_Samas_FELIN_01_F",
 	"AMF_Samas_G2_01_F",
 	"AMF_Samas_VALO_01_F",
+	"AMF_614_long_FS5_BLK",
+	"AMF_614_short_FS5_BLK",
 	"amf_sig552",
 	"AMF_614_short_FS4_TAN"
 ];	
