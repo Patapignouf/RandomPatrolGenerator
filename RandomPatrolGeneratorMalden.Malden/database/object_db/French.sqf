@@ -105,6 +105,18 @@ bluforHQVehicle_French = [
 	"AMF_GBC180_PERS_01"
 ];
 
+bluforArmoredVehicle_French = [
+	"AMF_VBMR_HMG_TDF", 
+	"AMF_VBCI_TDF_01_F", 
+	"AMF_VBCI_CE_01_F", 
+	"AMF_EBRC_CE_01", 
+	"AMF_EBRC_TDF_01", 
+	"B_AMF_AMX10_RCR_SEPAR_02_F", 
+	"B_AMF_AMX10_RCR_01_F", 
+	"B_AMF_TANK_01", 
+	"B_AMF_TANK_TDF_01_F"
+];
+
 ////////////////////////
 //Loadout management////
 ////////////////////////
