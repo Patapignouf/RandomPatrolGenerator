@@ -52,12 +52,11 @@ doGenerateEnemyGroup =
 				_x addEventHandler ["Suppressed", {
 					params ["_unit", "_distance", "_shooter", "_instigator", "_ammoObject", "_ammoClassName", "_ammoConfig"];
 
-					if (getSuppression _unit >0.9  && getSuppression _unit < 1.0) then 
+					if (getSuppression _unit >0.9  && getSuppression _unit < 1.0 && _distance<3) then 
 					{
-						//hint format ["_unit : %1 \n_distance : %2 \ninstigator : %3\n suppression level : %4",name _unit, _distance, name _instigator, getSuppression _unit];
+						//hint format ["unit : %1 \ndistance : %2 \ninstigator : %3\n suppression level : %4",name _unit, _distance, name _instigator, getSuppression _unit];
 						[[1], 'engine\rankManagement\rankUpdater.sqf'] remoteExec ['BIS_fnc_execVM', _instigator];
 					};
-
 				}];
 
 				//Add eventhandler killed
