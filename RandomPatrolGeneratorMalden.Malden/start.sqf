@@ -663,8 +663,8 @@ _ammoBox = [];
 	_ammoBox pushBack _tempBox;
 } foreach ["Box_NATO_Uniforms_F","Box_NATO_Wps_F"];
 
-//Spawn vehicle ammobox
-_vehicleAmmoBox = createVehicle ["ACE_fastropingSupplyCrate", [ initBlueforLocation, 20, 50, 2, 0, 20, 0] call BIS_fnc_findSafePos, [], 0, "NONE"];
+//Spawn vehicle ammobox ACE needed for interaction
+_vehicleAmmoBox = createVehicle ["Box_NATO_AmmoVeh_F", [ initBlueforLocation, 20, 50, 2, 0, 20, 0] call BIS_fnc_findSafePos, [], 0, "NONE"];
 clearWeaponCargoGlobal _vehicleAmmoBox;
 clearMagazineCargoGlobal _vehicleAmmoBox;
 clearItemCargoGlobal _vehicleAmmoBox;
