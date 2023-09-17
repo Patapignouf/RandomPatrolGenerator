@@ -186,7 +186,13 @@ rifleList_French = [
 	"AMF_614_long_FS5_BLK",
 	"AMF_614_short_FS5_BLK",
 	"amf_sig552",
-	"AMF_614_short_FS4_TAN"
+	"AMF_614_short_FS4_TAN",
+	"arifle_SPAR_01_snd_F",
+	"arifle_SPAR_01_blk_F",
+	"arifle_SPAR_01_khk_F",
+	"AMF_Glock_17",
+	"AMF_Glock_17_BLK",
+	"AMF_Glock_17_TAN"
 ];	
 
 grenadeLauncherList_French =  [		
@@ -202,7 +208,8 @@ launcherList_French = [
 autorifleList_French = [			
 	"amf_mini_mg_01_f",
 	"amf_mini_mg_tactical_mk3",
-	"CUP_lmg_FNMAG_RIS_modern"
+	"CUP_lmg_FNMAG_RIS_modern",
+	"LMG_03_F"
 ];	
 
 
@@ -214,7 +221,8 @@ marksmanrifleList_French = [
 	"AMF_RFF2_01_F",
 	"AMF_714_long_tan_f",
 	"CUP_arifle_Mk17_STD",
-	"amf_perseis_ii_poly_02_F"
+	"amf_perseis_ii_poly_02_F",
+	"arifle_SPAR_03_snd_F"
 ];
 
 smgList_French = [		
@@ -246,7 +254,16 @@ attachmentShortList_French	= [
 	"AMF_EOTECH_553_painted",
 	"AMF_xps3",
 	"AMF_exps3_magnifier_side",
-	"AMF_exps3_magnifier_up"
+	"AMF_exps3_magnifier_up",
+	"optic_Holosight",
+	"optic_Holosight",
+	"optic_Holosight_arid_F",
+	"optic_Holosight_blk_F",
+	"optic_Holosight_khk_F",
+	"optic_Holosight_lush_F",
+	"optic_Holosight_smg",
+	"optic_Holosight_smg_blk_F",
+	"optic_Holosight_smg_khk_F"
 ];
 
 //Items avalaible only for marksman
