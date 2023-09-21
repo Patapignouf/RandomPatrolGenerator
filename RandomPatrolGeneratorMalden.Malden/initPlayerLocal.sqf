@@ -170,6 +170,19 @@ if !(isClass (configFile >> "CfgPatches" >> "ace_medical")) then
 		};    
 		_damage    
 	}];
+} else 
+{
+	//Add ACE cookoff high probability on enemy weapon
+	player addEventHandler["Fired",{
+		params ["_unit", "_weapon", "_muzzle", "_mode", "_ammo", "_magazine", "_projectile", "_gunner"];
+    	[_weapon] call adjustCookOf;
+  	}];
+
+	//Reduce cookoff on jammed weapon
+	["ace_weaponJammed", {
+		_this call reduceCookOff;
+	}] call CBA_fnc_addEventHandler;
+
 };
 
 //Init player rank
