@@ -504,7 +504,7 @@ isAreaEligibleForArsenal = {
 	};
 	if (side _caller == independent) then 
 	{
-		_controlDistance = "(_this distance _target < 3) && (_target distance (getPos initCityLocation) < 1000)";
+		_controlDistance = "(_this distance _target < 3) && (_target distance (initCityLocation) < 1000)";
 	};
 	_controlDistance;
 };
@@ -876,4 +876,52 @@ listCurrentItemsLoadout =
 
 	diag_log format ["list of whitelist items by listCurrentItemsLoadout %1", _listOfItems];
 	_listOfItems
+};
+
+
+//[ACE] Increase cookoff chance on opfor weapon 
+adjustCookOf = {
+	params ["_weaponUsed"];
+
+	//Get player's authorized item list
+	_playerRestrictedItemsList = player getVariable ["avalaibleItemsInArsenal", []];
+	_currenItemPos = (_playerRestrictedItemsList) findIf {_x == _weaponUsed };
+
+	if (_currenItemPos == -1) then 
+	{
+		//hint format ["Weapon %1: not authorized", _weaponUsed];
+		private _weaponData = [_weaponUsed] call ace_overheating_fnc_getWeaponData;
+		/*
+		* 0: dispresion <NUMBER>
+		* 1: slowdownFactor <NUMBER>
+		* 2: jamChance <NUMBER>
+		*/
+		_weaponData set [0, (_weaponData # 0) + 0.25];
+		_weaponData set [2, (_weaponData # 2) + (0.08 / 100)];
+		ace_overheating_cacheWeaponData set [_weaponUsed, _weaponData];
+	};
+
+};
+
+//[ACE] Reduce non authorized weapon cookoff on jammed eh
+reduceCookOff = 
+{
+	params["_unit","_weaponUsed"];
+	//Get player's authorized item list
+	_playerRestrictedItemsList = player getVariable ["avalaibleItemsInArsenal", []];
+	_currenItemPos = (_playerRestrictedItemsList) findIf {_x == _weaponUsed };
+
+	if (_currenItemPos == -1) then 
+	{
+		//hint format ["Weapon %1: not authorized", _weaponUsed];
+		private _weaponData = [_weaponUsed] call ace_overheating_fnc_getWeaponData;
+		/*
+		* 0: dispresion <NUMBER>
+		* 1: slowdownFactor <NUMBER>
+		* 2: jamChance <NUMBER>
+		*/
+		_weaponData set [0, (_weaponData # 0)/2];
+		_weaponData set [2, (_weaponData # 2)/2];
+		ace_overheating_cacheWeaponData set [_weaponUsed, _weaponData];
+	};
 };

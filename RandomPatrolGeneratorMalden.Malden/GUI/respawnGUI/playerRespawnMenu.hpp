@@ -48,16 +48,5 @@ class playerRespawnMenu
 			w = 10 * GUI_GRID_CENTER_W;
 			h = 1 * GUI_GRID_CENTER_H;
 		};
-
-		//Leader respawn button
-		class RespawnOnLeader: RscButton
-		{
-			idc = 8201;
-			text = "Respawn on team leader";
-			x = GUI_GRID_CENTER_X + 25 * GUI_GRID_CENTER_W;
-			y = GUI_GRID_CENTER_Y + 5 * GUI_GRID_CENTER_H;
-			w = 10 * GUI_GRID_CENTER_W;
-			h = 1 * GUI_GRID_CENTER_H;
-		};
 	};
 };

@@ -29,8 +29,8 @@ if (isServer) then
 		{
 			diag_log format ["Wave start : %1", waveCounter ];
 			
-			//Randomize attack on independent city (50%)
-			if (random 100 >50) then 
+			//Randomize attack on independent city (20%)
+			if (random 100 < 20) then 
 			{
 				if (  waveCounter < count _thisAvailableWaveGroups) then
 				{
@@ -40,7 +40,7 @@ if (isServer) then
 					_thisAvailableGroups = _thisAvailableWaveGroups select ((count _thisAvailableWaveGroups)-1);
 				};
 				
-				[EnemyWaveSpawnPositions,getPos initCityLocation,_thisAvailableGroups,[], _thisDifficulty] execVM 'enemyManagement\behaviorEngine\doAmbush.sqf'; 
+				[EnemyWaveSpawnPositions, initCityLocation,_thisAvailableGroups,[], _thisDifficulty] execVM 'enemyManagement\behaviorEngine\doAmbush.sqf'; 
 				
 				diag_log format ["Wave end : %1", waveCounter ];
 				

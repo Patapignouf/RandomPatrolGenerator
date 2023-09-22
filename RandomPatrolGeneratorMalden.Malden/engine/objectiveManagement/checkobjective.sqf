@@ -15,7 +15,7 @@ RTBComplete = false;
 isRTBMissionGenerated = false;
 numberOfCompletedObj = 0;
 
-independantTrigger = createTrigger ["EmptyDetector", getPos _objectivesDestinationArea]; //create a trigger area created at object with variable name my_object
+independantTrigger = createTrigger ["EmptyDetector", _objectivesDestinationArea]; //create a trigger area created at object with variable name my_object
 independantTrigger setTriggerArea [60, 60, 0, false]; // trigger area with a radius of 100m.
 
 waitUntil {!isNil "missionGenerated"};
@@ -40,7 +40,7 @@ while {sleep 10; !RTBComplete} do
 	missionComplete = count _completedObjectives + 1 >= count _missionObjectives;
 
 	//Check if mission is complete
-	if (missionComplete && !enableCampaignMode) then 
+	if ((missionComplete && !enableCampaignMode)||(count _completedObjectives >= count AllPossibleObjectivePosition)) then 
 	{
 		//Generate RTB mission
 		if (!isRTBMissionGenerated) then 
@@ -59,7 +59,8 @@ while {sleep 10; !RTBComplete} do
 		nbIndPlayer = {alive _x && side _x == independent} count allPlayers;
 		nbBluePlayerBack = count ((allPlayers select {alive _x && side _x == blufor} ) inAreaArray bluforTrigger); //vehicles (all vehicles) inAreaArray (Returns list of Objects or Positions that are in the area _independantTrigger.)  
 		nbIndPlayerBack = count ((allPlayers select {alive _x && side _x == independent} ) inAreaArray independantTrigger);
-		if (((nbBluePlayer == nbBluePlayerBack && nbIndPlayer == nbIndPlayerBack) && (nbBluePlayerBack != 0 || nbIndPlayerBack != 0))||(count (allPlayers inAreaArray extractExtendedTriggerArea) == 0)) then 
+		nbPlayersNotExtracted = count ((allPlayers select {alive _x}) inAreaArray extractExtendedTriggerArea); 
+		if (((round(nbBluePlayer/2) <= nbBluePlayerBack && round(nbIndPlayer/2) <= nbIndPlayerBack) && (nbBluePlayerBack != 0 || nbIndPlayerBack != 0))|| (nbPlayersNotExtracted <= round((nbIndPlayer+nbBluePlayer)/2))) then 
 		{
 			["taskRTB","SUCCEEDED"] call BIS_fnc_taskSetState;
 			//Reward player for RTB

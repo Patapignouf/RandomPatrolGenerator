@@ -75,7 +75,8 @@ if (isClass (configFile >> "CfgPatches" >> "ace_medical")) then
 		"ACE_fieldDressing",
 		"ACE_packingBandage",
 		"ACE_elasticBandage",
-		"ACE_quikclot"
+		"ACE_quikclot",
+		"ACE_splint"
 	];
 
 	["ace_treatmentSucceded", {

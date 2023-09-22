@@ -9,15 +9,15 @@ positionToAttack = [];
 
 //Init sleep before spawn
 diag_log "Init harass !";
-sleep 300;
+sleep 800;
 
 if (isServer) then
 {
-	while {sleep 20; true} do  
+	while {sleep 60; true} do  
 	{
 		//Test if there are too much IA
 		//Test if IA are already in combat mode to simulate reinforcement
-		if (({alive _x && side _x == opfor} count allUnits) <=175 && {side _x == opfor && behaviour _x == "COMBAT"} count allUnits > 5) then
+		if (({alive _x && side _x == opfor} count allUnits) < 300 && {side _x == opfor && behaviour _x == "COMBAT"} count allUnits > 5) then
 		{
 			diag_log "RPG : Reinforcement wave begin !";
 
@@ -67,25 +67,26 @@ if (isServer) then
 				_tempVehicleGroup pushBack [selectRandom _thisAvailableOpforHeavyArmoredVehicle];
 			};
 
-			//Chopper reinforcement 65%
-			if (count _thisAvailableOpforUnarmedChopperVehicle != 0 &&  random 100 < 65) then 
+			//Chopper reinforcement 50%
+			if (count _thisAvailableOpforUnarmedChopperVehicle != 0 &&  random 100 < 50) then 
 			{
 				//Generate enemy wave
 				[_thisAvailableOpforGroup#0, selectRandom _thisAvailableOpforUnarmedChopperVehicle, positionToAttack] execVM 'enemyManagement\behaviorEngine\doVehicleReinforcement.sqf'; 
 			};
 
-			//Plane reinforcement 30%
-			if (missionNamespace getVariable ["enableArmedAicraft", false] && (count _thisAvailableOpforFixedWing != 0 &&  random 100 < 30)) then 
+			//Plane reinforcement 25%
+			if (missionNamespace getVariable ["enableArmedAicraft", false] && (count _thisAvailableOpforFixedWing != 0 &&  random 100 < 25)) then 
 			{
 				//Generate enemy wave
 				[selectRandom _thisAvailableOpforFixedWing, positionToAttack] execVM 'enemyManagement\behaviorEngine\doVehicleAttackOnPosition.sqf'; 
 			};
 
 			AvalaibleInitAttackPositions = [];
-			AvalaibleInitAttackPositions = [positionToAttack, 1200, 2000, round((_thisDifficulty-0.5)/2)+1] call getListOfPositionsAroundTarget;
-			[ AvalaibleInitAttackPositions, positionToAttack, _thisAvailableOpforGroup, _tempVehicleGroup, round((_thisDifficulty-0.5)/2)+1] execVM 'enemyManagement\behaviorEngine\doAmbush.sqf'; 
+			AvalaibleInitAttackPositions = [positionToAttack, 1200, 2000, round (_thisDifficulty/2)] call getListOfPositionsAroundTarget;
+			[ AvalaibleInitAttackPositions, positionToAttack, _thisAvailableOpforGroup, _tempVehicleGroup, _thisDifficulty] execVM 'enemyManagement\behaviorEngine\doAmbush.sqf'; 
 			diag_log format ["Harass start on position %1", positionToAttack];
+
+			sleep (1200+round (random 600));
 		};
-		sleep (600+round (random 300));
 	};
 };

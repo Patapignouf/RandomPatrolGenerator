@@ -9,18 +9,18 @@ warEraSelection = [
 ];
 
 missionLengthSelection = [
-	[1,"Short"], //Begin at 1
-	[2,"Medium"],
-	[3,"Long"],
-	[4,"Very long"]
+	[1,"Short (2 objectives)"], //Begin at 1
+	[2,"Medium (3 objectives)"],
+	[3,"Long (4 objectives)"],
+	[4,"Very long (5 objectives)"]
 ];
 
 missionDifficultySelection = [
-	[0,"A few"],
-	[1,"Normal"],
-	[2,"Many"],
-	[3,"Too many"],
-	[4,"Overrun"]
+	[1,"A few (2 players)"],
+	[2,"Normal (4 players)"],
+	[3,"Many (8 players)"],
+	[4,"Too many (16 players)"],
+	[5,"Overrun (32 players)"]
 ];
 
 missionStartIntelSelection = [
@@ -36,8 +36,11 @@ missionIASkill = [
 ];
 
 missionRespawnParamSettings = [
+	[60,"Respawn every minute"],
 	[180,"Respawn every 3 minutes"],
 	[300,"Respawn every 5 minutes"],
 	[600,"Respawn every 10 minutes"],
+	[1200,"Respawn every 20 minutes"],
+	[1800,"Respawn every 30 minutes"],
 	[99999999999999,"Respawn on objective completion"]
 ];

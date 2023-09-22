@@ -11,77 +11,113 @@ c_medic = "medic";
 //////////////////////////////
 
 //Syndikat
-civilian_group_Syndikat = ["C_Man_casual_8_F_tanoan", 
-"C_Man_casual_6_v2_F_tanoan", 
-"C_Man_casual_2_F_tanoan"];
+civilian_group_Syndikat = [
+	"C_Man_casual_8_F_tanoan", 
+	"C_Man_casual_6_v2_F_tanoan", 
+	"C_Man_casual_2_F_tanoan"
+];
 
-civilian_big_group_Syndikat = ["C_man_sport_2_F_tanoan", 
-"C_Man_casual_1_F_tanoan", 
-"C_Man_casual_3_F_tanoan", 
-"C_Man_casual_6_v2_F_tanoan", 
-"C_Man_formal_4_F_tanoan", 
-"C_Man_casual_5_F_tanoan" ];
+civilian_big_group_Syndikat = [
+	"C_man_sport_2_F_tanoan", 
+	"C_Man_casual_1_F_tanoan", 
+	"C_Man_casual_3_F_tanoan", 
+	"C_Man_casual_6_v2_F_tanoan", 
+	"C_Man_formal_4_F_tanoan", 
+	"C_Man_casual_5_F_tanoan" 
+];
 
-civilianTruck_Syndikat = ["C_Truck_02_transport_F"];
+civilianTruck_Syndikat = [
+	"C_Truck_02_transport_F",
+	"C_Offroad_01_F",
+	"C_Quadbike_01_F",
+	"C_Van_01_transport_F"
+];
 
 //////////////////////////////
 ///Define enemy group data////
 //////////////////////////////
 //Syndikat
-baseEnemyGroup_Syndikat = ["I_C_Soldier_Bandit_4_F", 
-"I_C_Soldier_Bandit_3_F", 
-"I_C_Soldier_Bandit_7_F", 
-"I_C_Soldier_Bandit_5_F", 
-"I_C_Soldier_Bandit_6_F", 
-"I_C_Soldier_Bandit_2_F", 
-"I_C_Soldier_Bandit_1_F", 
-"I_C_Soldier_Bandit_1_F"];
+baseEnemyGroup_Syndikat = [
+	"I_C_Soldier_Bandit_4_F", 
+	"I_C_Soldier_Bandit_3_F", 
+	"I_C_Soldier_Bandit_7_F", 
+	"I_C_Soldier_Bandit_5_F", 
+	"I_C_Soldier_Bandit_2_F", 
+	"I_C_Soldier_Bandit_1_F", 
+	"I_C_Soldier_Bandit_1_F"
+];
 
-baseEnemyATGroup_Syndikat = ["I_C_Soldier_Bandit_6_F", 
-"I_C_Soldier_Bandit_2_F", 
-"I_C_Soldier_Bandit_2_F",
-"I_C_Soldier_Bandit_7_F", 
-"I_C_Soldier_Bandit_1_F"];
+baseEnemyATGroup_Syndikat = [
+	"I_C_Soldier_Bandit_6_F", 
+	"I_C_Soldier_Bandit_2_F", 
+	"I_C_Soldier_Bandit_2_F",
+	"I_C_Soldier_Bandit_7_F", 
+	"I_C_Soldier_Bandit_1_F"
+];
 
-baseEnemyDemoGroup_Syndikat = ["I_C_Soldier_Bandit_2_F", 
-"I_C_Soldier_Bandit_1_F",
-"I_C_Soldier_Bandit_8_F", 
-"I_C_Soldier_Bandit_6_F"];
+baseEnemyDemoGroup_Syndikat = [
+	"I_C_Soldier_Bandit_2_F", 
+	"I_C_Soldier_Bandit_1_F",
+	"I_C_Soldier_Bandit_8_F", 
+	"I_C_Soldier_Bandit_6_F"
+];
 
-baseEnemyMortarGroup_Syndikat = ["I_G_Mortar_01_F", 
-"I_C_Soldier_Para_8_F", 
-"I_C_Soldier_Bandit_6_F"];
+baseEnemyMortarGroup_Syndikat = [
+	"I_G_Mortar_01_F", 
+	"I_C_Soldier_Para_8_F", 
+	"I_C_Soldier_Bandit_6_F"
+];
 
-baseEnemyVehicleGroup_Syndikat = ["I_C_Offroad_02_LMG_F", 
-"I_C_Offroad_02_AT_F", 
-"CUP_I_M151_M2_SYND", 
-"I_C_Offroad_02_unarmed_F"];
+baseEnemyVehicleGroup_Syndikat = [
+	"I_C_Offroad_02_LMG_F", 
+	"I_C_Offroad_02_AT_F", 
+	"CUP_I_M151_M2_SYND", 
+	"I_C_Offroad_02_unarmed_F"
+];
 
-baseEnemyLightArmoredVehicleGroup_Syndikat = ["CUP_I_Hilux_zu23_IND_G_F", 
-"CUP_I_Hilux_armored_DSHKM_IND_G_F"];
+baseEnemyLightArmoredVehicleGroup_Syndikat = [
+	"CUP_I_Hilux_zu23_IND_G_F", 
+	"CUP_I_Hilux_armored_DSHKM_IND_G_F"
+];
 
 baseEnemyUnarmedChopperGroup_Syndikat = [
 	"I_C_Heli_Light_01_civil_F"
 ];
 
-baseEnemyHeavyArmoredVehicleGroup_Syndikat = ["CUP_I_MTLB_pk_SYNDIKAT"];
+baseEnemyHeavyArmoredVehicleGroup_Syndikat = [
+	"CUP_I_MTLB_pk_SYNDIKAT"
+];
+
+//Basic enemy aircraft avalaible
+baseFixedWingGroup_Syndikat = [
+	"I_C_Plane_Civil_01_F"
+];
+
+	
 
 ////////////////////////
 //Vehicle management////
 ////////////////////////
 //Syndikat
-bluforUnarmedVehicle_Syndikat = ["B_AMF_VAB_ULTIMA_X8_F"];
-
-bluforArmedVehicle_Syndikat = ["amf_pvp_01_CE_f","B_AMF_VAB_ULTIMA_TOP_X8_F","AMF_VBMR_L_CE_01"];
-
-bluforUnarmedVehicleChopper_Syndikat = ["ffaa_nh90_tth_transport","AMF_gazelle_afte_f","ffaa_famet_cougar"];
-
-
-bluforDrone_Syndikat = ["B_UAV_02_dynamicLoadout_F"
+bluforUnarmedVehicle_Syndikat = [
+	
 ];
 
-bluforBoat_Syndikat = ["CUP_B_RHIB_HIL",
-"CUP_B_Zodiac_USMC"
+bluforArmedVehicle_Syndikat = [
+	
+];
+
+bluforUnarmedVehicleChopper_Syndikat = [
+	
+];
+
+
+bluforDrone_Syndikat = [
+	
+];
+
+bluforBoat_Syndikat = [
+	
 ];
 
 ////////////////////////

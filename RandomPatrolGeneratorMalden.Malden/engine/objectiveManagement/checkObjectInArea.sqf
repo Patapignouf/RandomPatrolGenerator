@@ -11,7 +11,7 @@ waitUntil {!isNil "missionGenerated"};
 _triggerArea1 = createTrigger ["EmptyDetector", initBlueforLocation];
 _triggerArea1 setTriggerArea [150, 150, 0, true];
 
-_triggerArea2 = createTrigger ["EmptyDetector", getPos initCityLocation];
+_triggerArea2 = createTrigger ["EmptyDetector", initCityLocation];
 _triggerArea2 setTriggerArea [150, 150, 0, true];
 
 _isInArea = false;

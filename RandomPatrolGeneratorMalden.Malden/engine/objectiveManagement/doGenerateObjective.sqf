@@ -83,6 +83,11 @@ generateObjectiveObject =
 					_missionFailedObjectives = missionNamespace getVariable ["missionFailedObjectives", []];
 					_missionFailedObjectives = _missionFailedObjectives + [_thisTaskID]; //needs to be improved
 					missionNamespace setVariable ["missionFailedObjectives", _missionFailedObjectives, true];
+
+					//Add penalty
+					[[-50,5], 'engine\rankManagement\rankPenalty.sqf'] remoteExec ['BIS_fnc_execVM', _killer];
+
+
 					//Manage task system
 					if ("RealismMode" call BIS_fnc_getParamValue == 1 ) then 
 					{
@@ -212,6 +217,10 @@ generateObjectiveObject =
 					_missionFailedObjectives = missionNamespace getVariable ["missionFailedObjectives", []];
 					_missionFailedObjectives = _missionFailedObjectives + [_thisTaskID]; //needs to be improved
 					missionNamespace setVariable ["missionFailedObjectives", _missionFailedObjectives, true];
+
+					//Add penalty
+					[[-50,5], 'engine\rankManagement\rankPenalty.sqf'] remoteExec ['BIS_fnc_execVM', _killer];
+
 					//Manage task system
 					if ("RealismMode" call BIS_fnc_getParamValue == 1 ) then 
 					{
@@ -459,6 +468,9 @@ generateObjectiveObject =
 					//Remove all actions
 					[_unit] remoteExec ["removeAllEventHandlers", 0, true];
 					[_unit] remoteExec ["removeAllActions", 0, true];
+
+					//Add penalty
+					[[-50,5], 'engine\rankManagement\rankPenalty.sqf'] remoteExec ['BIS_fnc_execVM', _killer];
 
 					//Manage task system
 					if ("RealismMode" call BIS_fnc_getParamValue == 1) then 

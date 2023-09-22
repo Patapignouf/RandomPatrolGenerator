@@ -14,6 +14,8 @@ respawnSettings = "Respawn" call BIS_fnc_getParamValue;
 
 //Init all environement database variable
 _handleEnvironmentInitialization = [] execVM 'initEnvironment.sqf'; 
+private _generateHarass = compile preprocessFileLineNumbers "enemyManagement\generationEngine\generateHarass.sqf";
+
 waitUntil {isNull _handleEnvironmentInitialization};
 
 //Clean area WIP
@@ -31,7 +33,7 @@ if (isMultiplayer) then
 		{
 			adminExist = true;
 		};
-	} foreach allPlayers;
+	} foreach (call BIS_fnc_listPlayers);
 };
 publicVariable "adminExist";
 
@@ -146,23 +148,32 @@ if (initCityLocationPosition isEqualType []) then
 
 	if (!([initCityLocationPosition, [0,0,0]] call BIS_fnc_areEqual)) then 
 	{
-		_nearestCity = nearestLocations [initCityLocationPosition, ["NameLocal","NameVillage","NameCity","NameCityCapital"], 1500] select 0;
-		initCityLocation = _nearestCity;
+		initCityLocation = initCityLocationPosition;
 	};
 }  else 
 {
 	//Select a random position
 	possibleInitLocation = [] call getRandomCenterLocations;
-	initCityLocation = selectRandom possibleInitLocation;
+	initCityLocation = getPos (selectRandom possibleInitLocation);
 };
 
+initCityLocationLocs = nearestLocations [initCityLocation, ["NameLocal","NameVillage","NameCity","NameCityCapital"], 300];
+initCityLocationLoc = objNull;
+initCityLocationName = mapGridPosition initCityLocation;
+if (count initCityLocationLocs >=1) then 
+{
+	initCityLocationLoc = initCityLocationLocs#0;
+	initCityLocationName = text initCityLocationLoc;
+};
+
+
 publicvariable "initCityLocation";
-possiblePOILocation = ([initCityLocation, 3000] call getLocationsAroundWithBuilding) - [initCityLocation];
+possiblePOILocation = ([initCityLocation, 3000] call getLocationsAroundWithBuilding) - [initCityLocationLoc];
 dangerAreaList = [];
 
 if ( count possiblePOILocation < missionLength + 1) then 
 {
-	possiblePOILocation = ([initCityLocation, 5000] call getLocationsAroundWithBuilding) - [initCityLocation];
+	possiblePOILocation = ([initCityLocation, 5000] call getLocationsAroundWithBuilding) - [initCityLocationLoc];
 };
 
 //Search road around AO
@@ -191,8 +202,12 @@ for [{_i = 0}, {_i < numberOfAmbush}, {_i = _i + 1}] do
 	possibleAmbushPosition = possibleAmbushPosition - [AmbushPositions select ((count AmbushPositions)-1)];
 };
 
+//Manually Determine objective location will not be randomize
+NeedToRandomizePOI = false;
+
 if (typeName PossibleObjectivePosition != "ARRAY") then 
 {
+	NeedToRandomizePOI = true;
 	PossibleObjectivePosition = [];
 	{
 		PossibleObjectivePosition pushBack (getPos (_x));
@@ -200,18 +215,19 @@ if (typeName PossibleObjectivePosition != "ARRAY") then
 };
 
 AllPossibleObjectivePosition = PossibleObjectivePosition;
+publicVariable "AllPossibleObjectivePosition";
 
 for [{_i = 0}, {_i <= 2}, {_i = _i + 1}] do //Peut être optimisé
 {
 	_currentTruckType = selectRandom civilianTruck;
-	[getPos initCityLocation, [[_currentTruckType, false]], 30, 100] call doGenerateVehicleForFOB;	
+	[initCityLocation, [[_currentTruckType, false]], 30, 100] call doGenerateVehicleForFOB;	
 };
 
 //Init enemy forces in the main civilian city if there's no independent player
-if ((round (random 3))==0 && (count (allPlayers select {side _x == independent})== 0)) then 
+if (random 100 < 20 && (count (allPlayers select {side _x == independent})== 0)) then 
 {
 	//Generate enemy forces on main civilian city environement
-	_handlePOIGeneration = [EnemyWaveLevel_1, baseEnemyVehicleGroup, [], [], [], getPos initCityLocation, missionDifficultyParam, objNull] execVM 'enemyManagement\generationEngine\generatePOI.sqf'; 
+	_handlePOIGeneration = [EnemyWaveLevel_1, baseEnemyVehicleGroup, [], [], [], initCityLocation, missionDifficultyParam, objNull] execVM 'enemyManagement\generationEngine\generatePOI.sqf'; 
 	waitUntil {isNull _handlePOIGeneration};
 };
 
@@ -232,13 +248,22 @@ currentRandObj = objNull;
 //Generate objectives according to the mission's length parameter
 for [{_i = 0}, {_i <= missionLength min(count AllPossibleObjectivePosition)}, {_i = _i + 1}] do //Peut être optimisé
 {
-	PossibleObjectivePosition = [avalaibleTypeOfObj, PossibleObjectivePosition, missionDifficultyParam] call generateObjective;
+	//Randomize objective locations or not
+	if (NeedToRandomizePOI) then 
+	{
+		PossibleObjectivePosition = [avalaibleTypeOfObj, PossibleObjectivePosition, missionDifficultyParam] call generateObjective;
+	} else 
+	{
+		[avalaibleTypeOfObj, [PossibleObjectivePosition#0], missionDifficultyParam] call generateObjective;
+		PossibleObjectivePosition = PossibleObjectivePosition - [PossibleObjectivePosition#0];
+	};
+	
 };
 
 //check wave spawn 
 EnemyWaveSpawnPositions = [];
 numberOfSpawnWave = 4;
-possibleEnemyWaveSpawnPositions = (([initCityLocation, 2000] call getLocationsAroundWithBuilding) - [initCityLocation]) - SupplyPositions;
+possibleEnemyWaveSpawnPositions = (([initCityLocation, 2000] call getLocationsAroundWithBuilding) - [initCityLocationLoc]) - SupplyPositions;
 
 for [{_i = 0}, {_i < numberOfSpawnWave}, {_i = _i + 1}] do
 {
@@ -258,7 +283,7 @@ currentCivGroup = objNull;
 civsGroup = [];
 for [{_i = 0}, {_i <= 2}, {_i = _i + 1}] do
 { 
-	currentCivGroup = [civilian_big_group, ((getPos initCityLocation) findEmptyPosition [5, 60]), civilian, "Civilian"] call doGenerateEnemyGroup;
+	currentCivGroup = [civilian_big_group, ((initCityLocation) findEmptyPosition [5, 60]), civilian, "Civilian"] call doGenerateEnemyGroup;
 	civsGroup pushBack currentCivGroup;
 	diag_log format ["Generation of civilian group : %1 on position %2 has been completed", currentCivGroup, initCityLocation];
 };
@@ -270,7 +295,7 @@ for [{_i = 0}, {_i <= 2}, {_i = _i + 1}] do
 
 
 //Init VA
-VA1 = createVehicle ["CargoNet_01_box_F", [getPos initCityLocation, 1, 10, 3, 0, 20, 0] call BIS_fnc_findSafePos, [], 0, "NONE"];
+VA1 = createVehicle ["CargoNet_01_box_F", [initCityLocation, 1, 10, 3, 0, 20, 0] call BIS_fnc_findSafePos, [], 0, "NONE"];
 clearWeaponCargoGlobal VA1;
 clearMagazineCargoGlobal VA1;
 clearItemCargoGlobal VA1;
@@ -286,11 +311,11 @@ publicvariable "VA1";
 isIndAttacked = false;
 publicvariable "isIndAttacked";
 AvalaibleInitAttackPositions = [];
-AvalaibleInitAttackPositions = [getPos initCityLocation, 1200,1400, missionDifficultyParam] call getListOfPositionsAroundTarget;
+AvalaibleInitAttackPositions = [initCityLocation, 1200,1400, missionDifficultyParam] call getListOfPositionsAroundTarget;
 if ( count AvalaibleInitAttackPositions != 0 && (enableInitAttack == 1 || ((enableInitAttack == 2) && (round (random 1))==0))) then
 {
 	diag_log "Init attack on independent city";
-	_handleCivGeneration = [AvalaibleInitAttackPositions,getPos initCityLocation,[baseEnemyGroup,baseEnemyATGroup],baseEnemyVehicleGroup, missionDifficultyParam] execVM 'enemyManagement\behaviorEngine\doAmbush.sqf'; 
+	_handleCivGeneration = [AvalaibleInitAttackPositions, initCityLocation,[baseEnemyGroup,baseEnemyATGroup],baseEnemyVehicleGroup, missionDifficultyParam] execVM 'enemyManagement\behaviorEngine\doAmbush.sqf'; 
 	isIndAttacked = true;
 	publicvariable "isIndAttacked";
 	waitUntil {isNull _handleCivGeneration};
@@ -321,7 +346,7 @@ if (isClass (configFile >> "CfgPatches" >> "ace_medical")) then
 },[respawnSettings],1.5,true,false,"","_target distance _this <5 && side _this == independent"]] remoteExec [ "addAction", 0, true ];
 
 //Init perma harass on player
-[[baseEnemyGroup,baseEnemyATGroup,baseEnemyDemoGroup],baseEnemyVehicleGroup, baseEnemyLightArmoredVehicleGroup, baseEnemyHeavyArmoredVehicleGroup, baseEnemyUnarmedChopperGroup, baseFixedWingGroup, missionDifficultyParam] execVM 'enemyManagement\generationEngine\generateHarass.sqf'; 
+[[baseEnemyGroup,baseEnemyATGroup,baseEnemyDemoGroup],baseEnemyVehicleGroup, baseEnemyLightArmoredVehicleGroup, baseEnemyHeavyArmoredVehicleGroup, baseEnemyUnarmedChopperGroup, baseFixedWingGroup, missionDifficultyParam] spawn _generateHarass; 
 
 // Get smallest distance to an AO
 areaOfOperation = [AllPossibleObjectivePosition] call getAreaOfMission;
@@ -367,13 +392,13 @@ if !(_isOnWater) then
 		//Check if position is already determine by player
 		if ([initBlueforLocation, [0,0,0]] call BIS_fnc_areEqual) then 
 		{
-			initBlueforLocation = [getPos initCityLocation,_minBluforCityRadius, _maxBluforCityRadius, 3, 0, 0.25, 0, [areaOfOperation], [[0,0,0],[0,0,0]]] call BIS_fnc_findSafePos;
+			initBlueforLocation = [initCityLocation,_minBluforCityRadius, _maxBluforCityRadius, 3, 0, 0.25, 0, [areaOfOperation], [[0,0,0],[0,0,0]]] call BIS_fnc_findSafePos;
 			//Test avalaible position (not in water and not default)
 			_spawnAttempts = 0;
 			while {(([initBlueforLocation , [0,0,0]] call BIS_fnc_areEqual) || surfaceIsWater initBlueforLocation) && _spawnAttempts <10} do 
 			{
 				_maxBluforCityRadius = _maxBluforCityRadius +200;
-				initBlueforLocation = [getPos initCityLocation, _minBluforCityRadius, _maxBluforCityRadius, 3, 0, 0.25, 0, [areaOfOperation], [[0,0,0],[0,0,0]]] call BIS_fnc_findSafePos;
+				initBlueforLocation = [initCityLocation, _minBluforCityRadius, _maxBluforCityRadius, 3, 0, 0.25, 0, [areaOfOperation], [[0,0,0],[0,0,0]]] call BIS_fnc_findSafePos;
 				_spawnAttempts = _spawnAttempts +1;
 			};
 			
@@ -638,6 +663,21 @@ _ammoBox = [];
 	_ammoBox pushBack _tempBox;
 } foreach ["Box_NATO_Uniforms_F","Box_NATO_Wps_F"];
 
+//Spawn vehicle ammobox ACE needed for interaction
+_vehicleAmmoBox = createVehicle ["Box_NATO_AmmoVeh_F", [ initBlueforLocation, 20, 50, 2, 0, 20, 0] call BIS_fnc_findSafePos, [], 0, "NONE"];
+clearWeaponCargoGlobal _vehicleAmmoBox;
+clearMagazineCargoGlobal _vehicleAmmoBox;
+clearItemCargoGlobal _vehicleAmmoBox;
+clearBackpackCargoGlobal _vehicleAmmoBox;
+
+//Set the AmmoBox and make it draggable box with ACE
+if (isClass (configFile >> "CfgPatches" >> "ace_medical")) then 
+{
+	[_vehicleAmmoBox, 1200] call ace_rearm_fnc_makeSource;
+	[_vehicleAmmoBox, true, [0, 2, 0], 45] call ace_dragging_fnc_setDraggable;
+};
+ 
+
 //Place empty box with ACE medical stuff
 _tempBox = createVehicle ["Box_NATO_Equip_F", [ initBlueforLocation, 1, 15, 2, 0, 20, 0] call BIS_fnc_findSafePos, [], 0, "NONE"];
 clearWeaponCargoGlobal _tempBox;
@@ -664,10 +704,22 @@ if (isClass (configFile >> "CfgPatches" >> "ace_medical")) then
 	_tempBox addItemCargoGlobal ["ACE_key_west", 5];
 
 	//Setup fortification ACE mod
-	[blufor, 150, [["Land_BagFence_Long_F", 20], ["Land_BagBunker_Small_F", 50]]] call ace_fortify_fnc_registerObjects;
+	[blufor, 50, [["Land_BagFence_Long_F", 10], ["Land_BagFence_Round_F", 10], ["Land_SandbagBarricade_01_hole_F", 15], ["Land_BagBunker_Small_F", 20]]] call ace_fortify_fnc_registerObjects;
 } else 
 {
 	_tempBox addItemCargoGlobal ["FirstAidKit", 20];
+};
+
+//Create a box with vehicle spare part for ACE engineer
+if (isClass (configFile >> "CfgPatches" >> "ace_medical")) then 
+{
+	_tempBoxSpare = createVehicle ["Land_CargoBox_V1_F", [ initBlueforLocation, 30, 70, 2, 0, 20, 0] call BIS_fnc_findSafePos, [], 0, "NONE"];
+	clearWeaponCargoGlobal _tempBoxSpare;
+	clearMagazineCargoGlobal _tempBoxSpare;
+	clearItemCargoGlobal _tempBoxSpare;
+	clearBackpackCargoGlobal _tempBoxSpare;
+	[_tempBoxSpare, 2, "ACE_Track", true] call ace_repair_fnc_addSpareParts;
+	[_tempBoxSpare, 8, "ACE_Wheel", true] call ace_repair_fnc_addSpareParts;
 };
 
 //Setup view distance changer
@@ -736,7 +788,7 @@ if ((round (random 1))==0 ) then
 { 
 	for [{_i = 0}, {_i < 2}, {_i = _i + 1}] do
 	{ 
-		_mortarSpawnPosition = [getPos initCityLocation, (800), (aoSize+700), 3, 10, 0.25, 0, [], [[0,0,0],[0,0,0]]] call BIS_fnc_findSafePos;
+		_mortarSpawnPosition = [initCityLocation, (800), (aoSize+700), 3, 10, 0.25, 0, [], [[0,0,0],[0,0,0]]] call BIS_fnc_findSafePos;
 		if !([_mortarSpawnPosition , [0,0,0]] call BIS_fnc_areEqual) then 
 		{
 			_mortarGroup = [baseEnemyMortarGroup, _mortarSpawnPosition, east, "Mortar"] call doGenerateEnemyGroup;
@@ -763,7 +815,15 @@ if (!isNil "USS_FREEDOM_CARRIER") then
 	{
 		_baseAmmoBoxSpawn = [_baseAmmoBoxSpawn#0+1, _baseAmmoBoxSpawn#1, _baseAmmoBoxSpawn#2];
 		_x setPosASL [_baseAmmoBoxSpawn#0, _baseAmmoBoxSpawn#1, _baseAmmoBoxSpawn#2];
+		
 	} foreach _ammoBox;
+
+	//Spawn vehicle ammo box ACE Only
+	if (isClass (configFile >> "CfgPatches" >> "ace_medical")) then 
+	{
+		_vehicleAmmoBox setPosASL [initBlueforLocation#0-95, initBlueforLocation#1+40, initBlueforLocation#2+2];
+	};
+
 
 	//Try to spawn chopper on carrier (WIP)
 	_baseSpawnChopper = [initBlueforLocation#0-100, initBlueforLocation#1-30, initBlueforLocation#2+1];
@@ -830,6 +890,7 @@ if (!isNil "USS_FREEDOM_CARRIER") then
 			_vehicle setdamage 0;
 			_vehicle setVelocity [0, 0, 0];
 			_vehicle enableSimulationGlobal true;
+
 			if (!(alive _vehicle)) then 
 			{
 				deleteVehicle _vehicle;
@@ -903,8 +964,8 @@ switch (startIntel) do
 		{
 			//Setup init Civ city
 			//Init task for blufor to get informations
-			[blufor, "taskContactCiv", [format ["Contact civilians at %1 to get tasks", text initCityLocation], "Contact civilians", ""], objNull, 1, 3, true] call BIS_fnc_taskCreate;
-			initCityLocationTrigger = createTrigger ["EmptyDetector", getPos initCityLocation]; //create a trigger area created at object with variable name my_object
+			[blufor, "taskContactCiv", [format ["Contact civilians at %1 to get tasks", initCityLocationName], "Contact civilians", ""], objNull, 1, 3, true] call BIS_fnc_taskCreate;
+			initCityLocationTrigger = createTrigger ["EmptyDetector", initCityLocation]; //create a trigger area created at object with variable name my_object
 			initCityLocationTrigger setTriggerArea [100, 100, 0, false]; // trigger area with a radius of 100m.
 			
 			//Setup task completion
@@ -1110,8 +1171,15 @@ if (enableCampaignMode) then
 
 		} else 
 		{
-			//Generate the new objective
-			PossibleObjectivePosition = [avalaibleTypeOfObj, PossibleObjectivePosition, missionDifficultyParam] call generateObjective;
+			//Randomize objective locations or not
+			if (NeedToRandomizePOI) then 
+			{
+				PossibleObjectivePosition = [avalaibleTypeOfObj, PossibleObjectivePosition, missionDifficultyParam] call generateObjective;
+			} else 
+			{
+				[avalaibleTypeOfObj, [PossibleObjectivePosition#0], missionDifficultyParam] call generateObjective;
+				PossibleObjectivePosition = PossibleObjectivePosition - [PossibleObjectivePosition#0];
+			};
 
 			//Reveal objective to the player
 			if (startIntel == 2) then 

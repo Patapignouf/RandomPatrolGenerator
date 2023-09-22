@@ -65,6 +65,7 @@ adjustRank = {
 	true
 };
 
+
 addExperience = {
 	params ["_experience"];
 
@@ -74,6 +75,13 @@ addExperience = {
 	[_experience + _unitExperience] call saveRank;
 
 	true
+};
+
+
+getExperience = {
+	//Unit current experience
+	_unitExperience = profileNamespace getVariable ["RPG_ranking", 0];
+	_unitExperience
 };
 
 addPenalty = {

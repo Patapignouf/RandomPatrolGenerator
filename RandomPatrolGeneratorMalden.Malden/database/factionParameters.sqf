@@ -24,6 +24,9 @@ _2035_Spetsnaz = 22;
 _HorizonIsland = 23;
 _HorizonIslandSF = 24;
 _2035_CSAT = 25;
+_WWII_FFI = 26;
+_ColdWar_OTAN = 27;
+_ColdWar_USSR = 28;
 
 #include "object_db\USA.sqf"
 #include "object_db\French.sqf"
@@ -35,6 +38,7 @@ _2035_CSAT = 25;
 #include "object_db\WWII_URSS.sqf"
 #include "object_db\WWII_UK.sqf"
 #include "object_db\WWII_USA.sqf"
+#include "object_db\WWII_FFI.sqf"
 #include "object_db\ColdWar_ARVN.sqf"
 #include "object_db\ColdWar_NVA.sqf"
 #include "object_db\ColdWar_USA.sqf"
@@ -51,6 +55,8 @@ _2035_CSAT = 25;
 #include "object_db\HorizonIsland.sqf"
 #include "object_db\HorizonIslandSF.sqf"
 #include "object_db\2035_CSAT.sqf"
+#include "object_db\ColdWar_OTAN.sqf"
+#include "object_db\ColdWar_USSR.sqf"
 
 //Define faction prefix
 c_db = "_db";
@@ -64,6 +70,7 @@ c_WWII_UK = "_WWII_UK";
 c_WWII_URSS = "_WWII_URSS";
 c_WWII_Wehrmacht = "_WWII_Wehrmacht";
 c_WWII_USA = "_WWII_USA";
+c_WWII_FFI = "_WWII_FFI";
 c_ColdWar_ARVN = "_ColdWar_ARVN";
 c_ColdWar_NVA = "_ColdWar_NVA";
 c_ColdWar_USA = "_ColdWar_USA";
@@ -80,57 +87,65 @@ c_2035_Spetsnaz = "_2035_Spetsnaz";
 c_HorizonIsland = "_HorizonIsland";
 c_HorizonIslandSF =  "_HorizonIslandSF";
 c_2035_CSAT ="_2035_CSAT";
+c_ColdWar_OTAN ="_ColdWar_OTAN";
+c_ColdWar_USSR ="_ColdWar_USSR";
+
+//Faction format :
+// [ Number : Faction Code, String : Faction string Name , String : Faction Name to display, Enabled for Blufor/Independant, Enabled for Opfor, Enabled for Civilian],
 
 //Setup basic ArmA 3 Factions
 factionInfos = [
-	[c_Syndikat,_Syndikat,"Syndikat"],
-	[c_2035_AAF,_2035_AAF,"2035 AAF"],
-	[c_2035_NATO,_2035_NATO,"2035 NATO"],
-	[c_2035_NATO_FS,_2035_NATO_FS,"2035 NATO Special Forces"],
-	[c_2035_Spetsnaz,_2035_Spetsnaz,"2035 Spetsnaz"],
-	[c_2035_FIA,_2035_FIA,"2035 FIA"],
-	[c_2035_Rebels,_2035_Rebels,"2035 Rebels"],
-	[c_2035_CSAT,_2035_CSAT,"2035 CSAT"]
+	[c_Syndikat,_Syndikat,"2035 Syndikat", true, true, true],
+	[c_2035_AAF,_2035_AAF,"2035 AAF", true, true, false],
+	[c_2035_NATO,_2035_NATO,"2035 NATO", true, true, false],
+	[c_2035_NATO_FS,_2035_NATO_FS,"2035 NATO Special Forces", true, true, false],
+	[c_2035_Spetsnaz,_2035_Spetsnaz,"2035 Spetsnaz", true, true, false],
+	[c_2035_FIA,_2035_FIA,"2035 FIA", true, true, true],
+	[c_2035_Rebels,_2035_Rebels,"2035 Rebels", true, true, true],
+	[c_2035_CSAT,_2035_CSAT,"2035 CSAT", true, true, true]
 ];
 
 
 //Add specific AMF factions
 if (isClass (configFile >> "CfgPatches" >> "AMF_Patches")) then 
 {
-	factionInfos pushBack [c_French,_French,"French [AMF][ACE]"];
+	factionInfos pushBack [c_French,_French,"French [AMF][ACE]", true, false, false];
 };
 
 
 //Add specific CUP factions
 if (isClass (configFile >> "CfgPatches" >> "CUP_BaseData")) then 
 {
-	factionInfos pushBack [c_USA,_USA,"US Army [CUP]"];
-	factionInfos pushBack [c_Taki,_Taki,"Takistani [CUP]"];
-	factionInfos pushBack [c_Russian,_Ru,"Russian [CUP]"];
-	factionInfos pushBack [c_USA_2000,_USA_2000,"2000 USA Marines [CUP]"];
-	factionInfos pushBack [c_USA_2000_DF,_USA_2000_DF,"1993 USA Delta Force [CUP][ACE]"];	
-	factionInfos pushBack [c_PMC, _PMC, "PMC Modern [CUP]"];	
-	factionInfos pushBack [c_Russian_Winter, _Russian_Winter, "Russian Winter [CUP]"];	
-	factionInfos pushBack [c_Taki_Army, _Taki_Army, "Takistani Army [CUP]"];
-	factionInfos pushBack [c_HorizonIsland, _HorizonIsland, "Horizon Island [CUP]"];
-	factionInfos pushBack [c_HorizonIslandSF, _HorizonIslandSF, "Horizon Island Special Forces [CUP]"];
+	factionInfos pushBack [c_USA,_USA,"US Army [CUP]", true, true, true];
+	factionInfos pushBack [c_Taki,_Taki,"Takistani [CUP]", true, true, true];
+	factionInfos pushBack [c_Russian,_Ru,"Russian [CUP]", true, true, true];
+	factionInfos pushBack [c_USA_2000,_USA_2000,"2000 USA Marines [CUP]", true, true, false];
+	factionInfos pushBack [c_USA_2000_DF,_USA_2000_DF,"1993 USA Delta Force [CUP][ACE]", true, true, false];	
+	factionInfos pushBack [c_PMC, _PMC, "PMC Modern [CUP]", true, true, false];	
+	factionInfos pushBack [c_Russian_Winter, _Russian_Winter, "Russian Winter [CUP]", true, true, true];	
+	factionInfos pushBack [c_Taki_Army, _Taki_Army, "Takistani Army [CUP]", true, true, false];
+	factionInfos pushBack [c_HorizonIsland, _HorizonIsland, "Horizon Island [CUP]", true, true, true];
+	factionInfos pushBack [c_ColdWar_OTAN, _ColdWar_OTAN, "Cold War OTAN [CUP]", true, false, false];
+	factionInfos pushBack [c_ColdWar_USSR, _ColdWar_USSR, "Cold War USSR [CUP]", false, true, false];
 };
 
 //Add specific UNSUNG factions
 if (isClass (configFile >> "CfgPatches" >> "uns_main")) then 
 {
-	factionInfos pushBack [c_ColdWar_ARVN,_ColdWar_ARVN,"Cold War ARVN [UNSUNG]"];
-	factionInfos pushBack [c_ColdWar_NVA,_ColdWar_NVA,"Cold War NVA [UNSUNG]"];
-	factionInfos pushBack [c_ColdWar_USA,_ColdWar_USA,"Cold War USA [UNSUNG]"];
+	factionInfos pushBack [c_ColdWar_ARVN,_ColdWar_ARVN,"Cold War ARVN [UNSUNG]", true, true, true];
+	factionInfos pushBack [c_ColdWar_NVA,_ColdWar_NVA,"Cold War NVA [UNSUNG]", true, true, true];
+	factionInfos pushBack [c_ColdWar_USA,_ColdWar_USA,"Cold War USA [UNSUNG]", true, true, false];
 };
 
 //Add specific IFA3 factions
 if (isClass (configFile >> "CfgPatches" >> "IFA3_Core")) then 
 {
-	factionInfos pushBack [c_WWII_UK,_WWII_UK,"WWII UK [IFA3]"];
-	factionInfos pushBack [c_WWII_URSS,_WWII_URSS,"WWII URSS [IFA3]"];
-	factionInfos pushBack [c_WWII_Wehrmacht,_WWII_Wehrmacht,"WWII Wehrmacht [IFA3]"];
-	factionInfos pushBack [c_WWII_USA,_WWII_USA,"WWII USA [IFA3]"];
+	factionInfos pushBack [c_WWII_UK,_WWII_UK,"WWII UK [IFA3]", true, true, false];
+	factionInfos pushBack [c_WWII_URSS,_WWII_URSS,"WWII URSS [IFA3]", true, true, false];
+	factionInfos pushBack [c_WWII_Wehrmacht,_WWII_Wehrmacht,"WWII Wehrmacht [IFA3]", true, true, false];
+	factionInfos pushBack [c_WWII_USA,_WWII_USA,"WWII USA [IFA3]", true, true, false];
+	factionInfos pushBack [c_WWII_FFI,_WWII_FFI,"WWII FFI [IFA3]", true, true, true];
+	
 };
 
 //Define global constant

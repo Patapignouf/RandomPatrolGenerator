@@ -6,10 +6,10 @@ _trgAOC = createTrigger ["EmptyDetector", initBlueforLocation];
 _trgAOC setTriggerArea [200, 200, 0, true];
 
 _spawnAttempts = 0;
-_OpforFobLocation = [getPos initCityLocation, 400, (aoSize+1500), 30, 0, 0.20, 0, [_trgAOC], [[0,0,0],[0,0,0]]] call BIS_fnc_findSafePos;
+_OpforFobLocation = [initCityLocation, 400, (aoSize+1500), 30, 0, 0.20, 0, [_trgAOC], [[0,0,0],[0,0,0]]] call BIS_fnc_findSafePos;
 while {([_OpforFobLocation] call isLocationOnMap) && _spawnAttempts <10} do 
 {
-	_OpforFobLocation = [getPos initCityLocation, 400, (aoSize+1500), 30, 0, 0.20, 0, [_trgAOC], [[0,0,0],[0,0,0]]] call BIS_fnc_findSafePos;
+	_OpforFobLocation = [initCityLocation, 400, (aoSize+1500), 30, 0, 0.20, 0, [_trgAOC], [[0,0,0],[0,0,0]]] call BIS_fnc_findSafePos;
 	_spawnAttempts = _spawnAttempts +1;
 };
 if (!([_OpforFobLocation] call isLocationOnMap)) then
@@ -64,11 +64,11 @@ if (!([_OpforFobLocation] call isLocationOnMap)) then
 	//Randomize if enemy FOB will received reinforcement
 	if (random 100 < 50) then 
 	{
-		//33%
+		//50%
 		[_objectiveObject] execVM 'engine\objectiveManagement\checkClearArea.sqf';
 	} else 
 	{
-		//66%
+		//50%
 		[_objectiveObject] execVM 'engine\objectiveManagement\checkDefendArea.sqf';
 	};
 };
