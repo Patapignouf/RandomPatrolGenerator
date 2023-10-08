@@ -2,7 +2,7 @@
 
 generateObjective =
 {
-	params ["_avalaibleTypeOfObj","_possibleObjectivePosition","_missionDifficulty"];
+	params ["_avalaibleTypeOfObj","_possibleObjectivePosition"];
 
 	//Init mission objective status
 	_completedObjectives = missionNamespace getVariable ["completedObjectives",[]];
@@ -28,7 +28,7 @@ generateObjective =
 	_objectiveCreated = [currentObjType, _selectedObjectivePosition] call generateObjectiveObject; 
 	
 	//Generate mission environement
-	_handlePOIGeneration = [EnemyWaveLevel_1, baseEnemyVehicleGroup, baseEnemyLightArmoredVehicleGroup, baseEnemyHeavyArmoredVehicleGroup, civilian_group, _selectedObjectivePosition, _missionDifficulty, _objectiveCreated] execVM 'enemyManagement\generationEngine\generatePOI.sqf'; 
+	_handlePOIGeneration = [EnemyWaveLevel_1, baseEnemyVehicleGroup, baseEnemyLightArmoredVehicleGroup, baseEnemyHeavyArmoredVehicleGroup, civilian_group, _selectedObjectivePosition, _objectiveCreated] execVM 'enemyManagement\generationEngine\generatePOI.sqf'; 
 	waitUntil {isNull _handlePOIGeneration};
 
 	//Return objective selected location

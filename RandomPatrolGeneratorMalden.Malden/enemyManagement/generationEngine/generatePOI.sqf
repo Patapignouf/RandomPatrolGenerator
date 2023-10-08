@@ -1,8 +1,9 @@
-params ["_thisAvailableOpforGroup","_thisAvailableOpforCars","_thisAvailableOpforLightArmoredVehicle","_thisAvailableOpforHeavyArmoredVehicle","_thisAvailableCivGroup","_thisAvailablePosition","_thisDifficulty", "_thisObjective"];
+params ["_thisAvailableOpforGroup","_thisAvailableOpforCars","_thisAvailableOpforLightArmoredVehicle","_thisAvailableOpforHeavyArmoredVehicle","_thisAvailableCivGroup","_thisAvailablePosition", "_thisObjective"];
 
 currentRandomGroup = objNull;
 currentGroup = objNull;
 diag_log format ["Begin generation AO %1",_thisAvailablePosition];
+_thisDifficulty = missionNamespace getVariable "missionDifficultyParam"; //Default medium
 
 //Try to find position with building if avalaible
 _tempAvailablePosition = getPos (nearestBuilding _thisAvailablePosition);

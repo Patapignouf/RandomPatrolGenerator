@@ -1,4 +1,4 @@
-params ["_thisAvailableOpforGroup","_thisAvailableOpforCars","_thisAvailableOpforLightArmoredVehicle","_thisAvailableOpforHeavyArmoredVehicle", "_thisAvailableOpforUnarmedChopperVehicle","_thisAvailableOpforFixedWing","_thisDifficulty"];
+params ["_thisAvailableOpforGroup","_thisAvailableOpforCars","_thisAvailableOpforLightArmoredVehicle","_thisAvailableOpforHeavyArmoredVehicle", "_thisAvailableOpforUnarmedChopperVehicle","_thisAvailableOpforFixedWing"];
 
 nb_ind_player_alive = 0;
 nb_blu_player_alive = 0;
@@ -15,6 +15,8 @@ if (isServer) then
 {
 	while {sleep 60; true} do  
 	{
+		_thisDifficulty = missionNamespace getVariable "missionDifficultyParam"; //Default medium
+
 		//Test if there are too much IA
 		//Test if IA are already in combat mode to simulate reinforcement
 		if (({alive _x && side _x == opfor} count allUnits) < 300 && {side _x == opfor && behaviour _x == "COMBAT"} count allUnits > 5) then

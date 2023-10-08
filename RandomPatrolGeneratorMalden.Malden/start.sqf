@@ -227,7 +227,7 @@ for [{_i = 0}, {_i <= 2}, {_i = _i + 1}] do //Peut être optimisé
 if (random 100 < 20 && (count (allPlayers select {side _x == independent})== 0)) then 
 {
 	//Generate enemy forces on main civilian city environement
-	_handlePOIGeneration = [EnemyWaveLevel_1, baseEnemyVehicleGroup, [], [], [], initCityLocation, missionDifficultyParam, objNull] execVM 'enemyManagement\generationEngine\generatePOI.sqf'; 
+	_handlePOIGeneration = [EnemyWaveLevel_1, baseEnemyVehicleGroup, [], [], [], initCityLocation, objNull] execVM 'enemyManagement\generationEngine\generatePOI.sqf'; 
 	waitUntil {isNull _handlePOIGeneration};
 };
 
@@ -251,10 +251,10 @@ for [{_i = 0}, {_i <= missionLength min(count AllPossibleObjectivePosition)}, {_
 	//Randomize objective locations or not
 	if (NeedToRandomizePOI) then 
 	{
-		PossibleObjectivePosition = [avalaibleTypeOfObj, PossibleObjectivePosition, missionDifficultyParam] call generateObjective;
+		PossibleObjectivePosition = [avalaibleTypeOfObj, PossibleObjectivePosition] call generateObjective;
 	} else 
 	{
-		[avalaibleTypeOfObj, [PossibleObjectivePosition#0], missionDifficultyParam] call generateObjective;
+		[avalaibleTypeOfObj, [PossibleObjectivePosition#0]] call generateObjective;
 		PossibleObjectivePosition = PossibleObjectivePosition - [PossibleObjectivePosition#0];
 	};
 	
@@ -346,7 +346,7 @@ if (isClass (configFile >> "CfgPatches" >> "ace_medical")) then
 },[respawnSettings],1.5,true,false,"","_target distance _this <5 && side _this == independent"]] remoteExec [ "addAction", 0, true ];
 
 //Init perma harass on player
-[[baseEnemyGroup,baseEnemyATGroup,baseEnemyDemoGroup],baseEnemyVehicleGroup, baseEnemyLightArmoredVehicleGroup, baseEnemyHeavyArmoredVehicleGroup, baseEnemyUnarmedChopperGroup, baseFixedWingGroup, missionDifficultyParam] spawn _generateHarass; 
+[[baseEnemyGroup,baseEnemyATGroup,baseEnemyDemoGroup],baseEnemyVehicleGroup, baseEnemyLightArmoredVehicleGroup, baseEnemyHeavyArmoredVehicleGroup, baseEnemyUnarmedChopperGroup, baseFixedWingGroup] spawn _generateHarass; 
 
 // Get smallest distance to an AO
 areaOfOperation = [AllPossibleObjectivePosition] call getAreaOfMission;
@@ -1109,6 +1109,9 @@ switch (timeOfDay) do
 86400 setOvercast (random 1);
 forceWeatherChange;
 
+//Setup difficulty management
+[] execVM 'engine\difficultyManagement.sqf'; 
+
 
 //Init checkdeath
 [] execVM 'engine\checkdeath.sqf';
@@ -1174,10 +1177,10 @@ if (enableCampaignMode) then
 			//Randomize objective locations or not
 			if (NeedToRandomizePOI) then 
 			{
-				PossibleObjectivePosition = [avalaibleTypeOfObj, PossibleObjectivePosition, missionDifficultyParam] call generateObjective;
+				PossibleObjectivePosition = [avalaibleTypeOfObj, PossibleObjectivePosition] call generateObjective;
 			} else 
 			{
-				[avalaibleTypeOfObj, [PossibleObjectivePosition#0], missionDifficultyParam] call generateObjective;
+				[avalaibleTypeOfObj, [PossibleObjectivePosition#0]] call generateObjective;
 				PossibleObjectivePosition = PossibleObjectivePosition - [PossibleObjectivePosition#0];
 			};
 
