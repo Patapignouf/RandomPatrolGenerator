@@ -72,6 +72,10 @@ waitUntil {missionNamespace getVariable "generationSetup" == true};
 
 	while {isNil "missionGenerated"} do 
 	{
+		//Disable player drowning
+		player setOxygenRemaining 100;
+
+		//Show loading screen
 		_camera camPrepareTarget ([[[_randomPos, 200]], []] call BIS_fnc_randomPos);
 		_randomPos = [nil, ["water"]] call BIS_fnc_randomPos;
 		_randomPos set [2,_randomPos#2+100];
