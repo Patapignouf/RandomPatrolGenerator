@@ -310,6 +310,7 @@ itemList_USA = [
 	"ItemCompass",
 	"ItemWatch",
 	"NVGoggles",
+	"Laserdesignator",
 	"B_UavTerminal",
 	"ItemGPS",
 	"Binocular",

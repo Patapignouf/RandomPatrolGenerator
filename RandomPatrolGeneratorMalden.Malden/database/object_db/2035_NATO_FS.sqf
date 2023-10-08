@@ -290,6 +290,7 @@ itemList_2035_NATO_FS = [
 	"ItemGPS",
 	"Binocular",
 	"Rangefinder",
+	"Laserdesignator",
 	"ACE_MapTools",
 	"ACE_microDAGR",
 	"ACE_SpraypaintRed",

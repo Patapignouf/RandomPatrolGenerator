@@ -287,6 +287,7 @@ itemList_2035_NATO = [
 	"B_UavTerminal",
 	"ItemGPS",
 	"Binocular",
+	"Laserdesignator",
 	"Rangefinder",
 	"ACE_MapTools",
 	"ACE_microDAGR",
