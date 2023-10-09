@@ -27,7 +27,7 @@ if (isServer) then
 				_newDifficulty = (_initialDifficulty-1) max 1;
 				missionNamespace setVariable ["missionDifficultyParam", _newDifficulty, true];
 				_initialPlayerCount = count allPlayers;
-				[format ["The difficulty has been adjusted to match the number of players"], 'engine\hintManagement\addCustomHint.sqf'] remoteExec ['BIS_fnc_execVM', 0];
+				[format ["OPFOR has reduced its presence in the area"], 'engine\hintManagement\addCustomHint.sqf'] remoteExec ['BIS_fnc_execVM', 0];
 			};
 			//Case where there are more players
 			case (_playerRatio>=1.4):
@@ -36,7 +36,7 @@ if (isServer) then
 				_newDifficulty = (_initialDifficulty+1) min 5;
 				missionNamespace setVariable ["missionDifficultyParam", _newDifficulty, true];
 				_initialPlayerCount = count allPlayers;
-				[format ["The difficulty has been adjusted to match the number of players"], 'engine\hintManagement\addCustomHint.sqf'] remoteExec ['BIS_fnc_execVM', 0];
+				[format ["OPFOR has increased its presence in the area"], 'engine\hintManagement\addCustomHint.sqf'] remoteExec ['BIS_fnc_execVM', 0];
 			};
 			default 
 			{
