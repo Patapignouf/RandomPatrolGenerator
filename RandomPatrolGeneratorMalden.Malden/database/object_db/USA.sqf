@@ -104,6 +104,13 @@ bluforArmedVehicle_USA = [
 	"CUP_B_M1151_M2_WDL_USA"
 ];
 
+//Armored vehicle avalaible for blufor : Ex light tank
+bluforArmoredVehicle_USA = [
+	"CUP_B_M7Bradley_USA_W", 
+	"CUP_B_LAV25_USMC", 
+	"CUP_B_M113A3_USA"
+];
+
 bluforUnarmedVehicleChopper_USA = [
 	"CUP_B_MH6J_USA",
 	"CUP_B_UH60M_Unarmed_US",
