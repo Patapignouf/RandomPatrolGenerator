@@ -16,12 +16,12 @@ if (isServer) then
 		switch (true) do 
 		{
 			//Case where player count is almost the same
-			case (_playerRatio>0.6&&_playerRatio<1.4):
+			case (_playerRatio>0.5&&_playerRatio<2):
 			{
 				//Do nothing
 			};
 			//Case where there are less players
-			case (_playerRatio<=0.6):
+			case (_playerRatio<=0.5):
 			{
 				_initialDifficulty = missionNamespace getVariable "missionDifficultyParam"; //Default medium
 				_newDifficulty = (_initialDifficulty-1) max 1;
@@ -30,7 +30,7 @@ if (isServer) then
 				[format ["OPFOR has reduced its presence in the area"], 'engine\hintManagement\addCustomHint.sqf'] remoteExec ['BIS_fnc_execVM', 0];
 			};
 			//Case where there are more players
-			case (_playerRatio>=1.4):
+			case (_playerRatio>=2):
 			{
 				_initialDifficulty = missionNamespace getVariable "missionDifficultyParam"; //Default medium
 				_newDifficulty = (_initialDifficulty+1) min 5;
