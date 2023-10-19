@@ -699,6 +699,7 @@ if (isClass (configFile >> "CfgPatches" >> "ace_medical")) then
 	_tempBox addItemCargoGlobal ["ACE_bloodIV_500", 10];
 	_tempBox addItemCargoGlobal ["ACE_bloodIV", 5];
 	_tempBox addItemCargoGlobal ["ACE_tourniquet", 5];
+	_tempBox addItemCargoGlobal ["ACE_Suture", 20];
 
 	//Add keys to the box
 	_tempBox addItemCargoGlobal ["ACE_key_west", 5];
