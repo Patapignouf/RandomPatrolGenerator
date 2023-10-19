@@ -263,6 +263,7 @@ itemMedicList_USA_2000_DF = [
 	"ACE_bloodIV_250",
 	"ACE_personalAidKit",
 	"ACE_surgicalKit",
+	"ACE_suture",
 	"ACE_bodyBag"
 	];
 

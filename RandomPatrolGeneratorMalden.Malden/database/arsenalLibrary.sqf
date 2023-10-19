@@ -103,12 +103,12 @@ getItembyWarEra = {
 		//2nd War
 		case 0:
 		{
-			_itemList = ["ACE_EntrenchingTool","ACE_WaterBottle","ACE_CableTie","ACE_MapTools","ItemCompass","ItemMap","ItemWatch","ACE_RangeTable_82mm","Binocular","ACE_EarPlugs"];
+			_itemList = ["ACE_Sandbag_empty","ACE_EntrenchingTool","ACE_WaterBottle","ACE_CableTie","ACE_MapTools","ItemCompass","ItemMap","ItemWatch","ACE_RangeTable_82mm","Binocular","ACE_EarPlugs"];
 		};
 		//Cold War
 		case 1:
 		{
-			_itemList = ["ACE_EntrenchingTool","ACE_WaterBottle","ACE_CableTie","ACE_MapTools","ItemCompass","ItemMap","ItemWatch","ACE_RangeTable_82mm","Binocular","ACE_SpraypaintRed","ACE_EarPlugs"];
+			_itemList = ["ACE_Sandbag_empty","ACE_EntrenchingTool","ACE_WaterBottle","ACE_CableTie","ACE_MapTools","ItemCompass","ItemMap","ItemWatch","ACE_RangeTable_82mm","Binocular","ACE_SpraypaintRed","ACE_EarPlugs"];
 			if (isClass (configFile >> "CfgPatches" >> "task_force_radio")) then {
 				_itemList pushBack "TFAR_anprc152";
 			} ;
@@ -116,7 +116,7 @@ getItembyWarEra = {
 		//Modern Warfare
 		case 2:
 		{
-			_itemList = ["ItemGPS","ACE_DAGR","ACE_EntrenchingTool","ACE_WaterBottle","ACE_CableTie","ACE_MapTools","ItemCompass","ItemMap","ItemWatch","ACE_RangeTable_82mm","Binocular","ACE_SpraypaintRed","ACE_EarPlugs"];
+			_itemList = ["ACE_Sandbag_empty","ItemGPS","ACE_DAGR","ACE_EntrenchingTool","ACE_WaterBottle","ACE_CableTie","ACE_MapTools","ItemCompass","ItemMap","ItemWatch","ACE_RangeTable_82mm","Binocular","ACE_SpraypaintRed","ACE_EarPlugs"];
 			if (isClass (configFile >> "CfgPatches" >> "task_force_radio")) then {
 				_itemList pushBack "TFAR_anprc152";
 			} ;
@@ -124,7 +124,7 @@ getItembyWarEra = {
 		//Actual Warfare
 		case 3:
 		{
-			_itemList = ["ItemGPS", "ACE_DAGR", "ACE_microDAGR","B_UavTerminal","ACE_EntrenchingTool","ACE_WaterBottle","ACE_CableTie","ACE_MapTools","ItemCompass","ItemMap","ItemWatch","ACE_RangeTable_82mm","Binocular","ACE_SpraypaintRed","ACE_EarPlugs"];
+			_itemList = ["ACE_Sandbag_empty","ItemGPS", "ACE_DAGR", "ACE_microDAGR","B_UavTerminal","ACE_EntrenchingTool","ACE_WaterBottle","ACE_CableTie","ACE_MapTools","ItemCompass","ItemMap","ItemWatch","ACE_RangeTable_82mm","Binocular","ACE_SpraypaintRed","ACE_EarPlugs"];
 			if (isClass (configFile >> "CfgPatches" >> "task_force_radio")) then {
 				_itemList pushBack "TFAR_anprc152";
 			} ;
@@ -132,7 +132,7 @@ getItembyWarEra = {
 		//Future Warfare
 		case 4:
 		{
-			_itemList = ["ItemGPS","ACE_DAGR", "ACE_microDAGR","B_UavTerminal","ACE_EntrenchingTool","ACE_WaterBottle","ACE_CableTie","ACE_MapTools","ItemCompass","ItemMap","ItemWatch","ACE_RangeTable_82mm","Binocular","ACE_SpraypaintRed","ACE_EarPlugs"];
+			_itemList = ["ACE_Sandbag_empty","ItemGPS","ACE_DAGR", "ACE_microDAGR","B_UavTerminal","ACE_EntrenchingTool","ACE_WaterBottle","ACE_CableTie","ACE_MapTools","ItemCompass","ItemMap","ItemWatch","ACE_RangeTable_82mm","Binocular","ACE_SpraypaintRed","ACE_EarPlugs"];
 			if (isClass (configFile >> "CfgPatches" >> "task_force_radio")) then {
 				_itemList pushBack "TFAR_anprc152";
 			} ;
@@ -535,7 +535,7 @@ setupPlayerLoadout = {
 			"\a3\missions_f_oldman\data\img\holdactions\holdAction_box_ca.paa", 
 			"\a3\missions_f_oldman\data\img\holdactions\holdAction_box_ca.paa", 
 			[player] call isAreaEligibleForArsenal,						// Condition for the action to be shown
-			"_caller distance _target < 10",						// Condition for the action to progress
+			"_caller distance _target < 15",						// Condition for the action to progress
 			{
 				// Action start code
 			}, 
@@ -627,6 +627,7 @@ adjustLoadout = {
 		for "_i" from 0 to 7 do { _currentPlayer addItem "ACE_splint" };
 		for "_i" from 0 to 29 do { _currentPlayer addItem "ACE_elasticBandage" };
 		for "_i" from 0 to 29 do { _currentPlayer addItem "ACE_quikclot" };
+		for "_i" from 0 to 11 do { _currentPlayer addItem "ACE_suture" };
 		//for "_i" from 0 to 9 do { _currentPlayer addItem "ACE_morphine" }; //Basic ACE conversion will give enough morphine
 		for "_i" from 0 to 5 do { _currentPlayer addItem "ACE_bloodIV_500" };
 		for "_i" from 0 to 2 do { _currentPlayer addItem "ACE_bloodIV" };

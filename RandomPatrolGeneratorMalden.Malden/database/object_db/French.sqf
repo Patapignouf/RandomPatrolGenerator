@@ -312,7 +312,10 @@ itemList_French = [
 	"ACE_SpraypaintRed",
 	"ACE_IR_Strobe_Item",
 	"ACE_RangeCard",
-	"AMF_APX_M241"
+	"AMF_APX_M241",
+	"ACE_NVG_Wide_Black_WP",
+	"ACE_NVG_Wide_WP",
+	"ACE_NVG_Wide_Green_WP"
 	];
 
 //items avalaible only for engineer
@@ -339,7 +342,8 @@ itemMedicList_French = [
 	"ACE_bloodIV_500",
 	"ACE_bloodIV_250",
 	"ACE_personalAidKit",
-	"ACE_surgicalKit"
+	"ACE_surgicalKit",
+	"ACE_suture"
 	];
 
 

@@ -314,7 +314,10 @@ itemList_2035_NATO = [
 	"ACE_SpraypaintBlue",
 	"ACE_SpraypaintGreen",
 	"ACE_SpraypaintRed",
-	"ACE_RangeCard"
+	"ACE_RangeCard",
+	"ACE_NVG_Wide_Black_WP",
+	"ACE_NVG_Wide_WP",
+	"ACE_NVG_Wide_Green_WP"
 	];
 
 //item avalaible for all engineer
@@ -347,6 +350,7 @@ itemMedicList_2035_NATO = [
 	"ACE_bloodIV_250",
 	"ACE_personalAidKit",
 	"ACE_surgicalKit",
+	"ACE_suture",
 	"ACE_bodyBag"
 	];
 

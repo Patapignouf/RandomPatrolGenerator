@@ -179,6 +179,7 @@ rifleList_USA = [
 	"CUP_arifle_mk18_black",
 	"CUP_arifle_SBR_black",
 	"CUP_arifle_M4A1_SOMMOD_Grip_black",
+	"CUP_arifle_mk18_tan_holo_laserflash",
 	"CUP_hgun_M9",
 	"CUP_arifle_M16A4_Base",
 	"CUP_arifle_M4A1_black"
@@ -340,7 +341,10 @@ itemList_USA = [
 	"ACE_SpraypaintGreen",
 	"ACE_SpraypaintRed",
 	"ACE_IR_Strobe_Item",
-	"ACE_RangeCard"
+	"ACE_RangeCard",
+	"ACE_NVG_Wide_Black_WP",
+	"ACE_NVG_Wide_WP",
+	"ACE_NVG_Wide_Green_WP"
 	];
 
 itemEngineerList_USA = [
@@ -365,7 +369,8 @@ itemMedicList_USA = [
 	"ACE_bloodIV_500",
 	"ACE_bloodIV_250",
 	"ACE_personalAidKit",
-	"ACE_surgicalKit"
+	"ACE_surgicalKit",
+	"ACE_suture"
 ];
 
 

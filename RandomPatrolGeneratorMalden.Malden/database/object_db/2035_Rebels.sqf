@@ -269,6 +269,7 @@ itemMedicList_2035_Rebels = [
 	"ACE_bloodIV_250",
 	"ACE_personalAidKit",
 	"ACE_surgicalKit",
+	"ACE_suture",
 	"ACE_bodyBag"
 	];
 

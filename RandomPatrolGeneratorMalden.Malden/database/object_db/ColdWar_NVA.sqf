@@ -223,7 +223,8 @@ itemMedicList_ColdWar_NVA = [
 	"ACE_bloodIV_500",
 	"ACE_bloodIV_250",
 	"ACE_personalAidKit",
-	"ACE_surgicalKit"
+	"ACE_surgicalKit",
+	"ACE_suture"
 ];
 
 backPackList_ColdWar_NVA = [

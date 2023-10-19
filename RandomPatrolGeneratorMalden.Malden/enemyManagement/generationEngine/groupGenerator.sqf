@@ -198,6 +198,7 @@ doAdjustACEMedic = {
 
 			//Add Medikit ACE equivalent
 			_currentUnit addItem "ACE_surgicalKit";
+			for "_i" from 0 to 11 do { _currentUnit addItem "ACE_suture" };
 			for "_i" from 0 to 1 do { _currentUnit addItem "ACE_bloodIV_500" };
 			for "_i" from 0 to 1 do { _currentUnit addItem "ACE_bloodIV" };
 			for "_i" from 0 to 3 do { _currentUnit addItem "ACE_epinephrine" };
