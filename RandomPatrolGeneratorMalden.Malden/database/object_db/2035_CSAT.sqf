@@ -334,8 +334,6 @@ itemList_2035_CSAT = [
 	"ACE_SpraypaintGreen",
 	"ACE_SpraypaintRed",
 	"ACE_RangeCard",
-	"HandGrenade",
-	"O_IR_Grenade",
 	"SmokeShell",
 	"SmokeShellRed",
 	"SmokeShellOrange",
