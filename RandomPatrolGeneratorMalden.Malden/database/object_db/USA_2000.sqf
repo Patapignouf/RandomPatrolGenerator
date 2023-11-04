@@ -129,12 +129,21 @@ bluforBoat_USA_2000 = [
 //FixedWing vehicle avalaible for blufor
 bluforFixedWing_USA_2000 = [
 	"CUP_B_A10_DYN_USA",
-	"CUP_B_AV8B_DYN_USMC"
+	"CUP_B_AV8B_DYN_USMC",
+	"CUP_B_F35B_USMC"
 ];
 
 //Vehicule able to do HQ features (Loadout management and more)
 bluforHQVehicle_USA_2000 = [
 	"CUP_B_M113A1_HQ_desert_USA"
+];
+
+bluforArmoredVehicle_USA_2000 = [
+	"CUP_B_M7Bradley_USA_W", 
+	"CUP_B_LAV25_USMC", 
+	"CUP_B_M113A3_USA",
+	"CUP_B_M1A1SA_Woodland_US_Army",
+	"CUP_B_M60A3_USMC"
 ];
 
 
@@ -281,8 +290,11 @@ itemList_USA_2000 = [
 	"ACE_SpraypaintGreen",
 	"ACE_SpraypaintRed",
 	"ACE_IR_Strobe_Item",
-	"ACE_RangeCard"
-	];
+	"ACE_RangeCard",
+	"ACE_NVG_Wide_Black_WP",
+	"ACE_NVG_Wide_WP",
+	"ACE_NVG_Wide_Green_WP"
+];
 
 itemEngineerList_USA_2000 = [
 	"ToolKit",
@@ -299,7 +311,7 @@ itemEngineerList_USA_2000 = [
 	"ace_marker_flags_purple",
 	"ace_marker_flags_orange",
 	"ace_marker_flags_red"
-	];
+];
 	
 itemMedicList_USA_2000 = [
 	"Medikit",
@@ -314,15 +326,17 @@ itemMedicList_USA_2000 = [
 	"ACE_surgicalKit",
 	"ACE_suture",
 	"ACE_bodyBag"
-	];
+];
 
 
 	//backpack avalaible for all unit
 backPackList_USA_2000 = [
 	"B_Mortar_01_weapon_F",
 	"B_Mortar_01_support_F",
-	"B_Kitbag_cbr"
-	];
+	"B_Kitbag_cbr",
+	"TFAR_rt1523g",
+	"CUP_V_B_Eagle_SPC_AR"
+];
 
 
 //Uniform, vest, headgear, avalaible for all unit
@@ -330,7 +344,7 @@ uniformList_USA_2000 = [
 	"CUP_H_LWHv2_MARPAT_des_cov_fr",
 	"CUP_U_B_USMC_MCCUU_des_gloves",
 	"CUP_V_B_RRV_Scout3"
-	];
+];
 
 //Magazine avalaible for all unit
 magazineList_USA_2000 = [
@@ -345,7 +359,7 @@ magazineList_USA_2000 = [
 	"CUP_8Rnd_B_Beneli_74Pellets",
 	"CUP_10Rnd_127x99_M107",
 	"CUP_5Rnd_762x51_M24"
-	];
+];
 
 //Get magazine with following command
 //getArray (configfile >> "CfgWeapons" >> weaponName >> "magazines");
