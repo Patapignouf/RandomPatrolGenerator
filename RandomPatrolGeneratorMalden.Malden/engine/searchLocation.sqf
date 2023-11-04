@@ -104,3 +104,45 @@ isLocationOnMap = {
 
 	_isLocationOnMap
 };
+
+//Find good positions roads near positions
+findPositionsNearRoads = {
+	params ["_position", "_distance", "_numberOfPositions"];
+	{deletemarker _x} foreach allMapMarkers;
+
+	//Result positions 
+	_candidateResultPositions = [];
+	
+	_IEDs = [];
+	_roads = _position nearroads _distance; //grabbing all roads within _distance
+	//systemchat str count _roads;
+
+	while {count _roads > 0} do {
+		_rndRoad = selectRandom _roads; //picking a random road segment
+		_roads = _roads select {_x distance2d _rndRoad >= 1000}; //removing any roads closer than 1km to that random segment
+		//_IEDs pushback _rndroad; //store the random segment in an array for later usage
+
+		//some markers to visualize the entire thing
+		//Uncomment for debug
+		// _marker = createmarker [str _rndRoad,getposatl _rndRoad];
+		// _marker setmarkertype "hd_dot";
+		// _marker setmarkercolor "ColorRed";
+		// _marker setmarkertext format ["IED %1",_IEDs find _rndRoad];
+		_candidateResultPositions pushBack (getposatl _rndRoad);
+	};
+
+	_resultPositions = [];
+	if (count _resultPositions > _numberOfPositions) then 
+	{
+		for [{_i = 0}, {_i <= _numberOfPositions}, {_i = _i + 1}] do 
+		{
+			_resultPositions pushBack [selectRandom _candidateResultPositions]; //Can be optimize, it can return same position twice
+		};
+	} else 
+	{
+		_resultPositions = _candidateResultPositions;
+	};
+
+	//that's it
+	_resultPositions
+};

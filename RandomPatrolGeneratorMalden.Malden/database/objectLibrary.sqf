@@ -33,6 +33,18 @@ if (isClass (configFile >> "CfgPatches" >> "CUP_BaseData")) then
 };
 
 
+avalaibleIED = [
+	"IEDLandBig_F", 
+	"IEDUrbanSmall_F", 
+	
+	"IEDLandSmall_F"
+];
+
+if (isClass (configFile >> "CfgPatches" >> "ace_medical")) then 
+{
+	avalaibleIED pushBack "ACE_IEDUrbanBig_Range";
+};
+
 avalaibleVIP = [
 	"C_Driver_1_F",
 	"C_Man_ConstructionWorker_01_Black_F", 
@@ -81,6 +93,7 @@ avalaibleTypeOfObjectives = [
 	["hvt", "HVT", "Attack", true],
 	["clearArea", "Clear Area", "Attack", true],
 	["defendArea", "Defend Area", "Attack", true],
+	["takeAndHold", "Take and hold", "Attack", true],
 	["informant", "Informant", "Support", true],
 	["collectIntel", "Collect Intel", "Support", true],
 	["steal", "Steal vehicle", "Support", true],

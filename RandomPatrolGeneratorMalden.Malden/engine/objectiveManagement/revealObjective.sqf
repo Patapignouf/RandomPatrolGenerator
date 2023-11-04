@@ -97,6 +97,12 @@ if ((count _revealedObjectives != count _tempMissionObjectives)) then
 						};
 					case "defendArea":
 						{
+							_currentObjectiveDescription = format ["You have to defend ammobox at %1, go to the location, find it and defend it against enemy reinforcement", _objectiveLocationName];
+							[_side, _objectiveToReveal select 2, [_currentObjectiveDescription, "Defend area", "cookiemarker2"], objNull, 1, 3, true] call BIS_fnc_taskCreate;
+							[_objectiveToReveal select 2,"upload"] call BIS_fnc_taskSetType;
+						};
+					case "takeAndHold":
+						{
 							_currentObjectiveDescription = format ["There is some enemies in %1, you have to take the location and defend it against enemy reinforcement", _objectiveLocationName];
 							[_side, _objectiveToReveal select 2, [_currentObjectiveDescription, "Defend area", "cookiemarker2"], objNull, 1, 3, true] call BIS_fnc_taskCreate;
 							[_objectiveToReveal select 2,"defend"] call BIS_fnc_taskSetType;
