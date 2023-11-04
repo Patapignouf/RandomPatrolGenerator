@@ -663,12 +663,19 @@ _ammoBox = [];
 	_ammoBox pushBack _tempBox;
 } foreach ["Box_NATO_Uniforms_F","Box_NATO_Wps_F"];
 
-//Spawn vehicle ammobox ACE needed for interaction
+//Spawn vehicle ammobox and refuel box ACE needed for interaction
 _vehicleAmmoBox = createVehicle ["Box_NATO_AmmoVeh_F", [ initBlueforLocation, 20, 50, 2, 0, 20, 0] call BIS_fnc_findSafePos, [], 0, "NONE"];
 clearWeaponCargoGlobal _vehicleAmmoBox;
 clearMagazineCargoGlobal _vehicleAmmoBox;
 clearItemCargoGlobal _vehicleAmmoBox;
 clearBackpackCargoGlobal _vehicleAmmoBox;
+
+_vehicleRefuelBox = createVehicle ["B_Slingload_01_Fuel_F", [ initBlueforLocation, 20, 50, 2, 0, 20, 0] call BIS_fnc_findSafePos, [], 0, "NONE"];
+clearWeaponCargoGlobal _vehicleRefuelBox;
+clearMagazineCargoGlobal _vehicleRefuelBox;
+clearItemCargoGlobal _vehicleRefuelBox;
+clearBackpackCargoGlobal _vehicleRefuelBox;
+
 
 //Set the AmmoBox and make it draggable box with ACE
 if (isClass (configFile >> "CfgPatches" >> "ace_medical")) then 
