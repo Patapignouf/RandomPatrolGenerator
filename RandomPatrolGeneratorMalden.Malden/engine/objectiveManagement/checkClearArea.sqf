@@ -1,4 +1,5 @@
 #include "..\..\objectGenerator\vehicleManagement.sqf"
+
 params ["_thisTrigger"];
 
 //Count independent and blufor player

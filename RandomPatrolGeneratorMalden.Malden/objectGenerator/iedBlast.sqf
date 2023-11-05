@@ -28,14 +28,23 @@ _exploded = false;
 		// Action successfull code
 		params ["_object","_caller","_ID","_objectParams","_progress","_maxProgress"];
 		
+		//Test if the player has engineer skill
+		if (_caller getUnitTrait "Engineer") then
+		{
+			//Tell the player that the IED has been defused
+			[1,["The IED has been defused", "PLAIN", 0.5]] remoteExec ["cutText", _caller];
+
+			//Reward the defuse
+			[[5], "engine\rankManagement\rankUpdater.sqf"] remoteExec ['BIS_fnc_execVM', 0];
+		} else 
+		{
+			//Explode the IED
+			"Land_ShellCrater_01_F" createVehicle (getPos _object);
+			"M_Titan_AT" createVehicle (getPos _object)
+		};
+
 		//Remove the IED
 		deleteVehicle _object;
-
-		//Tell the player that the IED has been defused
-		[1,["The IED has been defused", "PLAIN", 0.5]] remoteExec ["cutText", _caller];
-
-		//Reward the defuse
-		[[5], "engine\rankManagement\rankUpdater.sqf"] remoteExec ['BIS_fnc_execVM', 0];
 	}, 
 	{
 		// Action failed code
@@ -48,12 +57,12 @@ _exploded = false;
 ] remoteExec ["BIS_fnc_holdActionAdd", 0, true];
 
 
-while {sleep 5; !_exploded ;} do
+while {sleep 1; !_exploded ;} do
 {
 	//Check if players are around
 	{
 		if((_x distance _currentObject) < 5) then { _exploded = true; };
-	} forEach (allPlayers select {(_x getUnitTrait "Engineer") == false});
+	} forEach (allPlayers select {(speed _x) > 10});
 	if(_exploded) then
 	{
 		switch(_iedIntensity) do
@@ -80,9 +89,8 @@ while {sleep 5; !_exploded ;} do
 		soilCrater setPos _positionCrater;
 		//---Keep Car Wreck---
 		if(!_isCar) then { deletevehicle _currentObject; }
-		else { _currentObject setDammage 1; };
+		else { _currentObject setDamage 1; };
 		//---Spawning debries---
-		//Land_ShellCrater_02_debris_F
 		for "_i" from 1 to _debriesCount do
 		{
 			_distance = [2, _debriesCount] call BIS_fnc_randomInt;
