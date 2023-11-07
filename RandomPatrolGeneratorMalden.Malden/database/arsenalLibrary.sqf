@@ -286,11 +286,18 @@ setupArsenalToItem = {
 	params ["_itemToAttachArsenal","_currentPlayer","_currentFaction"];
 
 	//Process
-	//Clean arsenal
+	//Clean regular arsenal
 	[_itemToAttachArsenal,_itemToAttachArsenal call BIS_fnc_getVirtualWeaponCargo,false] call BIS_fnc_removeVirtualWeaponCargo;
 	[_itemToAttachArsenal,_itemToAttachArsenal call BIS_fnc_getVirtualItemCargo,false] call BIS_fnc_removeVirtualItemCargo;
 	[_itemToAttachArsenal,_itemToAttachArsenal call BIS_fnc_getVirtualMagazineCargo,false] call BIS_fnc_removeVirtualMagazineCargo;
 	[_itemToAttachArsenal,_itemToAttachArsenal call BIS_fnc_getVirtualBackpackCargo,false] call BIS_fnc_removeVirtualBackpackCargo;
+
+	//Clean ACE arsenal
+	if (isClass (configFile >> "CfgPatches" >> "ace_medical")) then 
+	{
+		[_itemToAttachArsenal, true, false] call ace_arsenal_fnc_removeVirtualItems;
+	};
+	
 
 	//Add Weapon to arsenal
 	_currentWeaponItems = [_currentPlayer, _currentFaction] call getVirtualWeaponList;
