@@ -69,7 +69,7 @@ generateObjectiveObject =
 	if (count _possibleIEDLocation >0) then 
 	{
 		{
-			_tempIED = createVehicle [selectRandom avalaibleIED, [[[_x, 3]], []] call BIS_fnc_randomPos, [], 0, "NONE"];
+			_tempIED = createVehicle [selectRandom avalaibleIED, [[[_x, 10]], []] call BIS_fnc_randomPos, [], 0, "NONE"];
 			[_tempIED, selectRandom [1,2,3], false] execVM "objectGenerator\iedBlast.sqf";
 		} foreach _possibleIEDLocation;
 	};
@@ -276,28 +276,31 @@ generateObjectiveObject =
 					_objectiveObjectBox setPos _thisObjectivePosition;
 				};		
 
-				//Generate objective trigger
-				_objectiveObject = createTrigger ["EmptyDetector", _currentRandomPos]; //create a trigger area created at object with variable name my_object
-				_objectiveObject setVariable ["isObjectiveObject", true, true];
-				_thisObjective = [_objectiveObject, _thisObjectiveType] call generateObjectiveTracker;
+				//Define the objective
+				_thisObjective = [_objectiveObjectBox, _thisObjectiveType] call generateObjectiveTracker;
 
-				//Add trigger to detect cleared area
-				_objectiveObject setPos _thisObjectivePosition; //create a trigger area created at object with variable name my_object
-				_objectiveObject setTriggerArea [150, 150, 0, false]; // trigger area with a radius of 200m.
-				_objectiveObject setVariable ["associatedTask", _thisObjective];
 
 				[_objectiveObjectBox, ["Send signal to defend the location",{
-					params ["_object","_caller","_ID","_objectiveObject"];
+					params ["_object","_caller","_ID","_thisObjectiveType"];
 
 					//Remove object interaction
 					[_object] remoteExec ["removeAllActions", 0, true];
 
+					//Generate objective trigger
+					_objectiveObject = createTrigger ["EmptyDetector", getPos _object]; //create a trigger area created at object with variable name my_object
+					_objectiveObject setVariable ["isObjectiveObject", true, true];
+					_thisObjective = [_objectiveObject, _thisObjectiveType] call generateObjectiveTracker;
+
+					//Add trigger to detect cleared area
+					_objectiveObject setTriggerArea [150, 150, 0, false]; // trigger area with a radius of 200m.
+					_objectiveObject setVariable ["associatedTask", _thisObjective, true];
+							
 					//Tell the player that enemy wave is incoming
 					[1,["Enemy wave incoming", "PLAIN", 0.5]] remoteExec ["cutText", _caller];
 
 					//Start defend
 					[_objectiveObject] execVM 'engine\objectiveManagement\checkDefendArea.sqf'; 
-				},_objectiveObject,1.5,true,true,"","_target distance _this <3"]] remoteExec ["addAction", 0, true];
+				},_thisObjectiveType,1.5,true,true,"","_target distance _this <3"]] remoteExec ["addAction", 0, true];
 			};
 		case "takeAndHold":
 			{
