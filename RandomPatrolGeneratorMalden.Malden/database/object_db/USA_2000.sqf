@@ -173,18 +173,30 @@ loadout_USA_2000 = [
 //USA
 rifleList_USA_2000 = [		
 	"CUP_arifle_M16A4_Base",
+	"CUP_arifle_M16A4_Aim_Laser",
+	"CUP_arifle_M16A4_ACOG_Laser",
 	"CUP_arifle_M4A1_Aim",
 	"CUP_arifle_M16A4_Grip",
+	"CUP_arifle_M4A1_desert_carryhandle",
+	"CUP_arifle_M4A1_camo_carryhandle",
 	"CUP_arifle_M16A1E1",
 	"CUP_arifle_M4A1_standard_short_black",
 	"CUP_arifle_M4A1",
-	"CUP_arifle_M4A3_black"
-
+	"CUP_arifle_M4A3_black",
+	"CUP_arifle_M4A1_camo",
+	"CUP_arifle_M4A1_camo_Aim",
+	"CUP_arifle_M4A3_desert_Aim_Flashlight",
+	"CUP_arifle_M4A1_desert",
+	"CUP_arifle_M4A3_desert",
+	"CUP_arifle_M4A3_camo"
 ];	
 
 grenadeLauncherList_USA_2000 = [
 	"CUP_arifle_M16A4_GL",
-	"CUP_arifle_M4A1_BUIS_GL"
+	"CUP_arifle_M4A1_BUIS_GL",
+	"CUP_arifle_M4A1_GL_carryhandle",
+	"CUP_arifle_M4A1_GL_carryhandle_camo",
+	"CUP_arifle_M4A1_GL_carryhandle_desert"
 ];
 
 launcherList_USA_2000 = [		
@@ -209,7 +221,10 @@ marksmanrifleList_USA_2000 = [
 smgList_USA_2000 = [		
 	"CUP_smg_MP5A5",
 	"CUP_sgun_M1014",
-	"CUP_hgun_M9"
+	"CUP_hgun_M9",
+	"CUP_sgun_M1014_vfg",
+	"CUP_sgun_M1014_Entry_vfg",
+	"CUP_sgun_M1014_solidstock"
 ];
 
 
@@ -329,7 +344,7 @@ itemMedicList_USA_2000 = [
 ];
 
 
-	//backpack avalaible for all unit
+//backpack avalaible for all unit
 backPackList_USA_2000 = [
 	"B_Mortar_01_weapon_F",
 	"B_Mortar_01_support_F",
@@ -352,11 +367,11 @@ magazineList_USA_2000 = [
 	"30Rnd_556x45_Stanag_Sand_Tracer_Green",
 	"CUP_20Rnd_TE1_Yellow_Tracer_762x51_DMR",
 	"CUP_30Rnd_Green_Tracer_9x19_MP5",
-	"CUP_8Rnd_B_Beneli_74Slug",
+	"CUP_8Rnd_12Gauge_Slug",
 	"CUP_15Rnd_9x19_M9",
 	"CUP_200Rnd_TE4_Red_Tracer_556x45_M249",
 	"CUP_100Rnd_TE4_LRT4_White_Tracer_762x51_Belt_M",
-	"CUP_8Rnd_B_Beneli_74Pellets",
+	"CUP_8Rnd_12Gauge_HE",
 	"CUP_10Rnd_127x99_M107",
 	"CUP_5Rnd_762x51_M24"
 ];
