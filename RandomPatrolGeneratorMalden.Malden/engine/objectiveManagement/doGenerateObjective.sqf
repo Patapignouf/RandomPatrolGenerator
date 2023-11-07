@@ -281,7 +281,7 @@ generateObjectiveObject =
 
 
 				[_objectiveObjectBox, ["Send signal to defend the location",{
-					params ["_object","_caller","_ID","_thisObjectiveType"];
+					params ["_object","_caller","_ID","_thisObjective"];
 
 					//Remove object interaction
 					[_object] remoteExec ["removeAllActions", 0, true];
@@ -289,7 +289,6 @@ generateObjectiveObject =
 					//Generate objective trigger
 					_objectiveObject = createTrigger ["EmptyDetector", getPos _object]; //create a trigger area created at object with variable name my_object
 					_objectiveObject setVariable ["isObjectiveObject", true, true];
-					_thisObjective = [_objectiveObject, _thisObjectiveType] call generateObjectiveTracker;
 
 					//Add trigger to detect cleared area
 					_objectiveObject setTriggerArea [150, 150, 0, false]; // trigger area with a radius of 200m.
@@ -299,8 +298,8 @@ generateObjectiveObject =
 					[1,["Enemy wave incoming", "PLAIN", 0.5]] remoteExec ["cutText", _caller];
 
 					//Start defend
-					[_objectiveObject] execVM 'engine\objectiveManagement\checkDefendArea.sqf'; 
-				},_thisObjectiveType,1.5,true,true,"","_target distance _this <3"]] remoteExec ["addAction", 0, true];
+					[[_objectiveObject], 'engine\objectiveManagement\checkDefendArea.sqf'] remoteExec ['BIS_fnc_execVM', 2];
+				},_thisObjective,1.5,true,true,"","_target distance _this <3"]] remoteExec ["addAction", 0, true];
 			};
 		case "takeAndHold":
 			{
