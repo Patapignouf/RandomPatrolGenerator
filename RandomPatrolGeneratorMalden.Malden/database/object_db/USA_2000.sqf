@@ -373,7 +373,11 @@ magazineList_USA_2000 = [
 	"CUP_100Rnd_TE4_LRT4_White_Tracer_762x51_Belt_M",
 	"CUP_8Rnd_12Gauge_HE",
 	"CUP_10Rnd_127x99_M107",
-	"CUP_5Rnd_762x51_M24"
+	"CUP_5Rnd_762x51_M24",
+	"CUP_Stinger_M",
+	"CUP_1Rnd_HEDP_M203",
+	"CUP_1Rnd_HE_M203",
+	"CUP_FlareWhite_M203"
 ];
 
 //Get magazine with following command
