@@ -42,7 +42,7 @@ doGenerateEnemyGroup =
 
 					if (isPlayer _killer) then 
 					{
-						[[5], 'engine\rankManagement\rankUpdater.sqf'] remoteExec ['BIS_fnc_execVM', _killer];
+						[[5, "RPG_ranking_vehicle_kill"], 'engine\rankManagement\rankUpdater.sqf'] remoteExec ['BIS_fnc_execVM', _killer];
 					}; 
 				}];
 			} else 
@@ -55,7 +55,7 @@ doGenerateEnemyGroup =
 					if (getSuppression _unit >0.9  && getSuppression _unit < 1.0 && _distance<3) then 
 					{
 						//hint format ["unit : %1 \ndistance : %2 \ninstigator : %3\n suppression level : %4",name _unit, _distance, name _instigator, getSuppression _unit];
-						[[1], 'engine\rankManagement\rankUpdater.sqf'] remoteExec ['BIS_fnc_execVM', _instigator];
+						[[1, "RPG_ranking_suppress"], 'engine\rankManagement\rankUpdater.sqf'] remoteExec ['BIS_fnc_execVM', _instigator];
 					};
 				}];
 
@@ -65,7 +65,7 @@ doGenerateEnemyGroup =
 
 					if (isPlayer _killer) then 
 					{
-						[[1], 'engine\rankManagement\rankUpdater.sqf'] remoteExec ['BIS_fnc_execVM', _killer];
+						[[1, "RPG_ranking_infantry_kill"], 'engine\rankManagement\rankUpdater.sqf'] remoteExec ['BIS_fnc_execVM', _killer];
 					}; 
 				}];
 			};
@@ -106,7 +106,7 @@ doGenerateEnemyGroup =
 
 					diag_log format ["Civilian has been killed by : %1 on side %2", name _killer, side _killer];
 					[format ["Civilian has been killed by : %1", name _killer], 'engine\hintManagement\addCustomHint.sqf'] remoteExec ['BIS_fnc_execVM', side _killer]; 
-					// [[-50], 'engine\rankManagement\rankUpdater.sqf'] remoteExec ['BIS_fnc_execVM', _killer];
+					
 					[[-50,5], 'engine\rankManagement\rankPenalty.sqf'] remoteExec ['BIS_fnc_execVM', _killer];
 				}; 
 			}];

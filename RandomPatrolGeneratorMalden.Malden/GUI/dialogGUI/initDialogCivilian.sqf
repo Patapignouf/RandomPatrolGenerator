@@ -188,7 +188,7 @@ _RcsButtonObjective ctrlAddEventHandler[ "ButtonClick",
 				player removeDiaryRecord  ["RPG", _intelDiaryAlreadyRevealed]; //Update diary doesn't work very well so delete/create is the only solution
 				_newIntelDiaryAlreadyRevealed = player createDiaryRecord ["RPG", ["RPG intel", _allDiaryIntel]];
 				player setVariable ["diaryIntel", _newIntelDiaryAlreadyRevealed];
-				[[1], 'engine\rankManagement\rankUpdater.sqf'] remoteExec ['BIS_fnc_execVM', player];
+				[[1, "RPG_ranking_intel_collect"], 'engine\rankManagement\rankUpdater.sqf'] remoteExec ['BIS_fnc_execVM', player];
 				missionNamespace setVariable ["TAG_fnc_civsAsked",(round random 1),true];
 		};
 

@@ -2,10 +2,14 @@
 
 params ["_thisTrigger"];
 
+//diag_log format ["Log : checkDefendArea , _thisTrigger = %1 , getPos _thisTrigger = %2 , associatedTask = %3", _thisTrigger, getPos _thisTrigger, _thisTrigger getVariable "associatedTask"];
+
 //Count independent and blufor player
 _nbBluePlayer = count ((allPlayers select {alive _x && side _x == blufor} ) inAreaArray _thisTrigger);
 _nbIndPlayer = count ((allPlayers select {alive _x && side _x == independent} ) inAreaArray _thisTrigger);
 _nbOpfor = count ((allUnits select {alive _x && side _x == opfor} ) inAreaArray _thisTrigger);
+
+//diag_log format ["Log : checkDefendArea , _nbBluePlayer = %1, _nbIndPlayer = %2, _nbOpfor = %3", _nbBluePlayer, _nbIndPlayer, _nbOpfor];
 
 //Check if there's IA on the area on the beginning
 while {sleep 15; _nbBluePlayer + _nbIndPlayer == 0 || _nbOpfor > 2} do 
@@ -13,6 +17,7 @@ while {sleep 15; _nbBluePlayer + _nbIndPlayer == 0 || _nbOpfor > 2} do
 	_nbBluePlayer = count ((allPlayers select {alive _x && side _x == blufor} ) inAreaArray _thisTrigger);
 	_nbIndPlayer = count ((allPlayers select {alive _x && side _x == independent} ) inAreaArray _thisTrigger);
 	_nbOpfor = count ((allUnits select {alive _x && side _x == opfor} ) inAreaArray _thisTrigger);
+	//diag_log format ["Log : checkDefendArea , _nbBluePlayer = %1, _nbIndPlayer = %2, _nbOpfor = %3", _nbBluePlayer, _nbIndPlayer, _nbOpfor];
 };
 
 //Generate enemy attack wave
@@ -20,6 +25,8 @@ AvalaibleInitAttackPositions = [];
 AvalaibleInitAttackPositions = [getPos _thisTrigger, 550, 800, round (missionDifficultyParam/2)] call getListOfPositionsAroundTarget;
 _handleAttackGeneration = [AvalaibleInitAttackPositions, getPos _thisTrigger, [baseEnemyGroup,baseEnemyATGroup], baseEnemyVehicleGroup, missionDifficultyParam+1] execVM 'enemyManagement\behaviorEngine\doAmbush.sqf'; 
 waitUntil {isNull _handleAttackGeneration};
+
+//diag_log format ["Log : checkDefendArea , enemy generation completed"];
 
 //Show a message for the opfor reinforcement
 _thisObjectiveToComplete = _thisTrigger getVariable ["associatedTask", []];
@@ -37,6 +44,8 @@ if (_thisFOBCheck) then
 	[[parseText format ["<img image='\A3\ui_f\data\map\markers\military\warning_CA.paa'/><br/><br/><t size='1.2'>An opfor reinforcement is coming to %1, be ready to defend the FOB</t>", mapGridPosition (getPos _thisTrigger)]], 'engine\hintManagement\addCustomHint.sqf'] remoteExec ['BIS_fnc_execVM', 0, true]
 	//[format ["An opfor reinforcement is coming to %1, be ready to defend the FOB", mapGridPosition (getPos _thisTrigger)]] remoteExec ["hint", 0, true];
 };
+
+//diag_log format ["Log : checkDefendArea, message sent"];
 
 //Wait enemy reinforcement
 sleep 500;
@@ -57,7 +66,7 @@ while {sleep 15; _nbBluePlayer + _nbIndPlayer == 0 || _nbOpfor > 2} do
 if (!([_thisObjectiveToComplete,[]] call BIS_fnc_areEqual)) then 
 {
 	[_thisObjectiveToComplete] execVM 'engine\objectiveManagement\completeObjective.sqf'; 
-	[[50], "engine\rankManagement\rankUpdater.sqf"] remoteExec ['BIS_fnc_execVM', 0];
+	[[50, "RPG_ranking_objective_complete"], "engine\rankManagement\rankUpdater.sqf"] remoteExec ['BIS_fnc_execVM', 0];
 
 	//Manage Completed Objective
 	_completedObjectives = missionNamespace getVariable ["completedObjectives",[]];

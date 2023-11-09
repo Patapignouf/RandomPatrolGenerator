@@ -18,7 +18,7 @@ saveRank = {
 };
 
 adjustRank = {
-	params ["_unit","_isInit"];
+	params ["_unit", "_isInit"];
 
 	//Unit current experience
 	_unitExperience = profileNamespace getVariable ["RPG_ranking", 0];
@@ -67,11 +67,16 @@ adjustRank = {
 
 
 addExperience = {
-	params ["_experience"];
+	params ["_experience", "_experienceType"];
 
 	//Unit current experience
 	_unitExperience = profileNamespace getVariable ["RPG_ranking", 0];
 
+	//Track custom experience type
+	_currentXPtoTrack = player getVariable [_experienceType, 0];
+	player setVariable [_experienceType, _currentXPtoTrack + _experience, true];
+
+	//Save rank
 	[_experience + _unitExperience] call saveRank;
 
 	true

@@ -119,7 +119,7 @@ params ["_currentGroup", "_thisObjective"];
 								[_side, [format ["%1%2",_thisObjectiveCode ,"_Intel"], _thisObjectiveCode], [_currentObjectiveDescription, "Updated intel", "cookiemarker2_intel"], objNull, 1, 3, true] call BIS_fnc_taskCreate;
 								[format ["%1%2",_thisObjectiveCode ,"_Intel"],"documents"] call BIS_fnc_taskSetType;
 								//Reward with experience 
-								[[3], 'engine\rankManagement\rankUpdater.sqf'] remoteExec ['BIS_fnc_execVM', _caller];
+								[[3, "RPG_ranking_intel_collect"], 'engine\rankManagement\rankUpdater.sqf'] remoteExec ['BIS_fnc_execVM', _caller];
 							} else 
 							{
 								//Display no intel found message

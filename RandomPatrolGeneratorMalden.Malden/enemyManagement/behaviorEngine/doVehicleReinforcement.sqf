@@ -46,7 +46,7 @@ _currentEnemyGroup leaveVehicle _heli;
 
 	if (isPlayer _killer) then 
 	{
-		[[5], 'engine\rankManagement\rankUpdater.sqf'] remoteExec ['BIS_fnc_execVM', _killer];
+		[[5, "RPG_ranking_vehicle_kill"], 'engine\rankManagement\rankUpdater.sqf'] remoteExec ['BIS_fnc_execVM', _killer];
 	}; 
 }];
 

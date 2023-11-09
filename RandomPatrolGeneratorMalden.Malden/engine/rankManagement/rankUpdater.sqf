@@ -1,8 +1,10 @@
+//rankUpdater.sqf
+
 #include "rankFunctions.sqf"
-params ["_experienceBonus"];
+params ["_experienceBonus", "_experienceType"];
 
 //add experience
-[_experienceBonus] call addExperience;
+[_experienceBonus, _experienceType] call addExperience;
 
 //adjustrank
 [player, false] call adjustRank;

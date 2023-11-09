@@ -76,23 +76,26 @@ if (isClass (configFile >> "CfgPatches" >> "ace_medical")) then
 		"ACE_packingBandage",
 		"ACE_elasticBandage",
 		"ACE_quikclot",
-		"ACE_splint"
+		"ACE_splint",
+		"ACE_Suture"
 	];
 
 	["ace_treatmentSucceded", {
 		params ["_caller", "_target", "_selectionName", "_className", "_itemUser", "_usedItem"];
 
+		//Display for debug
+		//hint format ["Use item : %1 from %2 with classname : %3",_usedItem, name _caller, _className];
+
 		//Only reward heal on others 
 		if (_caller != _target) then 
 		{
-			//hint format ["Use item : %1 from %2 with classname : %3",_usedItem, name _caller, _className];
 			if (experiencedMedicItems findIf { [_usedItem,_x] call BIS_fnc_areEqual} > -1) then 
 			{
 
 				//Check the number of bandage used, 5 bandages -> 1 exp point
 				if (_caller getVariable ["numberOfBandageUsed",0] >= 5 ) then 
 				{
-					[[1], 'engine\rankManagement\rankUpdater.sqf'] remoteExec ['BIS_fnc_execVM', _caller];
+					[[1, "RPG_ranking_heal"], 'engine\rankManagement\rankUpdater.sqf'] remoteExec ['BIS_fnc_execVM', _caller];
 					_caller setVariable ["numberOfBandageUsed", 0];
 				} else 
 				{
@@ -101,7 +104,7 @@ if (isClass (configFile >> "CfgPatches" >> "ace_medical")) then
 			};
 			if ([_className,"surgicalKit"] call BIS_fnc_areEqual) then 
 			{
-				[[1], 'engine\rankManagement\rankUpdater.sqf'] remoteExec ['BIS_fnc_execVM', _caller];
+				[[1, "RPG_ranking_heal"], 'engine\rankManagement\rankUpdater.sqf'] remoteExec ['BIS_fnc_execVM', _caller];
 			};
 		};
 	}] call CBA_fnc_addEventHandler;
@@ -120,7 +123,7 @@ if (isClass (configFile >> "CfgPatches" >> "ace_medical")) then
 			if (!([_healer,_injured] call BIS_fnc_areEqual)) then 
 			{
 				if (damage _injured < _damage) then {
-					[[1], 'engine\rankManagement\rankUpdater.sqf'] remoteExec ['BIS_fnc_execVM', _healer];
+					[[1, 'RPG_ranking_heal'], 'engine\rankManagement\rankUpdater.sqf'] remoteExec ['BIS_fnc_execVM', _healer];
 				};
 			};
 		};
