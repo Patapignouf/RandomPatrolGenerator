@@ -317,7 +317,10 @@ itemList_2035_NATO_FS = [
 	"ACE_RangeCard",
 	"NVGogglesB_blk_F",
 	"NVGogglesB_grn_F",
-	"NVGogglesB_gry_F"
+	"NVGogglesB_gry_F",
+	"ACE_NVG_Wide_Black_WP",
+	"ACE_NVG_Wide_WP",
+	"ACE_NVG_Wide_Green_WP"
 ];
 
 //item avalaible for all engineer
@@ -391,7 +394,11 @@ magazineList_2035_NATO_FS = [
 	"SmokeShellBlue",
 	"SmokeShellGreen",
 	"SmokeShellRed",
-	"10Rnd_338_Mag"
+	"10Rnd_338_Mag",
+	"SmokeShellOrange",
+	"SmokeShellPurple",
+	"SmokeShellYellow",
+	"O_IR_Grenade"
 ];
 
 //Get magazine with following command
