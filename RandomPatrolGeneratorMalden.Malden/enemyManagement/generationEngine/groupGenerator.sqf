@@ -52,10 +52,18 @@ doGenerateEnemyGroup =
 				_x addEventHandler ["Suppressed", {
 					params ["_unit", "_distance", "_shooter", "_instigator", "_ammoObject", "_ammoClassName", "_ammoConfig"];
 
-					if (getSuppression _unit >0.9  && getSuppression _unit < 1.0 && _distance<3) then 
+					if (getSuppression _unit > 0.8 && _distance<3 && !(_unit getVariable ["isSuppressed", false])) then 
 					{
+						_unit setVariable ["isSuppressed", true, true];
 						//hint format ["unit : %1 \ndistance : %2 \ninstigator : %3\n suppression level : %4",name _unit, _distance, name _instigator, getSuppression _unit];
 						[[1, "RPG_ranking_suppress"], 'engine\rankManagement\rankUpdater.sqf'] remoteExec ['BIS_fnc_execVM', _instigator];
+						
+						//Reset suppressed score on the unit after 60 sec
+						[_unit] spawn {
+							params ["_unit"];
+							sleep 60;
+							_unit setVariable ["isSuppressed", false, true];
+						};	
 					};
 				}];
 
@@ -66,6 +74,9 @@ doGenerateEnemyGroup =
 					if (isPlayer _killer) then 
 					{
 						[[1, "RPG_ranking_infantry_kill"], 'engine\rankManagement\rankUpdater.sqf'] remoteExec ['BIS_fnc_execVM', _killer];
+					} else {
+						//Debug IA killed log
+						diag_log format ["The IA %1 has been killed by %2", name _unit, name _killer];
 					}; 
 				}];
 			};
@@ -205,6 +216,7 @@ doAdjustACEMedic = {
 			for "_i" from 0 to 1 do { _currentUnit addItem "ACE_splint" };
 			for "_i" from 0 to 11 do { _currentUnit addItem "ACE_elasticBandage" };
 			for "_i" from 0 to 11 do { _currentUnit addItem "ACE_quikclot" };
+
 			//for "_i" from 0 to 9 do { _currentUnit addItem "ACE_morphine" }; //Basic ACE conversion will give enough morphine
 			//for "_i" from 0 to 5 do { _currentUnit addItem "ACE_tourniquet" };	//Basic ACE conversion will give enough tourniquet
 		};
