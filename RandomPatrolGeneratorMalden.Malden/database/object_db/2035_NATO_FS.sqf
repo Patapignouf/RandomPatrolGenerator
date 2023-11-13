@@ -236,7 +236,15 @@ marksmanrifleList_2035_NATO_FS = [
 //Smg avalaible for all unit
 smgList_2035_NATO_FS = [
 	"hgun_Pistol_heavy_01_F",
-	"SMG_02_F"
+	"SMG_02_F",
+	"SMG_03C_black",
+	"SMG_03C_camo",
+	"SMG_03C_hex",
+	"SMG_03C_khaki",
+	"SMG_03C_TR_black",
+	"SMG_03C_TR_camo",
+	"SMG_03C_TR_hex",
+	"SMG_03C_TR_khaki"
 ];
 
 //////////////////////////
@@ -371,7 +379,14 @@ uniformList_2035_NATO_FS = [
 	"U_BG_Guerilla2_3",
 	"U_I_G_resistanceLeader_F",
 	"V_PlateCarrier2_rgr_noflag_F",
-	"G_Bandanna_khk"
+	"G_Bandanna_khk",
+	"U_B_CTRG_Soldier_2_Arid_F",
+	"U_C_ArtTShirt_01_v1_F",
+	"U_C_ArtTShirt_01_v2_F",
+	"U_C_ArtTShirt_01_v3_F",
+	"U_C_ArtTShirt_01_v4_F",
+	"U_C_ArtTShirt_01_v5_F",
+	"U_C_ArtTShirt_01_v6_F"
 ];
 
 //Magazine avalaible for all unit
@@ -379,6 +394,7 @@ uniformList_2035_NATO_FS = [
 magazineList_2035_NATO_FS = [
 	"30Rnd_556x45_Stanag_Sand",
 	"11Rnd_45ACP_Mag",
+	"50Rnd_570x28_SMG_03",
 	"30Rnd_556x45_Stanag_Sand_Tracer_Green",
 	"130Rnd_338_Mag",
 	"200Rnd_65x39_cased_Box_Tracer",
