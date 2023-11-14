@@ -339,7 +339,8 @@ itemEngineerList_2035_NATO_FS = [
 	"ACE_Fortify",
 	"ACE_DefusalKit",
 	"ACE_DeadManSwitch",
-	"ACE_Clacker"
+	"ACE_Clacker",
+	"DemoCharge_Remote_Mag"
 ];
 
 //item avalaible for all medic
@@ -393,6 +394,7 @@ uniformList_2035_NATO_FS = [
 //Special note throwing items must be placed here too
 magazineList_2035_NATO_FS = [
 	"30Rnd_556x45_Stanag_Sand",
+	"CUP_20Rnd_762x51_HK417",
 	"11Rnd_45ACP_Mag",
 	"50Rnd_570x28_SMG_03",
 	"30Rnd_556x45_Stanag_Sand_Tracer_Green",
