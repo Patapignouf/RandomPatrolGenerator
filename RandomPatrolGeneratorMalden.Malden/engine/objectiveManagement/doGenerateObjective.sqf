@@ -65,7 +65,7 @@ generateObjectiveObject =
 		_thisObjectivePosition = _thistempObjectivePosition;
 	};
 
-	_possibleIEDLocation = [_thisObjectivePosition, 1000, 3] call findPositionsNearRoads;
+	_possibleIEDLocation = [_thisObjectivePosition, 1000, round (random 4)] call findPositionsNearRoads;
 	if (count _possibleIEDLocation >0) then 
 	{
 		{

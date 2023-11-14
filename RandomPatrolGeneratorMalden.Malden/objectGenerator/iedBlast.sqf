@@ -10,6 +10,10 @@ _positionCrater = getPosATL(_currentObject);
 _debriesCount = 0;
 _exploded = false;
 
+//Add fake ied mine 
+_fakeIed = createMine ["SatchelCharge_F", getPos _currentObject, [], 0];
+_fakeIed hideObjectGlobal true;
+
 //Add action to defuse
 [
 	_currentObject, 
@@ -28,8 +32,12 @@ _exploded = false;
 		// Action successfull code
 		params ["_object","_caller","_ID","_objectParams","_progress","_maxProgress"];
 		
+		_fakeIed = _objectParams#0;
+
+		_isACE = (isClass (configFile >> "CfgPatches" >> "ace_medical"));
+
 		//Test if the player has engineer skill
-		if (_caller getUnitTrait "Engineer") then
+		if (_caller getUnitTrait "Engineer" && ((!_isACE) || (_isACE && ("ACE_DefusalKit" in (items _caller))))) then
 		{
 			//Tell the player that the IED has been defused
 			[1,["The IED has been defused", "PLAIN", 0.5]] remoteExec ["cutText", _caller];
@@ -45,11 +53,12 @@ _exploded = false;
 
 		//Remove the IED
 		deleteVehicle _object;
+		deleteVehicle _fakeIed;
 	}, 
 	{
 		// Action failed code
 	}, 
-	[],  
+	[_fakeIed],  
 	2,
 	0, 
 	true, 
@@ -97,6 +106,7 @@ while {sleep 1; !_exploded ;} do
 			_direction = [0,359] call BIS_fnc_randomInt;
 			_randomPos = [_positionCrater, _distance, _direction] call BIS_fnc_relPos;
 			"Land_ShellCrater_02_debris_F" createVehicle _randomPos;
+			deleteVehicle _fakeIed;
 		};
 	};
 };
