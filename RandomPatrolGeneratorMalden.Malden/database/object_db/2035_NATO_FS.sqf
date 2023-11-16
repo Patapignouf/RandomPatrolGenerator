@@ -101,8 +101,8 @@ baseEnemyUnarmedChopperGroup_NATO_FS = [
 
 //Light vehicle avalaible for blufor : Ex light hummvee, quad
 bluforUnarmedVehicle_2035_NATO_FS = [
-	"B_MRAP_01_F",
-	"B_Truck_01_transport_F",
+	"C_Offroad_01_F",
+	"B_Quadbike_01_F",
 	"B_LSV_01_unarmed_F"
 ];
 
@@ -236,7 +236,9 @@ marksmanrifleList_2035_NATO_FS = [
 //Smg avalaible for all unit
 smgList_2035_NATO_FS = [
 	"hgun_Pistol_heavy_01_F",
+	"SMG_01_F",
 	"SMG_02_F",
+	"hgun_PDW2000_F",
 	"SMG_03C_black",
 	"SMG_03C_camo",
 	"SMG_03C_hex",
@@ -270,7 +272,9 @@ attachmentShortList_2035_NATO_FS	= [
 	"optic_mrco",
 	"acc_pointer_IR",
 	"optic_ERCO_snd_F",
-	"muzzle_snds_m_snd_F"
+	"muzzle_snds_m_snd_F",
+	"muzzle_snds_m_khk_F",
+	"muzzle_snds_m_blk_F"
 ];
 
 //Long range scope avalaible for marksman
@@ -364,10 +368,19 @@ itemMedicList_2035_NATO_FS = [
 backPackList_2035_NATO_FS = [
 	"B_TacticalPack_mcamo",
 	"B_Carryall_mcamo",
+	"B_Carryall_rgr",
+	"B_Carryall_cbr",
+	"B_Carryall_blk",
 	"B_AssaultPack_rgr",
 	"B_AssaultPack_cbr",
+	"B_AssaultPack_blk",
 	"B_Kitbag_cbr",
-	"TFAR_rt1523g"
+	"TFAR_rt1523g",
+	"TFAR_rt1523g_sage",
+	"ACE_TacticalLadder_Pack",
+	"ace_gunbag",
+	"ace_gunbag_tan",
+	"B_UAV_06_backpack_F"
 ];
 
 
@@ -375,12 +388,35 @@ backPackList_2035_NATO_FS = [
 uniformList_2035_NATO_FS = [
 	"U_B_CombatUniform_mcam_tshirt",
 	"V_PlateCarrier1_rgr_noflag_F",
+	"H_HelmetSpecB",
 	"H_HelmetSpecB_sand",
+	"H_HelmetSpecB_blk",
+	"H_HelmetSpecB_paint1",
+	"H_HelmetSpecB_paint2",
+	"H_HelmetB",
+	"H_HelmetB_sand",
+	"H_HelmetB_blk",
+	"H_HelmetB_paint1",
+	"H_HelmetB_paint2",
 	"U_BG_Guerilla2_1",
 	"U_BG_Guerilla2_3",
+	"H_Shemag_olive_hs",
+	"H_Shemag_olive",
+	"H_Watchcap_blk",
+	"H_Watchcap_khk",
+	"H_Watchcap_camo",
+	"H_Booniehat_blk",
+	"H_Booniehat_khk",
+	"H_Booniehat_camo",
+	"G_Balaclava_combat",
 	"U_I_G_resistanceLeader_F",
 	"V_PlateCarrier2_rgr_noflag_F",
+	"V_PlateCarrier1_blk",
 	"G_Bandanna_khk",
+	"G_Bandanna_blk",
+	"G_Bandanna_camo",
+	"G_Bandanna_rgr",
+	"V_PlateCarrierL_CTRG",
 	"U_B_CTRG_Soldier_2_Arid_F",
 	"U_C_ArtTShirt_01_v1_F",
 	"U_C_ArtTShirt_01_v2_F",
