@@ -266,6 +266,7 @@ getVirtualBackPack = {
 getVirtualMagazine = {
 	currentPlayer = _this select 0;
 	currentFaction = _this select 1;
+	currentWeaponList = _this select 2;
 	currentPlayerClass = currentPlayer getVariable "role";
 	virtualMagazineList = [];
 
@@ -277,6 +278,37 @@ getVirtualMagazine = {
 				virtualMagazineList = virtualMagazineList + (magazineList_db select {_x select 1  == currentFaction} select 0 select 0);
 			};
 	};
+
+	//If there is no magazine in faction DB
+	// if (count virtualMagazineList == 0) then 
+	// {
+		//Add the first magazine of each weapon
+		{
+			_currentWeaponMagazineList = getArray (configfile >> "CfgWeapons" >> _x >> "magazines");
+			if (count _currentWeaponMagazineList != 0) then 
+			{
+				if ((virtualMagazineList) findIf {_x == (_currentWeaponMagazineList#0)} == -1) then 
+				{
+					virtualMagazineList pushBack _currentWeaponMagazineList#0;
+				};
+			};
+		} foreach currentWeaponList;
+
+		//In addition add smokes and grenade 
+		virtualMagazineList append
+		[
+			"HandGrenade",
+			"SmokeShell",
+			"SmokeShellBlue",
+			"SmokeShellGreen",
+			"SmokeShellRed",
+			"SmokeShellOrange",
+			"SmokeShellPurple",
+			"SmokeShellYellow",
+			"O_IR_Grenade"
+		];
+	// };
+
 	diag_log format ["Player %1 with role %2 has access to items %3", name currentPlayer, currentPlayerClass, virtualMagazineList ];
 	virtualMagazineList
 };
@@ -308,13 +340,9 @@ setupArsenalToItem = {
 	[_itemToAttachArsenal, _currentBackpackItems, false, false] call BIS_fnc_addVirtualBackpackCargo;
 
 	//Add magazine to arsenal
-	_currentMagazineItems = [_currentPlayer,_currentFaction] call getVirtualMagazine;
-	if (count _currentMagazineItems == 0) then 
-	{
-		[_itemToAttachArsenal,true, false, false] call BIS_fnc_addVirtualMagazineCargo;
-	} else {
-		[_itemToAttachArsenal, _currentMagazineItems, false, false] call BIS_fnc_addVirtualMagazineCargo;
-	};
+	_currentMagazineItems = [_currentPlayer,_currentFaction, _currentWeaponItems] call getVirtualMagazine;
+	[_itemToAttachArsenal, _currentMagazineItems, false, false] call BIS_fnc_addVirtualMagazineCargo;
+	
 
 	//Add items, uniforms and optics to arsenal
 	_currentItems = ([_currentPlayer, _currentFaction] call getVirtualAttachement ) + ([_currentPlayer,_currentFaction] call getVirtualItemList ) + ([_currentPlayer,_currentFaction] call getVirtualUniform );
