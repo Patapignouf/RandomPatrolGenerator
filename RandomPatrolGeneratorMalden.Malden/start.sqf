@@ -432,7 +432,20 @@ if !(_isOnWater) then
 	publicVariable "initBlueforLocation";
 };
 
-[["FOB","ColorBlue","loc_Fortress",initBlueforLocation, blufor], 'objectGenerator\doGenerateMarker.sqf'] remoteExec ['BIS_fnc_execVM', 0, true];
+[["FOB", "ColorBlue", "loc_Fortress", initBlueforLocation, blufor], 'objectGenerator\doGenerateMarker.sqf'] remoteExec ['BIS_fnc_execVM', 0, true];
+
+//Trigger message when blufor FOB is attackEnabled
+[] spawn {
+	_trgBluforFOB = createTrigger ["EmptyDetector", initBlueforLocation];
+	_trgBluforFOB setTriggerArea [200, 200, 0, true];
+	while {sleep 60; true;} do 
+	{
+		if ((count ((allUnits select {alive _x && side _x == opfor} ) inAreaArray _trgBluforFOB))>0) then 
+		{
+			[[parseText format ["<img image='\A3\ui_f\data\map\markers\military\warning_CA.paa'/><br/><br/><t size='1.2'>Enemy has taken the FOB %1, be ready to defend it</t>", mapGridPosition initBlueforLocation]], 'engine\hintManagement\addCustomHint.sqf'] remoteExec ['BIS_fnc_execVM', blufor, true];
+		};
+	};
+};
 	
 //Clean area WIP
 [initBlueforLocation, 150] execVM 'objectGenerator\doCleanArea.sqf'; 				
@@ -1077,7 +1090,7 @@ if (enableCampaignMode) then
 	while {sleep 10; (!_maxObjectivesGenerated)} do 
 	{
 		//Is an objective been completed ?
-		if (_objectiveCompletedCounter == (count (missionNamespace getVariable ["completedObjectives",[]]))) then 
+		if (_objectiveCompletedCounter == (count ((missionNamespace getVariable ["completedObjectives",[]]) + (missionNamespace getVariable ["missionFailedObjectives",[]])))) then 
 		{
 			//Do nothing
 			sleep 30;
