@@ -124,6 +124,9 @@ params ["_currentGroup", "_thisObjective"];
 							{
 								//Display no intel found message
 								[1,["No intel found", "PLAIN", 0.5]] remoteExec ["cutText", _caller];
+
+								//Reward with less experience 
+								[[1, "RPG_ranking_intel_collect"], 'engine\rankManagement\rankUpdater.sqf'] remoteExec ['BIS_fnc_execVM', _caller];
 							};
 					}, 
 					{
