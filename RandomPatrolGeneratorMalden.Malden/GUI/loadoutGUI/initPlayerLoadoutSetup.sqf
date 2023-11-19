@@ -61,6 +61,8 @@ if (ironMan) then
 	_buttonLoad ctrlSetText "Get back loadout from the box";
 };
 
+//Remove custom voice 
+player setSpeaker "noVoice";
 
 //Specify all GUI content and button actions
 _comboBoxClassSelection ctrlAddEventHandler[ "LBSelChanged", 
