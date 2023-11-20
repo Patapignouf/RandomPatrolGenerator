@@ -52,7 +52,7 @@ doGenerateEnemyGroup =
 				_x addEventHandler ["Suppressed", {
 					params ["_unit", "_distance", "_shooter", "_instigator", "_ammoObject", "_ammoClassName", "_ammoConfig"];
 
-					if (getSuppression _unit > 0.8 && _distance<3 && !(_unit getVariable ["isSuppressed", false])) then 
+					if (getSuppression _unit > 0.9 && _distance<3 && !(_unit getVariable ["isSuppressed", false])) then 
 					{
 						_unit setVariable ["isSuppressed", true, true];
 						//hint format ["unit : %1 \ndistance : %2 \ninstigator : %3\n suppression level : %4",name _unit, _distance, name _instigator, getSuppression _unit];
@@ -62,6 +62,7 @@ doGenerateEnemyGroup =
 						[_unit] spawn {
 							params ["_unit"];
 							sleep 60;
+							waitUntil {getSuppression _unit < 0.9};
 							_unit setVariable ["isSuppressed", false, true];
 						};	
 					};
