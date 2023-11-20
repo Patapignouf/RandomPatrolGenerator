@@ -45,8 +45,8 @@ baseEnemyGroup_HorizonIsland = [
 ];
 
 baseEnemyATGroup_HorizonIsland = [
-	"CUP_B_HIL_Soldier_HAT_Recon", 
-	"CUP_B_HIL_Soldier_HAT_Recon",
+	"CUP_B_HIL_SL_Recon",
+	"CUP_B_HIL_Medic_Recon",
 	"CUP_B_HIL_Soldier_HAT_Recon",
 	"CUP_B_HIL_Soldier_MAT_Recon"
 ];
@@ -70,8 +70,7 @@ baseEnemyVehicleGroup_HorizonIsland = [
 
 baseEnemyLightArmoredVehicleGroup_HorizonIsland = [
 	"CUP_B_Boxer_HMG_HIL", 
-	"CUP_B_Boxer_GMG_HIL", 
-	"CUP_B_M270_HE_HIL"
+	"CUP_B_Boxer_GMG_HIL" 
 ];
 
 baseEnemyHeavyArmoredVehicleGroup_HorizonIsland = [

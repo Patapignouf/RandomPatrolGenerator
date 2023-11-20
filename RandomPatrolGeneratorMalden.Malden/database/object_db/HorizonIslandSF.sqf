@@ -70,8 +70,7 @@ baseEnemyVehicleGroup_HorizonIslandSF = [
 
 baseEnemyLightArmoredVehicleGroup_HorizonIslandSF = [
 	"CUP_B_Boxer_HMG_HIL", 
-	"CUP_B_Boxer_GMG_HIL", 
-	"CUP_B_M270_HE_HIL"
+	"CUP_B_Boxer_GMG_HIL"
 ];
 
 baseEnemyHeavyArmoredVehicleGroup_HorizonIslandSF = [
