@@ -443,7 +443,7 @@ if !(_isOnWater) then
 		if ((count ((allUnits select {alive _x && side _x == opfor} ) inAreaArray _trgBluforFOB))>0) then 
 		{
 			[[parseText format ["<img image='\A3\ui_f\data\map\markers\military\warning_CA.paa'/><br/><br/><t size='1.2'>Enemy has taken the blufor FOB %1, be ready to defend it</t>", mapGridPosition initBlueforLocation]], 'engine\hintManagement\addCustomHint.sqf'] remoteExec ['BIS_fnc_execVM', blufor, true];
-			sleep 500;
+			sleep 1000;
 		};
 	};
 };
@@ -1115,8 +1115,7 @@ if (enableCampaignMode) then
 			};
 
 			//Update objective complete counter
-			_completedObjectives = missionNamespace getVariable ["completedObjectives",[]];
-			_objectiveCompletedCounter = count _completedObjectives;
+			_objectiveCompletedCounter = count ((missionNamespace getVariable ["completedObjectives",[]]) + (missionNamespace getVariable ["missionFailedObjectives",[]]));
 		};
 
 
