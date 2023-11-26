@@ -125,6 +125,7 @@ if (isClass (configFile >> "CfgPatches" >> "CUP_BaseData")) then
 	factionInfos pushBack [c_Russian_Winter, _Russian_Winter, "Russian Winter [CUP]", true, true, true];	
 	factionInfos pushBack [c_Taki_Army, _Taki_Army, "Takistani Army [CUP]", true, true, false];
 	factionInfos pushBack [c_HorizonIsland, _HorizonIsland, "Horizon Island [CUP]", true, true, true];
+	factionInfos pushBack [c_HorizonIslandSF, _HorizonIslandSF, "Horizon Island SF [CUP]", true, true, true];
 	factionInfos pushBack [c_ColdWar_OTAN, _ColdWar_OTAN, "Cold War OTAN [CUP]", true, false, false];
 	factionInfos pushBack [c_ColdWar_USSR, _ColdWar_USSR, "Cold War USSR [CUP]", false, true, false];
 };
