@@ -904,12 +904,45 @@ switch (startIntel) do
 					};
 				};
 			};
+
+			//reveal objective for ind
+			if (_mainPlayerSide == independent) then 
+			{
+					for [{_i = 0}, {_i <= missionLength}, {_i = _i + 1}] do //Peut être optimisé
+				{
+					[objNull, [], _mainPlayerSide] execVM 'engine\objectiveManagement\revealObjective.sqf';
+				};
+			};
 		};
 	case 2:
 		{
+			//Give task to blufor
 			for [{_i = 0}, {_i <= missionLength}, {_i = _i + 1}] do //Peut être optimisé
 			{
 				[objNull, [], _mainPlayerSide] execVM 'engine\objectiveManagement\revealObjective.sqf';
+			};
+
+			//Add blufor task to encounter independent
+			if (_mainPlayerSide == independent) then 
+			{
+				//Setup init Civ city
+				//Init task for blufor to get informations
+				[blufor, "taskContactCiv", [format ["Contact independent at %1 to get tasks", initCityLocationName], "Contact independent", ""], objNull, 1, 3, true] call BIS_fnc_taskCreate;
+				initCityLocationTrigger = createTrigger ["EmptyDetector", initCityLocation]; //create a trigger area created at object with variable name my_object
+				initCityLocationTrigger setTriggerArea [100, 100, 0, false]; // trigger area with a radius of 100m.
+				
+				//Setup task completion
+				[] spawn {
+					_hasContactCivilian = false;
+					while {sleep 10; !_hasContactCivilian} do 
+					{
+						if (count((allPlayers select {alive _x && side _x == blufor} ) inAreaArray initCityLocationTrigger) >0) then 
+						{
+							_hasContactCivilian = true;
+							["taskContactCiv","SUCCEEDED"] call BIS_fnc_taskSetState;
+						};
+					};
+				};
 			};
 		};
 	default
@@ -918,14 +951,7 @@ switch (startIntel) do
 		};
 };
 
-//reveal objective for ind
-if (_mainPlayerSide == independent) then 
-{
-		for [{_i = 0}, {_i <= missionLength}, {_i = _i + 1}] do //Peut être optimisé
-	{
-		[objNull, [], _mainPlayerSide] execVM 'engine\objectiveManagement\revealObjective.sqf';
-	};
-};
+
 
 //Adjust some ACE parameters 
 if (isClass (configFile >> "CfgPatches" >> "ace_common")) then 
