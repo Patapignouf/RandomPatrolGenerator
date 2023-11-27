@@ -196,7 +196,8 @@ grenadeLauncherList_USA_2000 = [
 	"CUP_arifle_M4A1_BUIS_GL",
 	"CUP_arifle_M4A1_GL_carryhandle",
 	"CUP_arifle_M4A1_GL_carryhandle_camo",
-	"CUP_arifle_M4A1_GL_carryhandle_desert"
+	"CUP_arifle_M4A1_GL_carryhandle_desert",
+	"CUP_arifle_M16A4_GL_ACOG_Laser"
 ];
 
 launcherList_USA_2000 = [		
@@ -215,6 +216,7 @@ marksmanrifleList_USA_2000 = [
 	"CUP_srifle_DMR",
 	"CUP_srifle_M107_Base",
 	"CUP_srifle_M14_DMR",
+	"CUP_srifle_DMR_LeupoldMk4",
 	"CUP_srifle_M40A3"
 ];
 
@@ -272,7 +274,9 @@ attachmentLongList_USA_2000	= [
 	"CUP_optic_LeupoldMk4",
 	"CUP_optic_CWS",
 	"CUP_optic_CWS_NV",
-	"CUP_optic_CWS_NV_RDS"
+	"CUP_optic_CWS_NV_RDS",
+	"CUP_optic_LeupoldMk4_MRT_tan_pip",
+	"CUP_optic_LeupoldMk4_pip"
 ];
 
 ////////////////////////
@@ -350,7 +354,7 @@ backPackList_USA_2000 = [
 	"B_Mortar_01_support_F",
 	"B_Kitbag_cbr",
 	"TFAR_rt1523g",
-	"CUP_V_B_Eagle_SPC_AR"
+	"CUP_B_USMC_MOLLE_AR"
 ];
 
 
@@ -358,7 +362,10 @@ backPackList_USA_2000 = [
 uniformList_USA_2000 = [
 	"CUP_H_LWHv2_MARPAT_des_cov_fr",
 	"CUP_U_B_USMC_MCCUU_des_gloves",
-	"CUP_V_B_RRV_Scout3"
+	"CUP_V_B_RRV_Scout3",
+	"CUP_V_B_Eagle_SPC_AR",
+	"CUP_H_LWHv2_MARPAT_des_NVG_gog_cov2",
+	"CUP_V_B_Eagle_SPC_GL"
 ];
 
 //Magazine avalaible for all unit

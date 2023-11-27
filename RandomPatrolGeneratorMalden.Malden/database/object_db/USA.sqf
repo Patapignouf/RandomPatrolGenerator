@@ -189,6 +189,7 @@ rifleList_USA = [
 //Grenade launcher or weapon with grenade launcher option
 grenadeLauncherList_USA = [		
 	"CUP_arifle_mk18_m203_tan_holo_laserflash",
+	"CUP_arifle_M16A4_GL_ACOG_Laser",
 	"CUP_arifle_mk18_m203_black",
 	"CUP_arifle_M4A1_M203_CCO_Laser",
 	"CUP_arifle_Colt727_M203"
@@ -204,6 +205,7 @@ launcherList_USA = [
 
 autorifleList_USA = [			
 	"CUP_lmg_Mk48",
+	"CUP_lmg_M249",
 	"CUP_lmg_m249_pip2",
 	"CUP_lmg_M240_B"
 ];	
@@ -215,6 +217,7 @@ marksmanrifleList_USA = [
 	"CUP_srifle_M110",
 	"CUP_srifle_Mk18_blk_LP4",
 	"CUP_srifle_M14",
+	"CUP_srifle_DMR_LeupoldMk4",
 	"CUP_arifle_Mk20"
 ];
 
@@ -306,7 +309,8 @@ attachmentLongList_USA	= [
 	"CUP_B_USArmy_MG_SpecOp",
 	"CUP_H_OpsCore_Tan_SF",
 	"CUP_optic_LeupoldMk4_MRT_tan",
-	"CUP_optic_LeupoldMk4_MRT_tan_pip"
+	"CUP_optic_LeupoldMk4_MRT_tan_pip",
+	"CUP_optic_LeupoldMk4_pip"
 ];
 
 ////////////////////////
@@ -382,6 +386,7 @@ backPackList_USA = [
 	"B_Mortar_01_weapon_F",
 	"B_Mortar_01_support_F",
 	"CUP_B_US_Assault_UCP",
+	"CUP_B_USMC_MOLLE_AR",
 	"TFAR_rt1523g"
 ];
 
@@ -411,7 +416,9 @@ uniformList_USA = [
 	"CUP_V_B_IOTV_UCP_Rifleman_Deltoid_USArmy",
 	"CUP_V_B_IOTV_UCP_Rifleman_USArmy",
 	"CUP_U_B_USArmy_ACU_Kneepad_Rolled_UCP",
-	"CUP_U_B_USArmy_ACU_Kneepad_UCP"
+	"CUP_U_B_USArmy_ACU_Kneepad_UCP",
+	"CUP_H_LWHv2_MARPAT_des_NVG_gog_cov2",
+	"CUP_V_B_Eagle_SPC_GL"
 	];
 
 //Magazine avalaible for all unit

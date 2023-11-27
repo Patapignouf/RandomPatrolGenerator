@@ -352,9 +352,21 @@ setupArsenalToItem = {
 	_itemToAttachArsenal call RemoveArsenalActionFromGivenObject;
 
 	//Save avalaible item list
-	_whitelistOfArsenalItems = _currentWeaponItems+_currentBackpackItems+_currentMagazineItems+_currentItems + (_currentPlayer getVariable ["avalaibleItemsInArsenal", []]);
+	_currentDefaultLoadout = [_currentPlayer, _currentFaction] call getLoadoutByRole;
+
+	//Check if there is a basic unit config
+	if (typeName _currentDefaultLoadout == "STRING") then 
+	{
+		_currentDefaultLoadout = getUnitLoadout _currentDefaultLoadout;
+	};
+	_whiteListDefaultStuff = [_currentPlayer, _currentDefaultLoadout, []] call listCurrentItemsLoadout;
+	diag_log format ["List of whitelist default items by listCurrentItemsLoadout %1", _whiteListDefaultStuff];
+
+	//Merge every whitelist
+	_whitelistOfArsenalItems = _currentWeaponItems+_currentBackpackItems+_currentMagazineItems+_currentItems + _whiteListDefaultStuff;
 	_currentPlayer setVariable ["avalaibleItemsInArsenal", _whitelistOfArsenalItems, true];
-	
+	diag_log format ["List of whitelist items by listCurrentItemsLoadout %1", _whitelistOfArsenalItems];
+
 	//Remove arsenal action
 	player call RemoveArsenalActionFromGivenObject;
 	["AmmoboxExit", _itemToAttachArsenal] call BIS_fnc_arsenal;
@@ -365,29 +377,48 @@ setupArsenalToItem = {
 
 doInitializeLoadout = {
 	//InitParam
-	params ["_player","_currentFaction"];
+	params ["_player", "_currentFaction", "_forceDefault"];
 
+	//Save personnal loadout
 	_currentPlayerClass = _player getVariable "role";
-	_thisClasse = ((loadout_db select {_x select 1 == _currentFaction}) select 0 select 0) select {_x select 0 == _currentPlayerClass} select 0;
+	_loadableLoadout = profileNamespace getVariable [format [loadoutSaveName, name player, _currentFaction, _currentPlayerClass], []];
+	_isDefault = false;
 
-	_player setUnitLoadout ([_player,_currentFaction] call getLoadoutByRole);
+	//Setup default stuff
+	if (isNil "_forceDefault") then 
+	{
+		_forceDefault = false;
+	};
 
-	//Check if loadout need adjustment
-	//If the faction doesn't implement well ACE, loadout will be adjusted (check boolean flag in role definition)
-	if (count _thisClasse == 2) then 
+	//If there is a custom class already saved
+	if (count _loadableLoadout == 0 || ironMan || _forceDefault) then
 	{
-		[_player] call adjustLoadout;
-		
-	} else 
+		_loadableLoadout = [_player, _currentFaction] call getLoadoutByRole;
+		_isDefault = true;
+	};
+
+	//Load player loadout
+	_player setUnitLoadout _loadableLoadout;
+
+	//If it's a default loadout then adjust
+	if (_isDefault) then 
 	{
-		if (_thisClasse select 2 == false) then 
+		_thisClasse = ((loadout_db select {_x select 1 == _currentFaction}) select 0 select 0) select {_x select 0 == _currentPlayerClass} select 0;
+	
+		//Check if loadout need adjustment
+		//If the faction doesn't implement well ACE, loadout will be adjusted (check boolean flag in role definition)
+		if (count _thisClasse == 2) then 
 		{
 			[_player] call adjustLoadout;
+			
+		} else 
+		{
+			if (_thisClasse select 2 == false) then 
+			{
+				[_player] call adjustLoadout;
+			};
 		};
 	};
-	
-	//Whitelist current player loadout
-	_player setVariable ["avalaibleItemsInArsenal", [_player, getUnitLoadout _player, []] call listCurrentItemsLoadout, true];
 };
 
 
@@ -424,7 +455,7 @@ switchToRole = {
 	_caller setVariable ["role", _role, true];
 
 	//Manage default stuff
-	_personalLoadout = profileNamespace getVariable [format [loadoutSaveName,name _caller, _faction , _role], []];
+	_personalLoadout = profileNamespace getVariable [format [loadoutSaveName, name _caller, _faction , _role], []];
 	if (count _personalLoadout != 0 && _allowCustomLoad) then 
 	{
 		//Personal loadout 
@@ -432,7 +463,7 @@ switchToRole = {
 	} else 
 	{
 		//Default loadout
-		[_caller, _faction] call doInitializeLoadout;
+		[_caller, _faction, true] call doInitializeLoadout;
 	};
 
 	_caller setVariable ["spawnLoadout", getUnitLoadout _caller];
@@ -484,7 +515,7 @@ setupRoleSwitchToItem = {
 				_caller setVariable ["role", (_params select 0)];
 
 				//Manage default stuff
-				[_caller,(_params select 1)] call doInitializeLoadout;
+				[_caller,(_params select 1), true] call doInitializeLoadout;
 
 				_caller setVariable ["spawnLoadout", getUnitLoadout _caller];
 
@@ -910,7 +941,7 @@ listCurrentItemsLoadout =
 			};
 	};
 
-	diag_log format ["list of whitelist items by listCurrentItemsLoadout %1", _listOfItems];
+	//diag_log format ["list of whitelist items by listCurrentItemsLoadout %1", _listOfItems];
 	_listOfItems
 };
 

@@ -19,7 +19,9 @@ private _buttonLoad = _mainDisplay displayCtrl 7203;
 private _buttonClearItems = _mainDisplay displayCtrl 7204;
 private _button3DItems = _mainDisplay displayCtrl 7205;
 private _buttonRank = _mainDisplay displayCtrl 7206;
+private _buttonResetLoadout = _mainDisplay displayCtrl 7207;
 private _nameTag = _mainDisplay displayCtrl 7002;
+
 
 //Faction params
 bluFaction = missionNamespace getVariable "bluforFaction";
@@ -90,6 +92,20 @@ _comboBoxClassSelection ctrlAddEventHandler[ "LBSelChanged",
 		};
 	}];
 
+//Reset loadout
+if (ironMan) then 
+{
+	_buttonResetLoadout ctrlShow false;
+};
+
+_buttonResetLoadout ctrlAddEventHandler[ "ButtonClick", 
+	{ 
+		hint "Loadout reset";
+		[player, player call getPlayerFaction, true] call doInitializeLoadout;
+		player setVariable ["spawnLoadout", getUnitLoadout player];
+	}];
+
+
 //Open arsenal
 _buttonArsenal ctrlAddEventHandler[ "ButtonClick", 
 	{ 
@@ -142,6 +158,7 @@ _buttonSave ctrlAddEventHandler[ "ButtonClick",
 
 		//Save current loadout
 		[player, "personal"] call saveCustomLoadout;
+		hint "Loadout loaded";
 
 		//Load default faction stuff in ironMan mode
 		if (ironMan) then 
