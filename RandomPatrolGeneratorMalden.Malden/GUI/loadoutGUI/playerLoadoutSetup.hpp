@@ -98,7 +98,7 @@ class PlayerLoadoutSetup
 		class 3DForceOpticsButton: RscButton
 		{
 			idc = 7205;
-			text = "3D Optics";
+			text = "3D for CUP Optics";
 			x = 0.701406 * safezoneW + safezoneX;
 			y = GUI_GRID_CENTER_Y + 5 * GUI_GRID_CENTER_H;
 			w = 5 * GUI_GRID_CENTER_W;
