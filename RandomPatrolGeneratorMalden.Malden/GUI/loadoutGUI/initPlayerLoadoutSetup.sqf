@@ -78,6 +78,7 @@ _comboBoxClassSelection ctrlAddEventHandler[ "LBSelChanged",
 			_listOfAvalaibleRole = [player call getPlayerFaction] call setupRoleSwitchToList;
 			_role = (_listOfAvalaibleRole select parseNumber ((_comboBoxClassSelection lbData (lbCurSel _comboBoxClassSelection))));
 			[player, player, player call getPlayerFaction , _role, false] call switchToRole;
+			[player, player, player call getPlayerFaction] call setupArsenalToItem;
 
 			//Refresh load button
 			[] call refreshCustomLoadoutDisplay;
@@ -128,22 +129,30 @@ _buttonRank ctrlAddEventHandler[ "ButtonClick",
 	}];
 
 //Force 3D Optics
+//Set button color
+if (profileNamespace getVariable ["is3DOptics", false]) then 
+{
+	_button3DItems ctrlSetTextColor [0.5, 1, 0.5, 0.8]; //Green seems enable
+} else 
+{
+	_button3DItems ctrlSetTextColor [1, 1, 1, 1]; //White seems disable
+};
 _button3DItems ctrlAddEventHandler[ "ButtonClick", 
 	{ 
-		player addEventHandler ["OpticsSwitch", {
-			params ["_unit", "_isADS"];
-			
-			_currentOptics = (weaponsItems _unit)#0#3;	
-			if (["_PIP", _currentOptics] call BIS_fnc_inString) then 
-			{
-				_opticsStringRework = _currentOptics regexReplace ["_PIP", "_3D"];
-				if (getText (configFile >> "cfgWeapons" >> _opticsStringRework >> "displayName")!="") then 
-				{
-						_unit removePrimaryWeaponItem _currentOptics;
-						_unit addPrimaryWeaponItem _opticsStringRework;
-				};
-			};
-		}];
+		params ["_ctrl"];
+
+		//Switch optic mode
+		profileNamespace setVariable ["is3DOptics", !(profileNamespace getVariable ["is3DOptics", false])];
+		saveProfileNamespace;
+
+		//Set button color
+		if (profileNamespace getVariable ["is3DOptics", false]) then 
+		{
+			_ctrl ctrlSetTextColor [0.5, 1, 0.5, 0.8]; //Green seems enable
+		} else 
+		{
+			_ctrl ctrlSetTextColor [1, 1, 1, 1]; //White seems disable
+		};
 	}];
 
 
