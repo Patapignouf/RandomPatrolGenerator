@@ -177,6 +177,7 @@ rifleList_USA_2000 = [
 	"CUP_arifle_M16A4_ACOG_Laser",
 	"CUP_arifle_M4A1_Aim",
 	"CUP_arifle_M16A4_Grip",
+	"CUP_arifle_M4A1_black",
 	"CUP_arifle_M4A1_desert_carryhandle",
 	"CUP_arifle_M4A1_camo_carryhandle",
 	"CUP_arifle_M16A1E1",
@@ -202,6 +203,7 @@ grenadeLauncherList_USA_2000 = [
 
 launcherList_USA_2000 = [		
 	"CUP_launch_M136_Loaded",
+	"CUP_launch_Mk153Mod0",
 	"CUP_launch_FIM92Stinger_Loaded",
 	"CUP_launch_Javelin"
 ];	
@@ -312,7 +314,8 @@ itemList_USA_2000 = [
 	"ACE_RangeCard",
 	"ACE_NVG_Wide_Black_WP",
 	"ACE_NVG_Wide_WP",
-	"ACE_NVG_Wide_Green_WP"
+	"ACE_NVG_Wide_Green_WP",
+	"ACE_HuntIR_monitor"
 ];
 
 itemEngineerList_USA_2000 = [
@@ -324,6 +327,8 @@ itemEngineerList_USA_2000 = [
 	"ACE_DeadManSwitch",
 	"ACE_DefusalKit",
 	"ACE_Clacker",
+	"APERSBoundingMine_Range_Mag",
+	"DemoCharge_Remote_Mag",
 	"ACE_M26_Clacker",
 	"ace_marker_flags_white",
 	"ace_marker_flags_yellow",
@@ -383,8 +388,10 @@ magazineList_USA_2000 = [
 	"CUP_5Rnd_762x51_M24",
 	"CUP_Stinger_M",
 	"CUP_1Rnd_HEDP_M203",
+	"CUP_1Rnd_Smoke_M203",
 	"CUP_1Rnd_HE_M203",
-	"CUP_FlareWhite_M203"
+	"CUP_FlareWhite_M203",
+	"ACE_HuntIR_M203"
 ];
 
 //Get magazine with following command

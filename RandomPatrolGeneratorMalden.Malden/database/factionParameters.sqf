@@ -27,8 +27,11 @@ _2035_CSAT = 25;
 _WWII_FFI = 26;
 _ColdWar_OTAN = 27;
 _ColdWar_USSR = 28;
+_Chernarussian_Winter = 29;
+_USA_Winter = 30;
 
 #include "object_db\USA.sqf"
+#include "object_db\USA_Winter.sqf"
 #include "object_db\French.sqf"
 #include "object_db\Russian.sqf"
 #include "object_db\Syndikat.sqf"
@@ -48,6 +51,7 @@ _ColdWar_USSR = 28;
 #include "object_db\2035_Spetsnaz.sqf"
 #include "object_db\USA_2000_DF.sqf"
 #include "object_db\Russian_Winter.sqf"
+#include "object_db\Chernarussian_Winter.sqf"
 #include "object_db\PMC.sqf"
 #include "object_db\2035_Rebels.sqf"
 #include "object_db\Takistani_army.sqf"
@@ -61,6 +65,7 @@ _ColdWar_USSR = 28;
 //Define faction prefix
 c_db = "_db";
 c_USA = "_USA";
+c_USA_Winter = "_USA_Winter";
 c_USA_2000 = "_USA_2000";
 c_Russian = "_Russian";
 c_Taki = "_Taki";
@@ -89,6 +94,7 @@ c_HorizonIslandSF =  "_HorizonIslandSF";
 c_2035_CSAT ="_2035_CSAT";
 c_ColdWar_OTAN ="_ColdWar_OTAN";
 c_ColdWar_USSR ="_ColdWar_USSR";
+c_Chernarussian_Winter = "_Chernarussian_Winter";
 
 //Faction format :
 // [ Number : Faction Code, String : Faction string Name , String : Faction Name to display, Enabled for Blufor/Independant, Enabled for Opfor, Enabled for Civilian],
@@ -116,6 +122,7 @@ if (isClass (configFile >> "CfgPatches" >> "AMF_Patches")) then
 //Add specific CUP factions
 if (isClass (configFile >> "CfgPatches" >> "CUP_BaseData")) then 
 {
+	factionInfos pushBack [c_USA_Winter,_USA_Winter,"US Army Winter [CUP]", true, false, false];
 	factionInfos pushBack [c_USA,_USA,"US Army [CUP]", true, true, true];
 	factionInfos pushBack [c_Taki,_Taki,"Takistani [CUP]", true, true, true];
 	factionInfos pushBack [c_Russian,_Ru,"Russian [CUP]", true, true, true];
@@ -123,6 +130,7 @@ if (isClass (configFile >> "CfgPatches" >> "CUP_BaseData")) then
 	factionInfos pushBack [c_USA_2000_DF,_USA_2000_DF,"1993 USA Delta Force [CUP][ACE]", true, true, false];	
 	factionInfos pushBack [c_PMC, _PMC, "PMC Modern [CUP]", true, true, false];	
 	factionInfos pushBack [c_Russian_Winter, _Russian_Winter, "Russian Winter [CUP]", true, true, true];	
+	factionInfos pushBack [c_Chernarussian_Winter, _Chernarussian_Winter, "Chernarussian Winter [CUP]", false, true, false];
 	factionInfos pushBack [c_Taki_Army, _Taki_Army, "Takistani Army [CUP]", true, true, false];
 	factionInfos pushBack [c_HorizonIsland, _HorizonIsland, "Horizon Island [CUP]", true, true, true];
 	factionInfos pushBack [c_HorizonIslandSF, _HorizonIslandSF, "Horizon Island SF [CUP]", true, true, true];
