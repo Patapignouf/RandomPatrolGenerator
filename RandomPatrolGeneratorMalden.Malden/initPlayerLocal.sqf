@@ -616,30 +616,6 @@ player addEventHandler ["Killed", {
 		};
 	};	
 }];
-
-//Add 3D optic switch EH
-player addEventHandler ["OpticsSwitch", {
-	params ["_unit", "_isADS"];
-	
-	_currentOptics = (weaponsItems _unit)#0#3;	
-	if (["_PIP", _currentOptics] call BIS_fnc_inString && profileNamespace getVariable ["is3DOptics", false]) then 
-	{
-		_opticsStringRework = _currentOptics regexReplace ["_PIP", "_3D"];
-		if (getText (configFile >> "cfgWeapons" >> _opticsStringRework >> "displayName")!="") then 
-		{
-				_unit removePrimaryWeaponItem _currentOptics;
-				_unit addPrimaryWeaponItem _opticsStringRework;
-		};
-	} else 
-	{
-		_opticsStringRework = _currentOptics regexReplace ["_3D", "_PIP"];
-		if (getText (configFile >> "cfgWeapons" >> _opticsStringRework >> "displayName")!="") then 
-		{
-				_unit removePrimaryWeaponItem _currentOptics;
-				_unit addPrimaryWeaponItem _opticsStringRework;
-		};
-	};
-}];
 		
 
 //If a player join in progress he will be teleported to his teamleader (WIP feature)

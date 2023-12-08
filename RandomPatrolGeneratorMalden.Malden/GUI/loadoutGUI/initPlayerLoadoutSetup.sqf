@@ -259,6 +259,30 @@ _comboBoxClassSelection lbSetCurSel (_listOfAvalaibleRole find (player getVariab
 
 //Disable space button in dialog
 waituntil {!(IsNull (findDisplay 7000))};
+
+//Add 3D Optics Switch
+_currentOptics = (weaponsItems player)#0#3;	
+if (["_PIP", _currentOptics] call BIS_fnc_inString && profileNamespace getVariable ["is3DOptics", false]) then 
+{
+	_opticsStringRework = _currentOptics regexReplace ["_PIP", "_3D"];
+	if (getText (configFile >> "cfgWeapons" >> _opticsStringRework >> "displayName")!="") then 
+	{
+			player removePrimaryWeaponItem _currentOptics;
+			player addPrimaryWeaponItem _opticsStringRework;
+	};
+} else 
+{
+	if (["_3D", _currentOptics] call BIS_fnc_inString && profileNamespace getVariable ["is3DOptics", false]) then 
+	{
+		_opticsStringRework = _currentOptics regexReplace ["_3D", "_PIP"];
+		if (getText (configFile >> "cfgWeapons" >> _opticsStringRework >> "displayName")!="") then 
+		{
+				player removePrimaryWeaponItem _currentOptics;
+				player addPrimaryWeaponItem _opticsStringRework;
+		};
+	};
+};
+
 _keyDown = (findDisplay 7000) displayAddEventHandler ["KeyDown", {
 	params ["_control", "_dikCode", "_shift", "_ctrl", "_alt"];
 

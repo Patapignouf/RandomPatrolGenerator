@@ -6,7 +6,8 @@ c_at = "at";
 c_rifleman = "rifleman";
 c_engineer = "engineer";
 c_autorifleman = "autorifleman";
-c_marksman = "marksman"; 
+c_marksman = "marksman";
+c_sniper = "sniper"; 
 c_medic = "medic";
 c_radioman = "radioman";
 c_grenadier = "grenadier";
@@ -68,7 +69,8 @@ getVirtualWeaponList = {
 				virtualWeaponList = virtualWeaponList + (rifleList_db select {_x select 1  == currentFaction} select 0 select 0);
 				virtualWeaponList = virtualWeaponList + (autorifleList_db select {_x select 1  == currentFaction} select 0 select 0);
 			};
-		case c_marksman:
+		case c_marksman;
+		case c_sniper: 
 			{
 				virtualWeaponList = virtualWeaponList + (rifleList_db select {_x select 1  == currentFaction} select 0 select 0);
 				virtualWeaponList = virtualWeaponList + (marksmanrifleList_db select {_x select 1  == currentFaction} select 0 select 0);
@@ -205,10 +207,11 @@ getVirtualUniform = {
 				//add leader uniform
 				virtualUniformList = virtualUniformList + (uniformList_db select {_x select 1  == currentFaction} select 0 select 0);
 			};			
-		case c_marksman:	
+		case c_sniper:	
 			{
 				//add ghilie to the uniform list
 				virtualUniformList = virtualUniformList + (uniformList_db select {_x select 1  == currentFaction} select 0 select 0);
+				virtualUniformList = virtualUniformList + (uniformListSniper_db select {_x select 1  == currentFaction} select 0 select 0);
 			};		
 		default 
 			{ 
@@ -229,7 +232,8 @@ getVirtualAttachement = {
 
 	switch (currentPlayerClass) do
 	{
-		case c_marksman:		
+		case c_marksman;
+		case c_sniper:		
 			{
 				virtualAttachementList = virtualAttachementList + (attachmentShortList_db select {_x select 1  == currentFaction} select 0 select 0);
 				virtualAttachementList = virtualAttachementList + (attachmentLongList_db select {_x select 1  == currentFaction} select 0 select 0);
