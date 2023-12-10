@@ -77,7 +77,7 @@ getListOfPositionsAroundTarget =
 	
 	AvalaiblePositions = [];
 	
-	for [{_i = 0}, {_i <= _numberOfPosition}, {_i = _i + 1}] do
+	for [{_i = 0}, {_i < _numberOfPosition}, {_i = _i + 1}] do
 	{ 
 		AvalaiblePositions pushBack ([_targetPosition, (_minDistance), (_maxDistance), 8, 0, 0.25, 0, [], [[0,0,0],[0,0,0]]] call BIS_fnc_findSafePos);
 	};
