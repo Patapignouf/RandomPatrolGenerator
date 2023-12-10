@@ -712,22 +712,6 @@ adjustLoadout = {
 	_currentPlayer removeItem "itemRadio";
 	_currentPlayer setSpeaker "noVoice";
 
-	switch (side _currentPlayer) do 
-	{
-		case independent:
-		{
-			_currentPlayer addItem "ACE_key_indp";
-		};
-		case blufor:
-		{
-			_currentPlayer addItem "ACE_key_west";
-		};
-		default 
-		{
-			//Do nothing
-		};
-	};
-
 	//Adapt loadout to a specific Era
 	switch (warEra) do
 	{

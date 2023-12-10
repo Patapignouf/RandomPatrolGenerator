@@ -117,6 +117,40 @@ doGenerateVehicleForFOB =
 			};
 		sleep 2; //Wait vehicle spawn (avoid vehicle crash)
 
+		//Clear vehicle cargo
+		clearWeaponCargoGlobal _currentVehicle;
+		clearBackpackCargo _currentVehicle;
+
+		if (isClass (configFile >> "CfgPatches" >> "ace_medical")) then 
+		{
+			//Setup keys 
+			switch ((getnumber (configfile >> "cfgvehicles" >> _vehicleClass >> "side")) call bis_fnc_sideType) do
+			{
+				case blufor:
+					{
+						_currentVehicle addItemCargoGlobal ["ACE_key_west", 1];
+					};
+				case opfor:
+					{
+						_currentVehicle addItemCargoGlobal ["ACE_key_east", 1];
+					};
+				case civilian:
+					{
+						_currentVehicle addItemCargoGlobal ["ACE_key_civ", 1];
+					};
+				case independent:
+					{
+						_currentVehicle addItemCargoGlobal ["ACE_key_indp", 1];
+					};
+				default
+					{
+						//Side unknown
+					};
+			};
+		};
+
+		// hint format ["vehicle faction : %1",(_currentVehicle call BIS_fnc_objectSide)];
+
 		//Feed vehicle list
 		if (!isNull _currentVehicle) then 
 		{
@@ -129,6 +163,7 @@ doGenerateVehicleForFOB =
 	{
 		[["Boats","ColorBlue","hd_pickup_noShadow",_shipGoodPosition, blufor], 'objectGenerator\doGenerateMarker.sqf'] remoteExec ['BIS_fnc_execVM', 0];	
 	};
+
 	_vehicleSpawned;
 };
 

@@ -321,12 +321,6 @@ if ( count AvalaibleInitAttackPositions != 0 && (enableInitAttack == 1 || ((enab
 	waitUntil {isNull _handleCivGeneration};
 };
 
-//Generate items on VA1 box 
-if (isClass (configFile >> "CfgPatches" >> "ace_medical")) then 
-{
-	VA1 addItemCargoGlobal ["ACE_key_indp", 5];
-};
-
 //Add reinforcement action on independent box
 [VA1, ["Call Reinforcements",{
 	params ["_object","_caller","_ID","_param"];
@@ -623,9 +617,6 @@ if (isClass (configFile >> "CfgPatches" >> "ace_medical")) then
 	_tempBox addItemCargoGlobal ["ACE_bloodIV", 5];
 	_tempBox addItemCargoGlobal ["ACE_tourniquet", 5];
 	_tempBox addItemCargoGlobal ["ACE_Suture", 20];
-
-	//Add keys to the box
-	_tempBox addItemCargoGlobal ["ACE_key_west", 5];
 
 	//Setup fortification ACE mod
 	[blufor, 50, [["Land_BagFence_Long_F", 10], ["Land_BagFence_Round_F", 10], ["Land_SandbagBarricade_01_hole_F", 15], ["Land_BagBunker_Small_F", 20]]] call ace_fortify_fnc_registerObjects;
