@@ -548,7 +548,7 @@ if (side player == blufor) then
 					{
 						_caller setPos selectedLoc;
 						createVehicle [_avalaibleAicraft, selectedLoc, [], 0, "NONE"];
-						[_object,_ID] remoteExec [ "removeAction", 0, true ];
+						//[_object,_ID] remoteExec [ "removeAction", 0, true ];
 						
 						//Reduce avalaible spawn counter
 						missionNamespace setVariable ["bluforVehicleAvalaibleSpawn", bluforVehicleAvalaibleSpawnCounter-600, true];

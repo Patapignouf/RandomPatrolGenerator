@@ -145,23 +145,6 @@ getItembyWarEra = {
 		};
 	};
 
-	//Add ACE Key management
-	//ACE key doesn't work on the arsenal
-	switch (side _currentPlayer) do 
-	{
-		case independent:
-		{
-			_itemList pushBack "ACE_key_indp";
-		};
-		case blufor:
-		{
-			_itemList pushBack "ACE_key_west";
-		};
-		default 
-		{
-			//Do nothing
-		};
-	};
 	diag_log format ["itemList : %1", _itemList];
 	_itemList
 };
@@ -367,7 +350,7 @@ setupArsenalToItem = {
 	diag_log format ["List of whitelist default items by listCurrentItemsLoadout %1", _whiteListDefaultStuff];
 
 	//Merge every whitelist
-	_whitelistOfArsenalItems = _currentWeaponItems+_currentBackpackItems+_currentMagazineItems+_currentItems + _whiteListDefaultStuff;
+	_whitelistOfArsenalItems = _currentWeaponItems+_currentBackpackItems+_currentMagazineItems+_currentItems + _whiteListDefaultStuff + ["ACE_key_west","ACE_key_east","ACE_key_civ","ACE_key_indp"];
 	_currentPlayer setVariable ["avalaibleItemsInArsenal", _whitelistOfArsenalItems, true];
 	diag_log format ["List of whitelist items by listCurrentItemsLoadout %1", _whitelistOfArsenalItems];
 

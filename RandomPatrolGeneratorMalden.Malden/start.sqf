@@ -760,6 +760,12 @@ if (!isNil "USS_FREEDOM_CARRIER") then
 			{
 				deleteVehicle _vehicle;
 			}; 
+
+			//Add ACE keys
+			if (isClass (configFile >> "CfgPatches" >> "ace_medical")) then 
+			{
+				[_vehicle] call doAddKeys;
+			};
 		};
 	} foreach bluforUnarmedVehicleChopper;
 
@@ -785,6 +791,12 @@ if (!isNil "USS_FREEDOM_CARRIER") then
 			{
 				deleteVehicle _vehicle;
 			}; 
+
+			//Add ACE keys
+			if (isClass (configFile >> "CfgPatches" >> "ace_medical")) then 
+			{
+				[_vehicle] call doAddKeys;
+			};
 		};
 	} foreach bluforArmedChopper;
 
@@ -809,7 +821,14 @@ if (!isNil "USS_FREEDOM_CARRIER") then
 			if (!(alive _vehicle)) then 
 			{
 				deleteVehicle _vehicle;
-			}; 
+			};
+
+			//Add ACE keys
+			if (isClass (configFile >> "CfgPatches" >> "ace_medical")) then 
+			{
+				[_vehicle] call doAddKeys;
+			};
+
 		};
 	} foreach bluforUnarmedVehicle;
 
@@ -862,6 +881,12 @@ if (!isNil "USS_FREEDOM_CARRIER") then
 			{
 				deleteVehicle _vehicle;
 			}; 
+
+			//Add ACE keys
+			if (isClass (configFile >> "CfgPatches" >> "ace_medical")) then 
+			{
+				[_vehicle] call doAddKeys;
+			};
 		};
 	} foreach bluforFixedWing;
 };
