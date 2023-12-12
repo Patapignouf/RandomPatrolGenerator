@@ -90,7 +90,7 @@ while {sleep 1; !_exploded ;} do
 			};
 			case 3:
 			{
-				_bombType = "IEDLandBig_Remote_Ammo" createVehicle (getPos _currentObject);
+				_bombType = "Bo_GBU12_LGB" createVehicle (getPos _currentObject);
 				soilCrater = "Land_ShellCrater_02_large_F" createVehicle ([0,0,0]);
 				_debriesCount = 15;
 			};

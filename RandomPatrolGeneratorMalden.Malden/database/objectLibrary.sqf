@@ -36,7 +36,6 @@ if (isClass (configFile >> "CfgPatches" >> "CUP_BaseData")) then
 avalaibleIED = [
 	"IEDLandBig_F", 
 	"IEDUrbanSmall_F", 
-	
 	"IEDLandSmall_F"
 ];
 
