@@ -115,13 +115,6 @@ loadout_Russian_Winter = [
 
 
 //Sample stuff
-// [["CUP_srifle_SVD_pso","","","CUP_optic_PSO_1",["CUP_10Rnd_762x54_SVD_M",10],[],""],[],[],["CUP_U_O_RUS_Ratnik_Summer",[["FirstAidKit",1],["CUP_10Rnd_762x54_SVD_M",3,10],["SmokeShell",1,1]]],["CUP_Vest_RUS_6B45_Sh117",[["CUP_10Rnd_762x54_SVD_M",6,10],["CUP_HandGrenade_RGD5",2,1],["SmokeShellRed",1,1],["Chemlight_red",2,1]]],[],"CUP_H_RUS_6B47_v2_Summer","CUP_G_RUS_Balaclava_Ratnik",[],["ItemMap","","ItemRadio","ItemCompass","ItemWatch","CUP_NVG_1PN138"]]
-// [["CUP_arifle_RPK74M_1p78","","","CUP_optic_PechenegScope",["CUP_45Rnd_TE4_LRT4_Green_Tracer_545x39_RPK74M_M",45],[],""],[],["hgun_Rook40_F","","","",["16Rnd_9x21_Mag",17],[],""],["CUP_U_O_RUS_Ratnik_Summer",[["FirstAidKit",1],["CUP_45Rnd_TE4_LRT4_Green_Tracer_545x39_RPK74M_M",2,45]]],["CUP_Vest_RUS_6B45_Sh117",[["CUP_45Rnd_TE4_LRT4_Green_Tracer_545x39_RPK74M_M",7,45],["16Rnd_9x21_Mag",2,17],["CUP_HandGrenade_RGD5",2,1],["SmokeShell",1,1],["SmokeShellRed",1,1],["Chemlight_red",2,1]]],[],"CUP_H_RUS_6B47_v2_GogglesUp_Summer","CUP_G_RUS_Balaclava_Ratnik",["Binocular","","","",[],[],""],["ItemMap","","ItemRadio","ItemCompass","ItemWatch","CUP_NVG_1PN138"]]
-// [["CUP_arifle_AK12_black_1P87","","","CUP_optic_1P87_RIS",["CUP_30Rnd_545x39_AK12_M",30],[],""],["CUP_launch_Metis","","","",["CUP_AT13_M",1],[],""],["hgun_Rook40_F","","","",["16Rnd_9x21_Mag",17],[],""],["CUP_U_O_RUS_Ratnik_Summer",[["FirstAidKit",1],["CUP_30Rnd_545x39_AK12_M",3,30],["SmokeShell",1,1]]],["CUP_Vest_RUS_6B45_Sh117",[["CUP_30Rnd_545x39_AK12_M",4,30],["16Rnd_9x21_Mag",2,17],["CUP_HandGrenade_RGD5",2,1],["SmokeShellRed",1,1],["Chemlight_red",2,1]]],[],"CUP_H_RUS_6B47_v2_GogglesDown_Summer","CUP_G_RUS_Balaclava_Ratnik_v2",["Binocular","","","",[],[],""],["ItemMap","","ItemRadio","ItemCompass","ItemWatch","CUP_NVG_1PN138"]]
-// [["CUP_lmg_Pecheneg_PScope","","","CUP_optic_PechenegScope",["CUP_100Rnd_TE4_LRT4_762x54_PK_Tracer_Green_M",100],[],""],[],["hgun_Rook40_F","","","",["16Rnd_9x21_Mag",17],[],""],["CUP_U_O_RUS_Ratnik_Summer",[["FirstAidKit",1],["16Rnd_9x21_Mag",2,17],["CUP_HandGrenade_RGD5",1,1],["SmokeShell",1,1],["SmokeShellRed",1,1]]],["CUP_Vest_RUS_6B45_Sh117_PKP",[["CUP_100Rnd_TE4_LRT4_762x54_PK_Tracer_Green_M",2,100],["CUP_HandGrenade_RGD5",1,1],["Chemlight_red",2,1]]],[],"CUP_H_RUS_6B47_v2_GogglesUp_Summer","CUP_G_RUS_Balaclava_Ratnik",["Binocular","","","",[],[],""],["ItemMap","","ItemRadio","ItemCompass","ItemWatch","CUP_NVG_1PN138"]]
-// [["CUP_arifle_AS_VAL_VFG_pso_open","","","CUP_optic_PSO_1_1_open",["CUP_20Rnd_9x39_SP5_VSS_M",20],[],""],[],["CUP_hgun_PB6P9_snds","CUP_muzzle_PB6P9","","",["CUP_8Rnd_9x18_MakarovSD_M",8],[],""],["CUP_U_O_RUS_Ratnik_Summer",[["FirstAidKit",1],["CUP_20Rnd_9x39_SP5_VSS_M",2,20]]],["CUP_Vest_RUS_6B45_Sh117",[["CUP_20Rnd_9x39_SP5_VSS_M",5,20],["CUP_8Rnd_9x18_MakarovSD_M",2,8],["CUP_HandGrenade_RGD5",2,1],["SmokeShell",1,1],["SmokeShellRed",1,1],["SmokeShellOrange",1,1],["SmokeShellYellow",1,1],["Chemlight_red",2,1]]],[],"CUP_H_RUS_6B47_v2_Summer","CUP_G_RUS_Balaclava_Ratnik",["Rangefinder","","","",[],[],""],["ItemMap","ItemGPS","ItemRadio","ItemCompass","ItemWatch","CUP_NVG_1PN138"]]
-// [["CUP_srifle_VSSVintorez_pso","","","CUP_optic_PSO_1_1",["CUP_10Rnd_9x39_SP5_VSS_M",10],[],""],[],["CUP_hgun_PB6P9_snds","CUP_muzzle_PB6P9","","",["CUP_8Rnd_9x18_MakarovSD_M",8],[],""],["CUP_U_O_RUS_Ratnik_Summer",[["FirstAidKit",1],["CUP_10Rnd_9x39_SP5_VSS_M",5,10]]],["CUP_Vest_RUS_6B45_Sh117",[["CUP_10Rnd_9x39_SP5_VSS_M",4,10],["CUP_8Rnd_9x18_MakarovSD_M",2,8],["CUP_HandGrenade_RGD5",2,1],["SmokeShell",1,1],["SmokeShellRed",1,1],["SmokeShellOrange",1,1],["SmokeShellYellow",1,1],["Chemlight_red",2,1]]],[],"CUP_H_RUS_6B47_v2_Summer","CUP_G_RUS_Balaclava_Ratnik",["Rangefinder","","","",[],[],""],["ItemMap","ItemGPS","ItemRadio","ItemCompass","ItemWatch","CUP_NVG_1PN138"]]
-
 ////////////////////////
 ///Weapon management////
 ////////////////////////
@@ -132,8 +125,7 @@ rifleList_Russian_Winter = [
 
 launcherList_Russian_Winter = [		
 	"CUP_launch_Metis"
-
-];	
+];
 
 autorifleList_Russian_Winter = [			
 	"CUP_arifle_RPK74M_1p78",

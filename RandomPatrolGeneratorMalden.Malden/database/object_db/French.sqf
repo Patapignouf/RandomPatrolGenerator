@@ -1,61 +1,5 @@
 
 
-//////////////////////////////
-////Define civ group data/////
-//////////////////////////////
-
-//French
-civilian_group_French = ["C_Man_casual_7_F_euro", 
-"C_Man_smart_casual_1_F_euro", 
-"C_Man_smart_casual_2_F_euro"];
-
-civilian_big_group_French = ["C_man_p_beggar_F_euro", 
-"C_man_polo_4_F_euro", 
-"C_man_shorts_1_F_euro", 
-"C_man_shorts_2_F_euro", 
-"C_scientist_02_formal_F", 
-"C_scientist_01_formal_F", 
-"C_scientist_02_informal_F"];
-
-civilianTruck_French = ["C_SUV_01_F","C_Offroad_01_repair_F"];
-
-//////////////////////////////
-///Define enemy group data////
-//////////////////////////////
-//French
-baseEnemyGroup_French = ["I_C_Soldier_Bandit_4_F", 
-"I_C_Soldier_Bandit_3_F", 
-"I_C_Soldier_Bandit_7_F", 
-"I_C_Soldier_Bandit_5_F", 
-"I_C_Soldier_Bandit_6_F", 
-"I_C_Soldier_Bandit_2_F", 
-"I_C_Soldier_Bandit_8_F", 
-"I_C_Soldier_Bandit_1_F"];
-
-baseEnemyATGroup_French = ["I_C_Soldier_Bandit_6_F", 
-"I_C_Soldier_Bandit_2_F", 
-"I_C_Soldier_Bandit_2_F",
-"I_C_Soldier_Bandit_7_F", 
-"I_C_Soldier_Bandit_8_F"];
-
-baseEnemyDemoGroup_French = ["I_C_Soldier_Bandit_2_F", 
-"I_C_Soldier_Bandit_8_F",
-"I_C_Soldier_Bandit_8_F", 
-"I_C_Soldier_Bandit_6_F"];
-
-baseEnemyMortarGroup_French = ["I_G_Mortar_01_F", 
-"I_C_Soldier_Bandit_8_F", 
-"I_C_Soldier_Bandit_6_F"];
-
-baseEnemyVehicleGroup_French = ["I_C_Offroad_02_LMG_F", 
-"I_C_Offroad_02_AT_F"];
-
-baseEnemyLightArmoredVehicleGroup_French = ["I_C_Offroad_02_LMG_F", 
-"I_C_Offroad_02_AT_F"];
-
-baseEnemyHeavyArmoredVehicleGroup_French = ["I_C_Offroad_02_LMG_F", 
-"I_C_Offroad_02_AT_F"];
-
 ////////////////////////
 //Vehicle management////
 ////////////////////////
@@ -155,7 +99,7 @@ loadout_French = [
 	[c_engineer,[["AMF_614_long_FS5_TAN","","CUP_acc_ANPEQ_15_Flashlight_Tan_L","AMF_xps3_magnifier_side_tan",["30Rnd_556x45_Stanag",30],[],"amf_acc_614_grip12"],[],["AMF_Glock_17_TAN","","","",["16Rnd_9x21_Mag",17],[],""],["amf_uniform_02_CE_OD",[["ACE_tourniquet",4],["ACE_microDAGR",1],["ACE_CableTie",5],["ACE_morphine",4],["ACE_splint",4],["ACE_EarPlugs",1]]],["amf_SMB_GRE_FAMAS_TDF",[["16Rnd_9x21_Mag",3,17],["30Rnd_556x45_Stanag_green",9,30],["CUP_HandGrenade_M67",2,1],["SmokeShell",2,1],["SmokeShellGreen",2,1]]],["AMF_rush24_01_TDF",[["ACE_elasticBandage",25],["ACE_EntrenchingTool",1],["MineDetector",1],["ACE_DefusalKit",1],["ToolKit",1],["ACE_wirecutter",1],["CUP_PipeBomb_M",2,1]]],"AMF_OPSCORE_TAN2","amf_balaclava_sording_rangerod",["Rangefinder","","","",[],[],""],["ItemMap","ItemGPS","TFAR_anprc152","ItemCompass","ACE_Altimeter",""]], true],
 	[c_autorifleman,[["amf_mini_mg_tactical_mk3","","","AMF_specter",["150Rnd_MINI_MG_mag_Tracer_red",150],[],""],[],["AMF_Glock_17_TAN","","","",["16Rnd_9x21_Mag",17],[],""],["amf_uniform_02_CE_OD",[["ACE_tourniquet",4],["ACE_microDAGR",1],["ACE_CableTie",5],["ACE_morphine",4],["ACE_splint",4],["ACE_EarPlugs",1]]],["amf_SMB_GRE_FAMAS_TDF",[["16Rnd_9x21_Mag",3,17],["CUP_HandGrenade_M67",2,1],["SmokeShell",2,1],["SmokeShellGreen",2,1],["150Rnd_MINI_MG_mag_Tracer_red",2,150]]],["AMF_rush24_01_TDF",[["ACE_elasticBandage",25],["ACE_EntrenchingTool",1],["150Rnd_MINI_MG_mag_Tracer_red",3,150],["150Rnd_MINI_MG_mag_Tracer_green",3,150],["150Rnd_MINI_MG_mag_tracer_yellow",2,150]]],"AMF_OPSCORE_TAN2","amf_balaclava_sording_rangerod",["Rangefinder","","","",[],[],""],["ItemMap","ItemGPS","TFAR_anprc152","ItemCompass","ACE_Altimeter",""]], true],
 	[c_mitrailleuseLourd762,[["CUP_lmg_FNMAG_RIS_modern","","","AMF_specter",["150Rnd_762x51_Box_Tracer",150],[],""],[],["AMF_Glock_17_TAN","","","",["16Rnd_9x21_Mag",17],[],""],["amf_uniform_02_CE_OD",[["ACE_tourniquet",4],["ACE_microDAGR",1],["ACE_CableTie",5],["ACE_morphine",4],["ACE_splint",4],["ACE_EarPlugs",1]]],["amf_SMB_GRE_FAMAS_TDF",[["16Rnd_9x21_Mag",3,17],["CUP_HandGrenade_M67",2,1],["SmokeShell",2,1],["SmokeShellGreen",2,1],["150Rnd_762x51_Box_Tracer",1,150]]],["AMF_rush24_01_TDF",[["ACE_elasticBandage",25],["ACE_EntrenchingTool",1],["150Rnd_762x51_Box_Tracer",5,150]]],"AMF_OPSCORE_TAN2","amf_balaclava_sording_rangerod",["Rangefinder","","","",[],[],""],["ItemMap","ItemGPS","TFAR_anprc152","ItemCompass","ACE_Altimeter",""]], true],
-	[c_marksman,[["CUP_arifle_Mk17_STD","muzzle_snds_B","CUP_acc_ANPEQ_15_Flashlight_Tan_L","AMF_schmidt_benderx4_tan",["20Rnd_762x51_Mag",20],[],"bipod_02_F_tan"],[],["AMF_Glock_17_TAN","","","",["16Rnd_9x21_Mag",17],[],""],["amf_uniform_02_CE_OD",[["ACE_tourniquet",4],["ACE_microDAGR",1],["ACE_CableTie",5],["ACE_morphine",4],["ACE_splint",4],["ACE_EarPlugs",1]]],["amf_SMB_GRE_FAMAS_TDF",[["16Rnd_9x21_Mag",5,17],["CUP_HandGrenade_M67",2,1],["SmokeShell",2,1],["SmokeShellGreen",2,1],["20Rnd_762x51_Mag",6,20]]],["AMF_rush24_01_TDF",[["ACE_elasticBandage",25],["ACE_EntrenchingTool",1],["ACE_Tripod",1],["ACE_SpottingScope",1],["ACE_Flashlight_XL50",1],["ACE_wirecutter",1],["ACE_Flashlight_KSF1",1],["ACE_Kestrel4500",1],["ACE_ATragMX",1],["ACE_RangeCard",1],["20Rnd_762x51_Mag",9,20]]],"AMF_OPSCORE_TAN2","amf_balaclava_sording_rangerod",["Laserdesignator_02","","","",["Laserbatteries",1],[],""],["ItemMap","ItemGPS","TFAR_anprc152","ItemCompass","ACE_Altimeter",""]], true],
+	[c_marksman,[["CUP_arifle_Mk17_STD","muzzle_snds_B","CUP_acc_ANPEQ_15_Flashlight_Tan_L","AMF_schmidt_benderx4_tan",["CUP_20Rnd_762x51_B_SCAR",20],[],"bipod_02_F_tan"],[],["AMF_Glock_17_TAN","","","",["16Rnd_9x21_Mag",17],[],""],["amf_uniform_02_CE_OD",[["ACE_tourniquet",4],["ACE_microDAGR",1],["ACE_CableTie",5],["ACE_morphine",4],["ACE_splint",4],["ACE_EarPlugs",1]]],["amf_SMB_GRE_FAMAS_TDF",[["16Rnd_9x21_Mag",3,17],["CUP_HandGrenade_M67",2,1],["SmokeShell",2,1],["SmokeShellGreen",2,1],["20Rnd_762x51_Mag",6,20],["CUP_20Rnd_762x51_B_SCAR",1,20]]],["AMF_rush24_01_TDF",[["ACE_elasticBandage",25],["ACE_EntrenchingTool",1],["ACE_Tripod",1],["ACE_SpottingScope",1],["ACE_Flashlight_XL50",1],["ACE_wirecutter",1],["ACE_Flashlight_KSF1",1],["ACE_Kestrel4500",1],["ACE_ATragMX",1],["ACE_RangeCard",1],["20Rnd_762x51_Mag",9,20],["CUP_20Rnd_762x51_B_SCAR",5,20]]],"AMF_OPSCORE_TAN2","amf_balaclava_sording_rangerod",["Laserdesignator_02","","","",["Laserbatteries",1],[],""],["ItemMap","ItemGPS","","ItemCompass","ACE_Altimeter",""]], true],
 	[c_Tireurdeprecisionhk417556,[["AMF_714_long_tan_f","muzzle_snds_B_arid_F","CUP_acc_ANPEQ_15_Flashlight_Tan_L","AMF_schmidt_benderx4_tan",["20Rnd_762x51_HK417_mag",20],[],"bipod_02_F_tan"],[],["AMF_Glock_17_TAN","","","",["16Rnd_9x21_Mag",17],[],""],["amf_uniform_02_CE_OD",[["ACE_tourniquet",4],["ACE_microDAGR",1],["ACE_CableTie",5],["ACE_morphine",4],["ACE_splint",4],["ACE_EarPlugs",1]]],["amf_SMB_GRE_FAMAS_TDF",[["16Rnd_9x21_Mag",5,17],["CUP_HandGrenade_M67",2,1],["SmokeShell",2,1],["SmokeShellGreen",2,1],["20Rnd_762x51_HK417_mag",8,20]]],["AMF_rush24_01_TDF",[["ACE_elasticBandage",25],["ACE_EntrenchingTool",1],["ACE_Tripod",1],["ACE_SpottingScope",1],["ACE_Flashlight_XL50",1],["ACE_wirecutter",1],["ACE_Flashlight_KSF1",1],["ACE_Kestrel4500",1],["ACE_ATragMX",1],["ACE_RangeCard",1],["20Rnd_762x51_HK417_Tracer_red_mag",8,20]]],"AMF_OPSCORE_TAN2","amf_balaclava_sording_rangerod",["Rangefinder","","","",[],[],""],["ItemMap","ItemGPS","TFAR_anprc152","ItemCompass","ACE_Altimeter",""]], true],
 	[c_TireurDelite50,[["amf_perseis_ii_poly_02_F","","","optic_AMS",["7Rnd_Perseis_II_mag",7],[],""],[],["AMF_Glock_17_TAN","","","",["16Rnd_9x21_Mag",17],[],""],["amf_uniform_02_CE_OD",[["ACE_tourniquet",4],["ACE_microDAGR",1],["ACE_CableTie",5],["ACE_morphine",4],["ACE_splint",4],["ACE_EarPlugs",1]]],["amf_SMB_GRE_FAMAS_TDF_grn",[["16Rnd_9x21_Mag",7,17],["CUP_HandGrenade_M67",2,1],["SmokeShell",4,1],["SmokeShellGreen",3,1]]],["AMF_rush24_01_TDF",[["ACE_elasticBandage",25],["ACE_EntrenchingTool",1],["ACE_Tripod",1],["ACE_SpottingScope",1],["ACE_Flashlight_XL50",1],["ACE_wirecutter",1],["ACE_Flashlight_KSF1",1],["ACE_Kestrel4500",1],["ACE_ATragMX",1],["ACE_RangeCard",1],["7Rnd_Perseis_II_mag",21,7]]],"AMF_OPSCORE_TAN2","amf_balaclava_sording_rangerod",["Laserdesignator","","","",["Laserbatteries",1],[],""],["ItemMap","ItemGPS","TFAR_anprc152","ItemCompass","ACE_Altimeter",""]], true],
 	[c_127ARME,[["AMF_614_long_FS5_TAN","","CUP_acc_ANPEQ_15_Flashlight_Tan_L","AMF_xps3_magnifier_side_tan",["30Rnd_556x45_Stanag",30],[],"amf_acc_614_grip12"],[],["AMF_Glock_17_TAN","","","",["16Rnd_9x21_Mag",17],[],""],["amf_uniform_02_CE_OD",[["ACE_tourniquet",4],["ACE_microDAGR",1],["ACE_CableTie",5],["ACE_morphine",4],["ACE_splint",4],["ACE_EarPlugs",1],["ACE_elasticBandage",6]]],["amf_SMB_GRE_FAMAS_TDF",[["ACE_elasticBandage",14],["16Rnd_9x21_Mag",3,17],["30Rnd_556x45_Stanag_green",9,30],["CUP_HandGrenade_M67",2,1],["SmokeShell",2,1],["SmokeShellGreen",2,1]]],["CUP_B_M2_Gun_Bag",[]],"AMF_OPSCORE_TAN2","amf_balaclava_sording_rangerod",["Rangefinder","","","",[],[],""],["ItemMap","ItemGPS","TFAR_anprc152","ItemCompass","ACE_Altimeter",""]], true],
@@ -331,7 +275,8 @@ itemEngineerList_French = [
 	"ace_marker_flags_yellow",
 	"ace_marker_flags_purple",
 	"ace_marker_flags_orange",
-	"ace_marker_flags_red"
+	"ace_marker_flags_red",
+	"DemoCharge_Remote_Mag"
 	];
 
 //item avalaible only for medics
@@ -388,9 +333,30 @@ uniformList_French = [
 	"amf_JPC_01_MTP",
 	"amf_SMB_AUXSAN_FAMAS_TDF",
 	"amf_DCS_04_RG",
-	"amf_balaclava_tan"
+	"amf_balaclava_tan",
+
+	//Uniform winter 
+	"amf_uniform_01_TU_HX",
+	"amf_uniform_01_RE_TU_HX",
+	"amf_uniform_01_TU_MD",
+	"amf_uniform_01_TC_HS",
+	"amf_uniform_02_TU_HS",
+	"amf_uniform_02_TC_HS"
 	];
 
 //Magazine avalaible for all unit
 magazineList_French = [
+	"30Rnd_556x45_Stanag_Tracer_Green",
+	"CUP_1Rnd_HEDP_M203",
+	"CUP_1Rnd_HE_M203",
+	"CUP_FlareWhite_M203",
+	"CUP_HandGrenade_M67",
+	"SmokeShell",
+	"SmokeShellBlue",
+	"SmokeShellGreen",
+	"SmokeShellOrange",
+	"SmokeShellPurple",
+	"SmokeShellRed",
+	"SmokeShellYellow",
+	"Laserbatteries"
 	];
