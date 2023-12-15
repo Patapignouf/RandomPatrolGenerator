@@ -93,7 +93,7 @@ if (isClass (configFile >> "CfgPatches" >> "ace_medical")) then
 			{
 
 				//Check the number of bandage used, 5 bandages -> 1 exp point
-				if (_caller getVariable ["numberOfBandageUsed",0] >= 5 ) then 
+				if (_caller getVariable ["numberOfBandageUsed",0] >= 3 ) then 
 				{
 					[[1, "RPG_ranking_heal"], 'engine\rankManagement\rankUpdater.sqf'] remoteExec ['BIS_fnc_execVM', _caller];
 					_caller setVariable ["numberOfBandageUsed", 0];
