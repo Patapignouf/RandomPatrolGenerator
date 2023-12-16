@@ -292,7 +292,8 @@ getVirtualMagazine = {
 			"SmokeShellOrange",
 			"SmokeShellPurple",
 			"SmokeShellYellow",
-			"O_IR_Grenade"
+			"O_IR_Grenade",
+			"Laserbatteries"
 		];
 	// };
 

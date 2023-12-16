@@ -30,8 +30,16 @@ generateObjective =
 	//Generate mission environement
 	if (currentObjType != "defendArea") then 
 	{
-		_handlePOIGeneration = [EnemyWaveLevel_1, baseEnemyVehicleGroup, baseEnemyLightArmoredVehicleGroup, baseEnemyHeavyArmoredVehicleGroup, civilian_group, _selectedObjectivePosition, _objectiveCreated] execVM 'enemyManagement\generationEngine\generatePOI.sqf'; 
-		waitUntil {isNull _handlePOIGeneration};
+		if (random 100 < 75) then 
+		{
+			_handlePOIGeneration = [EnemyWaveLevel_1, baseEnemyVehicleGroup, baseEnemyLightArmoredVehicleGroup, baseEnemyHeavyArmoredVehicleGroup, civilian_group, _selectedObjectivePosition, _objectiveCreated] execVM 'enemyManagement\generationEngine\generatePOI.sqf'; 
+			waitUntil {isNull _handlePOIGeneration};
+		} else 
+		{
+			_handlePOIGeneration = [EnemyWaveLevel_1, baseEnemyVehicleGroup, baseEnemyLightArmoredVehicleGroup, baseEnemyHeavyArmoredVehicleGroup, civilian_group, _selectedObjectivePosition, _objectiveCreated] execVM 'enemyManagement\generationEngine\generateHostileCivPOI.sqf'; 
+			waitUntil {isNull _handlePOIGeneration};
+		};
+
 	} else 
 	{
 		//Populate the area with only civilian randomly

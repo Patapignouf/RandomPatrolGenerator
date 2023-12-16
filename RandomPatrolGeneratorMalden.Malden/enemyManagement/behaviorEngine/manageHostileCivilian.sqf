@@ -1,5 +1,5 @@
 //Get parameters
-params ["_thisUnit"];
+params ["_thisUnit", "_hostileTransformProba"];
 
 //Loop on the unit until it become hostile
 while {alive _thisUnit && (side _thisUnit == civilian)} do {
@@ -17,8 +17,8 @@ while {alive _thisUnit && (side _thisUnit == civilian)} do {
 	//Detect if at least one player is nearby
 	if (count _targets > 0) then 
 	{
-		//10% chance to become hostile
-		if (random 100 < 10) then 
+		//parameters % chance to become hostile
+		if (random 100 < _hostileTransformProba) then 
 		{
 			//Randomize time before becoming hostile	
 			sleep (10 + random (120));
@@ -41,9 +41,38 @@ while {alive _thisUnit && (side _thisUnit == civilian)} do {
 			};
 			
 			//Manage loadout
-			_thisUnit addVest "V_BandollierB_rgr";
-			_thisUnit addWeapon "hgun_Rook40_F"; //Inspire by DRO waiting for RPG version ;)
-			_thisUnit addMagazines ["16Rnd_9x21_Mag", 3];
+			//Setup date
+			switch (round (random 3)) do
+			{
+				case 0:
+				{
+					_thisUnit addVest "V_BandollierB_rgr";
+					_thisUnit addWeapon "hgun_Rook40_F"; //Inspire by DRO waiting for RPG version ;)
+					_thisUnit addMagazines ["16Rnd_9x21_Mag", 3];
+				};
+				case 1:
+				{
+					_thisUnit addVest "V_BandollierB_rgr";
+					_thisUnit addWeapon "hgun_PDW2000_F"; //Inspire by DRO waiting for RPG version ;)
+					_thisUnit addMagazines ["30Rnd_9x21_Mag", 3];
+				};
+				case 2:
+				{
+					_thisUnit addVest "V_BandollierB_rgr";
+					_thisUnit addWeapon "sgun_HunterShotgun_01_F"; //Inspire by DRO waiting for RPG version ;)
+					_thisUnit addMagazines ["2Rnd_12Gauge_Pellets", 10];
+				};
+				case 3:
+				{
+					_thisUnit addVest "V_BandollierB_rgr";
+					_thisUnit addWeapon "sgun_HunterShotgun_01_sawedoff_F"; //Inspire by DRO waiting for RPG version ;)
+					_thisUnit addMagazines ["2Rnd_12Gauge_Pellets", 10];
+				};
+				default
+				{
+					//No Stuff
+				};
+			};
 		};
 	};
 };

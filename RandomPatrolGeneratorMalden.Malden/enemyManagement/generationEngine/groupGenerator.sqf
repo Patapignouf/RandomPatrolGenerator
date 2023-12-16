@@ -1,5 +1,3 @@
-//private _generateCivDialogs = compile preprocessFileLineNumbers "enemyManagement\manageHostileCivilian.sqf";
-
 doGenerateEnemyGroup = 
 {
 	//Get parameters
@@ -92,9 +90,9 @@ doGenerateEnemyGroup =
 		{		
 			//Manage hostile civilian
 			// 20% chance not to be hostile at all
-			if (round (random 4 )== 0) then 
+			if (random 100 < 20) then 
 			{
-				[_x] execVM "enemyManagement\behaviorEngine\manageHostileCivilian.sqf";
+				[_x, 30] execVM "enemyManagement\behaviorEngine\manageHostileCivilian.sqf";
 			};
 
 			//Add eventhandler civKilled
@@ -125,10 +123,74 @@ doGenerateEnemyGroup =
 		} foreach (units _currentGroupPatrol);
 	};
 
+	//Return spawned group
+	_currentGroupPatrol
+};
+
+
+doGenerateHostileCivilianGroup = 
+{
+	//Get parameters
+	params ["_thisGroupToSpawn","_thisSpawnPosition", "_hostileProba"];
+	_thisGroupType = "Civilian";
+	//Group spawn
+	_currentGroupPatrol = [_thisSpawnPosition, civilian, _thisGroupToSpawn,[],[],[],[],[], random 360] call BIS_fnc_spawnGroup;
+
+	//Optimize IA 
+	_currentGroupPatrol enableDynamicSimulation true;
+
+	//Intel Synchronization
+	if (_thisGroupType != "") then
+	{
+		_missionEnemyInfo = missionNamespace getVariable ["MissionEnemyInfo",[]];
+		_missionEnemyInfo pushBack [_thisGroupType,_thisSpawnPosition, _currentGroupPatrol];
+		missionNamespace setVariable ["MissionEnemyInfo", _missionEnemyInfo, true];
+	};
+	
+	//Set IA Skills
+	[_currentGroupPatrol, missionIASkill] call doSetGroupSkills;
+
+
+	//Manage civilian specific feature
+	{		
+		//Manage hostile civilian
+		if (random 100 < _hostileProba) then 
+		{
+			//50% chance to trigger hostile transformation
+			[_x, 80] execVM "enemyManagement\behaviorEngine\manageHostileCivilian.sqf";
+		};
+
+		//Add eventhandler civKilled
+		_x addEventHandler ["Killed", {
+			params ["_unit", "_killer", "_instigator", "_useEffects"];
+			[_unit] remoteExec ["removeAllActions", 0, true];
+
+			if (isPlayer _killer) then 
+			{
+				//Add civ killed counter
+				_tempCivKilled = missionNamespace getVariable "civKilled";
+				_tempCivKilled = _tempCivKilled + 1;
+				missionNamespace setVariable ["civKilled", _tempCivKilled, true];
+
+				//If number of killed civ reach max civ killed number then end mission
+				if (missionNamespace getVariable "civKilled" > missionNamespace getVariable "maxCivKilled") then 
+				{
+					diag_log "END MISSION";
+					[['CIV_DEAD'], 'engine\objectiveManagement\endMission.sqf'] remoteExec ['BIS_fnc_execVM', 2];
+				};
+
+				diag_log format ["Civilian has been killed by : %1 on side %2", name _killer, side _killer];
+				[format ["Civilian has been killed by : %1", name _killer], 'engine\hintManagement\addCustomHint.sqf'] remoteExec ['BIS_fnc_execVM', side _killer]; 
+				
+				[[-50,5], 'engine\rankManagement\rankPenalty.sqf'] remoteExec ['BIS_fnc_execVM', _killer];
+			}; 
+		}];
+	} foreach (units _currentGroupPatrol);
 
 	//Return spawned group
 	_currentGroupPatrol
 };
+
 
 
 doSetGroupSkills = 
@@ -224,3 +286,6 @@ doAdjustACEMedic = {
 	}
 	foreach (units _thisGroup);
 };
+
+
+
