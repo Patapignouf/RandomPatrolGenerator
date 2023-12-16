@@ -1,8 +1,19 @@
 
 //Log player's death
 diag_log format ["Player %1 is dead", name player];
-	
-setPlayerRespawnTime (missionNamespace getVariable "missionRespawnParam");
+
+_respawnTimer = missionNamespace getVariable "missionRespawnParam";
+setPlayerRespawnTime (_respawnTimer);
+_initialCountDown = [_respawnTimer, false] call BIS_fnc_countDown;
+addMissionEventHandler ["EachFrame",
+	{
+		if (!alive player) then 
+		{
+			hintSilent format["%1", [(([0] call BIS_fnc_countdown)/60)+.01,"HH:MM"] call BIS_fnc_timetostring]
+		};
+	}
+];
+
 
 //Add player to a dead player base | This will block disconnection/connection method to respawn 
 _deadPlayerList = missionNamespace getVariable "deadPlayer";
@@ -10,7 +21,7 @@ _deadPlayerList pushBack (name player);
 missionNamespace setVariable ["deadPlayer", _deadPlayerList, true];
 
 //Add experience penalty on death
-[[-10, 1], 'engine\rankManagement\rankPenalty.sqf'] remoteExec ['BIS_fnc_execVM', player];
+//[[-10, 1], 'engine\rankManagement\rankPenalty.sqf'] remoteExec ['BIS_fnc_execVM', player];
 
 //Start spectator mod only ally players
 ["Terminate"] call BIS_fnc_EGSpectator;
