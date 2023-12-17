@@ -21,7 +21,7 @@ switch (_objectiveType) do
 	case "AttackFOB":
 	{
 		_currentObjectiveTitle = "Attack OPFOR FOB";
-		_currentObjectiveDescription = "Take and hold Opfor FOB";
+		_currentObjectiveDescription = format ["You have to control the opfor FOB on position %1.", mapGridPosition _objectiveLocation];
 		[_objectiveID, _objectiveLocation] spawn {
 			params ["_objectiveID", "_objectiveLocation"];
 			

@@ -71,6 +71,12 @@ if (!([_OpforFobLocation] call isLocationOnMap)) then
 		//50%
 		[_objectiveObject] execVM 'engine\objectiveManagement\checkDefendArea.sqf';
 	};
+
+	if (random 100 < 50) then 
+	{
+		[[format ["%1%2","_sideQuestFOB", random 10000],"AttackFOB", _OpforFobLocation, objNull], "engine\objectiveManagement\doGenerateSideObjective.sqf"] remoteExec ['BIS_fnc_execVM', 0, true];
+	};
+	
 };
 
 deletevehicle _trgAOC;
