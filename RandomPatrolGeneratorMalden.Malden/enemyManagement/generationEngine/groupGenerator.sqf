@@ -31,56 +31,69 @@ doGenerateEnemyGroup =
 	if (_thisFaction == opfor) then 
 	{
 		{	
+			//Case infantry
+			//Add eventHandler suppress
+			_x addEventHandler ["Suppressed", {
+				params ["_unit", "_distance", "_shooter", "_instigator", "_ammoObject", "_ammoClassName", "_ammoConfig"];
 
-			if (_thisGroupType == "Car" || _thisGroupType == "LightArmored" || _thisGroupType == "HeavyArmored") then 
-			{
-				//Add eventhandler killed
-				_x addEventHandler ["Killed", {
-					params ["_unit", "_killer", "_instigator", "_useEffects"];
+				if (getSuppression _unit > 0.9 && _distance<3 && !(_unit getVariable ["isSuppressed", false])) then 
+				{
+					_unit setVariable ["isSuppressed", true, true];
+					//hint format ["unit : %1 \ndistance : %2 \ninstigator : %3\n suppression level : %4",name _unit, _distance, name _instigator, getSuppression _unit];
+					[[1, "RPG_ranking_suppress"], 'engine\rankManagement\rankUpdater.sqf'] remoteExec ['BIS_fnc_execVM', _instigator];
+					
+					//Reset suppressed score on the unit after 60 sec
+					[_unit] spawn {
+						params ["_unit"];
+						sleep 60;
+						waitUntil {getSuppression _unit < 0.9};
+						_unit setVariable ["isSuppressed", false, true];
+					};	
+				};
+			}];
 
-					if (isPlayer _killer) then 
-					{
-						[[5, "RPG_ranking_vehicle_kill"], 'engine\rankManagement\rankUpdater.sqf'] remoteExec ['BIS_fnc_execVM', _killer];
-					}; 
-				}];
-			} else 
-			{
-				//Case infantry
-				//Add eventHandler suppress
-				_x addEventHandler ["Suppressed", {
-					params ["_unit", "_distance", "_shooter", "_instigator", "_ammoObject", "_ammoClassName", "_ammoConfig"];
+			//Add eventhandler killed
+			_x addEventHandler ["Killed", {
+				params ["_unit", "_killer", "_instigator", "_useEffects"];
 
-					if (getSuppression _unit > 0.9 && _distance<3 && !(_unit getVariable ["isSuppressed", false])) then 
-					{
-						_unit setVariable ["isSuppressed", true, true];
-						//hint format ["unit : %1 \ndistance : %2 \ninstigator : %3\n suppression level : %4",name _unit, _distance, name _instigator, getSuppression _unit];
-						[[1, "RPG_ranking_suppress"], 'engine\rankManagement\rankUpdater.sqf'] remoteExec ['BIS_fnc_execVM', _instigator];
-						
-						//Reset suppressed score on the unit after 60 sec
-						[_unit] spawn {
-							params ["_unit"];
-							sleep 60;
-							waitUntil {getSuppression _unit < 0.9};
-							_unit setVariable ["isSuppressed", false, true];
-						};	
-					};
-				}];
-
-				//Add eventhandler killed
-				_x addEventHandler ["Killed", {
-					params ["_unit", "_killer", "_instigator", "_useEffects"];
-
-					if (isPlayer _killer) then 
-					{
-						[[1, "RPG_ranking_infantry_kill"], 'engine\rankManagement\rankUpdater.sqf'] remoteExec ['BIS_fnc_execVM', _killer];
-					} else {
-						//Debug IA killed log
-						diag_log format ["The IA %1 has been killed by %2", name _unit, name _killer];
-					}; 
-				}];
-			};
+				if (isPlayer _killer) then 
+				{
+					[[1, "RPG_ranking_infantry_kill"], 'engine\rankManagement\rankUpdater.sqf'] remoteExec ['BIS_fnc_execVM', _killer];
+				} else {
+					//Debug IA killed log
+					diag_log format ["The IA %1 has been killed by %2", name _unit, name _killer];
+				}; 
+			}];
+			
 
 		} foreach (units _currentGroupPatrol);
+	};
+	
+	//Define specific vehicle trigger
+	if (_thisGroupType == "Car" || _thisGroupType == "LightArmored" || _thisGroupType == "HeavyArmored") then 
+	{
+		_vehicleFromGroup = vehicle (leader _currentGroupPatrol);
+
+		//Add eventhandler killed
+		_vehicleFromGroup addEventHandler ["Killed", {
+			params ["_unit", "_killer", "_instigator", "_useEffects"];
+
+			if (isPlayer _killer) then 
+			{
+				[[5, "RPG_ranking_vehicle_kill"], 'engine\rankManagement\rankUpdater.sqf'] remoteExec ['BIS_fnc_execVM', _killer];
+			}; 
+		}];
+		
+		//Add side quest
+		if (_thisGroupType == "LightArmored" || _thisGroupType == "HeavyArmored") then 
+		{
+			//TEMP feature - In the future there will be a dynamic side quest assignement
+			//50% chance to setup the side mission 
+			if (random 100 < 50) then 
+			{
+				[[format ["%1%2","_sideQuestArmored", random 10000],"DestroyArmored", getPos _vehicleFromGroup, _vehicleFromGroup], "engine\objectiveManagement\doGenerateSideObjective.sqf"] remoteExec ['BIS_fnc_execVM', 0, true];
+			};
+		};
 	};
 
 

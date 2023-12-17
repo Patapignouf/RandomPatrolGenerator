@@ -23,3 +23,9 @@ _vehicleAirAttackGroup enableDynamicSimulation false;
 wp2 = _vehicleAirAttackGroup addWaypoint [_destinationPos, 100];
 wp2 setwaypointtype"MOVE"; 
 
+//TEMP feature - In the future there will be a dynamic side quest assignement
+//50% chance to setup the side mission 
+if (random 100 < 50) then 
+{
+	[[format ["%1%2","_sideQuestPlane", random 10000],"DestroyPlane", getPos leader (_vehicleAirAttackGroup), vehicle leader _vehicleAirAttackGroup], "engine\objectiveManagement\doGenerateSideObjective.sqf"] remoteExec ['BIS_fnc_execVM', 0, true];
+};
