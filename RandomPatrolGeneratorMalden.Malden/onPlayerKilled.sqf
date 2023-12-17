@@ -21,7 +21,7 @@ _deadPlayerList pushBack (name player);
 missionNamespace setVariable ["deadPlayer", _deadPlayerList, true];
 
 //Add experience penalty on death
-//[[-10, 1], 'engine\rankManagement\rankPenalty.sqf'] remoteExec ['BIS_fnc_execVM', player];
+[[-10, 1], 'engine\rankManagement\rankPenalty.sqf'] remoteExec ['BIS_fnc_execVM', player];
 
 //Start spectator mod only ally players
 ["Terminate"] call BIS_fnc_EGSpectator;

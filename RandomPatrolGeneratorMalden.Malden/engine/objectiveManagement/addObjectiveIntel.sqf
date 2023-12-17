@@ -31,7 +31,7 @@ params ["_currentGroup", "_thisObjective"];
 						[_object] remoteExec ["removeAllActions", 0, true];
 
 						//25% chance to give intel to the player
-						if ((round (random 3))==0 && !([format ["%1%2",_objectiveParam # 0 # 2 ,"_Intel"]] call BIS_fnc_taskExists)) then 
+						if (random 100 < 25 && !([format ["%1%2",_objectiveParam # 0 # 2 ,"_Intel"]] call BIS_fnc_taskExists)) then 
 						{
 							//Search the nearestLocation from the intel
 							_side = side _caller;
@@ -122,9 +122,17 @@ params ["_currentGroup", "_thisObjective"];
 								[[3, "RPG_ranking_intel_collect"], 'engine\rankManagement\rankUpdater.sqf'] remoteExec ['BIS_fnc_execVM', _caller];
 							} else 
 							{
-								//Display no intel found message
-								[1,["No intel found", "PLAIN", 0.5]] remoteExec ["cutText", _caller];
-
+								//75% chance to get a minor intel
+								if (random 100 < 75) then 
+								{
+									//Reveal minor intel for the caller
+									[[_caller, "corpseLooting"], 'engine\objectiveManagement\revealMinorIntel.sqf'] remoteExec ['BIS_fnc_execVM', _caller];
+								} else 
+								{
+									//Display no intel found message
+									[1,["No intel found", "PLAIN", 0.5]] remoteExec ["cutText", _caller];
+									
+								};
 								//Reward with less experience 
 								[[1, "RPG_ranking_intel_collect"], 'engine\rankManagement\rankUpdater.sqf'] remoteExec ['BIS_fnc_execVM', _caller];
 							};
