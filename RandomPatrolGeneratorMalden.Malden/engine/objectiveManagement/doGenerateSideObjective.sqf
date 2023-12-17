@@ -8,7 +8,7 @@ _mainSideQuestID = "RPG_SideObjective";
 
 if (!([_mainSideQuestID] call BIS_fnc_taskExists)) then 
 {
-	    [true, _mainSideQuestID, ["Contains all side quests", "Side quests", "cookiemarker_mainSideQuest"], objNull, "CREATED", 3, true] call BIS_fnc_taskCreate;
+	    [true, _mainSideQuestID, ["Contains all side quests", "Side quests", "cookiemarker_mainSideQuest"], objNull, "CREATED", -1, true] call BIS_fnc_taskCreate;
 };
 
 //Set task description
@@ -124,4 +124,4 @@ switch (_objectiveType) do
 };
 
 //Generate the side task
-[true , [_objectiveID, _mainSideQuestID], [_currentObjectiveDescription, _currentObjectiveTitle, "cookiemarker2_intel"], objNull, "CREATED", 3, true] call BIS_fnc_taskCreate;
+[true , [_objectiveID, _mainSideQuestID], [_currentObjectiveDescription, _currentObjectiveTitle, "cookiemarker2_intel"], objNull, "CREATED", -1, true] call BIS_fnc_taskCreate;
