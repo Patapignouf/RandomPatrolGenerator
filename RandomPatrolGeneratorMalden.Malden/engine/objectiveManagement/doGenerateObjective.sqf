@@ -341,6 +341,10 @@ generateObjectiveObject =
 					_missionUncompletedObjectives = missionNamespace getVariable ["missionUncompletedObjectives",[]];
 					_missionUncompletedObjectives = _missionUncompletedObjectives - [_thisObjective];
 					missionNamespace setVariable ["missionUncompletedObjectives",_missionUncompletedObjectives,true];
+
+					//Reveal minor intel for the caller
+					[[_caller, "documentIntel"], 'engine\objectiveManagement\revealMinorIntel.sqf'] remoteExec ['BIS_fnc_execVM', _caller];
+
 					//Manage player's feedback
 					if ("RealismMode" call BIS_fnc_getParamValue == 1) then 
 					{
@@ -497,6 +501,10 @@ generateObjectiveObject =
 						_missionUncompletedObjectives = missionNamespace getVariable ["missionUncompletedObjectives",[]];
 						_missionUncompletedObjectives = _missionUncompletedObjectives - [_thisObjective];
 						missionNamespace setVariable ["missionUncompletedObjectives",_missionUncompletedObjectives,true];
+
+						//Reveal minor intel for the caller
+						[[_caller, "civilianAsking"], 'engine\objectiveManagement\revealMinorIntel.sqf'] remoteExec ['BIS_fnc_execVM', _caller];
+
 						//Manage player's feedback
 						if ("RealismMode" call BIS_fnc_getParamValue == 1) then 
 						{
