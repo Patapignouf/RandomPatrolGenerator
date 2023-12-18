@@ -29,6 +29,9 @@ _ColdWar_OTAN = 27;
 _ColdWar_USSR = 28;
 _Chernarussian_Winter = 29;
 _USA_Winter = 30;
+_KORSAK_KDF = 31;
+_KORSAK_KS = 32;
+_KORSAK_KFL = 33;
 
 #include "object_db\USA.sqf"
 #include "object_db\USA_Winter.sqf"
@@ -61,6 +64,9 @@ _USA_Winter = 30;
 #include "object_db\2035_CSAT.sqf"
 #include "object_db\ColdWar_OTAN.sqf"
 #include "object_db\ColdWar_USSR.sqf"
+#include "object_db\KORSAK_KDF.sqf"
+#include "object_db\KORSAK_KS.sqf"
+#include "object_db\KORSAK_KFL.sqf"
 
 //Define faction prefix
 c_db = "_db";
@@ -95,6 +101,9 @@ c_2035_CSAT ="_2035_CSAT";
 c_ColdWar_OTAN ="_ColdWar_OTAN";
 c_ColdWar_USSR ="_ColdWar_USSR";
 c_Chernarussian_Winter = "_Chernarussian_Winter";
+c_KORSAK_KDF = "_KORSAK_KDF";
+c_KORSAK_KS = "_KORSAK_KS";
+c_KORSAK_KFL = "_KORSAK_KFL";
 
 //Faction format :
 // [ Number : Faction Code, String : Faction string Name , String : Faction Name to display, Enabled for Blufor/Independant, Enabled for Opfor, Enabled for Civilian],
@@ -156,6 +165,15 @@ if (isClass (configFile >> "CfgPatches" >> "IFA3_Core")) then
 	factionInfos pushBack [c_WWII_FFI,_WWII_FFI,"WWII FFI [IFA3]", true, true, true];
 	
 };
+
+//Add specific IFA3 factions
+if (isClass (configFile >> "CfgPatches" >> "vtf_kf_main")) then 
+{
+	factionInfos pushBack [c_KORSAK_KDF,_KORSAK_KDF,"KORSAK KDF [KORSAK]", true, false, false];
+	factionInfos pushBack [c_KORSAK_KS,_KORSAK_KS,"KORSAK KS [KORSAK]", false, true, false];	
+	factionInfos pushBack [c_KORSAK_KFL,_KORSAK_KFL,"KORSAK KFL [KORSAK]", true, false, false];	
+};
+
 
 //Define global constant
 c_leader = "leader";
