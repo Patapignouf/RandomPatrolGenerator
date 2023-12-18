@@ -9,7 +9,7 @@ addMissionEventHandler ["EachFrame",
 	{
 		if (!alive player) then 
 		{
-			hintSilent format["%1", [(([0] call BIS_fnc_countdown)/60)+.01,"HH:MM"] call BIS_fnc_timetostring]
+			hintSilent format["%1", [(([0, false] call BIS_fnc_countdown)/60)+.01,"HH:MM"] call BIS_fnc_timetostring]
 		};
 	}
 ];
