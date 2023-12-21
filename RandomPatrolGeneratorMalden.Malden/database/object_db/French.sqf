@@ -215,7 +215,8 @@ attachmentLongList_French	= [
 	"amf_scrome_j4",
 	"amf_scrome_j8",
 	"amf_schmidt_benderx4",
-	"optic_lrps"
+	"optic_lrps",
+	"AMF_schmidt_benderx4_tan"
 ];
 
 
