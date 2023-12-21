@@ -35,6 +35,7 @@ missionNamespace setVariable ["missionRespawnParam", 99999999999999, true]; //De
 
 //Blufor Initilization 
 missionNamespace setVariable ["advancedBlueforLocation", [0,0], true]; //Default armored vehicle are disabled
+missionNamespace setVariable ["artlillerySupportCounter", 3]; //default artillery support counter
 
 //Spawn bloc to avoid player swimming
 _spawnBloc = createVehicle ["BlockConcrete_F", [0,0,0], [], 0, "NONE"];
