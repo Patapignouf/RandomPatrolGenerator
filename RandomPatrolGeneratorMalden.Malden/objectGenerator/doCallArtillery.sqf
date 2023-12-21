@@ -4,6 +4,13 @@ params ["_position", "_caller"];
 _artlillerySupportCounter = missionNamespace getVariable ["artlillerySupportCounter", 0];
 if (_artlillerySupportCounter > 0) then 
 {
+	//Remove the action if there is no avalaible credit
+	_artillerySupportID = _caller getVariable ["artillerySupportID", -1];
+	if (_artillerySupportID != -1 && _artlillerySupportCounter == 0) then 
+	{
+		[_caller, _artillerySupportID] call BIS_fnc_removeCommMenuItem;
+	};
+
 	missionNamespace setVariable ["artlillerySupportCounter", _artlillerySupportCounter-1, true];
 
 	//Hint to artillery call
@@ -20,7 +27,9 @@ if (_artlillerySupportCounter > 0) then
 		sleep 2;
 		"Bo_GBU12_LGB" createVehicle _customRandomPos;
 	};
+
 } else 
 {
+	//Not suppose to be triggered
 	hint "No artillery support avalaible";
 };

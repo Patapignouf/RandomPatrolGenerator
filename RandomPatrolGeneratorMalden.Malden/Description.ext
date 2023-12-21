@@ -227,7 +227,7 @@ class CfgCommunicationMenu
 	{
 		text = "Artillery Strike";		// Text displayed in the menu and in a notification
 		submenu = "";					// Submenu opened upon activation (expression is ignored when submenu is not empty.)
-		expression = "[[_pos], 'objectGenerator\doCallArtillery.sqf'] remoteExec ['BIS_fnc_execVM', 2];";	// Code executed upon activation
+		expression = "[[_pos, player], 'objectGenerator\doCallArtillery.sqf'] remoteExec ['BIS_fnc_execVM', 2];";	// Code executed upon activation
 		icon = "\a3\Ui_f\data\GUI\Cfg\CommunicationMenu\artillery_ca.paa";				// Icon displayed permanently next to the command menu
 		cursor = "\a3\Ui_f\data\IGUI\Cfg\Cursors\iconCursorSupport_ca.paa";				// Custom cursor displayed when the item is selected
 		enable = "1";					// Simple expression condition for enabling the item
