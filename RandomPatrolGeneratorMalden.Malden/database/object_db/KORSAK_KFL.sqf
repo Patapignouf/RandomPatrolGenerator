@@ -77,20 +77,22 @@ loadout_KORSAK_KFL = [
 rifleList_KORSAK_KFL = [		
 	"arifle_AK12U_F",
 	"arifle_SPAR_02_blk_F",
+	"arifle_SPAR_01_blk_F",
 	"hgun_Pistol_01_F",
 	"arifle_MSBS65_black_F",
 	"srifle_DMR_03_F"
 ];	
 
 grenadeLauncherList_KORSAK_KFL =  [		
-
+	"arifle_SPAR_01_GL_blk_ACO_Pointer_F",
+	"arifle_SPAR_01_GL_blk_F"
 ];	
 
 launcherList_KORSAK_KFL = [		
 	"launch_B_Titan_olive_F",
 	"launch_NLAW_F",
 	"ACE_launch_NLAW_ready_F"
-];	
+];
 
 autorifleList_KORSAK_KFL = [			
 	"LMG_03_F"
@@ -102,7 +104,8 @@ marksmanrifleList_KORSAK_KFL = [
 ];
 
 smgList_KORSAK_KFL = [		
-
+	"hgun_ACPC2_F",
+	"hgun_PDW2000_F"
 ];
 
 
