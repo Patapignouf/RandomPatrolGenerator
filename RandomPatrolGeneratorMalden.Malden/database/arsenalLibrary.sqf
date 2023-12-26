@@ -1,17 +1,7 @@
+#include "classConstant.sqf"
+
 //Import mission params
 warEra = missionNamespace getVariable "warEra"; // Default actual warfare
-
-c_leader = "leader";
-c_at = "at";
-c_rifleman = "rifleman";
-c_engineer = "engineer";
-c_autorifleman = "autorifleman";
-c_marksman = "marksman";
-c_sniper = "sniper"; 
-c_medic = "medic";
-c_radioman = "radioman";
-c_grenadier = "grenadier";
-c_ammobearer = "ammobearer";
 
 c_listOfRoles = [c_leader,c_at,c_rifleman,c_engineer,c_autorifleman,c_marksman,c_medic];
 
@@ -24,75 +14,74 @@ if (ironMan) then
 
 
 getLoadoutByRole = {
-	currentPlayer = _this select 0;
-	currentFaction = _this select 1;
+	params ["_currentPlayer", "_currentFaction"];
 
-	currentPlayerClass = currentPlayer getVariable "role";
-	thisloadout = [];
+	_currentPlayerClass = _currentPlayer getVariable "role";
+	_thisloadout = [];
 	//Need to adapt a little thing to allow default loadout when there's no loadout found
-	thisloadout = ((loadout_db select {_x select 1 == currentFaction}) select 0 select 0) select {_x select 0 == currentPlayerClass} select 0 select 1;
-	diag_log format ["Player %1 with role %2 has loadout %3", name currentPlayer, currentPlayerClass,thisloadout ];
-	thisloadout
+	_thisloadout = ((loadout_db select {_x select 1 == _currentFaction}) select 0 select 0) select {_x select 0 == _currentPlayerClass} select 0 select 1;
+	diag_log format ["Player %1 with role %2 has loadout %3", name _currentPlayer, _currentPlayerClass,_thisloadout ];
+	_thisloadout
 };
 
 getVirtualWeaponList = {
-	currentPlayer = _this select 0;
-	currentFaction = _this select 1;
-	currentPlayerClass = currentPlayer getVariable "role";
-	virtualWeaponList = [];
+	params ["_currentPlayer", "_currentFaction"];
 
-	switch (currentPlayerClass) do
+	_currentPlayerClass = _currentPlayer getVariable "role";
+	_virtualWeaponList = [];
+
+	switch (_currentPlayerClass) do
 	{
 		case c_leader:
 			{
-				virtualWeaponList = virtualWeaponList + (rifleList_db select {_x select 1  == currentFaction} select 0 select 0);
-				virtualWeaponList = virtualWeaponList + (smgList_db select {_x select 1  == currentFaction} select 0 select 0);
+				_virtualWeaponList = _virtualWeaponList + (rifleList_db select {_x select 1  == _currentFaction} select 0 select 0);
+				_virtualWeaponList = _virtualWeaponList + (smgList_db select {_x select 1  == _currentFaction} select 0 select 0);
 			};
 		case c_at:
 			{
-				virtualWeaponList = virtualWeaponList + (rifleList_db select {_x select 1  == currentFaction} select 0 select 0);
-				virtualWeaponList = virtualWeaponList + (smgList_db select {_x select 1  == currentFaction} select 0 select 0);
-				virtualWeaponList = virtualWeaponList + (launcherList_db select {_x select 1  == currentFaction} select 0 select 0);
+				_virtualWeaponList = _virtualWeaponList + (rifleList_db select {_x select 1  == _currentFaction} select 0 select 0);
+				_virtualWeaponList = _virtualWeaponList + (smgList_db select {_x select 1  == _currentFaction} select 0 select 0);
+				_virtualWeaponList = _virtualWeaponList + (launcherList_db select {_x select 1  == _currentFaction} select 0 select 0);
 			};
 		case c_rifleman:
 			{
-				virtualWeaponList = virtualWeaponList + (rifleList_db select {_x select 1  == currentFaction} select 0 select 0);
-				virtualWeaponList = virtualWeaponList + (smgList_db select {_x select 1  == currentFaction} select 0 select 0);
+				_virtualWeaponList = _virtualWeaponList + (rifleList_db select {_x select 1  == _currentFaction} select 0 select 0);
+				_virtualWeaponList = _virtualWeaponList + (smgList_db select {_x select 1  == _currentFaction} select 0 select 0);
 			};
 		case c_engineer:
 			{
-				virtualWeaponList = virtualWeaponList + (rifleList_db select {_x select 1  == currentFaction} select 0 select 0);
-				virtualWeaponList = virtualWeaponList + (smgList_db select {_x select 1  == currentFaction} select 0 select 0);
+				_virtualWeaponList = _virtualWeaponList + (rifleList_db select {_x select 1  == _currentFaction} select 0 select 0);
+				_virtualWeaponList = _virtualWeaponList + (smgList_db select {_x select 1  == _currentFaction} select 0 select 0);
 			};
 		case c_autorifleman:
 			{
-				virtualWeaponList = virtualWeaponList + (rifleList_db select {_x select 1  == currentFaction} select 0 select 0);
-				virtualWeaponList = virtualWeaponList + (autorifleList_db select {_x select 1  == currentFaction} select 0 select 0);
+				_virtualWeaponList = _virtualWeaponList + (rifleList_db select {_x select 1  == _currentFaction} select 0 select 0);
+				_virtualWeaponList = _virtualWeaponList + (autorifleList_db select {_x select 1  == _currentFaction} select 0 select 0);
 			};
 		case c_marksman;
 		case c_sniper: 
 			{
-				virtualWeaponList = virtualWeaponList + (rifleList_db select {_x select 1  == currentFaction} select 0 select 0);
-				virtualWeaponList = virtualWeaponList + (marksmanrifleList_db select {_x select 1  == currentFaction} select 0 select 0);
+				_virtualWeaponList = _virtualWeaponList + (rifleList_db select {_x select 1  == _currentFaction} select 0 select 0);
+				_virtualWeaponList = _virtualWeaponList + (marksmanrifleList_db select {_x select 1  == _currentFaction} select 0 select 0);
 			};
 		case c_medic:
 			{
-				virtualWeaponList = virtualWeaponList + (rifleList_db select {_x select 1  == currentFaction} select 0 select 0);
-				virtualWeaponList = virtualWeaponList + (smgList_db select {_x select 1  == currentFaction} select 0 select 0);
+				_virtualWeaponList = _virtualWeaponList + (rifleList_db select {_x select 1  == _currentFaction} select 0 select 0);
+				_virtualWeaponList = _virtualWeaponList + (smgList_db select {_x select 1  == _currentFaction} select 0 select 0);
 			};	
 		case c_grenadier:
 			{
-				virtualWeaponList = virtualWeaponList + (rifleList_db select {_x select 1  == currentFaction} select 0 select 0);
-				virtualWeaponList = virtualWeaponList + (grenadeLauncherList_db select {_x select 1  == currentFaction} select 0 select 0);
+				_virtualWeaponList = _virtualWeaponList + (rifleList_db select {_x select 1  == _currentFaction} select 0 select 0);
+				_virtualWeaponList = _virtualWeaponList + (grenadeLauncherList_db select {_x select 1  == _currentFaction} select 0 select 0);
 			};				
 		default
 			{
 				//Non implemented role : Default rifle
-			 	virtualWeaponList = virtualWeaponList + (rifleList_db select {_x select 1  == currentFaction} select 0 select 0); 
+			 	_virtualWeaponList = _virtualWeaponList + (rifleList_db select {_x select 1  == _currentFaction} select 0 select 0); 
 			};
 	};
-	diag_log format ["Player %1 with role %2 has access to weapons %3", name currentPlayer, currentPlayerClass,virtualWeaponList ];
-	virtualWeaponList
+	diag_log format ["Player %1 with role %2 has access to weapons %3", name _currentPlayer, _currentPlayerClass,_virtualWeaponList ];
+	_virtualWeaponList
 };
 
 
@@ -259,27 +248,44 @@ getVirtualMagazine = {
 
 	switch (currentPlayerClass) do
 	{
+
+		//Faction Magazine list
+		virtualMagazineList = virtualMagazineList + (magazineList_db select {_x select 1  == currentFaction} select 0 select 0);
+
+		//Add default weapon magazine
+		case c_autorifleman:
+			{
+				{
+					_currentWeaponMagazineList = getArray (configfile >> "CfgWeapons" >> _x >> "magazines");
+					if (count _currentWeaponMagazineList != 0) then 
+					{
+						if ((virtualMagazineList) findIf {_x == (_currentWeaponMagazineList#0)} == -1) then 
+						{
+							virtualMagazineList pushBack _currentWeaponMagazineList#0;
+						};
+					};
+				} foreach currentWeaponList;
+			};
 		default 
 			{ 
-				//Default Magazine list
-				virtualMagazineList = virtualMagazineList + (magazineList_db select {_x select 1  == currentFaction} select 0 select 0);
+				{
+				//Add default weapon magazine except large magazine
+				_listOfLargeMagazineText = ["50Rnd", "60Rnd", "150Rnd"]; //
+				_currentWeaponMagazineList = getArray (configfile >> "CfgWeapons" >> _x >> "magazines");
+					if (count _currentWeaponMagazineList != 0) then 
+					{
+						if ((virtualMagazineList) findIf {_x == (_currentWeaponMagazineList#0)} == -1) then 
+						{
+							//Add only if this is not a large magazine
+							if (!([_currentWeaponMagazineList#0, _listOfLargeMagazineText] call isElementOfArrayInString)) then 
+							{
+								virtualMagazineList pushBack _currentWeaponMagazineList#0;
+							};
+						};
+					};
+				} foreach currentWeaponList;
 			};
 	};
-
-	//If there is no magazine in faction DB
-	// if (count virtualMagazineList == 0) then 
-	// {
-		//Add the first magazine of each weapon
-		{
-			_currentWeaponMagazineList = getArray (configfile >> "CfgWeapons" >> _x >> "magazines");
-			if (count _currentWeaponMagazineList != 0) then 
-			{
-				if ((virtualMagazineList) findIf {_x == (_currentWeaponMagazineList#0)} == -1) then 
-				{
-					virtualMagazineList pushBack _currentWeaponMagazineList#0;
-				};
-			};
-		} foreach currentWeaponList;
 
 		//In addition add smokes and grenade 
 		virtualMagazineList append
@@ -295,7 +301,6 @@ getVirtualMagazine = {
 			"O_IR_Grenade",
 			"Laserbatteries"
 		];
-	// };
 
 	diag_log format ["Player %1 with role %2 has access to items %3", name currentPlayer, currentPlayerClass, virtualMagazineList ];
 	virtualMagazineList
@@ -477,79 +482,6 @@ switchToRole = {
 	titleCut ["", "BLACK IN", 5];
 };
 
-setupRoleSwitchToItem = {
-	//InitParam
-	itemToAttachArsenal = _this select 0;
-	currentPlayer = _this select 1;
-	currentFaction = _this select 2;
-
-	//Check if current faction has specific role definition
-	if (count (listOfRoles_db select {_x select 1  == currentFaction} select 0 select 0) == 0 ) then 
-	{
-		listOfRoles = c_listOfRoles;
-	} else 
-	{
-		listOfRoles = listOfRoles_db select {_x select 1  == currentFaction} select 0 select 0;
-	};
-	
-	//Add action to change role
-	{
-		itemToAttachArsenal addAction 
-			[format ["Switch to role %1", _x], 
-			{
-				//Define params
-				params ["_target","_caller","_ID","_params"];
-				diag_log format ["Player %1 has switched to role %2 in faction %3", name _caller, _params select 0, _params select 1];
-
-				titleCut [format ["Switching to role %1",(_params select 1)], "BLACK FADED", 5];
-
-				//Manage Unit trait
-				_caller setUnitTrait ["Medic", false];
-				_caller setUnitTrait ["Engineer", false];
-				_caller setUnitTrait ["ExplosiveSpecialist", false];
-				if ((_params select 0) == c_medic) then 
-				{
-					_caller setUnitTrait ["Medic", true];
-				};
-				if ((_params select 0) == c_engineer) then 
-				{
-					_caller setUnitTrait ["Engineer", true];
-					_caller setUnitTrait ["ExplosiveSpecialist", true];
-				};
-
-				//Manage player's role
-				_caller setVariable ["role", (_params select 0)];
-
-				//Manage default stuff
-				[_caller,(_params select 1), true] call doInitializeLoadout;
-
-				_caller setVariable ["spawnLoadout", getUnitLoadout _caller];
-
-				titleCut ["", "BLACK IN", 5];
-			},[_x,currentFaction]];
-	} foreach listOfRoles;
-
-	//Display player's current role
-	itemToAttachArsenal addAction 
-		[format ["Show team roles"], 
-		{
-			private _target = (_this select 0);
-			private _caller = (_this select 1);
-			private _params = (_this select 3);
-			
-			private _currentPlayersFaction = side _caller;
-			private _globalRoles = "Your team's roles :";
-			{
-				if (alive _x && side _x == _currentPlayersFaction) then 
-				{
-					_globalRoles = _globalRoles + format ["\n Player %1 has role %2",name _x, _x getVariable "role"];
-				};
-			} foreach allPlayers;
-			hint _globalRoles;
-		},[currentFaction]];
-};
-
-
 
 setupRoleSwitchToList = {
 	//InitParam
@@ -580,7 +512,6 @@ isAreaEligibleForArsenal = {
 	};
 	_controlDistance;
 };
-
 
 getPlayerFaction = {
 	params ["_unit"];
@@ -981,4 +912,19 @@ reduceCookOff =
 		_weaponData set [2, (_weaponData # 2)/2];
 		ace_overheating_cacheWeaponData set [_weaponUsed, _weaponData];
 	};
+};
+
+isElementOfArrayInString = 
+{
+	params ["_stringToAnalyse", "_arrayToTest"];
+	_result = false;
+
+	{
+		if ([_x, _stringToAnalyse] call BIS_fnc_inString) then 
+		{
+			_result = true;
+		};
+	} foreach _arrayToTest;
+
+	_result
 };

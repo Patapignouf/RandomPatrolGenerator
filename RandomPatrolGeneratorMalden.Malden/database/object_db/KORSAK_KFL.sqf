@@ -7,7 +7,6 @@ c_marksman = "marksman";
 c_sniper = "sniper";  
 c_medic = "medic";
 c_grenadier = "grenadier";
-c_drone = "UAV opérator";
 c_pilot = "pilot";
 
 

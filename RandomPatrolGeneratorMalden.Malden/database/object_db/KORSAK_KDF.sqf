@@ -1,15 +1,7 @@
-c_leader = "leader";
-c_at = "at";
-c_rifleman = "rifleman";
-c_engineer = "engineer";
-c_autorifleman = "autorifleman";
-c_marksman = "marksman";
-c_sniper = "sniper";  
-c_medic = "medic";
-c_grenadier = "grenadier";
-c_drone = "UAV opérator";
-c_pilot = "pilot";
+#include "..\classConstant.sqf"
 
+//Include custom classes
+//c_drone = "UAV opérator";
 
 ////////////////////////
 //Vehicle management////
@@ -62,6 +54,7 @@ bluforArmoredVehicle_KORSAK_KDF = [
 //Loadout management////
 ////////////////////////
 
+//Define custom list of role
 listOfRoles_KORSAK_KDF = [c_leader,c_at,c_rifleman,c_engineer,c_autorifleman,c_marksman,c_medic,c_grenadier,c_pilot];
 
 //USA
