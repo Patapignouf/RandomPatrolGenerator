@@ -699,23 +699,26 @@ if (1 <= (count EnemyWaveSpawnPositions)) then
 };
 
 //Generate mortar | 50% chance to spawn 
-if (random 100 < 50) then 
-{ 
-	for [{_i = 0}, {_i < 2}, {_i = _i + 1}] do
+if (count baseEnemyMortarGroup > 0) then 
+{
+	if (random 100 < 50) then 
 	{ 
-		_mortarSpawnPosition = [initCityLocation, (800), (aoSize+700), 3, 10, 0.25, 0, [], [[0,0,0],[0,0,0]]] call BIS_fnc_findSafePos;
-		if !([_mortarSpawnPosition , [0,0,0]] call BIS_fnc_areEqual) then 
-		{
-			_mortarGroup = [baseEnemyMortarGroup, _mortarSpawnPosition, east, "Mortar"] call doGenerateEnemyGroup;
-			//TEMP feature - In the future there will be a dynamic side quest assignement
-			//50% chance to setup the side mission 
-			if (random 100 < 50) then 
+		for [{_i = 0}, {_i < 2}, {_i = _i + 1}] do
+		{ 
+			_mortarSpawnPosition = [initCityLocation, (800), (aoSize+700), 3, 10, 0.25, 0, [], [[0,0,0],[0,0,0]]] call BIS_fnc_findSafePos;
+			if !([_mortarSpawnPosition , [0,0,0]] call BIS_fnc_areEqual) then 
 			{
-				[[format ["%1%2","_sideQuestMortar", random 10000],"DestroyMortar", getPos leader (_mortarGroup), vehicle leader _mortarGroup], "engine\objectiveManagement\doGenerateSideObjective.sqf"] remoteExec ['BIS_fnc_execVM', 0, true];
+				_mortarGroup = [baseEnemyMortarGroup, _mortarSpawnPosition, east, "Mortar"] call doGenerateEnemyGroup;
+				//TEMP feature - In the future there will be a dynamic side quest assignement
+				//50% chance to setup the side mission 
+				if (random 100 < 50) then 
+				{
+					[[format ["%1%2","_sideQuestMortar", random 10000],"DestroyMortar", getPos leader (_mortarGroup), vehicle leader _mortarGroup], "engine\objectiveManagement\doGenerateSideObjective.sqf"] remoteExec ['BIS_fnc_execVM', 0, true];
+				};
 			};
 		};
-	};
-}; 
+	}; 
+};
 
 
 for [{_i = 0}, {_i <= missionLength}, {_i = _i + 1}] do //Peut être optimisé
