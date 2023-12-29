@@ -32,6 +32,7 @@ _USA_Winter = 30;
 _KORSAK_KDF = 31;
 _KORSAK_KS = 32;
 _KORSAK_KFL = 33;
+_KORSAK_KAL = 34;
 
 #include "object_db\USA.sqf"
 #include "object_db\USA_Winter.sqf"
@@ -67,6 +68,7 @@ _KORSAK_KFL = 33;
 #include "object_db\KORSAK_KDF.sqf"
 #include "object_db\KORSAK_KS.sqf"
 #include "object_db\KORSAK_KFL.sqf"
+#include "object_db\KORSAK_KAL.sqf"
 
 //Define faction prefix
 c_db = "_db";
@@ -104,6 +106,7 @@ c_Chernarussian_Winter = "_Chernarussian_Winter";
 c_KORSAK_KDF = "_KORSAK_KDF";
 c_KORSAK_KS = "_KORSAK_KS";
 c_KORSAK_KFL = "_KORSAK_KFL";
+c_KORSAK_KAL = "_KORSAK_KAL";
 
 //Faction format :
 // [ Number : Faction Code, String : Faction string Name , String : Faction Name to display, Enabled for Blufor/Independant, Enabled for Opfor, Enabled for Civilian],
@@ -169,9 +172,10 @@ if (isClass (configFile >> "CfgPatches" >> "IFA3_Core")) then
 //Add specific IFA3 factions
 if (isClass (configFile >> "CfgPatches" >> "vtf_kf_main")) then 
 {
-	factionInfos pushBack [c_KORSAK_KDF,_KORSAK_KDF,"KORSAK KDF [KORSAK]", true, false, false];
-	factionInfos pushBack [c_KORSAK_KS,_KORSAK_KS,"KORSAK KS [KORSAK]", false, true, false];	
-	factionInfos pushBack [c_KORSAK_KFL,_KORSAK_KFL,"KORSAK KFL [KORSAK]", true, false, false];	
+	factionInfos pushBack [c_KORSAK_KDF,_KORSAK_KDF,"KDF Army [KORSAK]", true, false, false];
+	factionInfos pushBack [c_KORSAK_KS,_KORSAK_KS,"KS Separatists [KORSAK]", false, true, false];
+	factionInfos pushBack [c_KORSAK_KAL,_KORSAK_KAL,"KAL Locals [KORSAK]", false, true, false];	
+	factionInfos pushBack [c_KORSAK_KFL,_KORSAK_KFL,"KFL Foreign legion [KORSAK]", true, false, false];	
 };
 
 
