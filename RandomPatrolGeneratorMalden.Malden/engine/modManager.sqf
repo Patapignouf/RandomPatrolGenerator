@@ -15,6 +15,10 @@ doCheckRunningModsOnServer = {
 			missionNamespace setVariable [_x#1, true, true];
 		};
 	} foreach modToCheck;
+	if (gettext ( configfile >> "CfgSurfaces" >> "arm_rock" >> "RTTYPE") != "") then 
+	{
+		missionNamespace setVariable ["RealisticDriving", true, true];
+	}
 };
 
 doDisplayModsAlert = {
@@ -48,6 +52,13 @@ doCheckRunningModsOnClient = {
 			};
 		};
 	} foreach modToCheck;
+	if (missionNamespace getVariable ["RealisticDriving", false]) then 
+	{
+		if (gettext ( configfile >> "CfgSurfaces" >> "arm_rock" >> "RTTYPE") == "") then 
+		{
+			_modNotPresent pushBack "Realistic Driving Terrains";
+		};
+	};
 	[_modNotPresent] call doDisplayModsAlert;
 };
 
