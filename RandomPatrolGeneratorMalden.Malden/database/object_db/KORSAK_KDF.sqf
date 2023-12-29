@@ -78,11 +78,13 @@ rifleList_KORSAK_KDF = [
 	"vtf_kf_arifle_AK12_ARCO_F",
 	"arifle_AK12_F",
 	"arifle_AK12U_F",
-	"hgun_Pistol_01_F"
+	"hgun_Pistol_01_F",
+	"CUP_arifle_AK12_AFG_black" //For non possessor of contact DLC
 ];	
 
 grenadeLauncherList_KORSAK_KDF =  [		
-	"arifle_AK12_GL_F"
+	"arifle_AK12_GL_F",
+	"CUP_arifle_AK12_GP34_black"
 ];	
 
 launcherList_KORSAK_KDF = [		
@@ -219,6 +221,7 @@ uniformList_KORSAK_KDF = [
 	"vtf_kf_sweater",
 	"vtf_kf_deserter",
 	"V_CarrierRigKBT_01_light_Olive_F",
+	"V_PlateCarrier2_rgr_noflag_F", //For non possessor of contact DLC
 	"H_HelmetHBK_F",
 	"H_Cap_headphones",
 	"H_Booniehat_eaf",
@@ -229,6 +232,8 @@ uniformList_KORSAK_KDF = [
 magazineList_KORSAK_KDF = [
 	"1Rnd_HE_Grenade_shell",
 	"1Rnd_Smoke_Grenade_shell",
+	"CUP_1Rnd_HE_GP25_M",
+	"CUP_1Rnd_SMOKE_GP25_M",
 	"HandGrenade",
 	"SmokeShell",
 	"SmokeShellBlue",

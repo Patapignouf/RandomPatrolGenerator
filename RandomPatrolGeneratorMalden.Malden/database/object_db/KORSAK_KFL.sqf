@@ -66,7 +66,7 @@ loadout_KORSAK_KFL = [
 	[c_autorifleman, "vtf_kf_B_FL_Autorifleman_F"],
 	[c_marksman, "vtf_kf_B_FL_Marksman_F"],
 	[c_medic, "vtf_kf_B_FL_Medic_F"],
-	[c_grenadier, "vtf_kf_B_FL_Grenadier_F"]//Default stuff
+	[c_grenadier, "vtf_kf_B_FL_Grenadier_F"]
 ];
 
 ////////////////////////
@@ -77,14 +77,17 @@ rifleList_KORSAK_KFL = [
 	"arifle_AK12U_F",
 	"arifle_SPAR_02_blk_F",
 	"arifle_SPAR_01_blk_F",
+	"CUP_arifle_HK416_Black",
 	"hgun_Pistol_01_F",
 	"arifle_MSBS65_black_F",
-	"srifle_DMR_03_F"
+	"srifle_DMR_03_F",
+	"CUP_arifle_AK15_black" //For non possessor of contact DLC
 ];	
 
 grenadeLauncherList_KORSAK_KFL =  [		
 	"arifle_SPAR_01_GL_blk_ACO_Pointer_F",
-	"arifle_SPAR_01_GL_blk_F"
+	"arifle_SPAR_01_GL_blk_F",
+	"CUP_arifle_HK416_CQB_M203_Black" //For non possessor of contact DLC
 ];	
 
 launcherList_KORSAK_KFL = [		
@@ -97,9 +100,9 @@ autorifleList_KORSAK_KFL = [
 	"LMG_03_F"
 ];	
 
-
 marksmanrifleList_KORSAK_KFL = [		
-
+	"arifle_SPAR_03_blk_F",
+	"CUP_arifle_HK417_20" //For non possessor of contact DLC
 ];
 
 smgList_KORSAK_KFL = [		
@@ -175,7 +178,7 @@ itemList_KORSAK_KFL = [
 	"ACE_NVG_Wide_Black_WP",
 	"ACE_NVG_Wide_WP",
 	"ACE_NVG_Wide_Green_WP"
-	];
+];
 
 //items avalaible only for engineer
 itemEngineerList_KORSAK_KFL = [
@@ -192,7 +195,7 @@ itemEngineerList_KORSAK_KFL = [
 	"ace_marker_flags_orange",
 	"ace_marker_flags_red",
 	"DemoCharge_Remote_Mag"
-	];
+];
 
 //item avalaible only for medics
 itemMedicList_KORSAK_KFL = [
@@ -204,7 +207,7 @@ itemMedicList_KORSAK_KFL = [
 	"ACE_personalAidKit",
 	"ACE_surgicalKit",
 	"ACE_suture"
-	];
+];
 
 
 //backpack avalaible for all unit
@@ -216,7 +219,7 @@ backPackList_KORSAK_KFL = [
 	"B_FieldPack_green_F",
 	"TFAR_rt1523g",
 	"TFAR_rt1523g_sage"
-	];
+];
 
 
 //Uniform, vest, headgear, avalaible for all unit
@@ -227,8 +230,9 @@ uniformList_KORSAK_KFL = [
 	"H_HelmetHBK_F",
 	"H_Cap_headphones",
 	"H_Booniehat_eaf",
-	"H_HelmetHBK_headset_F"
-	];
+	"H_HelmetHBK_headset_F",
+	"V_PlateCarrierL_CTRG"
+];
 
 //Magazine avalaible for all unit
 magazineList_KORSAK_KFL = [
@@ -243,4 +247,4 @@ magazineList_KORSAK_KFL = [
 	"SmokeShellRed",
 	"SmokeShellYellow",
 	"Laserbatteries"
-	];
+];
