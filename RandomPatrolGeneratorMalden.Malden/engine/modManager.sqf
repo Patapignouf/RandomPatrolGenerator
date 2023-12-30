@@ -6,7 +6,7 @@ modToCheck = [
 	["uns_main", "MOD_UNSUNG", "UNSUNG","CfgPatches"],
 	["AMF_Patches", "MOD_AMF", "AMF","CfgPatches"],
 	["vtf_kf_main", "MOD_KORSAC", "KORSAC TERRAIN","CfgPatches"],
-	["RealisticDriving", "RealisticDriving", "Realistic Driving Terrains","Custom"]
+	["RT", "MOD_RT", "Realistic Driving Terrains","CfgPatches"]
 ];
 
 doCheckRunningModsOnServer = {
@@ -21,12 +21,12 @@ doCheckRunningModsOnServer = {
 		} else 
 		{
 			switch (_x#0) do {
-				case "RealisticDriving":
-				{
-					if (gettext ( configfile >> "CfgSurfaces" >> "arm_rock" >> "RTTYPE") != "") then {
-						missionNamespace setVariable [_x#1, true, true];
-					};
-				};
+				// case "RealisticDriving":
+				// {
+				// 	if (gettext ( configfile >> "CfgSurfaces" >> "arm_rock" >> "RTTYPE") != "") then {
+				// 		missionNamespace setVariable [_x#1, true, true];
+				// 	};
+				// };
 				default
 				{
 					//Do nothing
@@ -73,12 +73,12 @@ doCheckRunningModsOnClient = {
 			{
 				//Check custom mods
 				switch (_x#0) do {
-					case "RealisticDriving":
-					{
-						if (!(gettext ( configfile >> "CfgSurfaces" >> "arm_rock" >> "RTTYPE") != "")) then {
-							_modNotPresent pushBack _x#1;
-						};
-					};
+					// case "RealisticDriving":
+					// {
+					// 	if (!(gettext ( configfile >> "CfgSurfaces" >> "arm_rock" >> "RTTYPE") != "")) then {
+					// 		_modNotPresent pushBack _x#1;
+					// 	};
+					// };
 					default
 					{
 						//Do nothing
