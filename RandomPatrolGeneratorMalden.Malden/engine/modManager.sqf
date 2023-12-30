@@ -1,24 +1,39 @@
 modToCheck = [
-	["task_force_radio", "MOD_TFAR", "Task Force Radio"],
-	["ace_common", "MOD_ACE", "[ACE] Advanced Combat Environment"],
-	["CUP_BaseData", "MOD_CUP", "[CUP] Cummunity Upgrade Project"],
-	["IFA3_Core", "MOD_IFA3", "IFA3 Iron Front"],
-	["uns_main", "MOD_UNSUNG", "UNSUNG"],
-	["AMF_Patches", "MOD_AMF", "AMF"]
+	["task_force_radio", "MOD_TFAR", "Task Force Radio","CfgPatches"],
+	["ace_common", "MOD_ACE", "[ACE] Advanced Combat Environment","CfgPatches"],
+	["CUP_BaseData", "MOD_CUP", "[CUP] Cummunity Upgrade Project","CfgPatches"],
+	["IFA3_Core", "MOD_IFA3", "IFA3 Iron Front","CfgPatches"],
+	["uns_main", "MOD_UNSUNG", "UNSUNG","CfgPatches"],
+	["AMF_Patches", "MOD_AMF", "AMF","CfgPatches"],
+	["vtf_kf_main", "MOD_KORSAC", "KORSAC TERRAIN","CfgPatches"],
+	["RealisticDriving", "RealisticDriving", "Realistic Driving Terrains","Custom"]
 ];
 
 doCheckRunningModsOnServer = {
 
 	//Check mods on the server
 	{
-		if (isClass (configFile >> "CfgPatches" >> _x#0)) then {
-			missionNamespace setVariable [_x#1, true, true];
+		if (_x#3 == "CfgPatches") then 
+		{
+			if (isClass (configFile >> "CfgPatches" >> _x#0)) then {
+				missionNamespace setVariable [_x#1, true, true];
+			};
+		} else 
+		{
+			switch (_x#0) do {
+				case "RealisticDriving":
+				{
+					if (gettext ( configfile >> "CfgSurfaces" >> "arm_rock" >> "RTTYPE") != "") then {
+						missionNamespace setVariable [_x#1, true, true];
+					};
+				};
+				default
+				{
+					//Do nothing
+				};
+			};
 		};
 	} foreach modToCheck;
-	if (gettext ( configfile >> "CfgSurfaces" >> "arm_rock" >> "RTTYPE") != "") then 
-	{
-		missionNamespace setVariable ["RealisticDriving", true, true];
-	}
 };
 
 doDisplayModsAlert = {
@@ -27,7 +42,7 @@ doDisplayModsAlert = {
 	//Display alert if there is one mod needed not present
 	if (count _modNotPresent != 0) then 
 	{
-		_modsCheckToDisplay = "";
+	_modsCheckToDisplay = "";
 		{
 			_currentNotPresentMod = _x;
 			{
@@ -45,20 +60,35 @@ doCheckRunningModsOnClient = {
 	//Check every server mod on the client
 	_modNotPresent = [];
 	{
+		//Check server running mods
 		if (missionNamespace getVariable [_x#1, false]) then 
-		{
-			if (!(isClass (configFile >> "CfgPatches" >> _x#0))) then {
-				_modNotPresent pushBack _x#1;
+		{	
+			//Check standard content mods
+			if (_x#3 == "CfgPatches") then 
+			{
+				if (!(isClass (configFile >> "CfgPatches" >> _x#0))) then {
+					_modNotPresent pushBack _x#1;
+				};
+			} else 
+			{
+				//Check custom mods
+				switch (_x#0) do {
+					case "RealisticDriving":
+					{
+						if (!(gettext ( configfile >> "CfgSurfaces" >> "arm_rock" >> "RTTYPE") != "")) then {
+							_modNotPresent pushBack _x#1;
+						};
+					};
+					default
+					{
+						//Do nothing
+					};
+				};
 			};
 		};
 	} foreach modToCheck;
-	if (missionNamespace getVariable ["RealisticDriving", false]) then 
-	{
-		if (gettext ( configfile >> "CfgSurfaces" >> "arm_rock" >> "RTTYPE") == "") then 
-		{
-			_modNotPresent pushBack "Realistic Driving Terrains";
-		};
-	};
+
+	//Display alert
 	[_modNotPresent] call doDisplayModsAlert;
 };
 
