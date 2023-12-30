@@ -18,7 +18,7 @@ player setVariable ["role", player getVariable ["initRole","rifleman"]];
 
 [selectRandom ["LeadTrack01_F","LeadTrack01a_F","LeadTrack01b_F","LeadTrack03_F","LeadTrack01_F_Heli","LeadTrack04_F_EXP","LeadTrack01_F_Mark"], 10, 0.2] call BIS_fnc_playMusic;
 cutText [format ["<t size='1.2'>Please wait while mission is generating</t><br/><br/><img size=20 align='bottom' valign='bottom' image='%1'/>",format ["a3\missions_f_aow\data\img\artwork\landscape\showcase_aow_picture_%1_co.paa",selectRandom [16,59,118,106,98,62,76,93,75,64,122,87,70,14,104,108,111,123,20,92,63,41,65,68,22,91,72,30,31,80,32,47,27,18,46,121]]], "BLACK FADED", 100, true, true];
-sleep 3; //Wait player load correctly the mission
+uiSleep 3; //Wait player load correctly the mission
 
 //Define player who configure mission
 //Independent leader can choose mission
@@ -82,8 +82,8 @@ waitUntil {missionNamespace getVariable "generationSetup" == true};
 		_camera camPreparePos (_randomPos);
 		_camera camPreload 3;
 		_camera camCommitPrepared 400;
-		cutText [format ["<t size='1.2'>Please wait while mission is generating</t><br/><br/><img size=20 align='bottom' valign='bottom' image='%1'/>",format ["a3\missions_f_aow\data\img\artwork\landscape\showcase_aow_picture_%1_co.paa",selectRandom [16,59,118,106,98,62,76,93,75,64,122,87,70,14,104,108,111,123,20,92,63,41,65,68,22,91,72,30,31,80,32,47,27,18,46,121]]], "PLAIN", 0.5, true, true];
-		sleep 4;
+		cutText [format ["<t size='1.2'>Please wait while mission is generating</t><br/><t size='1.1'>%2</t><br/><br/><img size=20 align='bottom' valign='bottom' image='%1'/>", format ["a3\missions_f_aow\data\img\artwork\landscape\showcase_aow_picture_%1_co.paa",selectRandom [16,59,118,106,98,62,76,93,75,64,122,87,70,14,104,108,111,123,20,92,63,41,65,68,22,91,72,30,31,80,32,47,27,18,46,121]], missionNameSpace getVariable ["missionSetupMessage", ""]], "PLAIN", 0.5, true, true];
+		uiSleep 4;
 	};
 	_camera cameraEffect ["terminate", "back"];
 	camDestroy _camera;
@@ -201,7 +201,7 @@ player addEventHandler ["Respawn",{
 	_corpse setVariable ["isPlayerObject",true, true];
 	[_corpse] spawn {
 		params ["_corpse"];
-		sleep 500;
+		uiSleep 500;
 		deleteVehicle _corpse;
 	};
 }];
@@ -312,7 +312,7 @@ if (side player == blufor) then
 				//End init
 				[USS_FREEDOM_CARRIER,_spawnPos] spawn { 
 					params ["_USSCarrier","_spawnPos"];
-					sleep 1; 
+					uiSleep 1; 
 					_handleScirpt = _USSCarrier call BIS_fnc_Carrier01Init;
 					waitUntil {isNull _handleScirpt};
 					//Tp player on carrier
@@ -539,7 +539,7 @@ if (side player == blufor) then
 					//Click on map to spawn
 					selectedLoc = [0,0,0];
 					openMap true;
-					sleep 1;
+					uiSleep 1;
 
 					["<t color='#ffffff' size='.8'>Click on map to spawn an aircraft and teleport<br />The aircraft will spawn oriented on the north</t>",0,0,4,1,0,789] spawn BIS_fnc_dynamicText;
 					onMapSingleClick "selectedLoc = _pos; onMapSingleClick ''; openMap false; true;";
@@ -570,7 +570,7 @@ if (side player == blufor) then
 			//Click on map to Halo spawn
 			selectedHaloLoc = [0,0,0];
 			openMap true;
-			sleep 1;
+			uiSleep 1;
 			["<t color='#ffffff' size='.8'>Click on map to spawn Halo jump<br />Your backpack will be saved</t>",0,0,4,1,0,789] spawn BIS_fnc_dynamicText;
 			onMapSingleClick "selectedHaloLoc = _pos; onMapSingleClick ''; openMap false; true;";
 			waitUntil{!(visibleMap)};  
@@ -644,7 +644,7 @@ if (didJIP) then
 
 //Remove arsenal from player 
 [] spawn {
-	sleep 10;
+	uiSleep 10;
 	player call RemoveArsenalActionFromGivenObject;
 };
 
@@ -660,7 +660,7 @@ if (isClass (configFile >> "CfgPatches" >> "ace_medical")) then
 
 //Display welcome message
 5 fadeMusic 0;
-sleep 5;
+uiSleep 5;
 [parseText "<t font='PuristaBold' size='1.6'>Welcome to <br />Random Patrol Generator</t><br />by Patapignouf", true, nil, 7, 0.7, 0] spawn BIS_fnc_textTiles;
-sleep 20;
+uiSleep 20;
 [format ["Somewhere on %1",worldName], format ["Year %1", date select 0], mapGridPosition player] spawn BIS_fnc_infoText;

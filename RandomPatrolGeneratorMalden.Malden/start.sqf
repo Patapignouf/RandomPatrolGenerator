@@ -40,6 +40,8 @@ publicVariable "adminExist";
 //Mission settings waiting
 waitUntil {missionNamespace getVariable "generationSetup" == true};
 
+missionNameSpace setVariable ["missionSetupMessage", "Setup factions database", true];
+
 //faction definition
 warEra = missionNamespace getVariable "warEra"; // Default actual warfare
 bluFaction = missionNamespace getVariable "bluforFaction"; //Default faction 14 -> OTAN 2035
@@ -142,6 +144,8 @@ if ({isPlayer _x && side _x == independent} count allPlayers != 0) then
 /////Find locations//////
 /////////////////////////
 
+missionNameSpace setVariable ["missionSetupMessage", "Finding the best operation area", true];
+
 //Initilize independent starting position 
 if (initCityLocationPosition isEqualType []) then 
 {
@@ -235,6 +239,8 @@ if (random 100 < 20 && (count (allPlayers select {side _x == independent})== 0))
 ///Generate Objectives///
 /////////////////////////
 
+missionNameSpace setVariable ["missionSetupMessage", "Generating objectives", true];
+
 //Define 3 objectives
 SupplyPositions = [];
 SelectedObjectivePosition = objNull;
@@ -277,6 +283,8 @@ for [{_i = 0}, {_i < numberOfSpawnWave}, {_i = _i + 1}] do
 ////Generate Civ/////////
 /////////////////////////
 
+missionNameSpace setVariable ["missionSetupMessage", "Generating civilians city", true];
+
 //IA civilian taskGarrison
 diag_log format ["Begin generation of civilian AO : %1 on position %2", civilian_big_group, initCityLocation];
 currentCivGroup = objNull;
@@ -306,6 +314,8 @@ publicvariable "VA1";
 /////////////////////////
 ////Generate Ind/////////
 /////////////////////////
+
+missionNameSpace setVariable ["missionSetupMessage", "Generating independent base", true];
 
 //Init attack management on ind
 isIndAttacked = false;
@@ -356,6 +366,8 @@ publicVariable "extendedTriggerArea";
 /////////////////////////
 ////Generate Blufor//////
 /////////////////////////
+
+missionNameSpace setVariable ["missionSetupMessage", "Generating blufor base", true];
 
 //Init
 selectedBluforVehicle =[];
@@ -690,6 +702,9 @@ if ( count AvalaibleInitAttackPositions != 0 && (enableInitBluAttack == 1 || ((e
 ///////Generate Opfor///////
 /////////////////////////
 //IA taskPatrol with level 1 enemy
+
+missionNameSpace setVariable ["missionSetupMessage", "Generating opfor patrols, mortars and FOB", true];
+
 [EnemyWaveLevel_1,AmbushPositions, missionDifficultyParam] execVM 'enemyManagement\generationEngine\generatePatrol.sqf'; 
 
 //Generate Wave
@@ -976,7 +991,7 @@ switch (startIntel) do
 		};
 };
 
-
+missionNameSpace setVariable ["missionSetupMessage", "One last thing...", true];
 
 //Adjust some ACE parameters 
 if (isClass (configFile >> "CfgPatches" >> "ace_common")) then 
