@@ -65,6 +65,20 @@ _unit setVariable ["currentXP",_unitRanking, true];
 // 	true
 // }];
 
+//Add repair event (no direct event for repair found, this is based on animation, it can obviously be improved)
+_unit addEventHandler ["AnimDone", {
+	params ["_unit", "_anim"];
+	if (_anim == "acts_carfixingwheel" || _anim == "amovpknlmstpsnonwnondnon") then 
+	{
+		// diag_log _anim;
+		// hint format ["P1 : %1\nP2 : %2",_unit,_anim];
+		[[1, "RPG_ranking_repair"], 'engine\rankManagement\rankUpdater.sqf'] remoteExec ['BIS_fnc_execVM', _caller];
+	};
+
+}];
+
+
+
 
 //Medical ranking reward management
 if (isClass (configFile >> "CfgPatches" >> "ace_medical")) then 

@@ -65,6 +65,7 @@ sleep 5;
 			["RPG_ranking_vehicle_kill","vehicle kill"],
 			["RPG_ranking_suppress","suppress"],
 			["RPG_ranking_heal","heal"],
+			["RPG_ranking_repair","repair"],
 			["RPG_ied_defuse","IED defuse"],
 			["RPG_ranking_intel_collect","intel collect"],
 			["RPG_ranking_objective_complete","objective complete"]];
