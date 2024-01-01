@@ -154,7 +154,7 @@ doIncrementVehicleSpawnCounter =
 	missionNamespace setVariable ["bluforVehicleAvalaibleSpawn", bluforVehicleAvalaibleSpawnCounter, true];
 
 	//Show the counter to blufor
-	[format ["Standard vehicle spawn credits : %1", bluforVehicleAvalaibleSpawnCounter], 'engine\hintManagement\addCustomHint.sqf'] remoteExec ['BIS_fnc_execVM', blufor, true]; 
+	[[format ["Standard vehicle spawn credits : %1", bluforVehicleAvalaibleSpawnCounter], "intel"], 'engine\hintManagement\addCustomHint.sqf'] remoteExec ['BIS_fnc_execVM', blufor, true]; 
 };
 
 

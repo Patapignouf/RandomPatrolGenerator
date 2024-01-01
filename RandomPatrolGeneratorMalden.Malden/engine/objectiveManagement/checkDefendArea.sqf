@@ -35,7 +35,7 @@ if (!([_thisObjectiveToComplete,[]] call BIS_fnc_areEqual)) then
 
 	_nearestCity = nearestLocations [getPos _thisTrigger, ["NameLocal","NameVillage","NameCity","NameCityCapital"], 1500] select 0;
 	//[format ["Opfor attack has begun on %1, be ready", text _nearestCity]] remoteExec ["hint",0,true];
-	[[parseText format ["<img image='\A3\ui_f\data\map\markers\military\warning_CA.paa'/><br/><br/><t size='1.2'>Opfor attack has begun on %1, be ready</t>", text _nearestCity]], 'engine\hintManagement\addCustomHint.sqf'] remoteExec ['BIS_fnc_execVM', 0, true]
+	[[parseText format ["<img image='\A3\ui_f\data\map\markers\military\warning_CA.paa'/><br/><br/><t size='1.2'>Opfor attack has begun on %1, be ready</t>", text _nearestCity], "alert"], 'engine\hintManagement\addCustomHint.sqf'] remoteExec ['BIS_fnc_execVM', 0, true]
 };
 
 _thisFOBCheck = _thisTrigger getVariable ["isFOBAssociated", false];

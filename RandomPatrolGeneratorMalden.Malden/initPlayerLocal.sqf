@@ -609,7 +609,7 @@ player addEventHandler ["Killed", {
 	diag_log format ["%1 has been killed by : %2", name _unit, name _killer];
 	if (isPlayer _killer) then 
 	{
-		[format ["%1 has been killed by his teammate %2",name _unit, name _killer], 'engine\hintManagement\addCustomHint.sqf'] remoteExec ['BIS_fnc_execVM', side _killer];
+		[[format ["%1 has been killed by his teammate %2",name _unit, name _killer], "teamkill"], 'engine\hintManagement\addCustomHint.sqf'] remoteExec ['BIS_fnc_execVM', side _killer];
 		if (_killer != _unit) then 
 		{
 			[[-50,5], 'engine\rankManagement\rankPenalty.sqf'] remoteExec ['BIS_fnc_execVM', _killer];

@@ -14,7 +14,7 @@ if (_artlillerySupportCounter > 0) then
 	missionNamespace setVariable ["artlillerySupportCounter", _artlillerySupportCounter-1, true];
 
 	//Hint to artillery call
-	[format ["Artillery support called on position %1", mapGridPosition _position], 'engine\hintManagement\addCustomHint.sqf'] remoteExec ['BIS_fnc_execVM', blufor, true];  
+	[[format ["Artillery support called on position %1", mapGridPosition _position], "intel"], 'engine\hintManagement\addCustomHint.sqf'] remoteExec ['BIS_fnc_execVM', blufor, true];  
 
 	//Simulate waiting for shots
 	sleep (60 + random 60);
