@@ -41,7 +41,7 @@ if (!([_thisObjectiveToComplete,[]] call BIS_fnc_areEqual)) then
 _thisFOBCheck = _thisTrigger getVariable ["isFOBAssociated", false];
 if (_thisFOBCheck) then 
 {
-	[[parseText format ["<img image='\A3\ui_f\data\map\markers\military\warning_CA.paa'/><br/><br/><t size='1.2'>An opfor reinforcement is coming to %1, be ready to defend the FOB</t>", mapGridPosition (getPos _thisTrigger)]], 'engine\hintManagement\addCustomHint.sqf'] remoteExec ['BIS_fnc_execVM', 0, true]
+	[[parseText format ["<img image='\A3\ui_f\data\map\markers\military\warning_CA.paa'/><br/><br/><t size='1.2'>An opfor reinforcement is coming to %1, be ready to defend the FOB</t>", mapGridPosition (getPos _thisTrigger)], "alert"], 'engine\hintManagement\addCustomHint.sqf'] remoteExec ['BIS_fnc_execVM', 0, true]
 	//[format ["An opfor reinforcement is coming to %1, be ready to defend the FOB", mapGridPosition (getPos _thisTrigger)]] remoteExec ["hint", 0, true];
 };
 
