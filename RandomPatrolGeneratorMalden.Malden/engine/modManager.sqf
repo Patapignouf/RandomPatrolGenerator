@@ -48,6 +48,7 @@ doDisplayModsAlert = {
 			{
 				if ([_x#1, _currentNotPresentMod] call BIS_fnc_areEqual) then {
 					_modsCheckToDisplay = format ["%1<br />%2", _modsCheckToDisplay, format ["MOD : %1",_x#2]];
+					(format ["%2 doesn't have the mod : %1", _x#2, name player]) remoteExec ["systemChat", 0]; //Display message to every client
 				};
 			} foreach modToCheck;
 		} foreach _modNotPresent;
