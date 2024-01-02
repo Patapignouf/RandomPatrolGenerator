@@ -53,6 +53,8 @@ doDisplayModsAlert = {
 			} foreach modToCheck;
 		} foreach _modNotPresent;
 		[format ["<t color='#ff0000' size='1.5'>Needed mods :</t><t color='#ff0000' size='0.8'><br />%1</t>", _modsCheckToDisplay],0,0,10,1,0,789] call BIS_fnc_dynamicText;
+		sleep 2;
+		[] call showDownloadLinks;
 	};
 };
 
@@ -93,4 +95,10 @@ doCheckRunningModsOnClient = {
 	[_modNotPresent] call doDisplayModsAlert;
 };
 
-
+showDownloadLinks = 
+{
+	_ctrl = findDisplay 46 createDisplay "RscDisplayEmpty" ctrlCreate ["RscStructuredText", -1];
+	_ctrl ctrlSetPosition [0,0,1,1];
+	_ctrl ctrlCommit 0;
+	_ctrl ctrlSetStructuredText parseText "<a color='#ff0000' size='4' href='https://steamcommunity.com/sharedfiles/filedetails/?id=2224111992'><t color='#ff0000'>Download mods needed here !</t></a>";
+};

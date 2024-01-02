@@ -63,6 +63,10 @@ if (!didJIP) then
 //Wait mission setup
 waitUntil {missionNamespace getVariable "generationSetup" == true};
 
+
+
+
+
 //Show loading message
 [] spawn {
 	_randomPos = [nil, ["water"]] call BIS_fnc_randomPos;
@@ -664,3 +668,4 @@ uiSleep 5;
 [parseText "<t font='PuristaBold' size='1.6'>Welcome to <br />Random Patrol Generator</t><br />by Patapignouf", true, nil, 7, 0.7, 0] spawn BIS_fnc_textTiles;
 uiSleep 20;
 [format ["Somewhere on %1",worldName], format ["Year %1", date select 0], mapGridPosition player] spawn BIS_fnc_infoText;
+

@@ -3,7 +3,7 @@ params ["_unit"];
 
 //initialize unit rank
 _unit setRank "PRIVATE";
-_unitRanking = profileNamespace getVariable ["RPG_ranking", 0]; //Default armed aircraft are disabled
+_unitRanking = [_unit] call getExperience; //Default armed aircraft are disabled
 [_unit, true] call adjustRank;
 [_unit] call displayCurrentRank;
 _unit setVariable ["startingXP",_unitRanking, true];
@@ -152,3 +152,12 @@ if (isClass (configFile >> "CfgPatches" >> "ace_medical")) then
 	// "];
 };
 
+
+//Detect if there is a new player and show discord
+if (_unitRanking == 0) then 
+{
+	_ctrl = findDisplay 46 createDisplay "RscDisplayEmpty" ctrlCreate ["RscStructuredText", -1];
+	_ctrl ctrlSetPosition [0,0,1,1];
+	_ctrl ctrlCommit 0;
+	_ctrl ctrlSetStructuredText parseText "<a color='#ff0000' size='4' href='https://discord.gg/S6Y6YTjT'><t color='#ff0000'>Join the PataCompany !</t><br/><t color='#ff0000'>Join the Discord</t></a>";
+};
