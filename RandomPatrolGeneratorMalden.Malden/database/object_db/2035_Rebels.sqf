@@ -13,26 +13,30 @@ c_medic = "medic";
 
 //Light civilian group
 civilian_group_2035_Rebels = [
-	"C_Man_casual_7_F_euro", 
-	"C_Man_smart_casual_1_F_euro", 
-	"C_Man_smart_casual_2_F_euro"
+	"C_Man_1_enoch_F", 
+	"C_Man_4_enoch_F", 
+	"C_Man_2_enoch_F"
 ];
 
 //Heavy civilian group
 civilian_big_group_2035_Rebels = [
-	"C_man_p_beggar_F_euro", 
-	"C_man_polo_4_F_euro", 
-	"C_man_shorts_1_F_euro", 
-	"C_man_shorts_2_F_euro", 
-	"C_scientist_02_formal_F", 
-	"C_scientist_01_formal_F", 
-	"C_scientist_02_informal_F"
+	"C_Farmer_01_enoch_F", 
+	"C_Man_1_enoch_F", 
+	"C_Man_6_enoch_F", 
+	"C_Man_5_enoch_F", 
+	"C_Man_4_enoch_F", 
+	"C_Man_3_enoch_F", 
+	"C_Man_2_enoch_F"
 ];
 
 //Vehicle avalaible on civilian city
 civilianTruck_2035_Rebels = [
-	"C_SUV_01_F",
-	"C_Offroad_01_repair_F"
+	"C_Van_01_fuel_F", 
+	"C_Tractor_01_F", 
+	"C_Offroad_01_comms_F", 
+	"C_Offroad_01_covered_F", 
+	"C_Truck_02_transport_F", 
+	"C_SUV_01_F"
 ];
 
 //////////////////////////////

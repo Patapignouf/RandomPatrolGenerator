@@ -33,6 +33,7 @@ _KORSAK_KDF = 31;
 _KORSAK_KS = 32;
 _KORSAK_KFL = 33;
 _KORSAK_KAL = 34;
+_2035_NATO_Recon = 35;
 
 #include "object_db\USA.sqf"
 #include "object_db\USA_Winter.sqf"
@@ -52,6 +53,7 @@ _KORSAK_KAL = 34;
 #include "object_db\2035_AAF.sqf"
 #include "object_db\2035_NATO.sqf"
 #include "object_db\2035_NATO_FS.sqf"
+#include "object_db\2035_NATO_Recon.sqf"
 #include "object_db\2035_Spetsnaz.sqf"
 #include "object_db\USA_2000_DF.sqf"
 #include "object_db\Russian_Winter.sqf"
@@ -90,6 +92,7 @@ c_ColdWar_USA = "_ColdWar_USA";
 c_2035_AAF = "_2035_AAF";
 c_2035_NATO = "_2035_NATO";
 c_2035_NATO_FS = "_2035_NATO_FS";
+c_2035_NATO_Recon = "_2035_NATO_Recon";
 c_2035_FIA = "_2035_FIA";
 c_USA_2000_DF = "_USA_2000_DF";
 c_Russian_Winter = "_Russian_Winter";
@@ -116,6 +119,7 @@ factionInfos = [
 	[c_Syndikat,_Syndikat,"2035 Syndikat", true, true, true],
 	[c_2035_AAF,_2035_AAF,"2035 AAF", true, true, false],
 	[c_2035_NATO,_2035_NATO,"2035 NATO", true, true, false],
+	[c_2035_NATO_Recon,_2035_NATO_Recon,"2035 NATO Recon", true, false, false],
 	[c_2035_NATO_FS,_2035_NATO_FS,"2035 NATO Special Forces", true, true, false],
 	[c_2035_Spetsnaz,_2035_Spetsnaz,"2035 Spetsnaz", true, true, false],
 	[c_2035_FIA,_2035_FIA,"2035 FIA", true, true, true],

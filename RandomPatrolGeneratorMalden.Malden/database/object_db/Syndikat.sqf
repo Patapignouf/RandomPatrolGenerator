@@ -63,9 +63,7 @@ baseEnemyDemoGroup_Syndikat = [
 ];
 
 baseEnemyMortarGroup_Syndikat = [
-	"I_G_Mortar_01_F", 
-	"I_C_Soldier_Para_8_F", 
-	"I_C_Soldier_Bandit_6_F"
+
 ];
 
 baseEnemyVehicleGroup_Syndikat = [
