@@ -385,151 +385,18 @@ if (side player == blufor) then
 	//player setUserActionText [_actionIdHeal, "Heal", "<img size='2' image='\a3\ui_f\data\IGUI\Cfg\Actions\heal_ca'/>"];
 
 
-	//Manage vehicle spawn options 
-	if (enableArmoredVehicle) then 
-	{	
-		//TODO
-	};
-
 	//Add vehicle spawn option 
-	//Unarmed vehicle
 	if (isNil "USS_FREEDOM_CARRIER") then 
 	{
-		waitUntil {!isNil "bluforUnarmedVehicle"};
-		{
-			_IDVehicleSpawn = TPFlag1 addAction [format ["Spawn a %1 (%2 credits)", getText (configFile >> "cfgVehicles" >> _x >> "displayName"), 100],{
+		TPFlag1 addAction [format ["Open vehicle shop"],{
 					//Define parameters
 					params ["_object","_caller","_ID","_avalaibleVehicle"];
 
-					//Check players credit
-					bluforVehicleAvalaibleSpawnCounter = missionNamespace getVariable "bluforVehicleAvalaibleSpawn";
-					if (bluforVehicleAvalaibleSpawnCounter >= 100) then 
-					{
-						[initBlueforLocation, [[_avalaibleVehicle, false]], 30, 100] call doGenerateVehicleForFOB;	
-						missionNamespace setVariable ["bluforVehicleAvalaibleSpawn", bluforVehicleAvalaibleSpawnCounter-100, true];
-						hint format ["A %2 has spawned, %1 avdvanced spawn credit left.", bluforVehicleAvalaibleSpawnCounter-100, getText (configFile >> "cfgVehicles" >> _avalaibleVehicle >> "displayName")];
-					} else 
-					{
-						hint "You don't have enough advanced vehicle spawned credit left.";
-					};
-			},_x,1.5,true,false,"","(_target distance _this <5) && (_this getVariable 'role' == 'leader')"];
-		} foreach bluforUnarmedVehicle; 
-
-		//Armed vehicle
-		waitUntil {!isNil "bluforArmedVehicle"};
-		{
-			_IDVehicleSpawn = TPFlag1 addAction [format ["Spawn a %1 (%2 credits)", getText (configFile >> "cfgVehicles" >> _x >> "displayName"), 300],{
-				//Define parameters
-				params ["_object","_caller","_ID","_avalaibleVehicle"];
-
-				//Check players credit
-				bluforVehicleAvalaibleSpawnCounter = missionNamespace getVariable "bluforVehicleAvalaibleSpawn";
-				if (bluforVehicleAvalaibleSpawnCounter >= 300) then 
-				{
-					[initBlueforLocation, [[_avalaibleVehicle, false]], 30, 100] call doGenerateVehicleForFOB;	
-					missionNamespace setVariable ["bluforVehicleAvalaibleSpawn", bluforVehicleAvalaibleSpawnCounter-300, true];
-					hint format ["A %2 has spawned, %1 avdvanced spawn credit left.", bluforVehicleAvalaibleSpawnCounter-300, getText (configFile >> "cfgVehicles" >> _avalaibleVehicle >> "displayName")];
-				} else 
-				{
-					hint "You don't have enough advanced vehicle spawned credit left.";
-				};
-			},_x,1.5,true,false,"","(_target distance _this <5) && (_this getVariable 'role' == 'leader')"];
-		} foreach bluforArmedVehicle;
-
-		//Add armored vehicle for blufor
-		if (enableArmoredVehicle) then 
-		{
-			waitUntil {!isNil "bluforArmoredVehicle"};
-			{
-				_IDVehicleSpawn = TPFlag1 addAction [format ["Spawn a %1 (%2 credits)", getText (configFile >> "cfgVehicles" >> _x >> "displayName"), 700],{
-					//Define parameters
-					params ["_object","_caller","_ID","_avalaibleVehicle"];
-
-					//Check players credit
-					bluforVehicleAvalaibleSpawnCounter = missionNamespace getVariable "bluforVehicleAvalaibleSpawn";
-					if (bluforVehicleAvalaibleSpawnCounter >= 700) then 
-					{
-						[initBlueforLocation, [[_avalaibleVehicle, false]], 30, 100] call doGenerateVehicleForFOB;	
-						missionNamespace setVariable ["bluforVehicleAvalaibleSpawn", bluforVehicleAvalaibleSpawnCounter-700, true];
-						hint format ["A %2 has spawned, %1 avdvanced spawn credit left.", bluforVehicleAvalaibleSpawnCounter-700, getText (configFile >> "cfgVehicles" >> _avalaibleVehicle >> "displayName")];
-					} else 
-					{
-						hint "You don't have enough advanced vehicle spawned credit left.";
-					};
-				},_x,1.5,true,false,"","(_target distance _this <5) && (_this getVariable 'role' == 'leader')"];
-			} foreach bluforArmoredVehicle;
-		};
-		 
-
-		//Unarmed Chopper
-		waitUntil {!isNil "bluforUnarmedVehicleChopper"};
-		{
-			_IDVehicleSpawn = TPFlag1 addAction [format ["Spawn a %1 (%2 credits)", getText (configFile >> "cfgVehicles" >> _x >> "displayName"), 400],{
-				//Define parameters
-				params ["_object","_caller","_ID","_avalaibleVehicle"];
-
-				//Check players credit
-				bluforVehicleAvalaibleSpawnCounter = missionNamespace getVariable "bluforVehicleAvalaibleSpawn";
-				if (bluforVehicleAvalaibleSpawnCounter >= 400) then 
-				{
-					[initBlueforLocation, [[_avalaibleVehicle, false]], 30, 100] call doGenerateVehicleForFOB;	
-					missionNamespace setVariable ["bluforVehicleAvalaibleSpawn", bluforVehicleAvalaibleSpawnCounter-400, true];
-					hint format ["A %2 has spawned, %1 avdvanced spawn credit left.", bluforVehicleAvalaibleSpawnCounter-400, getText (configFile >> "cfgVehicles" >> _avalaibleVehicle >> "displayName")];
-				} else 
-				{
-					hint "You don't have enough advanced vehicle spawned credit left.";
-				};
-			},_x,1.5,true,false,"","(_target distance _this <5) && ((_this getVariable 'role' == 'leader') || (_this getVariable 'role' == 'pilot'))"];
-		} foreach bluforUnarmedVehicleChopper; 
-
-		//Armed Chopper
-		waitUntil {!isNil "bluforArmedChopper"};
-		if (enableArmedAicraft) then 
-		{	
-			{
-				_IDVehicleSpawn = TPFlag1 addAction [format ["Spawn a %1 (%2 credits)", getText (configFile >> "cfgVehicles" >> _x >> "displayName"), 500],{
-					//Define parameters
-					params ["_object","_caller","_ID","_avalaibleVehicle"];
-
-					//Check players credit
-					bluforVehicleAvalaibleSpawnCounter = missionNamespace getVariable "bluforVehicleAvalaibleSpawn";
-					if (bluforVehicleAvalaibleSpawnCounter >= 500) then 
-					{
-						[initBlueforLocation, [[_avalaibleVehicle, false]], 30, 100] call doGenerateVehicleForFOB;	
-						missionNamespace setVariable ["bluforVehicleAvalaibleSpawn", bluforVehicleAvalaibleSpawnCounter-500, true];
-						hint format ["A %2 has spawned, %1 avdvanced spawn credit left.", bluforVehicleAvalaibleSpawnCounter-500, getText (configFile >> "cfgVehicles" >> _avalaibleVehicle >> "displayName")];
-					} else 
-					{
-						hint "You don't have enough advanced vehicle spawned credit left.";
-					};
-				},_x,1.5,true,false,"","(_target distance _this <5) && ((_this getVariable 'role' == 'leader') || (_this getVariable 'role' == 'pilot'))"];
-			} foreach bluforArmedChopper; 
-		};
+					[[], 'GUI\vehicleSpawnerGUI\vehicleSpawner.sqf'] remoteExec ['BIS_fnc_execVM', player];
+			},_x,3,true,false,"","(_target distance _this <5) && (_this getVariable 'role' == 'leader' || _this getVariable 'role' == 'pilot')"];
 	};
 	
-
-	//UAV
-	waitUntil {!isNil "bluforDrone"};
-	{
-		_IDVehicleSpawn = TPFlag1 addAction [format ["Spawn a %1 (%2 credits)", getText (configFile >> "cfgVehicles" >> _x >> "displayName"),500],{
-			//Define parameters
-			params ["_object","_caller","_ID","_avalaibleVehicle"];
-
-			//Check players credit
-			bluforVehicleAvalaibleSpawnCounter = missionNamespace getVariable "bluforVehicleAvalaibleSpawn";
-			if (bluforVehicleAvalaibleSpawnCounter >= 500) then 
-			{
-				[initBlueforLocation, [[_avalaibleVehicle, true]], 30, 100] call doGenerateVehicleForFOB;	
-				missionNamespace setVariable ["bluforVehicleAvalaibleSpawn", bluforVehicleAvalaibleSpawnCounter-500, true];
-				hint format ["A %2 has spawned, %1 avdvanced spawn credit left.", bluforVehicleAvalaibleSpawnCounter - 500, getText (configFile >> "cfgVehicles" >> _avalaibleVehicle >> "displayName")];
-			} else 
-			{
-				hint "You don't have enough advanced vehicle spawned credit left.";
-			};
-		},_x,1.5,true,false,"","(_target distance _this <5) && (_this getVariable 'role' == 'leader')"];
-	} foreach bluforDrone; 
-	
-	//Manage vehicle spawn options 
+	//Manage aircraft spawn options 
 	waitUntil {!isNil "bluforFixedWing"};
 	if (enableArmedAicraft) then 
 	{	
