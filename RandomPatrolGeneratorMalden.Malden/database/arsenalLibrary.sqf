@@ -246,12 +246,11 @@ getVirtualMagazine = {
 	currentPlayerClass = currentPlayer getVariable "role";
 	virtualMagazineList = [];
 
+	//Faction Magazine list
+	virtualMagazineList = virtualMagazineList + (magazineList_db select {_x select 1  == currentFaction} select 0 select 0);
+
 	switch (currentPlayerClass) do
 	{
-
-		//Faction Magazine list
-		virtualMagazineList = virtualMagazineList + (magazineList_db select {_x select 1  == currentFaction} select 0 select 0);
-
 		//Add default weapon magazine
 		case c_autorifleman:
 			{
