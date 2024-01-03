@@ -126,8 +126,9 @@ if ((count _revealedObjectives != count _tempMissionObjectives)) then
 
 				//Display dialog on screen if necessary
 				if (!isNil "_caller") then 
-				{
-					[1,[_currentObjectiveDescription, "PLAIN", 0.5]] remoteExec ["cutText", _caller];
+				{					
+					//[1,[_currentObjectiveDescription, "PLAIN", 0.5]] remoteExec ["titleText", _caller];
+					[[format ["<t align = 'center' shadow = '2' color='#00ff00' size='1.5' font='PuristaMedium' >Civilian</t><br /><t color='#ffffff' size='1.5' font='PuristaMedium' shadow = '2' >%1</t>", _currentObjectiveDescription], "PLAIN", -1, true, true]] remoteExec ["titleText", _caller];
 				};
 		};
 };

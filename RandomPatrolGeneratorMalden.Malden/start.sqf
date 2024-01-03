@@ -448,7 +448,8 @@ if !(_isOnWater) then
 	{
 		if ((count ((allUnits select {alive _x && side _x == opfor} ) inAreaArray _trgBluforFOB))>0) then 
 		{
-			[[parseText format ["<img image='\A3\ui_f\data\map\markers\military\warning_CA.paa'/><br/><br/><t size='1.2'>Enemy has taken the blufor FOB %1, be ready to defend it</t>", mapGridPosition initBlueforLocation], "alert"], 'engine\hintManagement\addCustomHint.sqf'] remoteExec ['BIS_fnc_execVM', blufor, true];
+			_textToSpeech = format ["Enemy has taken the blufor FOB %1, be ready to defend it", mapGridPosition initBlueforLocation];
+			[[format ["<t align = 'center' shadow = '2' color='#0046ff' size='1.5' font='PuristaMedium' >High Command</t><br /><t color='#ffffff' size='1.5' font='PuristaMedium' shadow = '2' >%1</t>", _textToSpeech], "PLAIN DOWN", -1, true, true]] remoteExec ["titleText", blufor, true];
 			sleep 1000;
 		};
 	};
@@ -940,6 +941,7 @@ switch (startIntel) do
 					if (count((allPlayers select {alive _x && side _x == blufor} ) inAreaArray initCityLocationTrigger) >0) then 
 					{
 						_hasContactCivilian = true;
+
 						["taskContactCiv","SUCCEEDED"] call BIS_fnc_taskSetState;
 					};
 				};
@@ -980,6 +982,7 @@ switch (startIntel) do
 						{
 							_hasContactCivilian = true;
 							["taskContactCiv","SUCCEEDED"] call BIS_fnc_taskSetState;
+							[[10, "RPG_ranking_objective_complete"], 'engine\rankManagement\rankUpdater.sqf'] remoteExec ['BIS_fnc_execVM', blufor];
 						};
 					};
 				};

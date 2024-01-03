@@ -79,7 +79,7 @@ _RcsButtonObjective ctrlAddEventHandler[ "ButtonClick",
 
 		// hint format ["You have already talk to %1 ", name thisCivilian];
 		_randomAnswers = ["No idea what you're talking about!","Go bother someone else?","Oh please leave me alone !","Get out of this area !"];
-		[1,[selectRandom _randomAnswers, "PLAIN", 0.5]] remoteExec ["cutText", player];
+		[[format ["<t align = 'center' shadow = '2' color='#00ff00' size='1.5' font='PuristaMedium' >Civilian</t><br /><t color='#ffffff' size='1.5' font='PuristaMedium' shadow = '2' >%1</t>", selectRandom _randomAnswers], "PLAIN", -1, true, true]] remoteExec ["titleText", player];
 
 		//Counter to limit civilian not to give enough intel
 		_counter = missionNamespace getVariable ["TAG_fnc_civsAsked",0];
@@ -89,7 +89,7 @@ _RcsButtonObjective ctrlAddEventHandler[ "ButtonClick",
 	} else {
 		// hint format ["You have already talk to %1 ", name thisCivilian];
 		_randomAnswers = ["No idea what you're talking about!","Go bother someone else?","Oh please leave me alone !","Get out of this area !"];
-		[1,[selectRandom _randomAnswers, "PLAIN", 0.5]] remoteExec ["cutText", player];
+		[[format ["<t align = 'center' shadow = '2' color='#00ff00' size='1.5' font='PuristaMedium' >Civilian</t><br /><t color='#ffffff' size='1.5' font='PuristaMedium' shadow = '2' >%1</t>", selectRandom _randomAnswers], "PLAIN", -1, true, true]] remoteExec ["titleText", player];
 	};
 }];
 
@@ -140,7 +140,7 @@ _RcsButtonObjective ctrlAddEventHandler[ "ButtonClick",
 
 		// hint format ["You have already talk to %1 ", name thisCivilian];
 		_randomAnswers = ["No idea what you're talking about!","Go bother someone else?","Oh please leave me alone !","Get out of this area !"];
-		[1,[selectRandom _randomAnswers, "PLAIN", 0.5]] remoteExec ["cutText", player];
+		[[format ["<t align = 'center' shadow = '2' color='#00ff00' size='1.5' font='PuristaMedium' >Civilian</t><br /><t color='#ffffff' size='1.5' font='PuristaMedium' shadow = '2' >%1</t>", selectRandom _randomAnswers], "PLAIN", -1, true, true]] remoteExec ["titleText", player];
 
 		//Counter to limit civilian not to give enough intel
 		_counter = missionNamespace getVariable ["TAG_fnc_civsAsked",0];
@@ -150,7 +150,7 @@ _RcsButtonObjective ctrlAddEventHandler[ "ButtonClick",
 	} else {
 		// hint format ["You have already talk to %1 ", name thisCivilian];
 		_randomAnswers = ["No idea what you're talking about!","Go bother someone else?","Oh please leave me alone !","Get out of this area !"];
-		[1,[selectRandom _randomAnswers, "PLAIN", 0.5]] remoteExec ["cutText", player];
+		[[format ["<t align = 'center' shadow = '2' color='#00ff00' size='1.5' font='PuristaMedium' >Civilian</t><br /><t color='#ffffff' size='1.5' font='PuristaMedium' shadow = '2' >%1</t>", selectRandom _randomAnswers], "PLAIN", -1, true, true]] remoteExec ["titleText", player];
 	};
 }];
 
@@ -233,23 +233,22 @@ _RcsButtonObjective ctrlAddEventHandler[ "ButtonClick",
 			_civLoadout set [4, _vestArray];
 
 			_civ setUnitLoadout _civLoadout;
-			sleep 2;
+			// sleep 2;
 			for "_i" from 0 to 3 do { _civ addItem (currentMagazine player); };	//Give civ some ammunitions
 
-			sleep 5;
+			// sleep 5;
 			reload _civ;
 		} else 
 		{
 			_randomAnswers = ["Oh please leave me alone !","I don't trust you !"];
-			[1,[selectRandom _randomAnswers, "PLAIN", 0.5]] remoteExec ["cutText", player];
+			[[format ["<t align = 'center' shadow = '2' color='#00ff00' size='1.5' font='PuristaMedium' >Civilian</t><br /><t color='#ffffff' size='1.5' font='PuristaMedium' shadow = '2' >%1</t>", selectRandom _randomAnswers], "PLAIN", -1, true, true]] remoteExec ["titleText", player];
 		};
 
 	} else {
 		// hint format ["You have already talk to %1 ", name thisCivilian];
 		_randomAnswers = ["No idea what you're talking about!","Go bother someone else?","Oh please leave me alone !","Get out of this area !"];
-		[1,[selectRandom _randomAnswers, "PLAIN", 0.5]] remoteExec ["cutText", player];
+		[[format ["<t align = 'center' shadow = '2' color='#00ff00' size='1.5' font='PuristaMedium' >Civilian</t><br /><t color='#ffffff' size='1.5' font='PuristaMedium' shadow = '2' >%1</t>", selectRandom _randomAnswers], "PLAIN", -1, true, true]] remoteExec ["titleText", player];
 	};
-
 }];
 
 //Close display

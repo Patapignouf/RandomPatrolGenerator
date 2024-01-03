@@ -61,13 +61,18 @@ _intelToReveal = "";
 if (_revealedMode == "civilianAsking") then 
 {
 	_intelToReveal = _intelCivilianRevelated;
+	//Display dialog to the player
+	titleText [format ["<t align = 'center' shadow = '2' color='#00ff00' size='1.5' font='PuristaMedium' >Civilian</t><br /><t color='#ffffff' size='1.5' font='PuristaMedium' shadow = '2' >%1</t>", _intelToReveal], "PLAIN", -1, true, true];
 } else 
 {
 	_intelToReveal = _intelDocumentRevelated;
+	//Display dialog to the player
+	titleText [format ["<t align = 'center' shadow = '2' color='#FF0000' size='1.5' font='PuristaMedium' >Intel found</t><br /><t color='#ffffff' size='1.5' font='PuristaMedium' shadow = '2' >%1</t>", _intelToReveal], "PLAIN DOWN", -1, true, true];
 };
 
-//Display dialog to the player
-cutText [_intelToReveal, "PLAIN", 0.5];
+
+// cutText [_intelToReveal, "PLAIN", 0.5];
+
 
 //Create diary entry for the intel 
 _intelDiaryAlreadyRevealed = _caller getVariable "diaryIntel";
