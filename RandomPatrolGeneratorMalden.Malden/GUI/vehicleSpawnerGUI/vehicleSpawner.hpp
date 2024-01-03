@@ -28,7 +28,7 @@ class vehicleSpawner
 		class lnbEntries: RscListNBox
 		{
 			idc = 50002;
-			columns[] = {0, 2.5/6, 5/6};
+			columns[] = {0, 1/6, 2.5/6, 5/6};
 			x = -16 * GUI_GRID_W + 0.5;
 			y = -5 * GUI_GRID_H + 0.5;
 			w = W_LNB;
@@ -43,6 +43,19 @@ class vehicleSpawner
 			h = 1 * GUI_GRID_H;
 			class Controls
 			{
+				class btnSortCol0: RscButtonTextOnly
+				{
+					idc = 2399;
+					text = "Icon";
+					style=ST_LEFT;
+					colorFocused[]={1,1,1,0.5};
+					colorFocused2[]={1,1,1,0.1};
+					period=1.2;
+					x = 0;
+					y = 0;
+					w = 2.5/6 * W_LNB;
+					h = GUI_GRID_H;
+				};
 				class btnSortCol1: RscButtonTextOnly
 				{
 					idc = 2400;
@@ -51,7 +64,7 @@ class vehicleSpawner
 					colorFocused[]={1,1,1,0.5};
 					colorFocused2[]={1,1,1,0.1};
 					period=1.2;
-					x = 0;
+					x = 1/6 * W_LNB;
 					y = 0;
 					w = 2.5/6 * W_LNB;
 					h = GUI_GRID_H;

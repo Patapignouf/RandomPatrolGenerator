@@ -20,7 +20,9 @@ switch (_mode) do
 		{
 			_price = 100;
 			_vehicleName = getText (configFile >> "cfgVehicles" >> _x >> "displayName");
-			_ind = _lnbEntries lnbAddRow [_vehicleName, "Light vehicle", str _price];
+			_vehiclePicture = getText (configFile >> "cfgVehicles" >> _x >> "picture");
+			_ind = _lnbEntries lnbAddRow ["", _vehicleName, "Light vehicle", str _price];
+    		_lnbEntries lnbSetPicture [[_ind, 0], _vehiclePicture];
 			_lnbEntries lnbSetData [[_ind, 0], _x];
 			_lnbEntries lnbSetData [[_ind, 1], _vehicleName];
 			_lnbEntries lnbSetData [[_ind, 2], str _price];
@@ -29,7 +31,9 @@ switch (_mode) do
 		{
 			_price = 300;
 			_vehicleName = getText (configFile >> "cfgVehicles" >> _x >> "displayName");
-			_ind = _lnbEntries lnbAddRow [_vehicleName, "Armed vehicle", str _price];
+			_vehiclePicture = getText (configFile >> "cfgVehicles" >> _x >> "picture");
+			_ind = _lnbEntries lnbAddRow ["", _vehicleName, "Armed vehicle", str _price];
+			_lnbEntries lnbSetPicture [[_ind, 0], _vehiclePicture];
 			_lnbEntries lnbSetData [[_ind, 0], _x];
 			_lnbEntries lnbSetData [[_ind, 1], _vehicleName];
 			_lnbEntries lnbSetData [[_ind, 2], str _price];
@@ -41,7 +45,9 @@ switch (_mode) do
 			{
 				_price = 700;
 				_vehicleName = getText (configFile >> "cfgVehicles" >> _x >> "displayName");
-				_ind = _lnbEntries lnbAddRow [_vehicleName, "Armored vehicle", str _price];
+				_vehiclePicture = getText (configFile >> "cfgVehicles" >> _x >> "picture");
+				_ind = _lnbEntries lnbAddRow ["", _vehicleName, "Armored vehicle", str _price];
+				_lnbEntries lnbSetPicture [[_ind, 0], _vehiclePicture];
 				_lnbEntries lnbSetData [[_ind, 0], _x];
 				_lnbEntries lnbSetData [[_ind, 1], _vehicleName];
 				_lnbEntries lnbSetData [[_ind, 2], str _price];
@@ -53,7 +59,9 @@ switch (_mode) do
 		{
 			_price = 400;
 			_vehicleName = getText (configFile >> "cfgVehicles" >> _x >> "displayName");
-			_ind = _lnbEntries lnbAddRow [_vehicleName, "Unarmed helicopter", str _price];
+			_vehiclePicture = getText (configFile >> "cfgVehicles" >> _x >> "picture");
+			_ind = _lnbEntries lnbAddRow ["", _vehicleName, "Unarmed helicopter", str _price];
+			_lnbEntries lnbSetPicture [[_ind, 0], _vehiclePicture];
 			_lnbEntries lnbSetData [[_ind, 0], _x];
 			_lnbEntries lnbSetData [[_ind, 1], _vehicleName];
 			_lnbEntries lnbSetData [[_ind, 2], str _price];
@@ -65,7 +73,9 @@ switch (_mode) do
 			{
 				_price = 500;
 				_vehicleName = getText (configFile >> "cfgVehicles" >> _x >> "displayName");
-				_ind = _lnbEntries lnbAddRow [_vehicleName, "Armed helicopter", str _price];
+				_vehiclePicture = getText (configFile >> "cfgVehicles" >> _x >> "picture");
+				_ind = _lnbEntries lnbAddRow ["", _vehicleName, "Armed helicopter", str _price];
+				_lnbEntries lnbSetPicture [[_ind, 0], _vehiclePicture];
 				_lnbEntries lnbSetData [[_ind, 0], _x];
 				_lnbEntries lnbSetData [[_ind, 1], _vehicleName];
 				_lnbEntries lnbSetData [[_ind, 2], str _price];
@@ -74,16 +84,29 @@ switch (_mode) do
 			{
 				_price = 500;
 				_vehicleName = getText (configFile >> "cfgVehicles" >> _x >> "displayName");
-				_ind = _lnbEntries lnbAddRow [_vehicleName, "UAV", str _price];
+				_vehiclePicture = getText (configFile >> "cfgVehicles" >> _x >> "picture");
+				_ind = _lnbEntries lnbAddRow ["", _vehicleName, "UAV", str _price];
+				_lnbEntries lnbSetPicture [[_ind, 0], _vehiclePicture];
 				_lnbEntries lnbSetData [[_ind, 0], _x];
 				_lnbEntries lnbSetData [[_ind, 1], _vehicleName];
 				_lnbEntries lnbSetData [[_ind, 2], str _price];
 			} foreach bluforDrone;
+
+			{
+				_price = 600;
+				_vehicleName = getText (configFile >> "cfgVehicles" >> _x >> "displayName");
+				_vehiclePicture = getText (configFile >> "cfgVehicles" >> _x >> "picture");
+				_ind = _lnbEntries lnbAddRow ["", _vehicleName, "Fixed wing aircraft", str _price];
+				_lnbEntries lnbSetPicture [[_ind, 0], _vehiclePicture];
+				_lnbEntries lnbSetData [[_ind, 0], _x];
+				_lnbEntries lnbSetData [[_ind, 1], _vehicleName];
+				_lnbEntries lnbSetData [[_ind, 2], str _price];
+			} foreach bluforFixedWing;
 		};
 
 		// for "_i" from 0 to 30 do {
 		// 	_rInd = floor random (count _cfgs);
-		// 	_ind = _lnbEntries lnbAddRow [_cfgNames#_rInd, _names#_rInd, str _rInd];
+		// 	_ind = _lnbEntries lnbAddRow [_vehicleName,_cfgNames#_rInd, _names#_rInd, str _rInd];
 		// 	_lnbEntries lnbSetValue [[_ind,2],_rInd];
 		// };
 
@@ -126,13 +149,43 @@ _buttonOK ctrlAddEventHandler[ "ButtonClick",
 
 		if (_bluforVehicleAvalaibleSpawnCounter>=_vehiclePriceToSpawn) then 
 		{
-			[_vehicleClassToSpawn, _vehicleIsUAV] spawn {
-				params ["_vehicleClassToSpawn", "_vehicleIsUAV"];
-				[initBlueforLocation, [[_vehicleClassToSpawn, _vehicleIsUAV]], 30, 100] call doGenerateVehicleForFOB;	
-			};	
+			//Check if this is a plane
+			if (_vehicleClassToSpawn isKindOf "Plane") then 
+			{
+					//Open map and spawn plane
+					[_vehicleClassToSpawn, _vehiclePriceToSpawn, _vehicleNameToSpawn, _bluforVehicleAvalaibleSpawnCounter] spawn {
+						params ["_vehicleClassToSpawn", "_vehiclePriceToSpawn", "_vehicleNameToSpawn", "_bluforVehicleAvalaibleSpawnCounter"];
 
-			missionNamespace setVariable ["bluforVehicleAvalaibleSpawn", _bluforVehicleAvalaibleSpawnCounter-_vehiclePriceToSpawn, true];
-			hint format ["A %2 has spawned, %1 avdvanced spawn credit left.", _bluforVehicleAvalaibleSpawnCounter-_vehiclePriceToSpawn, _vehicleIsUAV];
+						//Click on map to spawn
+						selectedLoc = [0,0,0];
+						openMap true;
+						uiSleep 1;
+
+						["<t color='#ffffff' size='.8'>Click on map to spawn an aircraft and teleport<br />The aircraft will spawn oriented on the north</t>",0,0,4,1,0,789] spawn BIS_fnc_dynamicText;
+						onMapSingleClick "selectedLoc = _pos; onMapSingleClick ''; openMap false; true;";
+						waitUntil{!(visibleMap)};  
+						if (!([selectedLoc, [0,0,0]] call BIS_fnc_areEqual)) then 
+						{
+							_spawnedVehicle = createVehicle [_vehicleClassToSpawn, selectedLoc, [], 0, "NONE"];
+							player moveInAny (vehicle _spawnedVehicle);
+
+							//Reduce avalaible spawn counter
+							missionNamespace setVariable ["bluforVehicleAvalaibleSpawn", _bluforVehicleAvalaibleSpawnCounter-_vehiclePriceToSpawn, true];
+							hint format ["A %2 has spawned, %1 avdvanced spawn credit left.", _bluforVehicleAvalaibleSpawnCounter-_vehiclePriceToSpawn, _vehicleNameToSpawn];
+						};
+					};	
+			} else 
+			{
+				//Else (other type of vehicle) do normal spawn around FOB
+				[_vehicleClassToSpawn, _vehicleIsUAV] spawn {
+					params ["_vehicleClassToSpawn", "_vehicleIsUAV"];
+					[initBlueforLocation, [[_vehicleClassToSpawn, _vehicleIsUAV]], 30, 100] call doGenerateVehicleForFOB;	
+				};	
+
+				missionNamespace setVariable ["bluforVehicleAvalaibleSpawn", _bluforVehicleAvalaibleSpawnCounter-_vehiclePriceToSpawn, true];
+				hint format ["A %2 has spawned, %1 avdvanced spawn credit left.", _bluforVehicleAvalaibleSpawnCounter-_vehiclePriceToSpawn, _vehicleNameToSpawn];
+			};
+
 
 			//Close mission setup
 			_display closeDisplay 1;

@@ -396,43 +396,6 @@ if (side player == blufor) then
 			},_x,3,true,false,"","(_target distance _this <5) && (_this getVariable 'role' == 'leader' || _this getVariable 'role' == 'pilot')"];
 	};
 	
-	//Manage aircraft spawn options 
-	waitUntil {!isNil "bluforFixedWing"};
-	if (enableArmedAicraft) then 
-	{	
-		{
-			_IDVehicleSpawn = TPFlag1 addAction [format ["Spawn a %1 (%2 credits) (you will be teleported)", getText (configFile >> "cfgVehicles" >> _x >> "displayName"),600],{
-				params ["_object","_caller","_ID","_avalaibleAicraft"];
-
-				bluforVehicleAvalaibleSpawnCounter = missionNamespace getVariable "bluforVehicleAvalaibleSpawn";
-				if (bluforVehicleAvalaibleSpawnCounter >= 600) then 
-				{
-					//Click on map to spawn
-					selectedLoc = [0,0,0];
-					openMap true;
-					uiSleep 1;
-
-					["<t color='#ffffff' size='.8'>Click on map to spawn an aircraft and teleport<br />The aircraft will spawn oriented on the north</t>",0,0,4,1,0,789] spawn BIS_fnc_dynamicText;
-					onMapSingleClick "selectedLoc = _pos; onMapSingleClick ''; openMap false; true;";
-					waitUntil{!(visibleMap)};  
-					if (!([selectedLoc, [0,0,0]] call BIS_fnc_areEqual)) then 
-					{
-						_caller setPos selectedLoc;
-						createVehicle [_avalaibleAicraft, selectedLoc, [], 0, "NONE"];
-						//[_object,_ID] remoteExec [ "removeAction", 0, true ];
-						
-						//Reduce avalaible spawn counter
-						missionNamespace setVariable ["bluforVehicleAvalaibleSpawn", bluforVehicleAvalaibleSpawnCounter-600, true];
-						hint format ["A %2 has spawned, %1 avdvanced spawn credit left.", bluforVehicleAvalaibleSpawnCounter-600, getText (configFile >> "cfgVehicles" >> _avalaibleAicraft >> "displayName")];
-					};
-				} else 
-				{
-					hint "You don't have enough advanced vehicle spawned credit left.";
-				};
-			},_x,1.5,true,false,"","(_target distance _this <5) && (_this getVariable 'role' == 'pilot')"];
-		} foreach bluforFixedWing;
-	};
-
 	//Add HaloJump function
 	if (enableHalo == 1) then 
 	{	
