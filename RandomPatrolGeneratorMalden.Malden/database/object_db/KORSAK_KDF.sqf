@@ -225,7 +225,9 @@ uniformList_KORSAK_KDF = [
 	"H_HelmetHBK_F",
 	"H_Cap_headphones",
 	"H_Booniehat_eaf",
-	"H_HelmetHBK_headset_F"
+	"H_HelmetHBK_headset_F",
+	"H_HelmetB_light",
+	"H_HelmetSpecB_snakeskin"
 	];
 
 //Magazine avalaible for all unit
