@@ -211,6 +211,7 @@ backPackList_KORSAK_KDF = [
 	"B_Carryall_eaf_eng_F",
 	"B_AssaultPack_eaf_IELAT_F",
 	"B_FieldPack_green_F",
+	"B_Fieldpack_oli",
 	"TFAR_rt1523g",
 	"TFAR_rt1523g_sage"
 	];
