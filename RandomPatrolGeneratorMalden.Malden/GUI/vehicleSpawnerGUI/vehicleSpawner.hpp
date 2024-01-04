@@ -14,6 +14,7 @@ class vehicleSpawner
 		};
 		class title: RscStructuredText
 		{
+			idc = 49999;
 			text = "Vehicle shop"; //--- ToDo: Localize;
 			colorBackground[]={0.8,0.5,0,1};
 			x = -16.5 * GUI_GRID_W + 0.5;

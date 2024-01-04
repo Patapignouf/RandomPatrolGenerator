@@ -132,11 +132,11 @@ findPositionsNearRoads = {
 	};
 
 	_resultPositions = [];
-	if (count _resultPositions > _numberOfPositions) then 
+	if (count _candidateResultPositions > _numberOfPositions) then 
 	{
-		for [{_i = 0}, {_i <= _numberOfPositions}, {_i = _i + 1}] do 
+		for [{_i = 0}, {_i < _numberOfPositions}, {_i = _i + 1}] do 
 		{
-			_resultPositions pushBack [selectRandom _candidateResultPositions]; //Can be optimize, it can return same position twice
+			_resultPositions pushBack (selectRandom _candidateResultPositions); //Can be optimize, it can return same position twice
 		};
 	} else 
 	{
@@ -145,4 +145,26 @@ findPositionsNearRoads = {
 
 	//that's it
 	_resultPositions
+};
+
+//Search a road for a RoadBlock
+findRoadBlockPosition = 
+{
+	params ["_startingPosition", "_maxRadius"];
+
+	_roads = _startingPosition nearRoads _maxRadius;
+
+	_roadsSorted = [_roads,[],{_startingPosition distance _x},"ASCEND"] call BIS_fnc_sortBy;
+
+	_nearestRoad = _roadsSorted select 0;
+
+	_roadConnectedTo = roadsConnectedTo _nearestRoad;
+
+	_connectedRoad = _roadConnectedTo select 0;
+
+	_roadCenter = getPos _nearestRoad;
+
+	_roadDir = [_nearestRoad, _connectedRoad] call BIS_fnc_DirTo;
+
+	[_roadCenter, _roadDir]
 };

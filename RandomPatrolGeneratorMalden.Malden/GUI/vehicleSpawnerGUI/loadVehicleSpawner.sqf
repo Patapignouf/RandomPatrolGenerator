@@ -6,6 +6,9 @@ params ["_mode", "_this"];
 
 private _mainDisplay = (findDisplay 50000);
 private _buttonOK = _mainDisplay displayCtrl 50001;
+private _vehicleShopTitle = _mainDisplay displayCtrl 49999;
+
+_vehicleShopTitle ctrlSetText (format ["Vehicle shop | Credits %1", missionNamespace getVariable "bluforVehicleAvalaibleSpawn"]);
 
 switch (_mode) do
 {

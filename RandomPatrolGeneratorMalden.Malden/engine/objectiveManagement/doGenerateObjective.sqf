@@ -82,6 +82,14 @@ generateObjectiveObject =
 		} foreach _possibleIEDLocation;
 	};
 
+	_possibleRoadBlockLocation = [_thisObjectivePosition, 1500, round (random 2)] call findPositionsNearRoads;
+	if (count _possibleRoadBlockLocation >0) then 
+	{
+		{
+			[_x] execVM 'enemyManagement\generationEngine\generateOpforRoadBlock.sqf';
+		} foreach _possibleRoadBlockLocation;
+	};
+
 	//Define random pos for objective generation
 	_currentRandomPos = [] call BIS_fnc_randomPos;
 

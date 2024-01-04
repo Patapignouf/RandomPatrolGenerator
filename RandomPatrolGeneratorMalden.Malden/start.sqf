@@ -252,7 +252,9 @@ currentRandObj = objNull;
 
 
 //Generate objectives according to the mission's length parameter
-for [{_i = 0}, {_i <= missionLength min(count AllPossibleObjectivePosition)}, {_i = _i + 1}] do //Peut être optimisé
+_minNumberOfMission = missionLength min(count AllPossibleObjectivePosition);
+
+for [{_counterOfMission = 0}, {_counterOfMission <= _minNumberOfMission}, {_counterOfMission = _counterOfMission + 1}] do //Peut être optimisé
 {
 	//Randomize objective locations or not
 	if (NeedToRandomizePOI) then 
@@ -263,7 +265,6 @@ for [{_i = 0}, {_i <= missionLength min(count AllPossibleObjectivePosition)}, {_
 		[avalaibleTypeOfObj, [PossibleObjectivePosition#0]] call generateObjective;
 		PossibleObjectivePosition = PossibleObjectivePosition - [PossibleObjectivePosition#0];
 	};
-	
 };
 
 //check wave spawn 
