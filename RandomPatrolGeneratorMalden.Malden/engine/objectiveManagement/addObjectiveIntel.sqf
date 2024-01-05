@@ -130,8 +130,7 @@ params ["_currentGroup", "_thisObjective"];
 								} else 
 								{
 									//Display no intel found message
-									[1,["No intel found", "PLAIN", 0.5]] remoteExec ["cutText", _caller];
-									
+									[[format ["<t align = 'center' shadow = '2' color='#FF0000' size='1.5' font='PuristaMedium' >Corpse</t><br /><t color='#ffffff' size='1.5' font='PuristaMedium' shadow = '2' >No intel found</t>"], "PLAIN DOWN", -1, true, true]] remoteExec ["titleText", _caller];
 								};
 								//Reward with less experience 
 								[[1, "RPG_ranking_intel_collect"], 'engine\rankManagement\rankUpdater.sqf'] remoteExec ['BIS_fnc_execVM', _caller];

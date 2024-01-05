@@ -150,51 +150,54 @@ _buttonOK ctrlAddEventHandler[ "ButtonClick",
 
 		_bluforVehicleAvalaibleSpawnCounter = missionNamespace getVariable "bluforVehicleAvalaibleSpawn";
 
-		if (_bluforVehicleAvalaibleSpawnCounter>=_vehiclePriceToSpawn) then 
+		if (_vehicleClassToSpawn != "") then 
 		{
-			//Check if this is a plane
-			if (_vehicleClassToSpawn isKindOf "Plane") then 
+			if (_bluforVehicleAvalaibleSpawnCounter>=_vehiclePriceToSpawn) then 
 			{
-					//Open map and spawn plane
-					[_vehicleClassToSpawn, _vehiclePriceToSpawn, _vehicleNameToSpawn, _bluforVehicleAvalaibleSpawnCounter] spawn {
-						params ["_vehicleClassToSpawn", "_vehiclePriceToSpawn", "_vehicleNameToSpawn", "_bluforVehicleAvalaibleSpawnCounter"];
+				//Check if this is a plane
+				if (_vehicleClassToSpawn isKindOf "Plane") then 
+				{
+						//Open map and spawn plane
+						[_vehicleClassToSpawn, _vehiclePriceToSpawn, _vehicleNameToSpawn, _bluforVehicleAvalaibleSpawnCounter] spawn {
+							params ["_vehicleClassToSpawn", "_vehiclePriceToSpawn", "_vehicleNameToSpawn", "_bluforVehicleAvalaibleSpawnCounter"];
 
-						//Click on map to spawn
-						selectedLoc = [0,0,0];
-						openMap true;
-						uiSleep 1;
+							//Click on map to spawn
+							selectedLoc = [0,0,0];
+							openMap true;
+							uiSleep 1;
 
-						["<t color='#ffffff' size='.8'>Click on map to spawn an aircraft and teleport<br />The aircraft will spawn oriented on the north</t>",0,0,4,1,0,789] spawn BIS_fnc_dynamicText;
-						onMapSingleClick "selectedLoc = _pos; onMapSingleClick ''; openMap false; true;";
-						waitUntil{!(visibleMap)};  
-						if (!([selectedLoc, [0,0,0]] call BIS_fnc_areEqual)) then 
-						{
-							_spawnedVehicle = createVehicle [_vehicleClassToSpawn, selectedLoc, [], 0, "NONE"];
-							player moveInAny (vehicle _spawnedVehicle);
+							["<t color='#ffffff' size='.8'>Click on map to spawn an aircraft and teleport<br />The aircraft will spawn oriented on the north</t>",0,0,4,1,0,789] spawn BIS_fnc_dynamicText;
+							onMapSingleClick "selectedLoc = _pos; onMapSingleClick ''; openMap false; true;";
+							waitUntil{!(visibleMap)};  
+							if (!([selectedLoc, [0,0,0]] call BIS_fnc_areEqual)) then 
+							{
+								_spawnedVehicle = createVehicle [_vehicleClassToSpawn, selectedLoc, [], 0, "NONE"];
+								player moveInAny (vehicle _spawnedVehicle);
 
-							//Reduce avalaible spawn counter
-							missionNamespace setVariable ["bluforVehicleAvalaibleSpawn", _bluforVehicleAvalaibleSpawnCounter-_vehiclePriceToSpawn, true];
-							hint format ["A %2 has spawned, %1 avdvanced spawn credit left.", _bluforVehicleAvalaibleSpawnCounter-_vehiclePriceToSpawn, _vehicleNameToSpawn];
-						};
+								//Reduce avalaible spawn counter
+								missionNamespace setVariable ["bluforVehicleAvalaibleSpawn", _bluforVehicleAvalaibleSpawnCounter-_vehiclePriceToSpawn, true];
+								hint format ["A %2 has spawned, %1 avdvanced spawn credit left.", _bluforVehicleAvalaibleSpawnCounter-_vehiclePriceToSpawn, _vehicleNameToSpawn];
+							};
+						};	
+				} else 
+				{
+					//Else (other type of vehicle) do normal spawn around FOB
+					[_vehicleClassToSpawn, _vehicleIsUAV] spawn {
+						params ["_vehicleClassToSpawn", "_vehicleIsUAV"];
+						[initBlueforLocation, [[_vehicleClassToSpawn, _vehicleIsUAV]], 30, 100] call doGenerateVehicleForFOB;	
 					};	
+
+					missionNamespace setVariable ["bluforVehicleAvalaibleSpawn", _bluforVehicleAvalaibleSpawnCounter-_vehiclePriceToSpawn, true];
+					//hint format ["A %2 has spawned, %1 avdvanced spawn credit left.", _bluforVehicleAvalaibleSpawnCounter-_vehiclePriceToSpawn, _vehicleNameToSpawn];
+				};
+
+
+				//Close mission setup
+				_display closeDisplay 1;
 			} else 
 			{
-				//Else (other type of vehicle) do normal spawn around FOB
-				[_vehicleClassToSpawn, _vehicleIsUAV] spawn {
-					params ["_vehicleClassToSpawn", "_vehicleIsUAV"];
-					[initBlueforLocation, [[_vehicleClassToSpawn, _vehicleIsUAV]], 30, 100] call doGenerateVehicleForFOB;	
-				};	
-
-				missionNamespace setVariable ["bluforVehicleAvalaibleSpawn", _bluforVehicleAvalaibleSpawnCounter-_vehiclePriceToSpawn, true];
-				hint format ["A %2 has spawned, %1 avdvanced spawn credit left.", _bluforVehicleAvalaibleSpawnCounter-_vehiclePriceToSpawn, _vehicleNameToSpawn];
+				hint "You don't have enough credit left.";
 			};
-
-
-			//Close mission setup
-			_display closeDisplay 1;
-		} else 
-		{
-			hint "You don't have enough credit left.";
 		};
 	}
 ];
