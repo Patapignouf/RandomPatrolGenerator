@@ -187,16 +187,17 @@ currentAO = objNull;
 _distance = 0;
 {
 	currentAO = _x;
-	tempPossibleAmbush = (getPos _x) nearRoads 750;
+	tempPossibleAmbush = (getPos _x) nearRoads 1500;
 	{
 		_distance = (getPos _x) distance (getPos currentAO);
-		if (350<_distance && _distance<750) then	//Il faudrait tester si ce n'est pas trop près des villes adjacentes
+		if (350<_distance && _distance<1000) then	//Il faudrait tester si ce n'est pas trop près des villes adjacentes
 		{
 			possibleAmbushPosition pushBack _x;
 		};		
 	}
 	foreach tempPossibleAmbush;
 } foreach possiblePOILocation;
+
 
 numberOfAmbush = (missionLength+1)*4;
 AmbushPositions = [];
@@ -942,7 +943,7 @@ switch (startIntel) do
 					if (count((allPlayers select {alive _x && side _x == blufor} ) inAreaArray initCityLocationTrigger) >0) then 
 					{
 						_hasContactCivilian = true;
-
+						[[10, "RPG_ranking_objective_complete"], 'engine\rankManagement\rankUpdater.sqf'] remoteExec ['BIS_fnc_execVM', blufor];
 						["taskContactCiv","SUCCEEDED"] call BIS_fnc_taskSetState;
 					};
 				};
