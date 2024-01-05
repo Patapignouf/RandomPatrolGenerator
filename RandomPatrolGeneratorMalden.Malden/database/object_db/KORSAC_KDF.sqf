@@ -1,115 +1,110 @@
-c_leader = "leader";
-c_at = "at";
-c_rifleman = "rifleman";
-c_engineer = "engineer";
-c_autorifleman = "autorifleman";
-c_marksman = "marksman";
-c_sniper = "sniper";  
-c_medic = "medic";
-c_grenadier = "grenadier";
-c_pilot = "pilot";
+#include "..\classConstant.sqf"
 
+//Include custom classes
+//c_drone = "UAV opérator";
 
 ////////////////////////
 //Vehicle management////
 ////////////////////////
 //French
-bluforUnarmedVehicle_KORSAK_KFL = [
-	"vtf_kf_B_FL_Offroad_01_covered_F",
-	"vtf_kf_B_FL_Quadbike_01_F"
+bluforUnarmedVehicle_KORSAC_KDF = [
+	"vtf_kf_B_MRAP_01_F",
+	"vtf_kf_B_Offroad_01_covered_F",
+	"vtf_kf_B_LSV_01_unarmed_F",
+	"vtf_kf_B_Quadbike_01_F",
+	"vtf_kf_B_Van_02_vehicle_F",
+	"vtf_kf_B_Van_02_transport_F"
 ];
 
-bluforArmedVehicle_KORSAK_KFL = [
-
-];
-
-bluforUnarmedVehicleChopper_KORSAK_KFL = [
-
-];
-
-bluforArmedChopper_KORSAK_KFL = [
+bluforArmedVehicle_KORSAC_KDF = [
 
 ];
 
-bluforDrone_KORSAK_KFL = [
+bluforUnarmedVehicleChopper_KORSAC_KDF = [
+	"vtf_kf_B_Heli_Transport_03_unarmed_F"
+];
+
+bluforArmedChopper_KORSAC_KDF = [
 
 ];
 
-bluforBoat_KORSAK_KFL = [
+bluforDrone_KORSAC_KDF = [
 
 ];
 
-bluforFixedWing_KORSAK_KFL = [
+bluforBoat_KORSAC_KDF = [
 
 ];
 
-bluforHQVehicle_KORSAK_KFL = [
+bluforFixedWing_KORSAC_KDF = [
+
+];
+
+bluforHQVehicle_KORSAC_KDF = [
 	"vtf_kf_B_Truck_02_F"
 ];
 
-bluforArmoredVehicle_KORSAK_KFL = [
-
+bluforArmoredVehicle_KORSAC_KDF = [
+	"vtf_kf_B_APC_Wheeled_01_cannon_F",
+	"vtf_kf_B_APC_tracked_03_cannon_F",
+	"vtf_kf_B_MBT_02_cannon_F"
 ];
 
 ////////////////////////
 //Loadout management////
 ////////////////////////
 
-listOfRoles_KORSAK_KFL = [c_leader,c_at,c_rifleman,c_engineer,c_autorifleman,c_marksman,c_medic,c_grenadier];
+//Define custom list of role
+listOfRoles_KORSAC_KDF = [c_leader,c_at,c_rifleman,c_engineer,c_autorifleman,c_marksman,c_medic,c_grenadier,c_pilot];
 
 //USA
-loadout_KORSAK_KFL = [		
-	[c_leader, "vtf_kf_B_FL_SquadLeader_F"],
-	[c_at, "vtf_kf_B_FL_Rifleman_AT_F"],
-	[c_rifleman, "vtf_kf_B_FL_Rifleman_F"],//Default stuff
-	[c_engineer, "vtf_kf_B_FL_Engineer_F"],
-	[c_autorifleman, "vtf_kf_B_FL_Autorifleman_F"],
-	[c_marksman, "vtf_kf_B_FL_Marksman_F"],
-	[c_medic, "vtf_kf_B_FL_Medic_F"],
-	[c_grenadier, "vtf_kf_B_FL_Grenadier_F"]
+loadout_KORSAC_KDF = [		
+	[c_leader, "vtf_kf_B_SquadLeader_F"],
+	[c_at, "vtf_kf_B_Rifleman_AT_F"],
+	[c_rifleman, "vtf_kf_B_Rifleman_F"],//Default stuff
+	[c_engineer, "vtf_kf_B_Engineer_F"],
+	[c_autorifleman, "vtf_kf_B_Autorifleman_F"],
+	[c_marksman, "vtf_kf_B_Marksman_F"],
+	[c_medic, "vtf_kf_B_Medic_F"],
+	[c_grenadier, "vtf_kf_B_Grenadier_F"],//Default stuff
+	[c_pilot,"vtf_kf_B_Helipilot_F"]
 ];
 
 ////////////////////////
 ///Weapon management////
 ////////////////////////
 //French
-rifleList_KORSAK_KFL = [		
+rifleList_KORSAC_KDF = [		
+	"vtf_kf_arifle_AK12_ARCO_F",
+	"arifle_AK12_F",
 	"arifle_AK12U_F",
-	"arifle_SPAR_02_blk_F",
-	"arifle_SPAR_01_blk_F",
-	"CUP_arifle_HK416_Black",
 	"hgun_Pistol_01_F",
-	"arifle_MSBS65_black_F",
-	"srifle_DMR_03_F",
-	"CUP_arifle_AK15_black" //For non possessor of contact DLC
+	"CUP_arifle_AK12_AFG_black" //For non possessor of contact DLC
 ];	
 
-grenadeLauncherList_KORSAK_KFL =  [		
-	"arifle_SPAR_01_GL_blk_ACO_Pointer_F",
-	"arifle_SPAR_01_GL_blk_F",
-	"CUP_arifle_HK416_CQB_M203_Black" //For non possessor of contact DLC
+grenadeLauncherList_KORSAC_KDF =  [		
+	"arifle_AK12_GL_F",
+	"CUP_arifle_AK12_GP34_black"
 ];	
 
-launcherList_KORSAK_KFL = [		
+launcherList_KORSAC_KDF = [		
 	"launch_B_Titan_olive_F",
 	"launch_NLAW_F",
 	"ACE_launch_NLAW_ready_F"
-];
+];	
 
-autorifleList_KORSAK_KFL = [			
+autorifleList_KORSAC_KDF = [			
 	"LMG_03_F"
 ];	
 
-marksmanrifleList_KORSAK_KFL = [		
-	"arifle_SPAR_03_blk_F",
-	"CUP_arifle_HK417_20" //For non possessor of contact DLC
+
+marksmanrifleList_KORSAC_KDF = [		
+	"srifle_DMR_03_F"
 ];
 
-smgList_KORSAK_KFL = [		
-	"hgun_ACPC2_F",
-	"hgun_PDW2000_F"
-];
+smgList_KORSAC_KDF = [		
 
+];
 
 
 //////////////////////////
@@ -117,7 +112,7 @@ smgList_KORSAK_KFL = [
 //////////////////////////
 
 //items avalaible for everyone (optics)
-attachmentShortList_KORSAK_KFL	= [
+attachmentShortList_KORSAC_KDF	= [
 	"optic_Holosight",
 	"optic_Holosight",
 	"optic_Holosight_arid_F",
@@ -127,12 +122,11 @@ attachmentShortList_KORSAK_KFL	= [
 	"optic_Holosight_smg",
 	"optic_Holosight_smg_blk_F",
 	"optic_Holosight_smg_khk_F",
-	"optic_Arco_AK_blk_F",
-	"optic_ERCO_blk_F"
+	"optic_Arco_AK_blk_F"
 ];
 
 //Items avalaible only for marksman
-attachmentLongList_KORSAK_KFL	= [
+attachmentLongList_KORSAC_KDF	= [
 	"optic_AMS",
 	"optic_lrps",
 	"optic_SOS",
@@ -145,7 +139,7 @@ attachmentLongList_KORSAK_KFL	= [
 ////////////////////////
 
 //Items avalaible for everyone
-itemList_KORSAK_KFL = [
+itemList_KORSAC_KDF = [
 	"FirstAidKit",
 	"ItemMap",
 	"ItemCompass",
@@ -178,10 +172,10 @@ itemList_KORSAK_KFL = [
 	"ACE_NVG_Wide_Black_WP",
 	"ACE_NVG_Wide_WP",
 	"ACE_NVG_Wide_Green_WP"
-];
+	];
 
 //items avalaible only for engineer
-itemEngineerList_KORSAK_KFL = [
+itemEngineerList_KORSAC_KDF = [
 	"ToolKit",
 	"MineDetector",
 	"ACE_wirecutter", 
@@ -195,10 +189,10 @@ itemEngineerList_KORSAK_KFL = [
 	"ace_marker_flags_orange",
 	"ace_marker_flags_red",
 	"DemoCharge_Remote_Mag"
-];
+	];
 
 //item avalaible only for medics
-itemMedicList_KORSAK_KFL = [
+itemMedicList_KORSAC_KDF = [
 	"Medikit",
 	"ACE_epinephrine",
 	"ACE_bloodIV",
@@ -207,37 +201,42 @@ itemMedicList_KORSAK_KFL = [
 	"ACE_personalAidKit",
 	"ACE_surgicalKit",
 	"ACE_suture"
-];
+	];
 
 
 //backpack avalaible for all unit
-backPackList_KORSAK_KFL = [
+backPackList_KORSAC_KDF = [
 	"B_Mortar_01_weapon_F",
 	"B_Mortar_01_support_F",
 	"B_Carryall_eaf_eng_F",
 	"B_AssaultPack_eaf_IELAT_F",
 	"B_FieldPack_green_F",
+	"B_Fieldpack_oli",
 	"TFAR_rt1523g",
 	"TFAR_rt1523g_sage"
-];
+	];
 
 
 //Uniform, vest, headgear, avalaible for all unit
-uniformList_KORSAK_KFL = [
+uniformList_KORSAC_KDF = [
 	"vtf_kf_sweater",
 	"vtf_kf_deserter",
 	"V_CarrierRigKBT_01_light_Olive_F",
+	"V_PlateCarrier2_rgr_noflag_F", //For non possessor of contact DLC
 	"H_HelmetHBK_F",
 	"H_Cap_headphones",
 	"H_Booniehat_eaf",
 	"H_HelmetHBK_headset_F",
-	"V_PlateCarrierL_CTRG"
-];
+	"H_HelmetB_light",
+	"H_HelmetSpecB_snakeskin"
+	];
 
 //Magazine avalaible for all unit
-magazineList_KORSAK_KFL = [
+magazineList_KORSAC_KDF = [
 	"1Rnd_HE_Grenade_shell",
 	"1Rnd_Smoke_Grenade_shell",
+	"CUP_1Rnd_HE_GP25_M",
+	"CUP_1Rnd_SMOKE_GP25_M",
 	"HandGrenade",
 	"SmokeShell",
 	"SmokeShellBlue",
@@ -247,4 +246,4 @@ magazineList_KORSAK_KFL = [
 	"SmokeShellRed",
 	"SmokeShellYellow",
 	"Laserbatteries"
-];
+	];

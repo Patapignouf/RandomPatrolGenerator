@@ -29,10 +29,10 @@ _ColdWar_OTAN = 27;
 _ColdWar_USSR = 28;
 _Chernarussian_Winter = 29;
 _USA_Winter = 30;
-_KORSAK_KDF = 31;
-_KORSAK_KS = 32;
-_KORSAK_KFL = 33;
-_KORSAK_KAL = 34;
+_KORSAC_KDF = 31;
+_KORSAC_KS = 32;
+_KORSAC_KFL = 33;
+_KORSAC_KAL = 34;
 _2035_NATO_Recon = 35;
 
 #include "object_db\USA.sqf"
@@ -67,10 +67,10 @@ _2035_NATO_Recon = 35;
 #include "object_db\2035_CSAT.sqf"
 #include "object_db\ColdWar_OTAN.sqf"
 #include "object_db\ColdWar_USSR.sqf"
-#include "object_db\KORSAK_KDF.sqf"
-#include "object_db\KORSAK_KS.sqf"
-#include "object_db\KORSAK_KFL.sqf"
-#include "object_db\KORSAK_KAL.sqf"
+#include "object_db\KORSAC_KDF.sqf"
+#include "object_db\KORSAC_KS.sqf"
+#include "object_db\KORSAC_KFL.sqf"
+#include "object_db\KORSAC_KAL.sqf"
 
 //Define faction prefix
 c_db = "_db";
@@ -106,10 +106,10 @@ c_2035_CSAT ="_2035_CSAT";
 c_ColdWar_OTAN ="_ColdWar_OTAN";
 c_ColdWar_USSR ="_ColdWar_USSR";
 c_Chernarussian_Winter = "_Chernarussian_Winter";
-c_KORSAK_KDF = "_KORSAK_KDF";
-c_KORSAK_KS = "_KORSAK_KS";
-c_KORSAK_KFL = "_KORSAK_KFL";
-c_KORSAK_KAL = "_KORSAK_KAL";
+c_KORSAC_KDF = "_KORSAC_KDF";
+c_KORSAC_KS = "_KORSAC_KS";
+c_KORSAC_KFL = "_KORSAC_KFL";
+c_KORSAC_KAL = "_KORSAC_KAL";
 
 //Faction format :
 // [ Number : Faction Code, String : Faction string Name , String : Faction Name to display, Enabled for Blufor/Independant, Enabled for Opfor, Enabled for Civilian],
@@ -176,10 +176,10 @@ if (isClass (configFile >> "CfgPatches" >> "IFA3_Core")) then
 //Add specific IFA3 factions
 if (isClass (configFile >> "CfgPatches" >> "vtf_kf_main")) then 
 {
-	factionInfos pushBack [c_KORSAK_KDF,_KORSAK_KDF,"KDF Army [KORSAK]", true, false, false];
-	factionInfos pushBack [c_KORSAK_KS,_KORSAK_KS,"KS Separatists [KORSAK]", false, true, false];
-	factionInfos pushBack [c_KORSAK_KAL,_KORSAK_KAL,"KAL Locals [KORSAK]", false, true, false];	
-	factionInfos pushBack [c_KORSAK_KFL,_KORSAK_KFL,"KFL Foreign legion [KORSAK]", true, false, false];	
+	factionInfos pushBack [c_KORSAC_KDF,_KORSAC_KDF,"KDF Army [KORSAC]", true, false, false];
+	factionInfos pushBack [c_KORSAC_KS,_KORSAC_KS,"KS Separatists [KORSAC]", false, true, false];
+	factionInfos pushBack [c_KORSAC_KAL,_KORSAC_KAL,"KAL Locals [KORSAC]", false, true, false];	
+	factionInfos pushBack [c_KORSAC_KFL,_KORSAC_KFL,"KFL Foreign legion [KORSAC]", true, false, false];	
 };
 
 
