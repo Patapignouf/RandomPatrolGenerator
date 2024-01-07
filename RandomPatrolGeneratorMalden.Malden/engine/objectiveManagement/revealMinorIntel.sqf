@@ -32,13 +32,13 @@ switch (_infoName) do
 	case "Car":
 	{
 		_intelCivilianRevelated = format ["I saw a %2 around %1 this morning, be careful...",text _nearestCity, getText (configFile >> "cfgVehicles" >> typeOf (vehicle leader (_infoGroup)) >> "displayName")];
-		_intelDocumentRevelated = format ["There is a %2 on position %1.", mapGridPosition _infoPos, getText (configFile >> "cfgVehicles" >> typeOf (vehicle leader (_infoGroup)) >> "displayName")];
+		_intelDocumentRevelated = format ["There is an enemy vehicle %2 on position %1.", mapGridPosition _infoPos, getText (configFile >> "cfgVehicles" >> typeOf (vehicle leader (_infoGroup)) >> "displayName")];
 	};
 	case "LightArmored";
 	case "HeavyArmored":
 	{
 		_intelCivilianRevelated = format ["I saw a armored vehicle around %1, be careful it's dangerous...",text _nearestCity];
-		_intelDocumentRevelated = format ["There is a %2 on position %1.", mapGridPosition _infoPos, getText (configFile >> "cfgVehicles" >> typeOf (vehicle leader (_infoGroup)) >> "displayName")];
+		_intelDocumentRevelated = format ["There is a armored vehicle %2 on position %1.", mapGridPosition _infoPos, getText (configFile >> "cfgVehicles" >> typeOf (vehicle leader (_infoGroup)) >> "displayName")];
 	};
 	case "DefenseFOBInfantry":
 	{
@@ -58,21 +58,32 @@ switch (_infoName) do
 };
 
 _intelToReveal = "";
-if (_revealedMode == "civilianAsking") then 
+
+switch (_revealedMode) do 
 {
-	_intelToReveal = _intelCivilianRevelated;
-	//Display dialog to the player
-	titleText [format ["<t align = 'center' shadow = '2' color='#00ff00' size='1.5' font='PuristaMedium' >Civilian</t><br /><t color='#ffffff' size='1.5' font='PuristaMedium' shadow = '2' >%1</t>", _intelToReveal], "PLAIN", -1, true, true];
-} else 
-{
-	_intelToReveal = _intelDocumentRevelated;
-	//Display dialog to the player
-	titleText [format ["<t align = 'center' shadow = '2' color='#FF0000' size='1.5' font='PuristaMedium' >Intel found</t><br /><t color='#ffffff' size='1.5' font='PuristaMedium' shadow = '2' >%1</t>", _intelToReveal], "PLAIN DOWN", -1, true, true];
+	case "civilianAsking":
+	{
+		_intelToReveal = _intelCivilianRevelated;
+		//Display dialog to the player
+		titleText [format ["<t align = 'center' shadow = '2' color='#00ff00' size='1.5' font='PuristaMedium' >Civilian</t><br /><t color='#ffffff' size='1.5' font='PuristaMedium' shadow = '2' >%1</t>", _intelToReveal], "PLAIN", -1, true, true];
+	};
+	case "corpseLooting":
+	{
+		_intelToReveal = _intelDocumentRevelated;
+		//Display dialog to the player
+		titleText [format ["<t align = 'center' shadow = '2' color='#FF0000' size='1.5' font='PuristaMedium' >Intel found</t><br /><t color='#ffffff' size='1.5' font='PuristaMedium' shadow = '2' >%1</t>", _intelToReveal], "PLAIN DOWN", -1, true, true];
+	};
+	case "HQ":
+	{
+		_intelToReveal = _intelDocumentRevelated;
+		//Display dialog to the player
+		[[format ["<t align = 'center' shadow = '2' color='#0046ff' size='1.5' font='PuristaMedium' >High Command</t><br /><t color='#ffffff' size='1.5' font='PuristaMedium' shadow = '2' >%1</t>", _intelToReveal], "PLAIN DOWN", -1, true, true]] remoteExec ["titleText", _caller, true];
+	};
+	default
+	{
+		//Do nothing
+	};
 };
-
-
-// cutText [_intelToReveal, "PLAIN", 0.5];
-
 
 //Create diary entry for the intel 
 _intelDiaryAlreadyRevealed = _caller getVariable "diaryIntel";

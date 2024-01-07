@@ -71,25 +71,13 @@ params ["_deployableFOBItem", "_deployableFOBMounted", "_respawnSettings"];
 			},objNull,1.5,true,false,"","_target distance _this <5"]] remoteExec [ "addAction", 0, true ];
 
 			//Add action to make all player respawn
-			if (_respawnSetting == 1) then 
-			{
-				[TPFlag2, ["Call Reinforcements",{
-					params ["_object","_caller","_ID","_param"];
-					
-					if (!(missionNamespace getVariable ["usedRespawnFewTimeAgo",false])) then 
-					{
-						//set morning
-						skipTime 24;
-						[[], "engine\respawnManagement\respawnManager.sqf"] remoteExec ['BIS_fnc_execVM', 0, true];
-						[format ["%1 needs reinforcement", name _caller]] remoteExec ["hint",0,true];
-						missionNamespace setVariable ["usedRespawnFewTimeAgo",true,true];
-						sleep 1200;
-						missionNamespace setVariable ["usedRespawnFewTimeAgo",false,true];
-					} else {
-						hint "You must wait before call reinforcements";
-					};
-				},[_respawnSetting],1.5,true,false,"","_target distance _this <5 && side _this == blufor"]] remoteExec [ "addAction", 0, true ];
-			};
+			TPFlag2 addAction [format ["Open support shop"],{
+				//Define parameters
+				params ["_object","_caller","_ID","_avalaibleVehicle"];
+
+				[[], 'GUI\supportGUI\supportGUI.sqf'] remoteExec ['BIS_fnc_execVM', player];
+				}
+			];
 
 			//Add action to redeploy FOB
 			[TPFlag2, ["Advanced FOB disassembly",{

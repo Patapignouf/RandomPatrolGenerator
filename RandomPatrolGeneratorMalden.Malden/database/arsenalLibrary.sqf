@@ -413,20 +413,21 @@ doInitializeLoadout = {
 	};
 
 	//Manage radio support 
+	_artillerySupportID = _player getVariable ["artillerySupportID", -1];
 	if (_currentPlayerClass == "leader") then 
 	{
 		_artlillerySupportCounter = missionNamespace getVariable ["artlillerySupportCounter", 0];
-		if (_artlillerySupportCounter > 0) then 
+		if (_artlillerySupportCounter > 0 && _artillerySupportID == -1) then 
 		{
 			_artillerySupportID = [_player, "myArtillery"] call BIS_fnc_addCommMenuItem;
 			_player setVariable ["artillerySupportID", _artillerySupportID, true];
 		};
 	} else 
 	{
-		_artillerySupportID = _player getVariable ["artillerySupportID", -1];
 		if (_artillerySupportID != -1) then 
 		{
 			[_player, _artillerySupportID] call BIS_fnc_removeCommMenuItem;
+			_player setVariable ["artillerySupportID", -1, true]
 		};
 	};
 };

@@ -7,6 +7,7 @@
 #include "GUI\respawnGUI\playerRespawnMenu.hpp"
 #include "GUI\dialogGUI\dialogCivilian.hpp"
 #include "GUI\vehicleSpawnerGUI\vehicleSpawner.hpp"
+#include "GUI\supportGUI\supportGUI.hpp"
 
 respawnDialog = 0;
 respawnOnStart = -1;

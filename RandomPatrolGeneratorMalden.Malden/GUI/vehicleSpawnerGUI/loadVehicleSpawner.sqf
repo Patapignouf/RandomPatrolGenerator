@@ -196,7 +196,8 @@ _buttonOK ctrlAddEventHandler[ "ButtonClick",
 				_display closeDisplay 1;
 			} else 
 			{
-				hint "You don't have enough credit left.";
+				_textToSpeech = "You don't have enough credit left.";
+				[[format ["<t align = 'center' shadow = '2' color='#0046ff' size='1.5' font='PuristaMedium' >High Command</t><br /><t color='#ffffff' size='1.5' font='PuristaMedium' shadow = '2' >%1</t>", _textToSpeech], "PLAIN DOWN", -1, true, true]] remoteExec ["titleText", player, true];
 			};
 		};
 	}

@@ -1,7 +1,7 @@
-class vehicleSpawner
+class supportGUI
 {
-	idd = 50000;
-	onLoad = "[""onLoad"",_this] execVM 'GUI\vehicleSpawnerGUI\loadVehicleSpawner.sqf';";
+	idd = 60000;
+	onLoad = "[""onLoad"",_this] execVM 'GUI\supportGUI\loadSupportGUI.sqf';";
 	class controlsBackground
 	{
 		class back: RscText
@@ -14,8 +14,8 @@ class vehicleSpawner
 		};
 		class title: RscStructuredText
 		{
-			idc = 49999;
-			text = "Vehicle shop"; //--- ToDo: Localize;
+			idc = 59999;
+			text = "Support shop"; //--- ToDo: Localize;
 			colorBackground[]={0.8,0.5,0,1};
 			x = -16.5 * GUI_GRID_W + 0.5;
 			y = -7.6 * GUI_GRID_H + 0.5;
@@ -28,7 +28,7 @@ class vehicleSpawner
 		#define W_LNB (32 * GUI_GRID_W)
 		class lnbEntries: RscListNBox
 		{
-			idc = 50002;
+			idc = 60002;
 			columns[] = {0, 1/6, 3.5/6, 5/6};
 			x = -16 * GUI_GRID_W + 0.5;
 			y = -5 * GUI_GRID_H + 0.5;
@@ -37,7 +37,7 @@ class vehicleSpawner
 		};
 		class grpSortBtns: RscControlsGroup
 		{
-			idc = 2300;
+			idc = 602300;
 			x = -16 * GUI_GRID_W + 0.5;
 			y = -6 * GUI_GRID_H + 0.5;
 			w = W_LNB;
@@ -46,7 +46,7 @@ class vehicleSpawner
 			{
 				class btnSortCol0: RscButtonTextOnly
 				{
-					idc = 2399;
+					idc = 602399;
 					text = "Icon";
 					style=ST_LEFT;
 					colorFocused[]={1,1,1,0.5};
@@ -59,8 +59,8 @@ class vehicleSpawner
 				};
 				class btnSortCol1: RscButtonTextOnly
 				{
-					idc = 2400;
-					text = "Vehicle name";
+					idc = 602400;
+					text = "Support name";
 					style=ST_LEFT;
 					colorFocused[]={1,1,1,0.5};
 					colorFocused2[]={1,1,1,0.1};
@@ -72,13 +72,13 @@ class vehicleSpawner
 				};
 				class btnSortCol2: btnSortCol1
 				{
-					idc = 2401;
-					text = "Vehicle type";
+					idc = 602401;
+					text = "Support type";
 					x = 3.5/6 * W_LNB;
 				};
 				class btnSortCol3: btnSortCol1
 				{
-					idc = 2402;
+					idc = 602402;
 					text = "Credit";
 					x = 5/6 * W_LNB;
 					w = 1/6 * W_LNB;
@@ -94,7 +94,7 @@ class vehicleSpawner
 		};
 		class btnOK: RscButtonMenuOK
 		{
-			idc = 50001;
+			idc = 60001;
 			text = "BUY";
 			x = -16 * GUI_GRID_W + 0.5;
 			y = 7.5 * GUI_GRID_H + 0.5;

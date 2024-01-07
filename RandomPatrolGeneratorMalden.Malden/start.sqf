@@ -453,6 +453,15 @@ if !(_isOnWater) then
 			_textToSpeech = format ["Enemy has taken the blufor FOB %1, be ready to defend it", mapGridPosition initBlueforLocation];
 			[[format ["<t align = 'center' shadow = '2' color='#0046ff' size='1.5' font='PuristaMedium' >High Command</t><br /><t color='#ffffff' size='1.5' font='PuristaMedium' shadow = '2' >%1</t>", _textToSpeech], "PLAIN DOWN", -1, true, true]] remoteExec ["titleText", blufor, true];
 			sleep 1000;
+		} else 
+		{
+			{
+				//Clear wreck
+				if (!alive _x) then 
+				{
+					deleteVehicle _x;
+				};
+			} foreach (nearestObjects [initBlueforLocation, [], 100]);
 		};
 	};
 };
@@ -662,30 +671,11 @@ SettingsComputer =  createVehicle ["Land_MultiScreenComputer_01_olive_F", [initB
 			},_x,1.5,true,true,"","_target distance _this <5"]] remoteExec ["addAction", 0, true];
 } foreach [-1,300,500,1000,1500,2000,2500];
 
-TPFlag1 = createVehicle ["Flag_Blue_F", [initBlueforLocation, 1, 10, 3, 0, 20, 0] call BIS_fnc_findSafePos, [], 0, "NONE"];
+
+_mapTexture = ((configFile >> "CfgWorlds" >> worldName >> "pictureMap") call BIS_fnc_GetCfgData);
+TPFlag1 = createVehicle ["Land_MapBoard_Enoch_F", [initBlueforLocation, 1, 10, 3, 0, 20, 0] call BIS_fnc_findSafePos, [], 0, "NONE"];
+TPFlag1 setObjectTexture [0, _mapTexture];
 publicvariable "TPFlag1";
-
-//Add action to make all player respawn
-if (respawnSettings == 1) then 
-{
-	[TPFlag1, ["Call Reinforcements",{
-		params ["_object","_caller","_ID","_param"];
-		
-		if (!(missionNamespace getVariable ["usedRespawnFewTimeAgo",false])) then 
-		{
-			//set morning
-			skipTime 24;
-			[[], "engine\respawnManagement\respawnManager.sqf"] remoteExec ['BIS_fnc_execVM', 0, true];
-			[format ["%1 needs reinforcement", name _caller]] remoteExec ["hint",0,true];
-			missionNamespace setVariable ["usedRespawnFewTimeAgo",true,true];
-			sleep 1200;
-			missionNamespace setVariable ["usedRespawnFewTimeAgo",false,true];
-		} else {
-			hint "You must wait before call reinforcements";
-		};
-	},[respawnSettings],1.5,true,false,"","_target distance _this <5 && side _this == blufor"]] remoteExec [ "addAction", 0, true ];
-};
-
 
 //Setup random attack on blufor at the beginning
 isBluforAttacked = false;

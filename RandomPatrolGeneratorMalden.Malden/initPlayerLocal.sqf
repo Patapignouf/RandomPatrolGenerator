@@ -17,8 +17,42 @@ enableSentences false;
 player setVariable ["role", player getVariable ["initRole","rifleman"]];
 
 [selectRandom ["LeadTrack01_F","LeadTrack01a_F","LeadTrack01b_F","LeadTrack03_F","LeadTrack01_F_Heli","LeadTrack04_F_EXP","LeadTrack01_F_Mark"], 10, 0.2] call BIS_fnc_playMusic;
-cutText [format ["<t size='1.2'>Please wait while mission is generating</t><br/><br/><img size=20 align='bottom' valign='bottom' image='%1'/>",format ["a3\missions_f_aow\data\img\artwork\landscape\showcase_aow_picture_%1_co.paa",selectRandom [16,59,118,106,98,62,76,93,75,64,122,87,70,14,104,108,111,123,20,92,63,41,65,68,22,91,72,30,31,80,32,47,27,18,46,121]]], "BLACK FADED", 100, true, true];
-uiSleep 3; //Wait player load correctly the mission
+
+//Show loading message
+[] spawn {
+	_randomPos = [nil, ["water"]] call BIS_fnc_randomPos;
+	_randomPos set [2,_randomPos#2+100];
+	_camera = "camera" camCreate (_randomPos);
+	_camera cameraEffect ["Internal", "back"];
+
+	while {isNil "missionGenerated"} do 
+	{
+		if (player getVariable ["isSetupMission", false]) then 
+		{
+			cutText ["", "BLACK FADED", 100];
+		} else 
+		{
+			//Disable player drowning
+			player setOxygenRemaining 100;
+
+			//Show loading screen
+			_camera camPrepareTarget ([[[_randomPos, 200]], []] call BIS_fnc_randomPos);
+			_randomPos = [nil, ["water"]] call BIS_fnc_randomPos;
+			_randomPos set [2,_randomPos#2+100];
+			_camera camPreparePos (_randomPos);
+			_camera camPreload 3;
+			_camera camCommitPrepared 400;
+			[format ["<t size='1.2'>Please wait while mission is generating</t><br/><t size='1.1'>%2</t><br/><br/><img size=8 align='bottom' valign='bottom' image='%1'/>", format ["a3\missions_f_aow\data\img\artwork\landscape\showcase_aow_picture_%1_co.paa",selectRandom [16,59,118,106,98,62,76,93,75,64,122,87,70,14,104,108,111,123,20,92,63,41,65,68,22,91,72,30,31,80,32,47,27,18,46,121]], missionNameSpace getVariable ["missionSetupMessage", ""]],0,0,10,0.5,0,0] spawn BIS_fnc_dynamicText;
+			//cutText [format ["<t size='1.2'>Please wait while mission is generating</t><br/><t size='1.1'>%2</t><br/><br/><img size=20 align='bottom' valign='bottom' image='%1'/>", format ["a3\missions_f_aow\data\img\artwork\landscape\showcase_aow_picture_%1_co.paa",selectRandom [16,59,118,106,98,62,76,93,75,64,122,87,70,14,104,108,111,123,20,92,63,41,65,68,22,91,72,30,31,80,32,47,27,18,46,121]], missionNameSpace getVariable ["missionSetupMessage", ""]], "PLAIN", 0.5, true, true];
+			uiSleep 4;
+		};
+	};
+	_camera cameraEffect ["terminate", "back"];
+	camDestroy _camera;
+};
+
+//Wait for UI totaly loaded
+uiSleep 3;
 
 //Define player who configure mission
 //Independent leader can choose mission
@@ -31,6 +65,7 @@ if (!didJIP) then
 		if (call BIS_fnc_admin != 0) then 
 		{
 			cutText ["", "BLACK FADED", 100];
+			player setVariable ["isSetupMission", true];
 			[[], 'GUI\setupGUI\initMissionMenu.sqf'] remoteExec ['BIS_fnc_execVM', player];
 		};
 	} else 
@@ -42,6 +77,7 @@ if (!didJIP) then
 			{
 				//Display setup menu
 				cutText ["", "BLACK FADED", 100];
+				player setVariable ["isSetupMission", true];
 				[[], 'GUI\setupGUI\initMissionMenu.sqf'] remoteExec ['BIS_fnc_execVM', player];
 			};
 		} else {
@@ -51,6 +87,7 @@ if (!didJIP) then
 			{
 				//Display setup menu
 				cutText ["", "BLACK FADED", 100];
+				player setVariable ["isSetupMission", true];
 				[[], 'GUI\setupGUI\initMissionMenu.sqf'] remoteExec ['BIS_fnc_execVM', player];
 			};
 		};
@@ -63,36 +100,7 @@ if (!didJIP) then
 //Wait mission setup
 waitUntil {missionNamespace getVariable "generationSetup" == true};
 
-
-
-
-
-//Show loading message
-[] spawn {
-	_randomPos = [nil, ["water"]] call BIS_fnc_randomPos;
-	_randomPos set [2,_randomPos#2+100];
-	_camera = "camera" camCreate (_randomPos);
-	_camera cameraEffect ["internal", "back"];
-
-	while {isNil "missionGenerated"} do 
-	{
-		//Disable player drowning
-		player setOxygenRemaining 100;
-
-		//Show loading screen
-		_camera camPrepareTarget ([[[_randomPos, 200]], []] call BIS_fnc_randomPos);
-		_randomPos = [nil, ["water"]] call BIS_fnc_randomPos;
-		_randomPos set [2,_randomPos#2+100];
-		_camera camPreparePos (_randomPos);
-		_camera camPreload 3;
-		_camera camCommitPrepared 400;
-		cutText [format ["<t size='1.2'>Please wait while mission is generating</t><br/><t size='1.1'>%2</t><br/><br/><img size=20 align='bottom' valign='bottom' image='%1'/>", format ["a3\missions_f_aow\data\img\artwork\landscape\showcase_aow_picture_%1_co.paa",selectRandom [16,59,118,106,98,62,76,93,75,64,122,87,70,14,104,108,111,123,20,92,63,41,65,68,22,91,72,30,31,80,32,47,27,18,46,121]], missionNameSpace getVariable ["missionSetupMessage", ""]], "PLAIN", 0.5, true, true];
-		uiSleep 4;
-	};
-	_camera cameraEffect ["terminate", "back"];
-	camDestroy _camera;
-};
-
+player setVariable ["isSetupMission", false];
 
 //Load every mission settings dependencies
 #include "database\arsenalLibrary.sqf"
@@ -395,28 +403,14 @@ if (side player == blufor) then
 					[[], 'GUI\vehicleSpawnerGUI\vehicleSpawner.sqf'] remoteExec ['BIS_fnc_execVM', player];
 			},_x,3,true,false,"","(_target distance _this <5) && (_this getVariable 'role' == 'leader' || _this getVariable 'role' == 'pilot')"];
 	};
-	
-	//Add HaloJump function
-	if (enableHalo == 1) then 
-	{	
-		_IDHalo = TPFlag1 addAction ["Go in HALO JUMP",{
-			params ["_object","_caller","_ID"];
-			//Click on map to Halo spawn
-			selectedHaloLoc = [0,0,0];
-			openMap true;
-			uiSleep 1;
-			["<t color='#ffffff' size='.8'>Click on map to spawn Halo jump<br />Your backpack will be saved</t>",0,0,4,1,0,789] spawn BIS_fnc_dynamicText;
-			onMapSingleClick "selectedHaloLoc = _pos; onMapSingleClick ''; openMap false; true;";
-			waitUntil{!(visibleMap)};  
-			if (!([selectedHaloLoc, [0,0,0]] call BIS_fnc_areEqual)) then 
-			{
-				_caller setPos selectedHaloLoc;
-				[_caller,1500] call BIS_fnc_halo;
-				[format ["In the %1 airspace", worldName], format ["Year %1", date select 0], mapGridPosition player] spawn BIS_fnc_infoText;
-			};
-		},[],1.5,true,false,"","_target distance _this <5"];
-	};
 
+	TPFlag1 addAction [format ["Open support shop"],{
+			//Define parameters
+			params ["_object","_caller","_ID","_avalaibleVehicle"];
+
+			[[], 'GUI\supportGUI\supportGUI.sqf'] remoteExec ['BIS_fnc_execVM', player];
+	},_x,3,true,false,"","_target distance _this <5"];
+	
 	waituntil {!isNil "isBluforAttacked" && !isNil "isIndAttacked"};
 	if (isBluforAttacked) then
 	{

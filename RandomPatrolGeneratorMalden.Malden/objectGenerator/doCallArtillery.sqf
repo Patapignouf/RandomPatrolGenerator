@@ -6,9 +6,10 @@ if (_artlillerySupportCounter > 0) then
 {
 	//Remove the action if there is no avalaible credit
 	_artillerySupportID = _caller getVariable ["artillerySupportID", -1];
-	if (_artillerySupportID != -1 && _artlillerySupportCounter == 0) then 
+	if (_artillerySupportID != -1 && _artlillerySupportCounter == 1) then 
 	{
 		[_caller, _artillerySupportID] call BIS_fnc_removeCommMenuItem;
+		_caller setVariable ["artillerySupportID", -1, true]
 	};
 
 	missionNamespace setVariable ["artlillerySupportCounter", _artlillerySupportCounter-1, true];
