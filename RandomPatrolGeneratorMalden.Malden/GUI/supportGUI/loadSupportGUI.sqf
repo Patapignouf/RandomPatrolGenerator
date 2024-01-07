@@ -34,6 +34,7 @@ switch (_mode) do
 		{
 			[_lnbEntries] call addSupportForArtillery;
 			[_lnbEntries] call addSupportForIntel;
+			[_lnbEntries] call addSupportForAirDrop;
 			if (count bluforUnarmedVehicleChopper > 0) then 
 			{
 				[_lnbEntries] call addSupportForExtract;

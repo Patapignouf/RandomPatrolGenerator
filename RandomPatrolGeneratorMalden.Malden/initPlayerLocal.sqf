@@ -400,7 +400,7 @@ if (side player == blufor) then
 					//Define parameters
 					params ["_object","_caller","_ID","_avalaibleVehicle"];
 
-					[[], 'GUI\vehicleSpawnerGUI\vehicleSpawner.sqf'] remoteExec ['BIS_fnc_execVM', player];
+					[[], 'GUI\vehicleSpawnerGUI\vehicleSpawner.sqf'] remoteExec ['BIS_fnc_execVM', _caller];
 			},_x,3,true,false,"","(_target distance _this <5) && (_this getVariable 'role' == 'leader' || _this getVariable 'role' == 'pilot')"];
 	};
 
@@ -408,7 +408,7 @@ if (side player == blufor) then
 			//Define parameters
 			params ["_object","_caller","_ID","_avalaibleVehicle"];
 
-			[[], 'GUI\supportGUI\supportGUI.sqf'] remoteExec ['BIS_fnc_execVM', player];
+			[[], 'GUI\supportGUI\supportGUI.sqf'] remoteExec ['BIS_fnc_execVM', _caller];
 	},_x,3,true,false,"","_target distance _this <5"];
 	
 	waituntil {!isNil "isBluforAttacked" && !isNil "isIndAttacked"};

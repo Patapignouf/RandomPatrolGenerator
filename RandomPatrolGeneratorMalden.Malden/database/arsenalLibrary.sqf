@@ -449,6 +449,25 @@ doInitializeLoadout = {
 			_player setVariable ["extractSupportID", -1, true]
 		};
 	};
+
+	//Add airDrop action
+	_airDropSupportID = _player getVariable ["airDropSupportID", -1];
+	if (_currentPlayerClass == "leader") then 
+	{
+		_airDropSupportCounter = missionNamespace getVariable ["airDropSupportCounter", 0];
+		if (_airDropSupportCounter > 0 && _airDropSupportID == -1) then 
+		{
+			_airDropSupportID = [_player, "myairDrop"] call BIS_fnc_addCommMenuItem;
+			_player setVariable ["airDropSupportID", _airDropSupportID, true];
+		};
+	} else 
+	{
+		if (_airDropSupportID != -1) then 
+		{
+			[_player, _airDropSupportID] call BIS_fnc_removeCommMenuItem;
+			_player setVariable ["airDropSupportID", -1, true]
+		};
+	};
 };
 
 

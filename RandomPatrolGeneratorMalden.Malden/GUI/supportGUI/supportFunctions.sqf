@@ -105,6 +105,35 @@ params ["_caller", "_supportType"];
 				};
 			};
 		};
+		case "AirDrop":
+		{
+			_textToSpeech = "Logistic unit 1804, ready for air supply";
+			[[format ["<t align = 'center' shadow = '2' color='#0046ff' size='1.5' font='PuristaMedium' >High Command</t><br /><t color='#ffffff' size='1.5' font='PuristaMedium' shadow = '2' >%1</t>", _textToSpeech, name _caller], "PLAIN DOWN", -1, true, true]] remoteExec ["titleText", 0, true];
+
+			_supportairDropCounter = missionNamespace getVariable ["airDropSupportCounter", 0]; 
+			missionNamespace setVariable ["airDropSupportCounter", _supportairDropCounter+1, true];
+
+			_currentPlayerClass = _caller getVariable "role";
+
+			//Manage radio support 
+			_airDropSupportID = _caller getVariable ["airDropSupportID", -1];
+			if (_currentPlayerClass == "leader") then 
+			{	
+				_airDropSupportCounter = missionNamespace getVariable ["airDropSupportCounter", 0];
+				if (_airDropSupportCounter > 0 && _airDropSupportID == -1) then 
+				{
+					_airDropSupportID = [_caller, "myairDrop"] call BIS_fnc_addCommMenuItem;
+					_caller setVariable ["airDropSupportID", _airDropSupportID, true];
+				};
+			} else 
+			{
+				if (_airDropSupportID != -1) then 
+				{
+					[_caller, _airDropSupportID] call BIS_fnc_removeCommMenuItem;
+					_caller setVariable ["airDropSupportID", -1, true]
+				};
+			};
+		};
 		case "HALOJump":
 		{
 			[_caller] spawn {
@@ -256,5 +285,24 @@ addSupportForExtract = {
 		_ctrl lnbSetData [[_ind, 2], str _price];
 };
 
+addSupportForAirDrop = {
+	params ["_ctrl"];
+		//Add support for Air drop
+		_price = 200;
+		_supportName = "Logistic supply drop (radio)";
+		_supportNameCode = "AirDrop";
+		_supportIcon = "\a3\Ui_f\data\GUI\Cfg\CommunicationMenu\supplydrop_ca.paa";
+
+		//Add row for support
+		_ind = _ctrl lnbAddRow ["", _supportName, "Logistic", str _price];
+
+		//Set picture
+		_ctrl lnbSetPicture [[_ind, 0], _supportIcon];
+
+		//Set data
+		_ctrl lnbSetData [[_ind, 0], _supportNameCode];
+		_ctrl lnbSetData [[_ind, 1], _supportNameCode];
+		_ctrl lnbSetData [[_ind, 2], str _price];
+};
 
 
