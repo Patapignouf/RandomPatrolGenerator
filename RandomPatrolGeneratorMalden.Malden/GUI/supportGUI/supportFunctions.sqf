@@ -76,6 +76,35 @@ params ["_caller", "_supportType"];
 				};
 			};
 		};
+		case "Extract":
+		{
+			_textToSpeech = "Helicopter unit 1515, ready for extract";
+			[[format ["<t align = 'center' shadow = '2' color='#0046ff' size='1.5' font='PuristaMedium' >High Command</t><br /><t color='#ffffff' size='1.5' font='PuristaMedium' shadow = '2' >%1</t>", _textToSpeech, name _caller], "PLAIN DOWN", -1, true, true]] remoteExec ["titleText", 0, true];
+
+			_supportextractCounter = missionNamespace getVariable ["extractSupportCounter", 0]; 
+			missionNamespace setVariable ["extractSupportCounter", _supportextractCounter+1, true];
+
+			_currentPlayerClass = _caller getVariable "role";
+
+			//Manage radio support 
+			_extractSupportID = _caller getVariable ["extractSupportID", -1];
+			if (_currentPlayerClass == "leader") then 
+			{	
+				_extractSupportCounter = missionNamespace getVariable ["extractSupportCounter", 0];
+				if (_extractSupportCounter > 0 && _extractSupportID == -1) then 
+				{
+					_extractSupportID = [_caller, "myextract"] call BIS_fnc_addCommMenuItem;
+					_caller setVariable ["extractSupportID", _extractSupportID, true];
+				};
+			} else 
+			{
+				if (_extractSupportID != -1) then 
+				{
+					[_caller, _extractSupportID] call BIS_fnc_removeCommMenuItem;
+					_caller setVariable ["extractSupportID", -1, true]
+				};
+			};
+		};
 		case "HALOJump":
 		{
 			[_caller] spawn {
@@ -172,7 +201,7 @@ addSupportForArtillery = {
 		//Add support for INTEL
 		_price = 200;
 		_supportName = "Artillery";
-		_supportNameCode = "Artillery";
+		_supportNameCode = "Artillery (radio)";
 		_supportIcon = "\a3\ui_f\data\igui\cfg\simpletasks\types\Radio_ca.paa";
 
 		//Add row for support
@@ -206,3 +235,26 @@ addSupportForHALO = {
 		_ctrl lnbSetData [[_ind, 1], _supportNameCode];
 		_ctrl lnbSetData [[_ind, 2], str _price];
 };
+
+addSupportForExtract = {
+	params ["_ctrl"];
+		//Add support for INTEL
+		_price = 200;
+		_supportName = "Extract helicopter (radio)";
+		_supportNameCode = "Extract";
+		_supportIcon = "\a3\ui_f\data\igui\cfg\simpletasks\types\Radio_ca.paa";
+
+		//Add row for support
+		_ind = _ctrl lnbAddRow ["", _supportName, "Movement", str _price];
+
+		//Set picture
+		_ctrl lnbSetPicture [[_ind, 0], _supportIcon];
+
+		//Set data
+		_ctrl lnbSetData [[_ind, 0], _supportNameCode];
+		_ctrl lnbSetData [[_ind, 1], _supportNameCode];
+		_ctrl lnbSetData [[_ind, 2], str _price];
+};
+
+
+

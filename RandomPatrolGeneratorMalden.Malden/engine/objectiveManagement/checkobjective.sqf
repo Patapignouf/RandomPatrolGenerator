@@ -45,7 +45,7 @@ while {sleep 10; !RTBComplete} do
 		//Generate RTB mission
 		if (!isRTBMissionGenerated) then 
 		{
-			[true, "taskRTB", ["Return to your initial base or exctract  area of operation", "RTB or Extract", ""], objNull, 1, 3, true] call BIS_fnc_taskCreate;
+			[true, "taskRTB", ["Return to your initial base or extract  area of operation", "RTB or Extract", ""], objNull, 1, 3, true] call BIS_fnc_taskCreate;
 			isRTBMissionGenerated = true;
 
 			extractExtendedTriggerArea = createTrigger ["EmptyDetector", areaOfOperationPosition]; //create a trigger area created at object with variable name my_object

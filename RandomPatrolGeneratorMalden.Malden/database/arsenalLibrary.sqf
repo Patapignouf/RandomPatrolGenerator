@@ -430,6 +430,25 @@ doInitializeLoadout = {
 			_player setVariable ["artillerySupportID", -1, true]
 		};
 	};
+
+	//Add extract action
+	_extractSupportID = _player getVariable ["extractSupportID", -1];
+	if (_currentPlayerClass == "leader") then 
+	{
+		_extractSupportCounter = missionNamespace getVariable ["extractSupportCounter", 0];
+		if (_extractSupportCounter > 0 && _extractSupportID == -1) then 
+		{
+			_extractSupportID = [_player, "myextract"] call BIS_fnc_addCommMenuItem;
+			_player setVariable ["extractSupportID", _extractSupportID, true];
+		};
+	} else 
+	{
+		if (_extractSupportID != -1) then 
+		{
+			[_player, _extractSupportID] call BIS_fnc_removeCommMenuItem;
+			_player setVariable ["extractSupportID", -1, true]
+		};
+	};
 };
 
 

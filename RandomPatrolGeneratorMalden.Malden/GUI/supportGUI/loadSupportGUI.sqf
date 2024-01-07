@@ -34,6 +34,10 @@ switch (_mode) do
 		{
 			[_lnbEntries] call addSupportForArtillery;
 			[_lnbEntries] call addSupportForIntel;
+			if (count bluforUnarmedVehicleChopper > 0) then 
+			{
+				[_lnbEntries] call addSupportForExtract;
+			};
 		};
 
 		for "_idc" from 602400 to 602402 do {

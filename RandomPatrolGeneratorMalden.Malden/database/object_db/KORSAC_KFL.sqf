@@ -75,6 +75,8 @@ loadout_KORSAC_KFL = [
 //French
 rifleList_KORSAC_KFL = [		
 	"arifle_AK12U_F",
+	"optic_Arco",
+	"optic_Arco_blk_F",
 	"arifle_SPAR_02_blk_F",
 	"arifle_SPAR_01_blk_F",
 	"CUP_arifle_HK416_Black",
