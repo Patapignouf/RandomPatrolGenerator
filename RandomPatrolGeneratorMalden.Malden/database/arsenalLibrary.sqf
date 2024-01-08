@@ -438,7 +438,7 @@ doInitializeLoadout = {
 		_extractSupportCounter = missionNamespace getVariable ["extractSupportCounter", 0];
 		if (_extractSupportCounter > 0 && _extractSupportID == -1) then 
 		{
-			_extractSupportID = [_player, "myextract"] call BIS_fnc_addCommMenuItem;
+			_extractSupportID = [_player, "myExtract"] call BIS_fnc_addCommMenuItem;
 			_player setVariable ["extractSupportID", _extractSupportID, true];
 		};
 	} else 
@@ -457,7 +457,7 @@ doInitializeLoadout = {
 		_airDropSupportCounter = missionNamespace getVariable ["airDropSupportCounter", 0];
 		if (_airDropSupportCounter > 0 && _airDropSupportID == -1) then 
 		{
-			_airDropSupportID = [_player, "myairDrop"] call BIS_fnc_addCommMenuItem;
+			_airDropSupportID = [_player, "myAirDrop"] call BIS_fnc_addCommMenuItem;
 			_player setVariable ["airDropSupportID", _airDropSupportID, true];
 		};
 	} else 

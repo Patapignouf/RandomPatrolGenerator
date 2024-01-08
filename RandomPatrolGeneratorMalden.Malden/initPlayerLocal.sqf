@@ -14,7 +14,7 @@ player allowdamage false;
 enableSentences false;
 
 //player enableSimulationGlobal false;
-player setVariable ["role", player getVariable ["initRole","rifleman"]];
+player setVariable ["role", player getVariable ["initRole","rifleman"], true];
 
 [selectRandom ["LeadTrack01_F","LeadTrack01a_F","LeadTrack01b_F","LeadTrack03_F","LeadTrack01_F_Heli","LeadTrack04_F_EXP","LeadTrack01_F_Mark"], 10, 0.2] call BIS_fnc_playMusic;
 

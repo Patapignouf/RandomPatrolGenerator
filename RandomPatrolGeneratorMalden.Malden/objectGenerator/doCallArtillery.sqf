@@ -8,7 +8,7 @@ if (_artlillerySupportCounter > 0) then
 	_artillerySupportID = _caller getVariable ["artillerySupportID", -1];
 	if (_artillerySupportID != -1 && _artlillerySupportCounter == 1) then 
 	{
-		[_caller, _artillerySupportID] call BIS_fnc_removeCommMenuItem;
+		[_caller, _artillerySupportID] remoteExec ["BIS_fnc_removeCommMenuItem", _caller];
 		_caller setVariable ["artillerySupportID", -1, true]
 	};
 

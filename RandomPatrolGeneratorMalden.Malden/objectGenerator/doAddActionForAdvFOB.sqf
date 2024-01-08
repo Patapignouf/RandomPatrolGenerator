@@ -74,8 +74,7 @@ params ["_deployableFOBItem", "_deployableFOBMounted", "_respawnSettings"];
 			TPFlag2 addAction [format ["Open support shop"],{
 				//Define parameters
 				params ["_object","_caller","_ID","_avalaibleVehicle"];
-
-				[[], 'GUI\supportGUI\supportGUI.sqf'] remoteExec ['BIS_fnc_execVM', player];
+					[[], 'GUI\supportGUI\supportGUI.sqf'] remoteExec ['BIS_fnc_execVM', player];
 				}
 			];
 

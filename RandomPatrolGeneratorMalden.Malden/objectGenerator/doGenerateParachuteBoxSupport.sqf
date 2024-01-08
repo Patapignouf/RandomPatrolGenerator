@@ -8,18 +8,18 @@ if (_airDropSupportCounter > 0) then
 	_airDropSupportID = _caller getVariable ["airDropSupportID", -1];
 	if (_airDropSupportID != -1 && _airDropSupportCounter == 1) then 
 	{
-		[_caller, _airDropSupportID] call BIS_fnc_removeCommMenuItem;
-		_caller setVariable ["airDropSupportID", -1, true]
+		[_caller, _airDropSupportID] remoteExec ["BIS_fnc_removeCommMenuItem", _caller];
+		_caller setVariable ["airDropSupportID", -1, true];
 	};
 
 	missionNamespace setVariable ["airDropSupportCounter", _airDropSupportCounter-1, true];
 	
 	//Hint to airDrop call
 	_textToSpeech = format ["Air drop support called on position %1", mapGridPosition _position];
-	[[format ["<t align = 'center' shadow = '2' color='#0046ff' size='1.5' font='PuristaMedium' >High Command</t><br /><t color='#ffffff' size='1.5' font='PuristaMedium' shadow = '2' >%1</t>", _textToSpeech], "PLAIN DOWN", -1, true, true]] remoteExec ["titleText", blufor, true];
+	[[format ["<t align = 'center' shadow = '2' color='#0046ff' size='1.5' font='PuristaMedium' >High Command</t><br /><t color='#ffffff' size='1.5' font='PuristaMedium' shadow = '2' >%1</t>", _textToSpeech], "PLAIN DOWN", -1, true, true]] remoteExec ["titleText", side _caller, true];
 
 	//Wait for the drop
-	sleep (random 30);
+	sleep 5+(random 30);
 
 	//Call air drop 
 	_positionLZ = _position findEmptyPosition [0, 200,"Land_HelipadCircle_F"];
@@ -107,8 +107,16 @@ if (_airDropSupportCounter > 0) then
 	_crate attachTo [_parachute, [0, 0, -1.3]];
 	_crate allowdamage false;
 
-
+	//Wait for care almost hit ground
+	//Fix bug where crate go under the ground
+	waitUntil {((((position _crate)#2) < 0.6) || (isNil "_parachute"))};
+	detach _crate;
+	_crate setVelocity [0,0,-5];
+	sleep 0.3;
 	
+	//Place crate on the ground
+	_crate setPos [(position _crate)#0, (position _crate)#1, 1];
+	_crate setVelocity [0,0,0];  
 	
 } else 
 {

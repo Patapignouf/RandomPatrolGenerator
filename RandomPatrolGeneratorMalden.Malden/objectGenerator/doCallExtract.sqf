@@ -8,7 +8,7 @@ if (_extractSupportCounter > 0) then
 	_extractSupportID = _caller getVariable ["extractSupportID", -1];
 	if (_extractSupportID != -1 && _extractSupportCounter == 1) then 
 	{
-		[_caller, _extractSupportID] call BIS_fnc_removeCommMenuItem;
+		[_caller, _extractSupportID] remoteExec ["BIS_fnc_removeCommMenuItem", _caller];
 		_caller setVariable ["extractSupportID", -1, true]
 	};
 
