@@ -211,6 +211,8 @@ backPackList_KORSAC_KDF = [
 	"B_Mortar_01_weapon_F",
 	"B_Mortar_01_support_F",
 	"B_Carryall_eaf_eng_F",
+	"B_Carryall_eaf_F",
+	"B_Carryall_oli",
 	"B_AssaultPack_eaf_IELAT_F",
 	"B_FieldPack_green_F",
 	"B_Fieldpack_oli",
