@@ -77,6 +77,8 @@ if (_airDropSupportCounter > 0) then
 	_virtualWeaponList = _virtualWeaponList + (autorifleList_db select {_x select 1  == (_faction)} select 0 select 0);
 	_virtualWeaponList = _virtualWeaponList + (marksmanrifleList_db select {_x select 1  == (_faction)} select 0 select 0);
 
+	diag_log format ["Generate air supply drop weaponList : %1", _virtualWeaponList];
+
 	_listOfLargeMagazineText = ["50Rnd", "60Rnd", "150Rnd"]; //
 	{
 		_currentWeaponMagazineList = getArray (configfile >> "CfgWeapons" >> _x >> "magazines");
@@ -85,10 +87,10 @@ if (_airDropSupportCounter > 0) then
 			if ((_tempMagazine) findIf {_x == (_currentWeaponMagazineList#0)} == -1) then 
 			{
 				//Add only if this is not a large magazine
-				if (!([_currentWeaponMagazineList#0, _listOfLargeMagazineText] call isElementOfArrayInString)) then 
-				{
+				// if (!([_currentWeaponMagazineList#0, _listOfLargeMagazineText] call isElementOfArrayInString)) then 
+				// {
 					_tempMagazine pushBack _currentWeaponMagazineList#0;
-				};
+				// };
 			};
 		};
 	} foreach _virtualWeaponList;

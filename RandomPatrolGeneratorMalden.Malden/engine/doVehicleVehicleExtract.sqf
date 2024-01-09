@@ -10,9 +10,9 @@ _heli = vehicle (leader _vehicleTransportGroup);
 _vehicleTransportGroup enableDynamicSimulation false;
 
 //Go to landing pos
-_lzPos = _destinationPos findEmptyPosition [0, 200,"Land_HelipadCircle_F"];
-_lz =  createVehicle ["Land_HelipadEmpty_F", _lzPos, [], 0, "NONE"];
-wp1 = _vehicleTransportGroup addWaypoint [_lzPos, -1];
+_lzSafePos = [_destinationPos, 0, 250, 10, 0, 0.25, 0, [], [_destinationPos, _destinationPos]] call BIS_fnc_findSafePos;
+_lz =  createVehicle ["Land_HelipadEmpty_F", _lzSafePos, [], 0, "NONE"];
+wp1 = _vehicleTransportGroup addWaypoint [_lzSafePos, -1];
 wp1 setwaypointtype"TR UNLOAD"; 
 wp1 setWaypointBehaviour "CARELESS";
 wp1 setWaypointCombatMode "BLUE";

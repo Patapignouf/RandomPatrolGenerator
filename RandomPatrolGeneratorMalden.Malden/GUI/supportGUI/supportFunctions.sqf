@@ -127,145 +127,104 @@ params ["_caller", "_supportType"];
 	};
 };
 
+addSupportOption = {
+	params ["_ctrl", "_supportName", "_supportNameCode", "_supportIcon", "_price", "_supportType"];
+
+	//Add row for support
+	_ind = _ctrl lnbAddRow ["", _supportName, _supportType, str _price];
+
+	//Set picture
+	_ctrl lnbSetPicture [[_ind, 0], _supportIcon];
+
+	//Set data
+	_ctrl lnbSetData [[_ind, 0], _supportNameCode];
+	_ctrl lnbSetData [[_ind, 1], _supportNameCode];
+	_ctrl lnbSetData [[_ind, 2], str _price];
+};
+
 
 addSupportForIntel = {
 	params ["_ctrl"];
-		//Add support for INTEL
-		_price = 50;
-		_supportName = "Recon for intel";
-		_supportNameCode = "ReconIntel";
-		_supportIcon = "\a3\ui_f\data\igui\cfg\simpletasks\types\Radio_ca.paa";
+	//Add support for INTEL
+	_price = 50;
+	_supportName = "Recon for intel";
+	_supportNameCode = "ReconIntel";
+	_supportIcon = "\a3\ui_f\data\igui\cfg\simpletasks\types\Radio_ca.paa";
+	_supportType = "Recon";
 
-		//Add row for support
-		_ind = _ctrl lnbAddRow ["", _supportName, "Recon", str _price];
-
-		//Set picture
-		_ctrl lnbSetPicture [[_ind, 0], _supportIcon];
-
-		//Set data
-		_ctrl lnbSetData [[_ind, 0], _supportNameCode];
-		_ctrl lnbSetData [[_ind, 1], _supportNameCode];
-		_ctrl lnbSetData [[_ind, 2], str _price];
+	[_ctrl, _supportName, _supportNameCode, _supportIcon, _price, _supportType] call addSupportOption;
 };
 
 addSupportForReinforcement = {
 	params ["_ctrl"];
-		//Add support for INTEL
-		_price = 0;
-		_supportName = "Call reinforcement (every 20 mins)";
-		_supportNameCode = "Reinforcement";
-		_supportIcon = "\a3\ui_f\data\igui\cfg\simpletasks\types\Radio_ca.paa";
+	//Add support for INTEL
+	_price = 0;
+	_supportName = "Call reinforcement (every 20 mins)";
+	_supportNameCode = "Reinforcement";
+	_supportIcon = "\a3\ui_f\data\igui\cfg\simpletasks\types\Radio_ca.paa";
+	_supportType = "Reinforcement";
 
-		//Add row for support
-		_ind = _ctrl lnbAddRow ["", _supportName, "Reinforcement", str _price];
-
-		//Set picture
-		_ctrl lnbSetPicture [[_ind, 0], _supportIcon];
-
-		//Set data
-		_ctrl lnbSetData [[_ind, 0], _supportNameCode];
-		_ctrl lnbSetData [[_ind, 1], _supportNameCode];
-		_ctrl lnbSetData [[_ind, 2], str _price];
+	[_ctrl, _supportName, _supportNameCode, _supportIcon, _price, _supportType] call addSupportOption;
 };
 
 addSupportForForceReinforcement = {
 	params ["_ctrl"];
-		//Add support for INTEL
-		_price = 500;
-		_supportName = "Force reinforcement";
-		_supportNameCode = "ForceReinforcement";
-		_supportIcon = "\a3\ui_f\data\igui\cfg\simpletasks\types\Radio_ca.paa";
+	//Add support for INTEL
+	_price = 500;
+	_supportName = "Force reinforcement";
+	_supportNameCode = "ForceReinforcement";
+	_supportIcon = "\a3\ui_f\data\igui\cfg\simpletasks\types\Radio_ca.paa";
+	_supportType = "Reinforcement";
 
-		//Add row for support
-		_ind = _ctrl lnbAddRow ["", _supportName, "Reinforcement", str _price];
-
-		//Set picture
-		_ctrl lnbSetPicture [[_ind, 0], _supportIcon];
-
-		//Set data
-		_ctrl lnbSetData [[_ind, 0], _supportNameCode];
-		_ctrl lnbSetData [[_ind, 1], _supportNameCode];
-		_ctrl lnbSetData [[_ind, 2], str _price];
+	[_ctrl, _supportName, _supportNameCode, _supportIcon, _price, _supportType] call addSupportOption;
 };
 
 addSupportForArtillery = {
 	params ["_ctrl"];
-		//Add support for INTEL
-		_price = 200;
-		_supportName = "Artillery (radio)";
-		_supportNameCode = "Artillery";
-		_supportIcon = "\a3\Ui_f\data\GUI\Cfg\CommunicationMenu\artillery_ca.paa";
+	//Add support for INTEL
+	_price = 200;
+	_supportName = "Artillery (radio)";
+	_supportNameCode = "Artillery";
+	_supportIcon = "\a3\Ui_f\data\GUI\Cfg\CommunicationMenu\artillery_ca.paa";
+	_supportType = "Artillery";
 
-		//Add row for support
-		_ind = _ctrl lnbAddRow ["", _supportName, "Artillery", str _price];
-
-		//Set picture
-		_ctrl lnbSetPicture [[_ind, 0], _supportIcon];
-
-		//Set data
-		_ctrl lnbSetData [[_ind, 0], _supportNameCode];
-		_ctrl lnbSetData [[_ind, 1], _supportNameCode];
-		_ctrl lnbSetData [[_ind, 2], str _price];
+	[_ctrl, _supportName, _supportNameCode, _supportIcon, _price, _supportType] call addSupportOption;
 };
 
 addSupportForHALO = {
 	params ["_ctrl"];
-		//Add support for INTEL
-		_price = 0;
-		_supportName = "Halo Jump";
-		_supportNameCode = "HALOJump";
-		_supportIcon = "\a3\Ui_f\data\GUI\Cfg\CommunicationMenu\supplydrop_ca.paa";
+	//Add support for INTEL
+	_price = 0;
+	_supportName = "Halo Jump";
+	_supportNameCode = "HALOJump";
+	_supportIcon = "\a3\Ui_f\data\GUI\Cfg\CommunicationMenu\supplydrop_ca.paa";
+	_supportType = "Movement";
 
-		//Add row for support
-		_ind = _ctrl lnbAddRow ["", _supportName, "Movement", str _price];
-
-		//Set picture
-		_ctrl lnbSetPicture [[_ind, 0], _supportIcon];
-
-		//Set data
-		_ctrl lnbSetData [[_ind, 0], _supportNameCode];
-		_ctrl lnbSetData [[_ind, 1], _supportNameCode];
-		_ctrl lnbSetData [[_ind, 2], str _price];
+	[_ctrl, _supportName, _supportNameCode, _supportIcon, _price, _supportType] call addSupportOption;
 };
 
 addSupportForExtract = {
 	params ["_ctrl"];
-		//Add support for INTEL
-		_price = 200;
-		_supportName = "Extract helicopter (radio)";
-		_supportNameCode = "Extract";
-		_supportIcon = "\a3\Ui_f\data\GUI\Cfg\CommunicationMenu\transport_ca.paa";
+	//Add support for INTEL
+	_price = 200;
+	_supportName = "Extract helicopter (radio)";
+	_supportNameCode = "Extract";
+	_supportIcon = "\a3\Ui_f\data\GUI\Cfg\CommunicationMenu\transport_ca.paa";
+	_supportType = "Movement";
 
-		//Add row for support
-		_ind = _ctrl lnbAddRow ["", _supportName, "Movement", str _price];
-
-		//Set picture
-		_ctrl lnbSetPicture [[_ind, 0], _supportIcon];
-
-		//Set data
-		_ctrl lnbSetData [[_ind, 0], _supportNameCode];
-		_ctrl lnbSetData [[_ind, 1], _supportNameCode];
-		_ctrl lnbSetData [[_ind, 2], str _price];
+	[_ctrl, _supportName, _supportNameCode, _supportIcon, _price, _supportType] call addSupportOption;
 };
 
 addSupportForAirDrop = {
 	params ["_ctrl"];
-		//Add support for Air drop
-		_price = 200;
-		_supportName = "Logistic supply drop (radio)";
-		_supportNameCode = "AirDrop";
-		_supportIcon = "\a3\Ui_f\data\GUI\Cfg\CommunicationMenu\supplydrop_ca.paa";
+	//Add support for Air drop
+	_price = 200;
+	_supportName = "Logistic supply drop (radio)";
+	_supportNameCode = "AirDrop";
+	_supportIcon = "\a3\Ui_f\data\GUI\Cfg\CommunicationMenu\supplydrop_ca.paa";
+	_supportType = "Logistic";
 
-		//Add row for support
-		_ind = _ctrl lnbAddRow ["", _supportName, "Logistic", str _price];
-
-		//Set picture
-		_ctrl lnbSetPicture [[_ind, 0], _supportIcon];
-
-		//Set data
-		_ctrl lnbSetData [[_ind, 0], _supportNameCode];
-		_ctrl lnbSetData [[_ind, 1], _supportNameCode];
-		_ctrl lnbSetData [[_ind, 2], str _price];
+	[_ctrl, _supportName, _supportNameCode, _supportIcon, _price, _supportType] call addSupportOption;
 };
 
 
