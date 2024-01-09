@@ -499,33 +499,35 @@ if (0 < count bluforBoat ) then
 	};
 };
 
-//Wait FOB spawning
-sleep 3;
-
 //Generate all vehicles
 diag_log format ["Generating blufor vehicle : %1",selectedBluforVehicle];
-_spawnedVehicle = [initBlueforLocation, selectedBluforVehicle, 30, 100] call doGenerateVehicleForFOB;	
-diag_log format ["Generating blufor vehicle spawned : %1", _spawnedVehicle];
-//TODO: get each vehicule and set the lock parameter to LOCKED;
+[initBlueforLocation, selectedBluforVehicle, bluforHQVehicle] spawn {
+	params ["_initBlueforLocation", "_selectedBluforVehicle" ,"_bluforHQVehicle"];
 
-//HQ Vehicle spawn
-if (count bluforHQVehicle >0) then 
-{
-	//Spawn one HQ vehicle at bluforFOB
-	_bluforHQVehicleSpawned = ([initBlueforLocation, [[selectRandom bluforHQVehicle, false]], 30, 100] call doGenerateVehicleForFOB);	
-	diag_log format ["Generating blufor HQ vehicle spawned : %1", _bluforHQVehicleSpawned];
-	if (count _bluforHQVehicleSpawned >0) then 
+	sleep 10;
+	_spawnedVehicle = [_initBlueforLocation, _selectedBluforVehicle, 30, 100] call doGenerateVehicleForFOB;
+	diag_log format ["Generating blufor vehicle spawned : %1", _spawnedVehicle];
+	//TODO: get each vehicule and set the lock parameter to LOCKED;
+
+	//HQ Vehicle spawn
+	if (count _bluforHQVehicle >0) then 
 	{
-		// //Change vehicle name
-		createVehicle ["Flag_Blue_F", getPos (_bluforHQVehicleSpawned select 0) , [], 0, "NONE"];
-		bluforMobileHQ = _bluforHQVehicleSpawned select 0;
-		publicVariable "bluforMobileHQ";
+		//Spawn one HQ vehicle at bluforFOB
+		_bluforHQVehicleSpawned = ([initBlueforLocation, [[selectRandom _bluforHQVehicle, false]], 30, 100] call doGenerateVehicleForFOB);	
+		diag_log format ["Generating blufor HQ vehicle spawned : %1", _bluforHQVehicleSpawned];
+		if (count _bluforHQVehicleSpawned >0) then 
+		{
+			// //Change vehicle name
+			createVehicle ["Flag_Blue_F", getPos (_bluforHQVehicleSpawned select 0) , [], 0, "NONE"];
+			bluforMobileHQ = _bluforHQVehicleSpawned select 0;
+			publicVariable "bluforMobileHQ";
 
-		//Add support action 
-		[bluforMobileHQ, ["Open support shop",{
-			params ["_object","_caller","_ID","_param"];
-			[[], 'GUI\supportGUI\supportGUI.sqf'] remoteExec ['BIS_fnc_execVM', _caller];
-		},[],1.5,true,false,"","_target distance _this <10 && side _this == blufor"]] remoteExec [ "addAction", blufor, true ];
+			//Add support action 
+			[bluforMobileHQ, ["Open support shop",{
+				params ["_object","_caller","_ID","_param"];
+				[[], 'GUI\supportGUI\supportGUI.sqf'] remoteExec ['BIS_fnc_execVM', _caller];
+			},[],1.5,true,false,"","_target distance _this <10 && side _this == blufor"]] remoteExec [ "addAction", blufor, true ];
+		};
 	};
 };
 

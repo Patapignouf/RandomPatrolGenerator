@@ -361,11 +361,14 @@ if (side player == blufor) then
 
 	//Manage arsenal	
 	[VA2] call setupPlayerLoadout;	
-	if (!isNil "bluformobilehq") then
-	{
+
+	[] spawn {
+		waitUntil {!isNil "bluformobilehq"};
+		
 		//TODO FIX Mobile HQ Arsenal action
 		[bluforMobileHQ] call setupPlayerLoadout;
 	};
+
 
 	//Add heal action to VA2
 	_actionIdHeal = VA2 addAction ["Heal", {
