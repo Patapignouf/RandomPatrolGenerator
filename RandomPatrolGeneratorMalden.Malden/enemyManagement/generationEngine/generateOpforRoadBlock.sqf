@@ -33,6 +33,16 @@ if (!([_possibleRoadPosition] call isLocationOnMap)) then
 			_x setDir (getDir _randomAvalaiblePos);
 			deleteVehicle _randomAvalaiblePos;
 			_OpforFobStandardOpforLocation = _OpforFobStandardOpforLocation - [_randomAvalaiblePos];
+
+			//Disable IA prone
+			_x addEventHandler ["AnimStateChanged",
+			{
+				params ["_unit", "_anim"];
+				if (canStand _unit && (behaviour _unit in ["AWARE","COMBAT"])) then {
+				_unit setUnitPos "UP";
+				};
+			}];
+
 		} else 
 		{
 			_x hideObjectGlobal true;
