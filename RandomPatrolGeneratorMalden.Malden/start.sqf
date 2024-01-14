@@ -421,6 +421,11 @@ if !(_isOnWater) then
 		spawnFOBObjects = [initBlueforLocation, (random 360), selectRandom avalaibleFOB] call BIS_fnc_ObjectsMapper;
 		sleep 3;
 
+		//Snap FOB object to ground
+		{
+			_x setVectorUp surfaceNormal position _x;
+		} foreach spawnFOBObjects;
+
 		initBlueforLocation = getPos (spawnFOBObjects select 0);	
 		publicvariable "initBlueforLocation";
 		waitUntil {!isNil "spawnFOBObjects"};
@@ -666,6 +671,8 @@ SettingsComputer =  createVehicle ["Land_MultiScreenComputer_01_olive_F", [initB
 
 _mapTexture = ((configFile >> "CfgWorlds" >> worldName >> "pictureMap") call BIS_fnc_GetCfgData);
 TPFlag1 = createVehicle ["Land_MapBoard_Enoch_F", [initBlueforLocation, 1, 10, 3, 0, 20, 0] call BIS_fnc_findSafePos, [], 0, "NONE"];
+[TPFlag1, false] remoteExec ["enableSimulationGlobal", 2];
+TPFlag1 setVectorUp surfaceNormal position TPFlag1;
 TPFlag1 setObjectTexture [0, _mapTexture];
 publicvariable "TPFlag1";
 
