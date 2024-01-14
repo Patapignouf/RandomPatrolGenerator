@@ -19,7 +19,7 @@ if (_airDropSupportCounter > 0) then
 	[[format ["<t align = 'center' shadow = '2' color='#0046ff' size='1.5' font='PuristaMedium' >High Command</t><br /><t color='#ffffff' size='1.5' font='PuristaMedium' shadow = '2' >%1</t>", _textToSpeech], "PLAIN DOWN", -1, true, true]] remoteExec ["titleText", side _caller, true];
 
 	//Wait for the drop
-	sleep 5+(random 30);
+	sleep 30+(random 30);
 
 	//Call air drop 
 	_positionLZ = _position findEmptyPosition [0, 200,"Land_HelipadCircle_F"];
