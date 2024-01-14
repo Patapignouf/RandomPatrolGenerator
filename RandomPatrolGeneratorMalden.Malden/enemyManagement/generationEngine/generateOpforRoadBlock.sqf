@@ -19,6 +19,14 @@ if (!([_possibleRoadPosition] call isLocationOnMap)) then
 	_spawnFOBObjects = [_possibleRoadPosition, _possibleRoadDir, selectRandom avalaibleRoadBlock] call BIS_fnc_ObjectsMapper;
 	_OpforFobStandardOpforLocation = nearestObjects [_possibleRoadPosition, ["Sign_Arrow_Large_F"], 100];
 	_OpforFobTurretOpforLocation = nearestObjects [_possibleRoadPosition, ["Sign_Arrow_Large_Yellow_F"], 100];
+
+	//Disable gravity on barrier
+	//Temp fix to barrier always falling 
+	_OpforFobBarrier = nearestObjects [_possibleRoadPosition, ["RoadBarrier_F"], 50];
+	{
+		[_x, false] remoteExec ["enableSimulationGlobal", 2];
+	} foreach _OpforFobBarrier;
+
 	diag_log format ["Display _OpforFobStandardOpforLocation : %1 ",_OpforFobStandardOpforLocation];
 	diag_log format ["Display _OpforFobTurretOpforLocation : %1 ",_OpforFobTurretOpforLocation];
 
