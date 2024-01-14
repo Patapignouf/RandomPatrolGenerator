@@ -120,6 +120,35 @@ params ["_caller", "_supportType"];
 			_mainDisplay = (findDisplay 60000);
 			_mainDisplay closeDisplay 1;
 		};
+		case "DroneRecon":
+		{
+			[_caller] spawn {
+				params ["_caller"];
+				//Click on map to Halo spawn
+				selectedHaloLoc = [0,0,0];
+				openMap true;
+				uiSleep 1;
+				["<t color='#ffffff' size='.8'>Click on map to recon with a drone<br /></t>",0,0,4,1,0,789] spawn BIS_fnc_dynamicText;
+				onMapSingleClick "selectedHaloLoc = _pos; onMapSingleClick ''; openMap false; true;";
+				waitUntil{!(visibleMap)};  
+				if (!([selectedHaloLoc, [0,0,0]] call BIS_fnc_areEqual)) then 
+				{
+					
+					private _savingEnabled = savingEnabled;
+					_handle = [selectedHaloLoc, "", 250, 250, 75, 1, [], 0, true] spawn BIS_fnc_establishingShot;
+					[_handle, _savingEnabled] spawn { 
+						params ["_process", "_savingMode"];
+						waitUntil { scriptDone _process }; 
+						enableSaving [_savingMode, false];
+						hint "Find script";
+					 };
+				};
+			};
+
+			//Close support menu
+			_mainDisplay = (findDisplay 60000);
+			_mainDisplay closeDisplay 1;
+		};
 		default
 		{
 			//Do nothing
@@ -146,7 +175,7 @@ addSupportOption = {
 addSupportForIntel = {
 	params ["_ctrl"];
 	//Add support for INTEL
-	_price = 50;
+	_price = 25;
 	_supportName = "Recon for intel";
 	_supportNameCode = "ReconIntel";
 	_supportIcon = "\a3\ui_f\data\igui\cfg\simpletasks\types\Radio_ca.paa";
@@ -228,3 +257,14 @@ addSupportForAirDrop = {
 };
 
 
+addSupportForDroneRecon = {
+	params ["_ctrl"];
+	//Add support for Air drop
+	_price = 100;
+	_supportName = "Send drone for recon";
+	_supportNameCode = "DroneRecon";
+	_supportIcon = "\a3\ui_f\data\igui\cfg\simpletasks\types\Radio_ca.paa";
+	_supportType = "Recon";
+
+	[_ctrl, _supportName, _supportNameCode, _supportIcon, _price, _supportType] call addSupportOption;
+};

@@ -13,7 +13,7 @@ if (_extractSupportCounter > 0) then
 	};
 
 	missionNamespace setVariable ["extractSupportCounter", _extractSupportCounter-1, true];
-	[[selectRandom bluforUnarmedVehicleChopper, _position], 'engine\doVehicleVehicleExtract.sqf'] remoteExec ['BIS_fnc_execVM', 2];
+	[[selectRandom (bluforUnarmedVehicleChopper+bluforExtractVehicleChopper), _position], 'engine\doVehicleVehicleExtract.sqf'] remoteExec ['BIS_fnc_execVM', 2];
 
 	//Hint to extract call
 	_textToSpeech = format ["Extract called on position %1", mapGridPosition _position];

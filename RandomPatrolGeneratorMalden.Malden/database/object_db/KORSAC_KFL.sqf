@@ -27,6 +27,10 @@ bluforUnarmedVehicleChopper_KORSAC_KFL = [
 
 ];
 
+bluforExtractVehicleChopper_KORSAC_KFL = [
+	"vtf_kf_B_Heli_Transport_03_unarmed_F"
+];
+
 bluforArmedChopper_KORSAC_KFL = [
 
 ];

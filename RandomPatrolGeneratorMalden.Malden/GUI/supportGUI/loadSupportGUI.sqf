@@ -35,10 +35,14 @@ switch (_mode) do
 			[_lnbEntries] call addSupportForArtillery;
 			[_lnbEntries] call addSupportForIntel;
 			[_lnbEntries] call addSupportForAirDrop;
-			if (count bluforUnarmedVehicleChopper > 0) then 
+			if (count (bluforUnarmedVehicleChopper+bluforExtractVehicleChopper) > 0) then 
 			{
 				[_lnbEntries] call addSupportForExtract;
 			};
+			// if (missionNamespace getVariable ["warEra", 0] >= 2) then 
+			// {
+			// 	[_lnbEntries] call addSupportForDroneRecon;
+			// };
 		};
 
 		for "_idc" from 602400 to 602402 do {
