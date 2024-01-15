@@ -79,6 +79,7 @@ loadout_KORSAC_KFL = [
 //French
 rifleList_KORSAC_KFL = [		
 	"arifle_AK12U_F",
+	"arifle_AK12_F",
 	"optic_Arco",
 	"optic_Arco_blk_F",
 	"arifle_SPAR_02_blk_F",
@@ -239,7 +240,10 @@ uniformList_KORSAC_KFL = [
 	"H_Cap_headphones",
 	"H_Booniehat_eaf",
 	"H_HelmetHBK_headset_F",
-	"V_PlateCarrierL_CTRG"
+	"V_PlateCarrierL_CTRG",
+	"H_HelmetHBK_headset_F",
+	"H_HelmetB_light",
+	"H_HelmetSpecB_snakeskin"
 ];
 
 //Magazine avalaible for all unit
