@@ -2,7 +2,7 @@
 params ["_thisUnit", "_hostileTransformProba"];
 
 //Loop on the unit until it become hostile
-while {alive _thisUnit && (side _thisUnit == civilian)} do {
+while {alive _thisUnit && (side _thisUnit == civilian) && !(captive _thisUnit)} do {
 	sleep (10 + (random 30));
 
 	//Check for nearby player units
@@ -73,6 +73,34 @@ while {alive _thisUnit && (side _thisUnit == civilian)} do {
 					//No Stuff
 				};
 			};
+
+			//Add eventhandler killed
+			_thisUnit addEventHandler ["Killed", {
+				params ["_unit", "_killer", "_instigator", "_useEffects"];
+
+				if (isPlayer _killer) then 
+				{
+					[[1, "RPG_ranking_infantry_kill"], 'engine\rankManagement\rankUpdater.sqf'] remoteExec ['BIS_fnc_execVM', _killer];
+				} else {
+					//Debug IA killed log
+					diag_log format ["The IA %1 has been killed by %2", name _unit, name _killer];
+				}; 
+				
+				//Garbage collect unit  
+				[_unit] spawn 
+				{
+					params ["_unit"];
+					//Fix ACE locking place in vehicle when an IA dies
+					sleep 20;
+					moveOut _unit;
+
+					//Free some memory usage by cleaning the corpse
+					sleep 300;
+					deleteVehicle _unit;
+				};
+			}];
+
+
 		};
 	};
 };

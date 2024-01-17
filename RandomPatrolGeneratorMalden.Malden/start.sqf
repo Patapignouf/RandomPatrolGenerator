@@ -1005,7 +1005,7 @@ if (isClass (configFile >> "CfgPatches" >> "ace_common")) then
 
 
 //Init garbage collector
-[] execVM 'engine\garbageCollector.sqf'; 
+//[] execVM 'engine\garbageCollector.sqf'; 
 
 //Disable respawn for IA Unit
 {

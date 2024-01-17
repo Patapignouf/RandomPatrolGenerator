@@ -63,6 +63,19 @@ doGenerateEnemyGroup =
 					//Debug IA killed log
 					diag_log format ["The IA %1 has been killed by %2", name _unit, name _killer];
 				}; 
+
+				//Garbage collect unit  
+				[_unit] spawn 
+				{
+					params ["_unit"];
+					//Fix ACE locking place in vehicle when an IA dies
+					sleep 20;
+					moveOut _unit;
+
+					//Free some memory usage by cleaning the corpse
+					sleep 300;
+					deleteVehicle _unit;
+				};
 			}];
 			
 
