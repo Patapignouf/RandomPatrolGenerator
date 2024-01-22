@@ -2,7 +2,7 @@
 params ["_thisUnit", "_hostileTransformProba"];
 
 //Loop on the unit until it become hostile
-while {alive _thisUnit && (side _thisUnit == civilian) && !(captive _thisUnit)} do {
+while {alive _thisUnit && (side _thisUnit == civilian) && !(_thisUnit getVariable ["ace_isHandcuffed", false])} do {
 	sleep (10 + (random 30));
 
 	//Check for nearby player units
