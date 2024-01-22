@@ -98,7 +98,7 @@ if ((_objectiveID call BIS_fnc_taskState ) != "SUCCEEDED") then
 		case "DestroyMortar":
 		{
 			_currentObjectiveTitle = "Destroy enemy mortar";
-			_currentObjecZtiveDescription = format ["You have to destroy the enemy mortar spotted earlier on position %1.", mapGridPosition _objectiveLocation, getText (configFile >> "cfgVehicles" >> typeOf (vehicle leader (_objectiveObject)) >> "displayName")];
+			_currentObjectiveDescription = format ["You have to destroy the enemy mortar spotted earlier on position %1.", mapGridPosition _objectiveLocation, getText (configFile >> "cfgVehicles" >> typeOf (vehicle leader (_objectiveObject)) >> "displayName")];
 
 			_objectiveObject setVariable ["sideTaskAssociated", _objectiveID, true];
 
