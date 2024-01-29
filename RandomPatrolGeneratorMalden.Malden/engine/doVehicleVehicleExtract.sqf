@@ -53,7 +53,7 @@ wp1 setWaypointStatements ["true", "(vehicle this) LAND 'LAND';"];
 
 //Waiting for crew to dismount
 waitUntil {isTouchingGround (_heli)};
-sleep 200;
+sleep 600;
 
 //back to map border
 wp2 = _vehicleTransportGroup addWaypoint [[selectRandom [0,worldSize],selectRandom [0,worldSize]], 25];
