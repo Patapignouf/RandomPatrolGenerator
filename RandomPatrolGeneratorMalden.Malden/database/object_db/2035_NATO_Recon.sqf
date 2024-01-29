@@ -32,7 +32,7 @@ bluforUnarmedVehicleChopper_2035_NATO_Recon = [
 bluforArmedChopper_2035_NATO_Recon = [
 	"B_Heli_Attack_01_dynamicLoadout_F",
 	"B_Heli_Light_01_dynamicLoadout_F"
-	];
+];
 
 //Armored vehicle avalaible for blufor : Ex light tank
 bluforArmoredVehicle_2035_NATO_Recon = [
@@ -140,7 +140,6 @@ marksmanrifleList_2035_NATO_Recon = [
 
 //Smg avalaible for all unit
 smgList_2035_NATO_Recon = [
-
 	"SMG_01_F"
 ];
 
@@ -276,6 +275,7 @@ itemMedicList_2035_NATO_Recon = [
 backPackList_2035_NATO_Recon = [
 	"B_TacticalPack_mcamo",
 	"B_AssaultPack_rgr",
+	"B_Kitbag_rgr",
 	"B_Mortar_01_weapon_F",
 	"B_Mortar_01_support_F",
 	"TFAR_rt1523g",
@@ -290,9 +290,11 @@ uniformList_2035_NATO_Recon = [
 	"U_B_CombatUniform_mcam_tshirt",
 	"G_Tactical_Clear",
 	"H_HelmetB_camo",
+	"H_Booniehat_mcamo",
 	"V_PlateCarrier2_rgr",
 	"H_HelmetB_grass",
-	"G_Combat"
+	"G_Combat",
+	"V_Chestrig_rgr"
 	];
 
 uniformListSniper_2035_NATO_Recon = [
@@ -304,5 +306,5 @@ uniformListSniper_2035_NATO_Recon = [
 
 //Magazine avalaible for all unit
 magazineList_2035_NATO_Recon = [
+	"30Rnd_65x39_caseless_mag_Tracer"
 	];
-
