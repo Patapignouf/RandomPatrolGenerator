@@ -13,8 +13,8 @@ bluforUnarmedVehicle_French = [
 bluforArmedVehicle_French = [
 	"amf_pvp_01_top_CE_f",
 	"amf_pvp_01_mag_CE_f",
-	"B_AMF_VAB_ULTIMA_TOP_X8_F",
-	"AMF_VBMR_L_CE_01"
+	"B_AMF_VAB_ULTIMA_TOP_X8_F"
+	
 ];
 
 bluforUnarmedVehicleChopper_French = [
@@ -43,7 +43,8 @@ bluforFixedWing_French = [
 	"AMF_RAFALE_M_01_F",
 	"AMF_RAFALE_C_01_F",
 	"AMF_RAFALE_B_01_F",
-	"B_AMF_PLANE_FIGHTER_02_F"
+	"B_AMF_PLANE_FIGHTER_02_F",
+	"B_AMF_PLANE_TRANSPORT_01_F"
 ];
 
 bluforHQVehicle_French = [
@@ -57,6 +58,7 @@ bluforArmoredVehicle_French = [
 	"AMF_VBCI_CE_01_F", 
 	"AMF_EBRC_CE_01", 
 	"AMF_EBRC_TDF_01", 
+	"AMF_VBMR_L_CE_01",
 	"B_AMF_AMX10_RCR_SEPAR_02_F", 
 	"B_AMF_AMX10_RCR_01_F", 
 	"B_AMF_TANK_01", 
@@ -136,11 +138,28 @@ rifleList_French = [
 	"arifle_SPAR_01_khk_F",
 	"AMF_Glock_17",
 	"AMF_Glock_17_BLK",
-	"AMF_Glock_17_TAN"
+	"AMF_Glock_17_TAN",
+	"arifle_SPAR_01_snd_F",
+	"arifle_SPAR_01_blk_F",
+	"arifle_SPAR_01_khk_F",
+	"CUP_arifle_HK416_Desert",
+	"CUP_arifle_HK416_CQB_Desert",
+	"AMF_Pamas"
 ];	
 
 grenadeLauncherList_French =  [		
-	"CUP_arifle_HK416_AGL_Desert"
+	//CUP 
+	"CUP_arifle_HK416_AGL_Desert",
+	"CUP_arifle_HK416_AGL_Wood",
+	"CUP_arifle_HK416_CQB_AG36",
+	"CUP_arifle_HK416_CQB_M203_Desert",
+	"CUP_arifle_HK416_CQB_AG36_Wood",
+	"CUP_arifle_HK_M27_AG36",
+
+	//Vanilla
+	"arifle_SPAR_01_GL_snd_F",
+	"arifle_SPAR_01_GL_blk_F",
+	"arifle_SPAR_01_GL_khk_F"	
 ];	
 
 launcherList_French = [		
@@ -158,15 +177,24 @@ autorifleList_French = [
 
 
 marksmanrifleList_French = [		
-	"CUP_arifle_Mk17_STD",
+	//AMF 
 	"AMF_PGM_ULTIMA_RATIO_01_F",
 	"AMF_Perseis_II_01_F",
 	"AMF_Perseis_II_02_F",
 	"AMF_RFF2_01_F",
 	"AMF_714_long_tan_f",
-	"CUP_arifle_Mk17_STD",
 	"amf_perseis_ii_poly_02_F",
-	"arifle_SPAR_03_snd_F"
+
+	//CUP variant
+	"CUP_arifle_Mk17_STD",
+	"CUP_arifle_Mk20",
+	"CUP_arifle_HK417_20",
+	"CUP_arifle_HK417_20_Desert",
+
+	//Vanilla variant
+	"arifle_SPAR_03_snd_F",
+	"arifle_SPAR_03_blk_F",
+	"arifle_SPAR_03_khk_F"
 ];
 
 smgList_French = [		
@@ -181,6 +209,7 @@ smgList_French = [
 
 //items avalaible for everyone (optics)
 attachmentShortList_French	= [
+	//AMF optics
 	"AMF_Aimpoint_CompM5",
 	"AMF_AIMPOINT_MICRO_T1",
 	"AMF_AIMPOINT_MICRO_T2",
@@ -199,6 +228,8 @@ attachmentShortList_French	= [
 	"AMF_xps3",
 	"AMF_exps3_magnifier_side",
 	"AMF_exps3_magnifier_up",
+
+	//Vanilla optics
 	"optic_Holosight",
 	"optic_Holosight",
 	"optic_Holosight_arid_F",
@@ -207,16 +238,20 @@ attachmentShortList_French	= [
 	"optic_Holosight_lush_F",
 	"optic_Holosight_smg",
 	"optic_Holosight_smg_blk_F",
-	"optic_Holosight_smg_khk_F"
+	"optic_Holosight_smg_khk_F",
+	"optic_MRCO" // ACOG basic style
 ];
 
 //Items avalaible only for marksman
 attachmentLongList_French	= [
+	//AMF optics
 	"amf_scrome_j4",
 	"amf_scrome_j8",
 	"amf_schmidt_benderx4",
-	"optic_lrps",
-	"AMF_schmidt_benderx4_tan"
+	"AMF_schmidt_benderx4_tan",
+
+	//Vanilla optics
+	"optic_lrps"
 ];
 
 
@@ -299,13 +334,20 @@ backPackList_French = [
 	"B_Mortar_01_support_F",
 	"CUP_B_USMC_MOLLE_MG",
 	"AMF_TVMMP_weapon",
+	"AMF_WiredMMP_weapon",
 	"AMF_MMP_support",
 	"CUP_B_M2_Gun_Bag",
 	"CUP_B_M2_Tripod_Bag",
 	"AMF_rush24_01_TDF",
 	"amf_tecpack_30L",
 	"TFAR_rt1523g",
-	"AMF_FELIN_BACKPACK_BME"
+	"TFAR_rt1523g_sage",
+	"AMF_FELIN_BACKPACK_BME",
+	"AMF_FELIN_BACKPACK_MEDIC_BME",
+	"AMF_FELIN_BACKPACK_TDF",
+	"AMF_FELIN_BACKPACK_MEDIC_TDF",
+	"AMF_FELIN_BACKPACK_TAN",
+	"AMF_FELIN_BACKPACK_MEDIC_TAN"
 	];
 
 
@@ -314,7 +356,15 @@ uniformList_French = [
 	"amf_DCS_05_MTP",
 	"amf_uniform_05_MTP",
 	"amf_uniform_02_DA",
+	"amf_jpc_01_TAN",
+	"amf_jpc_01_MTP",
+	"amf_jpc_01_BME",
 	"amf_jpc_02_TAN",
+	"amf_jpc_02_MTP",
+	"amf_jpc_02_BME",
+	"amf_jpc_03_TAN",
+	"amf_jpc_03_MTP",
+	"amf_jpc_03_BME",
 	"amf_uniform_03_TUNDRA",
 	"amf_uniform_01_CE_HS",
 	"AMF_OPSCORE2_GREY_2",
@@ -322,6 +372,7 @@ uniformList_French = [
 	"AMF_OPSCORE2_OD1_2",
 	"AMF_OPSCORE2_TAN1",
 	"AMF_OPSCORE2_TAN1_2",
+	"AMF_OPSCORE3_TAN2_2_2",
 	"AMF_OPSCORE2_BLACK",
 	"AMF_OPSCORE2_BLACK_2",
 	"AMF_OPSCORE_TAN2_2",
@@ -333,8 +384,14 @@ uniformList_French = [
 	"amf_DCS_01_MTP",
 	"amf_JPC_01_MTP",
 	"amf_SMB_AUXSAN_FAMAS_TDF",
+	"amf_SMB_FUS_TDF",
+	"amf_SMB_FUS_TAN",
+	"amf_SMB_FUS_BME",
 	"amf_DCS_04_RG",
 	"amf_balaclava_tan",
+	"U_B_CombatUniform_mcam_tshirt", //vanilla
+	"V_Chestrig_khk",//vanilla
+	"H_HelmetB_grass", //vanilla
 
 	//Uniform winter 
 	"amf_uniform_01_TU_HX",
