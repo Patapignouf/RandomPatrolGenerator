@@ -443,8 +443,8 @@ if (didJIP) then
 
 	if (count (_deadPlayerList select { _x == (name player) }) == 0) then 
 	{
-
 		//Disable specific respawn menu
+		player setPos [0,0,1];
 		player allowdamage false;
 		[[], 'GUI\respawnGUI\initPlayerRespawnMenu.sqf'] remoteExec ['BIS_fnc_execVM', player];
 	} else 
