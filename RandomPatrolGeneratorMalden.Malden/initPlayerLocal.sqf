@@ -209,13 +209,13 @@ diag_log format ["Setup Player %1 at position 1", name player];
 player createDiarySubject ["RPG", "RPG"];
 _diaryIntel = player createDiaryRecord ["RPG", ["RPG intel", "You can see here all intels collected : <br/>"]];
 player setVariable ["diaryIntel", _diaryIntel];
-player createDiaryRecord ["RPG", ["RPG respawn", "There are two ways to respawn on Random Patrol Generator missions :<br/>- First, when a mission is completed<br/>- Secondly, when players call a reinforcement on blufor advanced FOB<br/><br/><br/>Note : Respawn setting has to be enabled"]];
+player createDiaryRecord ["RPG", ["RPG respawn", "There are two ways to respawn on Random Patrol Generator missions :<br/>- First, when a mission is completed<br/>- Secondly, when players call a reinforcement on support Shop<br/><br/><br/>Note : Respawn setting has to be enabled"]];
 player createDiaryRecord ["RPG", ["RPG arsenal", "A limited arsenal is avalaible on your start position, it will allow you to switch between roles."]];
 
 if (side player == independent) then 
 {
 	//Setup briefing independent
-	player createDiaryRecord ["RPG", ["RPG objectives", "Help the people in the town. Complete the tasks assigned to your unit to finish the mission. You can also ask town citizens for intel to help you prepare the operation.
+	player createDiaryRecord ["RPG", ["RPG objectives", "Help the people in the civilian location. Complete the tasks assigned to your unit to finish the mission. You can also ask citizens for intel to help you prepare the operation.
 	"]];
 
 	if (player == (leader (group player))) then
@@ -259,10 +259,10 @@ if (side player == independent) then
 if (side player == blufor) then
 {
 	//Setup briefing blufor
-	player createDiaryRecord ["RPG", ["RPG objectives", "Help the independent town located on your map. Complete the tasks assigned to your unit to finish the mission.
+	player createDiaryRecord ["RPG", ["RPG objectives", "Help the independent or civilian location. Complete the tasks assigned to your unit to finish the mission.
 	"]];
-	player createDiaryRecord ["RPG", ["RPG FOB", "You can deploy an advanced FOB avalaible in a supply box near main FOB :<br/>- It can be used to skip time<br/>- It can be used to call a reinforcement (respawn players)"]];
-	player createDiaryRecord ["RPG", ["RPG vehicles", "You can deploy use the blue flag on the main FOB to spawn vehicules. Each vehicle spawned use one specific credit. You have 10 credits for basic vehicle and 2 for advanced ones.<br/>Complete a mission to earn credits.<br/><br/> Note : Only the team leader can spawn vehicles."]];
+	player createDiaryRecord ["RPG", ["RPG FOB", "You can deploy an advanced FOB avalaible in a supply box near main FOB :<br/>- It can be used to skip time<br/>- It can be used to access support shop"]];
+	player createDiaryRecord ["RPG", ["RPG vehicles", "You can use the Vehicle Shop on the main FOB to spawn vehicules. Each vehicle spawned use one specific credit.<br/>Complete a mission to earn credits.<br/><br/> Note : Only the team leader and pilot can spawn vehicles."]];
 	
 	diag_log format ["Setup Player %1 at position 2", name player];
 
