@@ -18,6 +18,7 @@ _buttonNext ctrlAddEventHandler[ "ButtonClick",
 
 		//Go to objective selection
 		[[], 'GUI\setupGUI\startGUIMenuObjectives.sqf'] remoteExec ['BIS_fnc_execVM', player];
+		[[], 'objectGenerator\clearMarkers.sqf'] remoteExec ['BIS_fnc_execVM', 0];
 	}];
 
 //Init locations if necessary
@@ -110,6 +111,9 @@ _RcsButtonObjective ctrlAddEventHandler[ "ButtonClick",
 	params ["_ctrl"];
 	_display = ctrlParent _ctrl;
 
+	//Create map markers
+	[] call doUpdateMarkers;
+
 	//Open Map and select objective location
 	[] spawn { 	
 			closeDialog 1;
@@ -121,6 +125,7 @@ _RcsButtonObjective ctrlAddEventHandler[ "ButtonClick",
 			publicVariable "initCityLocationPosition";
 			//Show black screen
 			[[], 'GUI\setupGUI\startGUIMenuLocation.sqf'] remoteExec ['BIS_fnc_execVM', player];
+			[[], 'objectGenerator\clearMarkers.sqf'] remoteExec ['BIS_fnc_execVM', 0];
 		};
 
 	//Update UI
@@ -199,6 +204,9 @@ _RcsButtonObjective ctrlAddEventHandler[ "ButtonClick",
 	params ["_ctrl"];
 	_display = ctrlParent _ctrl;
 
+	//Create map markers
+	[] call doUpdateMarkers;
+
 	//Open Map and select objective location
 	[] spawn { 	
 			closeDialog 1;
@@ -210,6 +218,7 @@ _RcsButtonObjective ctrlAddEventHandler[ "ButtonClick",
 			publicVariable "initBlueforLocationPosition";
 			//Show black screen
 			[[], 'GUI\setupGUI\startGUIMenuLocation.sqf'] remoteExec ['BIS_fnc_execVM', player];
+			[[], 'objectGenerator\clearMarkers.sqf'] remoteExec ['BIS_fnc_execVM', 0];
 		};
 
 	//Update UI
@@ -297,6 +306,9 @@ _RcsButtonObjective ctrlAddEventHandler[ "ButtonClick",
 		publicVariable "PossibleObjectivePosition";
 	};
 
+	//Create map markers
+	[] call doUpdateMarkers;
+
 	//Open Map and select objective location
 	[] spawn { 	
 			closeDialog 1;
@@ -308,6 +320,7 @@ _RcsButtonObjective ctrlAddEventHandler[ "ButtonClick",
 			publicVariable "PossibleObjectivePosition";
 			//Show black screen
 			[[], 'GUI\setupGUI\startGUIMenuLocation.sqf'] remoteExec ['BIS_fnc_execVM', player];
+			[[], 'objectGenerator\clearMarkers.sqf'] remoteExec ['BIS_fnc_execVM', 0];
 		};
 
 	//Update UI
@@ -353,12 +366,45 @@ if (typeName PossibleObjectivePosition == "ARRAY") then
 			currentPossibleLocation = [];
 			publicVariable "currentPossibleLocation";
 			[[], 'GUI\setupGUI\startGUIMenuLocation.sqf'] remoteExec ['BIS_fnc_execVM', player];
+			[[], 'objectGenerator\clearMarkers.sqf'] remoteExec ['BIS_fnc_execVM', 0];
 		}];
 
 	} foreach PossibleObjectivePosition;
 };
 
+doUpdateMarkers = 
+{
+	//Generate red position
+	if (typeName PossibleObjectivePosition == "ARRAY") then 
+	{
+		_markerNumber = 1;
+		if (count PossibleObjectivePosition != 0) then 
+		{
+			{
+				[[format ["%1", _markerNumber], "ColorEAST", "hd_objective", _x, "All"], 'objectGenerator\doGenerateMarker.sqf'] remoteExec ['BIS_fnc_execVM', 0];
+				_markerNumber = _markerNumber+1;
+			} foreach PossibleObjectivePosition;
+		};
+	};
 
+	//Generate blue position
+	if (typeName initBlueforLocationPosition == "ARRAY") then 
+	{
+		if (count initBlueforLocationPosition != 0) then 
+		{
+			[["Blufor FOB", "ColorWEST", "hd_objective", initBlueforLocationPosition, "All"], 'objectGenerator\doGenerateMarker.sqf'] remoteExec ['BIS_fnc_execVM', 0];
+		};
+	};
+
+	//Generate civ position
+	if (typeName initCityLocationPosition == "ARRAY") then 
+	{
+		if (count initCityLocationPosition != 0) then 
+		{
+			[["Civilian/independent city", "ColorCIV", "hd_objective", initCityLocationPosition, "All"], 'objectGenerator\doGenerateMarker.sqf'] remoteExec ['BIS_fnc_execVM', 0];
+		};
+	};
+};
 
 /////////////////// TRIGGER NO DISPLAY ////////////////////////
 
