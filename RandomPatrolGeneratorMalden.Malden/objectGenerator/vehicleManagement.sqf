@@ -166,19 +166,19 @@ doAddKeys = {
 	{
 		case blufor:
 			{
-				_vehicle addItemCargoGlobal ["ACE_key_west", 1];
+				_vehicle addItemCargoGlobal ["ACE_key_west", 2];
 			};
 		case opfor:
 			{
-				_vehicle addItemCargoGlobal ["ACE_key_east", 1];
+				_vehicle addItemCargoGlobal ["ACE_key_east", 2];
 			};
 		case civilian:
 			{
-				_vehicle addItemCargoGlobal ["ACE_key_civ", 1];
+				_vehicle addItemCargoGlobal ["ACE_key_civ", 2];
 			};
 		case independent:
 			{
-				_vehicle addItemCargoGlobal ["ACE_key_indp", 1];
+				_vehicle addItemCargoGlobal ["ACE_key_indp", 2];
 			};
 		default
 			{
