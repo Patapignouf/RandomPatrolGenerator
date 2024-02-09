@@ -389,6 +389,19 @@ uniformList_French = [
 	"amf_SMB_FUS_BME",
 	"amf_DCS_04_RG",
 	"amf_balaclava_tan",
+
+	//desert 
+	"AMF_Casque_F1_DA",
+	"AMF_SPECTRA_2_DA",
+	"amf_balaclava_sordin_tantan",
+	"amf_uniform_01_RE_NG_DA_HS",
+	"amf_uniform_01_NG_DA_HX",
+	"amf_uniform_01_RE_DA_HX",
+	"amf_uniform_03_NG_DA_HS",
+	"amf_uniform_03_NG_SE_HS",
+
+
+
 	"U_B_CombatUniform_mcam_tshirt", //vanilla
 	"V_Chestrig_khk",//vanilla
 	"H_HelmetB_grass", //vanilla
