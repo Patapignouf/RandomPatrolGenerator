@@ -47,7 +47,7 @@ baseEnemyGroup_Taki_Army = [
 	"CUP_O_TK_Soldier_MG", 
 	"CUP_O_TK_Soldier_MG",
 	"CUP_O_TK_Soldier_AT", 
-	"CUP_O_TK_Soldier_GL", 
+	"CUP_O_TK_Medic", 
 	"CUP_O_TK_Soldier_GL",
 	"CUP_O_TK_Soldier_LAT", 
 	"CUP_O_TK_Soldier_AAT", 
@@ -103,6 +103,10 @@ baseEnemyUnarmedChopperGroup_Taki_Army = [
 	"CUP_O_MI6T_TKA"
 ];
 
+baseFixedWingGroup_Taki_Army = [
+	"CUP_O_Su25_Dyn_TKA",
+	"CUP_O_L39_TK"
+];
 
 ////////////////////////
 //Vehicle management////
