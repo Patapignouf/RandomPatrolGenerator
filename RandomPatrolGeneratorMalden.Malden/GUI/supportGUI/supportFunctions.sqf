@@ -15,17 +15,23 @@ params ["_caller", "_supportType"];
 				params ["_caller"];
 				if (!(missionNamespace getVariable ["usedRespawnFewTimeAgo",false])) then 
 				{
-					//set morning
-					skipTime 24;
-					[[], "engine\respawnManagement\respawnManager.sqf"] remoteExec ['BIS_fnc_execVM', 0];
+					if (count (allPlayers select {(alive _x) == false})!=0) then //Sorry for the test == false xD
+					{
+						//set morning
+						skipTime 24;
+						[[], "engine\respawnManagement\respawnManager.sqf"] remoteExec ['BIS_fnc_execVM', 0];
 
-					//Send message to everyone
-					_textToSpeech = format ["Copy %1, we send you some reinforcement",  name _caller];
-					[[format ["<t align = 'center' shadow = '2' color='#0046ff' size='1.5' font='PuristaMedium' >High Command</t><br /><t color='#ffffff' size='1.5' font='PuristaMedium' shadow = '2' >%1</t>", _textToSpeech, name _caller], "PLAIN DOWN", -1, true, true]] remoteExec ["titleText", 0, true];
-					
-					missionNamespace setVariable ["usedRespawnFewTimeAgo",true,true];
-					sleep 1200;
-					missionNamespace setVariable ["usedRespawnFewTimeAgo",false,true];
+						//Send message to everyone
+						_textToSpeech = format ["Copy %1, we send you some reinforcement",  name _caller];
+						[[format ["<t align = 'center' shadow = '2' color='#0046ff' size='1.5' font='PuristaMedium' >High Command</t><br /><t color='#ffffff' size='1.5' font='PuristaMedium' shadow = '2' >%1</t>", _textToSpeech, name _caller], "PLAIN DOWN", -1, true, true]] remoteExec ["titleText", 0, true];
+						
+						missionNamespace setVariable ["usedRespawnFewTimeAgo",true,true];
+						sleep 1200;
+						missionNamespace setVariable ["usedRespawnFewTimeAgo",false,true];
+					} else {
+						_textToSpeech = "There is no need for reinforcements";
+						[[format ["<t align = 'center' shadow = '2' color='#0046ff' size='1.5' font='PuristaMedium' >High Command</t><br /><t color='#ffffff' size='1.5' font='PuristaMedium' shadow = '2' >%1</t>", _textToSpeech], "PLAIN DOWN", -1, true, true]] remoteExec ["titleText", _caller, true];
+					};
 				} else {
 					_textToSpeech = "You must wait before call reinforcements";
 					[[format ["<t align = 'center' shadow = '2' color='#0046ff' size='1.5' font='PuristaMedium' >High Command</t><br /><t color='#ffffff' size='1.5' font='PuristaMedium' shadow = '2' >%1</t>", _textToSpeech], "PLAIN DOWN", -1, true, true]] remoteExec ["titleText", _caller, true];
