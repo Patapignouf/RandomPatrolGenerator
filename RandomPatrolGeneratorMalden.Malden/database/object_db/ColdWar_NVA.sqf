@@ -1,10 +1,4 @@
-c_leader = "leader";
-c_at = "at";
-c_rifleman = "rifleman";
-c_engineer = "engineer";
-c_autorifleman = "autorifleman";
-c_marksman = "marksman"; 
-c_medic = "medic";
+#include "..\classConstant.sqf"
 
 //////////////////////////////
 ////Define civ group data/////
@@ -38,36 +32,41 @@ civilianTruck_ColdWar_NVA = ["CUP_C_Skoda_CR_CIV",
 //////////////////////////////
 //newFaction
 //Basic enemy group | 8 men (Leader, Medic, MG, Sniper, Rifleman)
-baseEnemyGroup_ColdWar_NVA = ["uns_men_NVA_67_Roff", 
-"uns_men_NVA_67_Ra1", 
-"uns_men_NVA_67_RRTO", 
-"uns_men_NVA_67_Rmed", 
-"uns_men_NVA_67_Rmg", 
-"uns_men_NVA_67_Rmrk", 
-"uns_men_NVA_67_Ra2", 
-"uns_men_NVA_67_RSAP"];
+baseEnemyGroup_ColdWar_NVA = [
+	"uns_men_NVA_67_Roff", 
+	"uns_men_NVA_67_Ra1", 
+	"uns_men_NVA_67_RRTO", 
+	"uns_men_NVA_67_Rmed", 
+	"uns_men_NVA_67_MED",
+	"uns_men_NVA_67_Rmg", 
+	"uns_men_NVA_67_Rmrk", 
+	"uns_men_NVA_67_Ra2", 
+	"uns_men_NVA_67_RSAP"
+];
 
 //Basic anti tank enemy group | 5 men (Leader, MG, AT)
-baseEnemyATGroup_ColdWar_NVA = ["uns_men_NVA_67_COM", 
-"uns_men_NVA_67_nco", 
-"uns_men_NVA_67_HMG", 
-"uns_men_NVA_67_MRK", 
-"uns_men_NVA_67_TRI", 
-"uns_men_NVA_67_MTS", 
-"uns_men_NVA_67_AA", 
-"uns_men_NVA_67_AT",
-"uns_men_NVA_67_AT",
-"uns_men_NVA_67_AT"];
+baseEnemyATGroup_ColdWar_NVA = [
+	"uns_men_NVA_67_COM", 
+	"uns_men_NVA_67_nco", 
+	"uns_men_NVA_67_HMG", 
+	"uns_men_NVA_67_MRK", 
+	"uns_men_NVA_67_MTS", 
+	"uns_men_NVA_67_AA", 
+	"uns_men_NVA_67_AT",
+	"uns_men_NVA_67_AT"
+];
 
 //Basic demolition enemy group | 8 men (Leader, Explosive)
-baseEnemyDemoGroup_ColdWar_NVA = ["uns_men_NVA_daccong_nco", 
-"uns_men_NVA_daccong_SAP3", 
-"uns_men_NVA_daccong_LMG", 
-"uns_men_NVA_daccong_RTO", 
-"uns_men_NVA_daccong_MED", 
-"uns_men_NVA_daccong_AT3", 
-"uns_men_NVA_daccong_MRK", 
-"uns_men_NVA_daccong_SAP1"];
+baseEnemyDemoGroup_ColdWar_NVA = [
+	"uns_men_NVA_daccong_nco", 
+	"uns_men_NVA_daccong_SAP3", 
+	"uns_men_NVA_daccong_LMG", 
+	"uns_men_NVA_daccong_RTO", 
+	"uns_men_NVA_daccong_MED", 
+	"uns_men_NVA_daccong_AT3", 
+	"uns_men_NVA_daccong_MRK", 
+	"uns_men_NVA_daccong_SAP1"
+];
 
 //Basic Mortar enemy group | 8 men (Mortar, Rifleman)
 baseEnemyMortarGroup_ColdWar_NVA = ["uns_m1941_82mm_mortarVC",
