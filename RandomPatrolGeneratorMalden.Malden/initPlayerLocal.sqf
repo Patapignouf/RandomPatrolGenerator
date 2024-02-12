@@ -189,6 +189,9 @@ if !(isClass (configFile >> "CfgPatches" >> "ace_medical")) then
 //Init player rank
 [[player], 'engine\rankManagement\rankManager.sqf'] remoteExec ['BIS_fnc_execVM', player];
 
+//Init player survivor objective
+[[player], 'engine\objectiveManagement\survivorObjectiveManagement.sqf'] remoteExec ['BIS_fnc_execVM', player];
+
 //Init player respawn ticket
 [player, -1, true] call BIS_fnc_respawnTickets;
 
