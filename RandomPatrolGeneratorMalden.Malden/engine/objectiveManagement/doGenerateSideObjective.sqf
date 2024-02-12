@@ -3,7 +3,7 @@ params ["_objectiveID", "_objectiveType", "_objectiveLocation", "_objectiveObjec
 //Debug command
 //[["_TestID","AttackFOB",getPos player, player], "engine\objectiveManagement\doGenerateSideObjective.sqf"] remoteExec ['BIS_fnc_execVM', 0, true];
 
-if ((_objectiveID call BIS_fnc_taskState ) != "SUCCEEDED") then 
+if ((_objectiveID call BIS_fnc_taskState ) != "SUCCEEDED" && !(missionNameSpace getVariable [format ["RPG_%1", _objectiveID], false])) then 
 {
 	//Setup unique quest to rules them all
 	_mainSideQuestID = "RPG_SideObjective";
@@ -37,13 +37,13 @@ if ((_objectiveID call BIS_fnc_taskState ) != "SUCCEEDED") then
 				
 				//Add more opfor to the area
 				while {sleep 15; _nbBluePlayer + _nbIndPlayer == 0 || _nbOpfor > 2} do 
-				{
-					_nbBluePlayer = count ((allPlayers select {alive _x && side _x == blufor} ) inAreaArray _thisTrigger);
+				{					_nbBluePlayer = count ((allPlayers select {alive _x && side _x == blufor} ) inAreaArray _thisTrigger);
 					_nbIndPlayer = count ((allPlayers select {alive _x && side _x == independent} ) inAreaArray _thisTrigger);
 					_nbOpfor = count ((allUnits select {alive _x && side _x == opfor} ) inAreaArray _thisTrigger);
 				};			
 
 				[_objectiveID, "SUCCEEDED"] call BIS_fnc_taskSetState;
+				missionNameSpace setVariable [format ["RPG_%1", _objectiveID], true, true];
 				[[25, "RPG_ranking_objective_complete"], "engine\rankManagement\rankUpdater.sqf"] remoteExec ['BIS_fnc_execVM', 0];
 			};
 		};
@@ -57,17 +57,20 @@ if ((_objectiveID call BIS_fnc_taskState ) != "SUCCEEDED") then
 			if (alive _objectiveObject) then 
 			{
 				//Add eventhandler killed
+				_objectiveObject setVariable ["sideObjectiveID", format ["RPG_%1", _objectiveID], true];
 				_objectiveObject addEventHandler ["Killed", {
 					params ["_unit", "_killer", "_instigator", "_useEffects"];
 
 					_sideTaskID = _unit getVariable "sideTaskAssociated";
 					[_sideTaskID, "SUCCEEDED"] call BIS_fnc_taskSetState;
+					missionNameSpace setVariable [format ["RPG_%1", _unit getVariable "sideObjectiveID"], true, true];
 					[[25, "RPG_ranking_objective_complete"], "engine\rankManagement\rankUpdater.sqf"] remoteExec ['BIS_fnc_execVM', 0];
 				}];
 			} else 
 			{
 				//Already killed
 				[_objectiveID, "SUCCEEDED"] call BIS_fnc_taskSetState;
+				missionNameSpace setVariable [format ["RPG_%1", _objectiveID], true, true];
 				[[25, "RPG_ranking_objective_complete"], "engine\rankManagement\rankUpdater.sqf"] remoteExec ['BIS_fnc_execVM', 0];
 			};
 		};
@@ -81,17 +84,20 @@ if ((_objectiveID call BIS_fnc_taskState ) != "SUCCEEDED") then
 			if (alive _objectiveObject) then 
 			{
 				//Add eventhandler killed
+				_objectiveObject setVariable ["sideObjectiveID", format ["RPG_%1", _objectiveID], true];
 				_objectiveObject addEventHandler ["Killed", {
 					params ["_unit", "_killer", "_instigator", "_useEffects"];
 
 					_sideTaskID = _unit getVariable "sideTaskAssociated";
 					[_sideTaskID, "SUCCEEDED"] call BIS_fnc_taskSetState;
+					missionNameSpace setVariable [format ["RPG_%1", _unit getVariable "sideObjectiveID"], true, true];
 					[[25, "RPG_ranking_objective_complete"], "engine\rankManagement\rankUpdater.sqf"] remoteExec ['BIS_fnc_execVM', 0];
 				}];
 			} else 
 			{
 				//Already killed
 				[_objectiveID, "SUCCEEDED"] call BIS_fnc_taskSetState;
+				missionNameSpace setVariable [format ["RPG_%1", _objectiveID], true, true];
 				[[25, "RPG_ranking_objective_complete"], "engine\rankManagement\rankUpdater.sqf"] remoteExec ['BIS_fnc_execVM', 0];
 			};
 		};
@@ -105,17 +111,20 @@ if ((_objectiveID call BIS_fnc_taskState ) != "SUCCEEDED") then
 			if (alive _objectiveObject) then 
 			{
 				//Add eventhandler killed
+				_objectiveObject setVariable ["sideObjectiveID", format ["RPG_%1", _objectiveID], true];
 				_objectiveObject addEventHandler ["Killed", {
 					params ["_unit", "_killer", "_instigator", "_useEffects"];
 
 					_sideTaskID = _unit getVariable "sideTaskAssociated";
 					[_sideTaskID, "SUCCEEDED"] call BIS_fnc_taskSetState;
+					missionNameSpace setVariable [format ["RPG_%1", _unit getVariable "sideObjectiveID"], true, true];
 					[[25, "RPG_ranking_objective_complete"], "engine\rankManagement\rankUpdater.sqf"] remoteExec ['BIS_fnc_execVM', 0];
 				}];
 			} else 
 			{
 				//Already killed
 				[_objectiveID, "SUCCEEDED"] call BIS_fnc_taskSetState;
+				missionNameSpace setVariable [format ["RPG_%1", _objectiveID], true, true];
 				[[25, "RPG_ranking_objective_complete"], "engine\rankManagement\rankUpdater.sqf"] remoteExec ['BIS_fnc_execVM', 0];
 			};
 		};
