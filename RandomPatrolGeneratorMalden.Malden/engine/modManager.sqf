@@ -1,7 +1,7 @@
 modToCheck = [
 	["task_force_radio", "MOD_TFAR", "Task Force Radio","CfgPatches"],
 	["ace_common", "MOD_ACE", "[ACE] Advanced Combat Environment","CfgPatches"],
-	["CUP_BaseData", "MOD_CUP", "[CUP] Cummunity Upgrade Project","CfgPatches"],
+	["CUP_BaseData", "MOD_CUP", "[CUP] Community Upgrade Project","CfgPatches"],
 	["IFA3_Core", "MOD_IFA3", "IFA3 Iron Front","CfgPatches"],
 	["uns_main", "MOD_UNSUNG", "UNSUNG","CfgPatches"],
 	["AMF_Patches", "MOD_AMF", "AMF","CfgPatches"],
