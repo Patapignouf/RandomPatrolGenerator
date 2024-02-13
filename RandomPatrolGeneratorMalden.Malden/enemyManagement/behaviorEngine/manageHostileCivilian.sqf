@@ -78,12 +78,12 @@ while {alive _thisUnit && (side _thisUnit == civilian) && !(_thisUnit getVariabl
 			_thisUnit addEventHandler ["Killed", {
 				params ["_unit", "_killer", "_instigator", "_useEffects"];
 
-				if (isPlayer _killer) then 
+				if (isPlayer _instigator) then 
 				{
-					[[1, "RPG_ranking_infantry_kill"], 'engine\rankManagement\rankUpdater.sqf'] remoteExec ['BIS_fnc_execVM', _killer];
+					[[1, "RPG_ranking_infantry_kill"], 'engine\rankManagement\rankUpdater.sqf'] remoteExec ['BIS_fnc_execVM', _instigator];
 				} else {
 					//Debug IA killed log
-					diag_log format ["The IA %1 has been killed by %2", name _unit, name _killer];
+					diag_log format ["The IA %1 has been killed by %2", name _unit, name _instigator];
 				}; 
 				
 				//Garbage collect unit  

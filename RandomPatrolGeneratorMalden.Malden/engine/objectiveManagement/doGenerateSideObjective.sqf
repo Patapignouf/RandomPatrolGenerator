@@ -85,14 +85,19 @@ if ((_objectiveID call BIS_fnc_taskState ) != "SUCCEEDED" && !(missionNameSpace 
 			{
 				//Add eventhandler killed
 				_objectiveObject setVariable ["sideObjectiveID", format ["RPG_%1", _objectiveID], true];
-				_objectiveObject addEventHandler ["Killed", {
-					params ["_unit", "_killer", "_instigator", "_useEffects"];
-
-					_sideTaskID = _unit getVariable "sideTaskAssociated";
-					[_sideTaskID, "SUCCEEDED"] call BIS_fnc_taskSetState;
-					missionNameSpace setVariable [format ["RPG_%1", _unit getVariable "sideObjectiveID"], true, true];
-					[[25, "RPG_ranking_objective_complete"], "engine\rankManagement\rankUpdater.sqf"] remoteExec ['BIS_fnc_execVM', 0];
+				_objectiveObject addEventHandler ["HandleDamage", {
+					params ["_unit", "_selection", "_damage", "_source", "_projectile", "_hitIndex", "_instigator", "_hitPoint", "_directHit", "_context"];
+					if (_damage > 0.8 && !(_unit getVariable ["isAlmostDeadSideQuest", false])) then 
+					{
+						_unit setVariable ["isAlmostDeadSideQuest", true, true];
+						_sideTaskID = _unit getVariable "sideTaskAssociated";
+						[_sideTaskID, "SUCCEEDED"] call BIS_fnc_taskSetState;
+						missionNameSpace setVariable [format ["RPG_%1", _unit getVariable "sideObjectiveID"], true, true];
+						[[25, "RPG_ranking_objective_complete"], "engine\rankManagement\rankUpdater.sqf"] remoteExec ['BIS_fnc_execVM', 0];
+					};
 				}];
+
+
 			} else 
 			{
 				//Already killed

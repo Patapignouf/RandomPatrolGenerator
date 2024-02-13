@@ -56,12 +56,12 @@ doGenerateEnemyGroup =
 			_x addEventHandler ["Killed", {
 				params ["_unit", "_killer", "_instigator", "_useEffects"];
 
-				if (isPlayer _killer) then 
+				if (isPlayer _instigator) then 
 				{
-					[[1, "RPG_ranking_infantry_kill"], 'engine\rankManagement\rankUpdater.sqf'] remoteExec ['BIS_fnc_execVM', _killer];
+					[[1, "RPG_ranking_infantry_kill"], 'engine\rankManagement\rankUpdater.sqf'] remoteExec ['BIS_fnc_execVM', _instigator];
 				} else {
 					//Debug IA killed log
-					diag_log format ["The IA %1 has been killed by %2", name _unit, name _killer];
+					diag_log format ["The IA %1 has been killed by %2", name _unit, name _instigator];
 				}; 
 
 				//Garbage collect unit  
@@ -88,14 +88,18 @@ doGenerateEnemyGroup =
 		_vehicleFromGroup = vehicle (leader _currentGroupPatrol);
 
 		//Add eventhandler killed
-		_vehicleFromGroup addEventHandler ["Killed", {
-			params ["_unit", "_killer", "_instigator", "_useEffects"];
-
-			if (isPlayer _killer) then 
+		_vehicleFromGroup addEventHandler ["HandleDamage", {
+			params ["_unit", "_selection", "_damage", "_source", "_projectile", "_hitIndex", "_instigator", "_hitPoint", "_directHit", "_context"];
+			if (_damage > 0.8 && !(_unit getVariable ["isAlmostDead", false])) then 
 			{
-				[[5, "RPG_ranking_vehicle_kill"], 'engine\rankManagement\rankUpdater.sqf'] remoteExec ['BIS_fnc_execVM', _killer];
-			}; 
+				_unit setVariable ["isAlmostDead", true, true];
+				if (isPlayer _instigator) then 
+				{
+					[[5, "RPG_ranking_vehicle_kill"], 'engine\rankManagement\rankUpdater.sqf'] remoteExec ['BIS_fnc_execVM', _instigator];
+				}; 
+			};
 		}];
+
 		
 		//Add side quest
 		if (_thisGroupType == "LightArmored" || _thisGroupType == "HeavyArmored") then 
@@ -126,7 +130,7 @@ doGenerateEnemyGroup =
 				params ["_unit", "_killer", "_instigator", "_useEffects"];
 				[_unit] remoteExec ["removeAllActions", 0, true];
 
-				if (isPlayer _killer) then 
+				if (isPlayer _instigator) then 
 				{
 					//Add civ killed counter
 					_tempCivKilled = missionNamespace getVariable "civKilled";
@@ -140,10 +144,10 @@ doGenerateEnemyGroup =
 						[['CIV_DEAD'], 'engine\objectiveManagement\endMission.sqf'] remoteExec ['BIS_fnc_execVM', 2];
 					};
 
-					diag_log format ["Civilian has been killed by : %1 on side %2", name _killer, side _killer];
-					[[format ["Civilian has been killed by : %1", name _killer], "civiliankilled"], 'engine\hintManagement\addCustomHint.sqf'] remoteExec ['BIS_fnc_execVM', side _killer]; 
+					diag_log format ["Civilian has been killed by : %1 on side %2", name _instigator, side _instigator];
+					[[format ["Civilian has been killed by : %1", name _instigator], "civiliankilled"], 'engine\hintManagement\addCustomHint.sqf'] remoteExec ['BIS_fnc_execVM', side _instigator]; 
 					
-					[[-50,5], 'engine\rankManagement\rankPenalty.sqf'] remoteExec ['BIS_fnc_execVM', _killer];
+					[[-50,5], 'engine\rankManagement\rankPenalty.sqf'] remoteExec ['BIS_fnc_execVM', _instigator];
 				}; 
 			}];
 		} foreach (units _currentGroupPatrol);
@@ -191,7 +195,7 @@ doGenerateHostileCivilianGroup =
 			params ["_unit", "_killer", "_instigator", "_useEffects"];
 			[_unit] remoteExec ["removeAllActions", 0, true];
 
-			if (isPlayer _killer) then 
+			if (isPlayer _instigator) then 
 			{
 				//Add civ killed counter
 				_tempCivKilled = missionNamespace getVariable "civKilled";
@@ -205,10 +209,10 @@ doGenerateHostileCivilianGroup =
 					[['CIV_DEAD'], 'engine\objectiveManagement\endMission.sqf'] remoteExec ['BIS_fnc_execVM', 2];
 				};
 
-				diag_log format ["Civilian has been killed by : %1 on side %2", name _killer, side _killer];
-				[[format ["Civilian has been killed by : %1", name _killer], "civiliankilled"], 'engine\hintManagement\addCustomHint.sqf'] remoteExec ['BIS_fnc_execVM', side _killer]; 
+				diag_log format ["Civilian has been killed by : %1 on side %2", name _instigator, side _instigator];
+				[[format ["Civilian has been killed by : %1", name _instigator], "civiliankilled"], 'engine\hintManagement\addCustomHint.sqf'] remoteExec ['BIS_fnc_execVM', side _instigator]; 
 				
-				[[-50,5], 'engine\rankManagement\rankPenalty.sqf'] remoteExec ['BIS_fnc_execVM', _killer];
+				[[-50,5], 'engine\rankManagement\rankPenalty.sqf'] remoteExec ['BIS_fnc_execVM', _instigator];
 			}; 
 		}];
 	} foreach (units _currentGroupPatrol);

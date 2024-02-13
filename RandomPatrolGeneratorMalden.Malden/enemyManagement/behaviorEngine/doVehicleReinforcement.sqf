@@ -44,9 +44,9 @@ _currentEnemyGroup leaveVehicle _heli;
 (leader (_vehicleTransportGroup)) addEventHandler ["Killed", {
 	params ["_unit", "_killer", "_instigator", "_useEffects"];
 
-	if (isPlayer _killer) then 
+	if (isPlayer _instigator) then 
 	{
-		[[5, "RPG_ranking_vehicle_kill"], 'engine\rankManagement\rankUpdater.sqf'] remoteExec ['BIS_fnc_execVM', _killer];
+		[[5, "RPG_ranking_vehicle_kill"], 'engine\rankManagement\rankUpdater.sqf'] remoteExec ['BIS_fnc_execVM', _instigator];
 	}; 
 }];
 

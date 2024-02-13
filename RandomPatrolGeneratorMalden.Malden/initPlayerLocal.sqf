@@ -425,13 +425,13 @@ setPlayerRespawnTime (missionNamespace getVariable "missionRespawnParam");
 //Show a special message when there is a teamkill
 player addEventHandler ["Killed", {
 	params ["_unit", "_killer", "_instigator", "_useEffects"];
-	diag_log format ["%1 has been killed by : %2", name _unit, name _killer];
-	if (isPlayer _killer) then 
+	diag_log format ["%1 has been killed by : %2", name _unit, name _instigator];
+	if (isPlayer _instigator) then 
 	{
-		[[format ["%1 has been killed by his teammate %2",name _unit, name _killer], "teamkill"], 'engine\hintManagement\addCustomHint.sqf'] remoteExec ['BIS_fnc_execVM', side _killer];
-		if (_killer != _unit) then 
+		[[format ["%1 has been killed by his teammate %2",name _unit, name _instigator], "teamkill"], 'engine\hintManagement\addCustomHint.sqf'] remoteExec ['BIS_fnc_execVM', side _instigator];
+		if (_instigator != _unit) then 
 		{
-			[[-50,5], 'engine\rankManagement\rankPenalty.sqf'] remoteExec ['BIS_fnc_execVM', _killer];
+			[[-50,5], 'engine\rankManagement\rankPenalty.sqf'] remoteExec ['BIS_fnc_execVM', _instigator];
 		};
 	};	
 }];
