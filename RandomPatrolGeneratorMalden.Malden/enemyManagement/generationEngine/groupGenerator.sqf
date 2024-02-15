@@ -93,6 +93,8 @@ doGenerateEnemyGroup =
 			if (_damage > 0.8 && !(_unit getVariable ["isAlmostDead", false])) then 
 			{
 				_unit setVariable ["isAlmostDead", true, true];
+				_unit setDamage 1;
+				
 				if (isPlayer _instigator) then 
 				{
 					[[5, "RPG_ranking_vehicle_kill"], 'engine\rankManagement\rankUpdater.sqf'] remoteExec ['BIS_fnc_execVM', _instigator];

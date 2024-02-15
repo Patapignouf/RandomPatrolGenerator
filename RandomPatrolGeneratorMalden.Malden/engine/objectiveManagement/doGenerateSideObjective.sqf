@@ -90,6 +90,8 @@ if ((_objectiveID call BIS_fnc_taskState ) != "SUCCEEDED" && !(missionNameSpace 
 					if (_damage > 0.8 && !(_unit getVariable ["isAlmostDeadSideQuest", false])) then 
 					{
 						_unit setVariable ["isAlmostDeadSideQuest", true, true];
+						_unit setDamage 1;
+						
 						_sideTaskID = _unit getVariable "sideTaskAssociated";
 						[_sideTaskID, "SUCCEEDED"] call BIS_fnc_taskSetState;
 						missionNameSpace setVariable [format ["RPG_%1", _unit getVariable "sideObjectiveID"], true, true];
