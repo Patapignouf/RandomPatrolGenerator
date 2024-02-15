@@ -50,7 +50,6 @@ params ["_caller", "_supportType"];
 				[[format ["<t align = 'center' shadow = '2' color='#0046ff' size='1.5' font='PuristaMedium' >High Command</t><br /><t color='#ffffff' size='1.5' font='PuristaMedium' shadow = '2' >%1</t>", _textToSpeech, name _caller], "PLAIN DOWN", -1, true, true]] remoteExec ["titleText", side _caller, true];
 
 				[[], "engine\respawnManagement\respawnManager.sqf"] remoteExec ['BIS_fnc_execVM', 0];
-				[format ["%1 needs reinforcement", name _caller]] remoteExec ["hint",0,true];
 			};
 		};
 		case "Artillery":
