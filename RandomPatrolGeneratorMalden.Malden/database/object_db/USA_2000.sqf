@@ -93,14 +93,14 @@ baseFixedWingGroup_USA_2000 = [
 bluforUnarmedVehicle_USA_2000 = [
 	"CUP_B_M1151_USA",
 	"CUP_B_MTVR_USA"
-	];
+];
 
 bluforArmedVehicle_USA_2000 = [
 	"CUP_B_M1151_Deploy_USA",
 	"CUP_B_nM1025_SOV_M2_USA_DES",
 	"CUP_B_nM1025_M240_USA_DES",
 	"CUP_B_M1165_GMV_DSRT_USMC"
-	];
+];
 
 bluforUnarmedVehicleChopper_USA_2000 = [
 	"CUP_B_UH60M_Unarmed_US",
@@ -115,11 +115,11 @@ bluforArmedChopper_USA_2000 = [
 	"CUP_B_AH6M_USA", 
 	"CUP_B_UH60M_US", 
 	"CUP_B_AH1Z_Dynamic_USMC"
-	];
+];
 
 bluforDrone_USA_2000 = [
 	"CUP_B_USMC_DYN_MQ9"
-	];
+];
 
 bluforBoat_USA_2000 = [
 	"CUP_B_RHIB_HIL",
@@ -211,7 +211,14 @@ launcherList_USA_2000 = [
 
 autorifleList_USA_2000 = [			
 	"CUP_lmg_M249",
-	"CUP_lmg_M60"
+	"CUP_lmg_M60",
+	"CUP_lmg_m249_para",
+	"CUP_lmg_M249_E2",
+	"CUP_lmg_minimi_railed",
+	"CUP_lmg_m249_pip2",
+	"CUP_lmg_m249_pip4",
+	"CUP_lmg_M60E4_norail",
+	"CUP_M60E4_base"
 ];	
 
 marksmanrifleList_USA_2000 = [		
@@ -325,7 +332,6 @@ itemEngineerList_USA_2000 = [
 	"ACE_Fortify",
 	"ACE_DefusalKit",
 	"ACE_DeadManSwitch",
-	"ACE_DefusalKit",
 	"ACE_Clacker",
 	"APERSBoundingMine_Range_Mag",
 	"DemoCharge_Remote_Mag",
@@ -359,6 +365,7 @@ backPackList_USA_2000 = [
 	"B_Mortar_01_support_F",
 	"B_Kitbag_cbr",
 	"TFAR_rt1523g",
+	"TFAR_rt1523g_sage",
 	"CUP_B_USMC_MOLLE_AR"
 ];
 
