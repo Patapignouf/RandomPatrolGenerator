@@ -258,10 +258,13 @@ getVirtualMagazine = {
 					_currentWeaponMagazineList = getArray (configfile >> "CfgWeapons" >> _x >> "magazines");
 					if (count _currentWeaponMagazineList != 0) then 
 					{
-						if ((virtualMagazineList) findIf {_x == (_currentWeaponMagazineList#0)} == -1) then 
+						_currentWeapon = _x;
 						{
-							virtualMagazineList pushBack _currentWeaponMagazineList#0;
-						};
+							if ((virtualMagazineList) findIf {_currentWeapon == (_x)} == -1) then 
+							{
+								virtualMagazineList pushBack _x;
+							};
+						} foreach _currentWeaponMagazineList;
 					};
 				} foreach currentWeaponList;
 			};
@@ -269,18 +272,20 @@ getVirtualMagazine = {
 			{ 
 				{
 				//Add default weapon magazine except large magazine
-				_listOfLargeMagazineText = ["50Rnd", "60Rnd", "150Rnd"]; //
+				_listOfLargeMagazineText = ["50Rnd", "60Rnd", "100Rnd", "150Rnd", "200Rnd"]; //
 				_currentWeaponMagazineList = getArray (configfile >> "CfgWeapons" >> _x >> "magazines");
 					if (count _currentWeaponMagazineList != 0) then 
 					{
-						if ((virtualMagazineList) findIf {_x == (_currentWeaponMagazineList#0)} == -1) then 
+						_currentWeapon = _x;
 						{
-							//Add only if this is not a large magazine
-							if (!([_currentWeaponMagazineList#0, _listOfLargeMagazineText] call isElementOfArrayInString)) then 
+							if ((virtualMagazineList) findIf {_currentWeapon == (_x)} == -1) then 
 							{
-								virtualMagazineList pushBack _currentWeaponMagazineList#0;
+								if (!([_x, _listOfLargeMagazineText] call isElementOfArrayInString)) then 
+								{
+									virtualMagazineList pushBack _x;
+								};
 							};
-						};
+						} foreach _currentWeaponMagazineList;
 					};
 				} foreach currentWeaponList;
 			};
