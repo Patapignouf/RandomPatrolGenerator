@@ -8,3 +8,5 @@ params ["_experienceBonus", "_experienceType"];
 
 //adjustrank
 [player, false] call adjustRank;
+
+diag_log format ["RPG_XP_Reward : %1 %2",_experienceBonus, _experienceType];
