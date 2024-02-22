@@ -28,7 +28,7 @@ while {alive _thisUnit && (side _thisUnit == civilian) && !(_thisUnit getVariabl
 			_thisUnit removeAllMPEventHandlers "mpkilled"; 
 			_thisUnit removeAllEventHandlers "Killed";
 			[_thisUnit] remoteExec ["removeAllActions", 0, true];
-			_thisUnit switchMove "";
+			[_thisUnit, ""] remoteExec ["switchMove"];
 			
 			//Join enemy group
 			_tempGroup = createGroup east;
