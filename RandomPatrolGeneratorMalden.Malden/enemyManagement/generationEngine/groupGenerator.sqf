@@ -110,7 +110,7 @@ doGenerateEnemyGroup =
 			//50% chance to setup the side mission 
 			if (random 100 < 50) then 
 			{
-				[[format ["%1%2","_sideQuestArmored", random 10000],"DestroyArmored", getPos _vehicleFromGroup, _vehicleFromGroup], "engine\objectiveManagement\doGenerateSideObjective.sqf"] remoteExec ['BIS_fnc_execVM', 0];
+				[[format ["%1%2","_sideQuestArmored", random 10000],"DestroyArmored", getPos _vehicleFromGroup, _vehicleFromGroup], "engine\objectiveManagement\doGenerateSideObjective.sqf"] remoteExec ['BIS_fnc_execVM', 2];
 			};
 		};
 	};

@@ -84,7 +84,7 @@ if (!([_OpforFobLocation] call isLocationOnMap)) then
 
 	if (random 100 < 50) then 
 	{
-		[[format ["%1%2","_sideQuestFOB", random 10000],"AttackFOB", _OpforFobLocation, objNull], "engine\objectiveManagement\doGenerateSideObjective.sqf"] remoteExec ['BIS_fnc_execVM', 0];
+		[[format ["%1%2","_sideQuestFOB", random 10000],"AttackFOB", _OpforFobLocation, objNull], "engine\objectiveManagement\doGenerateSideObjective.sqf"] remoteExec ['BIS_fnc_execVM', 2];
 	};
 	
 };
