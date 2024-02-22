@@ -34,6 +34,8 @@ _KORSAC_KS = 32;
 _KORSAC_KFL = 33;
 _KORSAC_KAL = 34;
 _2035_NATO_Recon = 35;
+_ColdWar_USA_SF = 36;
+_ColdWar_VC = 37;
 
 #include "object_db\USA.sqf"
 #include "object_db\USA_Winter.sqf"
@@ -50,6 +52,8 @@ _2035_NATO_Recon = 35;
 #include "object_db\ColdWar_ARVN.sqf"
 #include "object_db\ColdWar_NVA.sqf"
 #include "object_db\ColdWar_USA.sqf"
+#include "object_db\ColdWar_VC.sqf"
+#include "object_db\ColdWar_USA_SF.sqf"
 #include "object_db\2035_AAF.sqf"
 #include "object_db\2035_NATO.sqf"
 #include "object_db\2035_NATO_FS.sqf"
@@ -88,6 +92,8 @@ c_WWII_USA = "_WWII_USA";
 c_WWII_FFI = "_WWII_FFI";
 c_ColdWar_ARVN = "_ColdWar_ARVN";
 c_ColdWar_NVA = "_ColdWar_NVA";
+c_ColdWar_VC = "_ColdWar_VC";
+c_ColdWar_USA_SF = "_ColdWar_USA_SF";
 c_ColdWar_USA = "_ColdWar_USA";
 c_2035_AAF = "_2035_AAF";
 c_2035_NATO = "_2035_NATO";
@@ -160,6 +166,8 @@ if (isClass (configFile >> "CfgPatches" >> "uns_main")) then
 	factionInfos pushBack [c_ColdWar_ARVN,_ColdWar_ARVN,"Cold War ARVN [UNSUNG]", true, true, true];
 	factionInfos pushBack [c_ColdWar_NVA,_ColdWar_NVA,"Cold War NVA [UNSUNG]", true, true, true];
 	factionInfos pushBack [c_ColdWar_USA,_ColdWar_USA,"Cold War USA [UNSUNG]", true, true, false];
+	factionInfos pushBack [c_ColdWar_USA_SF,_ColdWar_USA_SF,"Cold War USA Special forces [UNSUNG]", true, true, false];
+	factionInfos pushBack [c_ColdWar_VC,_ColdWar_VC,"Cold War VietCong [UNSUNG]", false, true, false];
 };
 
 //Add specific IFA3 factions

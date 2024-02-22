@@ -106,7 +106,8 @@ bluforUnarmedVehicleChopper_ColdWar_USA = ["uns_ch47_m60_usmc",
 bluforArmoredVehicle_ColdWar_USA = [
 	"uns_xm706e1",
 	"uns_M113_30cal", 
-	"uns_m48a3"
+	"uns_m48a3",
+	"uns_M113_transport"
 ];
 
 bluforBoat_ColdWar_USA = [
@@ -152,13 +153,17 @@ rifleList_ColdWar_USA = [
 	"uns_m16",
 	"uns_MX991_g",
 	"uns_m14",
-	"uns_m3a1"
+	"uns_m3a1",
+	"uns_m1garand",
+	"uns_m1carbine_pouch",
+	"uns_m2carbine"
 ];	
 
 grenadeLauncherList = 
 [
 	"uns_m16a1_m203",
-	"uns_m79"
+	"uns_m79",
+	"uns_m16a1_xm148"
 ];
 
 
@@ -171,9 +176,9 @@ autorifleList_ColdWar_USA = [
 	"uns_m60",
 	"uns_m60shorty",
 	"uns_m60support",
-	"uns_m60grip"
+	"uns_m60grip",
+	"uns_M16A1_HBAR"
 ];	
-
 
 marksmanrifleList_ColdWar_USA = [		
 	"uns_M21",
@@ -210,7 +215,6 @@ itemList_ColdWar_USA = [
 	"ItemWatch",
 	"NVGoggles",
 	"Binocular",
-	"Rangefinder",
 	"ACE_MapTools",
 	"ACE_SpraypaintRed",
 	"ACE_CableTie",
@@ -275,6 +279,7 @@ uniformList_ColdWar_USA = [
 	"UNS_USMC_BDU_65_S",
 	"UNS_USMC_BDU_65_F",
 	"UNS_USMC_BDU",
+	"UNS_USMC_Flak_S",
 	"UNS_USMC_BDU_S",
 	"UNS_USMC_BDU_F",
 	"uns_simc_m1_bitch_b7",
