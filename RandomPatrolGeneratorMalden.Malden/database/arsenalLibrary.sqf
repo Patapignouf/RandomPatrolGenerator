@@ -272,7 +272,7 @@ getVirtualMagazine = {
 			{ 
 				{
 				//Add default weapon magazine except large magazine
-				_listOfLargeMagazineText = ["50Rnd", "60Rnd", "100Rnd", "150Rnd", "200Rnd"]; //
+				_listOfLargeMagazineText = ["40Rnd","50Rnd", "60Rnd", "100Rnd", "150Rnd", "200Rnd"]; //
 				_currentWeaponMagazineList = getArray (configfile >> "CfgWeapons" >> _x >> "magazines");
 					if (count _currentWeaponMagazineList != 0) then 
 					{
