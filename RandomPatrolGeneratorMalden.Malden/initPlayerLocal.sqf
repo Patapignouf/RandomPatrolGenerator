@@ -312,7 +312,7 @@ if (side player == blufor) then
 				//End init
 				[USS_FREEDOM_CARRIER,_spawnPos] spawn { 
 					params ["_USSCarrier","_spawnPos"];
-					uiSleep 1; 
+					uiSleep 15; 
 					_handleScirpt = _USSCarrier call BIS_fnc_Carrier01Init;
 					waitUntil {isNull _handleScirpt};
 					//Tp player on carrier
@@ -347,7 +347,8 @@ if (side player == blufor) then
 	diag_log format ["Player %1 has spawn on position %2", name player, _spawnPos];
 	player setVariable ["spawnLoadout", getUnitLoadout player];
 
-	//Manage arsenal	
+	//Manage arsenal
+	waitUntil{!isNil "VA2"};
 	[VA2] call setupPlayerLoadout;	
 
 	[] spawn {
@@ -385,6 +386,7 @@ if (side player == blufor) then
 
 
 	//Add vehicle spawn option 
+	waitUntil{!isNil "TPFlag1"};
 	if (isNil "USS_FREEDOM_CARRIER") then 
 	{
 		TPFlag1 addAction [format ["Open vehicle shop"],{
