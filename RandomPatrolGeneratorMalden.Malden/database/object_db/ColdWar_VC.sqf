@@ -5,27 +5,33 @@
 //////////////////////////////
 
 //newFaction
-civilian_group_ColdWar_VC = ["uns_civilian1", 
-"uns_civilian4", 
-"uns_civilian3", 
-"uns_civilian2", 
-"uns_civilian4_b1", 
-"uns_civilian2_b2"];
+civilian_group_ColdWar_VC = [
+	"uns_civilian1", 
+	"uns_civilian4", 
+	"uns_civilian3", 
+	"uns_civilian2", 
+	"uns_civilian4_b1", 
+	"uns_civilian2_b2"
+];
 
-civilian_big_group_ColdWar_VC = ["uns_civilian1", 
-"uns_civilian4", 
-"uns_civilian3", 
-"uns_civilian2", 
-"uns_civilian4_b1", 
-"uns_civilian2_b1", 
-"uns_civilian1_b3", 
-"uns_civilian4_b2", 
-"uns_civilian3_b1", 
-"uns_civilian2_b3"];
+civilian_big_group_ColdWar_VC = [
+	"uns_civilian1", 
+	"uns_civilian4", 
+	"uns_civilian3", 
+	"uns_civilian2", 
+	"uns_civilian4_b1", 
+	"uns_civilian2_b1", 
+	"uns_civilian1_b3", 
+	"uns_civilian4_b2", 
+	"uns_civilian3_b1", 
+	"uns_civilian2_b3"
+];
 
-civilianTruck_ColdWar_VC = ["CUP_C_Skoda_CR_CIV",
-"CUP_C_LR_Transport_CTK", 
-"CUP_C_UAZ_Open_TK_CIV"];
+civilianTruck_ColdWar_VC = [
+	"CUP_C_Skoda_CR_CIV",
+	"CUP_C_LR_Transport_CTK", 
+	"CUP_C_UAZ_Open_TK_CIV"
+];
 
 //////////////////////////////
 ///Define enemy group data////
@@ -39,9 +45,9 @@ baseEnemyGroup_ColdWar_VC = [
 	"uns_men_VC_recon_MED",
 	"uns_men_VC_recon_LMG",
 	"uns_men_VC_recon_AT",
+	"uns_men_VC_recon_AS2",
 	"uns_men_VC_recon_MRK",
 	"uns_men_VC_recon_TRI",
-	"uns_men_VC_recon_MTS",
 	"uns_men_VC_recon_RF6"
 ];
 
@@ -60,12 +66,12 @@ baseEnemyATGroup_ColdWar_VC = [
 
 //Basic demolition enemy group | 8 men (Leader, Explosive)
 baseEnemyDemoGroup_ColdWar_VC = [
-	"uns_men_VC_recon_nco",
-	"uns_men_VC_recon_RF4",
-	"uns_men_VC_recon_SAP",
-	"uns_men_VC_recon_SAP2",
-	"uns_men_VC_recon_LMG",
-	"uns_men_VC_recon_MED"
+	"uns_men_VC_mainforce_68_COM",
+	"uns_men_VC_mainforce_67_SAP",
+	"uns_men_VC_mainforce_67_Rmg",
+	"uns_men_VC_mainforce_67_RF2",
+	"uns_men_VC_mainforce_67_SAP",
+	"uns_men_VC_mainforce_67_MED"
 ];
 
 //Basic Mortar enemy group | 8 men (Mortar, Rifleman)
@@ -80,7 +86,11 @@ baseEnemyVehicleGroup_ColdWar_VC = [
 	"uns_dshk_twin_bunker_open_VC",
 	"uns_pk_bunker_open_VC",
 	"uns_pk_bunker_closed_VC",
-	"uns_dshk_twin_bunker_closed_VC"
+	"uns_dshk_twin_bunker_closed_VC",
+	"uns_spiderhole_VC",
+	"uns_men_VC_recon_RF1",
+	"uns_pk_bunker_low_VC",
+	"uns_men_VC_regional_Rmg"
 ];
 
 //Basic enemy light armored vehicle avalaible must be destroyed without heavy AT (ex : BMP)
