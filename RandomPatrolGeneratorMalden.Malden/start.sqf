@@ -811,6 +811,7 @@ if (enableCampaignMode) then
 	_maxObjectivesGenerated = false;
 
 	//Add this action on campaign mode blufor side
+	waitUntil{!isNil "TPFlag1"};
 	[TPFlag1, ["Complete mission",{
 			//Param initialization
 			params ["_object","_caller","_ID","_missionLength"];
