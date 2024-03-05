@@ -1,4 +1,5 @@
 #include "classConstant.sqf"
+#include "itemdb.sqf"
 
 //Import mission params
 warEra = missionNamespace getVariable "warEra"; // Default actual warfare
@@ -149,19 +150,24 @@ getVirtualItemList = {
 			{
 				virtualItemList = virtualItemList + (itemList_db select {_x select 1  == _currentFaction} select 0 select 0);
 				virtualItemList = virtualItemList + (itemMedicList_db select {_x select 1  == _currentFaction} select 0 select 0);
+				virtualItemList = virtualItemList + basicItemsList;
+				virtualItemList = virtualItemList + basicMedicItems;
 			};			
 		case c_engineer:	
 			{
 				virtualItemList = virtualItemList + (itemList_db select {_x select 1  == _currentFaction} select 0 select 0);
 				virtualItemList = virtualItemList + (itemEngineerList_db select {_x select 1  == _currentFaction} select 0 select 0);
+				virtualItemList = virtualItemList + basicItemsList;
+				virtualItemList = virtualItemList + basicEngineerItems;
 			};		
 		default 
 			{
 				//Default item list
 			 	virtualItemList = virtualItemList + (itemList_db select {_x select 1  == _currentFaction} select 0 select 0); 
+				virtualItemList = virtualItemList + basicItemsList;
 			};
 	};
-	diag_log format ["Player %1 with role %2 has access to items %3", name _currentPlayer, currentPlayerClass,virtualItemList ];
+	diag_log format ["Player %1 with role %2 has access to items %3", name _currentPlayer, currentPlayerClass, virtualItemList ];
 	virtualItemList
 };
 
@@ -533,10 +539,10 @@ setupRoleSwitchToList = {
 	//Check if current faction has specific role definition
 	if (count (listOfRoles_db select {_x select 1  == _currentFaction} select 0 select 0) == 0 ) then 
 	{
-		listOfRoles = c_listOfRoles;
+		listOfRoles = ((loadout_db select {_x # 1 == _currentFaction}) # 0 # 0) apply {_x # 0};
 	} else 
 	{
-		listOfRoles = listOfRoles_db select {_x select 1  == _currentFaction} select 0 select 0;
+		listOfRoles = listOfRoles_db select {_x # 1  == _currentFaction} # 0 # 0;
 	};
  	listOfRoles;
 };

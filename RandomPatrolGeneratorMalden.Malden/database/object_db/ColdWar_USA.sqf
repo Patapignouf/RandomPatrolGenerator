@@ -129,7 +129,6 @@ bluforHQVehicle_ColdWar_USA =
 ////////////////////////
 //Loadout management////
 ////////////////////////
-listOfRoles_ColdWar_USA = [c_leader,c_at,c_rifleman,c_engineer,c_grenadier,c_autorifleman,c_marksman,c_medic,c_pilot];
 
 //newFaction
 loadout_ColdWar_USA = [		
@@ -191,7 +190,6 @@ smgList_ColdWar_USA = [
 	"uns_m1897"
 ];
 
-
 //////////////////////////
 //Attachement management//
 //////////////////////////
@@ -208,55 +206,6 @@ attachmentLongList_ColdWar_USA	= [
 ////////////////////////
 ////Items management////
 ////////////////////////
-itemList_ColdWar_USA = [
-	"FirstAidKit",
-	"ItemMap",
-	"ItemCompass",
-	"ItemWatch",
-	"NVGoggles",
-	"Binocular",
-	"ACE_MapTools",
-	"ACE_SpraypaintRed",
-	"ACE_CableTie",
-	"ACE_WaterBottle",
-	"ACE_EarPlugs",
-	"ACE_fieldDressing",
-	"ACE_packingBandage",
-	"ACE_elasticBandage",
-	"ACE_tourniquet",
-	"ACE_splint",
-	"ACE_morphine",
-	"ACE_quikclot",
-	"ACE_EntrenchingTool",
-	"ACE_RangeTable_82mm"
-	];
-
-itemEngineerList_ColdWar_USA = [
-	"ToolKit",
-	"MineDetector",
-	"ACE_wirecutter",
-	"ACE_Fortify",
-	"ACE_DefusalKit",
-	"ACE_Clacker",
-	"ACE_M26_Clacker",
-	"ace_marker_flags_white",
-	"ace_marker_flags_yellow",
-	"ace_marker_flags_purple",
-	"ace_marker_flags_orange",
-	"ace_marker_flags_red"
-	];
-	
-itemMedicList_ColdWar_USA = [
-	"Medikit",
-	"ACE_epinephrine",
-	"ACE_bloodIV",
-	"ACE_bloodIV_500",
-	"ACE_bloodIV_250",
-	"ACE_personalAidKit",
-	"ACE_surgicalKit",
-	"ACE_suture"
-	];
-
 backPackList_ColdWar_USA = [
 	"uns_simc_MC_rajio_base",
 	"uns_simc_pack_frem_1",
@@ -272,7 +221,7 @@ backPackList_ColdWar_USA = [
 	"uns_simc_MC_rajio_flak_base",
 	"uns_simc_USMCFLAK_M41_M43_roll",
 	"uns_simc_USMCFLAK_M41_flat"
-	];
+];
 
 uniformList_ColdWar_USA = [
 	"UNS_USMC_BDU_65",
@@ -293,7 +242,7 @@ uniformList_ColdWar_USA = [
 	"uns_simc_MC_M1C_bitch_b4",
 	"uns_simc_MC_M1C_bitch_b3",
 	"uns_simc_MC_M1C_bitch_b2"
-	];
+];
 
 magazineList_ColdWar_USA = [
 	"uns_20Rnd_556x45_Stanag_T",
@@ -304,13 +253,5 @@ magazineList_ColdWar_USA = [
 	"uns_40mm_mkv_Green",
 	"uns_12gaugemag_6",
 	"1Rnd_HE_Grenade_shell",
-	"uns_40mm_white",
-	"HandGrenade",
-	"SmokeShell",
-	"SmokeShellBlue",
-	"SmokeShellGreen",
-	"SmokeShellOrange",
-	"SmokeShellPurple",
-	"SmokeShellRed",
-	"SmokeShellYellow"
-	];
+	"uns_40mm_white"
+];

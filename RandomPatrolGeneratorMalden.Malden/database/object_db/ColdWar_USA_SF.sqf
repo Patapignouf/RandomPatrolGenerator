@@ -1,26 +1,5 @@
 #include "..\classConstant.sqf"
 
-//////////////////////////////
-////Define civ group data/////
-//////////////////////////////
-
-//newFaction
-civilian_group_USA_2000 = ["C_Man_4_enoch_F", 
-"C_Man_5_enoch_F", 
-"C_Man_6_enoch_F"];
-
-civilian_big_group_USA_2000 = ["C_Man_1_enoch_F", 
-"C_Man_2_enoch_F", 
-"C_Man_3_enoch_F", 
-"C_Man_4_enoch_F", 
-"C_Man_5_enoch_F", 
-"C_Man_6_enoch_F", 
-"C_Farmer_01_enoch_F" ];
-
-civilianTruck_USA_2000 = ["CUP_C_Octavia_CIV", 
-"C_Offroad_01_comms_F", 
-"C_Hatchback_01_sport_F"];
-
 ////////////////////////
 //Vehicle management////
 ////////////////////////
@@ -68,7 +47,6 @@ bluforHQVehicle_ColdWar_USA_SF =
 ////////////////////////
 //Loadout management////
 ////////////////////////
-listOfRoles_ColdWar_USA_SF = [c_leader,c_at,c_rifleman,c_engineer,c_grenadier,c_autorifleman,c_marksman,c_medic,c_pilot];
 
 //newFaction
 loadout_ColdWar_USA_SF = [		
@@ -97,12 +75,16 @@ rifleList_ColdWar_USA_SF = [
 	"uns_m870",
 	"uns_l1a1",
 	"uns_Ruger",
-	"uns_M16A1"
+	"uns_M16A1",
+	"uns_m1garand",
+	"uns_m1carbine_pouch",
+	"uns_m2carbine"
 ];	
 
 grenadeLauncherList = 
 [
 	"uns_m16a1_m203",
+	"uns_m16a1_xm148",
 	"uns_m79",
 	"uns_l1a1gl",
 	"uns_ex41",
@@ -118,7 +100,8 @@ autorifleList_ColdWar_USA_SF = [
 	"uns_m60",
 	"uns_m60shorty",
 	"uns_m60support",
-	"uns_m60grip"
+	"uns_m60grip",
+	"uns_M16A1_HBAR"
 ];	
 
 marksmanrifleList_ColdWar_USA_SF = [		
@@ -126,15 +109,20 @@ marksmanrifleList_ColdWar_USA_SF = [
 	"uns_model70_iron",
 	"uns_m3carbine",
 	"uns_M40_base",
-	"uns_M16A1mk_sd"
+	"uns_M16A1mk_sd",
+	"uns_m1carbine_pouch"
 ];
+
 
 smgList_ColdWar_USA_SF = [		
 	"uns_ithaca37",
 	"uns_m1897",
 	"uns_uzi",
 	"uns_m3a1",
-	"uns_thompson"
+	"uns_thompson",
+	"uns_m2carbine_shorty",
+	"uns_m50",
+	"uns_m50f"
 ];
 
 //////////////////////////
@@ -150,61 +138,13 @@ attachmentLongList_ColdWar_USA_SF	= [
 	"uns_m1carbinemag_T",
 	"uns_o_RedfieldART",
 	"uns_o_colt4x",
-	"uns_s_M16"
+	"uns_s_M16",
+	"uns_o_M84"
 ];
 
 ////////////////////////
 ////Items management////
 ////////////////////////
-itemList_ColdWar_USA_SF = [
-	"FirstAidKit",
-	"ItemMap",
-	"ItemCompass",
-	"ItemWatch",
-	"NVGoggles",
-	"Binocular",
-	"ACE_MapTools",
-	"ACE_SpraypaintRed",
-	"ACE_CableTie",
-	"ACE_WaterBottle",
-	"ACE_EarPlugs",
-	"ACE_fieldDressing",
-	"ACE_packingBandage",
-	"ACE_elasticBandage",
-	"ACE_tourniquet",
-	"ACE_splint",
-	"ACE_morphine",
-	"ACE_quikclot",
-	"ACE_EntrenchingTool",
-	"ACE_RangeTable_82mm"
-	];
-
-itemEngineerList_ColdWar_USA_SF = [
-	"ToolKit",
-	"MineDetector",
-	"ACE_wirecutter",
-	"ACE_Fortify",
-	"ACE_DefusalKit",
-	"ACE_Clacker",
-	"ACE_M26_Clacker",
-	"ace_marker_flags_white",
-	"ace_marker_flags_yellow",
-	"ace_marker_flags_purple",
-	"ace_marker_flags_orange",
-	"ace_marker_flags_red"
-	];
-	
-itemMedicList_ColdWar_USA_SF = [
-	"Medikit",
-	"ACE_epinephrine",
-	"ACE_bloodIV",
-	"ACE_bloodIV_500",
-	"ACE_bloodIV_250",
-	"ACE_personalAidKit",
-	"ACE_surgicalKit",
-	"ACE_suture"
-	];
-
 backPackList_ColdWar_USA_SF = [
 	"uns_simc_MC_rajio_base",
 	"uns_simc_pack_frem_1",
@@ -221,7 +161,7 @@ backPackList_ColdWar_USA_SF = [
 	"uns_simc_USMCFLAK_M41_M43_roll",
 	"uns_simc_USMCFLAK_M41_flat",
 	"uns_men_US_6SFG_SP8_Bag"
-	];
+];
 
 uniformList_ColdWar_USA_SF = [
 	"UNS_USMC_BDU_65",
@@ -243,7 +183,7 @@ uniformList_ColdWar_USA_SF = [
 	"UNS_Headband_OD2",
 	"UNS_Towel",
 	"uns_simc_pack_trop_6"
-	];
+];
 
 magazineList_ColdWar_USA_SF = [
 	"uns_20Rnd_556x45_Stanag_T",
@@ -254,13 +194,5 @@ magazineList_ColdWar_USA_SF = [
 	"uns_40mm_mkv_Green",
 	"uns_12gaugemag_6",
 	"1Rnd_HE_Grenade_shell",
-	"uns_40mm_white",
-	"HandGrenade",
-	"SmokeShell",
-	"SmokeShellBlue",
-	"SmokeShellGreen",
-	"SmokeShellOrange",
-	"SmokeShellPurple",
-	"SmokeShellRed",
-	"SmokeShellYellow"
-	];
+	"uns_40mm_white"
+];
