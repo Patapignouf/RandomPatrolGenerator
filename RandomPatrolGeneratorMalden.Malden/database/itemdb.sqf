@@ -1,8 +1,3 @@
-weaponList = [];
-		
-attachmentList = [];
-
-
 //basic items that will be included with all factions
 //Include ACE items
 basicItemsList = [
