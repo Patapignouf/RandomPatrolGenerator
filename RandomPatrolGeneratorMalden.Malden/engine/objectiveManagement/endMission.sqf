@@ -11,6 +11,13 @@ if (!_isEndMissionRunning) then
 	//Process players stats 
 	playersNames = "";
 	playersXPProgress = "";
+	playersRankName = "";
+
+	//Get all players info
+	{
+		_playerName = name _x;
+		playersRankName = format ["%1<br />%2", playersRankName, format ["%2 %1", _playerName, rank _x]];
+	} foreach ([allPlayers, [], {_x getVariable ["currentXP", 0]}, "DESCEND"] call BIS_fnc_sortBy);
 
 	//Get all players info
 	{
@@ -18,13 +25,12 @@ if (!_isEndMissionRunning) then
 		_currentXP = _x getVariable ["currentXP", 0];
 		_playerName = name _x;
 		_playerProgressXP = _currentXP - _startingXP;
-		playersNames = format ["%1%2", playersNames, format ["%1  ", _playerName]];
 		playersXPProgress = format ["%1<br />%2", playersXPProgress, format ["%1 has earned %2 experience points", _playerName, _playerProgressXP]];
-	} foreach allPlayers;
+	} foreach ([allPlayers, [], {(_x getVariable ["currentXP", 0]) - (_x getVariable ["startingXP", 0])}, "DESCEND"] call BIS_fnc_sortBy);
 
 
 	//Thanks player
-	[format ["<t color='#ffffff' size='1.5'>Random Patrol Generator</t><br /><t color='#ffffff' size='0.8'> Starring <br />%1</t>", playersNames],-1,-1,3,1,0,789] remoteExec ['BIS_fnc_dynamicText', 0];
+	[format ["<t color='#ffffff' size='1.5'>Random Patrol Generator</t><br /><t color='#ffffff' size='0.8'> Starring <br />%1</t>", playersRankName],0,0,3,1,0,789] remoteExec ['BIS_fnc_dynamicText', 0];
 
 	//Wait
 	sleep 10;
@@ -56,7 +62,7 @@ if (!_isEndMissionRunning) then
 
 			playersNames = format ["%1%2", playersNames, format ["%1  ", _playerName]];
 			playersXPProgress = format ["%1<br />%2", playersXPProgress, format ["%1 has earned %2 %3 experience points", _playerName, _playerProgressXP, _currentExpTypeName]];
-		} foreach allPlayers;
+		} foreach ([allPlayers, [], {_x getVariable [_currentExpType, 0]}, "DESCEND"] call BIS_fnc_sortBy);
 
 		//Display rank
 		if (_isUseFull) then 
