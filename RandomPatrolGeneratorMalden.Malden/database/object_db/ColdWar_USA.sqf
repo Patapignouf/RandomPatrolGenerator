@@ -96,12 +96,23 @@ bluforUnarmedVehicle_ColdWar_USA = ["uns_willys_2",
 bluforArmedVehicle_ColdWar_USA = ["uns_willysmg50", 
 "uns_xm706e2"];
 
-bluforUnarmedVehicleChopper_ColdWar_USA = ["uns_ch47_m60_usmc", 
-"uns_ch53d_m2_usmc", 
-"uns_UH1D_USMC_m60_light", 
-"uns_H13_transport_Army", 
-"uns_ch34_army", 
-"uns_h21c"];
+bluforUnarmedVehicleChopper_ColdWar_USA = [
+	"uns_ch47_m60_usmc", 
+	"uns_ch53d_m2_usmc", 
+	"uns_UH1D_USMC_m60_light", 
+	"uns_H13_transport_Army", 
+	"uns_ch34_army", 
+	"uns_h21c",
+	"uns_oh6_transport"
+];
+
+bluforArmedChopper_ColdWar_USA = [
+	"uns_H13_gunship_Army",
+	"uns_H13_gunship_CAV",
+	"uns_UH1C_M6_M200_M134",
+	"UNS_AH1G",
+	"uns_oh6_m27r"
+];
 
 bluforArmoredVehicle_ColdWar_USA = [
 	"uns_xm706e1",
@@ -120,7 +131,8 @@ bluforFixedWing_ColdWar_USA = [
 	"uns_f8e_USMC_BMB",
 	"uns_A1J_CAS",
 	"uns_A7_CAS",
-	"uns_C130_H"
+	"uns_C130_H",
+	"uns_a37_bmb"
 ];
 
 bluforHQVehicle_ColdWar_USA = 
