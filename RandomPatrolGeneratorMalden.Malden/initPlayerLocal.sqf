@@ -312,11 +312,22 @@ if (side player == blufor) then
 				//End init
 				[USS_FREEDOM_CARRIER,_spawnPos] spawn { 
 					params ["_USSCarrier","_spawnPos"];
-					uiSleep 15; 
 					_handleScirpt = _USSCarrier call BIS_fnc_Carrier01Init;
 					waitUntil {isNull _handleScirpt};
+
+					cutText ["ARRIVING ON CARRIER", "BLACK FADED", 100];
+					uiSleep 15; 
+
+					//Play random radio sound
+					[] spawn {
+						playMusic ["RadioAmbient5", 1];
+						sleep 4;
+						playMusic "";
+					};
+
 					//Tp player on carrier
 					player setPosASL [_spawnPos#0 + random 30,_spawnPos#1+random 30,_spawnPos#2+0.5];
+					titleCut ["WELCOME ON BOARD", "BLACK IN", 5];
 				};
 			};
 
@@ -482,6 +493,7 @@ if (isClass (configFile >> "CfgPatches" >> "ace_medical")) then
 //Display welcome message
 5 fadeMusic 0;
 uiSleep 5;
+playMusic "";
 [parseText "<t font='PuristaBold' size='1.6'>Welcome to <br />Random Patrol Generator</t><br />by Patapignouf", true, nil, 7, 0.7, 0] spawn BIS_fnc_textTiles;
 uiSleep 20;
 [format ["Somewhere on %1",worldName], format ["Year %1", date select 0], mapGridPosition player] spawn BIS_fnc_infoText;

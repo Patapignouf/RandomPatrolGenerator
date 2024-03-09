@@ -67,7 +67,7 @@ if (!_isEndMissionRunning) then
 				
 	//Display scoreboard
 	//Show a black screen and disable damage
-	[["", "BLACK FADED", 20]] remoteExec ["cutText",-2];
+	[["", "BLACK OUT", 5]] remoteExec ["cutText",-2];
 	[[_categories, _dataToDisplay], 'GUI\scoreBoardGUI\displayScoreBoard.sqf'] remoteExec ['BIS_fnc_execVM', 0];
 	[{ player allowDamage false;}] remoteExec ["call", -2];
 
