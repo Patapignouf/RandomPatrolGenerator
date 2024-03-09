@@ -174,6 +174,39 @@ _buttonOK ctrlAddEventHandler[ "ButtonClick",
 								_spawnedVehicle = createVehicle [_vehicleClassToSpawn, selectedLoc, [], 0, "NONE"];
 								player moveInAny (vehicle _spawnedVehicle);
 
+								//Add action to take off
+								[_spawnedVehicle, [format ["Jump"],{
+										params ["_object","_caller","_ID","_thisParams"];
+
+										moveOut _caller;
+										cutText ["", "BLACK IN", 5];
+										uiSleep 3;
+
+										//Halo jump script of pierremgi
+										0 = _caller spawn {
+											private _plyr = _this;
+											private "_whs";
+											_plyr setVariable ["bpk",unitBackpack _plyr];
+											_bpktype = backpack _plyr;
+											if (_bpktype != "") then {
+												_whs = createVehicle ["WeaponHolderSimulated_Scripted",[0,0,0],[],0,"can_collide"];
+												_plyr action ["DropBag", _whs, _bpktype];
+												_plyr addBackpackGlobal "B_parachute";
+												waitUntil {0.5; !isNull objectParent _plyr or isTouchingGround _plyr};  
+												waitUntil {0.5; isNull objectParent _plyr or isTouchingGround _plyr};
+												uiSleep 0.5;
+												if (!isNull _whs) then {
+													_plyr action ["AddBag",objectParent (_plyr getVariable "bpk"), _bpktype];
+													_plyr setVariable ["bpk",nil];
+													uiSleep 3;
+													deleteVehicle _whs;
+												};
+											};
+										};
+
+
+									},[],1.5,true,true,"","(_target distance _this < 15) && ((assignedVehicleRole player)#0 == 'cargo')"]] remoteExec ["addAction", 0, true];
+
 								//Reduce avalaible spawn counter
 								missionNamespace setVariable ["bluforVehicleAvalaibleSpawn", _bluforVehicleAvalaibleSpawnCounter-_vehiclePriceToSpawn, true];
 								hint format ["A %2 has spawned, %1 avdvanced spawn credit left.", _bluforVehicleAvalaibleSpawnCounter-_vehiclePriceToSpawn, _vehicleNameToSpawn];

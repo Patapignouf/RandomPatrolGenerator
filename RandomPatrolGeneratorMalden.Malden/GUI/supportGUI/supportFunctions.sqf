@@ -116,7 +116,30 @@ params ["_caller", "_supportType"];
 				if (!([selectedHaloLoc, [0,0,0]] call BIS_fnc_areEqual)) then 
 				{
 					_caller setPos selectedHaloLoc;
-					[_caller,1500] call BIS_fnc_halo;
+					
+					//Halo jump script of pierremgi
+					player setpos (getpos player vectorAdd [0,0,1000]);
+					0 = player spawn {
+						private _plyr = _this;
+						private "_whs";
+						_plyr setVariable ["bpk",unitBackpack _plyr];
+						_bpktype = backpack _plyr;
+						if (_bpktype != "") then {
+							_whs = createVehicle ["WeaponHolderSimulated_Scripted",[0,0,0],[],0,"can_collide"];
+							_plyr action ["DropBag", _whs, _bpktype];
+							_plyr addBackpackGlobal "B_parachute";
+							waitUntil {0.5; !isNull objectParent _plyr or isTouchingGround _plyr};  
+							waitUntil {0.5; isNull objectParent _plyr or isTouchingGround _plyr};
+							uiSleep 0.5;
+							if (!isNull _whs) then {
+								_plyr action ["AddBag",objectParent (_plyr getVariable "bpk"), _bpktype];
+								_plyr setVariable ["bpk",nil];
+								uiSleep 3;
+								deleteVehicle _whs;
+							};
+						};
+					};
+
 					[format ["In the %1 airspace", worldName], format ["Year %1", date select 0], mapGridPosition player] spawn BIS_fnc_infoText;
 				};
 			};
