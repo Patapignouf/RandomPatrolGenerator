@@ -117,7 +117,10 @@ bluforBoat_ColdWar_USA = [
 
 bluforFixedWing_ColdWar_USA = [
 	"uns_F4B_AGM",
-	"uns_f8e_USMC_BMB"
+	"uns_f8e_USMC_BMB",
+	"uns_A1J_CAS",
+	"uns_A7_CAS",
+	"uns_C130_H"
 ];
 
 bluforHQVehicle_ColdWar_USA = 

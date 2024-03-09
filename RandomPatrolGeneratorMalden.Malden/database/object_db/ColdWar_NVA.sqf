@@ -74,24 +74,42 @@ baseEnemyMortarGroup_ColdWar_NVA = ["uns_m1941_82mm_mortarVC",
 "uns_men_NVA_daccong_MED"];
 
 //Basic enemy vehicle avalaible (light) must be destroyed without AT (ex : jeep)
-baseEnemyVehicleGroup_ColdWar_NVA = ["uns_Type55", 
-"uns_nvatruck", 
-"uns_Type55_M40", 
-"uns_Type55_MG"];
+baseEnemyVehicleGroup_ColdWar_NVA = [
+	"uns_Type55", 
+	"uns_nvatruck", 
+	"uns_Type55_M40", 
+	"uns_Type55_MG",
+	"uns_dshk_twin_bunker_closed_NVA",
+	"uns_dshk_twin_bunker_open_NVA",
+	"uns_pk_bunker_low_NVA",
+	"uns_dshk_bunker_closed_NVA",
+	"uns_ZPU4_NVA"
+];
 
 //Basic enemy light armored vehicle avalaible must be destroyed without heavy AT (ex : BMP)
-baseEnemyLightArmoredVehicleGroup_ColdWar_NVA = ["uns_BTR152_DSHK"];
+baseEnemyLightArmoredVehicleGroup_ColdWar_NVA = [
+	"uns_BTR152_DSHK",
+	"uns_Type55_MG"
+];
 
 //Basic enemy heavy armored vehicle avalaible must be destroyed with other vehicle or heavy AT (ex : tank)
-baseEnemyHeavyArmoredVehicleGroup_ColdWar_NVA = ["uns_t34_76_vc"];
+baseEnemyHeavyArmoredVehicleGroup_ColdWar_NVA = [
+	"uns_t34_76_vc",
+	"uns_t54_nva",
+	"uns_pt76"
+];
 
 //Basic enemy chopper avalaible
-baseChopperGroup_ColdWar_NVA = ["uns_Mi8T_VPAF"];
+baseChopperGroup_ColdWar_NVA = [
+	"uns_Mi8T_VPAF"
+];
 
 //Basic enemy aircraft avalaible
-baseFixedWingGroup_ColdWar_NVA = ["uns_Mig21_BMB",
-"uns_an2_transport",
-"uns_an2_bmb"];
+baseFixedWingGroup_ColdWar_NVA = [
+	"uns_Mig21_BMB",
+	"uns_an2_transport",
+	"uns_an2_bmb"
+];
 
 ////////////////////////
 //Vehicle management////
