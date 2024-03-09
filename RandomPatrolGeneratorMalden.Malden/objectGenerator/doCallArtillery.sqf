@@ -17,12 +17,19 @@ if (_artlillerySupportCounter > 0) then
 	//Hint to artillery call
 	_textToSpeech = format ["Artillery support called on position %1", mapGridPosition _position];
 	[[format ["<t align = 'center' shadow = '2' color='#0046ff' size='1.5' font='PuristaMedium' >High Command</t><br /><t color='#ffffff' size='1.5' font='PuristaMedium' shadow = '2' >%1</t>", _textToSpeech], "PLAIN DOWN", -1, true, true]] remoteExec ["titleText", blufor, true];
+	
+	//Play random radio sound
+	[] spawn {
+		playMusic ["RadioAmbient5", 1];
+		sleep 4;
+		playMusic "";
+	};
 
 	//Simulate waiting for shots
 	sleep (60 + random 60);
 
 	//Call 3 shots
-	for [{_i = 0}, {_i <= 2}, {_i = _i + 1}] do //Peut être optimisé
+	for [{_i = 0}, {_i <= 4}, {_i = _i + 1}] do //Peut être optimisé
 	{
 		//Randomize shot location around the targeted position
 		_customRandomPos = [[[_position, 50]], []] call BIS_fnc_randomPos;

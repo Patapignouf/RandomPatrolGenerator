@@ -18,6 +18,14 @@ if (_extractSupportCounter > 0) then
 	//Hint to extract call
 	_textToSpeech = format ["Extract called on position %1", mapGridPosition _position];
 	[[format ["<t align = 'center' shadow = '2' color='#0046ff' size='1.5' font='PuristaMedium' >High Command</t><br /><t color='#ffffff' size='1.5' font='PuristaMedium' shadow = '2' >%1</t>", _textToSpeech], "PLAIN DOWN", -1, true, true]] remoteExec ["titleText", blufor, true];
+
+	//Play random radio sound
+	[] spawn {
+		playMusic ["RadioAmbient5", 1];
+		sleep 4;
+		playMusic "";
+	};
+
 	
 } else 
 {
