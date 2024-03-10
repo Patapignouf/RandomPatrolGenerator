@@ -371,30 +371,54 @@ if (side player == blufor) then
 
 
 	//Add heal action to VA2
-	_actionIdHeal = VA2 addAction ["Heal", {
-		
-		//Heal player if mission's setup wasn't safe 
-		if (isClass (configFile >> "CfgPatches" >> "ace_medical")) then 
+	_actionIdHeal = VA2 addAction 
+	[
+		"Heal", 
 		{
-			[objNull, player] call ace_medical_treatment_fnc_fullHeal;
-		} else 
-		{
-			player setDamage 0;
-		};
-	},
-	nil,		// arguments
-	1.5,		// priority
-	true,		// showWindow
-	false,		// hideOnUse
-	"",			// shortcut
-	"true",		// condition
-	50,			// radius
-	false,		// unconscious
-	"",			// selection
-	""			// memoryPoint
+			//Heal player if mission's setup wasn't safe 
+			if (isClass (configFile >> "CfgPatches" >> "ace_medical")) then 
+			{
+				[objNull, player] call ace_medical_treatment_fnc_fullHeal;
+			} else 
+			{
+				player setDamage 0;
+			};
+		},
+		nil,		// arguments
+		1.5,		// priority
+		true,		// showWindow
+		false,		// hideOnUse
+		"",			// shortcut
+		"true",		// condition
+		50,			// radius
+		false,		// unconscious
+		"",			// selection
+		""			// memoryPoint
 	];
 	//player setUserActionText [_actionIdHeal, "Heal", "<img size='2' image='\a3\ui_f\data\IGUI\Cfg\Actions\heal_ca'/>"];
 
+	//Add heal action to VA2
+	_actionShowRoles = VA2 addAction 
+	[
+		"Show roles", 
+		{
+			_playerRoles = "";
+			{
+				_playerRoles = format ["%1\n%2 %3",_playerRoles, _x getVariable "role" , name _x];
+			} foreach (allPlayers select {side _x == blufor});
+			hint _playerRoles;
+		},
+		nil,		// arguments
+		0,		// priority
+		true,		// showWindow
+		false,		// hideOnUse
+		"",			// shortcut
+		"true",		// condition
+		50,			// radius
+		false,		// unconscious
+		"",			// selection
+		""			// memoryPoint
+	];
 
 	//Add vehicle spawn option 
 	waitUntil{!isNil "TPFlag1"};
