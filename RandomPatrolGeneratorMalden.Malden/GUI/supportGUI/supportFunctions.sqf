@@ -38,6 +38,27 @@ params ["_caller", "_supportType"];
 				};
 			};
 		};
+		case "CallReinforcement":
+		{
+			[_caller] spawn 
+			{
+				params ["_caller"];
+				_textToSpeech = "Support unit 800, ready";
+				[[format ["<t align = 'center' shadow = '2' color='#0046ff' size='1.5' font='PuristaMedium' >High Command</t><br /><t color='#ffffff' size='1.5' font='PuristaMedium' shadow = '2' >%1</t>", _textToSpeech, name _caller], "PLAIN DOWN", -1, true, true]] remoteExec ["titleText", side _caller, true];
+
+				_reinforcementSupportCounter = missionNamespace getVariable ["reinforcementSupportCounter", 0]; 
+				missionNamespace setVariable ["reinforcementSupportCounter", _reinforcementSupportCounter+1, true];
+
+				//Manage radio support 
+				_reinforcementSupportID = _caller getVariable ["reinforcementSupportID", -1];
+
+				if (_reinforcementSupportID == -1) then 
+				{
+					_reinforcementSupportID = [_caller, "myReinforcement"] call BIS_fnc_addCommMenuItem;
+					_caller setVariable ["reinforcementSupportID", _reinforcementSupportID, true];
+				};
+			};
+		};
 		case "ForceReinforcement":
 		{
 			[_caller] spawn 
@@ -216,8 +237,20 @@ addSupportForReinforcement = {
 	params ["_ctrl"];
 	//Add support for INTEL
 	_price = 0;
-	_supportName = "Call reinforcement (every 20 mins)";
+	_supportName = format ["Ask for reinforcement now (avalaible every %1 seconds)", missionNamespace getVariable "missionRespawnParam"];
 	_supportNameCode = "Reinforcement";
+	_supportIcon = "\a3\ui_f\data\igui\cfg\simpletasks\types\Radio_ca.paa";
+	_supportType = "Reinforcement";
+
+	[_ctrl, _supportName, _supportNameCode, _supportIcon, _price, _supportType] call addSupportOption;
+};
+
+addCallForReinforcement = {
+	params ["_ctrl"];
+	//Add support for INTEL
+	_price = 600;
+	_supportName = "Call reinforcement (radio)";
+	_supportNameCode = "CallReinforcement";
 	_supportIcon = "\a3\ui_f\data\igui\cfg\simpletasks\types\Radio_ca.paa";
 	_supportType = "Reinforcement";
 
@@ -228,7 +261,7 @@ addSupportForForceReinforcement = {
 	params ["_ctrl"];
 	//Add support for INTEL
 	_price = 500;
-	_supportName = "Force reinforcement";
+	_supportName = "Force reinforcement now";
 	_supportNameCode = "ForceReinforcement";
 	_supportIcon = "\a3\ui_f\data\igui\cfg\simpletasks\types\Radio_ca.paa";
 	_supportType = "Reinforcement";

@@ -479,6 +479,25 @@ doInitializeLoadout = {
 			_player setVariable ["airDropSupportID", -1, true]
 		};
 	};
+
+	//Add reinforcement action
+	_reinforcementSupportID = _player getVariable ["reinforcementSupportID", -1];
+	if (_currentPlayerClass == "leader") then 
+	{
+		_reinforcementSupportCounter = missionNamespace getVariable ["reinforcementSupportCounter", 0];
+		if (_reinforcementSupportCounter > 0 && _reinforcementSupportID == -1) then 
+		{
+			_reinforcementSupportID = [_player, "myReinforcement"] call BIS_fnc_addCommMenuItem;
+			_player setVariable ["reinforcementSupportID", _reinforcementSupportID, true];
+		};
+	} else 
+	{
+		if (_reinforcementSupportID != -1) then 
+		{
+			[_player, _reinforcementSupportID] call BIS_fnc_removeCommMenuItem;
+			_player setVariable ["reinforcementSupportID", -1, true]
+		};
+	};
 };
 
 
@@ -553,11 +572,11 @@ isAreaEligibleForArsenal = {
 	_controlDistance = "";
 	if (side _caller == blufor) then 
 	{
-		_controlDistance = "(_this distance _target < 3) && ((_target distance initBlueforLocation < 150) || (_target distance (missionNamespace getVariable 'advancedBlueforLocation') < 30))"
+		_controlDistance = "(_this distance _target < 10) && ((_target distance initBlueforLocation < 150) || (_target distance (missionNamespace getVariable 'advancedBlueforLocation') < 30))"
 	};
 	if (side _caller == independent) then 
 	{
-		_controlDistance = "(_this distance _target < 3) && (_target distance (initCityLocation) < 1000)";
+		_controlDistance = "(_this distance _target < 10) && (_target distance (initCityLocation) < 1000)";
 	};
 	_controlDistance;
 };

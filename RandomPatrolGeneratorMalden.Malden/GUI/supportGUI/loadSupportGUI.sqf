@@ -32,6 +32,7 @@ switch (_mode) do
 		//Add support for leader
 		if (player getVariable "role" == "leader") then 
 		{
+			[_lnbEntries] call addCallForReinforcement;
 			[_lnbEntries] call addSupportForArtillery;
 			[_lnbEntries] call addSupportForIntel;
 			[_lnbEntries] call addSupportForAirDrop;

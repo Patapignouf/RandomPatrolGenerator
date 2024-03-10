@@ -38,6 +38,7 @@ missionNamespace setVariable ["advancedBlueforLocation", [0,0], true]; //Default
 missionNamespace setVariable ["artlillerySupportCounter", 0, true]; //default artillery support counter
 missionNamespace setVariable ["extractSupportCounter", 0, true]; //default artillery support counter
 missionNamespace setVariable ["airDropSupportCounter", 0, true]; //default artillery support counter
+missionNamespace setVariable ["reinforcementSupportCounter", 0, true]; //default artillery support counter
 
 //Spawn bloc to avoid player swimming
 _spawnBloc = createVehicle ["BlockConcrete_F", [0,0,0], [], 0, "NONE"];

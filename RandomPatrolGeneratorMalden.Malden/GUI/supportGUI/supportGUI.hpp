@@ -29,7 +29,7 @@ class supportGUI
 		class lnbEntries: RscListNBox
 		{
 			idc = 60002;
-			columns[] = {0, 1/6, 3.5/6, 5/6};
+			columns[] = {0, 1/15, 3.5/6, 5/6};
 			x = -16 * GUI_GRID_W + 0.5;
 			y = -5 * GUI_GRID_H + 0.5;
 			w = W_LNB;
