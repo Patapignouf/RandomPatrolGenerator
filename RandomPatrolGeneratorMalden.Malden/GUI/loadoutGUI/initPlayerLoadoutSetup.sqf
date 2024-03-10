@@ -35,6 +35,7 @@ _nameTag ctrlSetText (name player);
 
 refreshCustomLoadoutDisplay = {
 		_buttonLoad = (findDisplay 7000) displayCtrl 7203;
+		_button3DItems = (findDisplay 7000) displayCtrl 7205;
 		_loadableLoadout = profileNamespace getVariable [format [loadoutSaveName, name player, player call getPlayerFaction, player getVariable "role"], []];
 
 		if (count _loadableLoadout == 0) then 
@@ -44,6 +45,11 @@ refreshCustomLoadoutDisplay = {
 		{
 			_buttonLoad ctrlShow true;
 		};
+
+		if !(isClass (configFile >> "CfgPatches" >> "CUP_BaseData")) then 
+		{
+			_button3DItems ctrlShow false;
+		}
 };
 
 
