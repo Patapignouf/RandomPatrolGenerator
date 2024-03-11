@@ -50,7 +50,7 @@ baseEnemyATGroup_ColdWar_NVA = [
 	"uns_men_NVA_67_nco", 
 	"uns_men_NVA_67_HMG", 
 	"uns_men_NVA_67_MRK", 
-	"uns_men_NVA_67_MTS", 
+	"uns_men_NVA_67_HMG", 
 	"uns_men_NVA_67_AA", 
 	"uns_men_NVA_67_AT",
 	"uns_men_NVA_67_AT"
@@ -69,9 +69,11 @@ baseEnemyDemoGroup_ColdWar_NVA = [
 ];
 
 //Basic Mortar enemy group | 8 men (Mortar, Rifleman)
-baseEnemyMortarGroup_ColdWar_NVA = ["uns_m1941_82mm_mortarVC",
-"uns_men_NVA_daccong_RTO", 
-"uns_men_NVA_daccong_MED"];
+baseEnemyMortarGroup_ColdWar_NVA = [
+	"uns_m1941_82mm_mortarVC",
+	"uns_men_NVA_daccong_RTO", 
+	"uns_men_NVA_daccong_MED"
+];
 
 //Basic enemy vehicle avalaible (light) must be destroyed without AT (ex : jeep)
 baseEnemyVehicleGroup_ColdWar_NVA = [

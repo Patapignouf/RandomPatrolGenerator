@@ -38,49 +38,59 @@ civilianTruck_ColdWar_ARVN = ["CUP_C_Skoda_CR_CIV",
 //////////////////////////////
 //newFaction
 //Basic enemy group | 8 men (Leader, Medic, MG, Sniper, Rifleman)
-baseEnemyGroup_ColdWar_ARVN = ["uns_men_ARVN_COM", 
-"uns_men_ARVN_RTO", 
-"uns_men_ARVN_RF5", 
-"uns_men_ARVN_HMG", 
-"uns_men_ARVN_AHMG", 
-"uns_men_ARVN_RF1", 
-"uns_men_ARVN_GL", 
-"uns_men_ARVN_AT", 
-"uns_men_ARVN_MRK", 
-"uns_men_ARVN_ENG"];
+baseEnemyGroup_ColdWar_ARVN = [
+	"uns_men_ARVN_COM", 
+	"uns_men_ARVN_RTO", 
+	"uns_men_ARVN_RF5", 
+	"uns_men_ARVN_HMG", 
+	"uns_men_ARVN_AHMG", 
+	"uns_men_ARVN_RF1", 
+	"uns_men_ARVN_GL", 
+	"uns_men_ARVN_AT", 
+	"uns_men_ARVN_MRK", 
+	"uns_men_ARVN_ENG"
+];
 
 //Basic anti tank enemy group | 5 men (Leader, MG, AT)
-baseEnemyATGroup_ColdWar_ARVN = ["uns_men_ARVN_COM", 
-"uns_men_ARVN_RTO", 
-"uns_men_ARVN_AT", 
-"uns_men_ARVN_AT",
-"uns_men_ARVN_AT",
-"uns_men_ARVN_MED", 
-"uns_men_ARVN_TRI", 
-"uns_men_ARVN_MTSG", 
-"uns_men_ARVN_RF2"];
+baseEnemyATGroup_ColdWar_ARVN = [
+	"uns_men_ARVN_COM", 
+	"uns_men_ARVN_RTO", 
+	"uns_men_ARVN_AT", 
+	"uns_men_ARVN_AT",
+	"uns_men_ARVN_AT",
+	"uns_men_ARVN_MED", 
+	"uns_men_ARVN_TRI", 
+	"uns_men_ARVN_MTSG", 
+	"uns_men_ARVN_RF2"
+];
 
 //Basic demolition enemy group | 8 men (Leader, Explosive)
-baseEnemyDemoGroup_ColdWar_ARVN = ["uns_men_ARVN_COM", 
-"uns_men_ARVN_RTO", 
-"uns_men_ARVN_AT", 
-"uns_men_ARVN_MED", 
-"uns_men_ARVN_TRI", 
-"uns_men_ARVN_MTSG", 
-"uns_men_ARVN_RF2", 
-"uns_men_ARVN_MRK", 
-"uns_men_ARVN_SCT"];
+baseEnemyDemoGroup_ColdWar_ARVN = [
+	"uns_men_ARVN_COM", 
+	"uns_men_ARVN_RTO", 
+	"uns_men_ARVN_AT", 
+	"uns_men_ARVN_MED", 
+	"uns_men_ARVN_TRI", 
+	"uns_men_ARVN_MTSG", 
+	"uns_men_ARVN_RF2", 
+	"uns_men_ARVN_MRK", 
+	"uns_men_ARVN_SCT"
+];
 
 //Basic Mortar enemy group | 8 men (Mortar, Rifleman)
-baseEnemyMortarGroup_ColdWar_ARVN = ["uns_m1941_82mm_mortarVC",
-"uns_men_ARVN_RTO", 
-"uns_men_ARVN_MED"];
+baseEnemyMortarGroup_ColdWar_ARVN = [
+	"uns_m1941_82mm_mortarVC",
+	"uns_men_ARVN_RTO", 
+	"uns_men_ARVN_MED"
+];
 
 //Basic enemy vehicle avalaible (light) must be destroyed without AT (ex : jeep)
-baseEnemyVehicleGroup_ColdWar_ARVN = ["uns_willys_2_arvn", 
-"uns_willys_2_m1919_arvn", 
-"uns_men_ARVN_RF2", 
-"uns_willys_2_m60_arvn"];
+baseEnemyVehicleGroup_ColdWar_ARVN = [
+	"uns_willys_2_arvn", 
+	"uns_willys_2_m1919_arvn", 
+	"uns_men_ARVN_RF2", 
+	"uns_willys_2_m60_arvn"
+];
 
 //Basic enemy light armored vehicle avalaible must be destroyed without heavy AT (ex : BMP)
 baseEnemyLightArmoredVehicleGroup_ColdWar_ARVN = ["uns_xm706"];
