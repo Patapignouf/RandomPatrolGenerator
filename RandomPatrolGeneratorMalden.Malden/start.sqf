@@ -539,7 +539,8 @@ diag_log format ["Generating blufor vehicle : %1",selectedBluforVehicle];
 	};
 };
 
-
+//Add rappeling with Advanced rappeling on chopper
+AR_SUPPORTED_VEHICLES_OVERRIDE = bluforUnarmedVehicleChopper + bluforArmedChopper;
 
 
 //Setup random attack on blufor at the beginning

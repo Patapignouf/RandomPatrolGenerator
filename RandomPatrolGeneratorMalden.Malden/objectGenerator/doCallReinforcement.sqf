@@ -13,7 +13,7 @@ if (_reinforcementSupportCounter > 0) then
 	};
 
 	//Hint to extract call
-	_textToSpeech = format ["Copy %1, we will send you reinforcement", name _caller];
+	_textToSpeech = format ["Copy %1, we will send you reinforcement in 60 seconds", name _caller];
 	[[format ["<t align = 'center' shadow = '2' color='#0046ff' size='1.5' font='PuristaMedium' >High Command</t><br /><t color='#ffffff' size='1.5' font='PuristaMedium' shadow = '2' >%1</t>", _textToSpeech], "PLAIN DOWN", -1, true, true]] remoteExec ["titleText", blufor, true];
 
 	//Play random radio sound
@@ -27,7 +27,7 @@ if (_reinforcementSupportCounter > 0) then
 
 	//Wait 1 minute before respawn
 	sleep 60;
-	[[], "engine\respawnManagement\respawnManager.sqf"] remoteExec ['BIS_fnc_execVM', 2];
+	[[], "engine\respawnManagement\respawnManager.sqf"] remoteExec ['BIS_fnc_execVM', 0];
 	
 } else 
 {
