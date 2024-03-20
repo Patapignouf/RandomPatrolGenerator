@@ -30,7 +30,7 @@ generateObjective =
 	//Generate mission environement
 	if (currentObjType != "defendArea") then 
 	{
-		if (random 100 < 75) then 
+		if (random 100 < 80) then 
 		{
 			_handlePOIGeneration = [EnemyWaveLevel_1, baseEnemyVehicleGroup, baseEnemyLightArmoredVehicleGroup, baseEnemyHeavyArmoredVehicleGroup, civilian_group, _selectedObjectivePosition, _objectiveCreated] execVM 'enemyManagement\generationEngine\generatePOI.sqf'; 
 			waitUntil {isNull _handlePOIGeneration};
