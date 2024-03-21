@@ -827,6 +827,14 @@ validateSpecificItem =
 						diag_log format ["validateSpecificItem testing item  %1 ",_itemToVerify];
 						if (([getText (configFile >>  "cfgMagazines" >> _itemToVerify >> "Displayname"), ""] call BIS_fnc_areEqual ) && !([_itemToVerify, ""] call BIS_fnc_areEqual) && !(["TFAR_",_itemToVerify] call BIS_fnc_inString)) then 
 						{
+							
+							//Clean item name from variant 
+							//Filter 3D and pip optics 
+							_opticsKeyWords = ["PIP","pip","3D","3d","2D","2d"];
+							_tempArray = (_itemToVerify splitString "_");
+							_tempArray = _tempArray - _opticsKeyWords;
+							_itemToVerify = (_tempArray joinString "_");
+
 							//Test if the item exist in avalaible items list
 							_currenItemPos = (_restrictedItemsList) findIf {_x == _itemToVerify };
 							if (_currenItemPos == -1) then 
