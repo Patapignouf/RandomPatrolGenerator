@@ -201,6 +201,9 @@ _buttonOK ctrlAddEventHandler[ "ButtonClick",
 													uiSleep 3;
 													deleteVehicle _whs;
 												};
+											} else 
+											{
+												_plyr addBackpackGlobal "B_parachute";
 											};
 										};
 
@@ -217,7 +220,15 @@ _buttonOK ctrlAddEventHandler[ "ButtonClick",
 					//Else (other type of vehicle) do normal spawn around FOB
 					[_vehicleClassToSpawn, _vehicleIsUAV] spawn {
 						params ["_vehicleClassToSpawn", "_vehicleIsUAV"];
-						[initBlueforLocation, [[_vehicleClassToSpawn, _vehicleIsUAV]], 30, 100] call doGenerateVehicleForFOB;	
+
+						//Spawn the vehicle around the player or on blufor initial position if called from server
+						if (hasInterface) then 
+						{
+							[getPos player, [[_vehicleClassToSpawn, _vehicleIsUAV]], 30, 100] call doGenerateVehicleForFOB;	
+						} else 
+						{
+							[initBlueforLocation, [[_vehicleClassToSpawn, _vehicleIsUAV]], 30, 100] call doGenerateVehicleForFOB;	
+						};
 					};	
 
 					missionNamespace setVariable ["bluforVehicleAvalaibleSpawn", _bluforVehicleAvalaibleSpawnCounter-_vehiclePriceToSpawn, true];

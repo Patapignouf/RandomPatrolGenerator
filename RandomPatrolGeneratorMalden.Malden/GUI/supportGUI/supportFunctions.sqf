@@ -158,6 +158,9 @@ params ["_caller", "_supportType"];
 								uiSleep 3;
 								deleteVehicle _whs;
 							};
+						} else 
+						{
+							_plyr addBackpackGlobal "B_parachute";
 						};
 					};
 
