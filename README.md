@@ -9,7 +9,7 @@ There are some features like :
 - Civilian conversation system,
 - Class restricted arsenal,
 - Custom respawn system,
-- Custom XP system (costmetic rank implemented),
+- Custom XP system (cosmetic rank implemented),
 - Opfor reinforcement from ground and air,
 - Opfor FOB (challenging tasks),
 - Intel management,
@@ -18,6 +18,7 @@ There are some features like :
 - Hostile civilians,
 - Blufor aircraft carrier,
 - Custom mission setup,
+- Custom scoreboard on mission's end,
 - Ironman mod (stuff loose on death).
 
 Support for factions from :
@@ -25,12 +26,13 @@ Support for factions from :
 - CUP,
 - UNSUNG,
 - IFA3,
-- KROSAC,
+- RHS,
+- KORSAC,
 - AMF.
 
 Highly recommand to play with LAMBS_Danger, VCOM and ACE3 for the best experience.
 
-Factions are manually implemented with a factionTemplate and every mission is different.
+Factions are manually implemented with a factionTemplate and every missions are different.
 
 Initially made for hardcore player, there is settings to allow player respawn on objective completion or time.
 
@@ -39,6 +41,8 @@ Just start a game and enjoy :)
 
 Contributions are always welcome!
 
+If you like the mission you can buy me a coffe :p 
+https://www.buymeacoffee.com/patapignouf
 
 Please adhere to this project's `code of conduct` (avalaible soon :p).
 
