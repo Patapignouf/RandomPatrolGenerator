@@ -35,6 +35,7 @@ if (!didJIP) then
 		{
 			cutText ["", "BLACK FADED", 100];
 			player setVariable ["isSetupMission", true];
+			player setVariable ["isAdmin", true, true];
 			[[], 'GUI\setupGUI\initMissionMenu.sqf'] remoteExec ['BIS_fnc_execVM', player];
 		};
 	} else 
@@ -60,6 +61,18 @@ if (!didJIP) then
 				[[], 'GUI\setupGUI\initMissionMenu.sqf'] remoteExec ['BIS_fnc_execVM', player];
 			};
 		};
+	};
+};
+
+//Add admin menu action
+[] spawn {
+	if (player getVariable ["isAdmin", false]) then 
+	{
+		player addAction ["<t color='#FF0000'>Open ADMIN MENU</t>",{
+				//Define parameters
+				params ["_object","_caller","_ID","_avalaibleVehicle"];
+				[[], 'GUI\adminGUI\adminGUIInit.sqf'] remoteExec ['BIS_fnc_execVM', _caller];
+		},_x,3,true,false,"","(_target distance _this <3) && (_target getVariable ['isAdmin', false])"];
 	};
 };
 
@@ -331,7 +344,8 @@ if (side player == blufor) then
 				};
 			};
 
-			
+			//Wait for USS Carrier spawn
+			sleep 10;
 
 			//Add Action for TP on the carrier
 			_actionIdCarrier = player addAction ["Move to the carrier",{
@@ -373,7 +387,7 @@ if (side player == blufor) then
 	//Add heal action to VA2
 	_actionIdHeal = VA2 addAction 
 	[
-		"Heal", 
+		"<t color='#00bc1a'>Heal</t>", 
 		{
 			//Heal player if mission's setup wasn't safe 
 			if (isClass (configFile >> "CfgPatches" >> "ace_medical")) then 
@@ -400,7 +414,7 @@ if (side player == blufor) then
 	//Add heal action to VA2
 	_actionShowRoles = VA2 addAction 
 	[
-		"Show roles", 
+		"<t color='#5400ac'>Show roles</t>", 
 		{
 			_playerRoles = "";
 			{
