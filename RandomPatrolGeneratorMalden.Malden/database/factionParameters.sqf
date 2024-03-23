@@ -36,6 +36,8 @@ _KORSAC_KAL = 34;
 _2035_NATO_Recon = 35;
 _ColdWar_USA_SF = 36;
 _ColdWar_VC = 37;
+_USA_SOCOM_2020 = 38;
+_RU_2020 = 39;
 
 #include "object_db\USA.sqf"
 #include "object_db\USA_Winter.sqf"
@@ -75,13 +77,17 @@ _ColdWar_VC = 37;
 #include "object_db\KORSAC_KS.sqf"
 #include "object_db\KORSAC_KFL.sqf"
 #include "object_db\KORSAC_KAL.sqf"
+#include "object_db\USA_SOCOM_2020.sqf"
+#include "object_db\RU_2020.sqf"
 
 //Define faction prefix
 c_db = "_db";
 c_USA = "_USA";
 c_USA_Winter = "_USA_Winter";
 c_USA_2000 = "_USA_2000";
+c_USA_SOCOM_2020 = "_USA_SOCOM_2020";
 c_Russian = "_Russian";
+c_RU_2020 = "_RU_2020";
 c_Taki = "_Taki";
 c_Syndikat = "_Syndikat";
 c_French = "_French";
@@ -188,6 +194,13 @@ if (isClass (configFile >> "CfgPatches" >> "vtf_kf_main")) then
 	factionInfos pushBack [c_KORSAC_KS,_KORSAC_KS,"KS Separatists [KORSAC]", false, true, false];
 	factionInfos pushBack [c_KORSAC_KAL,_KORSAC_KAL,"KAL Locals [KORSAC]", false, true, false];	
 	factionInfos pushBack [c_KORSAC_KFL,_KORSAC_KFL,"KFL Foreign legion [KORSAC]", true, false, false];	
+};
+
+//Add specific RHS factions
+if (isClass (configFile >> "CfgPatches" >> "rhs_main")) then 
+{
+	factionInfos pushBack [c_USA_SOCOM_2020,_USA_SOCOM_2020,"2020 USA SOCOM [RHS]", true, true, false];
+	factionInfos pushBack [c_RU_2020,_RU_2020,"2020 Russian [RHS]", true, true, false];
 };
 
 
