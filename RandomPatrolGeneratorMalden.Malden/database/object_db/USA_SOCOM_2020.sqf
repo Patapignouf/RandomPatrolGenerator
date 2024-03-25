@@ -143,15 +143,23 @@ loadout_USA_SOCOM_2020 = [
 ////////////////////////
 //USA
 rifleList_USA_SOCOM_2020 = [		
+	//Mk18
 	"rhs_weap_mk18_KAC_bk",
 	"rhs_weap_mk18_KAC_d",
 	"rhs_weap_mk18_bk",
 	"rhs_weap_mk18",
+
+	//M4A1
 	"rhs_weap_m4a1_mstock_grip3",
+	"rhs_weap_m4a1_mstock",
 	"rhs_weap_m4a1_blockII_KAC",
 	"rhs_weap_m4a1_blockII",
-	"rhs_weap_mk17_CQC",
 	"rhs_weap_m4a1_carryhandle",
+
+	//misc
+	"rhs_weap_mk17_CQC",
+	"rhs_weap_m14ebrri",
+	"rhs_weap_m16a4_imod",
 
 	//Pistols
 	"rhsusf_weap_glock17g4"
@@ -178,7 +186,8 @@ autorifleList_USA_SOCOM_2020 = [
 	"rhs_weap_m249_light_L",
 	"rhs_weap_m249_pip",
 	"rhs_weap_m249",
-	"rhs_weap_m249_light_S"
+	"rhs_weap_m249_light_S",
+	"rhs_weap_m249_pip_S"
 ];	
 
 
@@ -187,8 +196,10 @@ marksmanrifleList_USA_SOCOM_2020 = [
 	"rhs_weap_M107",
 	"rhs_weap_m40a5_d",
 	"rhs_weap_m14_socom_rail",
-	"rhs_weap_XM2010"
+	"rhs_weap_XM2010",
+	"srifle_LRR_F"
 ];
+
 
 smgList_USA_SOCOM_2020 = [		
 	"rhsusf_weap_MP7A2_folded",
@@ -217,14 +228,17 @@ attachmentShortList_USA_SOCOM_2020	= [
 	"rhsusf_acc_eotech_552",
 	"rhsusf_acc_ELCAN",
 	"rhsusf_acc_compm4",
-	"rhsusf_acc_su230a"
+	"rhsusf_acc_su230a",
+	"rhsusf_acc_M2A1",
+	"rhsusf_acc_mrds"
 ];
 
 attachmentLongList_USA_SOCOM_2020	= [
 	"rhsusf_acc_M8541_mrds",
 	"rhsusf_acc_anpeq15side",
 	"rhsusf_acc_premier",
-	"rhsusf_acc_LEUPOLDMK4"
+	"rhsusf_acc_LEUPOLDMK4",
+	"rhsusf_acc_premier_mrds"
 ];
 
 ////////////////////////
