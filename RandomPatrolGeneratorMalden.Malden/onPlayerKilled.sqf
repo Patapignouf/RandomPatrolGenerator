@@ -15,7 +15,7 @@ addMissionEventHandler ["EachFrame",
 ];
 
 //Update dead counter 
-player setVariable ["deathNumber", (player getVariable ["deathNumber", 0])+1];
+player setVariable ["deathNumber", (player getVariable ["deathNumber", 0])+1, true];
 
 //Add player to a dead player base | This will block disconnection/connection method to respawn 
 _deadPlayerList = missionNamespace getVariable "deadPlayer";
