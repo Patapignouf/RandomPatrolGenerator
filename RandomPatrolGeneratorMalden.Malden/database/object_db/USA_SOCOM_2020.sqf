@@ -187,9 +187,9 @@ autorifleList_USA_SOCOM_2020 = [
 	"rhs_weap_m249_pip",
 	"rhs_weap_m249",
 	"rhs_weap_m249_light_S",
-	"rhs_weap_m249_pip_S"
+	"rhs_weap_m249_pip_S",
+	"rhs_weap_m240B"
 ];	
-
 
 marksmanrifleList_USA_SOCOM_2020 = [		
 	"rhs_weap_mk17_LB",
@@ -197,9 +197,10 @@ marksmanrifleList_USA_SOCOM_2020 = [
 	"rhs_weap_m40a5_d",
 	"rhs_weap_m14_socom_rail",
 	"rhs_weap_XM2010",
-	"srifle_LRR_F"
+	"srifle_LRR_F",
+	"rhs_weap_sr25",
+	"rhs_weap_sr25_ec"
 ];
-
 
 smgList_USA_SOCOM_2020 = [		
 	"rhsusf_weap_MP7A2_folded",
