@@ -268,7 +268,10 @@ getVirtualMagazine = {
 						{
 							if ((virtualMagazineList) findIf {_currentWeapon == (_x)} == -1) then 
 							{
-								virtualMagazineList pushBack _x;
+								if (!([_x] call isBannedItem)) then 
+								{
+									virtualMagazineList pushBack _x;
+								};
 							};
 						} foreach _currentWeaponMagazineList;
 					};
@@ -286,7 +289,7 @@ getVirtualMagazine = {
 						{
 							if ((virtualMagazineList) findIf {_currentWeapon == (_x)} == -1) then 
 							{
-								if (!([_x, _listOfLargeMagazineText] call isElementOfArrayInString)) then 
+								if (!([_x, _listOfLargeMagazineText] call isElementOfArrayInString) && !([_x] call isBannedItem)) then 
 								{
 									virtualMagazineList pushBack _x;
 								};
@@ -988,6 +991,16 @@ reduceCookOff =
 		_weaponData set [2, (_weaponData # 2)/2];
 		ace_overheating_cacheWeaponData set [_weaponUsed, _weaponData];
 	};
+};
+
+isBannedItem = {
+	params ["_itemToAnalyse"];
+	_result = false;
+	_bannedItemList = ["rhsusf_mag_10Rnd_STD_50BMG_mk211"];
+
+	_result = _bannedItemList findIf { _x == _itemToAnalyse } > -1;
+
+	_result
 };
 
 isElementOfArrayInString = 
