@@ -145,6 +145,7 @@ loadout_USA_SOCOM_2020 = [
 rifleList_USA_SOCOM_2020 = [		
 	//Mk18
 	"rhs_weap_mk18_KAC_bk",
+	"rhs_weap_mk18_KAC",
 	"rhs_weap_mk18_KAC_d",
 	"rhs_weap_mk18_bk",
 	"rhs_weap_mk18",
@@ -152,26 +153,29 @@ rifleList_USA_SOCOM_2020 = [
 	//M4A1
 	"rhs_weap_m4a1_mstock_grip3",
 	"rhs_weap_m4a1_mstock",
-	"rhs_weap_m4a1_blockII_KAC",
+	"rhs_weap_m4a1_blockII_KAC_bk",
 	"rhs_weap_m4a1_blockII",
+	"rhs_weap_m4a1_blockII_bk",
 	"rhs_weap_m4a1_carryhandle",
 
 	//misc
 	"rhs_weap_mk17_CQC",
 	"rhs_weap_m14ebrri",
 	"rhs_weap_m16a4_imod",
-
+	"rhs_weap_m16a4_carryhandle",
+	
 	//Pistols
 	"rhsusf_weap_glock17g4"
-
 ];	
 
 //Grenade launcher or weapon with grenade launcher option
 grenadeLauncherList_USA_SOCOM_2020 = [		
 	"rhs_weap_m4a1_blockII_M203",
 	"rhs_weap_m4a1_m203",
+	"rhs_weap_m4a1_m203s",
 	"rhs_weap_mk18_m320",
-	"rhs_weap_m32"
+	"rhs_weap_m32",
+	"rhs_weap_M320"
 ];
 
 
@@ -179,13 +183,15 @@ launcherList_USA_SOCOM_2020 = [
 	"rhs_weap_M136_hedp",
 	"rhs_weap_fgm148",
 	"rhs_weap_fim92",
-	"rhs_weap_smaw"
+	"rhs_weap_smaw",
+	"rhs_weap_maaws"
 ];	
 
 autorifleList_USA_SOCOM_2020 = [			
 	"rhs_weap_m249_light_L",
 	"rhs_weap_m249_pip",
 	"rhs_weap_m249",
+	"rhs_weap_m249_S",
 	"rhs_weap_m249_light_S",
 	"rhs_weap_m249_pip_S",
 	"rhs_weap_m240B"
@@ -194,6 +200,7 @@ autorifleList_USA_SOCOM_2020 = [
 marksmanrifleList_USA_SOCOM_2020 = [		
 	"rhs_weap_mk17_LB",
 	"rhs_weap_M107",
+	"rhs_weap_m24sws",
 	"rhs_weap_m40a5_d",
 	"rhs_weap_m14_socom_rail",
 	"rhs_weap_XM2010",
@@ -213,6 +220,7 @@ smgList_USA_SOCOM_2020 = [
 //////////////////////////
 attachmentShortList_USA_SOCOM_2020	= [
 	"rhsusf_acc_anpeq15",
+	"rhsusf_acc_anpeq15_wmx",
 	"rhsusf_acc_eotech_xps3",
 	"rhsusf_acc_ACOG_USMC",
 	"rhsusf_acc_su230",
@@ -231,7 +239,11 @@ attachmentShortList_USA_SOCOM_2020	= [
 	"rhsusf_acc_compm4",
 	"rhsusf_acc_su230a",
 	"rhsusf_acc_M2A1",
-	"rhsusf_acc_mrds"
+	"rhsusf_acc_mrds",
+
+	//Launcher optics
+	"rhs_weap_optic_smaw",
+	"rhs_optic_maaws"
 ];
 
 attachmentLongList_USA_SOCOM_2020	= [
@@ -262,8 +274,9 @@ itemList_USA_SOCOM_2020 = [
 	"ACE_RangeCard",
 	"ACE_NVG_Wide_Black_WP",
 	"ACE_NVG_Wide_WP",
-	"ACE_NVG_Wide_Green_WP"
-	];
+	"ACE_NVG_Wide_Green_WP",
+	"rhsusf_ANPVS_14"
+];
 
 itemEngineerList_USA_SOCOM_2020 = [
 
@@ -293,11 +306,31 @@ uniformList_USA_SOCOM_2020 = [
 	"rhsusf_mich_bare_norotos",
 	"rhsusf_mich_bare_norotos_arc_alt_tan",
 	"rhs_Booniehat_m81",
-	"rhs_uniform_g3_mc"
+	"rhs_uniform_g3_mc",
+	"rhsusf_shemagh_gogg_od",
+	"rhsusf_mich_bare_norotos_arc_alt",
+	"rhsusf_opscore_mar_ut_pelt",
+	"rhsusf_opscore_fg_pelt_nsw",
+	"rhsusf_shemagh_gogg_od",
+	"rhsusf_shemagh2_gogg_tan",
+	"rhsusf_shemagh2_od",
+	"rhs_uniform_cu_ocp",
+	"rhsusf_opscore_fg_pelt_cam",
+
+	//Plateframe
+	"rhsusf_plateframe_light",
+	"rhsusf_plateframe_machinegunner",
+	"rhsusf_plateframe_marksman",
+	"rhsusf_plateframe_medic",
+	"rhsusf_plateframe_rifleman",
+	"rhsusf_plateframe_teamleader"
 ];
+
 
 //Magazine avalaible for all unit
 magazineList_USA_SOCOM_2020 = 	[
 	"rhs_mag_30Rnd_556x45_M855A1_Stanag_Pull",
 	"rhsusf_mag_40Rnd_46x30_FMJ"
 ];
+
+

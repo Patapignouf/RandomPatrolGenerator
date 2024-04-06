@@ -152,13 +152,22 @@ loadout_RU_2020 = [
 rifleList_RU_2020 = [		
 	"rhs_weap_ak74m",
 	"rhs_weap_makarov_pm",
-	"rhs_weap_ak74mr"
+	"rhs_weap_ak74mr",
+	"rhs_weap_aks74n_npz",
+	"rhs_weap_aks74n_2",
+	"rhs_weap_ak103",
+	"rhs_weap_ak105",
+	"rhs_weap_ak105_zenitco01",
+	"rhs_weap_pya"
 ];	
+
 
 //Grenade launcher or weapon with grenade launcher option
 grenadeLauncherList_RU_2020 = [		
 	"rhs_weap_ak74m_gp25",
-	"rhs_weap_ak74mr_gp25"
+	"rhs_weap_ak74mr_gp25",
+	"rhs_weap_ak74m_fullplum_gp25_npz",
+	"rhs_weap_ak74n_gp25"
 ];
 
 
@@ -176,30 +185,36 @@ autorifleList_RU_2020 = [
 marksmanrifleList_RU_2020 = [		
 	"rhs_asval",
 	"rhs_weap_svds",
-	"rhs_weap_vss"
+	"rhs_weap_vss",
+	"rhs_weap_t5000",
+	"rhs_weap_svds_npz"
 ];
+
 
 smgList_RU_2020 = [		
 	"rhs_weap_aks74u",
-	"rhs_weap_ak74m_folded"
+	"rhs_weap_ak74m_folded",
+	"rhs_weap_pp2000_folded"
 ];
 
 //////////////////////////
 attachmentShortList_RU_2020	= [
-"rhs_acc_dtk",
-"rhs_acc_pkas",
-"rhs_acc_pgo7v3",
-"rhs_acc_1p78",
-"rhs_acc_uuk",
-"rhs_acc_1p87",
-"rhs_acc_rakursPM",
-"rhs_acc_dtk4short"
+	"rhs_acc_dtk",
+	"rhs_acc_pkas",
+	"rhs_acc_pgo7v3",
+	"rhs_acc_1p78",
+	"rhs_acc_uuk",
+	"rhs_acc_1p87",
+	"rhs_acc_rakursPM",
+	"rhs_acc_dtk4short"
 ];
 
 attachmentLongList_RU_2020	= [
 	"rhs_acc_pso1m21",
-	"rhs_acc_pso1m2"
+	"rhs_acc_pso1m2",
+	"rhs_weap_svds_npz"
 ];
+
 
 ////////////////////////
 ////Items management////
@@ -222,7 +237,7 @@ itemList_RU_2020 = [
 	"ACE_NVG_Wide_Black_WP",
 	"ACE_NVG_Wide_WP",
 	"ACE_NVG_Wide_Green_WP"
-	];
+];
 
 itemEngineerList_RU_2020 = [
 
@@ -254,8 +269,10 @@ uniformList_RU_2020 = [
 	"rhs_6b45_mg",
 	"rhs_uniform_6sh122_v1",
 	"rhs_6b23_digi_medic",
-	"rhs_balaclava"
+	"rhs_balaclava",
+	"rhs_scarf"
 ];
+
 
 //Magazine avalaible for all unit
 magazineList_RU_2020 = 	[
