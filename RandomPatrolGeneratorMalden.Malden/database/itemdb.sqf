@@ -19,7 +19,9 @@ basicItemsList = [
 	"ACE_morphine",
 	"ACE_quikclot",
 	"ACE_EntrenchingTool",
-	"ACE_RangeTable_82mm"
+	"ACE_RangeTable_82mm",
+	"ACE_painkillers",
+	"ACE_PlottingBoard"
 ];
 
 //basic medic items that will be included with all factions
