@@ -15,6 +15,55 @@ if (isClass (configFile >> "CfgPatches" >> "ace_medical")) then
   player setDamage 0;
 };
 
+//Disable miniMap GPS for ACE Player (use microDAGR instead)
+if (isClass (configFile >> "CfgPatches" >> "ace_medical")) then 
+{
+	player enableInfoPanelComponent ["left", "MinimapDisplay", false];
+	player enableInfoPanelComponent ["right", "MinimapDisplay", false];
+};
+
+//Init player rank
+[[player], 'engine\rankManagement\rankManager.sqf'] remoteExec ['BIS_fnc_execVM', player];
+
+//Show a special message when there is a teamkill
+player addEventHandler ["Killed", {
+	params ["_unit", "_killer", "_instigator", "_useEffects"];
+	diag_log format ["%1 has been killed by : %2", name _unit, name _instigator];
+	if (isPlayer _instigator) then 
+	{
+		[[format ["%1 has been killed by his teammate %2",name _unit, name _instigator], "teamkill"], 'engine\hintManagement\addCustomHint.sqf'] remoteExec ['BIS_fnc_execVM', side _instigator];
+		if (_instigator != _unit) then 
+		{
+			[[-50,5], 'engine\rankManagement\rankPenalty.sqf'] remoteExec ['BIS_fnc_execVM', _instigator];
+		};
+	};
+}];
+
+//Prevent players from instant death
+if !(isClass (configFile >> "CfgPatches" >> "ace_medical")) then 
+{
+	player addEventHandler ["HandleDamage",{
+		private["_damage"];
+		if ((lifeState player == "INCAPACITATED")||(lifeState player == "SHOOTING")) then {
+			_damage = 0;
+		};    
+		_damage    
+	}];
+} else 
+{
+	//Add ACE cookoff high probability on enemy weapon
+	player addEventHandler["Fired",{
+		params ["_unit", "_weapon", "_muzzle", "_mode", "_ammo", "_magazine", "_projectile", "_gunner"];
+    	[_weapon] call adjustCookOf;
+  	}];
+
+	//Reduce cookoff on jammed weapon
+	["ace_weaponJammed", {
+		_this call reduceCookOff;
+	}] call CBA_fnc_addEventHandler;
+
+};
+
 
 //Hide HUD group to debug the UI after death
 showHUD [
@@ -32,10 +81,17 @@ showHUD [
 ];
 //#####
 
-// if (isClass (configFile >> "CfgPatches" >> "task_force_radio")) then {
-// 	[player, false] call TFAR_fnc_forceSpectator;
-// };
-
+//Add admin menu action
+[] spawn {
+	if (player getVariable ["isAdmin", false]) then 
+	{
+		player addAction ["<t color='#FF0000'>Open ADMIN MENU</t>",{
+				//Define parameters
+				params ["_object","_caller","_ID","_avalaibleVehicle"];
+				[[], 'GUI\adminGUI\adminGUIInit.sqf'] remoteExec ['BIS_fnc_execVM', _caller];
+		},_x,3,true,false,"","(_target distance _this <3) && (_target getVariable ['isAdmin', false])"];
+	};
+};
 
 //Default respawn 
 //Remove player name from the dead player's list
