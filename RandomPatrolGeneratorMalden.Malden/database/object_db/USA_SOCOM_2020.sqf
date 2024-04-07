@@ -56,11 +56,19 @@ baseEnemyHeavyArmoredVehicleGroup_USA_SOCOM_2020 = [
 ];
 
 baseEnemyUnarmedChopperGroup_USA_SOCOM_2020 = [
-	"RHS_MELB_MH6M"
+	"RHS_MELB_MH6M",
+	"RHS_UH60M2",
+	"RHS_CH_47F_10"
+];
+
+baseEnemyArmedChopperGroup_USA_SOCOM_2020 = [
+	"RHS_AH64D", 
+	"RHS_AH64DGrey"
 ];
 
 baseFixedWingGroup_USA_SOCOM_2020 = [
-	"RHS_A10"
+	"RHS_A10",
+	"rhsusf_f22"
 ];
 
 
