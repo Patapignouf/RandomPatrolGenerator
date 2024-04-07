@@ -57,6 +57,11 @@ baseEnemyUnarmedChopperGroup_RU_2020 = [
 	"RHS_Mi8mt_vdv"
 ];
 
+baseEnemyArmedChopperGroup_RU_2020 = [
+	"RHS_Mi24P_vdv", 
+	"RHS_Mi8MTV3_heavy_vdv"
+];
+
 baseFixedWingGroup_RU_2020 = [
 	"rhs_mig29s_vvs",
 	"RHS_Su25SM_vvs",
@@ -94,7 +99,8 @@ bluforArmoredVehicle_RU_2020 = [
 
 bluforUnarmedVehicleChopper_RU_2020 = [
 	"RHS_Mi8mt_vdv",
-	"RHS_Mi8mt_Cargo_vdv"
+	"RHS_Mi8mt_Cargo_vdv",
+	"rhs_ka60_c"
 ];
 
 bluforArmedChopper_RU_2020 = [
@@ -173,7 +179,8 @@ grenadeLauncherList_RU_2020 = [
 
 launcherList_RU_2020 = [		
 	"rhs_weap_rpg26",
-	"rhs_weap_rpg7"
+	"rhs_weap_rpg7",
+	"rhs_weap_igla"
 ];	
 
 autorifleList_RU_2020 = [			
@@ -206,18 +213,21 @@ attachmentShortList_RU_2020	= [
 	"rhs_acc_uuk",
 	"rhs_acc_1p87",
 	"rhs_acc_rakursPM",
-	"rhs_acc_dtk4short"
+	"rhs_acc_pgs64",
+	"rhs_acc_2dpZenit",
+	"rhs_acc_okp7_picatinny",
+	"rhs_acc_perst1ik_ris",
+	"rhs_acc_pgo7v3"
 ];
 
 attachmentLongList_RU_2020	= [
 	"rhs_acc_pso1m21",
 	"rhs_acc_pso1m2",
-	"rhs_weap_svds_npz"
+	"rhs_weap_svds_npz",
+	"rhs_acc_dh520x56"
 ];
 
 
-////////////////////////
-////Items management////
 ////////////////////////
 itemList_RU_2020 = [
 	"NVGoggles",
