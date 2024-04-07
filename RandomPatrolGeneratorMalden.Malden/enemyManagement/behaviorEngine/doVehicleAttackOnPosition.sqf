@@ -33,5 +33,5 @@ wp2 setwaypointtype"MOVE";
 //50% chance to setup the side mission 
 if (random 100 < 50) then 
 {
-	[[format ["%1%2","_sideQuestPlane", random 10000],"DestroyPlane", getPos leader (_vehicleAirAttackGroup), vehicle leader _vehicleAirAttackGroup], "engine\objectiveManagement\doGenerateSideObjective.sqf"] remoteExec ['BIS_fnc_execVM', 2];
+	[[format ["%1%2","_sideQuestAirVehicle", random 10000],"DestroyAirVehicle", getPos leader (_vehicleAirAttackGroup), vehicle leader _vehicleAirAttackGroup], "engine\objectiveManagement\doGenerateSideObjective.sqf"] remoteExec ['BIS_fnc_execVM', 2];
 };

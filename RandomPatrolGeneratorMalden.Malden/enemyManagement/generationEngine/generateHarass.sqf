@@ -1,4 +1,4 @@
-params ["_thisAvailableOpforGroup","_thisAvailableOpforCars","_thisAvailableOpforLightArmoredVehicle","_thisAvailableOpforHeavyArmoredVehicle", "_thisAvailableOpforUnarmedChopperVehicle","_thisAvailableOpforFixedWing"];
+params ["_thisAvailableOpforGroup","_thisAvailableOpforCars","_thisAvailableOpforLightArmoredVehicle","_thisAvailableOpforHeavyArmoredVehicle", "_thisAvailableOpforUnarmedChopperVehicle","_thisAvailableOpforFixedWing", "_thisAvailableOpforArmedChopperVehicle"];
 
 nb_ind_player_alive = 0;
 nb_blu_player_alive = 0;
@@ -76,11 +76,32 @@ if (isServer) then
 				[_thisAvailableOpforGroup#0, selectRandom _thisAvailableOpforUnarmedChopperVehicle, positionToAttack] execVM 'enemyManagement\behaviorEngine\doVehicleReinforcement.sqf'; 
 			};
 
-			//Plane reinforcement 25%
-			if (missionNamespace getVariable ["enableArmedAicraft", false] && (count _thisAvailableOpforFixedWing != 0 &&  random 100 < 25)) then 
+			//Check if there is a player in a plane
+			if (count (allPlayers select {(vehicle _x ) isKindOf "Plane"}) > 0) then 
 			{
-				//Generate enemy wave
-				[selectRandom _thisAvailableOpforFixedWing, positionToAttack] execVM 'enemyManagement\behaviorEngine\doVehicleAttackOnPosition.sqf'; 
+				//Plane reinforcement 75%
+				//Increase the probability of enemy air reinforcement when there are players in the air
+				if (missionNamespace getVariable ["enableArmedAicraft", false] && (count _thisAvailableOpforFixedWing != 0 &&  random 100 < 75)) then 
+				{
+					//Generate enemy wave
+					[selectRandom _thisAvailableOpforFixedWing, positionToAttack] execVM 'enemyManagement\behaviorEngine\doVehicleAttackOnPosition.sqf'; 
+				};
+			} else 
+			{
+				//Plane reinforcement 25%
+				if (missionNamespace getVariable ["enableArmedAicraft", false] && (count _thisAvailableOpforFixedWing != 0 &&  random 100 < 25)) then 
+				{
+					//Generate enemy wave
+					[selectRandom _thisAvailableOpforFixedWing, positionToAttack] execVM 'enemyManagement\behaviorEngine\doVehicleAttackOnPosition.sqf'; 
+				};
+			};
+
+
+			//Attack chopper reinforcement 25%
+			if (missionNamespace getVariable ["enableArmedAicraft", false] && (count count _thisAvailableOpforArmedChopperVehicle != 0 &&  random 100 < 25)) then 
+			{
+				//Generate enemy attack chopper wave
+				[selectRandom _thisAvailableOpforArmedChopperVehicle, positionToAttack] execVM 'enemyManagement\behaviorEngine\doVehicleAttackOnPosition.sqf'; 
 			};
 
 			AvalaibleInitAttackPositions = [];

@@ -48,10 +48,10 @@ if ((_objectiveID call BIS_fnc_taskState ) != "SUCCEEDED" && !(missionNameSpace 
 				[[25, "RPG_ranking_objective_complete"], "engine\rankManagement\rankUpdater.sqf"] remoteExec ['BIS_fnc_execVM', 0];
 			};
 		};
-		case "DestroyPlane":
+		case "DestroyAirVehicle":
 		{
-			_currentObjectiveTitle = "Destroy OPFOR plane";
-			_currentObjectiveDescription = format ["You have to destroy the plane flying around the AO.", mapGridPosition _objectiveLocation, getText (configFile >> "cfgVehicles" >> typeOf (vehicle leader (_objectiveObject)) >> "displayName")];
+			_currentObjectiveTitle = "Destroy OPFOR air vehicle";
+			_currentObjectiveDescription = format ["You have to destroy the enemy air vehicle flying around the AO.", mapGridPosition _objectiveLocation, getText (configFile >> "cfgVehicles" >> typeOf (vehicle leader (_objectiveObject)) >> "displayName")];
 
 			_objectiveObject setVariable ["sideTaskAssociated", _objectiveID, true];
 			
