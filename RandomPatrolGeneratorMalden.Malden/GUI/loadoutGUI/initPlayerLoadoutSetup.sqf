@@ -198,16 +198,23 @@ _buttonLoad ctrlAddEventHandler[ "ButtonClick",
 		//Fix TFAR link 
 		if (isClass (configFile >> "CfgPatches" >> "task_force_radio")) then 
 		{
-
 			_currentRadios = player call TFAR_fnc_radiosList;
 
 			if (count _currentRadios >= 1) then
 			{
+				//Remove previously added radio in case where there is already a member with the same radio ID
 				_currentRadio = _currentRadios#0;
 				player unassignItem _currentRadio;
 				player removeItem _currentRadio;
-				player addItem "TFAR_anprc152";
-				player assignItem "TFAR_anprc152";
+
+				//Search default radio name (TFAR rename player's radio)
+				_tempArray = (_currentRadio splitString "_");
+				_tempArray resize (count _tempArray-1);
+				_radioToAdd = (_tempArray joinString "_");
+
+				//Add specific radio
+				player addItem _radioToAdd;
+				player assignItem _radioToAdd;
 			};
 		};
 		

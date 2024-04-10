@@ -150,6 +150,7 @@ getVirtualItemList = {
 			{
 				virtualItemList = virtualItemList + (itemList_db select {_x select 1  == _currentFaction} select 0 select 0);
 				virtualItemList = virtualItemList + (itemMedicList_db select {_x select 1  == _currentFaction} select 0 select 0);
+				virtualItemList = virtualItemList + (factionDefaultRadios_db select {_x select 1  == _currentFaction} select 0 select 0); 
 				virtualItemList = virtualItemList + basicItemsList;
 				virtualItemList = virtualItemList + basicMedicItems;
 			};			
@@ -157,6 +158,7 @@ getVirtualItemList = {
 			{
 				virtualItemList = virtualItemList + (itemList_db select {_x select 1  == _currentFaction} select 0 select 0);
 				virtualItemList = virtualItemList + (itemEngineerList_db select {_x select 1  == _currentFaction} select 0 select 0);
+				virtualItemList = virtualItemList + (factionDefaultRadios_db select {_x select 1  == _currentFaction} select 0 select 0); 
 				virtualItemList = virtualItemList + basicItemsList;
 				virtualItemList = virtualItemList + basicEngineerItems;
 			};		
@@ -164,6 +166,7 @@ getVirtualItemList = {
 			{
 				//Default item list
 			 	virtualItemList = virtualItemList + (itemList_db select {_x select 1  == _currentFaction} select 0 select 0); 
+				virtualItemList = virtualItemList + (factionDefaultRadios_db select {_x select 1  == _currentFaction} select 0 select 0); 
 				virtualItemList = virtualItemList + basicItemsList;
 			};
 	};
@@ -672,8 +675,21 @@ setupSaveAndLoadRole = {
 adjustTFARRadio = {
 	params ["_currentPlayer"];
 	if (isClass (configFile >> "CfgPatches" >> "task_force_radio")) then {
-		_currentPlayer addItem "TFAR_anprc152";
-		_currentPlayer assignItem "TFAR_anprc152";
+
+		//Get default radio setup in the faction
+		_currentFaction = _currentPlayer call getPlayerFaction;
+		_factionDefaultRadios = ((factionDefaultRadios_db select {_x#1  == _currentFaction})#0)#0;
+
+		//If there is a radio defined, add it to the player else add basic default radio
+		if (count _factionDefaultRadios > 0) then 
+		{
+			_currentPlayer addItem _factionDefaultRadios#0;
+			_currentPlayer assignItem _factionDefaultRadios#0;
+		} else 
+		{
+			_currentPlayer addItem basicDefaultRadio#0;
+			_currentPlayer assignItem basicDefaultRadio#0;	
+		};
 
 		//Seems not working
 		if (side _currentPlayer == blufor) then

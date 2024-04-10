@@ -21,7 +21,12 @@ basicItemsList = [
 	"ACE_EntrenchingTool",
 	"ACE_RangeTable_82mm",
 	"ACE_painkillers",
-	"ACE_PlottingBoard"
+	"ACE_PlottingBoard",
+	"ACE_RangeTable_82mm",
+	"ACE_SpraypaintBlack",
+	"ACE_SpraypaintBlue",
+	"ACE_SpraypaintGreen",
+	"ACE_SpraypaintRed"
 ];
 
 //basic medic items that will be included with all factions
@@ -52,4 +57,8 @@ basicEngineerItems = [
 	"ace_marker_flags_purple",
 	"ace_marker_flags_orange",
 	"ace_marker_flags_red"
+];
+
+basicDefaultRadio = [
+	"TFAR_anprc152"
 ];
