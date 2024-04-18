@@ -104,10 +104,6 @@ baseEnemyHeavyArmoredVehicleGroup_WWII_Wehrmacht = [
 //	"LIB_StuG_III_G"
 ];
 
-//Basic enemy chopper avalaible
-baseChopperGroup_WWII_Wehrmacht = [
-	// lol
-];
 
 //Basic enemy aircraft avalaible
 baseFixedWingGroup_WWII_Wehrmacht = [

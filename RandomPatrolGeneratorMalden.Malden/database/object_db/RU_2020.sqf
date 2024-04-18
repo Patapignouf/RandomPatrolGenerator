@@ -35,7 +35,10 @@ baseEnemyDemoGroup_RU_2020 = [
 ];
 
 baseEnemyMortarGroup_RU_2020 = [
-	
+	"rhs_2b14_82mm_vdv",
+	"rhs_vdv_marksman", 
+	"rhs_vdv_rifleman", 
+	"rhs_vdv_arifleman_rpk"
 ];
 
 baseEnemyVehicleGroup_RU_2020 = [
@@ -159,16 +162,32 @@ rifleList_RU_2020 = [
 	"rhs_weap_ak74m",
 	"rhs_weap_makarov_pm",
 	"rhs_weap_ak74mr",
+	"rhs_weap_ak74m_fullplum",
+	"rhs_weap_ak74m_fullplum_npz",
+	"rhs_weap_ak74m_zenitco01_b33",
 	"rhs_weap_aks74n_npz",
 	"rhs_weap_aks74n_2",
 	"rhs_weap_ak103",
+	"rhs_weap_ak103_npz",
+	"rhs_weap_ak103_zenitco01",
+	"rhs_weap_ak103_zenitco01_b33",
+	"rhs_weap_ak103_1",
+	"rhs_weap_ak104",
+	"rhs_weap_ak104_npz",
 	"rhs_weap_ak105",
+	"rhs_weap_ak105_npz",
 	"rhs_weap_ak105_zenitco01",
-	"rhs_weap_pya"
+	"rhs_weap_ak105_zenitco01_b33",
+	"rhs_weap_pya",
+	"rhs_weap_6p53",
+
+	//Periscope
+	"rhs_weap_tr8"
 ];	
 
 
-//Grenade launcher or weapon with grenade launcher option
+
+
 grenadeLauncherList_RU_2020 = [		
 	"rhs_weap_ak74m_gp25",
 	"rhs_weap_ak74mr_gp25",
@@ -186,7 +205,9 @@ launcherList_RU_2020 = [
 autorifleList_RU_2020 = [			
 	"rhs_weap_pkm",
 	"rhs_weap_pkp",
-	"rhs_weap_rpk74m"
+	"rhs_weap_rpk74m",
+	"rhs_weap_rpk74m_npz"
+
 ];	
 
 marksmanrifleList_RU_2020 = [		
@@ -194,14 +215,18 @@ marksmanrifleList_RU_2020 = [
 	"rhs_weap_svds",
 	"rhs_weap_vss",
 	"rhs_weap_t5000",
-	"rhs_weap_svds_npz"
+	"rhs_weap_svds_npz",
+	"rhs_weap_vss_grip_npz",
+	"rhs_weap_svdp"
 ];
+
 
 
 smgList_RU_2020 = [		
 	"rhs_weap_aks74u",
 	"rhs_weap_ak74m_folded",
-	"rhs_weap_pp2000_folded"
+	"rhs_weap_pp2000_folded",
+	"rhs_weap_pp2000"
 ];
 
 //////////////////////////
@@ -217,7 +242,10 @@ attachmentShortList_RU_2020	= [
 	"rhs_acc_2dpZenit",
 	"rhs_acc_okp7_picatinny",
 	"rhs_acc_perst1ik_ris",
-	"rhs_acc_pgo7v3"
+	"rhs_acc_pgo7v3",
+	"rhs_acc_pkas_pkp",
+	"rhs_acc_pgo7v3_pkp",
+	"rhs_acc_pgo7v3_ak"
 ];
 
 attachmentLongList_RU_2020	= [
@@ -234,19 +262,16 @@ itemList_RU_2020 = [
 	"Laserdesignator",
 	"B_UavTerminal",
 	"ItemGPS",
-	"Binocular",
 	"Rangefinder",
 	"ACE_EntrenchingTool",
 	"ACE_RangeTable_82mm",
-	"ACE_SpraypaintBlack",
-	"ACE_SpraypaintBlue",
-	"ACE_SpraypaintGreen",
-	"ACE_SpraypaintRed",
 	"ACE_IR_Strobe_Item",
 	"ACE_RangeCard",
 	"ACE_NVG_Wide_Black_WP",
 	"ACE_NVG_Wide_WP",
 	"ACE_NVG_Wide_Green_WP"
+	//"rhs_radio_R187P1",
+	//"rhs_radio_R169P1"
 ];
 
 itemEngineerList_RU_2020 = [
@@ -262,8 +287,7 @@ backPackList_RU_2020 = [
 	"rhs_rk_sht_30_emr",
 	"rhs_tortila_olive",
 	"rhs_assault_umbts",
-	"TFAR_rt1523g",
-	"TFAR_rt1523g_green"
+	"TFAR_mr3000_rhs"
 ];
 
 //Uniform, vest, headgear, avalaible for all unit
@@ -283,6 +307,9 @@ uniformList_RU_2020 = [
 	"rhs_scarf"
 ];
 
+factionDefaultRadios_RU_2020 = [
+	"tfar_fadak"
+];
 
 //Magazine avalaible for all unit
 magazineList_RU_2020 = 	[

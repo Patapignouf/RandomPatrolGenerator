@@ -3,14 +3,14 @@
 //////////////////////////////
 //Russian Ratnik_Winter
 baseEnemyGroup_KORSAC_KS  = [
-"vtf_kf_O_SquadLeader_F",
-"vtf_kf_O_Medic_F",
-"vtf_kf_O_Rifleman_AT_F",
-"vtf_kf_O_Marksman_F",
-"vtf_kf_O_Grenadier_F",
-"vtf_kf_O_Rifleman_F",
-"vtf_kf_O_Autorifleman_F",
-"vtf_kf_O_Engineer_F"
+	"vtf_kf_O_SquadLeader_F",
+	"vtf_kf_O_Medic_F",
+	"vtf_kf_O_Rifleman_AT_F",
+	"vtf_kf_O_Marksman_F",
+	"vtf_kf_O_Grenadier_F",
+	"vtf_kf_O_Rifleman_F",
+	"vtf_kf_O_Autorifleman_F",
+	"vtf_kf_O_Engineer_F"
 	
 ];
 

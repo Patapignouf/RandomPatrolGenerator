@@ -102,7 +102,7 @@ baseEnemyHeavyArmoredVehicleGroup_ColdWar_NVA = [
 ];
 
 //Basic enemy chopper avalaible
-baseChopperGroup_ColdWar_NVA = [
+baseEnemyUnarmedChopperGroup_ColdWar_NVA = [
 	"uns_Mi8T_VPAF"
 ];
 

@@ -140,7 +140,6 @@ bluforHQVehicle_HorizonIsland = [
 //Loadout management////
 ////////////////////////
 
-listOfRoles_HorizonIsland = [c_leader,c_at,c_rifleman,c_engineer,c_autorifleman,c_marksman,c_medic,c_grenadier,c_pilot];
 
 //USA
 loadout_HorizonIsland = [		

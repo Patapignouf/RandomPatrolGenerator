@@ -55,7 +55,6 @@ bluforArmoredVehicle_KORSAC_KDF = [
 ////////////////////////
 
 //Define custom list of role
-listOfRoles_KORSAC_KDF = [c_leader,c_at,c_rifleman,c_engineer,c_autorifleman,c_marksman,c_medic,c_grenadier,c_pilot];
 
 //USA
 loadout_KORSAC_KDF = [		

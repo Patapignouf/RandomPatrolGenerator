@@ -134,12 +134,6 @@ loadout_Syndikat = [
 ];
 
 //Stuff sample
-// [["arifle_AKS_F","","","",["30Rnd_545x39_Mag_F",30],[],""],[],[],["U_I_C_Soldier_Bandit_1_F",[["FirstAidKit",1],["30Rnd_545x39_Mag_F",2,30]]],["V_BandollierB_rgr",[["30Rnd_545x39_Mag_F",3,30],["MiniGrenade",2,1]]],[],"","",[],["ItemMap","","ItemRadio","ItemCompass","ItemWatch",""]]
-// [["arifle_AKM_F","","","",["30Rnd_762x39_Mag_F",30],[],""],[],[],["U_I_C_Soldier_Bandit_4_F",[["FirstAidKit",1],["30Rnd_762x39_Mag_F",1,30],["MiniGrenade",1,1]]],["V_BandollierB_blk",[["30Rnd_762x39_Mag_F",4,30],["MiniGrenade",1,1]]],[],"","",[],["ItemMap","","ItemRadio","ItemCompass","ItemWatch",""]]
-// [["LMG_03_F","","","",["200Rnd_556x45_Box_F",200],[],""],[],["hgun_Pistol_01_F","","","",["10Rnd_9x21_Mag",10],[],""],["U_I_C_Soldier_Para_4_F",[["FirstAidKit",1],["10Rnd_9x21_Mag",2,10]]],["V_Chestrig_blk",[["200Rnd_556x45_Box_F",2,200]]],[],"","",[],["ItemMap","","ItemRadio","ItemCompass","ItemWatch",""]]
-// [["arifle_AKS_F","","","",["30Rnd_545x39_Mag_F",30],[],""],["launch_RPG7_F","","","",["RPG7_F",1],[],""],[],["U_I_C_Soldier_Para_5_F",[["FirstAidKit",1],["30Rnd_545x39_Mag_F",1,30]]],[],["B_Kitbag_cbr_Para_5_F",[["30Rnd_545x39_Mag_F",4,30],["RPG7_F",3,1]]],"","",[],["ItemMap","","ItemRadio","ItemCompass","ItemWatch",""]]
-// [["arifle_AKM_F","","","",["30Rnd_762x39_Mag_F",30],[],""],[],[],["U_I_C_Soldier_Para_3_F",[["FirstAidKit",1],["30Rnd_762x39_Mag_F",1,30]]],[],["B_Kitbag_rgr_Para_3_F",[["Medikit",1],["FirstAidKit",4],["30Rnd_762x39_Mag_F",4,30]]],"","",[],["ItemMap","","ItemRadio","ItemCompass","ItemWatch",""]]
-// [["srifle_DMR_06_camo_F","","","",["20Rnd_762x51_Mag",20],[],""],[],[],["U_I_C_Soldier_Para_3_F",[["FirstAidKit",1]]],[],["B_Kitbag_rgr_Para_3_F",[["Medikit",1],["FirstAidKit",4]]],"","",[],["ItemMap","","ItemRadio","ItemCompass","ItemWatch",""]]
 
 ////////////////////////
 ///Weapon management////

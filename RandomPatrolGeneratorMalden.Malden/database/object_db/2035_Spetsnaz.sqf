@@ -136,7 +136,6 @@ bluforHQVehicle_2035_Spetsnaz = [
 //Loadout management////
 ////////////////////////
 
-listOfRoles_2035_Spetsnaz = [c_leader,c_at,c_rifleman,c_engineer,c_autorifleman,c_marksman,c_medic,c_grenadier];
 
 //Two options : 
 // - ACE Arsenal : ],[],"AMF_FELIN_MOUNT_EARPROT_OD","",["Laserdesignator","","","",["Laserbatteries",1],[],""],["ItemMap","ItemGPS","","ItemCompass","TFAR_microdagr",""]]
@@ -297,10 +296,13 @@ itemMedicList_2035_Spetsnaz = [
 
 //backpack avalaible for all unit
 backPackList_2035_Spetsnaz = [
-
+	"tfar_mr3000"
 
 ];
 
+factionDefaultRadios_2035_Spetsnaz = [
+	"tfar_fadak"
+];
 
 //Uniform, vest, headgear, avalaible for all unit
 uniformList_2035_Spetsnaz = [

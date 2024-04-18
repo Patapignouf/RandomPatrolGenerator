@@ -106,10 +106,6 @@ baseEnemyHeavyArmoredVehicleGroup_WWII_USA = [
 //	"LIB_M4A4_FIREFLY"
 ];
 
-//Basic enemy chopper avalaible
-baseChopperGroup_WWII_USA = [
-	// lol
-];
 
 //Basic enemy aircraft avalaible
 baseFixedWingGroup_WWII_USA = [
@@ -170,7 +166,6 @@ bluforHQVehicle_WWII_USA = [
 ////////////////////////
 //Loadout management////
 ////////////////////////
-listOfRoles_WWII_USA = [c_leader,c_at,c_rifleman,c_engineer,c_autorifleman,c_marksman,c_radioman,c_medic,c_pilot];
 
 //WWII_USA
 loadout_WWII_USA = [		

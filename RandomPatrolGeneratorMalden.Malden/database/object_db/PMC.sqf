@@ -140,7 +140,6 @@ bluforBoat_PMC = [
 //Loadout management////
 ////////////////////////
 
-listOfRoles_PMC = [c_leader,c_at,c_rifleman,c_engineer,c_autorifleman,c_marksman,c_medic,c_grenadier];
 
 //PMC
 loadout_PMC = [		

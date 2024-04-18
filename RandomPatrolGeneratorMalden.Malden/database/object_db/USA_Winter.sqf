@@ -73,7 +73,6 @@ bluforHQVehicle_USA_Winter = [
 //Loadout management////
 ////////////////////////
 
-listOfRoles_USA_Winter = [c_leader,c_at,c_rifleman,c_engineer,c_autorifleman,c_marksman,c_sniper,c_medic,c_grenadier,c_drone,c_pilot];
 
 //USA
 loadout_USA_Winter = [		

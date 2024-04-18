@@ -90,7 +90,6 @@ c_Radio = "radio";
 c_Drone = "opérateur drone";
 c_Pilot = "pilot";
 
-listOfRoles_French = [c_leader,c_Medic,c_at,c_rifleman,c_engineer,c_autorifleman,c_mitrailleuseLourd762,c_marksman,c_TireurdeprecisionHK417556,c_Tireurdelite50,c_127ARME,c_127trepied,c_Mortier,c_Trepiedmortier,c_TireurMMP,c_TrepiedMMP,c_Grenadier,c_Radio,c_Drone,c_Pilot];
 
 //French
 loadout_French = [		

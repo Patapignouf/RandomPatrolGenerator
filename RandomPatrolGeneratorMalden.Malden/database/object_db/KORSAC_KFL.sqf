@@ -59,7 +59,6 @@ bluforArmoredVehicle_KORSAC_KFL = [
 //Loadout management////
 ////////////////////////
 
-listOfRoles_KORSAC_KFL = [c_leader,c_at,c_rifleman,c_engineer,c_autorifleman,c_marksman,c_medic,c_grenadier];
 
 //USA
 loadout_KORSAC_KFL = [		

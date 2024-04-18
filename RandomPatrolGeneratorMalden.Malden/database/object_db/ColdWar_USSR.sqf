@@ -152,7 +152,6 @@ bluforArmoredVehicle_ColdWar_USSR = [
 //Loadout management////
 ////////////////////////
 
-listOfRoles_ColdWar_USSR = [c_leader,c_at,c_rifleman,c_engineer,c_autorifleman,c_marksman,c_medic,c_grenadier,c_pilot];
 
 //USSR
 loadout_ColdWar_USSR = [		

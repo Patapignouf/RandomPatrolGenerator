@@ -51,11 +51,6 @@ baseEnemyHeavyArmoredVehicleGroup_KORSAC_KAL = [
 
 ];
 
-//Basic enemy chopper avalaible
-baseChopperGroup_KORSAC_KAL = [
-
-];
-
 //Basic enemy aircraft avalaible
 baseFixedWingGroup_KORSAC_KAL = [
 

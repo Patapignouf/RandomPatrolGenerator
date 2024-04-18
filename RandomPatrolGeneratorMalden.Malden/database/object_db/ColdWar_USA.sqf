@@ -78,7 +78,7 @@ baseEnemyLightArmoredVehicleGroup_ColdWar_USA = ["uns_xm706e1","uns_M113_30cal",
 baseEnemyHeavyArmoredVehicleGroup_ColdWar_USA = ["uns_m48a3"];
 
 //Basic enemy chopper avalaible
-baseChopperGroup_ColdWar_USA = ["UNS_AH1G", 
+baseEnemyUnarmedChopperGroup_ColdWar_USA = ["UNS_AH1G", 
 "uns_UH1H_m60"];
 
 //Basic enemy aircraft avalaible

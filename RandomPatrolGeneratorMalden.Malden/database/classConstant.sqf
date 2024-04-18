@@ -10,3 +10,4 @@ c_radioman = "radioman";
 c_grenadier = "grenadier";
 c_ammobearer = "ammobearer";
 c_pilot = "pilot";
+c_drone = "UAV operator";

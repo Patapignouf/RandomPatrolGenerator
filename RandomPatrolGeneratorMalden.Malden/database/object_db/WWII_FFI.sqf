@@ -77,10 +77,7 @@ baseEnemyHeavyArmoredVehicleGroup_WWII_FFI = [
 
 ];
 
-//Basic enemy chopper avalaible
-baseChopperGroup_WWII_FFI = [
-	// lol
-];
+
 
 //Basic enemy aircraft avalaible
 baseFixedWingGroup_WWII_FFI = [
@@ -133,7 +130,6 @@ bluforHQVehicle_WWII_FFI = [
 ////////////////////////
 //Loadout management////
 ////////////////////////
-listOfRoles_WWII_FFI = [c_leader,c_at,c_rifleman,c_engineer,c_autorifleman,c_medic];
 
 //WWII_USA
 loadout_WWII_FFI = [		

@@ -1,41 +1,38 @@
-c_leader = "leader";
-c_at = "at";
-c_rifleman = "rifleman";
-c_engineer = "engineer";
-c_autorifleman = "autorifleman";
-c_marksman = "marksman"; 
-c_medic = "medic";
-c_grenadier = "grenadier";
-c_pilot = "pilot";
-c_drone = "UAV operator";
+#include "..\classConstant.sqf"
 
 //////////////////////////////
 ////Define civ group data/////
 //////////////////////////////
 
 
-civilian_group_2035_AAF = ["C_Man_casual_9_F", 
-"C_Man_casual_4_v2_F", 
-"C_Man_casual_6_v2_F", 
-"C_Man_casual_7_F", 
-"C_Man_ConstructionWorker_01_Blue_F"];
+civilian_group_2035_AAF = [
+	"C_Man_casual_9_F", 
+	"C_Man_casual_4_v2_F", 
+	"C_Man_casual_6_v2_F", 
+	"C_Man_casual_7_F", 
+	"C_Man_ConstructionWorker_01_Blue_F"
+];
 
-civilian_big_group_2035_AAF = ["C_Man_casual_9_F", 
-"C_Man_casual_4_v2_F", 
-"C_Man_casual_6_v2_F", 
-"C_Man_casual_7_F", 
-"C_Man_ConstructionWorker_01_Blue_F", 
-"C_man_w_worker_F", 
-"C_Man_UtilityWorker_01_F", 
-"C_man_polo_2_F" ];
+civilian_big_group_2035_AAF = [
+	"C_Man_casual_9_F", 
+	"C_Man_casual_4_v2_F", 
+	"C_Man_casual_6_v2_F", 
+	"C_Man_casual_7_F", 
+	"C_Man_ConstructionWorker_01_Blue_F", 
+	"C_man_w_worker_F", 
+	"C_Man_UtilityWorker_01_F", 
+	"C_man_polo_2_F" 
+];
 
-civilianTruck_2035_AAF = ["C_Hatchback_01_sport_F", 
-"C_Hatchback_01_F", 
-"C_SUV_01_F", 
-"C_Quadbike_01_F", 
-"C_Van_01_box_F", 
-"C_Van_01_fuel_F", 
-"C_Offroad_01_repair_F"];
+civilianTruck_2035_AAF = [
+	"C_Hatchback_01_sport_F", 
+	"C_Hatchback_01_F", 
+	"C_SUV_01_F", 
+	"C_Quadbike_01_F", 
+	"C_Van_01_box_F", 
+	"C_Van_01_fuel_F", 
+	"C_Offroad_01_repair_F"
+];
 
 //////////////////////////////
 ///Define enemy group data////
@@ -44,7 +41,9 @@ civilianTruck_2035_AAF = ["C_Hatchback_01_sport_F",
 baseEnemyGroup_2035_AAF = [
 	"I_soldier_F", 
 	"I_Soldier_AR_F", 
+	"I_Soldier_AR_F",
 	"I_Soldier_GL_F", 
+	"I_medic_F",
 	"I_Soldier_M_F", 
 	"I_Soldier_LAT2_F", 
 	"I_soldier_F", 
@@ -72,14 +71,13 @@ baseEnemyMortarGroup_2035_AAF = [
 	"I_Mortar_01_F",
 	"I_soldier_F", 
 	"I_Soldier_AR_F", 
-	"I_Soldier_GL_F"
+	"I_ghillie_sard_F"
 ];
 
 baseEnemyVehicleGroup_2035_AAF = [
 	"I_MRAP_03_F", 
 	"I_MRAP_03_hmg_F", 
-	"I_Truck_02_transport_F", 
-	"I_Truck_02_medical_F"
+	"I_Truck_02_transport_F"
 ];
 
 baseEnemyLightArmoredVehicleGroup_2035_AAF = [
@@ -97,6 +95,10 @@ baseEnemyHeavyArmoredVehicleGroup_2035_AAF = [
 baseEnemyUnarmedChopperGroup_2035_AAF = [
 	"I_Heli_Transport_02_F", 
 	"I_Heli_light_03_unarmed_F"
+];
+
+baseEnemyArmedChopperGroup_2035_AAF = [
+	"I_Heli_light_03_dynamicLoadout_F"
 ];
 
 //Basic enemy aircraft avalaible
@@ -160,8 +162,6 @@ bluforHQVehicle_2035_FIA = [
 ////////////////////////
 //Loadout management////
 ////////////////////////
-
-listOfRoles_2035_AAF = [c_leader,c_at,c_rifleman,c_engineer,c_autorifleman,c_marksman,c_medic,c_grenadier,c_drone,c_pilot];
 
 loadout_2035_AAF = [		
 	[c_leader,"I_Soldier_SL_F"],
@@ -308,7 +308,7 @@ backPackList_2035_AAF = [
 	"B_TacticalPack_oli",
 	"B_Fieldpack_oli_Ammo",
 	"B_Carryall_oli",
-	"TFAR_rt1523g"
+	"tfar_anprc155"
 ];
 
 uniformList_2035_AAF = [
@@ -319,6 +319,10 @@ uniformList_2035_AAF = [
 	"H_MilCap_dgtl",
 	"H_Booniehat_dgtl",
 	"V_Chestrig_oli"
+];
+
+factionDefaultRadios_2035_AAF = [
+	"tfar_anprc148jem"
 ];
 
 magazineList_2035_AAF = [

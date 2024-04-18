@@ -115,7 +115,6 @@ bluforHQVehicle_Taki = [
 //Loadout management////
 ////////////////////////
 
-listOfRoles_Taki = [c_leader,c_at,c_rifleman,c_engineer,c_autorifleman,c_marksman,c_medic,c_grenadier];
 
 //Takistani
 loadout_Taki = [		

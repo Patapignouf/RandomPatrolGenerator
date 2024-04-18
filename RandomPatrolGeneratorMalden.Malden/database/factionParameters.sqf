@@ -38,6 +38,8 @@ _ColdWar_USA_SF = 36;
 _ColdWar_VC = 37;
 _USA_SOCOM_2020 = 38;
 _RU_2020 = 39;
+_RU_2020_reservists = 40;
+_USA_2020 = 41;
 
 #include "object_db\USA.sqf"
 #include "object_db\USA_Winter.sqf"
@@ -46,6 +48,7 @@ _RU_2020 = 39;
 #include "object_db\Syndikat.sqf"
 #include "object_db\Takistani.sqf"
 #include "object_db\USA_2000.sqf"
+#include "object_db\USA_2020.sqf"
 #include "object_db\WWII_Wehrmacht.sqf"
 #include "object_db\WWII_URSS.sqf"
 #include "object_db\WWII_UK.sqf"
@@ -79,6 +82,7 @@ _RU_2020 = 39;
 #include "object_db\KORSAC_KAL.sqf"
 #include "object_db\USA_SOCOM_2020.sqf"
 #include "object_db\RU_2020.sqf"
+#include "object_db\RU_2020_reservists.sqf"
 
 //Define faction prefix
 c_db = "_db";
@@ -86,8 +90,10 @@ c_USA = "_USA";
 c_USA_Winter = "_USA_Winter";
 c_USA_2000 = "_USA_2000";
 c_USA_SOCOM_2020 = "_USA_SOCOM_2020";
+c_USA_2020 = "_USA_2020";
 c_Russian = "_Russian";
 c_RU_2020 = "_RU_2020";
+c_RU_2020_reservists = "_RU_2020_reservists";
 c_Taki = "_Taki";
 c_Syndikat = "_Syndikat";
 c_French = "_French";
@@ -200,7 +206,9 @@ if (isClass (configFile >> "CfgPatches" >> "vtf_kf_main")) then
 if (isClass (configFile >> "CfgPatches" >> "rhs_main")) then 
 {
 	factionInfos pushBack [c_USA_SOCOM_2020,_USA_SOCOM_2020,"2020 USA SOCOM [RHS]", true, true, false];
-	factionInfos pushBack [c_RU_2020,_RU_2020,"2020 Russian [RHS]", true, true, false];
+	factionInfos pushBack [c_USA_2020,_USA_2020,"2020 USA [RHS]", true, true, false];
+	factionInfos pushBack [c_RU_2020,_RU_2020,"2020 Russian VDV [RHS]", true, true, false];
+	factionInfos pushBack [c_RU_2020_reservists,_RU_2020_reservists,"2020 Russian regular and reservists [RHS]", false, true, false];
 };
 
 

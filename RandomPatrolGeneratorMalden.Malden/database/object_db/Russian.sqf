@@ -138,7 +138,6 @@ bluforHQVehicle_USA_2000 = [
 ////////////////////////
 
 //Russian
-listOfRoles_Russian = [c_leader,c_at,c_rifleman,c_engineer,c_autorifleman,c_marksman,c_medic,c_grenadier];
 
 //Russian
 loadout_Russian = [		

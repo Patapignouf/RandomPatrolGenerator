@@ -103,10 +103,7 @@ baseEnemyHeavyArmoredVehicleGroup_WWII_URSS = [
 //	"LIB_SU85"
 ];
 
-//Basic enemy chopper avalaible
-baseChopperGroup_WWII_URSS = [
-	// lol
-];
+
 
 //Basic enemy aircraft avalaible
 baseFixedWingGroup_WWII_URSS = [

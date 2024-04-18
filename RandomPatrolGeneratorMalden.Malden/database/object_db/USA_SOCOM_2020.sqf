@@ -123,8 +123,8 @@ bluforFixedWing_USA_SOCOM_2020 = [
 
 //Vehicule able to do HQ features (Loadout management and more)
 bluforHQVehicle_USA_SOCOM_2020 = [
-	"rhsusf_m113d_usarmy_unarmed",
-	"rhsusf_M1230_M2_usarmy_d"
+	"rhsusf_M1084A1R_SOV_M2_D_fmtv_socom", 
+	"rhsusf_M1078A1R_SOV_M2_D_fmtv_socom"
 ];	
 
 

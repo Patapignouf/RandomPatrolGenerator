@@ -155,7 +155,6 @@ bluforHQVehicle_USA = [
 //Loadout management////
 ////////////////////////
 
-listOfRoles_USA = [c_leader,c_at,c_rifleman,c_engineer,c_autorifleman,c_marksman,c_medic,c_grenadier,c_drone,c_pilot];
 
 //USA
 loadout_USA = [		

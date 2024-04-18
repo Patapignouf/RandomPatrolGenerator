@@ -106,10 +106,6 @@ baseEnemyHeavyArmoredVehicleGroup_WWII_UK = [
 //	"LIB_M4A4_FIREFLY"
 ];
 
-//Basic enemy chopper avalaible
-baseChopperGroup_WWII_UK = [
-	// lol
-];
 
 //Basic enemy aircraft avalaible
 baseFixedWingGroup_WWII_UK = [
@@ -176,7 +172,6 @@ bluforHQVehicle_WWII_UK = [
 //Loadout management////
 ////////////////////////
 
-listOfRoles_WWII_UK = [c_leader,c_at,c_rifleman,c_engineer,c_autorifleman,c_marksman,c_medic,c_radioman,c_pilot];
 
 //WWII_UK
 loadout_WWII_UK = [		

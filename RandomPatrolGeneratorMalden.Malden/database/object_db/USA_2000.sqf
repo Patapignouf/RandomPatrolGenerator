@@ -152,7 +152,6 @@ bluforArmoredVehicle_USA_2000 = [
 ////////////////////////
 
 //USA
-listOfRoles_USA_2000 = [c_leader,c_at,c_rifleman,c_engineer,c_autorifleman,c_marksman,c_medic,c_pilot,c_drone,c_grenadier];
 
 loadout_USA_2000 = [		
 	[c_leader,"CUP_B_USMC_Soldier_SL_des"],

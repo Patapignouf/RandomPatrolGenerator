@@ -59,7 +59,12 @@ baseEnemyHeavyArmoredVehicleGroup_newFaction = [
 ];
 
 //Basic enemy chopper avalaible
-baseChopperGroup_newFaction = [
+baseEnemyUnarmedChopperGroup_newFaction = [
+	
+];
+
+//Basic armed enemy chopper avalaible
+baseEnemyArmedChopperGroup_newFaction = [
 	
 ];
 
@@ -68,10 +73,6 @@ baseFixedWingGroup_newFaction = [
 	
 ];
 
-//Basic enemy chopper avalaible
-baseChopperGroup_newFaction = [
-	
-];
 
 ////////////////////////
 //Vehicle management////
@@ -118,10 +119,6 @@ bluforHQVehicle_newFaction = [
 //Loadout management////
 ////////////////////////
 
-//List of Roles accepted in the BIS_fnc_arsenal
-//You can add or delete role to this list
-//Every role describe on the list must be defined in loadout_newFaction
-listOfRoles_newFaction = [c_leader,c_at,c_rifleman,c_engineer,c_autorifleman,c_marksman,c_medic,c_grenadier];
 
 //Two options : 
 // - ACE Arsenal : [["AMF_Samas_VALO_01_F","","","AMF_Aimpoint_CompM5",["25Rnd_samas_f1_mag",25],[],""],[],["AMF_Glock_17","","","",["16Rnd_9x21_Mag",17],[],""],["amf_uniform_02_CE",[["ACE_EarPlugs",1],["16Rnd_9x21_Mag",2,17]]],["amf_smb_tlb_famas_grn",[["ACE_MapTools",1],["ACE_CableTie",1],["25Rnd_samas_f1_mag",10,25],["CUP_HandGrenade_M67",2,1],["SmokeShellBlue",2,1],["SmokeShell",2,1]]],[],"AMF_FELIN_MOUNT_EARPROT_OD","",["Laserdesignator","","","",["Laserbatteries",1],[],""],["ItemMap","ItemGPS","","ItemCompass","TFAR_microdagr",""]]

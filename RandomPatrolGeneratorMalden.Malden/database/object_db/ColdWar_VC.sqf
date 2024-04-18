@@ -104,11 +104,6 @@ baseEnemyHeavyArmoredVehicleGroup_ColdWar_VC = [
 	"uns_t34_76_vc"
 ];
 
-//Basic enemy chopper avalaible
-baseChopperGroup_ColdWar_VC = [
-	
-];
-
 //Basic enemy aircraft avalaible
 baseFixedWingGroup_ColdWar_VC = [
 	

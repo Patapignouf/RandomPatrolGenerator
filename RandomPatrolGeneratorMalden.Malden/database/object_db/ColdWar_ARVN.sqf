@@ -99,7 +99,7 @@ baseEnemyLightArmoredVehicleGroup_ColdWar_ARVN = ["uns_xm706"];
 baseEnemyHeavyArmoredVehicleGroup_ColdWar_ARVN = ["uns_xm706"];
 
 //Basic enemy chopper avalaible
-baseChopperGroup_ColdWar_ARVN = ["uns_UH1D_vnaf_m60"];
+baseEnemyUnarmedChopperGroups_ColdWar_ARVN = ["uns_UH1D_vnaf_m60"];
 
 //Basic enemy aircraft avalaible
 baseFixedWingGroup_ColdWar_ARVN = ["uns_A1H_CAS"];
