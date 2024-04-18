@@ -284,7 +284,7 @@ getVirtualMagazine = {
 			{ 
 				{
 				//Add default weapon magazine except large magazine
-				_listOfLargeMagazineText = ["40Rnd","50Rnd", "60Rnd", "100Rnd", "150Rnd", "200Rnd"]; //
+				_listOfLargeMagazineText = ["40Rnd","50Rnd", "60Rnd", "75rnd", "100Rnd", "150Rnd", "200Rnd"]; //
 				_currentWeaponMagazineList = getArray (configfile >> "CfgWeapons" >> _x >> "magazines");
 					if (count _currentWeaponMagazineList != 0) then 
 					{
@@ -562,13 +562,8 @@ setupRoleSwitchToList = {
 	params ["_currentFaction"];
 
 	//Check if current faction has specific role definition
-	if (count (listOfRoles_db select {_x select 1  == _currentFaction} select 0 select 0) == 0 ) then 
-	{
-		listOfRoles = ((loadout_db select {_x # 1 == _currentFaction}) # 0 # 0) apply {_x # 0};
-	} else 
-	{
-		listOfRoles = listOfRoles_db select {_x # 1  == _currentFaction} # 0 # 0;
-	};
+	listOfRoles = ((loadout_db select {_x # 1 == _currentFaction}) # 0 # 0) apply {_x # 0};
+
  	listOfRoles;
 };
 
