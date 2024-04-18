@@ -155,7 +155,7 @@ _buttonOK ctrlAddEventHandler[ "ButtonClick",
 			if (_bluforVehicleAvalaibleSpawnCounter>=_vehiclePriceToSpawn) then 
 			{
 				//Check if this is a plane
-				if (_vehicleClassToSpawn isKindOf "Plane") then 
+				if (_vehicleClassToSpawn isKindOf "Plane" && _vehicleIsUAV == false) then 
 				{
 						//Open map and spawn plane
 						[_vehicleClassToSpawn, _vehiclePriceToSpawn, _vehicleNameToSpawn, _bluforVehicleAvalaibleSpawnCounter] spawn {
