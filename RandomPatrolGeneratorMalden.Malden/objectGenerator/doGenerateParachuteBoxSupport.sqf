@@ -86,7 +86,7 @@ if (_airDropSupportCounter > 0) then
 
 	diag_log format ["Generate air supply drop weaponList : %1", _virtualWeaponList];
 
-	_listOfLargeMagazineText = ["50Rnd", "60Rnd", "150Rnd"]; //
+	_listOfLargeMagazineText = []; //
 	{
 		_currentWeaponMagazineList = getArray (configfile >> "CfgWeapons" >> _x >> "magazines");
 		if (count _currentWeaponMagazineList != 0) then 
