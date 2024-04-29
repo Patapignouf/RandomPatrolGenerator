@@ -44,7 +44,7 @@ _currentEnemyGroup leaveVehicle _heli;
 _vehicleFromGroup = vehicle (leader _vehicleTransportGroup);
 _vehicleFromGroup addEventHandler ["HandleDamage", {
 	params ["_unit", "_selection", "_damage", "_source", "_projectile", "_hitIndex", "_instigator", "_hitPoint", "_directHit", "_context"];
-	if (_damage > 0.8 && !(_unit getVariable ["isAlmostDead", false])) then 
+	if ((_unit getHit "motor") > 0.7 && !(_unit getVariable ["isAlmostDead", false])) then 
 	{
 		_unit setVariable ["isAlmostDead", true, true];
 		_unit setDamage 1;

@@ -88,7 +88,7 @@ if ((_objectiveID call BIS_fnc_taskState ) != "SUCCEEDED" && !(missionNameSpace 
 				_objectiveObject setVariable ["sideObjectiveID", format ["RPG_%1", _objectiveID], true];
 				_objectiveObject addEventHandler ["HandleDamage", {
 					params ["_unit", "_selection", "_damage", "_source", "_projectile", "_hitIndex", "_instigator", "_hitPoint", "_directHit", "_context"];
-					if (_damage > 0.8 && !(_unit getVariable ["isAlmostDeadSideQuest", false])) then 
+					if ((_unit getHit "motor") > 0.7 && !(_unit getVariable ["isAlmostDeadSideQuest", false])) then 
 					{
 						_unit setVariable ["isAlmostDeadSideQuest", true, true];
 						_unit setDamage 1;
