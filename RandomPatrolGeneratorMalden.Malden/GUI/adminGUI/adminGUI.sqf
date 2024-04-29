@@ -25,6 +25,7 @@ switch (_mode) do
 		[_lnbEntries] call addVehicleSpawnerGUI;
 		[_lnbEntries] call addSupportGUI;
 		[_lnbEntries] call addCredit;
+		[_lnbEntries] call addClearWeather;
 	};
 	case "sortCol":{
 		params ["_display","_ctrl"];

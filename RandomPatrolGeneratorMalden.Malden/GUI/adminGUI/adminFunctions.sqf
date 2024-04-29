@@ -36,6 +36,19 @@ params ["_supportType"];
 			_mainDisplay closeDisplay 1;
 			[[], 'GUI\supportGUI\supportGUI.sqf'] remoteExec ['BIS_fnc_execVM', player];
 		};
+		case "ClearWeather":
+		{
+			//Close admin menu
+			_mainDisplay = (findDisplay 60000);
+			_mainDisplay closeDisplay 1;
+
+			//Clear weather without transition
+			0 setOvercast 0;
+			0 setRain 0;
+			forceWeatherChange;
+
+			hint "Weather cleared";
+		};
 		case "AddCredit":
 		{
 			[] call doIncrementVehicleSpawnCounter; 
@@ -124,6 +137,17 @@ addCredit = {
 	_supportNameCode = "AddCredit";
 	_supportIcon = "\a3\ui_f\data\igui\cfg\simpletasks\types\Radio_ca.paa";
 	_supportType = "Credit";
+
+	[_ctrl, _supportName, _supportNameCode, _supportIcon, _supportType] call addSupportOption;
+};
+
+addClearWeather = {
+	params ["_ctrl"];
+
+	_supportName = "Clear weather";
+	_supportNameCode = "ClearWeather";
+	_supportIcon = "\a3\ui_f\data\igui\cfg\simpletasks\types\Radio_ca.paa";
+	_supportType = "Weather";
 
 	[_ctrl, _supportName, _supportNameCode, _supportIcon, _supportType] call addSupportOption;
 };
