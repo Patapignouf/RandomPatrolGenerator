@@ -258,6 +258,8 @@ attachmentShortList_USA_2020	= [
 	"rhsusf_acc_mrds",
 	"rhsusf_acc_anpeq15side",
 	"rhsusf_acc_kac_grip",
+	"rhsusf_acc_T1_low",
+	"rhsusf_acc_T1_high",
 
 	//Launcher optics
 	"rhs_weap_optic_smaw",
