@@ -9,6 +9,12 @@ c_grenadier = "grenadier";
 c_drone = "UAV opérator";
 c_pilot = "pilot";
 
+//Add specific CUP factions
+if (isClass (configFile >> "CfgPatches" >> "CUP_BaseData")) then 
+{
+	factionInfos pushBack ["_ColdWar_OTAN", 27, "Cold War OTAN [CUP]", true, false, false];
+};
+
 
 //////////////////////////
 /// BLUFOR ONLY FOR NOW////

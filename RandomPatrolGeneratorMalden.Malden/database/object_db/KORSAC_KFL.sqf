@@ -9,6 +9,11 @@ c_medic = "medic";
 c_grenadier = "grenadier";
 c_pilot = "pilot";
 
+//Add specific KORSAC factions
+if (isClass (configFile >> "CfgPatches" >> "vtf_kf_main")) then 
+{
+	factionInfos pushBack ["_KORSAC_KFL",33,"KFL Foreign legion [KORSAC]", true, false, false];	
+};
 
 ////////////////////////
 //Vehicle management////

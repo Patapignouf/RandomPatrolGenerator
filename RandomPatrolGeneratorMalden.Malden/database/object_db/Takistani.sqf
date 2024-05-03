@@ -7,6 +7,12 @@ c_marksman = "marksman";
 c_medic = "medic";
 c_grenadier = "grenadier";
 
+//Add specific CUP factions
+if (isClass (configFile >> "CfgPatches" >> "CUP_BaseData")) then 
+{
+	factionInfos pushBack ["_Taki",0,"Takistani [CUP]", true, true, true];
+};
+
 ///////////////////////////
 /////Civilian Management///
 ///////////////////////////

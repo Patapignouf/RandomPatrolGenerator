@@ -1,3 +1,8 @@
+//Add specific AMF factions
+if (isClass (configFile >> "CfgPatches" >> "AMF_Patches")) then 
+{
+	factionInfos pushBack ["_French", 4,"French [AMF][ACE]", true, false, false];
+};
 
 
 ////////////////////////

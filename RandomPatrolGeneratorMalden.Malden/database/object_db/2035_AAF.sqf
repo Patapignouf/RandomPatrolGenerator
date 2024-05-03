@@ -1,5 +1,9 @@
 #include "..\classConstant.sqf"
 
+
+factionInfos pushBack ["_2035_AAF", 13,"2035 AAF", true, true, false];
+
+
 //////////////////////////////
 ////Define civ group data/////
 //////////////////////////////

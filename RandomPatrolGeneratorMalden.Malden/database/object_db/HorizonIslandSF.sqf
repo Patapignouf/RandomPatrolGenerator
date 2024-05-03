@@ -9,6 +9,12 @@ c_grenadier = "grenadier";
 c_drone = "UAV opérator";
 c_pilot = "pilot";
 
+//Add specific CUP factions
+if (isClass (configFile >> "CfgPatches" >> "CUP_BaseData")) then 
+{
+		factionInfos pushBack ["_HorizonIslandSF", 24, "Horizon Island SF [CUP]", true, true, true];
+};
+
 //////////////////////////////
 ////Define civ group data/////
 //////////////////////////////

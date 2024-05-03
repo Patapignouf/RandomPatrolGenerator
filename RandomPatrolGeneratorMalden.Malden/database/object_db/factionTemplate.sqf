@@ -1,5 +1,11 @@
 #include "..\classConstant.sqf"
 
+//Faction format :
+// [ Number : Faction Code, String : Faction string Name , String : Faction Name to display, Enabled for Blufor/Independant, Enabled for Opfor, Enabled for Civilian],
+//Add specific factions
+//factionInfos pushBack ["_newFaction", 9999, "New Faction name", true, true, true];
+
+
 //////////////////////////////
 ////Define civ group data/////
 //////////////////////////////
@@ -190,51 +196,16 @@ attachmentLongList_newFaction	= [
 
 //item avalaible for all unit
 itemList_newFaction = [
-	"FirstAidKit",
-	"ItemMap",
-	"ItemCompass",
-	"ItemWatch",
-	"NVGoggles",
-	"B_UavTerminal",
-	"ItemGPS",
-	"Binocular",
-	"Rangefinder",
-	"ACE_MapTools",
-	"ACE_microDAGR",
-	"ACE_SpraypaintRed",
-	"ACE_CableTie",
-	"ACE_DAGR",
-	"ACE_WaterBottle",
-	"ACE_EarPlugs",
-	"ACE_fieldDressing",
-	"ACE_packingBandage",
-	"ACE_elasticBandage",
-	"ACE_tourniquet",
-	"ACE_splint",
-	"ACE_morphine",
-	"ACE_quikclot",
-	"ACE_EntrenchingTool",
-	"ACE_RangeTable_82mm"
+
 	];
 
 //item avalaible for all engineer
 itemEngineerList_newFaction = [
-	"Medikit",
-	"ToolKit",
-	"MineDetector",
-	"ACE_wirecutter",
-	"ACE_Fortify"
+
 	];
 
 //item avalaible for all medic
 itemMedicList_newFaction = [
-	"ACE_epinephrine",
-	"ACE_bloodIV",
-	"ACE_bloodIV_500",
-	"ACE_bloodIV_250",
-	"ACE_personalAidKit",
-	"ACE_surgicalKit",
-	"ACE_suture"
 	];
 
 //backpack avalaible for all unit
@@ -249,3 +220,8 @@ uniformList_newFaction = [
 //Magazine avalaible for all unit
 magazineList_newFaction = [
 	];
+
+//Default radio for every rifleman
+factionDefaultRadios_newFaction = [
+
+];

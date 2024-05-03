@@ -1,5 +1,11 @@
 #include "..\classConstant.sqf"
 
+//Add specific RHS factions
+if (isClass (configFile >> "CfgPatches" >> "rhs_main")) then 
+{
+	factionInfos pushBack ["_RU_2020", 39,"2020 Russian VDV [RHS]", true, true, false];
+};
+
 //////////////////////////////
 ///Define enemy group data////
 //////////////////////////////

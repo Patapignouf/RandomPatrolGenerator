@@ -1,5 +1,11 @@
 #include "..\classConstant.sqf"
 
+//Add specific UNSUNG factions
+if (isClass (configFile >> "CfgPatches" >> "uns_main")) then 
+{
+	factionInfos pushBack ["_ColdWar_USA_SF",36,"Cold War USA Special forces [UNSUNG]", true, true, false];
+};
+
 ////////////////////////
 //Vehicle management////
 ////////////////////////

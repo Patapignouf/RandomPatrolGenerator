@@ -1,7 +1,10 @@
 #include "..\classConstant.sqf"
 
-//Include custom classes
-//c_drone = "UAV opérator";
+//Add specific KORSAC factions
+if (isClass (configFile >> "CfgPatches" >> "vtf_kf_main")) then 
+{
+	factionInfos pushBack ["_KORSAC_KDF",31,"KDF Army [KORSAC]", true, false, false];
+};
 
 ////////////////////////
 //Vehicle management////

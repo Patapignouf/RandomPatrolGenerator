@@ -1,3 +1,11 @@
+//Add specific CUP factions
+if (isClass (configFile >> "CfgPatches" >> "CUP_BaseData")) then 
+{
+	factionInfos pushBack ["_Chernarussian_Winter", 29, "Chernarussian Winter [CUP]", false, true, false];
+};
+
+
+
 //////////////////////////////  
 ///Define enemy group data////
 //////////////////////////////

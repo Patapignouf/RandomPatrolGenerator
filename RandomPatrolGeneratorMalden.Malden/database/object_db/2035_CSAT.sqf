@@ -9,6 +9,8 @@ c_medic = "medic";
 c_pilot = "pilot";
 c_drone = "UAV operator";
 
+factionInfos pushBack ["_2035_CSAT", 25, "2035 CSAT", true, true, true];
+
 //////////////////////////////
 ////Define civ group data/////
 //////////////////////////////

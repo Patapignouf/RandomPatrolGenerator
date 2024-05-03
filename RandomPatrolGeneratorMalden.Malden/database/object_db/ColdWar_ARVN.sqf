@@ -6,6 +6,12 @@ c_autorifleman = "autorifleman";
 c_marksman = "marksman"; 
 c_medic = "medic";
 
+//Add specific UNSUNG factions
+if (isClass (configFile >> "CfgPatches" >> "uns_main")) then 
+{
+	factionInfos pushBack ["_ColdWar_ARVN",12,"Cold War ARVN [UNSUNG]", true, true, true];
+};
+
 //////////////////////////////
 ////Define civ group data/////
 //////////////////////////////

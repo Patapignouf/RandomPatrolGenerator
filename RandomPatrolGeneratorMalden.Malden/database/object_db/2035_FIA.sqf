@@ -7,6 +7,8 @@ c_autorifleman = "autorifleman";
 c_marksman = "marksman"; 
 c_medic = "medic";
 
+factionInfos pushBack ["_2035_FIA", 21,"2035 FIA", true, true, true];
+
 //////////////////////////////
 ////Define civ group data/////
 //////////////////////////////

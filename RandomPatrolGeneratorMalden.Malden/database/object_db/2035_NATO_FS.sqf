@@ -8,6 +8,8 @@ c_marksman = "marksman";
 c_medic = "medic";
 c_pilot = "pilot";
 
+factionInfos pushBack ["_2035_NATO_FS", 19,"2035 NATO Special Forces", true, true, false];
+
 //////////////////////////////
 ////Define civ group data/////
 //////////////////////////////

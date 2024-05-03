@@ -6,6 +6,12 @@ c_autorifleman = "autorifleman";
 c_marksman = "marksman"; 
 c_medic = "medic";
 
+//Add specific IFA3 factions
+if (isClass (configFile >> "CfgPatches" >> "IFA3_Core")) then 
+{
+	factionInfos pushBack ["_WWII_URSS", 8,"WWII URSS [IFA3]", true, true, false];
+};
+
 //////////////////////////////
 ////Define civ group data/////
 //////////////////////////////

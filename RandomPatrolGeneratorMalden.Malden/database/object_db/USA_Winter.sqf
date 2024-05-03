@@ -10,6 +10,11 @@ c_grenadier = "grenadier";
 c_drone = "UAV opérator";
 c_pilot = "pilot";
 
+//Add specific CUP factions
+if (isClass (configFile >> "CfgPatches" >> "CUP_BaseData")) then 
+{
+	factionInfos pushBack ["_USA_Winter",30,"US Army Winter [CUP]", true, false, false];
+};
 
 ////////////////////////
 //Vehicle management////

@@ -1,6 +1,6 @@
 #include "..\classConstant.sqf"
 
-
+factionInfos pushBack ["_2035_NATO_Recon", 35,"2035 NATO Recon", true, false, false];
 
 ////////////////////////
 //Vehicle management////

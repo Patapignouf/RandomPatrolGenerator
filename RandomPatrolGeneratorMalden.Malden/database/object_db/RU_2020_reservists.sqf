@@ -1,5 +1,12 @@
 #include "..\classConstant.sqf"
 
+//Add specific RHS factions
+if (isClass (configFile >> "CfgPatches" >> "rhs_main")) then 
+{
+	//factionInfos pushBack [c_USA_SOCOM_2020,_USA_SOCOM_2020,"2020 USA SOCOM [RHS]", true, true, false];
+	factionInfos pushBack ["_RU_2020_reservists", 40,"2020 Russian regular and reservists [RHS]", false, true, false];
+};
+
 //////////////////////////////
 ///Define enemy group data////
 //////////////////////////////

@@ -7,6 +7,13 @@ c_marksman = "marksman";
 c_medic = "medic";
 c_pilot = "pilot";
 
+//Add specific IFA3 factions
+if (isClass (configFile >> "CfgPatches" >> "IFA3_Core")) then 
+{
+	factionInfos pushBack ["_WWII_FFI",26,"WWII FFI [IFA3]", true, true, true];
+};
+
+
 //////////////////////////////
 ////Define civ group data/////
 //////////////////////////////

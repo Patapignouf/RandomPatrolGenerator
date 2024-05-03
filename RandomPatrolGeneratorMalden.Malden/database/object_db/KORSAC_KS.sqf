@@ -1,3 +1,9 @@
+//Add specific KORSAC factions
+if (isClass (configFile >> "CfgPatches" >> "vtf_kf_main")) then 
+{
+	factionInfos pushBack ["_KORSAC_KS",32,"KS Separatists [KORSAC]", false, true, false];
+};
+
 //////////////////////////////  
 ///Define enemy group data////
 //////////////////////////////

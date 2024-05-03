@@ -6,6 +6,12 @@ c_autorifleman = "autorifleman";
 c_marksman = "marksman"; 
 c_medic = "medic";
 
+//Add specific CUP factions
+if (isClass (configFile >> "CfgPatches" >> "CUP_BaseData")) then 
+{
+	factionInfos pushBack ["_Russian_Winter", 16, "Russian Winter [CUP]", true, true, true];	
+};
+
 //////////////////////////////
 ////Define civ group data/////
 //////////////////////////////

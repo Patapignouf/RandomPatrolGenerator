@@ -1,5 +1,7 @@
 #include "..\classConstant.sqf"
 
+factionInfos pushBack["_2035_NATO", 14,"2035 NATO", true, true, false];
+
 //////////////////////////////
 ////Define civ group data/////
 //////////////////////////////

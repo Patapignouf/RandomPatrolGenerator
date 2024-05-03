@@ -7,6 +7,12 @@ c_marksman = "marksman";
 c_medic = "medic";
 c_grenadier = "grenadier";
 
+//Add specific CUP factions
+if (isClass (configFile >> "CfgPatches" >> "CUP_BaseData")) then 
+{
+	factionInfos pushBack ["_PMC", 17, "PMC Modern [CUP]", true, true, false];	
+};
+
 //////////////////////////////
 ////Define civ group data/////
 //////////////////////////////

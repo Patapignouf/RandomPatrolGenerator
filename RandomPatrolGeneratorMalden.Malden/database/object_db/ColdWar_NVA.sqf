@@ -1,5 +1,11 @@
 #include "..\classConstant.sqf"
 
+//Add specific UNSUNG factions
+if (isClass (configFile >> "CfgPatches" >> "uns_main")) then 
+{
+	factionInfos pushBack ["_ColdWar_NVA", 11,"Cold War NVA [UNSUNG]", true, true, true];
+};
+
 //////////////////////////////
 ////Define civ group data/////
 //////////////////////////////

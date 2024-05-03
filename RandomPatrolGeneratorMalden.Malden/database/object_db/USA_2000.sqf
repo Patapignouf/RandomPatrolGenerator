@@ -9,6 +9,13 @@ c_pilot = "pilot";
 c_drone = "UAV operator";
 c_grenadier = "grenadier";
 
+//Add specific CUP factions
+//Add specific CUP factions
+if (isClass (configFile >> "CfgPatches" >> "CUP_BaseData")) then 
+{
+	factionInfos pushBack ["_USA_2000",5,"2000 USA Marines [CUP]", true, true, false];
+};
+
 //////////////////////////////
 ////Define civ group data/////
 //////////////////////////////

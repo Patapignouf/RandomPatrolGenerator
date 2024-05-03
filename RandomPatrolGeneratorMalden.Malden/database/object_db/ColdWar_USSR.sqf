@@ -9,6 +9,11 @@ c_grenadier = "grenadier";
 c_drone = "UAV opérator";
 c_pilot = "pilot";
 
+//Add specific CUP factions
+if (isClass (configFile >> "CfgPatches" >> "CUP_BaseData")) then 
+{
+	factionInfos pushBack ["_ColdWar_USSR", 28, "Cold War USSR [CUP]", false, true, false];
+};
 
 
 //////////////////////////

@@ -6,6 +6,8 @@ c_autorifleman = "autorifleman";
 c_marksman = "marksman"; 
 c_medic = "medic";
 
+factionInfos pushBack ["_Syndikat", 2,"2035 Syndikat", true, true, true];
+
 //////////////////////////////
 ////Define civ group data/////
 //////////////////////////////

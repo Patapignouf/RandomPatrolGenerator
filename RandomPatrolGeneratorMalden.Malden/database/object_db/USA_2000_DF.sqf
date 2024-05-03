@@ -8,6 +8,11 @@ c_medic = "medic";
 c_grenadier = "grenadier";
 c_pilot = "pilot";
 
+//Add specific CUP factions
+if (isClass (configFile >> "CfgPatches" >> "CUP_BaseData")) then 
+{
+	factionInfos pushBack ["_USA_2000_DF",15,"1993 USA Delta Force [CUP][ACE]", true, true, false];	
+};
 
 //////////////////////////////
 ////Define civ group data/////
