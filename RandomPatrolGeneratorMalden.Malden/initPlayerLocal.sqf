@@ -66,13 +66,24 @@ if (!didJIP) then
 
 //Add admin menu action
 [] spawn {
-	if (player getVariable ["isAdmin", false]) then 
+	if (player getVariable ["isAdmin", false] || (hasInterface && isServer)) then 
 	{
+		//Add 3 spaces empty actions
+		for [{_i = 0}, {_i < 3}, {_i = _i + 1}] do
+		{
+			player addAction ["                       ",{
+				//Define parameters
+				params ["_object","_caller","_ID","_avalaibleVehicle"];
+				//Do
+			},_x,0.1,true,false,"","(_target distance _this <3) && (_target getVariable ['isAdmin', false] || (hasInterface && isServer))"];
+		};
+
+		//Add admin settings GUI action
 		player addAction ["<t color='#FF0000'>Open ADMIN MENU</t>",{
 				//Define parameters
 				params ["_object","_caller","_ID","_avalaibleVehicle"];
 				[[], 'GUI\adminGUI\adminGUIInit.sqf'] remoteExec ['BIS_fnc_execVM', _caller];
-		},_x,3,true,false,"","(_target distance _this <3) && (_target getVariable ['isAdmin', false])"];
+		},_x,0,true,false,"","(_target distance _this <3) && (_target getVariable ['isAdmin', false] || (hasInterface && isServer))"];
 	};
 };
 
@@ -423,7 +434,7 @@ if (side player == blufor) then
 			hint _playerRoles;
 		},
 		nil,		// arguments
-		0,		// priority
+		1,		// priority
 		true,		// showWindow
 		false,		// hideOnUse
 		"",			// shortcut

@@ -104,7 +104,7 @@ params ["_deployableFOBItem", "_deployableFOBMounted", "_respawnSettings"];
 				_deployableFOBItem allowDamage false; 
 				[_deployableFOBItem, _avalaibleOutpost, _respawnSetting] execVM 'objectGenerator\doAddActionForAdvFOB.sqf'; 
 
-			},[_avalaibleOutpost, _respawnSetting],1.5,true,false,"","_target distance _this <5"]] remoteExec [ "addAction", 0, true ];
+			},[_avalaibleOutpost, _respawnSetting],3,true,false,"","_target distance _this <5"]] remoteExec [ "addAction", 0, true ];
 
 			//Remove Box
 			deleteVehicle _object;
@@ -117,7 +117,7 @@ params ["_deployableFOBItem", "_deployableFOBMounted", "_respawnSettings"];
 	}, 
 	[_deployableFOBMounted, _respawnSettings],  
 	10,
-	0, 
+	3, 
 	true,
 	false
 ] remoteExec ["BIS_fnc_holdActionAdd", 0, true];

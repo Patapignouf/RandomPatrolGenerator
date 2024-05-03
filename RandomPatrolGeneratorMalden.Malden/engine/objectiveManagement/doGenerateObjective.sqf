@@ -316,7 +316,7 @@ generateObjectiveObject =
 
 					//Start defend
 					[[_objectiveObject], 'engine\objectiveManagement\checkDefendArea.sqf'] remoteExec ['BIS_fnc_execVM', 2];
-				},_thisObjective,1.5,true,true,"","_target distance _this <3"]] remoteExec ["addAction", 0, true];
+				},_thisObjective, 10,true,true,"","_target distance _this <3"]] remoteExec ["addAction", 0, true];
 			};
 		case "takeAndHold":
 			{
