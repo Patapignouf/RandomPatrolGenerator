@@ -467,6 +467,25 @@ doInitializeLoadout = {
 		};
 	};
 
+	//Add transport action
+	_transportSupportID = _player getVariable ["transportSupportID", -1];
+	if (_currentPlayerClass == "leader") then 
+	{
+		_transportSupportCounter = missionNamespace getVariable ["transportSupportCounter", 0];
+		if (_transportSupportCounter > 0 && _transportSupportID == -1) then 
+		{
+			_transportSupportID = [_player, "myTransport"] call BIS_fnc_addCommMenuItem;
+			_player setVariable ["transportSupportID", _transportSupportID, true];
+		};
+	} else 
+	{
+		if (_transportSupportID != -1) then 
+		{
+			[_player, _transportSupportID] call BIS_fnc_removeCommMenuItem;
+			_player setVariable ["transportSupportID", -1, true]
+		};
+	};
+
 	//Add airDrop action
 	_airDropSupportID = _player getVariable ["airDropSupportID", -1];
 	if (_currentPlayerClass == "leader") then 

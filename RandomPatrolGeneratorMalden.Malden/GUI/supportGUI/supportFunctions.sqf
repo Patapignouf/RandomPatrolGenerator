@@ -106,6 +106,22 @@ params ["_caller", "_supportType"];
 				_caller setVariable ["extractSupportID", _extractSupportID, true];
 			};
 		};
+		case "Transport":
+		{
+			_textToSpeech = "Helicopter unit 1889, ready for transport";
+			[[format ["<t align = 'center' shadow = '2' color='#0046ff' size='1.5' font='PuristaMedium' >High Command</t><br /><t color='#ffffff' size='1.5' font='PuristaMedium' shadow = '2' >%1</t>", _textToSpeech, name _caller], "PLAIN DOWN", -1, true, true]] remoteExec ["titleText", side _caller, true];
+
+			_supportTransportCounter = missionNamespace getVariable ["transportSupportCounter", 0]; 
+			missionNamespace setVariable ["transportSupportCounter", _supportTransportCounter+1, true];
+
+			//Manage radio support 
+			_transportSupportID = _caller getVariable ["transportSupportID", -1];
+			if (_transportSupportID == -1) then 
+			{
+				_transportSupportID = [_caller, "myTransport"] call BIS_fnc_addCommMenuItem;
+				_caller setVariable ["transportSupportID", _transportSupportID, true];
+			};
+		};
 		case "AirDrop":
 		{
 			_textToSpeech = "Logistic unit 1804, ready for air supply";
@@ -302,6 +318,18 @@ addSupportForExtract = {
 	_price = 200;
 	_supportName = "Extract helicopter (radio)";
 	_supportNameCode = "Extract";
+	_supportIcon = "\a3\Ui_f\data\GUI\Cfg\CommunicationMenu\transport_ca.paa";
+	_supportType = "Movement";
+
+	[_ctrl, _supportName, _supportNameCode, _supportIcon, _price, _supportType] call addSupportOption;
+};
+
+addSupportForTransport = {
+	params ["_ctrl"];
+	//Add support for Transport
+	_price = 300;
+	_supportName = "Transport helicopter (radio)";
+	_supportNameCode = "Transport";
 	_supportIcon = "\a3\Ui_f\data\GUI\Cfg\CommunicationMenu\transport_ca.paa";
 	_supportType = "Movement";
 
