@@ -39,6 +39,7 @@ switch (_mode) do
 			if (count (bluforUnarmedVehicleChopper+bluforExtractVehicleChopper) > 0) then 
 			{
 				[_lnbEntries] call addSupportForExtract;
+				[_lnbEntries] call addSupportForTransport;
 			};
 			// if (missionNamespace getVariable ["warEra", 0] >= 2) then 
 			// {
