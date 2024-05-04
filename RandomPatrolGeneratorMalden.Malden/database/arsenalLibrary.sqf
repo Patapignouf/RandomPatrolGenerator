@@ -303,20 +303,8 @@ getVirtualMagazine = {
 			};
 	};
 
-		//In addition add smokes and grenade 
-		virtualMagazineList append
-		[
-			"HandGrenade",
-			"SmokeShell",
-			"SmokeShellBlue",
-			"SmokeShellGreen",
-			"SmokeShellRed",
-			"SmokeShellOrange",
-			"SmokeShellPurple",
-			"SmokeShellYellow",
-			"O_IR_Grenade",
-			"Laserbatteries"
-		];
+		//In addition add basic smokes and grenades
+		virtualMagazineList = virtualMagazineList + basicAmmunitions; 
 
 	diag_log format ["Player %1 with role %2 has access to items %3", name currentPlayer, currentPlayerClass, virtualMagazineList ];
 	virtualMagazineList
@@ -617,41 +605,20 @@ getPlayerFaction = {
 };
 
 setupPlayerLoadout = {
-	//InitParam
-	diag_log "test setupPlayerLoadout";
-	params ["_itemToAttachArsenal"];
-	[
-			_itemToAttachArsenal, 
-			"Setup loadout", 
-			"\a3\missions_f_oldman\data\img\holdactions\holdAction_box_ca.paa", 
-			"\a3\missions_f_oldman\data\img\holdactions\holdAction_box_ca.paa", 
-			[player] call isAreaEligibleForArsenal,						// Condition for the action to be shown
-			"_caller distance _target < 15",						// Condition for the action to progress
-			{
-				// Action start code
-			}, 
-			{
-				// Action on going code
-			},  
-			{
-				// Action successfull code
-				//Params
-				params ["_target", "_caller", "_unusedParam" ,"_params"];
-				//Show GUI
-				[[], 'GUI\loadoutGUI\initPlayerLoadoutSetup.sqf'] remoteExec ['BIS_fnc_execVM', _caller];
-			}, 
-			{
-				// Action failed code
-			}, 
-			[],  
-			0.5,
-			1000, 
-			false, 
-			false
-		] call BIS_fnc_holdActionAdd;
 
-		//Setup initArsenal whitelist items
-		[player, player, player call getPlayerFaction] call setupArsenalToItem;
+	//InitParam
+	params ["_itemToAttachArsenal"];
+
+	_actionLoadoutSetup = _itemToAttachArsenal addAction ["<img size='3' image='\a3\missions_f_oldman\data\img\holdactions\holdAction_box_ca.paa'/><t size='1.2'>Setup loadout</t>",{
+		//Define parameters
+		params ["_object","_caller","_ID","_parameters"];
+
+		[[], 'GUI\loadoutGUI\initPlayerLoadoutSetup.sqf'] remoteExec ['BIS_fnc_execVM', _caller];
+
+	},[],1000,true, false,"",[player] call isAreaEligibleForArsenal];
+
+	//Setup initArsenal whitelist items
+	[player, player, player call getPlayerFaction] call setupArsenalToItem;
 };
 
 setupSaveAndLoadRole = {

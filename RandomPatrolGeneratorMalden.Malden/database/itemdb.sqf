@@ -107,3 +107,16 @@ if (isClass (configFile >> "CfgPatches" >> "task_force_radio")) then
 {
 	basicDefaultRadio = ["TFAR_anprc152"];
 };
+
+basicAmmunitions = [
+	"HandGrenade",
+	"SmokeShell",
+	"SmokeShellBlue",
+	"SmokeShellGreen",
+	"SmokeShellRed",
+	"SmokeShellOrange",
+	"SmokeShellPurple",
+	"SmokeShellYellow",
+	"O_IR_Grenade",
+	"Laserbatteries"
+];
