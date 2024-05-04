@@ -22,8 +22,8 @@ respawnTemplates[] = {"Tickets", "Spectator"};
 author			= "Pata";
 onLoadName		= "Random Patrol Generator";
 onLoadMission	= "Plan, Execute, Extract. Be ready to adapt any plan to any situation.";
-loadScreen      = __EVAL(["\A3\Structures_F_Argo\Commercial\Billboards\Data\Advertisements\bill_action_co.paa","\A3\Structures_F_Argo\Commercial\Billboards\Data\Advertisements\bill_mars_co.paa","\A3\Structures_F_Argo\Commercial\Billboards\Data\Advertisements\bill_maskrtnik_co.paa","\A3\Structures_F_Argo\Commercial\Billboards\Data\Advertisements\bill_olives_co.paa","\A3\Structures_F_Argo\Commercial\Billboards\Data\Advertisements\bill_pate_co.paa","\A3\Structures_F_Argo\Commercial\Billboards\Data\Advertisements\bill_pills_co.paa","\A3\Structures_F_Argo\Commercial\Billboards\Data\Advertisements\bill_plane_co.paa","\A3\Structures_F_Argo\Commercial\Billboards\Data\Advertisements\bill_supermarket_co.paa","\A3\Structures_F_Argo\Commercial\Billboards\Data\Advertisements\bill_winery_co.paa"] select floor random 9);
-overviewpicture = "a3\Missions_F_AoW\Data\Img\Artwork\Landscape\showcase_aow_picture_18_co.paa";
+loadScreen      = "images\rpg_picture_large.paa";
+overviewpicture = "images\rpg_picture_large.paa";
 overviewText    = "Plan, Execute, Extract. Be ready to adapt any plan to any situation.";
 briefingName    = "[COOP] Random Patrol Generator";
 
