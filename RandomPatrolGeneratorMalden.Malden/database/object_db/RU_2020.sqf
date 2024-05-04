@@ -137,7 +137,9 @@ bluforFixedWing_RU_2020 = [
 
 //Vehicule able to do HQ features (Loadout management and more)
 bluforHQVehicle_RU_2020 = [
-
+	"rhs_typhoon_vdv", 
+	"rhs_tigr_vdv",
+	"RHS_Mi8T_vdv"
 ];	
 
 
@@ -248,7 +250,6 @@ attachmentShortList_RU_2020	= [
 	"rhs_acc_2dpZenit",
 	"rhs_acc_okp7_picatinny",
 	"rhs_acc_perst1ik_ris",
-	"rhs_acc_pgo7v3",
 	"rhs_acc_pkas_pkp",
 	"rhs_acc_pgo7v3_pkp",
 	"rhs_acc_pgo7v3_ak"
@@ -258,7 +259,9 @@ attachmentLongList_RU_2020	= [
 	"rhs_acc_pso1m21",
 	"rhs_acc_pso1m2",
 	"rhs_weap_svds_npz",
-	"rhs_acc_dh520x56"
+	"rhs_acc_dh520x56",
+	"rhs_acc_pgo7v3_asval",
+	"rhs_acc_pkas_asval"
 ];
 
 
