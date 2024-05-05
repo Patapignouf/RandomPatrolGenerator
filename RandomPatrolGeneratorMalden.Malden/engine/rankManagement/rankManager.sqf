@@ -72,9 +72,8 @@ _unit addEventHandler ["AnimDone", {
 	{
 		// diag_log _anim;
 		// hint format ["P1 : %1\nP2 : %2",_unit,_anim];
-		[[1, "RPG_ranking_repair"], 'engine\rankManagement\rankUpdater.sqf'] remoteExec ['BIS_fnc_execVM', _caller];
+		[[1, "RPG_ranking_repair"], 'engine\rankManagement\rankUpdater.sqf'] remoteExec ['BIS_fnc_execVM', _unit];
 	};
-
 }];
 
 
@@ -106,8 +105,8 @@ if (isClass (configFile >> "CfgPatches" >> "ace_medical")) then
 			if (experiencedMedicItems findIf { [_usedItem,_x] call BIS_fnc_areEqual} > -1) then 
 			{
 
-				//Check the number of bandage used, 5 bandages -> 1 exp point
-				if (_caller getVariable ["numberOfBandageUsed",0] >= 3 ) then 
+				//Check the number of bandage used, 4 bandages -> 1 exp point
+				if (_caller getVariable ["numberOfBandageUsed", 0] >= 3 ) then 
 				{
 					[[1, "RPG_ranking_heal"], 'engine\rankManagement\rankUpdater.sqf'] remoteExec ['BIS_fnc_execVM', _caller];
 					_caller setVariable ["numberOfBandageUsed", 0];

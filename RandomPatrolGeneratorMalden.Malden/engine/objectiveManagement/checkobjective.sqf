@@ -4,7 +4,6 @@ _objectivesDestinationArea = _this select 0;
 
 //Obj management
 obj_list_items = [];
-respawnSettings = ["Respawn",1] call BIS_fnc_getParamValue;
 enableCampaignMode = missionNamespace getVariable "enableCampaignMode"; //Default disable
 
 //Define current test
@@ -25,10 +24,9 @@ bluforTrigger = createTrigger ["EmptyDetector", initBlueforLocation]; //create a
 bluforTrigger setTriggerArea [100, 100, 0, false]; // trigger area with a radius of 100m.
 objectReturnedToCity = []; 
 
-if (respawnSettings == 1) then 
-{
-	[] execVM "engine\respawnManagement\respawnSetup.sqf";
-};
+
+[] execVM "engine\respawnManagement\respawnSetup.sqf";
+
 
 while {sleep 10; !RTBComplete} do
 {
