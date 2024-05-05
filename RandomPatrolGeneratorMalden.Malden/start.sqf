@@ -10,7 +10,7 @@
 enableInitAttack = "EnableInitAttack" call BIS_fnc_getParamValue;
 enableInitBluAttack = "EnableInitBluAttack" call BIS_fnc_getParamValue;
 timeOfDay = "TimeOfDay" call BIS_fnc_getParamValue;
-respawnSettings = "Respawn" call BIS_fnc_getParamValue;
+disableZoom = "DisableZoom" call BIS_fnc_getParamValue;
 
 //Init all environement database variable
 _handleEnvironmentInitialization = [] execVM 'initEnvironment.sqf'; 
@@ -354,7 +354,7 @@ if ( count AvalaibleInitAttackPositions != 0 && (enableInitAttack == 1 || ((enab
 	} else {
 		hint "You must wait before call reinforcements";
 	};
-},[respawnSettings],1.5,true,false,"","_target distance _this <5 && side _this == independent"]] remoteExec [ "addAction", 0, true ];
+},[],1.5,true,false,"","_target distance _this <5 && side _this == independent"]] remoteExec [ "addAction", 0, true ];
 
 //Init perma harass on player
 [[baseEnemyGroup,baseEnemyATGroup,baseEnemyDemoGroup],baseEnemyVehicleGroup, baseEnemyLightArmoredVehicleGroup, baseEnemyHeavyArmoredVehicleGroup, baseEnemyUnarmedChopperGroup, baseFixedWingGroup, baseEnemyArmedChopperGroup] spawn _generateHarass; 
@@ -559,7 +559,7 @@ if ( count AvalaibleInitAttackPositions != 0 && (enableInitBluAttack == 1 || ((e
 	publicvariable "isBluforAttacked";
 };
 
-[initBlueforLocation, deployableFOBMounted, respawnSettings, deployableFOB] execVM 'engine\generateBluforFOBBoxes.sqf'; 
+[initBlueforLocation, deployableFOBMounted, deployableFOB] execVM 'engine\generateBluforFOBBoxes.sqf'; 
 
 
 
@@ -795,6 +795,10 @@ forceWeatherChange;
 //Setup difficulty management
 [] execVM 'engine\difficultyManagement.sqf'; 
 
+if (disableZoom == 1) then 
+{
+	[[], 'engine\disableZoom.sqf'] remoteExec ['BIS_fnc_execVM', 0, true];
+};
 
 //Init checkdeath
 [] execVM 'engine\checkdeath.sqf';

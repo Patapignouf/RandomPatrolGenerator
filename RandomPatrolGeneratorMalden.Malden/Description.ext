@@ -106,16 +106,16 @@ class Params
 		texts[] = { "" };
 		default = "";
 	};
-	class Respawn
+	class DisableZoom
 	{
-		title = "Respawn management (DO NOT USE)";
+		title = "Temp Zoom (hold right clic)";
 		values[] = {0,1};
-		texts[] = {"No respawn","Respawn on objective success"};
-		default = 1;
+		texts[] = {"Enable","Disable"};
+		default = 0;
 	};
 	class EnableHalo
 	{
-		title = "Enable HALO JUMP (WIP)";
+		title = "Enable HALO JUMP";
 		values[] = {0,1};
 		texts[] = {"No","Yes"};
 		default = 1;

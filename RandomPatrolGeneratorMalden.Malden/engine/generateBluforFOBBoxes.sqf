@@ -1,4 +1,4 @@
-params ["_initBlueforLocation","_deployableFOBMounted","_respawnSettings","_deployableFOB"];
+params ["_initBlueforLocation","_deployableFOBMounted","_deployableFOB"];
 
 //Wait for Blufor FOB generation
 sleep 5;
@@ -22,7 +22,7 @@ deployableFOBItem allowDamage false;
 publicvariable "deployableFOBItem";
 
 //Add action to deploy advanced outpost
-[deployableFOBItem, _deployableFOBMounted, _respawnSettings] execVM 'objectGenerator\doAddActionForAdvFOB.sqf'; 
+[deployableFOBItem, _deployableFOBMounted] execVM 'objectGenerator\doAddActionForAdvFOB.sqf'; 
 
 BluforAmmoBox = [];
 

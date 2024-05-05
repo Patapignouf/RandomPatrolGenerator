@@ -1,4 +1,4 @@
-params ["_deployableFOBItem", "_deployableFOBMounted", "_respawnSettings"];
+params ["_deployableFOBItem", "_deployableFOBMounted"];
 
 [
 	_deployableFOBItem, 
@@ -17,7 +17,6 @@ params ["_deployableFOBItem", "_deployableFOBMounted", "_respawnSettings"];
 		// Action successfull code
 		params ["_object","_caller","_ID","_param"];
 		_avalaibleOutpost = _param select 0;
-		_respawnSetting = _param select 1;
 
 		//[TODO] Check distance from blufor spawn
 		if (_caller distance initBlueforLocation > 100) then 
@@ -102,9 +101,9 @@ params ["_deployableFOBItem", "_deployableFOBMounted", "_respawnSettings"];
 				clearItemCargoGlobal _deployableFOBItem;
 				clearBackpackCargoGlobal _deployableFOBItem;
 				_deployableFOBItem allowDamage false; 
-				[_deployableFOBItem, _avalaibleOutpost, _respawnSetting] execVM 'objectGenerator\doAddActionForAdvFOB.sqf'; 
+				[_deployableFOBItem, _avalaibleOutpost] execVM 'objectGenerator\doAddActionForAdvFOB.sqf'; 
 
-			},[_avalaibleOutpost, _respawnSetting],3,true,false,"","_target distance _this <5"]] remoteExec [ "addAction", 0, true ];
+			},[_avalaibleOutpost],0.5,true,false,"","_target distance _this <5"]] remoteExec [ "addAction", 0, true ];
 
 			//Remove Box
 			deleteVehicle _object;
@@ -115,7 +114,7 @@ params ["_deployableFOBItem", "_deployableFOBMounted", "_respawnSettings"];
 	{
 		// Action failed code
 	}, 
-	[_deployableFOBMounted, _respawnSettings],  
+	[_deployableFOBMounted],  
 	10,
 	3, 
 	true,
