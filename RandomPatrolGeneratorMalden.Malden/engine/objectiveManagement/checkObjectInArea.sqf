@@ -43,10 +43,9 @@ if (alive _objectiveObject) then
 		[_objective] execVM 'engine\objectiveManagement\completeObjective.sqf'; 
 		[[50, "RPG_ranking_objective_complete"], "engine\rankManagement\rankUpdater.sqf"] remoteExec ['BIS_fnc_execVM', 0];
 	};
-	if (respawnSettings == 1) then 
-	{
-		[[], "engine\respawnManagement\respawnManager.sqf"] remoteExec ['BIS_fnc_execVM', 0];
-	};
+
+	[[], "engine\respawnManagement\respawnManager.sqf"] remoteExec ['BIS_fnc_execVM', 0];
+	
 };
 
 //Clean trigger
