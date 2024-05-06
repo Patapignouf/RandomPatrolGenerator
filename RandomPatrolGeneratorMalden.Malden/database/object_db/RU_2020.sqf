@@ -122,7 +122,8 @@ bluforArmedChopper_RU_2020 = [
 ];
 
 bluforDrone_RU_2020 = [
-
+	"rhs_pchela1t_vvs", 
+	"rhs_pchela1t_vvsc"
 ];
 
 bluforBoat_RU_2020 = [
