@@ -49,7 +49,8 @@ baseEnemyMortarGroup_RU_2020_reservists = [
 baseEnemyVehicleGroup_RU_2020_reservists = [
 	"rhs_tigr_vv", 
 	"rhs_tigr_sts_vv", 
-	"rhs_tigr_m_vv"
+	"rhs_tigr_m_vv",
+	"rhs_Igla_AA_pod_msv" //AA Turret
 ];
 
 baseEnemyLightArmoredVehicleGroup_RU_2020_reservists = [

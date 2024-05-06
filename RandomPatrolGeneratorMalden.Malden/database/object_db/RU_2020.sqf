@@ -95,7 +95,8 @@ bluforUnarmedVehicle_RU_2020 = [
 
 bluforArmedVehicle_RU_2020 = [
 	"rhs_tigr_sts_3camo_vdv",
-	"rhs_tigr_sts_vdv"
+	"rhs_tigr_sts_vdv",
+	"rhs_Igla_AA_pod_msv" //AA Turret
 ];
 
 //Armored vehicle avalaible for blufor : Ex light tank
@@ -186,8 +187,25 @@ rifleList_RU_2020 = [
 	"rhs_weap_ak105_npz",
 	"rhs_weap_ak105_zenitco01",
 	"rhs_weap_ak105_zenitco01_b33",
+	"rhs_weap_ak74mr_grip1",
+	"rhs_weap_ak74m_fullplum_grip1",
+	"rhs_weap_ak74m_fullplum_npz_grip1",
+	"rhs_weap_ak74m_zenitco01_b33_grip1",
+	"rhs_weap_aks74n_npz_grip1",
+	"rhs_weap_ak103_npz_grip1",
+	"rhs_weap_ak103_zenitco01_grip1",
+	"rhs_weap_ak103_zenitco01_b33_grip1",
+	"rhs_weap_ak104_npz_grip1",
+	"rhs_weap_ak105_npz_grip1",
+	"rhs_weap_ak105_zenitco01_grip1",
+	"rhs_weap_ak105_zenitco01_b33_grip1",
+
+
+
 	"rhs_weap_pya",
 	"rhs_weap_6p53",
+
+	
 
 	//Periscope
 	"rhs_weap_tr8"
@@ -200,6 +218,10 @@ grenadeLauncherList_RU_2020 = [
 	"rhs_weap_ak74m_gp25",
 	"rhs_weap_ak74mr_gp25",
 	"rhs_weap_ak74m_fullplum_gp25_npz",
+	"rhs_weap_ak74n_gp25",
+	"rhs_weap_ak74m_gp25_grip1",
+	"rhs_weap_ak74mr_gp25_grip1",
+	"rhs_weap_ak74m_fullplum_gp25_npz_grip1",
 	"rhs_weap_ak74n_gp25"
 ];
 
@@ -222,6 +244,7 @@ marksmanrifleList_RU_2020 = [
 	"rhs_asval",
 	"rhs_weap_svds",
 	"rhs_weap_vss",
+	"rhs_weap_vss_grip1",
 	"rhs_weap_t5000",
 	"rhs_weap_svds_npz",
 	"rhs_weap_vss_grip_npz",
@@ -252,13 +275,17 @@ attachmentShortList_RU_2020	= [
 	"rhs_acc_perst1ik_ris",
 	"rhs_acc_pkas_pkp",
 	"rhs_acc_pgo7v3_pkp",
-	"rhs_acc_pgo7v3_ak"
+	"rhs_acc_pgo7v3_ak",
+	"rhs_acc_grip_ffg2",
+	"rhs_acc_grip_rk2",
+	"rhs_acc_grip_rk6",
+	"rhs_acc_ekp8_18"
+
 ];
 
 attachmentLongList_RU_2020	= [
 	"rhs_acc_pso1m21",
 	"rhs_acc_pso1m2",
-	"rhs_weap_svds_npz",
 	"rhs_acc_dh520x56",
 	"rhs_acc_pgo7v3_asval",
 	"rhs_acc_pkas_asval"
@@ -267,11 +294,9 @@ attachmentLongList_RU_2020	= [
 
 ////////////////////////
 itemList_RU_2020 = [
-	"NVGoggles",
-	"Laserdesignator",
 	"B_UavTerminal",
 	"ItemGPS",
-	"Rangefinder",
+	"rhs_pdu4",
 	"ACE_EntrenchingTool",
 	"ACE_RangeTable_82mm",
 	"ACE_IR_Strobe_Item",
@@ -279,8 +304,6 @@ itemList_RU_2020 = [
 	"ACE_NVG_Wide_Black_WP",
 	"ACE_NVG_Wide_WP",
 	"ACE_NVG_Wide_Green_WP"
-	//"rhs_radio_R187P1",
-	//"rhs_radio_R169P1"
 ];
 
 itemEngineerList_RU_2020 = [
@@ -313,8 +336,10 @@ uniformList_RU_2020 = [
 	"rhs_uniform_6sh122_v1",
 	"rhs_6b23_digi_medic",
 	"rhs_balaclava",
+	"rhs_balaclava_olive",
 	"rhs_scarf"
 ];
+
 
 factionDefaultRadios_RU_2020 = [
 	"tfar_fadak"
