@@ -9,6 +9,12 @@ avalaibleAmmoBox = [
 	"Box_FIA_Wps_F"
 ];
 
+if (isClass (configFile >> "CfgPatches" >> "rhs_main")) then 
+{
+	avalaibleAmmoBox pushBack "rhs_mags_crate";
+	avalaibleAmmoBox pushBack "rhsusf_mags_crate";
+};
+
 avalaibleSupplyBox = [
 	"Box_IND_Support_F"
 ];
@@ -17,6 +23,11 @@ if (isClass (configFile >> "CfgPatches" >> "ace_medical")) then
 {
 	avalaibleSupplyBox pushBack "ACE_medicalSupplyCrate_advanced";
 	avalaibleSupplyBox pushBack "ACE_medicalSupplyCrate";
+};
+
+if (isClass (configFile >> "CfgPatches" >> "rhs_main")) then 
+{
+	avalaibleSupplyBox pushBack "rhs_7ya37_1_single";
 };
 
 avalaibleHVT = [
@@ -30,6 +41,11 @@ if (isClass (configFile >> "CfgPatches" >> "CUP_BaseData")) then
 {
 	avalaibleHVT pushBack "CUP_O_TK_Officer";
 	avalaibleHVT pushBack "CUP_O_RU_Officer_EMR";
+};
+
+if (isClass (configFile >> "CfgPatches" >> "rhs_main")) then 
+{
+	avalaibleHVT pushBack "rhs_vdv_mflora_officer";
 };
 
 
@@ -63,6 +79,13 @@ if (isClass (configFile >> "CfgPatches" >> "CUP_BaseData")) then
 	avalaibleVIP pushBack "CUP_C_R_Doctor_01";
 };
 
+if (isClass (configFile >> "CfgPatches" >> "rhs_main")) then 
+{
+	avalaibleVIP pushBack "rhs_pilot";
+	avalaibleVIP pushBack "rhsusf_airforce_jetpilot";
+};
+
+
 avalaibleStealVehicle = [
 	"C_Truck_02_box_F", 
 	"C_Truck_02_fuel_F", 
@@ -70,9 +93,10 @@ avalaibleStealVehicle = [
 	"C_Van_01_fuel_F"
 ];
 
-avalaibleDestroyVehicle = [
-	"CUP_O_Hilux_DSHKM_TK_INS"
-];
+if (isClass (configFile >> "CfgPatches" >> "rhs_main")) then 
+{
+	avalaibleStealVehicle pushBack "rhs_typhoon_vdv";
+};
 
 avalaibleCollectIntel = [
 	"Land_Suitcase_F",
@@ -80,8 +104,13 @@ avalaibleCollectIntel = [
 	"Land_Laptop_unfolded_F", 
 	"Land_FirstAidKit_01_open_F", 
 	"Land_Defibrillator_F", 
-	"MapBoard_altis_F"
+	"MapBoard_altis_F",
+	"Land_FlatTV_01_F", 
+	"Land_TripodScreen_01_dual_v1_sand_F", 
+	"Land_MultiScreenComputer_01_sand_F", 
+	"SatelliteAntenna_01_Olive_F"
 ];
+
 
 avalaibleTypeOfObj = [];
 
