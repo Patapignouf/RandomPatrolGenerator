@@ -12,8 +12,69 @@ c_pilot = "pilot";
 //Add specific KORSAC factions
 if (isClass (configFile >> "CfgPatches" >> "vtf_kf_main")) then 
 {
-	factionInfos pushBack ["_KORSAC_KFL",33,"KFL Foreign legion [KORSAC]", true, false, false];	
+	factionInfos pushBack ["_KORSAC_KFL",33,"KFL Foreign legion [KORSAC]", true, true, false];	
 };
+
+//////////////////////////////  
+///Define enemy group data////
+//////////////////////////////
+//Russian Ratnik_Winter
+baseEnemyGroup_KORSAC_KFL  = [
+	"vtf_kf_B_FL_SquadLeader_F", 
+	"vtf_kf_B_FL_Medic_F", 
+	"vtf_kf_B_FL_Rifleman_AT_F", 
+	"vtf_kf_B_FL_Marksman_F", 
+	"vtf_kf_B_FL_Grenadier_F", 
+	"vtf_kf_B_FL_Rifleman_F", 
+	"vtf_kf_B_FL_Autorifleman_F", 
+	"vtf_kf_B_FL_Engineer_F"
+];
+
+baseEnemyATGroup_KORSAC_KFL  = [
+	"vtf_kf_B_FL_SquadLeader_F", 
+	"vtf_kf_B_FL_Rifleman_AT_F", 
+	"vtf_kf_B_FL_Rifleman_AT_F",
+	"vtf_kf_B_FL_Grenadier_F", 
+	"vtf_kf_B_FL_Autorifleman_F"
+];
+
+baseEnemyDemoGroup_KORSAC_KFL  = [
+	"vtf_kf_B_FL_SquadLeader_F", 
+	"vtf_kf_B_FL_Engineer_F", 
+	"vtf_kf_B_FL_Grenadier_F", 
+	"vtf_kf_B_FL_Autorifleman_F"
+];	
+
+baseEnemyMortarGroup_KORSAC_KFL  = [
+
+];
+
+baseEnemyVehicleGroup_KORSAC_KFL  = [ 
+	"vtf_kf_B_FL_Quadbike_01_F", 
+	"vtf_kf_B_FL_Offroad_01_covered_F"
+];
+
+baseEnemyLightArmoredVehicleGroup_KORSAC_KFL = [
+
+];
+
+baseEnemyHeavyArmoredVehicleGroup_KORSAC_KFL = [
+
+];
+
+
+baseEnemyUnarmedChopperGroup_KORSAC_KFL = [
+	"vtf_kf_B_Heli_Transport_03_unarmed_F" //Helicopter from another faction
+];
+
+//Basic enemy aircraft avalaible
+baseFixedWingGroup_KORSAC_KFL = [
+	
+];
+
+
+
+
 
 ////////////////////////
 //Vehicle management////
