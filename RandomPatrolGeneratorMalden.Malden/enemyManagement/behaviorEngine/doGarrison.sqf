@@ -28,15 +28,22 @@ if (isClass (configFile >> "CfgPatches" >> "lambs_danger")) then
 	_allBuildings apply {_allPositions append (_x buildingPos -1)};
 	//_allPositions = call BIS_fnc_arrayShuffle; 
 
-	//diag_log format ["Avalaible _allPositions position %1", _allPositions];
+	diag_log format ["Avalaible _allPositions position %1", _allPositions];
 
 	//Place units in building (garrison)
 	_units = units _thisGroup; 
 	if (count _units > count _allPositions) then {_units resize (count _allPositions);};
 	{
-		//_x disableAI "PATH";
+		_x disableAI "PATH";
 		_x setUnitPos selectRandom ["UP","UP","MIDDLE"];
 		_x setPos (selectRandom _allPositions);
-		_x addEventHandler["Fired",{params ["_unit"];_unit enableAI "PATH";_unit setUnitPos "AUTO";_unit removeEventHandler ["Fired",_thisEventHandler];}];
+		_x addEventHandler["Fired",
+			{
+				params ["_unit"];
+				_unit enableAI "PATH";
+				_unit dofollow leader _unit;
+				_unit setUnitPos "AUTO";
+				_unit removeEventHandler ["Fired",_thisEventHandler];
+			}];
 	} foreach _units; 
 };
