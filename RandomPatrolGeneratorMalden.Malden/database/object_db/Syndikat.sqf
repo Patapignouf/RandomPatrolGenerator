@@ -58,10 +58,11 @@ baseEnemyATGroup_Syndikat = [
 ];
 
 baseEnemyDemoGroup_Syndikat = [
-	"I_C_Soldier_Bandit_2_F", 
-	"I_C_Soldier_Bandit_1_F",
-	"I_C_Soldier_Bandit_8_F", 
-	"I_C_Soldier_Bandit_6_F"
+	"I_C_Soldier_Para_6_F", 
+	"I_C_Soldier_Para_5_F", 
+	"I_C_Soldier_Para_7_F", 
+	"I_C_Soldier_Para_8_F",
+	"I_C_Soldier_Para_6_F"
 ];
 
 baseEnemyMortarGroup_Syndikat = [
@@ -71,13 +72,13 @@ baseEnemyMortarGroup_Syndikat = [
 baseEnemyVehicleGroup_Syndikat = [
 	"I_C_Offroad_02_LMG_F", 
 	"I_C_Offroad_02_AT_F", 
-	"CUP_I_M151_M2_SYND", 
-	"I_C_Offroad_02_unarmed_F"
+	"I_C_Offroad_02_unarmed_F",
+	"I_C_HMG_02_high_F",
+	"I_C_Van_02_transport_F"
 ];
 
 baseEnemyLightArmoredVehicleGroup_Syndikat = [
-	"CUP_I_Hilux_zu23_IND_G_F", 
-	"CUP_I_Hilux_armored_DSHKM_IND_G_F"
+
 ];
 
 baseEnemyUnarmedChopperGroup_Syndikat = [
@@ -85,7 +86,6 @@ baseEnemyUnarmedChopperGroup_Syndikat = [
 ];
 
 baseEnemyHeavyArmoredVehicleGroup_Syndikat = [
-	"CUP_I_MTLB_pk_SYNDIKAT"
 ];
 
 //Basic enemy aircraft avalaible
