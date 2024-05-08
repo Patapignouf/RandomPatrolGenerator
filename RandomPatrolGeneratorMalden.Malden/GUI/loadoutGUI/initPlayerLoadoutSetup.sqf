@@ -2,7 +2,6 @@ disableSerialization;
 #include "..\..\database\factionParameters.sqf"
 #include "..\..\database\missionParameters.sqf"
 #include "..\..\database\arsenalLibrary.sqf"
-#include "..\..\database\arsenalLibrary.sqf"
 #include "..\..\engine\rankManagement\rankFunctions.sqf"
 
 //Create GUI
@@ -265,6 +264,7 @@ _currentComboBox = _comboBoxClassSelection;
 {
 	_currentComboBox lbAdd format ["%1", _x];
 	_currentComboBox lbSetData [(lbSize _currentComboBox)-1, format ["%1",(lbSize _currentComboBox)-1]];
+	_currentComboBox lbSetTooltip [(lbSize _currentComboBox)-1, [_x] call getClassInformation];
 } foreach _listOfAvalaibleRole;
 
 //Default value of role combo box 

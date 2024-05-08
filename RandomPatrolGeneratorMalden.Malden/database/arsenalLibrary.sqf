@@ -4,15 +4,12 @@
 //Import mission params
 warEra = missionNamespace getVariable "warEra"; // Default actual warfare
 
-c_listOfRoles = [c_leader,c_at,c_rifleman,c_engineer,c_autorifleman,c_marksman,c_medic];
-
 loadoutSaveName = "RPG_%1_%2_%3";
 
 if (ironMan) then 
 {
 	loadoutSaveName = "RPG_ironMan_%1_%2_%3";
 };
-
 
 getLoadoutByRole = {
 	params ["_currentPlayer", "_currentFaction"];
@@ -1013,4 +1010,60 @@ isElementOfArrayInString =
 	} foreach _arrayToTest;
 
 	_result
+};
+
+getClassInformation = {
+	params ["_class"];
+
+	_classDescription = "";
+
+	switch (_class) do
+		{
+			case c_leader:
+				{
+					_classDescription = "The leader have access to multiple options such as complete vehicle shop and support shop";
+				};
+			case c_at:
+				{
+					_classDescription = "The AT have access to Anti-Tank and Anti-Aircraft launchers";
+				};
+			case c_rifleman:
+				{
+					_classDescription = "The rifleman has a basic class without any speciality";
+				};
+			case c_engineer:
+				{
+					_classDescription = "The engineer has access to the toolbox, he can defuse IED and build fortifications";
+				};
+			case c_autorifleman:
+				{
+					_classDescription = "The autorifleman has access to machinegun, he can provide suppressive fire to his teammates";
+				};
+			case c_marksman:
+				{
+					_classDescription = "The marksman has access to marksman rifle and accurate scopes";
+				};
+			case c_sniper: 
+				{
+					_classDescription = "The sniper has access to marksman rifle and accurate scopes and specific camoflage";
+				};
+			case c_medic:
+				{
+					_classDescription = "The medic has access to Medikit, he's able to heal his teammates";
+				};	
+			case c_grenadier:
+				{
+					_classDescription = "The grenadier has access to grenade launcher";
+				};
+			case c_pilot:
+				{
+					_classDescription = "The pilot has access to air vehicle shop";
+				};						
+			default
+				{
+					//Non implemented role
+					//_classDescription = "Custom class";
+				};
+		};
+	_classDescription;
 };

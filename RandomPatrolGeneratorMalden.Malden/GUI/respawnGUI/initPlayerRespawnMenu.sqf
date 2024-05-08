@@ -42,7 +42,11 @@ if (!ironMan) then
 	{
 		_dropdown lbAdd format ["%1", _x];
 		_dropdown lbSetData [(lbSize _dropdown)-1, format ["%1",(lbSize _dropdown)-1]];
+		_dropdown lbSetTooltip [(lbSize _dropdown)-1, [_x] call getClassInformation];
 	} foreach _listOfAvalaibleRole;
+
+	//Select current class
+	_dropdown lbSetCurSel (_listOfAvalaibleRole find (player getVariable "role")); //Actual Warfare
 
 	//Allow player to switch his class
 	_dropdown ctrlAddEventHandler ["LBSelChanged",
@@ -67,10 +71,8 @@ if (!ironMan) then
 		//Show black screen
 		cutText ["", "BLACK FADED", 100];
 	}];
-
-	//Select current class
-	_dropdown lbSetCurSel (_listOfAvalaibleRole find (player getVariable "role")); //Actual Warfare
 };
+
 //Function params
 _buttonRespawnStart ctrlAddEventHandler[ "ButtonClick", 
 	{ 
