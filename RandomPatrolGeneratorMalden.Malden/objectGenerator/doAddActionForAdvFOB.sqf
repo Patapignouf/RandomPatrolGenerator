@@ -70,7 +70,7 @@ params ["_deployableFOBItem", "_deployableFOBMounted"];
 			},objNull,1.5,true,false,"","_target distance _this <5"]] remoteExec [ "addAction", 0, true ];
 
 			//Add action to make all player respawn
-			TPFlag2 addAction [format ["Open support shop"],{
+			TPFlag2 addAction [format ["<img size='2' image='\a3\ui_f_oldman\data\IGUI\Cfg\holdactions\holdAction_market_ca.paa'/><t size='1'>Open support shop</t>"],{
 				//Define parameters
 				params ["_object","_caller","_ID","_avalaibleVehicle"];
 					[[], 'GUI\supportGUI\supportGUI.sqf'] remoteExec ['BIS_fnc_execVM', player];

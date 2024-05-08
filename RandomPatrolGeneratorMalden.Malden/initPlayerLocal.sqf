@@ -411,7 +411,7 @@ if (side player == blufor) then
 			};
 		},
 		nil,		// arguments
-		1.5,		// priority
+		2,		// priority
 		true,		// showWindow
 		false,		// hideOnUse
 		"",			// shortcut
@@ -435,7 +435,7 @@ if (side player == blufor) then
 			hint _playerRoles;
 		},
 		nil,		// arguments
-		1,		// priority
+		2,		// priority
 		true,		// showWindow
 		false,		// hideOnUse
 		"",			// shortcut
@@ -450,7 +450,7 @@ if (side player == blufor) then
 	waitUntil{!isNil "TPFlag1"};
 	if (isNil "USS_FREEDOM_CARRIER") then 
 	{
-		TPFlag1 addAction [format ["Open vehicle shop"],{
+		TPFlag1 addAction [format ["<img size='2' image='\a3\ui_f_oldman\data\IGUI\Cfg\holdactions\holdAction_market_ca.paa'/><t size='1'>Open vehicle shop</t>"],{
 					//Define parameters
 					params ["_object","_caller","_ID","_avalaibleVehicle"];
 
@@ -458,7 +458,7 @@ if (side player == blufor) then
 			},_x,3,true,false,"","(_target distance _this <5) && (_this getVariable 'role' == 'leader' || _this getVariable 'role' == 'pilot')"];
 	};
 
-	TPFlag1 addAction [format ["Open support shop"],{
+	TPFlag1 addAction ["<img size='2' image='\a3\ui_f_oldman\data\IGUI\Cfg\holdactions\holdAction_market_ca.paa'/><t size='1'>Open support shop</t>",{
 			//Define parameters
 			params ["_object","_caller","_ID","_avalaibleVehicle"];
 
