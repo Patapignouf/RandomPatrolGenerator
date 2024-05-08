@@ -97,9 +97,15 @@ if ((count _revealedObjectives != count _tempMissionObjectives)) then
 						};
 					case "defendArea":
 						{
-							_currentObjectiveDescription = format ["There is some enemies in %1, you have to take the location and defend it against enemy reinforcement", _objectiveLocationName];
+							_currentObjectiveDescription = format ["You have to defend ammobox at %1, go to the location, find it and defend it against enemy reinforcement", _objectiveLocationName];
 							[_side, _objectiveToReveal select 2, [_currentObjectiveDescription, "Defend area", "cookiemarker2"], objNull, 1, 3, true] call BIS_fnc_taskCreate;
 							[_objectiveToReveal select 2,"defend"] call BIS_fnc_taskSetType;
+						};
+					case "takeAndHold":
+						{
+							_currentObjectiveDescription = format ["There is some enemies in %1, you have to take the location and defend it against enemy reinforcement", _objectiveLocationName];
+							[_side, _objectiveToReveal select 2, [_currentObjectiveDescription, "Take And Hold", "cookiemarker2"], objNull, 1, 3, true] call BIS_fnc_taskCreate;
+							[_objectiveToReveal select 2,"upload"] call BIS_fnc_taskSetType;
 						};
 					case "collectIntel":
 						{
@@ -120,8 +126,9 @@ if ((count _revealedObjectives != count _tempMissionObjectives)) then
 
 				//Display dialog on screen if necessary
 				if (!isNil "_caller") then 
-				{
-					[1,[_currentObjectiveDescription, "PLAIN", 0.5]] remoteExec ["cutText", _caller];
+				{					
+					//[1,[_currentObjectiveDescription, "PLAIN", 0.5]] remoteExec ["titleText", _caller];
+					[[format ["<t align = 'center' shadow = '2' color='#00ff00' size='1.5' font='PuristaMedium' >Civilian</t><br /><t color='#ffffff' size='1.5' font='PuristaMedium' shadow = '2' >%1</t>", _currentObjectiveDescription], "PLAIN", -1, true, true]] remoteExec ["titleText", _caller];
 				};
 		};
 };

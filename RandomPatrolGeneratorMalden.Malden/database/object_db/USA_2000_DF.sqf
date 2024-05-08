@@ -8,6 +8,11 @@ c_medic = "medic";
 c_grenadier = "grenadier";
 c_pilot = "pilot";
 
+//Add specific CUP factions
+if (isClass (configFile >> "CfgPatches" >> "CUP_BaseData")) then 
+{
+	factionInfos pushBack ["_USA_2000_DF",15,"1993 USA Delta Force [CUP][ACE]", true, true, false];	
+};
 
 //////////////////////////////
 ////Define civ group data/////
@@ -135,7 +140,6 @@ bluforHQVehicle_USA_2000_DF = [
 ////////////////////////
 
 //USA
-listOfRoles_USA_2000_DF = [c_leader,c_at,c_rifleman,c_engineer,c_autorifleman,c_marksman,c_grenadier,c_medic,c_pilot];
 
 loadout_USA_2000_DF = [		
 	[c_leader,[["CUP_arifle_Colt727","","CUP_acc_Flashlight","CUP_optic_CompM4",["CUP_30Rnd_556x45_Stanag",30],[],""],[],["CUP_hgun_Colt1911","","","",["CUP_7Rnd_45ACP_1911",7],[],""],["CUP_U_B_BDUv2_roll2_DCU",[["ACE_fieldDressing",1],["ACE_packingBandage",1],["ACE_morphine",1],["ACE_tourniquet",1],["Chemlight_green",1,1],["CUP_30Rnd_556x45_Stanag",1,30]]],["CUP_V_PMC_CIRAS_Black_TL",[["HandGrenade",1,1],["SmokeShell",1,1],["SmokeShellGreen",1,1],["CUP_7Rnd_45ACP_1911",2,7],["CUP_30Rnd_556x45_Stanag",6,30]]],[],"CUP_H_Ger_M92_Black_GG_CB","",["Binocular","","","",[],[],""],["ItemMap","ItemGPS","","ItemCompass","TFAR_microdagr",""]]],
@@ -263,6 +267,7 @@ itemMedicList_USA_2000_DF = [
 	"ACE_bloodIV_250",
 	"ACE_personalAidKit",
 	"ACE_surgicalKit",
+	"ACE_suture",
 	"ACE_bodyBag"
 	];
 

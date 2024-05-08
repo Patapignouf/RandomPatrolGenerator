@@ -9,6 +9,12 @@ c_grenadier = "grenadier";
 c_drone = "UAV opérator";
 c_pilot = "pilot";
 
+//Add specific CUP factions
+if (isClass (configFile >> "CfgPatches" >> "CUP_BaseData")) then 
+{
+	factionInfos pushBack ["_USA",1,"US Army [CUP]", true, true, true];
+};
+
 //////////////////////////////
 ////Define civ group data/////
 //////////////////////////////
@@ -104,6 +110,13 @@ bluforArmedVehicle_USA = [
 	"CUP_B_M1151_M2_WDL_USA"
 ];
 
+//Armored vehicle avalaible for blufor : Ex light tank
+bluforArmoredVehicle_USA = [
+	"CUP_B_M7Bradley_USA_W", 
+	"CUP_B_LAV25_USMC", 
+	"CUP_B_M113A3_USA"
+];
+
 bluforUnarmedVehicleChopper_USA = [
 	"CUP_B_MH6J_USA",
 	"CUP_B_UH60M_Unarmed_US",
@@ -148,7 +161,6 @@ bluforHQVehicle_USA = [
 //Loadout management////
 ////////////////////////
 
-listOfRoles_USA = [c_leader,c_at,c_rifleman,c_engineer,c_autorifleman,c_marksman,c_medic,c_grenadier,c_drone,c_pilot];
 
 //USA
 loadout_USA = [		
@@ -172,6 +184,7 @@ rifleList_USA = [
 	"CUP_arifle_mk18_black",
 	"CUP_arifle_SBR_black",
 	"CUP_arifle_M4A1_SOMMOD_Grip_black",
+	"CUP_arifle_mk18_tan_holo_laserflash",
 	"CUP_hgun_M9",
 	"CUP_arifle_M16A4_Base",
 	"CUP_arifle_M4A1_black"
@@ -181,6 +194,7 @@ rifleList_USA = [
 //Grenade launcher or weapon with grenade launcher option
 grenadeLauncherList_USA = [		
 	"CUP_arifle_mk18_m203_tan_holo_laserflash",
+	"CUP_arifle_M16A4_GL_ACOG_Laser",
 	"CUP_arifle_mk18_m203_black",
 	"CUP_arifle_M4A1_M203_CCO_Laser",
 	"CUP_arifle_Colt727_M203"
@@ -196,6 +210,7 @@ launcherList_USA = [
 
 autorifleList_USA = [			
 	"CUP_lmg_Mk48",
+	"CUP_lmg_M249",
 	"CUP_lmg_m249_pip2",
 	"CUP_lmg_M240_B"
 ];	
@@ -207,6 +222,7 @@ marksmanrifleList_USA = [
 	"CUP_srifle_M110",
 	"CUP_srifle_Mk18_blk_LP4",
 	"CUP_srifle_M14",
+	"CUP_srifle_DMR_LeupoldMk4",
 	"CUP_arifle_Mk20"
 ];
 
@@ -298,7 +314,8 @@ attachmentLongList_USA	= [
 	"CUP_B_USArmy_MG_SpecOp",
 	"CUP_H_OpsCore_Tan_SF",
 	"CUP_optic_LeupoldMk4_MRT_tan",
-	"CUP_optic_LeupoldMk4_MRT_tan_pip"
+	"CUP_optic_LeupoldMk4_MRT_tan_pip",
+	"CUP_optic_LeupoldMk4_pip"
 ];
 
 ////////////////////////
@@ -310,6 +327,7 @@ itemList_USA = [
 	"ItemCompass",
 	"ItemWatch",
 	"NVGoggles",
+	"Laserdesignator",
 	"B_UavTerminal",
 	"ItemGPS",
 	"Binocular",
@@ -332,7 +350,10 @@ itemList_USA = [
 	"ACE_SpraypaintGreen",
 	"ACE_SpraypaintRed",
 	"ACE_IR_Strobe_Item",
-	"ACE_RangeCard"
+	"ACE_RangeCard",
+	"ACE_NVG_Wide_Black_WP",
+	"ACE_NVG_Wide_WP",
+	"ACE_NVG_Wide_Green_WP"
 	];
 
 itemEngineerList_USA = [
@@ -357,7 +378,8 @@ itemMedicList_USA = [
 	"ACE_bloodIV_500",
 	"ACE_bloodIV_250",
 	"ACE_personalAidKit",
-	"ACE_surgicalKit"
+	"ACE_surgicalKit",
+	"ACE_suture"
 ];
 
 
@@ -369,6 +391,7 @@ backPackList_USA = [
 	"B_Mortar_01_weapon_F",
 	"B_Mortar_01_support_F",
 	"CUP_B_US_Assault_UCP",
+	"CUP_B_USMC_MOLLE_AR",
 	"TFAR_rt1523g"
 ];
 
@@ -398,7 +421,9 @@ uniformList_USA = [
 	"CUP_V_B_IOTV_UCP_Rifleman_Deltoid_USArmy",
 	"CUP_V_B_IOTV_UCP_Rifleman_USArmy",
 	"CUP_U_B_USArmy_ACU_Kneepad_Rolled_UCP",
-	"CUP_U_B_USArmy_ACU_Kneepad_UCP"
+	"CUP_U_B_USArmy_ACU_Kneepad_UCP",
+	"CUP_H_LWHv2_MARPAT_des_NVG_gog_cov2",
+	"CUP_V_B_Eagle_SPC_GL"
 	];
 
 //Magazine avalaible for all unit
@@ -418,6 +443,7 @@ magazineList_USA = 	[
 	"CUP_40Rnd_46x30_MP7",
 	"CUP_15Rnd_9x19_M9",
 	"20Rnd_762x51_Mag",
+	"CUP_HandGrenade_M67",
 	"CUP_20Rnd_762x51_B_SCAR",
 	"SmokeShell",
 	"SmokeShellBlue",

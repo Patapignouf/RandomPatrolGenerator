@@ -7,6 +7,12 @@ c_marksman = "marksman";
 c_medic = "medic";
 c_grenadier = "grenadier";
 
+//Add specific CUP factions
+if (isClass (configFile >> "CfgPatches" >> "CUP_BaseData")) then 
+{
+	factionInfos pushBack ["_PMC", 17, "PMC Modern [CUP]", true, true, false];	
+};
+
 //////////////////////////////
 ////Define civ group data/////
 //////////////////////////////
@@ -140,7 +146,6 @@ bluforBoat_PMC = [
 //Loadout management////
 ////////////////////////
 
-listOfRoles_PMC = [c_leader,c_at,c_rifleman,c_engineer,c_autorifleman,c_marksman,c_medic,c_grenadier];
 
 //PMC
 loadout_PMC = [		
@@ -332,7 +337,8 @@ itemMedicList_PMC = [
 	"ACE_bloodIV_500",
 	"ACE_bloodIV_250",
 	"ACE_personalAidKit",
-	"ACE_surgicalKit"
+	"ACE_surgicalKit",
+	"ACE_suture"
 ];
 
 //backpack avalaible for all unit

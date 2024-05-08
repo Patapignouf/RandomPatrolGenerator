@@ -4,7 +4,6 @@ _objectivesDestinationArea = _this select 0;
 
 //Obj management
 obj_list_items = [];
-respawnSettings = ["Respawn",1] call BIS_fnc_getParamValue;
 enableCampaignMode = missionNamespace getVariable "enableCampaignMode"; //Default disable
 
 //Define current test
@@ -25,10 +24,9 @@ bluforTrigger = createTrigger ["EmptyDetector", initBlueforLocation]; //create a
 bluforTrigger setTriggerArea [100, 100, 0, false]; // trigger area with a radius of 100m.
 objectReturnedToCity = []; 
 
-if (respawnSettings == 1) then 
-{
-	[] execVM "engine\respawnManagement\respawnSetup.sqf";
-};
+
+[] execVM "engine\respawnManagement\respawnSetup.sqf";
+
 
 while {sleep 10; !RTBComplete} do
 {
@@ -45,7 +43,7 @@ while {sleep 10; !RTBComplete} do
 		//Generate RTB mission
 		if (!isRTBMissionGenerated) then 
 		{
-			[true, "taskRTB", ["Return to your initial base or exctract  area of operation", "RTB or Extract", ""], objNull, 1, 3, true] call BIS_fnc_taskCreate;
+			[true, "taskRTB", ["Return to your initial base or extract  area of operation", "RTB or Extract", ""], objNull, 1, 3, true] call BIS_fnc_taskCreate;
 			isRTBMissionGenerated = true;
 
 			extractExtendedTriggerArea = createTrigger ["EmptyDetector", areaOfOperationPosition]; //create a trigger area created at object with variable name my_object
@@ -64,7 +62,7 @@ while {sleep 10; !RTBComplete} do
 		{
 			["taskRTB","SUCCEEDED"] call BIS_fnc_taskSetState;
 			//Reward player for RTB
-			[[50], "engine\rankManagement\rankUpdater.sqf"] remoteExec ['BIS_fnc_execVM', 0];
+			[[50, "RPG_ranking_objective_complete"], "engine\rankManagement\rankUpdater.sqf"] remoteExec ['BIS_fnc_execVM', 0];
 			RTBComplete = true;
 
 			//Save current loadout

@@ -3,7 +3,7 @@ params ["_unit"];
 
 //initialize unit rank
 _unit setRank "PRIVATE";
-_unitRanking = profileNamespace getVariable ["RPG_ranking", 0]; //Default armed aircraft are disabled
+_unitRanking = [_unit] call getExperience; //Default armed aircraft are disabled
 [_unit, true] call adjustRank;
 [_unit] call displayCurrentRank;
 _unit setVariable ["startingXP",_unitRanking, true];
@@ -65,6 +65,19 @@ _unit setVariable ["currentXP",_unitRanking, true];
 // 	true
 // }];
 
+//Add repair event (no direct event for repair found, this is based on animation, it can obviously be improved)
+_unit addEventHandler ["AnimDone", {
+	params ["_unit", "_anim"];
+	if (_anim == "acts_carfixingwheel" || _anim == "amovpknlmstpsnonwnondnon") then 
+	{
+		// diag_log _anim;
+		// hint format ["P1 : %1\nP2 : %2",_unit,_anim];
+		[[1, "RPG_ranking_repair"], 'engine\rankManagement\rankUpdater.sqf'] remoteExec ['BIS_fnc_execVM', _unit];
+	};
+}];
+
+
+
 
 //Medical ranking reward management
 if (isClass (configFile >> "CfgPatches" >> "ace_medical")) then 
@@ -76,23 +89,26 @@ if (isClass (configFile >> "CfgPatches" >> "ace_medical")) then
 		"ACE_packingBandage",
 		"ACE_elasticBandage",
 		"ACE_quikclot",
-		"ACE_splint"
+		"ACE_splint",
+		"ACE_Suture"
 	];
 
 	["ace_treatmentSucceded", {
 		params ["_caller", "_target", "_selectionName", "_className", "_itemUser", "_usedItem"];
 
+		//Display for debug
+		//hint format ["Use item : %1 from %2 with classname : %3",_usedItem, name _caller, _className];
+
 		//Only reward heal on others 
 		if (_caller != _target) then 
 		{
-			//hint format ["Use item : %1 from %2 with classname : %3",_usedItem, name _caller, _className];
 			if (experiencedMedicItems findIf { [_usedItem,_x] call BIS_fnc_areEqual} > -1) then 
 			{
 
-				//Check the number of bandage used, 5 bandages -> 1 exp point
-				if (_caller getVariable ["numberOfBandageUsed",0] >= 5 ) then 
+				//Check the number of bandage used, 4 bandages -> 1 exp point
+				if (_caller getVariable ["numberOfBandageUsed", 0] >= 3 ) then 
 				{
-					[[1], 'engine\rankManagement\rankUpdater.sqf'] remoteExec ['BIS_fnc_execVM', _caller];
+					[[1, "RPG_ranking_heal"], 'engine\rankManagement\rankUpdater.sqf'] remoteExec ['BIS_fnc_execVM', _caller];
 					_caller setVariable ["numberOfBandageUsed", 0];
 				} else 
 				{
@@ -101,7 +117,7 @@ if (isClass (configFile >> "CfgPatches" >> "ace_medical")) then
 			};
 			if ([_className,"surgicalKit"] call BIS_fnc_areEqual) then 
 			{
-				[[1], 'engine\rankManagement\rankUpdater.sqf'] remoteExec ['BIS_fnc_execVM', _caller];
+				[[1, "RPG_ranking_heal"], 'engine\rankManagement\rankUpdater.sqf'] remoteExec ['BIS_fnc_execVM', _caller];
 			};
 		};
 	}] call CBA_fnc_addEventHandler;
@@ -120,7 +136,7 @@ if (isClass (configFile >> "CfgPatches" >> "ace_medical")) then
 			if (!([_healer,_injured] call BIS_fnc_areEqual)) then 
 			{
 				if (damage _injured < _damage) then {
-					[[1], 'engine\rankManagement\rankUpdater.sqf'] remoteExec ['BIS_fnc_execVM', _healer];
+					[[1, 'RPG_ranking_heal'], 'engine\rankManagement\rankUpdater.sqf'] remoteExec ['BIS_fnc_execVM', _healer];
 				};
 			};
 		};
@@ -135,3 +151,12 @@ if (isClass (configFile >> "CfgPatches" >> "ace_medical")) then
 	// "];
 };
 
+
+//Detect if there is a new player and show discord
+if (_unitRanking == 0) then 
+{
+	_ctrl = findDisplay 46 createDisplay "RscDisplayEmpty" ctrlCreate ["RscStructuredText", -1];
+	_ctrl ctrlSetPosition [0,0,1,1];
+	_ctrl ctrlCommit 0;
+	_ctrl ctrlSetStructuredText parseText "<a color='#ff0000' size='4' href='https://discord.gg/S6Y6YTjT'><t color='#ff0000'>Join the PataCompany !</t><br/><t color='#ff0000'>Join the Discord</t></a>";
+};

@@ -7,6 +7,12 @@ c_marksman = "marksman";
 c_medic = "medic";
 c_grenadier = "grenadier";
 
+//Add specific CUP factions
+if (isClass (configFile >> "CfgPatches" >> "CUP_BaseData")) then 
+{
+	factionInfos pushBack ["_Russian",3,"Russian [CUP]", true, true, true];
+};
+
 //////////////////////////////
 ////Define civ group data/////
 //////////////////////////////
@@ -138,7 +144,6 @@ bluforHQVehicle_USA_2000 = [
 ////////////////////////
 
 //Russian
-listOfRoles_Russian = [c_leader,c_at,c_rifleman,c_engineer,c_autorifleman,c_marksman,c_medic,c_grenadier];
 
 //Russian
 loadout_Russian = [		
@@ -281,7 +286,8 @@ itemMedicList_Russian = [
 	"ACE_bloodIV_500",
 	"ACE_bloodIV_250",
 	"ACE_personalAidKit",
-	"ACE_surgicalKit"
+	"ACE_surgicalKit",
+	"ACE_suture"
 ];
 
 

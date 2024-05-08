@@ -9,6 +9,11 @@ c_grenadier = "grenadier";
 c_drone = "UAV opérator";
 c_pilot = "pilot";
 
+//Add specific CUP factions
+if (isClass (configFile >> "CfgPatches" >> "CUP_BaseData")) then 
+{
+	factionInfos pushBack ["_ColdWar_USSR", 28, "Cold War USSR [CUP]", false, true, false];
+};
 
 
 //////////////////////////
@@ -152,7 +157,6 @@ bluforArmoredVehicle_ColdWar_USSR = [
 //Loadout management////
 ////////////////////////
 
-listOfRoles_ColdWar_USSR = [c_leader,c_at,c_rifleman,c_engineer,c_autorifleman,c_marksman,c_medic,c_grenadier,c_pilot];
 
 //USSR
 loadout_ColdWar_USSR = [		
@@ -266,7 +270,8 @@ itemMedicList_ColdWar_USSR = [
 	"ACE_bloodIV_500",
 	"ACE_bloodIV_250",
 	"ACE_personalAidKit",
-	"ACE_surgicalKit"
+	"ACE_surgicalKit",
+	"ACE_suture"
 ];
 
 

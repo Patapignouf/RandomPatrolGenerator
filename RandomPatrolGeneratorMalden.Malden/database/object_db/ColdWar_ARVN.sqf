@@ -6,6 +6,12 @@ c_autorifleman = "autorifleman";
 c_marksman = "marksman"; 
 c_medic = "medic";
 
+//Add specific UNSUNG factions
+if (isClass (configFile >> "CfgPatches" >> "uns_main")) then 
+{
+	factionInfos pushBack ["_ColdWar_ARVN",12,"Cold War ARVN [UNSUNG]", true, true, true];
+};
+
 //////////////////////////////
 ////Define civ group data/////
 //////////////////////////////
@@ -38,49 +44,59 @@ civilianTruck_ColdWar_ARVN = ["CUP_C_Skoda_CR_CIV",
 //////////////////////////////
 //newFaction
 //Basic enemy group | 8 men (Leader, Medic, MG, Sniper, Rifleman)
-baseEnemyGroup_ColdWar_ARVN = ["uns_men_ARVN_COM", 
-"uns_men_ARVN_RTO", 
-"uns_men_ARVN_RF5", 
-"uns_men_ARVN_HMG", 
-"uns_men_ARVN_AHMG", 
-"uns_men_ARVN_RF1", 
-"uns_men_ARVN_GL", 
-"uns_men_ARVN_AT", 
-"uns_men_ARVN_MRK", 
-"uns_men_ARVN_ENG"];
+baseEnemyGroup_ColdWar_ARVN = [
+	"uns_men_ARVN_COM", 
+	"uns_men_ARVN_RTO", 
+	"uns_men_ARVN_RF5", 
+	"uns_men_ARVN_HMG", 
+	"uns_men_ARVN_AHMG", 
+	"uns_men_ARVN_RF1", 
+	"uns_men_ARVN_GL", 
+	"uns_men_ARVN_AT", 
+	"uns_men_ARVN_MRK", 
+	"uns_men_ARVN_ENG"
+];
 
 //Basic anti tank enemy group | 5 men (Leader, MG, AT)
-baseEnemyATGroup_ColdWar_ARVN = ["uns_men_ARVN_COM", 
-"uns_men_ARVN_RTO", 
-"uns_men_ARVN_AT", 
-"uns_men_ARVN_AT",
-"uns_men_ARVN_AT",
-"uns_men_ARVN_MED", 
-"uns_men_ARVN_TRI", 
-"uns_men_ARVN_MTSG", 
-"uns_men_ARVN_RF2"];
+baseEnemyATGroup_ColdWar_ARVN = [
+	"uns_men_ARVN_COM", 
+	"uns_men_ARVN_RTO", 
+	"uns_men_ARVN_AT", 
+	"uns_men_ARVN_AT",
+	"uns_men_ARVN_AT",
+	"uns_men_ARVN_MED", 
+	"uns_men_ARVN_TRI", 
+	"uns_men_ARVN_MTSG", 
+	"uns_men_ARVN_RF2"
+];
 
 //Basic demolition enemy group | 8 men (Leader, Explosive)
-baseEnemyDemoGroup_ColdWar_ARVN = ["uns_men_ARVN_COM", 
-"uns_men_ARVN_RTO", 
-"uns_men_ARVN_AT", 
-"uns_men_ARVN_MED", 
-"uns_men_ARVN_TRI", 
-"uns_men_ARVN_MTSG", 
-"uns_men_ARVN_RF2", 
-"uns_men_ARVN_MRK", 
-"uns_men_ARVN_SCT"];
+baseEnemyDemoGroup_ColdWar_ARVN = [
+	"uns_men_ARVN_COM", 
+	"uns_men_ARVN_RTO", 
+	"uns_men_ARVN_AT", 
+	"uns_men_ARVN_MED", 
+	"uns_men_ARVN_TRI", 
+	"uns_men_ARVN_MTSG", 
+	"uns_men_ARVN_RF2", 
+	"uns_men_ARVN_MRK", 
+	"uns_men_ARVN_SCT"
+];
 
 //Basic Mortar enemy group | 8 men (Mortar, Rifleman)
-baseEnemyMortarGroup_ColdWar_ARVN = ["uns_m1941_82mm_mortarVC",
-"uns_men_ARVN_RTO", 
-"uns_men_ARVN_MED"];
+baseEnemyMortarGroup_ColdWar_ARVN = [
+	"uns_m1941_82mm_mortarVC",
+	"uns_men_ARVN_RTO", 
+	"uns_men_ARVN_MED"
+];
 
 //Basic enemy vehicle avalaible (light) must be destroyed without AT (ex : jeep)
-baseEnemyVehicleGroup_ColdWar_ARVN = ["uns_willys_2_arvn", 
-"uns_willys_2_m1919_arvn", 
-"uns_men_ARVN_RF2", 
-"uns_willys_2_m60_arvn"];
+baseEnemyVehicleGroup_ColdWar_ARVN = [
+	"uns_willys_2_arvn", 
+	"uns_willys_2_m1919_arvn", 
+	"uns_men_ARVN_RF2", 
+	"uns_willys_2_m60_arvn"
+];
 
 //Basic enemy light armored vehicle avalaible must be destroyed without heavy AT (ex : BMP)
 baseEnemyLightArmoredVehicleGroup_ColdWar_ARVN = ["uns_xm706"];
@@ -89,7 +105,7 @@ baseEnemyLightArmoredVehicleGroup_ColdWar_ARVN = ["uns_xm706"];
 baseEnemyHeavyArmoredVehicleGroup_ColdWar_ARVN = ["uns_xm706"];
 
 //Basic enemy chopper avalaible
-baseChopperGroup_ColdWar_ARVN = ["uns_UH1D_vnaf_m60"];
+baseEnemyUnarmedChopperGroups_ColdWar_ARVN = ["uns_UH1D_vnaf_m60"];
 
 //Basic enemy aircraft avalaible
 baseFixedWingGroup_ColdWar_ARVN = ["uns_A1H_CAS"];
@@ -176,55 +192,6 @@ attachmentLongList_ColdWar_ARVN	= [
 ////////////////////////
 ////Items management////
 ////////////////////////
-itemList_ColdWar_ARVN = [
-	"FirstAidKit",
-	"ItemMap",
-	"ItemCompass",
-	"ItemWatch",
-	"NVGoggles",
-	"Binocular",
-	"Rangefinder",
-	"ACE_MapTools",
-	"ACE_SpraypaintRed",
-	"ACE_CableTie",
-	"ACE_WaterBottle",
-	"ACE_EarPlugs",
-	"ACE_fieldDressing",
-	"ACE_packingBandage",
-	"ACE_elasticBandage",
-	"ACE_tourniquet",
-	"ACE_splint",
-	"ACE_morphine",
-	"ACE_quikclot",
-	"ACE_EntrenchingTool",
-	"ACE_RangeTable_82mm"
-	];
-
-itemEngineerList_ColdWar_ARVN = [
-	"ToolKit",
-	"MineDetector",
-	"ACE_wirecutter", 
-	"ACE_Fortify",
-	"ACE_DefusalKit",
-	"ACE_Clacker",
-	"ACE_M26_Clacker",
-	"ace_marker_flags_white",
-	"ace_marker_flags_yellow",
-	"ace_marker_flags_purple",
-	"ace_marker_flags_orange",
-	"ace_marker_flags_red"
-];
-	
-itemMedicList_ColdWar_ARVN = [
-	"Medikit",
-	"ACE_epinephrine",
-	"ACE_bloodIV",
-	"ACE_bloodIV_500",
-	"ACE_bloodIV_250",
-	"ACE_personalAidKit",
-	"ACE_surgicalKit"
-];
-
 backPackList_ColdWar_ARVN = [
 "Uns_M1941_82mm_Mortar_NVA_Bag",
 "uns_Tripod_Bag",

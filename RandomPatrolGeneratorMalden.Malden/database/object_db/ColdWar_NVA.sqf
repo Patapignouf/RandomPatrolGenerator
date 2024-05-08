@@ -1,10 +1,10 @@
-c_leader = "leader";
-c_at = "at";
-c_rifleman = "rifleman";
-c_engineer = "engineer";
-c_autorifleman = "autorifleman";
-c_marksman = "marksman"; 
-c_medic = "medic";
+#include "..\classConstant.sqf"
+
+//Add specific UNSUNG factions
+if (isClass (configFile >> "CfgPatches" >> "uns_main")) then 
+{
+	factionInfos pushBack ["_ColdWar_NVA", 11,"Cold War NVA [UNSUNG]", true, true, true];
+};
 
 //////////////////////////////
 ////Define civ group data/////
@@ -38,61 +38,86 @@ civilianTruck_ColdWar_NVA = ["CUP_C_Skoda_CR_CIV",
 //////////////////////////////
 //newFaction
 //Basic enemy group | 8 men (Leader, Medic, MG, Sniper, Rifleman)
-baseEnemyGroup_ColdWar_NVA = ["uns_men_NVA_67_Roff", 
-"uns_men_NVA_67_Ra1", 
-"uns_men_NVA_67_RRTO", 
-"uns_men_NVA_67_Rmed", 
-"uns_men_NVA_67_Rmg", 
-"uns_men_NVA_67_Rmrk", 
-"uns_men_NVA_67_Ra2", 
-"uns_men_NVA_67_RSAP"];
+baseEnemyGroup_ColdWar_NVA = [
+	"uns_men_NVA_67_Roff", 
+	"uns_men_NVA_67_Ra1", 
+	"uns_men_NVA_67_RRTO", 
+	"uns_men_NVA_67_Rmed", 
+	"uns_men_NVA_67_MED",
+	"uns_men_NVA_67_Rmg", 
+	"uns_men_NVA_67_Rmrk", 
+	"uns_men_NVA_67_Ra2", 
+	"uns_men_NVA_67_RSAP"
+];
 
 //Basic anti tank enemy group | 5 men (Leader, MG, AT)
-baseEnemyATGroup_ColdWar_NVA = ["uns_men_NVA_67_COM", 
-"uns_men_NVA_67_nco", 
-"uns_men_NVA_67_HMG", 
-"uns_men_NVA_67_MRK", 
-"uns_men_NVA_67_TRI", 
-"uns_men_NVA_67_MTS", 
-"uns_men_NVA_67_AA", 
-"uns_men_NVA_67_AT",
-"uns_men_NVA_67_AT",
-"uns_men_NVA_67_AT"];
+baseEnemyATGroup_ColdWar_NVA = [
+	"uns_men_NVA_67_COM", 
+	"uns_men_NVA_67_nco", 
+	"uns_men_NVA_67_HMG", 
+	"uns_men_NVA_67_MRK", 
+	"uns_men_NVA_67_HMG", 
+	"uns_men_NVA_67_AA", 
+	"uns_men_NVA_67_AT",
+	"uns_men_NVA_67_AT"
+];
 
 //Basic demolition enemy group | 8 men (Leader, Explosive)
-baseEnemyDemoGroup_ColdWar_NVA = ["uns_men_NVA_daccong_nco", 
-"uns_men_NVA_daccong_SAP3", 
-"uns_men_NVA_daccong_LMG", 
-"uns_men_NVA_daccong_RTO", 
-"uns_men_NVA_daccong_MED", 
-"uns_men_NVA_daccong_AT3", 
-"uns_men_NVA_daccong_MRK", 
-"uns_men_NVA_daccong_SAP1"];
+baseEnemyDemoGroup_ColdWar_NVA = [
+	"uns_men_NVA_daccong_nco", 
+	"uns_men_NVA_daccong_SAP3", 
+	"uns_men_NVA_daccong_LMG", 
+	"uns_men_NVA_daccong_RTO", 
+	"uns_men_NVA_daccong_MED", 
+	"uns_men_NVA_daccong_AT3", 
+	"uns_men_NVA_daccong_MRK", 
+	"uns_men_NVA_daccong_SAP1"
+];
 
 //Basic Mortar enemy group | 8 men (Mortar, Rifleman)
-baseEnemyMortarGroup_ColdWar_NVA = ["uns_m1941_82mm_mortarVC",
-"uns_men_NVA_daccong_RTO", 
-"uns_men_NVA_daccong_MED"];
+baseEnemyMortarGroup_ColdWar_NVA = [
+	"uns_m1941_82mm_mortarVC",
+	"uns_men_NVA_daccong_RTO", 
+	"uns_men_NVA_daccong_MED"
+];
 
 //Basic enemy vehicle avalaible (light) must be destroyed without AT (ex : jeep)
-baseEnemyVehicleGroup_ColdWar_NVA = ["uns_Type55", 
-"uns_nvatruck", 
-"uns_Type55_M40", 
-"uns_Type55_MG"];
+baseEnemyVehicleGroup_ColdWar_NVA = [
+	"uns_Type55", 
+	"uns_nvatruck", 
+	"uns_Type55_M40", 
+	"uns_Type55_MG",
+	"uns_dshk_twin_bunker_closed_NVA",
+	"uns_dshk_twin_bunker_open_NVA",
+	"uns_pk_bunker_low_NVA",
+	"uns_dshk_bunker_closed_NVA",
+	"uns_ZPU4_NVA"
+];
 
 //Basic enemy light armored vehicle avalaible must be destroyed without heavy AT (ex : BMP)
-baseEnemyLightArmoredVehicleGroup_ColdWar_NVA = ["uns_BTR152_DSHK"];
+baseEnemyLightArmoredVehicleGroup_ColdWar_NVA = [
+	"uns_BTR152_DSHK",
+	"uns_Type55_MG"
+];
 
 //Basic enemy heavy armored vehicle avalaible must be destroyed with other vehicle or heavy AT (ex : tank)
-baseEnemyHeavyArmoredVehicleGroup_ColdWar_NVA = ["uns_t34_76_vc"];
+baseEnemyHeavyArmoredVehicleGroup_ColdWar_NVA = [
+	"uns_t34_76_vc",
+	"uns_t54_nva",
+	"uns_pt76"
+];
 
 //Basic enemy chopper avalaible
-baseChopperGroup_ColdWar_NVA = ["uns_Mi8T_VPAF"];
+baseEnemyUnarmedChopperGroup_ColdWar_NVA = [
+	"uns_Mi8T_VPAF"
+];
 
 //Basic enemy aircraft avalaible
-baseFixedWingGroup_ColdWar_NVA = ["uns_Mig21_BMB",
-"uns_an2_transport",
-"uns_an2_bmb"];
+baseFixedWingGroup_ColdWar_NVA = [
+	"uns_Mig21_BMB",
+	"uns_an2_transport",
+	"uns_an2_bmb"
+];
 
 ////////////////////////
 //Vehicle management////
@@ -177,55 +202,6 @@ attachmentLongList_ColdWar_NVA	= [
 ////////////////////////
 ////Items management////
 ////////////////////////
-itemList_ColdWar_NVA = [
-	"FirstAidKit",
-	"ItemMap",
-	"ItemCompass",
-	"ItemWatch",
-	"NVGoggles",
-	"Binocular",
-	"Rangefinder",
-	"ACE_MapTools",
-	"ACE_SpraypaintRed",
-	"ACE_CableTie",
-	"ACE_WaterBottle",
-	"ACE_EarPlugs",
-	"ACE_fieldDressing",
-	"ACE_packingBandage",
-	"ACE_elasticBandage",
-	"ACE_tourniquet",
-	"ACE_splint",
-	"ACE_morphine",
-	"ACE_quikclot",
-	"ACE_EntrenchingTool",
-	"ACE_RangeTable_82mm"
-	];
-
-itemEngineerList_ColdWar_NVA = [
-	"ToolKit",
-	"MineDetector",
-	"ACE_wirecutter", 
-	"ACE_Fortify",
-	"ACE_DefusalKit",
-	"ACE_Clacker",
-	"ACE_M26_Clacker",
-	"ace_marker_flags_white",
-	"ace_marker_flags_yellow",
-	"ace_marker_flags_purple",
-	"ace_marker_flags_orange",
-	"ace_marker_flags_red"
-	];
-	
-itemMedicList_ColdWar_NVA = [
-	"Medikit",
-	"ACE_epinephrine",
-	"ACE_bloodIV",
-	"ACE_bloodIV_500",
-	"ACE_bloodIV_250",
-	"ACE_personalAidKit",
-	"ACE_surgicalKit"
-];
-
 backPackList_ColdWar_NVA = [
 "Uns_M1941_82mm_Mortar_NVA_Bag",
 "uns_Tripod_Bag",

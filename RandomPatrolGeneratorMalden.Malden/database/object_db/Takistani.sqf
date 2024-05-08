@@ -5,22 +5,33 @@ c_engineer = "engineer";
 c_autorifleman = "autorifleman";
 c_marksman = "marksman"; 
 c_medic = "medic";
+c_grenadier = "grenadier";
+
+//Add specific CUP factions
+if (isClass (configFile >> "CfgPatches" >> "CUP_BaseData")) then 
+{
+	factionInfos pushBack ["_Taki",0,"Takistani [CUP]", true, true, true];
+};
 
 ///////////////////////////
 /////Civilian Management///
 ///////////////////////////
 
 //Taki
-civilian_group_taki = ["CUP_C_TK_Man_06_Coat", 
-"CUP_C_TK_Man_05_Coat", 
-"CUP_C_TK_Man_08"];
+civilian_group_taki = [
+	"CUP_C_TK_Man_06_Coat", 
+	"CUP_C_TK_Man_05_Coat", 
+	"CUP_C_TK_Man_08",
+	"CUP_C_TK_Man_03_Jack"
+];
 
-civilian_big_group_taki = ["CUP_C_TK_Man_06_Coat", 
-"CUP_C_TK_Man_05_Coat", 
-"CUP_C_TK_Man_08", 
-"CUP_C_TK_Man_04", 
-"CUP_C_TK_Man_03_Jack", 
-"CUP_C_TK_Man_02"
+civilian_big_group_taki = [
+	"CUP_C_TK_Man_06_Coat", 
+	"CUP_C_TK_Man_05_Coat", 
+	"CUP_C_TK_Man_08", 
+	"CUP_C_TK_Man_04", 
+	"CUP_C_TK_Man_03_Jack", 
+	"CUP_C_TK_Man_02"
 ];
 
 civilianTruck_taki = [
@@ -82,20 +93,34 @@ baseEnemyHeavyArmoredVehicleGroup_taki = ["CUP_O_MTLB_pk_TK_MILITIA"];
 //Vehicle management////
 ////////////////////////
 //Takistani
-bluforUnarmedVehicle_Taki = ["CUP_O_LR_Transport_TKM","CUP_O_Hilux_unarmed_TK_INS"];
+bluforUnarmedVehicle_Taki = [
+	"CUP_O_LR_Transport_TKM",
+	"CUP_O_Hilux_unarmed_TK_INS"
+];
 
-bluforArmedVehicle_Taki = ["CUP_O_LR_MG_TKM"];
+bluforArmedVehicle_Taki = [
+	"CUP_O_LR_MG_TKM"
+];
+
+bluforArmoredVehicle_Taki = [
+	"CUP_O_MTLB_pk_TK_MILITIA",
+	"CUP_O_BTR40_MG_TKM"
+];
 
 bluforUnarmedVehicleChopper_Taki = [];
-
 
 bluforDrone_Taki = [];
 
 bluforBoat_Taki = [];
 
+//Vehicule able to do HQ features (Loadout management and more)
+bluforHQVehicle_Taki = [
+	"CUP_O_BTR40_TKM"
+];
 ////////////////////////
 //Loadout management////
 ////////////////////////
+
 
 //Takistani
 loadout_Taki = [		
@@ -105,17 +130,12 @@ loadout_Taki = [
 	[c_engineer,"CUP_O_TK_INS_Mechanic"],
 	[c_autorifleman,"CUP_O_TK_INS_Soldier_MG"],
 	[c_marksman,"CUP_O_TK_INS_Sniper"],
-	[c_medic,"CUP_O_TK_INS_Guerilla_Medic"]
+	[c_medic,"CUP_O_TK_INS_Guerilla_Medic"],
+	[c_grenadier,"CUP_O_TK_INS_Soldier_GL"]
 ];
 
 
 //Sample loadout
-// [["CUP_arifle_AK74_GL","","","",["CUP_30Rnd_545x39_AK_M",30],["CUP_1Rnd_HE_GP25_M",1],""],[],[],["CUP_O_TKI_Khet_Partug_01",[["FirstAidKit",1],["CUP_30Rnd_545x39_AK_M",3,30],["SmokeShell",1,1]]],["CUP_V_OI_TKI_Jacket1_03",[["SmokeShellBlue",1,1],["CUP_1Rnd_HE_GP25_M",3,1]]],[],"","CUP_FR_NeckScarf3",[],["ItemMap","","ItemRadio","ItemCompass","ItemWatch",""]]
-// [["CUP_arifle_AKS74_pso","","","CUP_optic_PSO_1_AK",["CUP_30Rnd_545x39_AK_M",30],[],""],[],[],["CUP_O_TKI_Khet_Partug_04",[["FirstAidKit",1],["CUP_30Rnd_545x39_AK_M",3,30],["SmokeShell",1,1]]],["CUP_V_OI_TKI_Jacket2_02",[["SmokeShellBlue",1,1]]],[],"","CUP_FR_NeckScarf4",["Binocular","","","",[],[],""],["ItemMap","","ItemRadio","ItemCompass","ItemWatch",""]]
-// [["CUP_arifle_AK74","","","",["CUP_30Rnd_545x39_AK_M",30],[],""],["CUP_launch_RPG7V","","","",["CUP_PG7VL_M",1],[],""],[],["CUP_O_TKI_Khet_Partug_02",[["FirstAidKit",1],["CUP_30Rnd_545x39_AK_M",3,30]]],["CUP_V_OI_TKI_Jacket4_03",[]],["CUP_B_TKI_Backpack_Gunner_RPG",[["CUP_PG7VL_M",1,1]]],"","CUP_FR_NeckScarf2",[],["ItemMap","","ItemRadio","ItemCompass","ItemWatch",""]]
-// [["CUP_lmg_PKM","","","",["CUP_100Rnd_TE4_LRT4_762x54_PK_Tracer_Green_M",100],[],""],[],[],["CUP_O_TKI_Khet_Partug_05",[["FirstAidKit",1]]],["CUP_V_OI_TKI_Jacket3_01",[["CUP_100Rnd_TE4_LRT4_762x54_PK_Tracer_Green_M",1,100]]],["CUP_B_TKI_AlicePack_MG",[["CUP_100Rnd_TE4_LRT4_762x54_PK_Tracer_Green_M",2,100]]],"","CUP_FR_NeckScarf",[],["ItemMap","","ItemRadio","ItemCompass","ItemWatch",""]]
-// [["CUP_srifle_LeeEnfield","","","",["CUP_10x_303_M",10],[],""],[],[],["CUP_O_TKI_Khet_Partug_06",[["FirstAidKit",1],["CUP_10x_303_M",4,10]]],["CUP_V_OI_TKI_Jacket4_01",[]],[],"","CUP_FR_NeckScarf4",[],["ItemMap","","ItemRadio","ItemCompass","ItemWatch",""]]
-// [["CUP_arifle_FNFAL","","","",["CUP_20Rnd_762x51_FNFAL_M",20],[],""],[],[],["CUP_O_TKI_Khet_Partug_04",[["FirstAidKit",1],["CUP_20Rnd_762x51_FNFAL_M",2,20]]],["CUP_V_OI_TKI_Jacket3_01",[["CUP_20Rnd_762x51_FNFAL_M",1,20]]],["CUP_B_TIK_CivPack_WDL_Ammo",[["CUP_20Rnd_762x51_FNFAL_M",2,20],["CUP_10Rnd_762x54_SVD_M",2,10],["CUP_1Rnd_HEDP_M203",2,1],["CUP_HandGrenade_RGD5",2,1]]],"","CUP_FR_NeckScarf5",[],["ItemMap","","ItemRadio","ItemCompass","ItemWatch",""]]
 
 ////////////////////////
 ///Weapon management////
@@ -123,11 +143,37 @@ loadout_Taki = [
 //Takistani
 rifleList_Taki = [		
 	"CUP_arifle_AK74",
-	"CUP_arifle_FNFAL"
+	"CUP_arifle_AKM",
+	"CUP_arifle_FNFAL",
+	"CUP_arifle_AKM_Early",
+	"CUP_arifle_AKMS",
+	"CUP_arifle_AKMS_Early",
+	"CUP_arifle_AKS74U",
+	"CUP_arifle_AK47",
+	"CUP_arifle_AK47_Early",
+	"CUP_arifle_AKS",
+	"CUP_arifle_AK74_Early",
+	"CUP_arifle_AKS74",
+	"CUP_srifle_LeeEnfield"
 ];	
 
+
+grenadeLauncherList_Taki = [
+	"CUP_arifle_AKM_GL",
+	"CUP_arifle_AKM_GL_Early",
+	"CUP_arifle_AKMS_GL",
+	"CUP_arifle_AKMS_GL_Early",
+	"CUP_arifle_AK47_GL",
+	"CUP_arifle_AK47_GL_Early",
+	"CUP_arifle_AK74_GL",
+	"CUP_arifle_AK74_GL_Early",
+	"CUP_arifle_AKS74_GL"
+];
+
+
 launcherList_Taki = [		
-	"CUP_launch_RPG7V"
+	"CUP_launch_RPG7V",
+	"CUP_launch_RPG7V_PGO7V"
 ];	
 
 autorifleList_Taki = [			
@@ -137,10 +183,12 @@ autorifleList_Taki = [
 
 marksmanrifleList_Taki = [		
 	"CUP_arifle_AKS74_pso",
-	"CUP_srifle_LeeEnfield"
+	"CUP_srifle_SVD_pso",
+	"CUP_srifle_SVD"
 ];
 
 smgList_Taki = [		
+	"CUP_hgun_Makarov"
 ];
 
 
@@ -148,73 +196,11 @@ smgList_Taki = [
 //Attachement management//
 //////////////////////////
 attachmentShortList_Taki	= [
-	"CUP_optic_AC11704_Black",
-	"CUP_optic_VortexRazor_UH1_Black",		
-	"CUP_optic_artel_m14",
-	"CUP_optic_artel_m14_pip",
-	"CUP_optic_Aimpoint_5000",
-	"CUP_optic_HoloBlack",
-	"CUP_optic_Eotech553_Black",		
-	"CUP_optic_CompM2_Black",			
-	"CUP_optic_CompM2_low",			
-	"CUP_optic_CompM4",
-	"CUP_optic_MicroT1",			
-	"CUP_optic_MicroT1_low",			
-	"CUP_optic_MARS",
-	"CUP_optic_MEPRO",
-	"CUP_optic_MEPRO_openx_orange",
-	"CUP_optic_MEPRO_moa_clear",
-	"CUP_optic_MEPRO_tri_clear",
-	"CUP_optic_SUSAT",
-	"CUP_optic_SUSAT_PIP",
-	"CUP_optic_SUSAT_3D",
-	//"CUP_optic_ACOG",  //Remove too versatile optics to test players new choice
-	"CUP_optic_ACOG_PIP",
-	"CUP_optic_ACOG_3D",
-	"CUP_optic_ACOG2",
-	"CUP_optic_ACOG2_PIP",
-	"CUP_optic_ACOG2_3D",
-	"CUP_optic_RCO",
-	"CUP_optic_ACOG_TA01NSN_Black_PIP",
-	"CUP_optic_ACOG_TA01NSN_Black_3D",
-	"CUP_optic_ACOG_TA01B_Black",
-	"CUP_optic_ACOG_TA01B_Black_PIP",
-	"CUP_optic_ACOG_TA01B_Black_3D",
-	"CUP_optic_ZDDot",
-	"CUP_optic_MRad",
-	"CUP_optic_TrijiconRx01_black",
-	"CUP_optic_TrijiconRx01_kf_black",
-	"CUP_optic_ZeissZPoint",
-	"CUP_optic_HensoldtZO",
-	"CUP_acc_ANPEQ_15",
-	"CUP_acc_ANPEQ_15_Black",
-	"CUP_acc_ANPEQ_15_Top_Flashlight_Tan_L",
-	"CUP_acc_ANPEQ_2",
-	"CUP_acc_ANPEQ_2_Black_Top",
-	"CUP_acc_ANPEQ_2_desert",
-	"CUP_acc_ANPEQ_2_grey",
-	"CUP_bipod_Harris_1A2_L_BLK",
-	"CUP_bipod_VLTOR_Modpod",
-	"CUP_muzzle_PB6P9",
-	"CUP_muzzle_Bizon",
-	"CUP_muzzle_PBS4",
-	"CUP_muzzle_TGPA",
-	"CUP_muzzle_snds_KZRZP_Base",
-	"CUP_muzzle_snds_KZRZP_SVD",
-	"CUP_muzzle_snds_KZRZP_AK762",
-	"CUP_muzzle_snds_KZRZP_AK545",
-	"CUP_muzzle_snds_KZRZP_PK"
+
 ];
 
 attachmentLongList_Taki	= [
-	"CUP_optic_SB_11_4x20_PM",
-	"CUP_optic_SB_11_4x20_PM_pip",
-	"CUP_optic_SB_3_12x50_PMII",
-	"CUP_optic_SB_3_12x50_PMII_PIP",
-	"CUP_optic_LeupoldMk4",
-	"CUP_optic_CWS",
-	"CUP_optic_CWS_NV",
-	"CUP_optic_CWS_NV_RDS"
+	"CUP_optic_PSO_1"
 ];
 
 
@@ -226,11 +212,9 @@ itemList_Taki = [
 	"ItemMap",
 	"ItemCompass",
 	"ItemWatch",
-	"NVGoggles",
 	"Binocular",
 	"Rangefinder",
 	"ACE_MapTools",
-	"ACE_microDAGR",
 	"ACE_CableTie",
 	"ACE_DAGR",
 	"ACE_WaterBottle",
@@ -247,22 +231,95 @@ itemList_Taki = [
 	"ACE_SpraypaintBlack",
 	"ACE_SpraypaintBlue",
 	"ACE_SpraypaintGreen",
-	"ACE_SpraypaintRed",
-	"ACE_IR_Strobe_Item"
+	"ACE_SpraypaintRed"
 	];
 
 itemEngineerList_Taki = [
 	"ToolKit",
-	"MineDetector",
-	"ACE_wirecutter", "ACE_Fortify"
+	"ACE_wirecutter",
+	"ACE_Fortify",
+	"ACE_DefusalKit",
+	"ACE_DeadManSwitch",
+	"ACE_DefusalKit",
+	"ACE_Clacker",
+	"ACE_M26_Clacker",
+	"ace_marker_flags_white",
+	"ace_marker_flags_yellow",
+	"ace_marker_flags_purple",
+	"ace_marker_flags_orange",
+	"ace_marker_flags_red"
 	];
 	
 itemMedicList_Taki = [
 	"Medikit",
 	"ACE_epinephrine",
+	"ACE_morphine",
+	"ACE_splint",
+	"ACE_tourniquet",
 	"ACE_bloodIV",
 	"ACE_bloodIV_500",
 	"ACE_bloodIV_250",
 	"ACE_personalAidKit",
-	"ACE_surgicalKit"
+	"ACE_surgicalKit",
+	"ACE_suture",
+	"ACE_bodyBag"
 	];
+
+
+
+//Uniform, vest, headgear, avalaible for all unit
+uniformList_Taki = [
+	"CUP_O_TKI_Khet_Partug_01",
+	"CUP_H_TKI_Lungee_01",
+	"CUP_V_OI_TKI_Jacket2_03",
+	"CUP_FR_NeckScarf",
+	"CUP_O_TKI_Khet_Partug_02",
+	"CUP_V_OI_TKI_Jacket2_02",
+	"CUP_V_OI_TKI_Jacket2_01",
+	"CUP_O_TKI_Khet_Partug_06",
+	"CUP_FR_NeckScarf4",
+	"CUP_O_TKI_Khet_Partug_08",
+	"CUP_FR_NeckScarf3",
+	"CUP_FR_NeckScarf5",
+	"CUP_O_TKI_Khet_Partug_05"
+];
+
+
+
+
+backPackList_Taki = [
+	"B_Mortar_01_weapon_F",
+	"B_Mortar_01_support_F",
+	"CUP_B_TK_AssaultPack_Medic",
+	"CUP_B_AlicePack_Khaki",
+	"CUP_B_AlicePack_Bedroll"
+];
+
+
+//Magazine avalaible for all unit
+magazineList_Taki = [
+	"CUP_HandGrenade_M67",
+	"SmokeShell",
+	"SmokeShellBlue",
+	"SmokeShellGreen",
+	"SmokeShellOrange",
+	"SmokeShellPurple",
+	"SmokeShellRed",
+	"SmokeShellYellow",
+	"CUP_8Rnd_9x18_Makarov_M",
+	"CUP_30Rnd_TE1_Red_Tracer_545x39_AK_M",
+	"CUP_30Rnd_762x39_AK47_M",
+	"CUP_1Rnd_HE_GP25_M",
+	"CUP_FlareWhite_GP25_M",
+	"CUP_1Rnd_SMOKE_GP25_M",
+	"CUP_100Rnd_TE4_LRT4_762x54_PK_Tracer_Red_M",
+	"CUP_30Rnd_TE1_Red_Tracer_545x39_AK74_plum_M",
+	"CUP_10x_303_M",
+	"CUP_PG7V_M",
+	"CUP_PG7VM_M",
+	"CUP_PG7VL_M",
+	"CUP_TBG7V_M",
+	"CUP_OG7_M",
+	"CUP_20Rnd_762x51_FNFAL_M",
+	"CUP_10Rnd_762x54_SVD_M"
+];

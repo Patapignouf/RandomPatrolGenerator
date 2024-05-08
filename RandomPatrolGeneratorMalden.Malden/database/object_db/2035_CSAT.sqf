@@ -9,6 +9,8 @@ c_medic = "medic";
 c_pilot = "pilot";
 c_drone = "UAV operator";
 
+factionInfos pushBack ["_2035_CSAT", 25, "2035 CSAT", true, true, true];
+
 //////////////////////////////
 ////Define civ group data/////
 //////////////////////////////
@@ -103,6 +105,14 @@ baseEnemyUnarmedChopperGroup_2035_CSAT = [
 	"O_T_VTOL_02_infantry_dynamicLoadout_F"
 ];
 
+baseEnemyArmedChopperGroup_2035_CSAT = [
+	"O_Heli_Attack_02_dynamicLoadout_F", 
+	"O_Heli_Light_02_dynamicLoadout_F"
+];
+
+baseEnemyArmedChopperGroup_2035_CSAT = [
+
+];
 
 ////////////////////////
 //Vehicle management////
@@ -176,8 +186,6 @@ bluforHQVehicle_2035_CSAT = [
 ////////////////////////
 //Loadout management////
 ////////////////////////
-
-listOfRoles_2035_CSAT = [c_leader,c_at,c_rifleman,c_engineer,c_autorifleman,c_marksman,c_medic,c_grenadier, c_pilot, c_drone];
 
 //Two options : 
 // - ACE Arsenal : ],[],"AMF_FELIN_MOUNT_EARPROT_OD","",["Laserdesignator","","","",["Laserbatteries",1],[],""],["ItemMap","ItemGPS","","ItemCompass","TFAR_microdagr",""]]
@@ -334,8 +342,6 @@ itemList_2035_CSAT = [
 	"ACE_SpraypaintGreen",
 	"ACE_SpraypaintRed",
 	"ACE_RangeCard",
-	"HandGrenade",
-	"O_IR_Grenade",
 	"SmokeShell",
 	"SmokeShellRed",
 	"SmokeShellOrange",
@@ -366,6 +372,7 @@ itemMedicList_2035_CSAT = [
 	"ACE_bloodIV_250",
 	"ACE_personalAidKit",
 	"ACE_surgicalKit",
+	"ACE_suture",
 	"ACE_bodyBag"
 ];
 
@@ -377,7 +384,8 @@ backPackList_2035_CSAT = [
 	"B_FieldPack_Taiga_F",
 	"B_Carryall_ocamo",
 	"B_Carryall_Taiga_F",
-	"B_Carryall_oucamo"
+	"B_Carryall_oucamo",
+	"tfar_mr3000"
 ];
 
 
@@ -394,6 +402,10 @@ uniformList_2035_CSAT = [
 	"U_O_CombatUniform_oucamo",
 	"V_HarnessO_gry",
 	"H_HelmetO_oucamo"
+];
+
+factionDefaultRadios_2035_CSAT = [
+	"tfar_fadak"
 ];
 
 //Magazine avalaible for all unit

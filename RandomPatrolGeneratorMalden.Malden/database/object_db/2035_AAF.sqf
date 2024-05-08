@@ -1,39 +1,42 @@
-c_leader = "leader";
-c_at = "at";
-c_rifleman = "rifleman";
-c_engineer = "engineer";
-c_autorifleman = "autorifleman";
-c_marksman = "marksman"; 
-c_medic = "medic";
-c_grenadier = "grenadier";
+#include "..\classConstant.sqf"
+
+
+factionInfos pushBack ["_2035_AAF", 13,"2035 AAF", true, true, false];
+
 
 //////////////////////////////
 ////Define civ group data/////
 //////////////////////////////
 
 
-civilian_group_2035_AAF = ["C_Man_casual_9_F", 
-"C_Man_casual_4_v2_F", 
-"C_Man_casual_6_v2_F", 
-"C_Man_casual_7_F", 
-"C_Man_ConstructionWorker_01_Blue_F"];
+civilian_group_2035_AAF = [
+	"C_Man_casual_9_F", 
+	"C_Man_casual_4_v2_F", 
+	"C_Man_casual_6_v2_F", 
+	"C_Man_casual_7_F", 
+	"C_Man_ConstructionWorker_01_Blue_F"
+];
 
-civilian_big_group_2035_AAF = ["C_Man_casual_9_F", 
-"C_Man_casual_4_v2_F", 
-"C_Man_casual_6_v2_F", 
-"C_Man_casual_7_F", 
-"C_Man_ConstructionWorker_01_Blue_F", 
-"C_man_w_worker_F", 
-"C_Man_UtilityWorker_01_F", 
-"C_man_polo_2_F" ];
+civilian_big_group_2035_AAF = [
+	"C_Man_casual_9_F", 
+	"C_Man_casual_4_v2_F", 
+	"C_Man_casual_6_v2_F", 
+	"C_Man_casual_7_F", 
+	"C_Man_ConstructionWorker_01_Blue_F", 
+	"C_man_w_worker_F", 
+	"C_Man_UtilityWorker_01_F", 
+	"C_man_polo_2_F" 
+];
 
-civilianTruck_2035_AAF = ["C_Hatchback_01_sport_F", 
-"C_Hatchback_01_F", 
-"C_SUV_01_F", 
-"C_Quadbike_01_F", 
-"C_Van_01_box_F", 
-"C_Van_01_fuel_F", 
-"C_Offroad_01_repair_F"];
+civilianTruck_2035_AAF = [
+	"C_Hatchback_01_sport_F", 
+	"C_Hatchback_01_F", 
+	"C_SUV_01_F", 
+	"C_Quadbike_01_F", 
+	"C_Van_01_box_F", 
+	"C_Van_01_fuel_F", 
+	"C_Offroad_01_repair_F"
+];
 
 //////////////////////////////
 ///Define enemy group data////
@@ -42,7 +45,9 @@ civilianTruck_2035_AAF = ["C_Hatchback_01_sport_F",
 baseEnemyGroup_2035_AAF = [
 	"I_soldier_F", 
 	"I_Soldier_AR_F", 
+	"I_Soldier_AR_F",
 	"I_Soldier_GL_F", 
+	"I_medic_F",
 	"I_Soldier_M_F", 
 	"I_Soldier_LAT2_F", 
 	"I_soldier_F", 
@@ -70,21 +75,20 @@ baseEnemyMortarGroup_2035_AAF = [
 	"I_Mortar_01_F",
 	"I_soldier_F", 
 	"I_Soldier_AR_F", 
-	"I_Soldier_GL_F"
+	"I_ghillie_sard_F"
 ];
 
 baseEnemyVehicleGroup_2035_AAF = [
 	"I_MRAP_03_F", 
 	"I_MRAP_03_hmg_F", 
-	"I_Truck_02_transport_F", 
-	"I_Truck_02_medical_F"
+	"I_Truck_02_transport_F"
 ];
 
 baseEnemyLightArmoredVehicleGroup_2035_AAF = [
 	"I_LT_01_AT_F", 
 	"I_LT_01_scout_F", 
 	"I_LT_01_cannon_F"
- ];
+];
 
 baseEnemyHeavyArmoredVehicleGroup_2035_AAF = [
 	"I_MBT_03_cannon_F", 
@@ -95,6 +99,10 @@ baseEnemyHeavyArmoredVehicleGroup_2035_AAF = [
 baseEnemyUnarmedChopperGroup_2035_AAF = [
 	"I_Heli_Transport_02_F", 
 	"I_Heli_light_03_unarmed_F"
+];
+
+baseEnemyArmedChopperGroup_2035_AAF = [
+	"I_Heli_light_03_dynamicLoadout_F"
 ];
 
 //Basic enemy aircraft avalaible
@@ -116,6 +124,13 @@ bluforUnarmedVehicle_2035_AAF = [
 
 bluforArmedVehicle_2035_AAF = [
 	"I_MRAP_03_hmg_F"
+];
+
+bluforArmoredVehicle_2035_AAF = [
+	"I_APC_tracked_03_cannon_F",
+	"I_APC_Wheeled_03_cannon_F",
+	"I_LT_01_cannon_F",
+	"I_MBT_03_cannon_F"
 ];
 
 bluforUnarmedVehicleChopper_2035_AAF = [
@@ -140,7 +155,7 @@ bluforBoat_2035_AAF = [
 bluforFixedWing_2035_AAF = [
 	"I_Plane_Fighter_03_dynamicLoadout_F", 
 	"I_Plane_Fighter_04_F"
-	];
+];
 
 bluforHQVehicle_2035_FIA = [
 	"I_Truck_02_covered_F",
@@ -152,8 +167,6 @@ bluforHQVehicle_2035_FIA = [
 //Loadout management////
 ////////////////////////
 
-listOfRoles_2035_AAF = [c_leader,c_at,c_rifleman,c_engineer,c_autorifleman,c_marksman,c_medic,c_grenadier];
-
 loadout_2035_AAF = [		
 	[c_leader,"I_Soldier_SL_F"],
 	[c_at,"I_Soldier_AT_F"],
@@ -162,7 +175,9 @@ loadout_2035_AAF = [
 	[c_autorifleman,"I_Soldier_AR_F"],
 	[c_marksman,"I_Soldier_M_F"],
 	[c_medic,"I_medic_F"],
-	[c_grenadier,"I_Soldier_GL_F"]
+	[c_grenadier,"I_Soldier_GL_F"],
+	[c_drone,"I_soldier_UAV_F"],
+	[c_pilot,"I_helipilot_F"]
 ];
 
 ////////////////////////
@@ -172,7 +187,8 @@ rifleList_2035_AAF = [
 	"arifle_Mk20_F",
 	"arifle_Mk20_plain_F",
 	"arifle_Mk20C_F",
-	"arifle_Mk20C_plain_F"
+	"arifle_Mk20C_plain_F",
+	"hgun_ACPC2_F"
 ];	
 
 //Grenade launcher or weapon with grenade launcher option
@@ -182,7 +198,10 @@ grenadeLauncherList_2035_AAF = [
 ];
 
 launcherList_2035_AAF = [		
-	"launch_I_Titan_short_F"
+	"launch_I_Titan_short_F",
+	"launch_I_Titan_F",
+	"launch_NLAW_F",
+	"ACE_launch_NLAW_ready_F"
 ];	
 
 autorifleList_2035_AAF = [			
@@ -207,7 +226,11 @@ smgList_2035_AAF = [
 attachmentShortList_2035_AAF	= [
 	"acc_pointer_IR",
 	"optic_MRCO",
-	"optic_ACO_grn"
+	"optic_ACO_grn",
+	"optic_Holosight_smg",
+	"bipod_03_F_blk",
+	"muzzle_snds_H",
+	"acc_pointer_IR"
 ];
 
 attachmentLongList_2035_AAF	= [
@@ -248,8 +271,12 @@ itemList_2035_AAF = [
 	"ACE_SpraypaintGreen",
 	"ACE_SpraypaintRed",
 	"ACE_IR_Strobe_Item",
-	"ACE_RangeCard"
-	];
+	"ACE_RangeCard",
+	"ACE_NVG_Wide_Black_WP",
+	"ACE_NVG_Wide_WP",
+	"ACE_NVG_Wide_Green_WP",
+	"NVGoggles_INDEP"
+];
 
 itemEngineerList_2035_AAF = [
 	"ToolKit",
@@ -264,7 +291,7 @@ itemEngineerList_2035_AAF = [
 	"ace_marker_flags_purple",
 	"ace_marker_flags_orange",
 	"ace_marker_flags_red"
-	];
+];
 	
 itemMedicList_2035_AAF = [
 	"Medikit",
@@ -273,18 +300,53 @@ itemMedicList_2035_AAF = [
 	"ACE_bloodIV_500",
 	"ACE_bloodIV_250",
 	"ACE_personalAidKit",
-	"ACE_surgicalKit"
+	"ACE_surgicalKit",
+	"ACE_suture"
 ];
 
 
 backPackList_2035_AAF = [
-	"I_Fieldpack_oli_AT"
+	"B_Fieldpack_oli_AT",
+	"B_Fieldpack_oli_Medic",
+	"B_Fieldpack_oli",
+	"B_TacticalPack_oli",
+	"B_Fieldpack_oli_Ammo",
+	"B_Carryall_oli",
+	"tfar_anprc155"
 ];
 
 uniformList_2035_AAF = [
-	"U_I_CombatUniform_shortsleeve"
+	"U_I_CombatUniform_shortsleeve",
+	"U_I_CombatUniform",
+	"V_PlateCarrierIA2_dgtl",
+	"H_HelmetIA",
+	"H_MilCap_dgtl",
+	"H_Booniehat_dgtl",
+	"V_Chestrig_oli"
+];
+
+factionDefaultRadios_2035_AAF = [
+	"tfar_anprc148jem"
 ];
 
 magazineList_2035_AAF = [
-
+	"30Rnd_556x45_Stanag",
+	"30Rnd_556x45_Stanag_Tracer_Green",
+	"9Rnd_45ACP_Mag",
+	"30Rnd_9x21_Yellow_Mag",
+	"5Rnd_127x108_Mag",
+	"200Rnd_65x39_cased_Box",
+	"Titan_AT",
+	"Titan_AP",
+	"Titan_AA",
+	"20Rnd_762x51_Mag",
+	"SmokeShell",
+	"SmokeShellBlue",
+	"SmokeShellGreen",
+	"SmokeShellOrange",
+	"SmokeShellPurple",
+	"SmokeShellRed",
+	"SmokeShellYellow",
+	"HandGrenade",
+	"O_IR_Grenade"
 ];

@@ -41,14 +41,36 @@ _currentEnemyGroup leaveVehicle _heli;
 
 //Add Experience
 //Add eventhandler killed
-(leader (_vehicleTransportGroup)) addEventHandler ["Killed", {
-	params ["_unit", "_killer", "_instigator", "_useEffects"];
-
-	if (isPlayer _killer) then 
+_vehicleFromGroup = vehicle (leader _vehicleTransportGroup);
+_vehicleFromGroup addEventHandler ["HandleDamage", {
+	params ["_unit", "_selection", "_damage", "_source", "_projectile", "_hitIndex", "_instigator", "_hitPoint", "_directHit", "_context"];
+	if ((_unit getHit "motor") > 0.7 && !(_unit getVariable ["isAlmostDead", false])) then 
 	{
-		[[5], 'engine\rankManagement\rankUpdater.sqf'] remoteExec ['BIS_fnc_execVM', _killer];
-	}; 
+		_unit setVariable ["isAlmostDead", true, true];
+		_unit setDamage 1;
+		
+		if (isPlayer _instigator) then 
+		{
+			[[5, "RPG_ranking_vehicle_kill"], 'engine\rankManagement\rankUpdater.sqf'] remoteExec ['BIS_fnc_execVM', _instigator];
+			_killedForExp = _unit getVariable ["EHKilledForXP", 0];
+			[_unit, ["Killed", _killedForExp]] remoteExec ["removeEventHandler", 0, true];
+		}; 
+	};
 }];
+
+_killedForExp = _vehicleFromGroup addEventHandler ["Killed", {
+	params ["_unit", "_killer", "_instigator", "_useEffects"];
+	if ((_unit getHit "motor") > 0.7 && !(_unit getVariable ["isAlmostDead", false])) then 
+	{	
+		if (isPlayer _instigator) then 
+		{
+			[[5, "RPG_ranking_vehicle_kill"], 'engine\rankManagement\rankUpdater.sqf'] remoteExec ['BIS_fnc_execVM', _instigator];
+			[_unit, "HandleDamage"] remoteExec ["removeAllEventHandlers", 0, true];
+		}; 
+	};
+}];
+
+_vehicleFromGroup setVariable ["EHKilledForXP", _killedForExp, true];
 
 //back to map border
 wp2 = _vehicleTransportGroup addWaypoint [[selectRandom [0,worldSize],selectRandom [0,worldSize]], 25];

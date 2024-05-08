@@ -1,8 +1,9 @@
-params ["_thisAvailableOpforGroup","_thisAvailableOpforCars","_thisAvailableOpforLightArmoredVehicle","_thisAvailableOpforHeavyArmoredVehicle","_thisAvailableCivGroup","_thisAvailablePosition","_thisDifficulty", "_thisObjective"];
+params ["_thisAvailableOpforGroup","_thisAvailableOpforCars","_thisAvailableOpforLightArmoredVehicle","_thisAvailableOpforHeavyArmoredVehicle","_thisAvailableCivGroup","_thisAvailablePosition", "_thisObjective"];
 
 currentRandomGroup = objNull;
 currentGroup = objNull;
 diag_log format ["Begin generation AO %1",_thisAvailablePosition];
+_thisDifficulty = missionNamespace getVariable "missionDifficultyParam"; //Default medium
 
 //Try to find position with building if avalaible
 _tempAvailablePosition = getPos (nearestBuilding _thisAvailablePosition);
@@ -82,9 +83,9 @@ if (random 100 < 75) then
 	};
 };
 
-diag_log format ["Civilian generation start on AO %1",_thisAvailablePosition];
-//Add chance to spawn civilian 33%
-if (random 100 < 33 && count _thisAvailableCivGroup > 0) then 
+diag_log format ["Civilian generation start on AO %1", _thisAvailablePosition];
+//Add chance to spawn civilian 25%
+if (random 100 < 25 && count _thisAvailableCivGroup > 0) then 
 {
 	for [{_i = 0}, {_i < _thisDifficulty}, {_i = _i + 1}] do 
 	{

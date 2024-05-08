@@ -79,7 +79,7 @@ _RcsButtonObjective ctrlAddEventHandler[ "ButtonClick",
 
 		// hint format ["You have already talk to %1 ", name thisCivilian];
 		_randomAnswers = ["No idea what you're talking about!","Go bother someone else?","Oh please leave me alone !","Get out of this area !"];
-		[1,[selectRandom _randomAnswers, "PLAIN", 0.5]] remoteExec ["cutText", player];
+		[[format ["<t align = 'center' shadow = '2' color='#00ff00' size='1.5' font='PuristaMedium' >Civilian</t><br /><t color='#ffffff' size='1.5' font='PuristaMedium' shadow = '2' >%1</t>", selectRandom _randomAnswers], "PLAIN", -1, true, true]] remoteExec ["titleText", player];
 
 		//Counter to limit civilian not to give enough intel
 		_counter = missionNamespace getVariable ["TAG_fnc_civsAsked",0];
@@ -89,7 +89,7 @@ _RcsButtonObjective ctrlAddEventHandler[ "ButtonClick",
 	} else {
 		// hint format ["You have already talk to %1 ", name thisCivilian];
 		_randomAnswers = ["No idea what you're talking about!","Go bother someone else?","Oh please leave me alone !","Get out of this area !"];
-		[1,[selectRandom _randomAnswers, "PLAIN", 0.5]] remoteExec ["cutText", player];
+		[[format ["<t align = 'center' shadow = '2' color='#00ff00' size='1.5' font='PuristaMedium' >Civilian</t><br /><t color='#ffffff' size='1.5' font='PuristaMedium' shadow = '2' >%1</t>", selectRandom _randomAnswers], "PLAIN", -1, true, true]] remoteExec ["titleText", player];
 	};
 }];
 
@@ -131,70 +131,16 @@ _RcsButtonObjective ctrlAddEventHandler[ "ButtonClick",
 		if (_reveal) exitWith 
 		{
 			//Get mission context
-			_revealedObjectives = missionNamespace getVariable ["revealedObjectives",[]];
-			_tempMissionObjectives = missionNamespace getVariable ["MissionObjectives",[]];
-			_revealedMissionEnemyInfo = missionNamespace getVariable ["revealedMissionEnemyInfo",[]];
-			_MissionEnemyInfo = missionNamespace getVariable ["MissionEnemyInfo",[]];
+			//Reveal minor intel for the caller
+			[[player, "civilianAsking"], 'engine\objectiveManagement\revealMinorIntel.sqf'] remoteExec ['BIS_fnc_execVM', player];
 
-			//Same code here, needs to be factorize
-			_potentialMissionEnemyInfo = _MissionEnemyInfo - _revealedMissionEnemyInfo;
-			_infoToReveal = selectRandom _potentialMissionEnemyInfo;
-			_revealedMissionEnemyInfo pushBack _infoToReveal;
-			missionNamespace setVariable ["revealedMissionEnemyInfo",_revealedMissionEnemyInfo,true];
-			_infoName = _infoToReveal select 0;
-			_infoPos = _infoToReveal select 1;
-			_infoGroup = _infoToReveal select 2;
-			_nearestCity = nearestLocations [_infoPos, ["NameLocal","NameVillage","NameCity","NameCityCapital"], 1500] select 0;
-			_intelRevelated = "";
-			switch (_infoName) do 
-			{
-				case "Mortar":
-				{
-					_intelRevelated = format ["This morning i saw a mortar position near %1. I don't know if they are there for you, be careful.",text _nearestCity];
-				};
-				case "Patrol":
-				{
-					_intelRevelated = format ["I've heard there's soldiers patrolling around %1. About %2 men.",text _nearestCity, count units _infoGroup];
-				};
-				case "Car":
-				{
-					_intelRevelated = format ["I saw an unknown car leaving here for %1 this morning...",text _nearestCity];
-				};
-				case "LightArmored";
-				case "HeavyArmored":
-				{
-					_intelRevelated = format ["I've heard there's military vehicles next to %1. They seem to prepare an attack.",text _nearestCity];
-				};
-				case "DefenseFOBInfantry":
-				{
-					_intelRevelated = format ["I know there is an enemy base around %1, this location seems dangerous",text _nearestCity];
-				};
-				case "DefenseInfantry":
-				{
-					_intelRevelated = format ["I know there is a group of %2 soldiers defending %1, this location seems dangerous",text _nearestCity, count units _infoGroup];
-				};
-				case "Civilian":
-				{
-					_intelRevelated = format ["Be careful, there are civilian in %1. Watch your fire...",text _nearestCity];
-				};
-			};
-				
-				//Display dialog to the player
-				cutText [_intelRevelated, "PLAIN", 0.5];
-
-				//Create diary entry for the intel 
-				_intelDiaryAlreadyRevealed = player getVariable "diaryIntel";
-				_allDiaryIntel =  format ["%1 <br/> %2 <br/>", _intelDiaryAlreadyRevealed, _intelRevelated];
-				player removeDiaryRecord  ["RPG", _intelDiaryAlreadyRevealed]; //Update diary doesn't work very well so delete/create is the only solution
-				_newIntelDiaryAlreadyRevealed = player createDiaryRecord ["RPG", ["RPG intel", _allDiaryIntel]];
-				player setVariable ["diaryIntel", _newIntelDiaryAlreadyRevealed];
-				[[1], 'engine\rankManagement\rankUpdater.sqf'] remoteExec ['BIS_fnc_execVM', player];
-				missionNamespace setVariable ["TAG_fnc_civsAsked",(round random 1),true];
+			[[1, "RPG_ranking_intel_collect"], 'engine\rankManagement\rankUpdater.sqf'] remoteExec ['BIS_fnc_execVM', player];
+			missionNamespace setVariable ["TAG_fnc_civsAsked",(round random 1),true];
 		};
 
 		// hint format ["You have already talk to %1 ", name thisCivilian];
 		_randomAnswers = ["No idea what you're talking about!","Go bother someone else?","Oh please leave me alone !","Get out of this area !"];
-		[1,[selectRandom _randomAnswers, "PLAIN", 0.5]] remoteExec ["cutText", player];
+		[[format ["<t align = 'center' shadow = '2' color='#00ff00' size='1.5' font='PuristaMedium' >Civilian</t><br /><t color='#ffffff' size='1.5' font='PuristaMedium' shadow = '2' >%1</t>", selectRandom _randomAnswers], "PLAIN", -1, true, true]] remoteExec ["titleText", player];
 
 		//Counter to limit civilian not to give enough intel
 		_counter = missionNamespace getVariable ["TAG_fnc_civsAsked",0];
@@ -204,7 +150,7 @@ _RcsButtonObjective ctrlAddEventHandler[ "ButtonClick",
 	} else {
 		// hint format ["You have already talk to %1 ", name thisCivilian];
 		_randomAnswers = ["No idea what you're talking about!","Go bother someone else?","Oh please leave me alone !","Get out of this area !"];
-		[1,[selectRandom _randomAnswers, "PLAIN", 0.5]] remoteExec ["cutText", player];
+		[[format ["<t align = 'center' shadow = '2' color='#00ff00' size='1.5' font='PuristaMedium' >Civilian</t><br /><t color='#ffffff' size='1.5' font='PuristaMedium' shadow = '2' >%1</t>", selectRandom _randomAnswers], "PLAIN", -1, true, true]] remoteExec ["titleText", player];
 	};
 }];
 
@@ -287,23 +233,22 @@ _RcsButtonObjective ctrlAddEventHandler[ "ButtonClick",
 			_civLoadout set [4, _vestArray];
 
 			_civ setUnitLoadout _civLoadout;
-			sleep 2;
+			// sleep 2;
 			for "_i" from 0 to 3 do { _civ addItem (currentMagazine player); };	//Give civ some ammunitions
 
-			sleep 5;
+			// sleep 5;
 			reload _civ;
 		} else 
 		{
 			_randomAnswers = ["Oh please leave me alone !","I don't trust you !"];
-			[1,[selectRandom _randomAnswers, "PLAIN", 0.5]] remoteExec ["cutText", player];
+			[[format ["<t align = 'center' shadow = '2' color='#00ff00' size='1.5' font='PuristaMedium' >Civilian</t><br /><t color='#ffffff' size='1.5' font='PuristaMedium' shadow = '2' >%1</t>", selectRandom _randomAnswers], "PLAIN", -1, true, true]] remoteExec ["titleText", player];
 		};
 
 	} else {
 		// hint format ["You have already talk to %1 ", name thisCivilian];
 		_randomAnswers = ["No idea what you're talking about!","Go bother someone else?","Oh please leave me alone !","Get out of this area !"];
-		[1,[selectRandom _randomAnswers, "PLAIN", 0.5]] remoteExec ["cutText", player];
+		[[format ["<t align = 'center' shadow = '2' color='#00ff00' size='1.5' font='PuristaMedium' >Civilian</t><br /><t color='#ffffff' size='1.5' font='PuristaMedium' shadow = '2' >%1</t>", selectRandom _randomAnswers], "PLAIN", -1, true, true]] remoteExec ["titleText", player];
 	};
-
 }];
 
 //Close display

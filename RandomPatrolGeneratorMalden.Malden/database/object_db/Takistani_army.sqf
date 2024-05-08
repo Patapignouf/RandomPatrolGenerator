@@ -8,6 +8,12 @@ c_medic = "medic";
 c_grenadier = "grenadier";
 c_pilot = "pilot";
 
+//Add specific CUP factions
+if (isClass (configFile >> "CfgPatches" >> "CUP_BaseData")) then 
+{
+	factionInfos pushBack ["_Taki_Army", 20, "Takistani Army [CUP]", true, true, false];
+};
+
 ///////////////////////////
 /////Civilian Management///
 ///////////////////////////
@@ -47,7 +53,7 @@ baseEnemyGroup_Taki_Army = [
 	"CUP_O_TK_Soldier_MG", 
 	"CUP_O_TK_Soldier_MG",
 	"CUP_O_TK_Soldier_AT", 
-	"CUP_O_TK_Soldier_GL", 
+	"CUP_O_TK_Medic", 
 	"CUP_O_TK_Soldier_GL",
 	"CUP_O_TK_Soldier_LAT", 
 	"CUP_O_TK_Soldier_AAT", 
@@ -103,6 +109,10 @@ baseEnemyUnarmedChopperGroup_Taki_Army = [
 	"CUP_O_MI6T_TKA"
 ];
 
+baseFixedWingGroup_Taki_Army = [
+	"CUP_O_Su25_Dyn_TKA",
+	"CUP_O_L39_TK"
+];
 
 ////////////////////////
 //Vehicle management////
@@ -166,7 +176,6 @@ bluforHQVehicle_Taki_Army = [
 //Loadout management////
 ////////////////////////
 
-listOfRoles_Taki_Army = [c_leader,c_at,c_rifleman,c_engineer,c_autorifleman,c_marksman,c_grenadier,c_medic,c_pilot];
 
 //Takistani army
 loadout_Taki_Army = [		
@@ -278,7 +287,8 @@ itemMedicList_Taki_Army = [
 	"ACE_bloodIV_500",
 	"ACE_bloodIV_250",
 	"ACE_personalAidKit",
-	"ACE_surgicalKit"
+	"ACE_surgicalKit",
+	"ACE_suture"
 	];
 
 

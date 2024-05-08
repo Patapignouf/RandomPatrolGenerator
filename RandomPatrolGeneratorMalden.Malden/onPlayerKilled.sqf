@@ -1,8 +1,21 @@
 
 //Log player's death
 diag_log format ["Player %1 is dead", name player];
-	
-setPlayerRespawnTime (missionNamespace getVariable "missionRespawnParam");
+
+_respawnTimer = missionNamespace getVariable "missionRespawnParam";
+setPlayerRespawnTime (_respawnTimer);
+_initialCountDown = [_respawnTimer, false] call BIS_fnc_countDown;
+addMissionEventHandler ["EachFrame",
+	{
+		if (!alive player) then 
+		{
+			hintSilent format["%1", [(([0, false] call BIS_fnc_countdown)/60)+.01,"HH:MM"] call BIS_fnc_timetostring]
+		};
+	}
+];
+
+//Update dead counter 
+player setVariable ["deathNumber", (player getVariable ["deathNumber", 0])+1, true];
 
 //Add player to a dead player base | This will block disconnection/connection method to respawn 
 _deadPlayerList = missionNamespace getVariable "deadPlayer";

@@ -1,3 +1,5 @@
+#include "..\..\objectGenerator\vehicleManagement.sqf"
+
 params ["_thisTrigger"];
 
 //Count independent and blufor player
@@ -31,12 +33,14 @@ _thisObjectiveToComplete = _thisTrigger getVariable ["associatedTask",[]];
 if (!([_thisObjectiveToComplete,[]] call BIS_fnc_areEqual)) then 
 {
 	[_thisObjectiveToComplete] execVM 'engine\objectiveManagement\completeObjective.sqf'; 
-	[[50], "engine\rankManagement\rankUpdater.sqf"] remoteExec ['BIS_fnc_execVM', 0];
+	[[50, "RPG_ranking_objective_complete"], "engine\rankManagement\rankUpdater.sqf"] remoteExec ['BIS_fnc_execVM', 0];
 
 	//Manage Completed Objective
 	_completedObjectives = missionNamespace getVariable ["completedObjectives",[]];
 	_completedObjectives pushBack _thisObjectiveToComplete;
 	missionNamespace setVariable ["completedObjectives",_completedObjectives,true];	
+	
+	[] call doIncrementVehicleSpawnCounter;	
 
 	//Call respawn
 	if (["Respawn",1] call BIS_fnc_getParamValue == 1) then 

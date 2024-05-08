@@ -121,10 +121,10 @@ _currentComboBox = _comboBoxRespawnParam;
 
 
 //Default faction 
-_comboBoxBlufor lbSetCurSel (factionInfos apply {_x select 1} find (bluforFaction_loaded));
-_comboBoxOpfor lbSetCurSel (factionInfos apply {_x select 1} find (opforFaction_loaded));
-_comboBoxIndependent lbSetCurSel (factionInfos apply {_x select 1} find (independentFaction_loaded));
-_comboBoxCivilian lbSetCurSel (factionInfos apply {_x select 1} find (civilianFaction_loaded));
+_comboBoxBlufor lbSetCurSel (factionInfos select {_x#3} apply {_x select 1} find (bluforFaction_loaded));
+_comboBoxOpfor lbSetCurSel (factionInfos select {_x#4} apply {_x select 1} find (opforFaction_loaded));
+_comboBoxIndependent lbSetCurSel (factionInfos select {_x#3} apply {_x select 1} find (independentFaction_loaded));
+_comboBoxCivilian lbSetCurSel (factionInfos select {_x#5} apply {_x select 1} find (civilianFaction_loaded));
 _comboBoxWarEra lbSetCurSel (warEraSelection apply {_x select 0} find (warEra_loaded));
 
 //Default values

@@ -9,6 +9,12 @@ c_grenadier = "grenadier";
 c_drone = "UAV opérator";
 c_pilot = "pilot";
 
+//Add specific CUP factions
+if (isClass (configFile >> "CfgPatches" >> "CUP_BaseData")) then 
+{
+		factionInfos pushBack ["_HorizonIslandSF", 24, "Horizon Island SF [CUP]", true, true, true];
+};
+
 //////////////////////////////
 ////Define civ group data/////
 //////////////////////////////
@@ -70,8 +76,7 @@ baseEnemyVehicleGroup_HorizonIslandSF = [
 
 baseEnemyLightArmoredVehicleGroup_HorizonIslandSF = [
 	"CUP_B_Boxer_HMG_HIL", 
-	"CUP_B_Boxer_GMG_HIL", 
-	"CUP_B_M270_HE_HIL"
+	"CUP_B_Boxer_GMG_HIL"
 ];
 
 baseEnemyHeavyArmoredVehicleGroup_HorizonIslandSF = [
@@ -140,7 +145,6 @@ bluforHQVehicle_HorizonIslandSF = [
 //Loadout management////
 ////////////////////////
 
-listOfRoles_HorizonIslandSF = [c_leader,c_at,c_rifleman,c_engineer,c_autorifleman,c_marksman,c_medic,c_grenadier,c_pilot];
 
 //USA
 loadout_HorizonIslandSF = [		
@@ -277,7 +281,8 @@ itemMedicList_HorizonIslandSF = [
 	"ACE_bloodIV_500",
 	"ACE_bloodIV_250",
 	"ACE_personalAidKit",
-	"ACE_surgicalKit"
+	"ACE_surgicalKit",
+	"ACE_suture"
 ];
 
 

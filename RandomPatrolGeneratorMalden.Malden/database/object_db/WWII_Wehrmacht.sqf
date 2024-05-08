@@ -6,6 +6,12 @@ c_autorifleman = "autorifleman";
 c_marksman = "marksman"; 
 c_medic = "medic";
 
+//Add specific IFA3 factions
+if (isClass (configFile >> "CfgPatches" >> "IFA3_Core")) then 
+{
+	factionInfos pushBack ["_WWII_Wehrmacht", 7, "WWII Wehrmacht [IFA3]", true, true, false];
+};
+
 //////////////////////////////
 ////Define civ group data/////
 //////////////////////////////
@@ -104,10 +110,6 @@ baseEnemyHeavyArmoredVehicleGroup_WWII_Wehrmacht = [
 //	"LIB_StuG_III_G"
 ];
 
-//Basic enemy chopper avalaible
-baseChopperGroup_WWII_Wehrmacht = [
-	// lol
-];
 
 //Basic enemy aircraft avalaible
 baseFixedWingGroup_WWII_Wehrmacht = [
@@ -282,7 +284,8 @@ itemMedicList_WWII_Wehrmacht = [
 	"ACE_bloodIV_500",
 	"ACE_bloodIV_250",
 	"ACE_personalAidKit",
-	"ACE_surgicalKit"
+	"ACE_surgicalKit",
+	"ACE_suture"
 ];
 
 // Those lists might not be correct...

@@ -16,6 +16,61 @@ indFaction = missionNamespace getVariable "independentFaction";
 player setVariable ["isInRespawnMenu", true, true];
 normalClose = false;
 
+//For non ironman mission the player is allowed to change class during respawn
+if (!ironMan) then 
+{
+	//Add drop down for class selection
+	_dropdown = _mainDisplay ctrlCreate ["RscCombo", 100];
+	_dropdown ctrlSetPosition [0.05, 0, 0.3, 0.04];
+	_dropdown ctrlCommit 0;
+
+	//get list of avalaible role for player's faction
+	_listOfAvalaibleRole =[];
+	if (player getVariable "sideBeforeDeath" == "independent") then 
+	{
+		//Independent
+		_listOfAvalaibleRole = [indFaction] call setupRoleSwitchToList;
+
+	} else 
+	{
+		//Blufor
+		_listOfAvalaibleRole = [bluFaction] call setupRoleSwitchToList;
+	};
+
+	//Load every class for current player's faction
+	//Define list of role in the combo box
+	{
+		_dropdown lbAdd format ["%1", _x];
+		_dropdown lbSetData [(lbSize _dropdown)-1, format ["%1",(lbSize _dropdown)-1]];
+	} foreach _listOfAvalaibleRole;
+
+	//Allow player to switch his class
+	_dropdown ctrlAddEventHandler ["LBSelChanged",
+	{
+		params ["_control", "_selectedIndex"];
+		if (_control lbData (lbCurSel _control) != "") then 
+		{
+			//Setup arsenal loadout
+			_listOfAvalaibleRole = [player call getPlayerFaction] call setupRoleSwitchToList;
+			_role = (_listOfAvalaibleRole select parseNumber ((_control lbData (lbCurSel _control))));
+			[player, player, player call getPlayerFaction , _role, false] call switchToRole;
+			[player, player, player call getPlayerFaction] call setupArsenalToItem;
+
+			//Load personnal loadout
+			_loadableLoadout = profileNamespace getVariable [format [loadoutSaveName, name player, player call getPlayerFaction, player getVariable "role"], player getVariable "spawnLoadout"];
+			player setUnitLoadout _loadableLoadout;
+
+			//Hint switch role
+			[[format ["%1 has switched to role %2", name player, player getVariable "role"], "arsenal"], 'engine\hintManagement\addCustomHint.sqf'] remoteExec ['BIS_fnc_execVM', -clientOwner]; 
+		};
+
+		//Show black screen
+		cutText ["", "BLACK FADED", 100];
+	}];
+
+	//Select current class
+	_dropdown lbSetCurSel (_listOfAvalaibleRole find (player getVariable "role")); //Actual Warfare
+};
 //Function params
 _buttonRespawnStart ctrlAddEventHandler[ "ButtonClick", 
 	{ 

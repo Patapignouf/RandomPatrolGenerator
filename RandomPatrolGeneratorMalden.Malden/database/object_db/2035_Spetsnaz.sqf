@@ -8,26 +8,7 @@ c_marksman = "marksman";
 c_medic = "medic";
 c_pilot = "pilot";
 
-//////////////////////////////
-////Define civ group data/////
-//////////////////////////////
-
-//Light civilian group
-civilian_group_2035_Spetsnaz = ["C_Man_casual_7_F_euro", 
-"C_Man_smart_casual_1_F_euro", 
-"C_Man_smart_casual_2_F_euro"];
-
-//Heavy civilian group
-civilian_big_group_2035_Spetsnaz = ["C_man_p_beggar_F_euro", 
-"C_man_polo_4_F_euro", 
-"C_man_shorts_1_F_euro", 
-"C_man_shorts_2_F_euro", 
-"C_scientist_02_formal_F", 
-"C_scientist_01_formal_F", 
-"C_scientist_02_informal_F"];
-
-//Vehicle avalaible on civilian city
-civilianTruck_2035_Spetsnaz = ["C_SUV_01_F","C_Offroad_01_repair_F"];
+factionInfos pushBack ["_2035_Spetsnaz",22,"2035 Spetsnaz", true, true, false];
 
 //////////////////////////////
 ///Define enemy group data////
@@ -49,7 +30,8 @@ baseEnemyATGroup_2035_Spetsnaz = [
 	"O_R_Soldier_TL_F", 
 	"O_R_Soldier_AR_F", 
 	"O_R_Soldier_LAT_F",
-	"O_R_Soldier_LAT_F"
+	"O_R_Soldier_LAT_F",
+	"O_R_soldier_M_F"
 ];
 
 //Basic demolition enemy group | 8 men max (Leader, Explosive)
@@ -62,33 +44,28 @@ baseEnemyDemoGroup_2035_Spetsnaz = [
 
 //Basic Mortar enemy group | 8 men max (Mortar, Rifleman)
 baseEnemyMortarGroup_2035_Spetsnaz = [
-	"O_G_Mortar_01_F", 
-	"O_R_Patrol_Soldier_M2_F",
-	"O_R_Patrol_Soldier_M2_F"
+
 ];
 
 //Basic enemy vehicle avalaible (light) must be destroyed without AT (ex : jeep)
 baseEnemyVehicleGroup_2035_Spetsnaz = [
-	"O_G_Offroad_01_armed_F", 
-	"O_G_Offroad_01_AT_F"
+
 ];
 
 //Basic enemy light armored vehicle avalaible must be destroyed without heavy AT (ex : BMP)
 baseEnemyLightArmoredVehicleGroup_2035_Spetsnaz = [
-	"O_T_MRAP_02_gmg_ghex_F", 
-	"O_T_MRAP_02_hmg_ghex_F"
+
 ];
 
 //Basic enemy heavy armored vehicle avalaible must be destroyed with other vehicle or heavy AT (ex : tank)
 baseEnemyHeavyArmoredVehicleGroup_2035_Spetsnaz = [
-	"O_T_APC_Tracked_02_AA_ghex_F", 
-	"O_T_APC_Tracked_02_cannon_ghex_F", 
-	"O_T_APC_Wheeled_02_rcws_v2_ghex_F"
+
 ];
 
 //Basic enemy aircraft avalaible
 baseFixedWingGroup_2035_Spetsnaz = [
-	
+	"O_Plane_CAS_02_dynamicLoadout_F",
+	"O_Plane_Fighter_02_F"
 ];
 
 
@@ -161,7 +138,6 @@ bluforHQVehicle_2035_Spetsnaz = [
 //Loadout management////
 ////////////////////////
 
-listOfRoles_2035_Spetsnaz = [c_leader,c_at,c_rifleman,c_engineer,c_autorifleman,c_marksman,c_medic,c_grenadier];
 
 //Two options : 
 // - ACE Arsenal : ],[],"AMF_FELIN_MOUNT_EARPROT_OD","",["Laserdesignator","","","",["Laserbatteries",1],[],""],["ItemMap","ItemGPS","","ItemCompass","TFAR_microdagr",""]]
@@ -315,16 +291,20 @@ itemMedicList_2035_Spetsnaz = [
 	"ACE_bloodIV_250",
 	"ACE_personalAidKit",
 	"ACE_surgicalKit",
+	"ACE_suture",
 	"ACE_bodyBag"
 ];
 
 
 //backpack avalaible for all unit
 backPackList_2035_Spetsnaz = [
-
+	"tfar_mr3000"
 
 ];
 
+factionDefaultRadios_2035_Spetsnaz = [
+	"tfar_fadak"
+];
 
 //Uniform, vest, headgear, avalaible for all unit
 uniformList_2035_Spetsnaz = [

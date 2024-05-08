@@ -7,81 +7,103 @@ c_autorifleman = "autorifleman";
 c_marksman = "marksman"; 
 c_medic = "medic";
 
+factionInfos pushBack ["_2035_Rebels", 18,"2035 Rebels", true, true, true];
+
 //////////////////////////////
 ////Define civ group data/////
 //////////////////////////////
 
 //Light civilian group
-civilian_group_2035_Rebels = ["C_Man_casual_7_F_euro", 
-"C_Man_smart_casual_1_F_euro", 
-"C_Man_smart_casual_2_F_euro"];
+civilian_group_2035_Rebels = [
+	"C_Man_1_enoch_F", 
+	"C_Man_4_enoch_F", 
+	"C_Man_2_enoch_F"
+];
 
 //Heavy civilian group
-civilian_big_group_2035_Rebels = ["C_man_p_beggar_F_euro", 
-"C_man_polo_4_F_euro", 
-"C_man_shorts_1_F_euro", 
-"C_man_shorts_2_F_euro", 
-"C_scientist_02_formal_F", 
-"C_scientist_01_formal_F", 
-"C_scientist_02_informal_F"];
+civilian_big_group_2035_Rebels = [
+	"C_Farmer_01_enoch_F", 
+	"C_Man_1_enoch_F", 
+	"C_Man_6_enoch_F", 
+	"C_Man_5_enoch_F", 
+	"C_Man_4_enoch_F", 
+	"C_Man_3_enoch_F", 
+	"C_Man_2_enoch_F"
+];
 
 //Vehicle avalaible on civilian city
-civilianTruck_2035_Rebels = ["C_SUV_01_F","C_Offroad_01_repair_F"];
+civilianTruck_2035_Rebels = [
+	"C_Van_01_fuel_F", 
+	"C_Tractor_01_F", 
+	"C_Offroad_01_comms_F", 
+	"C_Offroad_01_covered_F", 
+	"C_Truck_02_transport_F", 
+	"C_SUV_01_F"
+];
 
 //////////////////////////////
 ///Define enemy group data////
 //////////////////////////////
 
 //Basic enemy group | 8 men (Leader, Medic, MG, Sniper, Rifleman)
-baseEnemyGroup_2035_Rebels = ["I_L_Looter_Pistol_F", 
-"I_L_Looter_SG_F", 
-"I_L_Looter_Rifle_F", 
-"I_L_Looter_SMG_F", 
-"I_L_Criminal_SG_F", 
-"I_L_Criminal_SMG_F",
-"I_L_Criminal_SMG_F",
-"I_L_Criminal_SMG_F"];
+baseEnemyGroup_2035_Rebels = [
+	"I_L_Looter_Pistol_F", 
+	"I_L_Looter_SG_F", 
+	"I_L_Looter_Rifle_F", 
+	"I_L_Looter_SMG_F", 
+	"I_L_Criminal_SG_F", 
+	"I_L_Criminal_SMG_F",
+	"I_L_Criminal_SMG_F",
+	"I_L_Criminal_SMG_F"
+];
 
 //Basic anti tank enemy group | 5 men max (Leader, MG, AT)
-baseEnemyATGroup_2035_Rebels = ["I_L_Looter_Pistol_F", 
-"I_L_Looter_SG_F", 
-"I_L_Looter_Rifle_F", 
-"I_L_Hunter_F",
-"I_C_Soldier_Para_5_F",
-"I_C_Soldier_Para_5_F",
-"I_L_Hunter_F"];
+baseEnemyATGroup_2035_Rebels = [
+	"I_L_Looter_Pistol_F", 
+	"I_L_Looter_SG_F", 
+	"I_L_Looter_Rifle_F", 
+	"I_L_Hunter_F",
+	"I_C_Soldier_Para_5_F",
+	"I_C_Soldier_Para_5_F",
+	"I_L_Hunter_F"
+];
 
 //Basic demolition enemy group | 8 men max (Leader, Explosive)
-baseEnemyDemoGroup_2035_Rebels = ["I_C_Soldier_Bandit_2_F", 
-"I_C_Soldier_Bandit_8_F",
-"I_C_Soldier_Bandit_8_F", 
-"I_C_Soldier_Bandit_6_F"];
+baseEnemyDemoGroup_2035_Rebels = [
+	"I_C_Soldier_Bandit_2_F", 
+	"I_C_Soldier_Bandit_8_F",
+	"I_C_Soldier_Bandit_8_F", 
+	"I_C_Soldier_Bandit_6_F"
+];
 
 //Basic Mortar enemy group | 8 men max (Mortar, Rifleman)
-baseEnemyMortarGroup_2035_Rebels = ["I_G_Mortar_01_F", 
-"I_L_Looter_SG_F", 
-"I_L_Criminal_SMG_F",
-"I_L_Criminal_SG_F", 
-"I_L_Looter_SG_F", 
-"I_L_Criminal_SMG_F"];
+baseEnemyMortarGroup_2035_Rebels = [
+];
 
 //Basic enemy vehicle avalaible (light) must be destroyed without AT (ex : jeep)
-baseEnemyVehicleGroup_2035_Rebels = ["I_G_Offroad_01_AT_F", 
-"I_G_Offroad_01_armed_F", 
-"I_G_Offroad_01_F", 
-"I_G_Van_01_transport_F"];
+baseEnemyVehicleGroup_2035_Rebels = [
+	"I_G_Offroad_01_AT_F", 
+	"I_G_Offroad_01_armed_F", 
+	"I_G_Offroad_01_F", 
+	"I_G_Van_01_transport_F"
+];
 
 //Basic enemy light armored vehicle avalaible must be destroyed without heavy AT (ex : BMP)
-baseEnemyLightArmoredVehicleGroup_2035_Rebels = ["I_G_Offroad_01_armed_F"];
+baseEnemyLightArmoredVehicleGroup_2035_Rebels = [
+
+];
 
 //Basic enemy heavy armored vehicle avalaible must be destroyed with other vehicle or heavy AT (ex : tank)
-baseEnemyHeavyArmoredVehicleGroup_2035_Rebels = ["CUP_I_MTLB_pk_SYNDIKAT"];
+baseEnemyHeavyArmoredVehicleGroup_2035_Rebels = [
 
-//Basic enemy chopper avalaible
-baseChopperGroup_2035_Rebels = [];
+];
+
+
 
 //Basic enemy aircraft avalaible
-baseFixedWingGroup_2035_Rebels = [];
+baseFixedWingGroup_2035_Rebels = [
+
+];
 
 ////////////////////////
 //Vehicle management////
@@ -102,7 +124,7 @@ bluforArmedVehicle_2035_Rebels = [
 
 //Chopper unarmed vehicle avalaible for blufor : Ex CH47
 bluforUnarmedVehicleChopper_2035_Rebels = [
-	"C_Heli_Light_01_civil_F"
+
 ];
 
 
@@ -138,7 +160,6 @@ bluforFixedWing_2035_Rebels = [
 //Loadout management////
 ////////////////////////
 
-listOfRoles_2035_Rebels = [c_leader,c_at,c_rifleman,c_engineer,c_autorifleman,c_marksman,c_medic,c_grenadier];
 
 //Two options : 
 // - ACE Arsenal : [["AMF_Samas_VALO_01_F","","","AMF_Aimpoint_CompM5",["25Rnd_samas_f1_mag",25],[],""],[],["AMF_Glock_17","","","",["16Rnd_9x21_Mag",17],[],""],["amf_uniform_02_CE",[["ACE_EarPlugs",1],["16Rnd_9x21_Mag",2,17]]],["amf_smb_tlb_famas_grn",[["ACE_MapTools",1],["ACE_CableTie",1],["25Rnd_samas_f1_mag",10,25],["CUP_HandGrenade_M67",2,1],["SmokeShellBlue",2,1],["SmokeShell",2,1]]],[],"AMF_FELIN_MOUNT_EARPROT_OD","",["Laserdesignator","","","",["Laserbatteries",1],[],""],["ItemMap","ItemGPS","","ItemCompass","TFAR_microdagr",""]]
@@ -269,6 +290,7 @@ itemMedicList_2035_Rebels = [
 	"ACE_bloodIV_250",
 	"ACE_personalAidKit",
 	"ACE_surgicalKit",
+	"ACE_suture",
 	"ACE_bodyBag"
 	];
 

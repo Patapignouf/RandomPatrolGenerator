@@ -9,6 +9,13 @@ c_pilot = "pilot";
 c_drone = "UAV operator";
 c_grenadier = "grenadier";
 
+//Add specific CUP factions
+//Add specific CUP factions
+if (isClass (configFile >> "CfgPatches" >> "CUP_BaseData")) then 
+{
+	factionInfos pushBack ["_USA_2000",5,"2000 USA Marines [CUP]", true, true, false];
+};
+
 //////////////////////////////
 ////Define civ group data/////
 //////////////////////////////
@@ -93,14 +100,14 @@ baseFixedWingGroup_USA_2000 = [
 bluforUnarmedVehicle_USA_2000 = [
 	"CUP_B_M1151_USA",
 	"CUP_B_MTVR_USA"
-	];
+];
 
 bluforArmedVehicle_USA_2000 = [
 	"CUP_B_M1151_Deploy_USA",
 	"CUP_B_nM1025_SOV_M2_USA_DES",
 	"CUP_B_nM1025_M240_USA_DES",
 	"CUP_B_M1165_GMV_DSRT_USMC"
-	];
+];
 
 bluforUnarmedVehicleChopper_USA_2000 = [
 	"CUP_B_UH60M_Unarmed_US",
@@ -115,11 +122,11 @@ bluforArmedChopper_USA_2000 = [
 	"CUP_B_AH6M_USA", 
 	"CUP_B_UH60M_US", 
 	"CUP_B_AH1Z_Dynamic_USMC"
-	];
+];
 
 bluforDrone_USA_2000 = [
 	"CUP_B_USMC_DYN_MQ9"
-	];
+];
 
 bluforBoat_USA_2000 = [
 	"CUP_B_RHIB_HIL",
@@ -129,12 +136,21 @@ bluforBoat_USA_2000 = [
 //FixedWing vehicle avalaible for blufor
 bluforFixedWing_USA_2000 = [
 	"CUP_B_A10_DYN_USA",
-	"CUP_B_AV8B_DYN_USMC"
+	"CUP_B_AV8B_DYN_USMC",
+	"CUP_B_F35B_USMC"
 ];
 
 //Vehicule able to do HQ features (Loadout management and more)
 bluforHQVehicle_USA_2000 = [
 	"CUP_B_M113A1_HQ_desert_USA"
+];
+
+bluforArmoredVehicle_USA_2000 = [
+	"CUP_B_M7Bradley_USA_W", 
+	"CUP_B_LAV25_USMC", 
+	"CUP_B_M113A3_USA",
+	"CUP_B_M1A1SA_Woodland_US_Army",
+	"CUP_B_M60A3_USMC"
 ];
 
 
@@ -143,7 +159,6 @@ bluforHQVehicle_USA_2000 = [
 ////////////////////////
 
 //USA
-listOfRoles_USA_2000 = [c_leader,c_at,c_rifleman,c_engineer,c_autorifleman,c_marksman,c_medic,c_pilot,c_drone,c_grenadier];
 
 loadout_USA_2000 = [		
 	[c_leader,"CUP_B_USMC_Soldier_SL_des"],
@@ -164,22 +179,37 @@ loadout_USA_2000 = [
 //USA
 rifleList_USA_2000 = [		
 	"CUP_arifle_M16A4_Base",
+	"CUP_arifle_M16A4_Aim_Laser",
+	"CUP_arifle_M16A4_ACOG_Laser",
 	"CUP_arifle_M4A1_Aim",
 	"CUP_arifle_M16A4_Grip",
+	"CUP_arifle_M4A1_black",
+	"CUP_arifle_M4A1_desert_carryhandle",
+	"CUP_arifle_M4A1_camo_carryhandle",
 	"CUP_arifle_M16A1E1",
 	"CUP_arifle_M4A1_standard_short_black",
 	"CUP_arifle_M4A1",
-	"CUP_arifle_M4A3_black"
-
+	"CUP_arifle_M4A3_black",
+	"CUP_arifle_M4A1_camo",
+	"CUP_arifle_M4A1_camo_Aim",
+	"CUP_arifle_M4A3_desert_Aim_Flashlight",
+	"CUP_arifle_M4A1_desert",
+	"CUP_arifle_M4A3_desert",
+	"CUP_arifle_M4A3_camo"
 ];	
 
 grenadeLauncherList_USA_2000 = [
 	"CUP_arifle_M16A4_GL",
-	"CUP_arifle_M4A1_BUIS_GL"
+	"CUP_arifle_M4A1_BUIS_GL",
+	"CUP_arifle_M4A1_GL_carryhandle",
+	"CUP_arifle_M4A1_GL_carryhandle_camo",
+	"CUP_arifle_M4A1_GL_carryhandle_desert",
+	"CUP_arifle_M16A4_GL_ACOG_Laser"
 ];
 
 launcherList_USA_2000 = [		
 	"CUP_launch_M136_Loaded",
+	"CUP_launch_Mk153Mod0",
 	"CUP_launch_FIM92Stinger_Loaded",
 	"CUP_launch_Javelin"
 ];	
@@ -187,20 +217,31 @@ launcherList_USA_2000 = [
 
 autorifleList_USA_2000 = [			
 	"CUP_lmg_M249",
-	"CUP_lmg_M60"
+	"CUP_lmg_M60",
+	"CUP_lmg_m249_para",
+	"CUP_lmg_M249_E2",
+	"CUP_lmg_minimi_railed",
+	"CUP_lmg_m249_pip2",
+	"CUP_lmg_m249_pip4",
+	"CUP_lmg_M60E4_norail",
+	"CUP_M60E4_base"
 ];	
 
 marksmanrifleList_USA_2000 = [		
 	"CUP_srifle_DMR",
 	"CUP_srifle_M107_Base",
 	"CUP_srifle_M14_DMR",
+	"CUP_srifle_DMR_LeupoldMk4",
 	"CUP_srifle_M40A3"
 ];
 
 smgList_USA_2000 = [		
 	"CUP_smg_MP5A5",
 	"CUP_sgun_M1014",
-	"CUP_hgun_M9"
+	"CUP_hgun_M9",
+	"CUP_sgun_M1014_vfg",
+	"CUP_sgun_M1014_Entry_vfg",
+	"CUP_sgun_M1014_solidstock"
 ];
 
 
@@ -248,7 +289,9 @@ attachmentLongList_USA_2000	= [
 	"CUP_optic_LeupoldMk4",
 	"CUP_optic_CWS",
 	"CUP_optic_CWS_NV",
-	"CUP_optic_CWS_NV_RDS"
+	"CUP_optic_CWS_NV_RDS",
+	"CUP_optic_LeupoldMk4_MRT_tan_pip",
+	"CUP_optic_LeupoldMk4_pip"
 ];
 
 ////////////////////////
@@ -281,8 +324,12 @@ itemList_USA_2000 = [
 	"ACE_SpraypaintGreen",
 	"ACE_SpraypaintRed",
 	"ACE_IR_Strobe_Item",
-	"ACE_RangeCard"
-	];
+	"ACE_RangeCard",
+	"ACE_NVG_Wide_Black_WP",
+	"ACE_NVG_Wide_WP",
+	"ACE_NVG_Wide_Green_WP",
+	"ACE_HuntIR_monitor"
+];
 
 itemEngineerList_USA_2000 = [
 	"ToolKit",
@@ -291,15 +338,16 @@ itemEngineerList_USA_2000 = [
 	"ACE_Fortify",
 	"ACE_DefusalKit",
 	"ACE_DeadManSwitch",
-	"ACE_DefusalKit",
 	"ACE_Clacker",
+	"APERSBoundingMine_Range_Mag",
+	"DemoCharge_Remote_Mag",
 	"ACE_M26_Clacker",
 	"ace_marker_flags_white",
 	"ace_marker_flags_yellow",
 	"ace_marker_flags_purple",
 	"ace_marker_flags_orange",
 	"ace_marker_flags_red"
-	];
+];
 	
 itemMedicList_USA_2000 = [
 	"Medikit",
@@ -312,24 +360,31 @@ itemMedicList_USA_2000 = [
 	"ACE_bloodIV_250",
 	"ACE_personalAidKit",
 	"ACE_surgicalKit",
+	"ACE_suture",
 	"ACE_bodyBag"
-	];
+];
 
 
-	//backpack avalaible for all unit
+//backpack avalaible for all unit
 backPackList_USA_2000 = [
 	"B_Mortar_01_weapon_F",
 	"B_Mortar_01_support_F",
-	"B_Kitbag_cbr"
-	];
+	"B_Kitbag_cbr",
+	"TFAR_rt1523g",
+	"TFAR_rt1523g_sage",
+	"CUP_B_USMC_MOLLE_AR"
+];
 
 
 //Uniform, vest, headgear, avalaible for all unit
 uniformList_USA_2000 = [
 	"CUP_H_LWHv2_MARPAT_des_cov_fr",
 	"CUP_U_B_USMC_MCCUU_des_gloves",
-	"CUP_V_B_RRV_Scout3"
-	];
+	"CUP_V_B_RRV_Scout3",
+	"CUP_V_B_Eagle_SPC_AR",
+	"CUP_H_LWHv2_MARPAT_des_NVG_gog_cov2",
+	"CUP_V_B_Eagle_SPC_GL"
+];
 
 //Magazine avalaible for all unit
 magazineList_USA_2000 = [
@@ -337,14 +392,20 @@ magazineList_USA_2000 = [
 	"30Rnd_556x45_Stanag_Sand_Tracer_Green",
 	"CUP_20Rnd_TE1_Yellow_Tracer_762x51_DMR",
 	"CUP_30Rnd_Green_Tracer_9x19_MP5",
-	"CUP_8Rnd_B_Beneli_74Slug",
+	"CUP_8Rnd_12Gauge_Slug",
 	"CUP_15Rnd_9x19_M9",
 	"CUP_200Rnd_TE4_Red_Tracer_556x45_M249",
 	"CUP_100Rnd_TE4_LRT4_White_Tracer_762x51_Belt_M",
-	"CUP_8Rnd_B_Beneli_74Pellets",
+	"CUP_8Rnd_12Gauge_HE",
 	"CUP_10Rnd_127x99_M107",
-	"CUP_5Rnd_762x51_M24"
-	];
+	"CUP_5Rnd_762x51_M24",
+	"CUP_Stinger_M",
+	"CUP_1Rnd_HEDP_M203",
+	"CUP_1Rnd_Smoke_M203",
+	"CUP_1Rnd_HE_M203",
+	"CUP_FlareWhite_M203",
+	"ACE_HuntIR_M203"
+];
 
 //Get magazine with following command
 //getArray (configfile >> "CfgWeapons" >> weaponName >> "magazines");

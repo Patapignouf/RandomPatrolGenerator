@@ -105,7 +105,7 @@ doGenerateVehicleForFOB =
 						_wp = _currentUAVGroup addWaypoint [_tempPos, 0];
 
 						//Set unlimited fuel to the UAV
-						[[_currentVehicle], 'objectGenerator\setUnlimitedFuel.sqf'] remoteExec ['BIS_fnc_execVM', 2];
+						[[_currentVehicle], 'objectGenerator\setUnlimitedFuel.sqf'] remoteExec ['BIS_fnc_execVM', 0, true];
 					};
 					if (_isUAV) then 
 					{
@@ -116,6 +116,18 @@ doGenerateVehicleForFOB =
 				default {_kind = "Other";};   
 			};
 		sleep 2; //Wait vehicle spawn (avoid vehicle crash)
+
+		//Clear vehicle cargo
+		clearWeaponCargoGlobal _currentVehicle;
+		clearBackpackCargo _currentVehicle;
+
+		//Add ACE keys
+		if (isClass (configFile >> "CfgPatches" >> "ace_medical")) then 
+		{
+			[_currentVehicle] call doAddKeys;
+		};
+
+		// hint format ["vehicle faction : %1",(_currentVehicle call BIS_fnc_objectSide)];
 
 		//Feed vehicle list
 		if (!isNull _currentVehicle) then 
@@ -129,6 +141,7 @@ doGenerateVehicleForFOB =
 	{
 		[["Boats","ColorBlue","hd_pickup_noShadow",_shipGoodPosition, blufor], 'objectGenerator\doGenerateMarker.sqf'] remoteExec ['BIS_fnc_execVM', 0];	
 	};
+
 	_vehicleSpawned;
 };
 
@@ -141,5 +154,35 @@ doIncrementVehicleSpawnCounter =
 	missionNamespace setVariable ["bluforVehicleAvalaibleSpawn", bluforVehicleAvalaibleSpawnCounter, true];
 
 	//Show the counter to blufor
-	[format ["Standard vehicle spawn credits : %1", bluforVehicleAvalaibleSpawnCounter], 'engine\hintManagement\addCustomHint.sqf'] remoteExec ['BIS_fnc_execVM', blufor, true]; 
+	[[format ["Standard vehicle spawn credits : %1", bluforVehicleAvalaibleSpawnCounter], "intel"], 'engine\hintManagement\addCustomHint.sqf'] remoteExec ['BIS_fnc_execVM', blufor, true]; 
+};
+
+
+doAddKeys = {
+	params ["_vehicle"];
+
+	//Setup keys 
+	switch ((getnumber (configfile >> "cfgvehicles" >> typeOf _vehicle >> "side")) call bis_fnc_sideType) do
+	{
+		case blufor:
+			{
+				_vehicle addItemCargoGlobal ["ACE_key_west", 2];
+			};
+		case opfor:
+			{
+				_vehicle addItemCargoGlobal ["ACE_key_east", 2];
+			};
+		case civilian:
+			{
+				_vehicle addItemCargoGlobal ["ACE_key_civ", 2];
+			};
+		case independent:
+			{
+				_vehicle addItemCargoGlobal ["ACE_key_indp", 2];
+			};
+		default
+			{
+				//Side unknown
+			};
+	};
 };

@@ -6,6 +6,9 @@
 #include "GUI\loadoutGUI\playerLoadoutSetup.hpp"
 #include "GUI\respawnGUI\playerRespawnMenu.hpp"
 #include "GUI\dialogGUI\dialogCivilian.hpp"
+#include "GUI\vehicleSpawnerGUI\vehicleSpawner.hpp"
+#include "GUI\supportGUI\supportGUI.hpp"
+#include "GUI\adminGUI\adminGUI.hpp"
 
 respawnDialog = 0;
 respawnOnStart = -1;
@@ -19,8 +22,8 @@ respawnTemplates[] = {"Tickets", "Spectator"};
 author			= "Pata";
 onLoadName		= "Random Patrol Generator";
 onLoadMission	= "Plan, Execute, Extract. Be ready to adapt any plan to any situation.";
-loadScreen      = __EVAL(["\A3\Structures_F_Argo\Commercial\Billboards\Data\Advertisements\bill_action_co.paa","\A3\Structures_F_Argo\Commercial\Billboards\Data\Advertisements\bill_mars_co.paa","\A3\Structures_F_Argo\Commercial\Billboards\Data\Advertisements\bill_maskrtnik_co.paa","\A3\Structures_F_Argo\Commercial\Billboards\Data\Advertisements\bill_olives_co.paa","\A3\Structures_F_Argo\Commercial\Billboards\Data\Advertisements\bill_pate_co.paa","\A3\Structures_F_Argo\Commercial\Billboards\Data\Advertisements\bill_pills_co.paa","\A3\Structures_F_Argo\Commercial\Billboards\Data\Advertisements\bill_plane_co.paa","\A3\Structures_F_Argo\Commercial\Billboards\Data\Advertisements\bill_supermarket_co.paa","\A3\Structures_F_Argo\Commercial\Billboards\Data\Advertisements\bill_winery_co.paa"] select floor random 9);
-overviewpicture = "a3\Missions_F_AoW\Data\Img\Artwork\Landscape\showcase_aow_picture_18_co.paa";
+loadScreen      = "images\rpg_picture_large.paa";
+overviewpicture = "images\rpg_picture_large.paa";
 overviewText    = "Plan, Execute, Extract. Be ready to adapt any plan to any situation.";
 briefingName    = "[COOP] Random Patrol Generator";
 
@@ -103,16 +106,16 @@ class Params
 		texts[] = { "" };
 		default = "";
 	};
-	class Respawn
+	class DisableZoom
 	{
-		title = "Respawn management (DO NOT USE)";
+		title = "Temp Zoom (hold right clic)";
 		values[] = {0,1};
-		texts[] = {"No respawn","Respawn on objective success"};
-		default = 1;
+		texts[] = {"Enable","Disable"};
+		default = 0;
 	};
 	class EnableHalo
 	{
-		title = "Enable HALO JUMP (WIP)";
+		title = "Enable HALO JUMP";
 		values[] = {0,1};
 		texts[] = {"No","Yes"};
 		default = 1;
@@ -186,6 +189,14 @@ class CfgDebriefing
 		picture = "";
 		pictureColor[] = {0.5,0.4,0.4,1};
    };
+   class REP_DEAD
+   {
+		title = "Mission Failed";
+		subtitle = "THE REPORTER IS DEAD";
+		description = "";
+		picture = "";
+		pictureColor[] = {0.5,0.4,0.4,1};
+   };
    class VEHICLE_DEAD
    {
 		title = "Mission Failed";
@@ -218,4 +229,59 @@ class CfgDebriefing
 		picture = "";
 		pictureColor[] = {0.5,0.4,0.4,1};
    };
+};
+
+
+class CfgCommunicationMenu
+{
+	class myArtillery
+	{
+		text = "Artillery Strike";		// Text displayed in the menu and in a notification
+		submenu = "";					// Submenu opened upon activation (expression is ignored when submenu is not empty.)
+		expression = "[[_pos, player], 'objectGenerator\doCallArtillery.sqf'] remoteExec ['BIS_fnc_execVM', 2];";	// Code executed upon activation
+		icon = "\a3\Ui_f\data\GUI\Cfg\CommunicationMenu\artillery_ca.paa";				// Icon displayed permanently next to the command menu
+		cursor = "\a3\Ui_f\data\IGUI\Cfg\Cursors\iconCursorSupport_ca.paa";				// Custom cursor displayed when the item is selected
+		enable = "1";					// Simple expression condition for enabling the item
+		//removeAfterExpressionCall = 1;	// 1 to remove the item after calling
+	};
+	class myExtract
+	{
+		text = "Extract helicopter";		// Text displayed in the menu and in a notification
+		submenu = "";					// Submenu opened upon activation (expression is ignored when submenu is not empty.)
+		expression = "[[_pos, player], 'objectGenerator\doCallExtract.sqf'] remoteExec ['BIS_fnc_execVM', 2];";	// Code executed upon activation
+		icon = "\a3\Ui_f\data\GUI\Cfg\CommunicationMenu\transport_ca.paa";				// Icon displayed permanently next to the command menu
+		cursor = "\a3\Ui_f\data\IGUI\Cfg\Cursors\iconCursorSupport_ca.paa";				// Custom cursor displayed when the item is selected
+		enable = "1";					// Simple expression condition for enabling the item
+		//removeAfterExpressionCall = 1;	// 1 to remove the item after calling
+	};
+	class myTransport
+	{
+		text = "Transport helicopter";		// Text displayed in the menu and in a notification
+		submenu = "";					// Submenu opened upon activation (expression is ignored when submenu is not empty.)
+		expression = "[[_pos, player], 'objectGenerator\doCallTransport.sqf'] remoteExec ['BIS_fnc_execVM', 2];";	// Code executed upon activation
+		icon = "\a3\Ui_f\data\GUI\Cfg\CommunicationMenu\transport_ca.paa";				// Icon displayed permanently next to the command menu
+		cursor = "\a3\Ui_f\data\IGUI\Cfg\Cursors\iconCursorSupport_ca.paa";				// Custom cursor displayed when the item is selected
+		enable = "1";					// Simple expression condition for enabling the item
+		//removeAfterExpressionCall = 1;	// 1 to remove the item after calling
+	};
+	class myAirDrop
+	{
+		text = "Logistic drop";		// Text displayed in the menu and in a notification
+		submenu = "";					// Submenu opened upon activation (expression is ignored when submenu is not empty.)
+		expression = "[[_pos, player, []], 'objectGenerator\doGenerateParachuteBoxSupport.sqf'] remoteExec ['BIS_fnc_execVM', 2];";	// Code executed upon activation
+		icon = "\a3\Ui_f\data\GUI\Cfg\CommunicationMenu\supplydrop_ca.paa";				// Icon displayed permanently next to the command menu
+		cursor = "\a3\Ui_f\data\IGUI\Cfg\Cursors\iconCursorSupport_ca.paa";				// Custom cursor displayed when the item is selected
+		enable = "1";					// Simple expression condition for enabling the item
+		//removeAfterExpressionCall = 1;	// 1 to remove the item after calling
+	};
+	class myReinforcement
+	{
+		text = "Call reinforcement";		// Text displayed in the menu and in a notification
+		submenu = "";					// Submenu opened upon activation (expression is ignored when submenu is not empty.)
+		expression = "[[_pos, player, []], 'objectGenerator\doCallReinforcement.sqf'] remoteExec ['BIS_fnc_execVM', 2];";	// Code executed upon activation
+		icon = "\a3\Ui_f\data\GUI\Cfg\CommunicationMenu\call_ca.paa";				// Icon displayed permanently next to the command menu
+		cursor = "\a3\Ui_f\data\GUI\Cfg\CommunicationMenu\call_ca.paa";				// Custom cursor displayed when the item is selected
+		enable = "1";					// Simple expression condition for enabling the item
+		//removeAfterExpressionCall = 1;	// 1 to remove the item after calling
+	};
 };

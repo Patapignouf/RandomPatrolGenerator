@@ -19,7 +19,9 @@ private _buttonLoad = _mainDisplay displayCtrl 7203;
 private _buttonClearItems = _mainDisplay displayCtrl 7204;
 private _button3DItems = _mainDisplay displayCtrl 7205;
 private _buttonRank = _mainDisplay displayCtrl 7206;
+private _buttonResetLoadout = _mainDisplay displayCtrl 7207;
 private _nameTag = _mainDisplay displayCtrl 7002;
+
 
 //Faction params
 bluFaction = missionNamespace getVariable "bluforFaction";
@@ -33,6 +35,7 @@ _nameTag ctrlSetText (name player);
 
 refreshCustomLoadoutDisplay = {
 		_buttonLoad = (findDisplay 7000) displayCtrl 7203;
+		_button3DItems = (findDisplay 7000) displayCtrl 7205;
 		_loadableLoadout = profileNamespace getVariable [format [loadoutSaveName, name player, player call getPlayerFaction, player getVariable "role"], []];
 
 		if (count _loadableLoadout == 0) then 
@@ -42,6 +45,11 @@ refreshCustomLoadoutDisplay = {
 		{
 			_buttonLoad ctrlShow true;
 		};
+
+		if !(isClass (configFile >> "CfgPatches" >> "CUP_BaseData")) then 
+		{
+			_button3DItems ctrlShow false;
+		}
 };
 
 
@@ -61,6 +69,8 @@ if (ironMan) then
 	_buttonLoad ctrlSetText "Get back loadout from the box";
 };
 
+//Remove custom voice 
+player setSpeaker "noVoice";
 
 //Specify all GUI content and button actions
 _comboBoxClassSelection ctrlAddEventHandler[ "LBSelChanged", 
@@ -74,12 +84,13 @@ _comboBoxClassSelection ctrlAddEventHandler[ "LBSelChanged",
 			_listOfAvalaibleRole = [player call getPlayerFaction] call setupRoleSwitchToList;
 			_role = (_listOfAvalaibleRole select parseNumber ((_comboBoxClassSelection lbData (lbCurSel _comboBoxClassSelection))));
 			[player, player, player call getPlayerFaction , _role, false] call switchToRole;
+			[player, player, player call getPlayerFaction] call setupArsenalToItem;
 
 			//Refresh load button
 			[] call refreshCustomLoadoutDisplay;
 
 			//Hint switch role
-			[[format ["%1 has switched to role %2", name player, player getVariable "role"]], 'engine\hintManagement\addCustomHint.sqf'] remoteExec ['BIS_fnc_execVM', -clientOwner]; 
+			[[format ["%1 has switched to role %2", name player, player getVariable "role"], "arsenal"], 'engine\hintManagement\addCustomHint.sqf'] remoteExec ['BIS_fnc_execVM', -clientOwner]; 
 		}
 		else 
 		{
@@ -87,6 +98,20 @@ _comboBoxClassSelection ctrlAddEventHandler[ "LBSelChanged",
 			firstOpen = false;
 		};
 	}];
+
+//Reset loadout
+if (ironMan) then 
+{
+	_buttonResetLoadout ctrlShow false;
+};
+
+_buttonResetLoadout ctrlAddEventHandler[ "ButtonClick", 
+	{ 
+		hint "Loadout reset";
+		[player, player call getPlayerFaction, true] call doInitializeLoadout;
+		player setVariable ["spawnLoadout", getUnitLoadout player];
+	}];
+
 
 //Open arsenal
 _buttonArsenal ctrlAddEventHandler[ "ButtonClick", 
@@ -110,22 +135,30 @@ _buttonRank ctrlAddEventHandler[ "ButtonClick",
 	}];
 
 //Force 3D Optics
+//Set button color
+if (profileNamespace getVariable ["is3DOptics", false]) then 
+{
+	_button3DItems ctrlSetTextColor [0.5, 1, 0.5, 0.8]; //Green seems enable
+} else 
+{
+	_button3DItems ctrlSetTextColor [1, 1, 1, 1]; //White seems disable
+};
 _button3DItems ctrlAddEventHandler[ "ButtonClick", 
 	{ 
-		player addEventHandler ["OpticsSwitch", {
-			params ["_unit", "_isADS"];
-			
-			_currentOptics = (weaponsItems _unit)#0#3;	
-			if (["_PIP", _currentOptics] call BIS_fnc_inString) then 
-			{
-				_opticsStringRework = _currentOptics regexReplace ["_PIP", "_3D"];
-				if (getText (configFile >> "cfgWeapons" >> _opticsStringRework >> "displayName")!="") then 
-				{
-						_unit removePrimaryWeaponItem _currentOptics;
-						_unit addPrimaryWeaponItem _opticsStringRework;
-				};
-			};
-		}];
+		params ["_ctrl"];
+
+		//Switch optic mode
+		profileNamespace setVariable ["is3DOptics", !(profileNamespace getVariable ["is3DOptics", false])];
+		saveProfileNamespace;
+
+		//Set button color
+		if (profileNamespace getVariable ["is3DOptics", false]) then 
+		{
+			_ctrl ctrlSetTextColor [0.5, 1, 0.5, 0.8]; //Green seems enable
+		} else 
+		{
+			_ctrl ctrlSetTextColor [1, 1, 1, 1]; //White seems disable
+		};
 	}];
 
 
@@ -140,6 +173,7 @@ _buttonSave ctrlAddEventHandler[ "ButtonClick",
 
 		//Save current loadout
 		[player, "personal"] call saveCustomLoadout;
+		hint "Loadout loaded";
 
 		//Load default faction stuff in ironMan mode
 		if (ironMan) then 
@@ -164,16 +198,23 @@ _buttonLoad ctrlAddEventHandler[ "ButtonClick",
 		//Fix TFAR link 
 		if (isClass (configFile >> "CfgPatches" >> "task_force_radio")) then 
 		{
-
 			_currentRadios = player call TFAR_fnc_radiosList;
 
 			if (count _currentRadios >= 1) then
 			{
+				//Remove previously added radio in case where there is already a member with the same radio ID
 				_currentRadio = _currentRadios#0;
 				player unassignItem _currentRadio;
 				player removeItem _currentRadio;
-				player addItem "TFAR_anprc152";
-				player assignItem "TFAR_anprc152";
+
+				//Search default radio name (TFAR rename player's radio)
+				_tempArray = (_currentRadio splitString "_");
+				_tempArray resize (count _tempArray-1);
+				_radioToAdd = (_tempArray joinString "_");
+
+				//Add specific radio
+				player addItem _radioToAdd;
+				player assignItem _radioToAdd;
 			};
 		};
 		
@@ -231,6 +272,30 @@ _comboBoxClassSelection lbSetCurSel (_listOfAvalaibleRole find (player getVariab
 
 //Disable space button in dialog
 waituntil {!(IsNull (findDisplay 7000))};
+
+//Add 3D Optics Switch
+_currentOptics = (weaponsItems player)#0#3;	
+if (["_PIP", _currentOptics] call BIS_fnc_inString && profileNamespace getVariable ["is3DOptics", false]) then 
+{
+	_opticsStringRework = _currentOptics regexReplace ["_PIP", "_3D"];
+	if (getText (configFile >> "cfgWeapons" >> _opticsStringRework >> "displayName")!="") then 
+	{
+			player removePrimaryWeaponItem _currentOptics;
+			player addPrimaryWeaponItem _opticsStringRework;
+	};
+} else 
+{
+	if (["_3D", _currentOptics] call BIS_fnc_inString && profileNamespace getVariable ["is3DOptics", false]) then 
+	{
+		_opticsStringRework = _currentOptics regexReplace ["_3D", "_PIP"];
+		if (getText (configFile >> "cfgWeapons" >> _opticsStringRework >> "displayName")!="") then 
+		{
+				player removePrimaryWeaponItem _currentOptics;
+				player addPrimaryWeaponItem _opticsStringRework;
+		};
+	};
+};
+
 _keyDown = (findDisplay 7000) displayAddEventHandler ["KeyDown", {
 	params ["_control", "_dikCode", "_shift", "_ctrl", "_alt"];
 

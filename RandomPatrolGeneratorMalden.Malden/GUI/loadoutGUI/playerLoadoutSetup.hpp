@@ -9,7 +9,7 @@ class PlayerLoadoutSetup
 			x = 0.229686 * safezoneW + safezoneX;
 			y = 0.117436 * safezoneH + safezoneY;
 			w = 45 * GUI_GRID_CENTER_W;
-			h = 15 * GUI_GRID_CENTER_H;
+			h = 19 * GUI_GRID_CENTER_H;
 			colorBackground[] = {0.5,0.5,0.5,0.8};
 		};
 
@@ -31,7 +31,7 @@ class PlayerLoadoutSetup
 			idc = 7200;
 			text = "Close";
 			x = GUI_GRID_CENTER_X + 15 * GUI_GRID_CENTER_W;
-			y = GUI_GRID_CENTER_Y + 8 * GUI_GRID_CENTER_H;
+			y = GUI_GRID_CENTER_Y + 10 * GUI_GRID_CENTER_H;
 			w = 10 * GUI_GRID_CENTER_W;
 			h = 1 * GUI_GRID_CENTER_H;
 		};
@@ -98,7 +98,7 @@ class PlayerLoadoutSetup
 		class 3DForceOpticsButton: RscButton
 		{
 			idc = 7205;
-			text = "3D Optics";
+			text = "3D for CUP Optics";
 			x = 0.701406 * safezoneW + safezoneX;
 			y = GUI_GRID_CENTER_Y + 5 * GUI_GRID_CENTER_H;
 			w = 5 * GUI_GRID_CENTER_W;
@@ -127,6 +127,17 @@ class PlayerLoadoutSetup
 			y = 0.07 * safezoneH + safezoneY;
 			w = 0.211441 * safezoneW;
 			h = 0.241947 * safezoneH;
+		};
+
+		//Load default button
+		class LoadDefaultButton: RscButton
+		{
+			idc = 7207;
+			text = "Load default";
+			x = GUI_GRID_CENTER_X + 15 * GUI_GRID_CENTER_W;
+			y = GUI_GRID_CENTER_Y + 8 * GUI_GRID_CENTER_H;
+			w = 10 * GUI_GRID_CENTER_W;
+			h = 1 * GUI_GRID_CENTER_H;
 		};
 
 		////////////////////

@@ -7,6 +7,13 @@ c_marksman = "marksman";
 c_medic = "medic";
 c_pilot = "pilot";
 
+//Add specific IFA3 factions
+if (isClass (configFile >> "CfgPatches" >> "IFA3_Core")) then 
+{
+	factionInfos pushBack ["_WWII_FFI",26,"WWII FFI [IFA3]", true, true, true];
+};
+
+
 //////////////////////////////
 ////Define civ group data/////
 //////////////////////////////
@@ -77,10 +84,7 @@ baseEnemyHeavyArmoredVehicleGroup_WWII_FFI = [
 
 ];
 
-//Basic enemy chopper avalaible
-baseChopperGroup_WWII_FFI = [
-	// lol
-];
+
 
 //Basic enemy aircraft avalaible
 baseFixedWingGroup_WWII_FFI = [
@@ -133,7 +137,6 @@ bluforHQVehicle_WWII_FFI = [
 ////////////////////////
 //Loadout management////
 ////////////////////////
-listOfRoles_WWII_FFI = [c_leader,c_at,c_rifleman,c_engineer,c_autorifleman,c_medic];
 
 //WWII_USA
 loadout_WWII_FFI = [		
@@ -227,7 +230,8 @@ itemMedicList_WWII_FFI = [
 	"ACE_bloodIV_500",
 	"ACE_bloodIV_250",
 	"ACE_personalAidKit",
-	"ACE_surgicalKit"
+	"ACE_surgicalKit",
+	"ACE_suture"
 ];
 
 // Those lists might not be correct...
