@@ -42,5 +42,5 @@ missionRespawnParamSettings = [
 	[600,"Respawn every 10 minutes"],
 	[1200,"Respawn every 20 minutes"],
 	[1800,"Respawn every 30 minutes"],
-	[99999999999999,"Respawn on objective completion"]
+	[99999999999999,"Respawn on objective completion only"]
 ];

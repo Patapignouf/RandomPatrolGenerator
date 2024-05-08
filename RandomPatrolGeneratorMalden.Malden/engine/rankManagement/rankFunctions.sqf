@@ -120,5 +120,5 @@ displayCurrentRank = {
 	_rankName = [_unit, "displayName"] call BIS_fnc_rankParams;
 	
 	//Display current rank 
-	[[parseText format ["<img image='%1'/><br/><br/><t size='1.2'>Your current rank is %2</t><br/><br/><t size='1.2'>Experience to the next rank  %3/%4</t>", _rankTexture, _rankName, _unitExperience, _unitExperienceNextFloor], "intel"], 'engine\hintManagement\addCustomHint.sqf'] remoteExec ['BIS_fnc_execVM', _unit]; 
+	[[parseText format ["<img image='%1' size='3'/><br/><br/><t size='1.5'>Your current rank is %2</t><br/><br/><t size='1.2'>Experience to the next rank  %3/%4</t>", _rankTexture, _rankName, _unitExperience, _unitExperienceNextFloor], "intel"], 'engine\hintManagement\addCustomHint.sqf'] remoteExec ['BIS_fnc_execVM', _unit]; 
 };
