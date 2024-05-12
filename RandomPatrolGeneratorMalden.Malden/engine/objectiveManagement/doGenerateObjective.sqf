@@ -340,7 +340,7 @@ generateObjectiveObject =
 
 				//Add intel action to the intel case
 				_objectiveObject setPos _thisObjectivePosition;
-				[_objectiveObject, ["Collect intel",{
+				[_objectiveObject, ["<img size='2' image='\a3\ui_f_oldman\data\IGUI\Cfg\holdactions\map_ca.paa'/><t size='1'>Collect intel</t>",{
 					params ["_object","_caller","_ID","_thisObjective"];
 					//Manage Completed Objective
 					_completedObjectives = missionNamespace getVariable ["completedObjectives",[]];
@@ -367,7 +367,7 @@ generateObjectiveObject =
 					{
 						[[], "engine\respawnManagement\respawnManager.sqf"] remoteExec ['BIS_fnc_execVM', 0];
 					};
-				},_thisObjective,1.5,true,true,"","_target distance _this <3"]] remoteExec ["addAction", 0, true];
+				},_thisObjective,10,true,true,"","_target distance _this <4"]] remoteExec ["addAction", 0, true];
 			};
 		case "captureFlag":
 			{
