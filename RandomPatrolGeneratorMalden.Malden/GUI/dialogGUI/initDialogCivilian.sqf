@@ -220,7 +220,7 @@ _RcsButtonObjective ctrlAddEventHandler[ "ButtonClick",
 			_tempGroup = createGroup (side player); //Specific line to debug unit which doesn't change side
 			[_civ] joinSilent _tempGroup;
 			[_civ] joinSilent (group player); //join player group
-
+			_civ doFollow player;
 			
 			//Manage loadout
 			_civLoadout = getUnitLoadout _civ;
