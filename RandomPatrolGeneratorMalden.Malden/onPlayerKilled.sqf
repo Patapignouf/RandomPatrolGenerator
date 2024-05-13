@@ -17,13 +17,13 @@ addMissionEventHandler ["EachFrame",
 //Update dead counter 
 player setVariable ["deathNumber", (player getVariable ["deathNumber", 0])+1, true];
 
+//Add experience penalty on death
+[[-10, 1], 'engine\rankManagement\rankPenalty.sqf'] remoteExec ['BIS_fnc_execVM', player];
+
 //Add player to a dead player base | This will block disconnection/connection method to respawn 
 _deadPlayerList = missionNamespace getVariable "deadPlayer";
 _deadPlayerList pushBack (name player);
 missionNamespace setVariable ["deadPlayer", _deadPlayerList, true];
-
-//Add experience penalty on death
-[[-10, 1], 'engine\rankManagement\rankPenalty.sqf'] remoteExec ['BIS_fnc_execVM', player];
 
 //Start spectator mod only ally players
 ["Terminate"] call BIS_fnc_EGSpectator;

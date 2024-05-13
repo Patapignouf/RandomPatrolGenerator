@@ -82,7 +82,6 @@ addExperience = {
 	true
 };
 
-
 getExperience = {
 	//Unit current experience
 	_unitExperience = profileNamespace getVariable ["RPG_ranking", 0];

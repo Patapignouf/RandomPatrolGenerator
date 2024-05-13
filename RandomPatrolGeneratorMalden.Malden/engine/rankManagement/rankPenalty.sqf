@@ -11,3 +11,5 @@ _potentialExperienceLose = floor (-_currentUnitExperience*_losePercentage/100);
 
 //adjustrank
 [player, false] call adjustRank;
+
+diag_log format ["RPG_XP_Reward : %1 %2 %3", name player, _potentialExperienceLose min _experienceMalus, "RPG_ranking_player_death"];
