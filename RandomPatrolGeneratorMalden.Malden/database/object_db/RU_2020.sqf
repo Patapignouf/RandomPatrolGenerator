@@ -249,6 +249,7 @@ marksmanrifleList_RU_2020 = [
 	"rhs_weap_t5000",
 	"rhs_weap_svds_npz",
 	"rhs_weap_vss_grip_npz",
+	"rhs_weap_vss_grip_npz_grip1",
 	"rhs_weap_svdp"
 ];
 
