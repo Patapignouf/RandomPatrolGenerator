@@ -23,7 +23,7 @@ if (isClass (configFile >> "CfgPatches" >> "ace_medical")) then
 };
 
 //Init player rank
-[[player], 'engine\rankManagement\rankManager.sqf'] remoteExec ['BIS_fnc_execVM', player];
+[[player, false], 'engine\rankManagement\rankManager.sqf'] remoteExec ['BIS_fnc_execVM', player];
 
 //Show a special message when there is a teamkill
 player addEventHandler ["Killed", {

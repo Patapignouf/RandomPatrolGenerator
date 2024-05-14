@@ -212,7 +212,7 @@ if !(isClass (configFile >> "CfgPatches" >> "ace_medical")) then
 };
 
 //Init player rank
-[[player], 'engine\rankManagement\rankManager.sqf'] remoteExec ['BIS_fnc_execVM', player];
+[[player, true], 'engine\rankManagement\rankManager.sqf'] remoteExec ['BIS_fnc_execVM', player];
 
 //Init player survivor objective
 [[player], 'engine\objectiveManagement\survivorObjectiveManagement.sqf'] remoteExec ['BIS_fnc_execVM', player];
@@ -464,6 +464,13 @@ if (side player == blufor) then
 
 			[[], 'GUI\supportGUI\supportGUI.sqf'] remoteExec ['BIS_fnc_execVM', _caller];
 	},_x,3,true,false,"","_target distance _this <5"];
+
+	TPFlag1 addAction ["<img size='2' image='\a3\ui_f_oldman\data\IGUI\Cfg\holdactions\holdAction_market_ca.paa'/><t size='1'>Open team member shop</t>",{
+			//Define parameters
+			params ["_object","_caller","_ID","_avalaibleVehicle"];
+
+			[[], 'GUI\botteamGUI\botteamGUI.sqf'] remoteExec ['BIS_fnc_execVM', _caller];
+	},_x,3,true,false,"","(_target distance _this <5) && (_this getVariable 'role' == 'leader')"];
 	
 	waituntil {!isNil "isBluforAttacked" && !isNil "isIndAttacked"};
 	if (isBluforAttacked) then
@@ -496,7 +503,7 @@ player addEventHandler ["Killed", {
 		{
 			[[-50,5], 'engine\rankManagement\rankPenalty.sqf'] remoteExec ['BIS_fnc_execVM', _instigator];
 		};
-	};	
+	};
 }];
 		
 
