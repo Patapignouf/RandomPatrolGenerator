@@ -4,7 +4,7 @@ warEraSelection = [
 	[0,"2nd War"],
 	[1,"Cold War"],
 	[2,"Modern Warfare"],
-	[3,"Actual Warfare"],
+	[3,"Current Warfare"],
 	[4,"Future Warfare"]
 ];
 
