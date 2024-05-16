@@ -8,7 +8,17 @@ params ["_caller", "_botteamClass", "_botteamType"];
 		case "Infantry":
 		{
 			//Spawn random unit
-			_customPos = (position player) findEmptyPosition [20, 150, "Land_HelipadCircle_F"];
+			_customPos = [];
+			if (isNil "USS_FREEDOM_CARRIER") then 
+			{
+				//Custom spawn on ground outside the FOB
+				_customPos = (position player) findEmptyPosition [20, 150, "Land_HelipadCircle_F"];
+			} else 
+			{
+				//Custom spawn on carrier
+				_customPos = getPosASL player;
+			};
+			
 			private _botUnit = group player createUnit ["B_Soldier_F", _customPos, [], 0, "NONE"];
 			
 			//Get custom stuff 
