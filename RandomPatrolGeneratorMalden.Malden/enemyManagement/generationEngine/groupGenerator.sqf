@@ -101,6 +101,8 @@ doGenerateEnemyGroup =
 					_killedForExp = _unit getVariable ["EHKilledForXP", 0];
 					[_unit, ["Killed", _killedForExp]] remoteExec ["removeEventHandler", 0, true];
 				}; 
+				sleep 600;
+				deleteVehicle _unit;
 			};
 		}];
 
@@ -113,6 +115,8 @@ doGenerateEnemyGroup =
 					[[5, "RPG_ranking_vehicle_kill"], 'engine\rankManagement\rankUpdater.sqf'] remoteExec ['BIS_fnc_execVM', _instigator];
 					[_unit, "HandleDamage"] remoteExec ["removeAllEventHandlers", 0, true];
 				}; 
+				sleep 600;
+				deleteVehicle _unit;
 			};
 		}];
 
