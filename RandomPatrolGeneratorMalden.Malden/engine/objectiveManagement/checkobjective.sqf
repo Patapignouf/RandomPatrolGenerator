@@ -13,6 +13,7 @@ missionComplete = false;
 RTBComplete = false;
 isRTBMissionGenerated = false;
 numberOfCompletedObj = 0;
+missionLengthParam = missionNamespace getVariable "missionLength"; //Default 2 missions + 1 optional
 
 independantTrigger = createTrigger ["EmptyDetector", _objectivesDestinationArea]; //create a trigger area created at object with variable name my_object
 independantTrigger setTriggerArea [60, 60, 0, false]; // trigger area with a radius of 100m.
@@ -32,11 +33,18 @@ while {sleep 10; !RTBComplete} do
 {
 	_completedObjectives = missionNamespace getVariable ["completedObjectives",[]];
 	_missionObjectives = missionNamespace getVariable ["MissionObjectives",[]];
-	_missionUncompletedObjectives = missionNamespace getVariable ["missionUncompletedObjectives",_missionObjectives];
-	missionNamespace setVariable ["missionUncompletedObjectives",_missionUncompletedObjectives,true];
+	_missionFailedObjectives = missionNamespace getVariable ["missionFailedObjectives",[]];
 
-	missionComplete = count _completedObjectives + 1 >= count _missionObjectives;
-
+	//Check if the server is setup with only one objective
+	if (missionLengthParam == 1) then 
+	{
+		missionComplete = ((count _completedObjectives) + (count _missionFailedObjectives))  >= count _missionObjectives;
+	} else 
+	{
+		//When there are more than one objective, blufor/independent needs n-1 objective to complete the mission
+		missionComplete = ((count _completedObjectives)+ (count _missionFailedObjectives)) + 1 >= count _missionObjectives;
+	};
+	
 	//Check if mission is complete
 	if ((missionComplete && !enableCampaignMode)||(count _completedObjectives >= count AllPossibleObjectivePosition)) then 
 	{
@@ -58,7 +66,7 @@ while {sleep 10; !RTBComplete} do
 		nbBluePlayerBack = count ((allPlayers select {alive _x && side _x == blufor} ) inAreaArray bluforTrigger); //vehicles (all vehicles) inAreaArray (Returns list of Objects or Positions that are in the area _independantTrigger.)  
 		nbIndPlayerBack = count ((allPlayers select {alive _x && side _x == independent} ) inAreaArray independantTrigger);
 		nbPlayersNotExtracted = count ((allPlayers select {alive _x}) inAreaArray extractExtendedTriggerArea); 
-		if (((round(nbBluePlayer/2) <= nbBluePlayerBack && round(nbIndPlayer/2) <= nbIndPlayerBack) && (nbBluePlayerBack != 0 || nbIndPlayerBack != 0))|| (nbPlayersNotExtracted <= round((nbIndPlayer+nbBluePlayer)/2))) then 
+		if (((floor(nbBluePlayer/2) < nbBluePlayerBack && floor(nbIndPlayer/2) < nbIndPlayerBack) && (nbBluePlayerBack != 0 || nbIndPlayerBack != 0)) || ((nbPlayersNotExtracted != (nbIndPlayer + nbBluePlayer)) && (nbPlayersNotExtracted <= round((nbIndPlayer+nbBluePlayer)/2)))) then 
 		{
 			["taskRTB","SUCCEEDED"] call BIS_fnc_taskSetState;
 			//Reward player for RTB

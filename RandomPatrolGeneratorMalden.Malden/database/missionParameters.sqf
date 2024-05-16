@@ -9,10 +9,10 @@ warEraSelection = [
 ];
 
 missionLengthSelection = [
-	[1,"Short (2 objectives)"], //Begin at 1
-	[2,"Medium (3 objectives)"],
-	[3,"Long (4 objectives)"],
-	[4,"Very long (5 objectives)"]
+	[1,"Short (1 objective)"], //Begin at 1
+	[2,"Medium (2 objectives)"],
+	[3,"Long (3 objectives)"],
+	[4,"Very long (4 objectives)"]
 ];
 
 missionDifficultySelection = [

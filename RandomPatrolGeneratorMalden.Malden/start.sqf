@@ -180,7 +180,7 @@ publicvariable "initCityLocation";
 possiblePOILocation = ([initCityLocation, 3000] call getLocationsAroundWithBuilding) - [initCityLocationLoc];
 dangerAreaList = [];
 
-if ( count possiblePOILocation < missionLength + 1) then 
+if ( count possiblePOILocation < missionLength) then 
 {
 	possiblePOILocation = ([initCityLocation, 5000] call getLocationsAroundWithBuilding) - [initCityLocationLoc];
 };
@@ -260,7 +260,7 @@ currentRandObj = objNull;
 //Generate objectives according to the mission's length parameter
 _minNumberOfMission = missionLength min(count AllPossibleObjectivePosition);
 
-for [{_counterOfMission = 0}, {_counterOfMission <= _minNumberOfMission}, {_counterOfMission = _counterOfMission + 1}] do //Peut être optimisé
+for [{_counterOfMission = 0}, {_counterOfMission < _minNumberOfMission}, {_counterOfMission = _counterOfMission + 1}] do //Peut être optimisé
 {
 	//Randomize objective locations or not
 	if (NeedToRandomizePOI) then 
@@ -832,7 +832,7 @@ if (enableCampaignMode) then
 			{
 				hint "Not enough mission completed";
 			};
-		},missionLength,1.5,true,true,"","_target distance _this <5"]] remoteExec ["addAction", 0, true];
+		},missionLength,1.5,true,true,"","_target distance _this <5 && side _this == blufor"]] remoteExec ["addAction", 0, true];
 
 	//Add this action on campaign mode independent side
 	[VA1, ["<t color='#0a5e00'>Complete mission</t>",{
@@ -848,7 +848,7 @@ if (enableCampaignMode) then
 			{
 				hint "Not enough mission completed";
 			};
-		},missionLength,1.5,true,true,"","_target distance _this <5"]] remoteExec ["addAction", 0, true];
+		},missionLength,1.5,true,true,"","_target distance _this <5 && side _this == independent"]] remoteExec ["addAction", 0, true];
 
 
 	//Loop until maximum number of possible objective are generated
