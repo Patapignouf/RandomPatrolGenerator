@@ -8,7 +8,8 @@ params ["_caller", "_botteamClass", "_botteamType"];
 		case "Infantry":
 		{
 			//Spawn random unit
-			private _botUnit = group player createUnit ["B_Soldier_F", position player, [], 0, "NONE"];
+			_customPos = (position player) findEmptyPosition [20, 150, "Land_HelipadCircle_F"];
+			private _botUnit = group player createUnit ["B_Soldier_F", _customPos, [], 0, "NONE"];
 			
 			//Get custom stuff 
 			_listOfAvalaibleRole =[];
