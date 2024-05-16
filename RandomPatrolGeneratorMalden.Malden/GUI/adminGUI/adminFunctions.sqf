@@ -9,8 +9,6 @@ params ["_supportType"];
 			_actualDifficulty = missionNamespace getVariable "missionDifficultyParam";
 			missionNamespace setVariable ["missionDifficultyParam", _actualDifficulty+1, true];
 			[[format ["OPFOR has increased its presence in the area"], "intel"], 'engine\hintManagement\addCustomHint.sqf'] remoteExec ['BIS_fnc_execVM', 0];
-
-			[[format ["OPFOR has reduced its presence in the area"], "intel"], 'engine\hintManagement\addCustomHint.sqf'] remoteExec ['BIS_fnc_execVM', 0];
 		};
 		case "Decreasedifficulty":
 		{
