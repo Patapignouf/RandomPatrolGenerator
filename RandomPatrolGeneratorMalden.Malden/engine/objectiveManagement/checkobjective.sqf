@@ -66,7 +66,8 @@ while {sleep 10; !RTBComplete} do
 		nbBluePlayerBack = count ((allPlayers select {alive _x && side _x == blufor} ) inAreaArray bluforTrigger); //vehicles (all vehicles) inAreaArray (Returns list of Objects or Positions that are in the area _independantTrigger.)  
 		nbIndPlayerBack = count ((allPlayers select {alive _x && side _x == independent} ) inAreaArray independantTrigger);
 		nbPlayersNotExtracted = count ((allPlayers select {alive _x}) inAreaArray extractExtendedTriggerArea); 
-		if (((floor(nbBluePlayer/2) < nbBluePlayerBack && floor(nbIndPlayer/2) < nbIndPlayerBack) && (nbBluePlayerBack != 0 || nbIndPlayerBack != 0)) || ((nbPlayersNotExtracted != (nbIndPlayer + nbBluePlayer)) && (nbPlayersNotExtracted <= round((nbIndPlayer+nbBluePlayer)/2)))) then 
+		if (((floor(nbBluePlayer/2) <= nbBluePlayerBack && floor(nbIndPlayer/2) <= nbIndPlayerBack) && (nbBluePlayerBack != 0 || nbIndPlayerBack != 0)) || 
+			((nbPlayersNotExtracted != (nbIndPlayer + nbBluePlayer)) && (nbPlayersNotExtracted <= round((nbIndPlayer+nbBluePlayer)/2)))) then 
 		{
 			["taskRTB","SUCCEEDED"] call BIS_fnc_taskSetState;
 			//Reward player for RTB
