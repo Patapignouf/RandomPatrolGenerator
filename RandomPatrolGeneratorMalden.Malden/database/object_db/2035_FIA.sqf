@@ -40,8 +40,8 @@ civilianTruck_2035_FIA = [
 baseEnemyGroup_2035_FIA = [
 	"O_G_Soldier_SL_F", 
 	"O_G_Soldier_AR_F", 
-	"O_G_Soldier_GL_F", 
-	"O_G_Soldier_LAT2_F", 
+	"O_G_Soldier_AR_F", 
+	"O_G_Sharpshooter_F", 
 	"O_G_Soldier_M_F", 
 	"O_G_Soldier_F", 
 	"O_G_Soldier_F", 
@@ -76,11 +76,15 @@ baseEnemyMortarGroup_2035_FIA = [
 
 //Basic enemy vehicle avalaible (light) must be destroyed without AT (ex : jeep)
 baseEnemyVehicleGroup_2035_FIA = [
+	//Vehicle
 	"O_G_Offroad_01_F", 
 	"O_G_Offroad_01_AT_F", 
 	"O_G_Van_02_vehicle_F", 
 	"O_G_Van_01_transport_F", 
-	"O_G_Offroad_01_armed_F"
+	"O_G_Offroad_01_armed_F",
+
+	//Turret
+	"O_G_HMG_02_high_F"
 ];
 
 //Basic enemy light armored vehicle avalaible must be destroyed without heavy AT (ex : BMP)

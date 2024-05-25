@@ -44,25 +44,25 @@ baseEnemyGroup_Syndikat = [
 	"I_C_Soldier_Bandit_3_F", 
 	"I_C_Soldier_Bandit_7_F", 
 	"I_C_Soldier_Bandit_5_F", 
-	"I_C_Soldier_Bandit_2_F", 
 	"I_C_Soldier_Bandit_1_F", 
+	"I_C_Soldier_Bandit_5_F",
 	"I_C_Soldier_Bandit_1_F"
 ];
 
 baseEnemyATGroup_Syndikat = [
-	"I_C_Soldier_Bandit_6_F", 
-	"I_C_Soldier_Bandit_2_F", 
-	"I_C_Soldier_Bandit_2_F",
-	"I_C_Soldier_Bandit_7_F", 
-	"I_C_Soldier_Bandit_1_F"
+	"I_C_Soldier_Para_6_F", 
+	"I_C_Soldier_Para_5_F", 
+	"I_C_Soldier_Para_5_F", 
+	"I_C_Soldier_Para_7_F", 
+	"I_C_Soldier_Para_8_F"
 ];
 
 baseEnemyDemoGroup_Syndikat = [
 	"I_C_Soldier_Para_6_F", 
-	"I_C_Soldier_Para_5_F", 
 	"I_C_Soldier_Para_7_F", 
 	"I_C_Soldier_Para_8_F",
-	"I_C_Soldier_Para_6_F"
+	"I_C_Soldier_Para_6_F",
+	"I_C_Soldier_Para_4_F"
 ];
 
 baseEnemyMortarGroup_Syndikat = [
