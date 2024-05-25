@@ -167,6 +167,7 @@ rifleList_USA_SOCOM_2020 = [
 	"rhs_weap_m4a1_mstock_grip3",
 	"rhs_weap_m4a1_mstock",
 	"rhs_weap_m4a1_blockII_KAC_bk",
+	"rhs_weap_m4a1_blockII_grip_KAC_bk",
 	"rhs_weap_m4a1_blockII_KAC",
 	"rhs_weap_m4a1_blockII",
 	"rhs_weap_m4a1_blockII_bk",

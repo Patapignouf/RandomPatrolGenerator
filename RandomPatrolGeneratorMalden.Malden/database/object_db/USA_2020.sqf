@@ -174,18 +174,24 @@ loadout_USA_2020 = [
 rifleList_USA_2020 = [		
 	//M4A1
 	"rhs_weap_m4a1_mstock_grip3",
+	"rhs_weap_m4a1_grip3",
 	"rhs_weap_m4a1_mstock",
 	"rhs_weap_m4a1_blockII_KAC_bk",
+	"rhs_weap_m4a1_blockII_grip_KAC_bk",
 	"rhs_weap_m4a1_blockII",
 	"rhs_weap_m4a1_blockII_bk",
 	"rhs_weap_m4a1_carryhandle",
 	"rhs_weap_m4_grip3",
+
 
 	//misc
 	"rhs_weap_m14ebrri",
 	"rhs_weap_m16a4",
 	"rhs_weap_m16a4_imod",
 	"rhs_weap_m16a4_carryhandle",
+	"rhs_weap_m16a4_grip2",
+	"rhs_weap_m16a4_imod_grip2",
+	"rhs_weap_m16a4_carryhandle_grip2",
 	
 	//Pistols
 	"rhsusf_weap_glock17g4",
@@ -238,6 +244,8 @@ marksmanrifleList_USA_2020 = [
 smgList_USA_2020 = [		
 	"rhsusf_weap_MP7A2_folded",
 	"rhsusf_weap_MP7A2",
+	"rhsusf_weap_MP7A2_grip3",
+	"rhsusf_weap_MP7A2_folded_grip3",
 	"rhs_weap_M590_5RD",
 	"rhs_weap_M590_8RD"
 ];
