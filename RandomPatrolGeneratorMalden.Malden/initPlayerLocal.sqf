@@ -409,6 +409,9 @@ if (side player == blufor) then
 			{
 				player setDamage 0;
 			};
+
+			//Display heal message information
+			["<t color='#6AA84F' size='.8'>You have been healed</t>",0,0,2,0,0,789] spawn BIS_fnc_dynamicText;
 		},
 		nil,		// arguments
 		2,		// priority
