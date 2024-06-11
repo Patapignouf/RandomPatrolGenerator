@@ -106,6 +106,7 @@ bluforArmoredVehicle_USA_2020 = [
 	"RHS_M2A3", 
 	"RHS_M2A2", 
 	"RHS_M6", 
+	"rhsusf_stryker_m1126_m2_d",
 	"rhsusf_m1a1aimd_usarmy",
 	"rhsusf_M1117_D", 
 	"rhsusf_M1220_M153_M2_usarmy_d", 

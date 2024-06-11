@@ -175,6 +175,7 @@ rifleList_USA_SOCOM_2020 = [
 
 	//misc
 	"rhs_weap_mk17_CQC",
+	"rhs_weap_mk17_CQC_grip2",
 	"rhs_weap_m14ebrri",
 	"rhs_weap_m16a4_imod",
 	"rhs_weap_m16a4_carryhandle",
