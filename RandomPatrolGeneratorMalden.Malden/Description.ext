@@ -107,6 +107,20 @@ class Params
 		texts[] = { "" };
 		default = "";
 	};
+	class EnablePersistent
+	{
+		title = "Enable Persistent Mode (No fail on death)";
+		values[] = {0,1};
+		texts[] = {"No","Yes"};
+		default = 0;
+	};
+	class EnableAutoDifficultyBalance
+	{
+		title = "Enable Automatic difficulty balance";
+		values[] = {0,1};
+		texts[] = {"No","Yes"};
+		default = 1;
+	};
 	class DisableZoom
 	{
 		title = "Temp Zoom (hold right clic)";

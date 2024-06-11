@@ -9,6 +9,7 @@
 //Init base mission parameters 
 enableInitAttack = "EnableInitAttack" call BIS_fnc_getParamValue;
 enableInitBluAttack = "EnableInitBluAttack" call BIS_fnc_getParamValue;
+enableAutoDifficultyBalance = "EnableAutoDifficultyBalance" call BIS_fnc_getParamValue;
 timeOfDay = "TimeOfDay" call BIS_fnc_getParamValue;
 disableZoom = "DisableZoom" call BIS_fnc_getParamValue;
 
@@ -793,7 +794,10 @@ switch (timeOfDay) do
 forceWeatherChange;
 
 //Setup difficulty management
-[] execVM 'engine\difficultyManagement.sqf'; 
+if (enableAutoDifficultyBalance==1) then 
+{
+	[] execVM 'engine\difficultyManagement.sqf'; 
+};
 
 if (disableZoom == 1) then 
 {
