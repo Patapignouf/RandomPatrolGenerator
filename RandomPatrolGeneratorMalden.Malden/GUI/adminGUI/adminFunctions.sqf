@@ -36,14 +36,7 @@ params ["_supportType"];
 		};
 		case "ClearWeather":
 		{
-			//Close admin menu
-			_mainDisplay = (findDisplay 60000);
-			_mainDisplay closeDisplay 1;
-
-			//Clear weather without transition
-			0 setOvercast 0;
-			0 setRain 0;
-			forceWeatherChange;
+			[[], 'engine\clearWeather.sqf'] remoteExec ['BIS_fnc_execVM', 0];
 
 			hint "Weather cleared";
 		};
