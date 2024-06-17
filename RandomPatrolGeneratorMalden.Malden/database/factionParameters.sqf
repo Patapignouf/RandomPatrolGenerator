@@ -3,6 +3,8 @@ factionInfos = [];
 //Define constant suffix for factions building
 c_db = "_db";
 
+factionID = 41;
+
 #include "object_db\2035_AAF.sqf"
 #include "object_db\2035_Rebels.sqf"
 #include "object_db\2035_CSAT.sqf"
@@ -45,3 +47,12 @@ c_db = "_db";
 #include "object_db\USA_SOCOM_2020.sqf"
 #include "object_db\RU_2020.sqf"
 #include "object_db\RU_2020_reservists.sqf"
+
+////////////////////////////////////
+///DO NOT CHANGE FACTION ORDER//////
+///Insert new faction here /////////
+///Add factions after the last one//
+////////////////////////////////////
+
+//#include "object_db\RU_2020_reservists_desert.sqf"
+//#include "object_db\factionTemplate.sqf"

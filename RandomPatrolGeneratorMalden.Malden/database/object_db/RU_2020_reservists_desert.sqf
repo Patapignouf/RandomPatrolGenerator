@@ -3,26 +3,27 @@
 //Add specific RHS factions
 if (isClass (configFile >> "CfgPatches" >> "rhs_main")) then 
 {
+	factionID = factionID+1;
 	//factionInfos pushBack [c_USA_SOCOM_2020,_USA_SOCOM_2020,"2020 USA SOCOM [RHS]", true, true, false];
-	factionInfos pushBack ["_RU_2020_reservists", 40,"2020 Russian regular and reservists [RHS]", false, true, false];
+	factionInfos pushBack ["_RU_2020_reservists_desert", factionID,"2020 Russian regular and reservists desert CAMO [RHS]", false, true, false];
 };
 
 //////////////////////////////
 ///Define enemy group data////
 //////////////////////////////
 //USA
-baseEnemyGroup_RU_2020_reservists = [
+baseEnemyGroup_RU_2020_reservists_desert = [
 	"rhs_mvd_izlom_sergeant", 
 	"rhs_mvd_izlom_marksman", 
 	"rhs_mvd_izlom_machinegunner", 
-	"rhs_mvd_izlom_rifleman", 
+	"rhs_mvd_izlom_grenadier_rpg", 
 	"rhs_mvd_izlom_arifleman", 
 	"rhs_mvd_izlom_arifleman_rpk", 
 	"rhs_mvd_izlom_rifleman", 
-	"rhs_mvd_izlom_machinegunner"
+	"rhs_mvd_izlom_rifleman_LAT"
 ];
 
-baseEnemyATGroup_RU_2020_reservists = [
+baseEnemyATGroup_RU_2020_reservists_desert = [
 	"rhs_msv_emr_engineer", 
 	"rhs_msv_emr_medic", 
 	"rhs_msv_emr_junior_sergeant", 
@@ -30,14 +31,15 @@ baseEnemyATGroup_RU_2020_reservists = [
 	"rhs_msv_emr_aa"
 ];
 
-baseEnemyDemoGroup_RU_2020_reservists = [
-	"rhs_msv_emr_sergeant", 
-	"rhs_msv_emr_engineer", 
-	"rhs_msv_emr_arifleman", 
-	"rhs_msv_emr_rifleman"
+baseEnemyDemoGroup_RU_2020_reservists_desert = [
+	"rhs_mvd_izlom_arifleman_rpk", 
+	"rhs_mvd_izlom_grenadier_rpg", 
+	"rhs_mvd_izlom_sergeant", 
+	"rhs_mvd_izlom_rifleman_LAT", 
+	"rhs_mvd_izlom_rifleman_asval"
 ];
 
-baseEnemyMortarGroup_RU_2020_reservists = [
+baseEnemyMortarGroup_RU_2020_reservists_desert = [
 	"rhs_2b14_82mm_msv", 
 	"rhs_msv_emr_arifleman", 
 	"rhs_msv_emr_sergeant", 
@@ -45,14 +47,14 @@ baseEnemyMortarGroup_RU_2020_reservists = [
 	"rhs_msv_rifleman"
 ];
 
-baseEnemyVehicleGroup_RU_2020_reservists = [
+baseEnemyVehicleGroup_RU_2020_reservists_desert = [
 	"rhs_tigr_vv", 
 	"rhs_tigr_sts_vv", 
 	"rhs_tigr_m_vv",
 	"rhs_Igla_AA_pod_msv" //AA Turret
 ];
 
-baseEnemyLightArmoredVehicleGroup_RU_2020_reservists = [
+baseEnemyLightArmoredVehicleGroup_RU_2020_reservists_desert = [
 	//Btr
 	"rhs_btr60_vv", 
 	"rhs_btr70_vv", 
@@ -61,7 +63,7 @@ baseEnemyLightArmoredVehicleGroup_RU_2020_reservists = [
 	"rhs_gaz66_zu23_vv"
 ];
 
-baseEnemyHeavyArmoredVehicleGroup_RU_2020_reservists = [
+baseEnemyHeavyArmoredVehicleGroup_RU_2020_reservists_desert = [
 	"rhs_bmp1_vv", 
 	"rhs_prp3_vv", 
 	"rhs_bmp2d_vv",
@@ -73,15 +75,15 @@ baseEnemyHeavyArmoredVehicleGroup_RU_2020_reservists = [
 	"rhs_t72ba_tv"
 ];
 
-baseEnemyUnarmedChopperGroup_RU_2020_reservists = [
+baseEnemyUnarmedChopperGroup_RU_2020_reservists_desert = [
 	"RHS_Mi8t_vv"
 ];
 
-baseEnemyArmedChopperGroup_RU_2020_reservists = [
+baseEnemyArmedChopperGroup_RU_2020_reservists_desert = [
 	"RHS_Mi8mt_vv"
 ];
 
-baseFixedWingGroup_RU_2020_reservists = [
+baseFixedWingGroup_RU_2020_reservists_desert = [
 	"RHS_T50_vvs_generic_ext", 
 	"rhs_mig29s_vvs", 
 	"rhs_mig29s_vmf", 
@@ -93,7 +95,7 @@ baseFixedWingGroup_RU_2020_reservists = [
 //Vehicle management////
 ////////////////////////
 //USA
-bluforUnarmedVehicle_RU_2020_reservists = [
+bluforUnarmedVehicle_RU_2020_reservists_desert = [
 	"rhs_gaz66_vdv",
 	"rhs_kamaz5350_vdv",
 	"RHS_Ural_Open_VDV_01",
@@ -104,26 +106,26 @@ bluforUnarmedVehicle_RU_2020_reservists = [
 	"rhs_tigr_m_vdv"
 ];
 
-bluforArmedVehicle_RU_2020_reservists = [
+bluforArmedVehicle_RU_2020_reservists_desert = [
 	"rhs_tigr_sts_3camo_vdv",
 	"rhs_tigr_sts_vdv"
 ];
 
 //Armored vehicle avalaible for blufor : Ex light tank
-bluforArmoredVehicle_RU_2020_reservists = [
+bluforArmoredVehicle_RU_2020_reservists_desert = [
 	"rhs_bmd1",
 	"rhs_bmp2d_vdv",
 	"rhs_sprut_vdv",
 	"rhs_btr60_vdv"
 ];
 
-bluforUnarmedVehicleChopper_RU_2020_reservists = [
+bluforUnarmedVehicleChopper_RU_2020_reservists_desert = [
 	"RHS_Mi8mt_vdv",
 	"RHS_Mi8mt_Cargo_vdv",
 	"rhs_ka60_c"
 ];
 
-bluforArmedChopper_RU_2020_reservists = [
+bluforArmedChopper_RU_2020_reservists_desert = [
 	"RHS_Ka52_vvs",
 	"RHS_Mi24P_vvs",
 	"RHS_Mi8AMTSh_vvs",
@@ -131,23 +133,23 @@ bluforArmedChopper_RU_2020_reservists = [
 	"RHS_Mi8MTV3_vdv"
 ];
 
-bluforDrone_RU_2020_reservists = [
+bluforDrone_RU_2020_reservists_desert = [
 
 ];
 
-bluforBoat_RU_2020_reservists = [
+bluforBoat_RU_2020_reservists_desert = [
 
 ];
 
 //FixedWing vehicle avalaible for blufor
-bluforFixedWing_RU_2020_reservists = [
+bluforFixedWing_RU_2020_reservists_desert = [
 	"rhs_mig29s_vvs",
 	"RHS_Su25SM_vvs",
 	"RHS_T50_vvs_generic"
 ];
 
 //Vehicule able to do HQ features (Loadout management and more)
-bluforHQVehicle_RU_2020_reservists = [
+bluforHQVehicle_RU_2020_reservists_desert = [
 
 ];	
 
@@ -157,7 +159,7 @@ bluforHQVehicle_RU_2020_reservists = [
 ////////////////////////
 
 //USA
-loadout_RU_2020_reservists = [		
+loadout_RU_2020_reservists_desert = [		
 	[c_leader, "rhs_msv_emr_sergeant"],
 	[c_at, "rhs_msv_emr_LAT"],
 	[c_rifleman, "rhs_msv_emr_rifleman"],//Default stuff
@@ -173,7 +175,7 @@ loadout_RU_2020_reservists = [
 ///Weapon management////
 ////////////////////////
 //USA
-rifleList_RU_2020_reservists = [		
+rifleList_RU_2020_reservists_desert = [		
 	"rhs_weap_ak74m",
 	"rhs_weap_makarov_pm",
 	"rhs_weap_ak74mr",
@@ -188,7 +190,7 @@ rifleList_RU_2020_reservists = [
 
 
 //Grenade launcher or weapon with grenade launcher option
-grenadeLauncherList_RU_2020_reservists = [		
+grenadeLauncherList_RU_2020_reservists_desert = [		
 	"rhs_weap_ak74m_gp25",
 	"rhs_weap_ak74mr_gp25",
 	"rhs_weap_ak74m_fullplum_gp25_npz",
@@ -196,13 +198,13 @@ grenadeLauncherList_RU_2020_reservists = [
 ];
 
 
-launcherList_RU_2020_reservists = [		
+launcherList_RU_2020_reservists_desert = [		
 	"rhs_weap_rpg26",
 	"rhs_weap_rpg7",
 	"rhs_weap_igla"
 ];	
 
-autorifleList_RU_2020_reservists = [			
+autorifleList_RU_2020_reservists_desert = [			
 	"rhs_weap_pkm",
 	"rhs_weap_pkp",
 	"rhs_weap_rpk74m",
@@ -210,7 +212,7 @@ autorifleList_RU_2020_reservists = [
 
 ];	
 
-marksmanrifleList_RU_2020_reservists = [		
+marksmanrifleList_RU_2020_reservists_desert = [		
 	"rhs_asval",
 	"rhs_weap_svds",
 	"rhs_weap_vss",
@@ -220,7 +222,7 @@ marksmanrifleList_RU_2020_reservists = [
 ];
 
 
-smgList_RU_2020_reservists = [		
+smgList_RU_2020_reservists_desert = [		
 	"rhs_weap_aks74u",
 	"rhs_weap_ak74m_folded",
 	"rhs_weap_pp2000_folded",
@@ -228,7 +230,7 @@ smgList_RU_2020_reservists = [
 ];
 
 //////////////////////////
-attachmentShortList_RU_2020_reservists	= [
+attachmentShortList_RU_2020_reservists_desert	= [
 	"rhs_acc_dtk",
 	"rhs_acc_pkas",
 	"rhs_acc_pgo7v3",
@@ -245,7 +247,7 @@ attachmentShortList_RU_2020_reservists	= [
 	"rhs_acc_pgo7v3_ak"
 ];
 
-attachmentLongList_RU_2020_reservists	= [
+attachmentLongList_RU_2020_reservists_desert	= [
 	"rhs_acc_pso1m21",
 	"rhs_acc_pso1m2",
 	"rhs_weap_svds_npz",
@@ -254,7 +256,7 @@ attachmentLongList_RU_2020_reservists	= [
 
 
 ////////////////////////
-itemList_RU_2020_reservists = [
+itemList_RU_2020_reservists_desert = [
 	"NVGoggles",
 	"Laserdesignator",
 	"B_UavTerminal",
@@ -271,16 +273,16 @@ itemList_RU_2020_reservists = [
 	//"rhs_radio_R169P1"
 ];
 
-itemEngineerList_RU_2020_reservists = [
+itemEngineerList_RU_2020_reservists_desert = [
 
 ];
 	
-itemMedicList_RU_2020_reservists = [
+itemMedicList_RU_2020_reservists_desert = [
 
 ];
 
 //backpack avalaible for all unit
-backPackList_RU_2020_reservists = [
+backPackList_RU_2020_reservists_desert = [
 	"rhs_rk_sht_30_emr",
 	"rhs_tortila_olive",
 	"rhs_assault_umbts",
@@ -288,7 +290,7 @@ backPackList_RU_2020_reservists = [
 ];
 
 //Uniform, vest, headgear, avalaible for all unit
-uniformList_RU_2020_reservists = [
+uniformList_RU_2020_reservists_desert = [
 	"rhs_uniform_vkpo_gloves",
 	"rhs_6b47_emr_1",
 	"rhs_facewear_6m2_1",
@@ -305,10 +307,10 @@ uniformList_RU_2020_reservists = [
 ];
 
 
-factionDefaultRadios_RU_2020_reservists = [
+factionDefaultRadios_RU_2020_reservists_desert = [
 	"tfar_fadak"
 ];
 
 //Magazine avalaible for all unit
-magazineList_RU_2020_reservists = 	[
+magazineList_RU_2020_reservists_desert = 	[
 ];
