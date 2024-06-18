@@ -92,6 +92,15 @@ class vehicleSpawner
 			w = 8 * GUI_GRID_W;
 			h = 1 * GUI_GRID_H;
 		};
+		class btnPreview: RscButtonMenuOK
+		{
+			idc = 50003;
+			text = "PREVIEW";
+			x = -5 * GUI_GRID_W + 0.5;
+			y = 7.5 * GUI_GRID_H + 0.5;
+			w = 8 * GUI_GRID_W;
+			h = 1 * GUI_GRID_H;
+		};
 		class btnOK: RscButtonMenuOK
 		{
 			idc = 50001;

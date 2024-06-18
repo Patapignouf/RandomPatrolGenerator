@@ -6,6 +6,7 @@ params ["_mode", "_this"];
 
 private _mainDisplay = (findDisplay 50000);
 private _buttonOK = _mainDisplay displayCtrl 50001;
+private _buttonPreview = _mainDisplay displayCtrl 50003;
 private _vehicleShopTitle = _mainDisplay displayCtrl 49999;
 
 _vehicleShopTitle ctrlSetText (format ["Vehicle shop | Credits %1", missionNamespace getVariable "bluforVehicleAvalaibleSpawn"]);
@@ -25,7 +26,7 @@ switch (_mode) do
 			_vehicleName = getText (configFile >> "cfgVehicles" >> _x >> "displayName");
 			_vehiclePicture = getText (configFile >> "cfgVehicles" >> _x >> "picture");
 			_ind = _lnbEntries lnbAddRow ["", _vehicleName, "Light vehicle", str _price];
-    		_lnbEntries lnbSetPicture [[_ind, 0], _vehiclePicture];
+			_lnbEntries lnbSetPicture [[_ind, 0], _vehiclePicture];
 			_lnbEntries lnbSetData [[_ind, 0], _x];
 			_lnbEntries lnbSetData [[_ind, 1], _vehicleName];
 			_lnbEntries lnbSetData [[_ind, 2], str _price];
@@ -246,3 +247,54 @@ _buttonOK ctrlAddEventHandler[ "ButtonClick",
 		};
 	}
 ];
+
+
+_buttonPreview ctrlAddEventHandler[ "ButtonClick", 
+	{ 
+		params ["_ctrl"];
+		_display = ctrlParent _ctrl;
+
+		//Spawn vehicle
+		_lnbEntries = _display displayCtrl 50002;
+		_vehicleClassToSpawn = (_lnbEntries lnbData [lnbCurSelRow _lnbEntries, 0]);
+		_vehicleNameToSpawn = (_lnbEntries lnbData [lnbCurSelRow _lnbEntries, 1]);
+
+		_vehiclePreview = getText (configFile >> "cfgVehicles" >> _vehicleClassToSpawn >> "editorPreview");
+		_parsedText = parseText format ["<img image='%1' size='12'/>",  _vehiclePreview];
+		[_parsedText, "PLAIN DOWN", -1, true, true] remoteExec ["titleText", player, true];
+
+		//Create display too choose reporter player
+		_display = (findDisplay 46) createDisplay "RscDisplayEmpty";
+
+		_backGround = _display ctrlCreate[ "ctrlStaticPicture", -1 ];
+		_backGround ctrlSetPosition[ 0, 0, 0.75, 0.75 ];
+		_backGround ctrlSetText "#(argb,8,8,3)color(0.35,0.35,0.35,1)";
+		_backGround ctrlCommit 0;
+
+		_RcsTitleDialog = _display ctrlCreate ["RscText", -1];
+		_RcsTitleDialog ctrlSetText (format ["Preview for %1", _vehicleNameToSpawn]);
+		_RcsTitleDialog ctrlSetPosition[ 0, 0, 0.75, 0.04 ];
+		_RcsTitleDialog ctrlSetBackgroundColor [0,0,0,1];
+		_RcsTitleDialog ctrlSetTextColor [1, 1, 1, 1];
+		_RcsTitleDialog ctrlCommit 0;
+
+		_RcsBodyLeftDialog = _display ctrlCreate ["RscStructuredText", -1];
+		_RcsBodyLeftDialog ctrlSetStructuredText  (_parsedText);
+		_RcsBodyLeftDialog ctrlSetPosition [ 0.05, 0.1, 0.75, 0.75 ];
+		//_RcsBodyLeftDialog ctrlSetBackgroundColor [0,0,0,1];
+		_RcsBodyLeftDialog ctrlSetTextColor [1, 1, 1, 1];
+		_RcsBodyLeftDialog ctrlCommit 0;
+
+		
+		_ButtonRight = _display ctrlCreate ["RscButton", 7804];
+		_ButtonRight ctrlSetPosition [(0.55 * safezoneW + safezoneX),(0.6 * safezoneH + safezoneY),(0.05 * safezoneW),(0.025* safezoneH)];
+		_ButtonRight ctrlSetBackgroundColor [0,0,0,0.7];
+		_ButtonRight ctrlCommit 0;
+		ctrlSetFocus _ButtonRight;
+		_ButtonRight ctrlSetText "Close";
+		_ButtonRight ctrlAddEventHandler ["ButtonClick",{
+			params ["_ctrl"];
+			_display = ctrlParent _ctrl;
+			_display closeDisplay 1;
+		}];	
+	}];
