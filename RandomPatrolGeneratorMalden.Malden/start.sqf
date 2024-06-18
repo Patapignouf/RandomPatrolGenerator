@@ -603,7 +603,7 @@ if (count baseEnemyMortarGroup > 0) then
 };
 
 
-for [{_i = 0}, {_i <= missionLength}, {_i = _i + 1}] do //Peut être optimisé
+for [{_i = 0}, {_i < missionLength}, {_i = _i + 1}] do //Peut être optimisé
 {
 	[] execVM 'enemyManagement\generationEngine\generateOpforFOB.sqf';
 };
