@@ -77,6 +77,12 @@ if ((count _revealedObjectives != count _tempMissionObjectives)) then
 							[_side, _objectiveToReveal select 2, [_currentObjectiveDescription, "VIP", "cookiemarker2"], objNull, 1, 3, true] call BIS_fnc_taskCreate;
 							[_objectiveToReveal select 2,"talk1"] call BIS_fnc_taskSetType;
 						};
+					case "hostage":
+						{
+							_currentObjectiveDescription = format ["I have a spotted the hostage captured near %2. He looks like %1.", getText (configFile >> "cfgVehicles" >> typeOf _thisObject >> "displayName"),_objectiveLocationName, _initCityLocationName];
+							[_side, _objectiveToReveal select 2, [_currentObjectiveDescription, "Hostage", "cookiemarker2"], objNull, 1, 3, true] call BIS_fnc_taskCreate;
+							[_objectiveToReveal select 2,"talk1"] call BIS_fnc_taskSetType;
+						};
 					case "steal":
 						{
 							_currentObjectiveDescription = format ["Some people stole our vehicle %1. I think it's located in %2. Can you bring it to %3...", getText (configFile >> "cfgVehicles" >> typeOf _thisObject >> "displayName"),_objectiveLocationName, _initCityLocationName];

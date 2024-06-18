@@ -1,4 +1,5 @@
 #include "..\..\objectGenerator\vehicleManagement.sqf"
+#include "..\..\enemyManagement\generationEngine\hostileGroupManager.sqf"
 
 generateObjective =
 {
@@ -23,29 +24,50 @@ generateObjective =
 	_possibleObjectivePosition = _possibleObjectivePosition - [_selectedObjectivePosition];
 
 	diag_log format ["Objective generation started : %1 on position %2", currentObjType, _selectedObjectivePosition];
-
-	//Generate mission objectives
-	_objectiveCreated = [currentObjType, _selectedObjectivePosition] call generateObjectiveObject; 
 	
 	//Generate mission environement
-	if (currentObjType != "defendArea") then 
+	switch (currentObjType) do 
 	{
-		if (random 100 < 80) then 
+		case "defendArea":
 		{
-			_handlePOIGeneration = [EnemyWaveLevel_1, baseEnemyVehicleGroup, baseEnemyLightArmoredVehicleGroup, baseEnemyHeavyArmoredVehicleGroup, civilian_group, _selectedObjectivePosition, _objectiveCreated] execVM 'enemyManagement\generationEngine\generatePOI.sqf'; 
-			waitUntil {isNull _handlePOIGeneration};
-		} else 
-		{
-			_handlePOIGeneration = [EnemyWaveLevel_1, baseEnemyVehicleGroup, baseEnemyLightArmoredVehicleGroup, baseEnemyHeavyArmoredVehicleGroup, civilian_group, _selectedObjectivePosition, _objectiveCreated] execVM 'enemyManagement\generationEngine\generateHostileCivPOI.sqf'; 
-			waitUntil {isNull _handlePOIGeneration};
-		};
+			//Populate the area with only civilian randomly
+			if (random 100 > 50) then 
+			{
+				[civilian_group, ((_selectedObjectivePosition) findEmptyPosition [5, 60]), civilian, "Civilian"] call doGenerateEnemyGroup;
+			};
 
-	} else 
-	{
-		//Populate the area with only civilian randomly
-		if (random 100 > 50) then 
+			//Generate mission objectives
+			diag_log format ["_selectedObjectivePosition %1", _selectedObjectivePosition];
+			_objectiveCreated = [currentObjType, _selectedObjectivePosition] call generateObjectiveObject; 
+
+		};
+		case "hostage":
 		{
-			[civilian_group, ((initCityLocation) findEmptyPosition [5, 60]), civilian, "Civilian"] call doGenerateEnemyGroup;
+			//Populate biggest buildings with opfor
+			_tempSelectedObjectivePosition = [_selectedObjectivePosition, 200, EnemyWaveLevel_1] call generateOpforInBiggestBuildings;
+			_selectedObjectivePosition = _tempSelectedObjectivePosition;
+
+			//Generate mission objectives
+			diag_log format ["_selectedObjectivePosition %1", _selectedObjectivePosition];
+			_objectiveCreated = [currentObjType, _selectedObjectivePosition] call generateObjectiveObject; 
+		};
+		default
+		{
+			//Generate mission objectives
+			diag_log format ["_selectedObjectivePosition %1", _selectedObjectivePosition];
+			_objectiveCreated = [currentObjType, _selectedObjectivePosition] call generateObjectiveObject; 
+
+			if (random 100 < 80) then 
+			{
+				//80% normal objective with opfor forces
+				_handlePOIGeneration = [EnemyWaveLevel_1, baseEnemyVehicleGroup, baseEnemyLightArmoredVehicleGroup, baseEnemyHeavyArmoredVehicleGroup, civilian_group, _selectedObjectivePosition, _objectiveCreated] execVM 'enemyManagement\generationEngine\generatePOI.sqf'; 
+				waitUntil {isNull _handlePOIGeneration};
+			} else 
+			{
+				//20% objective with hostile almost only civilian
+				_handlePOIGeneration = [EnemyWaveLevel_1, baseEnemyVehicleGroup, baseEnemyLightArmoredVehicleGroup, baseEnemyHeavyArmoredVehicleGroup, civilian_group, _selectedObjectivePosition, _objectiveCreated] execVM 'enemyManagement\generationEngine\generateHostileCivPOI.sqf'; 
+				waitUntil {isNull _handlePOIGeneration};
+			};
 		};
 	};
 
@@ -59,20 +81,26 @@ generateObjectiveObject =
 	params ["_thisObjectiveType","_thisObjectivePosition"];
 
 	//Define specific objective data
-	_thisObjective = []; 
+	_thisObjective = [];
+	_thistempObjectivePosition = [];
 
 	//Try to find position with building if avalaible
-	_allBuildings = nearestTerrainObjects [_thisObjectivePosition, ["house"], 100, false, true];
-	_allPositions = [];
-	_allBuildings apply {_allPositions append (_x buildingPos -1)};
-	_thistempObjectivePosition = selectRandom _allPositions;
+	if (_thisObjectiveType != "hostage") then 
+	{
+		_allBuildings = nearestTerrainObjects [_thisObjectivePosition, ["house"], 100, false, true];
+		_allPositions = [];
+		_allBuildings apply {_allPositions append (_x buildingPos -1)};
+		_thistempObjectivePosition = selectRandom _allPositions;
+	};
+
 	
 	//Test if there's an avalaible position
-	if (!isNil "_thistempObjectivePosition") then 
+	if (count _thistempObjectivePosition != 0) then 
 	{
 		_thisObjectivePosition = _thistempObjectivePosition;
 	};
 
+	//Place IED
 	_possibleIEDLocation = [_thisObjectivePosition, 1000, round (random 4)] call findPositionsNearRoads;
 	if (count _possibleIEDLocation >0) then 
 	{
@@ -82,6 +110,7 @@ generateObjectiveObject =
 		} foreach _possibleIEDLocation;
 	};
 
+	//Place roadblock
 	_possibleRoadBlockLocation = [_thisObjectivePosition, 1500, round (random 2)] call findPositionsNearRoads;
 	if (count _possibleRoadBlockLocation >0) then 
 	{
@@ -217,6 +246,121 @@ generateObjectiveObject =
 					//Remove all actions
 					[_unit] remoteExec ["removeAllEventHandlers", 0, true];
 					[_unit] remoteExec ["removeAllActions", 0, true];
+
+					//Punish player
+					if (isPlayer _instigator) then 
+					{
+						//Add penalty
+						[[-50,5], 'engine\rankManagement\rankPenalty.sqf'] remoteExec ['BIS_fnc_execVM', _instigator];
+					};
+
+					//Manage objective
+					_missionFailedObjectives = missionNamespace getVariable ["missionFailedObjectives", []];
+					_missionFailedObjectives = _missionFailedObjectives + [_thisTaskID]; //needs to be improved
+					missionNamespace setVariable ["missionFailedObjectives", _missionFailedObjectives, true];
+					//Manage task system
+					if ("RealismMode" call BIS_fnc_getParamValue == 1) then 
+					{
+						[_thisTaskID, "FAILED"] call BIS_fnc_taskSetState;
+					};
+				}];
+			};
+		case "hostage":
+			{
+				//Generate objective object
+				_objectiveObject =  leader ([_currentRandomPos, civilian, [selectRandom avalaibleVIP],[],[],[],[],[], random 360] call BIS_fnc_spawnGroup);
+				_objectiveObject setVariable ["isObjectiveObject", true, true];
+				_thisObjective = [_objectiveObject, _thisObjectiveType] call generateObjectiveTracker;
+
+				diag_log format ["VIP task setup ! : %1", _objectiveObject];
+				_objectiveObject setPos _thisObjectivePosition;
+
+				//Use ACE function to set hancuffed
+				_objectiveObject setcaptive true;                              // keep tangos from targeting hostage until breach trigger fires
+				[_objectiveObject, "acts_aidlpsitmstpssurwnondnon_loop"] remoteExec ["switchMove", 0, true];
+				_objectiveObject setBehaviour "CARELESS";   
+				_objectiveObject disableAI "PATH";
+
+				//Objective failed
+				_objectiveObject setVariable ["thisTask", _thisObjective select 2, true];
+				
+				//Manage objective completion
+				[
+					_objectiveObject, 
+					"Free the hostage", 
+					"\a3\ui_f\data\IGUI\Cfg\holdactions\holdAction_unbind_ca.paa", 
+					"\a3\ui_f\data\IGUI\Cfg\holdactions\holdAction_unbind_ca.paa", 
+					"_this distance _target < 3",						// Condition for the action to be shown
+					"_caller distance _target < 3",						// Condition for the action to progress
+					{
+						// Action start code
+					}, 
+					{
+						// Action on going code
+					},  
+					{
+						// Action successfull code
+						params ["_object","_caller","_ID","_objectParams","_progress","_maxProgress"];
+						_thisObjective = _objectParams select 0;
+
+						//Manage Completed Objective
+						_completedObjectives = missionNamespace getVariable ["completedObjectives",[]];
+						_completedObjectives pushBack _thisObjective;
+						missionNamespace setVariable ["completedObjectives",_completedObjectives,true];	
+						//Manage UncompletedObjective
+						_missionUncompletedObjectives = missionNamespace getVariable ["missionUncompletedObjectives",[]];
+						_missionUncompletedObjectives = _missionUncompletedObjectives - [_thisObjective];
+						missionNamespace setVariable ["missionUncompletedObjectives",_missionUncompletedObjectives,true];
+
+						//Free the hostage
+						_object setcaptive false;                              // keep tangos from targeting hostage until breach trigger fires
+						[_object, ""] remoteExec ["switchMove", 0, true];
+						_object setBehaviour "CARELESS";   
+						_object enableAI "PATH";
+
+						_textToSpeech = format ["Thank you"];
+						[[format ["<t align = 'center' shadow = '2' color='#0046ff' size='1.5' font='PuristaMedium' >Hostage</t><br /><t color='#ffffff' size='1.5' font='PuristaMedium' shadow = '2' >%1</t>", _textToSpeech], "PLAIN DOWN", -1, true, true]] remoteExec ["titleText", side _caller, true];
+
+						//Manage player's feedback
+						if ("RealismMode" call BIS_fnc_getParamValue == 1) then 
+						{
+							[] call doIncrementVehicleSpawnCounter;	
+							[_thisObjective] execVM 'engine\objectiveManagement\completeObjective.sqf'; 
+							[[50, "RPG_ranking_objective_complete"], "engine\rankManagement\rankUpdater.sqf"] remoteExec ['BIS_fnc_execVM', 0];
+						};
+						//Manage respawn and remove actions from NPC 
+						removeAllActions _object;
+						[_object] remoteExec ["removeAllActions", 0, true];
+						if (["Respawn",1] call BIS_fnc_getParamValue == 1) then 
+						{
+							[[], "engine\respawnManagement\respawnManager.sqf"] remoteExec ['BIS_fnc_execVM', 0];
+						};
+					}, 
+					{
+						// Action failed code
+					}, 
+					[_thisObjective],  
+					10,
+					10, 
+					true, 
+					false
+				] remoteExec ["BIS_fnc_holdActionAdd", 0, true];
+				
+				_objectiveObject addEventHandler ["Killed", {
+					params ["_unit", "_killer", "_instigator", "_useEffects"];
+					//get task associated to the object
+					_thisTaskID = _unit getVariable "thisTask";
+
+					//Remove all actions
+					[_unit] remoteExec ["removeAllEventHandlers", 0, true];
+					[_unit] remoteExec ["removeAllActions", 0, true];
+
+					//Punish player
+					if (isPlayer _instigator) then 
+					{
+						//Add penalty
+						[[-50,5], 'engine\rankManagement\rankPenalty.sqf'] remoteExec ['BIS_fnc_execVM', _instigator];
+					};
 
 					//Manage objective
 					_missionFailedObjectives = missionNamespace getVariable ["missionFailedObjectives", []];
@@ -465,7 +609,7 @@ generateObjectiveObject =
 					}, 
 					[_thisObjective],  
 					30,
-					0, 
+					10, 
 					true, 
 					false
 				] remoteExec ["BIS_fnc_holdActionAdd", 0, true];
@@ -554,8 +698,12 @@ generateObjectiveObject =
 					[_unit] remoteExec ["removeAllEventHandlers", 0, true];
 					[_unit] remoteExec ["removeAllActions", 0, true];
 
-					//Add penalty
-					[[-50,5], 'engine\rankManagement\rankPenalty.sqf'] remoteExec ['BIS_fnc_execVM', _instigator];
+					//Punish player
+					if (isPlayer _instigator) then 
+					{
+						//Add penalty
+						[[-50,5], 'engine\rankManagement\rankPenalty.sqf'] remoteExec ['BIS_fnc_execVM', _instigator];
+					};
 
 					//Manage task system
 					if ("RealismMode" call BIS_fnc_getParamValue == 1) then 

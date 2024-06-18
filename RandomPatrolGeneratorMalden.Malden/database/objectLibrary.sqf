@@ -125,7 +125,8 @@ avalaibleTypeOfObjectives = [
 	["informant", "Informant", "Support", true],
 	["collectIntel", "Collect Intel", "Support", true],
 	["steal", "Steal vehicle", "Support", true],
-	["captureFlag", "Capture city", "Attack", true]
+	["captureFlag", "Capture city", "Attack", true],
+	["hostage", "Hostage rescue", "Attack", true]
 ];
 
 //If ACE is enable on the server, specific objectives are avalaible
@@ -134,12 +135,6 @@ if (isClass (configFile >> "CfgPatches" >> "ace_medical")) then
 	avalaibleTypeOfObjectives pushBack ["vip", "VIP", "Support", true];
 	avalaibleTypeOfObjectives pushBack ["supply", "Supply box", "Support", true];
 };
-
-
-// avalaibleTypeOfObjectives = [
-// 	// [Technical Objective name, Display name, type of objective]
-// 	["hvt", "HVT", "Attack", true]
-// ];
 
 //FOB description from DRO
 //Waiting for a PANY FOB

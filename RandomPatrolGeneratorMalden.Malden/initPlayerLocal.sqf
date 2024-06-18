@@ -399,7 +399,7 @@ if (side player == blufor) then
 	//Add heal action to VA2
 	_actionIdHeal = VA2 addAction 
 	[
-		"<t color='#00bc1a'>Heal</t>", 
+		"<img size='2' image='\a3\ui_f\data\IGUI\Cfg\holdactions\holdAction_reviveMedic_ca.paa'/><t color='#00bc1a'>Heal</t>", 
 		{
 			//Heal player if mission's setup wasn't safe 
 			if (isClass (configFile >> "CfgPatches" >> "ace_medical")) then 
@@ -414,7 +414,28 @@ if (side player == blufor) then
 			["<t color='#6AA84F' size='.8'>You have been healed</t>",0,0,2,0,0,789] spawn BIS_fnc_dynamicText;
 		},
 		nil,		// arguments
-		2,		// priority
+		3,		// priority
+		true,		// showWindow
+		false,		// hideOnUse
+		"",			// shortcut
+		"true",		// condition
+		50,			// radius
+		false,		// unconscious
+		"",			// selection
+		""			// memoryPoint
+	];
+
+	//Add rank action to VA2
+	_actionIdRankManager = VA2 addAction 
+	[
+		"<img size='2' image='\a3\ui_f\data\IGUI\Cfg\holdactions\holdAction_thumbsup_ca.paa'/><t color='#0433b1'>Show rank and experience</t>", 
+		{
+			//Open player rank manager
+			[[], 'GUI\rankGUI\rankGUI.sqf'] remoteExec ['BIS_fnc_execVM', player];
+
+		},
+		nil,		// arguments
+		4,		// priority
 		true,		// showWindow
 		false,		// hideOnUse
 		"",			// shortcut
@@ -429,7 +450,7 @@ if (side player == blufor) then
 	//Add heal action to VA2
 	_actionShowRoles = VA2 addAction 
 	[
-		"<t color='#5400ac'>Show roles</t>", 
+		"<img size='2' image='\a3\missions_f_oldman\data\img\holdactions\holdAction_follow_start_ca.paa'/><t color='#5400ac'>Show roles</t>", 
 		{
 			_playerRoles = "";
 			{
@@ -438,7 +459,7 @@ if (side player == blufor) then
 			hint _playerRoles;
 		},
 		nil,		// arguments
-		2,		// priority
+		3,		// priority
 		true,		// showWindow
 		false,		// hideOnUse
 		"",			// shortcut

@@ -69,6 +69,10 @@ params ["_currentGroup", "_thisObjective"];
 										{
 											_currentObjectiveDescription = format ["The informant %1 is at %2", getText (configFile >> "cfgVehicles" >> typeOf _thisObject >> "displayName"), mapGridPosition (getPos _thisObject)];
 										};
+									case "hostage":
+										{
+											_currentObjectiveDescription = format ["The hostage %1 is at %2", getText (configFile >> "cfgVehicles" >> typeOf _thisObject >> "displayName"), mapGridPosition (getPos _thisObject)];
+										};
 									case "clearArea":
 										{
 											_opforCount = count ((allUnits select {alive _x && side _x == opfor} ) inAreaArray _thisObject);

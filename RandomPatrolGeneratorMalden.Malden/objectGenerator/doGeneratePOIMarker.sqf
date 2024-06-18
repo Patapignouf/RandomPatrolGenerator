@@ -39,6 +39,11 @@ if (!isDedicated) then
 					_markerstr setMarkerColorLocal "ColorBlue";
 					_markerstr setMarkerTextLocal format ["Ramenez en ville le VIP %1", getText (configFile >> "cfgVehicles" >> typeOf _thisObject >> "displayName")];
 					};
+				case "hostage":
+					{
+					_markerstr setMarkerColorLocal "ColorBlue";
+					_markerstr setMarkerTextLocal format ["Sauver l'hotage %1", getText (configFile >> "cfgVehicles" >> typeOf _thisObject >> "displayName")];
+					};
 				case "steal":
 					{
 					_markerstr setMarkerColorLocal "ColorYellow";
