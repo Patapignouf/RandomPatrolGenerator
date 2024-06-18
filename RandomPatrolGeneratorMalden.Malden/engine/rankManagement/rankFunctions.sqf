@@ -100,6 +100,16 @@ addPenalty = {
 displayCurrentRank = {
 	params ["_unit"];
 
+	//Text to display 
+	_textToDisplay = [_unit] call getDisplayableCurrentRank;
+	
+	//Display current rank 
+	[[parseText _textToDisplay, "intel"], 'engine\hintManagement\addCustomHint.sqf'] remoteExec ['BIS_fnc_execVM', _unit]; 
+};
+
+getDisplayableCurrentRank = {
+	params ["_unit"];
+
 	//Unit current experience
 	_unitExperience = profileNamespace getVariable ["RPG_ranking", 0];
 	_unitFloorRank = (rankList select {_x#1 <= _unitExperience}) #-1;
@@ -116,8 +126,69 @@ displayCurrentRank = {
 
 	//Get rank informations
 	_rankTexture = [_unit, "texture"] call BIS_fnc_rankParams;
-	_rankName = [_unit, "displayName"] call BIS_fnc_rankParams;
-	
-	//Display current rank 
-	[[parseText format ["<img image='%1' size='3'/><br/><br/><t size='1.5'>Your current rank is %2</t><br/><br/><t size='1.2'>Experience to the next rank  %3/%4</t>", _rankTexture, _rankName, _unitExperience, _unitExperienceNextFloor], "intel"], 'engine\hintManagement\addCustomHint.sqf'] remoteExec ['BIS_fnc_execVM', _unit]; 
+	_rankName = [_unit] call getPlayerRankCompleteName;
+	format ["<img image='%1' size='3'/><br/><br/><t size='1.5'>Your current rank is %2</t><br/><br/><t size='1.2'>Experience to the next rank  %3/%4</t>", _rankTexture, _rankName, _unitExperience, _unitExperienceNextFloor];
+};
+
+getDisplayableCurrentXPPerCat = {
+	params ["_unit"];
+
+	_structuredStringXP = "Experience for the current OP<br/>";
+
+	//Add progression 
+	_structuredStringXP = format ["%1<br/>Progression : %2",_structuredStringXP, (_unit getVariable ["currentXP",0])-(_unit getVariable ["startingXP",0])];
+
+	//Unit current experience
+	_basicXPToGather = [["RPG_ranking_infantry_kill","infantry kill"],
+					["RPG_ranking_vehicle_kill","vehicle kill"],
+					["deathNumber","death"],
+					["RPG_ranking_suppress","suppress"],
+					["RPG_ranking_heal","heal"],
+					["RPG_ranking_repair","repair"],
+					["RPG_ied_defuse","IED defuse"],
+					["RPG_ranking_intel_collect","intel collect"],
+					["RPG_ranking_objective_complete","objective complete"]
+					];
+
+	{
+		_structuredStringXP = format ["%1<br/>%2 : %3",_structuredStringXP, _x#1, _unit getVariable [_x#0,0]];
+	}	foreach _basicXPToGather;
+
+	_structuredStringXP
+};
+
+getPlayerRankCompleteName = {
+	params ["_player"];
+	_currentPlayerCompleteRankName = ([_player] call getPlayerRank);
+	_currentPrestige = _player getVariable ["RPG_prestige", 0];
+	if (_currentPrestige != 0) then 
+	{
+		_currentPlayerCompleteRankName = format ["%1 P%2", _currentPlayerCompleteRankName, _currentPrestige];
+	};
+	_currentPlayerCompleteRankName
+};
+
+getPlayerRank = {
+	params ["_player"];
+	[_player, "displayName"] call BIS_fnc_rankParams
+};
+
+
+increasePrestige = {
+	//Test if player has enough XP
+	if (([player] call getPlayerRank) == "Colonel") then 
+	{
+		//Reset experience
+		[0] call saveRank;
+		[player, true] call adjustRank;
+
+		//Increase prestige
+		_currentPrestige = profileNamespace getVariable ["RPG_prestige", 0];
+		profileNamespace setVariable ["RPG_prestige", _currentPrestige+1];
+		player setVariable ["RPG_prestige", _currentPrestige+1, true];
+
+		//Display message to everyone 
+		[[parseText format ["<img image='\a3\ui_f\data\IGUI\Cfg\holdactions\holdAction_requestleadership_ca.paa' size='3'/><br/><br/><t size='1.2'>You have been promoted to prestige %1</t>", _currentPrestige+1], "intel"], 'engine\hintManagement\addCustomHint.sqf'] remoteExec ['BIS_fnc_execVM', player]; 
+		[[parseText format ["<img image='\a3\ui_f\data\IGUI\Cfg\holdactions\holdAction_requestleadership_ca.paa' size='3'/><br/><br/><t size='1.2'>%2 has been promoted to prestige %1</t>", _currentPrestige+1, name player], "intel"], 'engine\hintManagement\addCustomHint.sqf'] remoteExec ['BIS_fnc_execVM', -clientOwner]; 
+	};
 };

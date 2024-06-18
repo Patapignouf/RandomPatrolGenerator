@@ -130,7 +130,7 @@ _buttonClearItems ctrlAddEventHandler[ "ButtonClick",
 //show rank
 _buttonRank ctrlAddEventHandler[ "ButtonClick", 
 	{ 
-		player call displayCurrentRank;
+		[[], 'GUI\rankGUI\rankGUI.sqf'] remoteExec ['BIS_fnc_execVM', player];
 	}];
 
 //Force 3D Optics

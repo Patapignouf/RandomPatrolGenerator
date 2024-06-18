@@ -10,7 +10,8 @@ if (_isFirstStart) then
 	[_unit] call displayCurrentRank;
 	_unit setVariable ["startingXP",_unitRanking, true];
 	_unit setVariable ["currentXP",_unitRanking, true];
-
+	_currentPrestige = profileNamespace getVariable ["RPG_prestige", 0];
+	_unit setVariable ["RPG_prestige", _currentPrestige, true];
 
 	//Detect if there is a new player and show discord
 	if (_unitRanking == 0) then 

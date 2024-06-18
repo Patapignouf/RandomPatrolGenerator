@@ -1,5 +1,7 @@
 params ['_endingName'];
 
+#include "..\..\engine\rankManagement\rankFunctions.sqf"
+
 //Test if there is already a mission ending running 
 _isEndMissionRunning = missionNamespace getVariable ["isEndMissionRunning", false];
 
@@ -30,7 +32,7 @@ if (!_isEndMissionRunning) then
 	//Get all players info for thanks credit
 	{
 		_playerName = name _x;
-		playersRankName = format ["%1<br />%2", playersRankName, format ["%2 %1", _playerName, rank _x]];
+		playersRankName = format ["%1<br />%2", playersRankName, format ["%2 %1", _playerName, [_x] call getPlayerRankCompleteName]];
 	} foreach ([allPlayers, [], {_x getVariable ["currentXP", 0]}, "DESCEND"] call BIS_fnc_sortBy);
 
 	//Thanks player
@@ -44,7 +46,7 @@ if (!_isEndMissionRunning) then
 		_currentPlayerScore = [];
 		_currentPlayer = _x;
 		_playerName = name _currentPlayer;
-		_playerRank = rank _currentPlayer;
+		_playerRank = [_x] call getPlayerRankCompleteName;
 		_startingXP = _currentPlayer getVariable ["startingXP", 0];
 		_currentXP = _currentPlayer getVariable ["currentXP", 0];
 		_playerProgressXP = _currentXP - _startingXP;
