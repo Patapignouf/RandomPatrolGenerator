@@ -179,20 +179,23 @@ rifleList_USA_2020 = [
 	"rhs_weap_m4a1_mstock",
 	"rhs_weap_m4a1_blockII_KAC_bk",
 	"rhs_weap_m4a1_blockII_grip_KAC_bk",
+	"rhs_weap_m4a1_blockII_grip",
 	"rhs_weap_m4a1_blockII",
 	"rhs_weap_m4a1_blockII_bk",
 	"rhs_weap_m4a1_carryhandle",
 	"rhs_weap_m4_grip3",
 
-
-	//misc
-	"rhs_weap_m14ebrri",
+	//M16A4
 	"rhs_weap_m16a4",
 	"rhs_weap_m16a4_imod",
 	"rhs_weap_m16a4_carryhandle",
 	"rhs_weap_m16a4_grip2",
 	"rhs_weap_m16a4_imod_grip2",
+	"rhs_weap_m16a4_imod_grip3",
 	"rhs_weap_m16a4_carryhandle_grip2",
+
+	//M14
+	"rhs_weap_m14ebrri",
 	
 	//Pistols
 	"rhsusf_weap_glock17g4",
@@ -275,6 +278,8 @@ attachmentShortList_USA_2020	= [
 	"rhsusf_acc_kac_grip",
 	"rhsusf_acc_T1_low",
 	"rhsusf_acc_T1_high",
+	"rhsusf_acc_anpeq15A",
+	"rhsusf_acc_M952V",
 
 	//Launcher optics
 	"rhs_weap_optic_smaw",
@@ -354,7 +359,16 @@ uniformList_USA_2020 = [
 	"rhsusf_plateframe_marksman",
 	"rhsusf_plateframe_medic",
 	"rhsusf_plateframe_rifleman",
-	"rhsusf_plateframe_teamleader"
+	"rhsusf_plateframe_teamleader",
+
+	//Shemag 
+	"rhsusf_shemagh_gogg_tan",
+	"rhsusf_shemagh2_gogg_tan",
+	"rhsusf_shemagh_gogg_od",
+	"rhsusf_shemagh2_gogg_od",
+	"rhsusf_oakley_goggles_blk",
+	"rhsusf_oakley_goggles_clr",
+	"rhsusf_oakley_goggles_ylw"
 ];
 
 

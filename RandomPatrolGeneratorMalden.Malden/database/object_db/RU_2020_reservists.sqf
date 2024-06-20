@@ -24,7 +24,8 @@ baseEnemyGroup_RU_2020_reservists = [
 
 baseEnemyATGroup_RU_2020_reservists = [
 	"rhs_msv_emr_engineer", 
-	"rhs_msv_emr_medic", 
+	"rhs_msv_emr_medic",
+	"rhs_msv_emr_engineer",
 	"rhs_msv_emr_junior_sergeant", 
 	"rhs_msv_emr_at", 
 	"rhs_msv_emr_aa"
@@ -33,6 +34,7 @@ baseEnemyATGroup_RU_2020_reservists = [
 baseEnemyDemoGroup_RU_2020_reservists = [
 	"rhs_msv_emr_sergeant", 
 	"rhs_msv_emr_engineer", 
+	"rhs_msv_emr_arifleman",
 	"rhs_msv_emr_arifleman", 
 	"rhs_msv_emr_rifleman"
 ];
