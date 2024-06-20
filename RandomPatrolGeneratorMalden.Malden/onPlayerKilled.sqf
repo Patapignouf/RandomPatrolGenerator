@@ -33,3 +33,8 @@ if (isClass (configFile >> "CfgPatches" >> "task_force_radio")) then {
 	[player, true] call TFAR_fnc_forceSpectator;
 	player setVariable ["tf_voiceVolume",1,true];
 };
+
+//Show information about respawn settings
+_title = "You will respawn on one of these conditions : ";
+_textToSpeech = format ["<br /> - Wait %1 seconds <br /> - Wait for a call reinforcement from your allies<br /> - Wait for an objective accomplishment",  _respawnTimer];
+titleText [format ["<t align = 'center' shadow = '2' color='#0046ff' size='1.5' font='PuristaMedium' >System</t><br /><t color='#ffffff' size='1.5' font='PuristaMedium' shadow = '2' >%1<t align = 'center'>%2</t></t>", _title, _textToSpeech], "PLAIN DOWN", -1, true, true];
