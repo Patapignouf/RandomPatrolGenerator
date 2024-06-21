@@ -17,14 +17,14 @@ baseEnemyGroup_USA_2020 = [
 	"rhsusf_army_ocp_arb_rifleman", 
 	"rhsusf_army_ocp_arb_engineer", 
 	"rhsusf_army_ocp_arb_medic", 
-	"rhsusf_army_ocp_arb_maaws", 
+	"rhsusf_army_ocp_arb_rifleman", 
 	"rhsusf_army_ocp_rifleman_arb_m16"
 ];
 
 baseEnemyATGroup_USA_2020 = [
 	"rhsusf_army_ocp_arb_squadleader",
 	"rhsusf_army_ocp_aa", 
-	"rhsusf_army_ocp_arb_riflemanat", 
+	"rhsusf_army_ocp_arb_rifleman", 
 	"rhsusf_army_ocp_arb_riflemanat",
 	"rhsusf_army_ocp_arb_medic", 
 	"rhsusf_army_ocp_arb_maaws"
