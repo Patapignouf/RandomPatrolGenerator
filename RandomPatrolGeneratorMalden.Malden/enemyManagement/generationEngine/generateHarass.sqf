@@ -98,7 +98,7 @@ if (isServer) then
 
 
 			//Attack chopper reinforcement 25%
-			if (missionNamespace getVariable ["enableArmedAicraft", false] && (count count _thisAvailableOpforArmedChopperVehicle != 0 &&  random 100 < 25)) then 
+			if (missionNamespace getVariable ["enableArmedAicraft", false] && (count _thisAvailableOpforArmedChopperVehicle != 0 &&  random 100 < 25)) then 
 			{
 				//Generate enemy attack chopper wave
 				[selectRandom _thisAvailableOpforArmedChopperVehicle, positionToAttack] execVM 'enemyManagement\behaviorEngine\doVehicleAttackOnPosition.sqf'; 
