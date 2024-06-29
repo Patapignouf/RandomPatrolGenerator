@@ -24,6 +24,59 @@ publicvariable "deployableFOBItem";
 //Add action to deploy advanced outpost
 [deployableFOBItem, _deployableFOBMounted] execVM 'objectGenerator\doAddActionForAdvFOB.sqf'; 
 
+//Add airdrop on blufor FOB
+[deployableFOBItem, [
+	"<img size='2' image='\a3\data_f_destroyer\data\UI\IGUI\Cfg\holdactions\holdAction_unloadVehicle_ca.paa'/><t>Air drop the advanced FOB</t>",
+	{
+			params ["_object","_caller","_ID","_viewDistance"];
+
+			//Open map 
+			//Click on map to spawn
+			selectedLoc = [0,0,0];
+			openMap true;
+			uiSleep 1;
+
+			["<t color='#ffffff' size='.8'>Select the FOB crate airdrop position<br /></t>",0,0,2,0,0,789] spawn BIS_fnc_dynamicText;
+			onMapSingleClick "selectedLoc = _pos; onMapSingleClick ''; openMap false; true;";
+			waitUntil{!(visibleMap)};  
+			if (!([selectedLoc, [0,0,0]] call BIS_fnc_areEqual)) then 
+			{
+				//Remove this action
+				[_object, _ID] remoteExec ["removeAction", 0, true];
+
+				//Call air drop 
+				_positionLZ = selectedLoc findEmptyPosition [0, 200,"Land_HelipadCircle_F"];
+
+				_parachute = createVehicle ["B_Parachute_02_F", [(_positionLZ select 0), (_positionLZ select 1), ((_positionLZ select 2)+500)], [], 0, 'FLY'];
+				_object attachTo [_parachute, [0, 0, -1.3]];
+				_object allowdamage false;
+
+				
+				//Wait for care almost hit ground
+				//Fix bug where crate go under the ground
+				waitUntil {((((position _object)#2) < 0.6) || (isNil "_parachute"))};
+				detach _object;
+				_object setVelocity [0,0,-5];
+				sleep 0.3;
+				
+				//Place crate on the ground
+				_object setPos [(position _object)#0, (position _object)#1, 1];
+				_object setVelocity [0,0,0];  
+
+				//Add smoke to crate
+				for [{_i = 0}, {_i < 3}, {_i = _i + 1}] do
+				{
+					_supplyLight = "Chemlight_green" createVehicle (position deployableFOBItem);
+					_supplyLight attachTo [deployableFOBItem, [0,0,0]];
+					_supplySmoke = "SmokeShellGreen" createVehicle (position deployableFOBItem);
+					_supplySmoke attachTo [deployableFOBItem, [0,0,0]];
+					sleep 30;
+				};
+			};
+
+	},_x,1.5,true,true,"","(_target distance _this <5) && (_this getVariable 'role' == 'leader' || _this getVariable 'role' == 'pilot')"]] remoteExec ["addAction", 0, true];
+
+
 BluforAmmoBox = [];
 
 //Place empty box to blufor camp
@@ -260,11 +313,12 @@ if (!isNil "USS_FREEDOM_CARRIER") then
 		};
 	} foreach bluforUnarmedVehicle;
 
-	_baseSpawnShip = [initBlueforLocation#0-40, initBlueforLocation#1+70, initBlueforLocation#2];
+	_baseSpawnShip = [initBlueforLocation#0-100, initBlueforLocation#1+70, 0];
 	{
-		_baseSpawnShip = [_baseSpawnShip#0+30, _baseSpawnShip#1, 0];
+		_baseSpawnShip = [_baseSpawnShip#0+40, _baseSpawnShip#1, 0];
 		_ship = createVehicle [_x,  _baseSpawnShip, [], 0, "NONE"];
 		sleep 1;
+		_ship setPos _baseSpawnShip;
 		_ship setfuel 1;
 		_ship setdamage 0;
 		if (!(alive _ship)) then 
