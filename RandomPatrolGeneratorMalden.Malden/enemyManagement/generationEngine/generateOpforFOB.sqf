@@ -50,7 +50,7 @@ if (!([_OpforFobLocation] call isLocationOnMap)) then
 		_randomAvalaiblePos = selectRandom _OpforFobTurretOpforLocation;
 		if (!isNil "_randomAvalaiblePos") then 
 		{
-			_turret = createVehicle ["B_G_HMG_02_high_F", getPosASL _randomAvalaiblePos, [], 0, "NONE"];
+			_turret = createVehicle ["B_G_HMG_02_high_F", getPosASL _randomAvalaiblePos, [], 0, "CAN_COLLIDE"];
 			_turret setDir (getDir _randomAvalaiblePos);
 			_x moveInAny _turret;
 			_x disableAI "PATH";
