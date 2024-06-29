@@ -108,6 +108,19 @@ switch (_mode) do
 			} foreach bluforFixedWing;
 		};
 
+		//Add ships
+		{
+			_price = 200;
+			_vehicleName = getText (configFile >> "cfgVehicles" >> _x >> "displayName");
+			_vehiclePicture = getText (configFile >> "cfgVehicles" >> _x >> "picture");
+			_ind = _lnbEntries lnbAddRow ["", _vehicleName, "Ship", str _price];
+			_lnbEntries lnbSetPicture [[_ind, 0], _vehiclePicture];
+			_lnbEntries lnbSetData [[_ind, 0], _x];
+			_lnbEntries lnbSetData [[_ind, 1], _vehicleName];
+			_lnbEntries lnbSetData [[_ind, 2], str _price];
+		} foreach bluforBoat;
+
+
 		// for "_i" from 0 to 30 do {
 		// 	_rInd = floor random (count _cfgs);
 		// 	_ind = _lnbEntries lnbAddRow [_vehicleName,_cfgNames#_rInd, _names#_rInd, str _rInd];
@@ -218,21 +231,49 @@ _buttonOK ctrlAddEventHandler[ "ButtonClick",
 						};	
 				} else 
 				{
-					//Else (other type of vehicle) do normal spawn around FOB
-					[_vehicleClassToSpawn, _vehicleIsUAV] spawn {
-						params ["_vehicleClassToSpawn", "_vehicleIsUAV"];
+					if (_vehicleClassToSpawn isKindOf "Ship") then 
+					{
+						//Spawn ship
+						//Open map and spawn plane
+						[_vehicleClassToSpawn, _vehiclePriceToSpawn, _vehicleNameToSpawn, _bluforVehicleAvalaibleSpawnCounter] spawn {
+							params ["_vehicleClassToSpawn", "_vehiclePriceToSpawn", "_vehicleNameToSpawn", "_bluforVehicleAvalaibleSpawnCounter"];
 
-						//Spawn the vehicle around the player or on blufor initial position if called from server
-						if (hasInterface) then 
-						{
-							[getPos player, [[_vehicleClassToSpawn, _vehicleIsUAV]], 30, 100] call doGenerateVehicleForFOB;	
-						} else 
-						{
-							[initBlueforLocation, [[_vehicleClassToSpawn, _vehicleIsUAV]], 30, 100] call doGenerateVehicleForFOB;	
+							//Click on map to spawn
+							selectedLoc = [0,0,0];
+							openMap true;
+							uiSleep 1;
+
+							["<t color='#ffffff' size='.8'>Click on map to spawn an ship<br />The ship will spawn oriented on the north</t>",0,0,2,0,0,789] spawn BIS_fnc_dynamicText;
+							onMapSingleClick "selectedLoc = _pos; onMapSingleClick ''; openMap false; true;";
+							waitUntil{!(visibleMap)};  
+							if (!([selectedLoc, [0,0,0]] call BIS_fnc_areEqual)) then 
+							{
+								_spawnedVehicle = createVehicle [_vehicleClassToSpawn, selectedLoc, [], 0, "NONE"];
+								//player moveInAny (vehicle _spawnedVehicle);
+
+								//Reduce avalaible spawn counter
+								missionNamespace setVariable ["bluforVehicleAvalaibleSpawn", _bluforVehicleAvalaibleSpawnCounter-_vehiclePriceToSpawn, true];
+								hint format ["A %2 has spawned, %1 avdvanced spawn credit left.", _bluforVehicleAvalaibleSpawnCounter-_vehiclePriceToSpawn, _vehicleNameToSpawn];
+							};
 						};
-					};	
+					} else 
+					{
+						//Else (other type of vehicle) do normal spawn around FOB
+						[_vehicleClassToSpawn, _vehicleIsUAV] spawn {
+							params ["_vehicleClassToSpawn", "_vehicleIsUAV"];
 
-					missionNamespace setVariable ["bluforVehicleAvalaibleSpawn", _bluforVehicleAvalaibleSpawnCounter-_vehiclePriceToSpawn, true];
+							//Spawn the vehicle around the player or on blufor initial position if called from server
+							if (hasInterface) then 
+							{
+								[getPos player, [[_vehicleClassToSpawn, _vehicleIsUAV]], 30, 100] call doGenerateVehicleForFOB;	
+							} else 
+							{
+								[initBlueforLocation, [[_vehicleClassToSpawn, _vehicleIsUAV]], 30, 100] call doGenerateVehicleForFOB;	
+							};
+						};	
+
+						missionNamespace setVariable ["bluforVehicleAvalaibleSpawn", _bluforVehicleAvalaibleSpawnCounter-_vehiclePriceToSpawn, true];
+					};
 					//hint format ["A %2 has spawned, %1 avdvanced spawn credit left.", _bluforVehicleAvalaibleSpawnCounter-_vehiclePriceToSpawn, _vehicleNameToSpawn];
 				};
 
