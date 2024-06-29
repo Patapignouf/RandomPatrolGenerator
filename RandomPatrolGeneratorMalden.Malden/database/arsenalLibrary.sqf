@@ -659,7 +659,7 @@ adjustTFARRadio = {
 		_factionDefaultRadios = ((factionDefaultRadios_db select {_x#1  == _currentFaction})#0)#0;
 
 		//If there is a radio defined, add it to the player else add basic default radio
-		if (count _factionDefaultRadios > 0) then 
+		if (count _factionDefaultRadios > 0 && ((call TFAR_fnc_haveDDRadio) || (call TFAR_fnc_haveLRRadio) || call TFAR_fnc_haveSWRadio)) then 
 		{
 			_currentPlayer addItem _factionDefaultRadios#0;
 			_currentPlayer assignItem _factionDefaultRadios#0;
@@ -677,6 +677,48 @@ adjustTFARRadio = {
 			// [(call TFAR_fnc_activeLrRadio), 1, format ["%1",bluforShortFrequencyTFAR]] call TFAR_fnc_SetChannelFrequency;
 		};
 	};
+};
+
+removeTFARID = {
+	params ["_unitLoadout"];
+	
+	//From https://github.com/michail-nikolaev/task-force-arma-3-radio/blob/master/addons/core/functions/fnc_loadoutReplaceProcess.sqf
+	//Adjusted to work with getUnitLoadout 
+
+	private _cfgWeapons = configFile >> "CfgWeapons"; //So we don't resolve every time in loop
+
+	// _loadouts is an associative array [loadoutName, loadoutContent, loadoutName, ...], so we have to skip the name in our loop
+	_inventory = _unitLoadout;
+	// iterate through each container
+	{
+		_content = _x;
+		diag_log format ["_content tested %1",_content];
+		// iterate through each item of the container
+		{
+			_class = _cfgWeapons >> _x;
+			diag_log format ["class tested %1",_class];
+
+			//Following will replace 0.9.x Radios with their 1.0 versions. //#TODO Enable for Release -- yet untested
+			//if ((_class select [0,3]) == "tf_") then {_class = "tfar_" + (_class select [3])};
+
+			// if the item is an actual radio, not a radio prototype nor common item
+			if ((isClass _class) && {isNumber (_class >> "tf_radio")}) then {
+				// erase the content value with parent prototype
+				diag_log ["TFAR","replace",_class,_forEachIndex,getText (_class >> "tf_parent")];
+				_content set [_forEachIndex, getText (_class >> "tf_parent")];
+			};
+		} forEach _content;
+		true
+	} count [
+		//(_inventory select 3) select 1, // uniform content
+		//(_inventory select 4) select 1, // vest content
+		//(_inventory select 5) select 1, // backpack content
+		_inventory select 9             // assigned items
+		];
+
+	diag_log  format ["TFAR stuff : %1", _inventory];
+
+	_inventory;
 };
 
 adjustLoadout = {
@@ -780,6 +822,11 @@ saveCustomLoadout = {
 				{
 					//Do nothing
 				};
+		};
+
+		if (isClass (configFile >> "CfgPatches" >> "task_force_radio")) then {
+			//Remove TFAR radio ID 
+			_defaultStuff = [_defaultStuff] call removeTFARID;
 		};
 
 		//Save personnal loadout
