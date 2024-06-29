@@ -49,17 +49,17 @@ baseEnemyGroup_WWII_Wehrmacht = [
 	"LIB_GER_medic",
 	"LIB_GER_mgunner",
 	"LIB_GER_scout_sniper",
+	"LIB_GER_unterofficer",
 	"LIB_GER_rifleman",
 	"LIB_GER_rifleman",
-	"LIB_GER_rifleman",
-	"LIB_GER_LAT_Rifleman"
+	"LIB_GER_Soldier2"
 ];
 
 //Basic anti tank enemy group | 5 men (Leader, MG, AT)
 baseEnemyATGroup_WWII_Wehrmacht = [
 	"LIB_GER_unterofficer",
 	"LIB_GER_mgunner",
-	"LIB_GER_mgunner",
+	"LIB_GER_AT_soldier",
 	"LIB_GER_LAT_Rifleman",
 	"LIB_GER_medic"
 ];
@@ -67,7 +67,7 @@ baseEnemyATGroup_WWII_Wehrmacht = [
 //Basic demolition enemy group | 8 men (Leader, Explosive)
 baseEnemyDemoGroup_WWII_Wehrmacht = [
 	"LIB_GER_unterofficer",
-	"LIB_GER_ober_grenadier",
+	"LIB_GER_mgunner2",
 	"LIB_GER_ober_grenadier",
 	"LIB_GER_ober_grenadier",
 	"LIB_GER_sapper",
@@ -87,11 +87,22 @@ baseEnemyMortarGroup_WWII_Wehrmacht = [
 
 //Basic enemy vehicle avalaible (light) must be destroyed without AT (ex : jeep)
 baseEnemyVehicleGroup_WWII_Wehrmacht = [
+	//Basic armed vehicle
 	"LIB_Kfz1_MG42", 
 	"LIB_Kfz1_MG42_camo", 
 	"LIB_Kfz1_MG42_sernyt",
 	"LIB_SdKfz251", 
-	"LIB_SdKfz251_FFV"
+	"LIB_SdKfz251_FFV",
+
+	//Unarmed vehicle
+	"LIB_Kfz1", 
+	"LIB_OpelBlitz_Open_Y_Camo",
+
+	//Turret 
+	"LIB_leFH18_AT", 
+	"LIB_FlaK_30", 
+	"LIB_MG34_Lafette_Deployed", 
+	"LIB_MG42_Lafette_Deployed"
 ];
 
 //Basic enemy light armored vehicle avalaible must be destroyed without heavy AT (ex : BMP)
