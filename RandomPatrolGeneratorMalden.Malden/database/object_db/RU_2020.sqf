@@ -200,8 +200,8 @@ rifleList_RU_2020 = [
 	"rhs_weap_ak105_npz_grip1",
 	"rhs_weap_ak105_zenitco01_grip1",
 	"rhs_weap_ak105_zenitco01_b33_grip1",
-
-
+	"rhs_weap_45th_akms",
+	"rhs_weap_akms",
 
 	"rhs_weap_pya",
 	"rhs_weap_6p53",
@@ -275,6 +275,7 @@ attachmentShortList_RU_2020	= [
 	"rhs_acc_2dpZenit",
 	"rhs_acc_okp7_picatinny",
 	"rhs_acc_perst1ik_ris",
+	"rhs_acc_perst1ik",
 	"rhs_acc_pkas_pkp",
 	"rhs_acc_pgo7v3_pkp",
 	"rhs_acc_pgo7v3_ak",

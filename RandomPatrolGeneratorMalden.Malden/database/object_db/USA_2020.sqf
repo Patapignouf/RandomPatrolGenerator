@@ -47,9 +47,16 @@ baseEnemyMortarGroup_USA_2020 = [
 ];
 
 baseEnemyVehicleGroup_USA_2020 = [
+	//Vehicles
 	"rhsusf_m1025_d_m2", 
 	"rhsusf_m1025_d", 
-	"rhsusf_m1151_m240_v1_usarmy_d"
+	"rhsusf_m1151_m240_v1_usarmy_d",
+
+	//Turret
+	"RHS_Stinger_AA_pod_WD", 
+	"rhsusf_army_ucp_rifleman", 
+	"RHS_M2StaticMG_WD", 
+	"RHS_TOW_TriPod_WD"
 ];
 
 baseEnemyLightArmoredVehicleGroup_USA_2020 = [
