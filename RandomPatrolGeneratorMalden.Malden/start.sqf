@@ -536,7 +536,7 @@ diag_log format ["Generating blufor vehicle : %1",selectedBluforVehicle];
 			//Add support action 
 			[bluforMobileHQ, ["<img size='2' image='\a3\ui_f_oldman\data\IGUI\Cfg\holdactions\holdAction_market_ca.paa'/>Open support shop</t>",{
 				params ["_object","_caller","_ID","_param"];
-				[[], 'GUI\supportGUI\supportGUI.sqf'] remoteExec ['BIS_fnc_execVM', _caller];
+				[[false], 'GUI\supportGUI\supportGUI.sqf'] remoteExec ['BIS_fnc_execVM', _caller];
 			},[],1.5,true,false,"","_target distance _this <10 && side _this == blufor"]] remoteExec [ "addAction", blufor, true ];
 		};
 	};

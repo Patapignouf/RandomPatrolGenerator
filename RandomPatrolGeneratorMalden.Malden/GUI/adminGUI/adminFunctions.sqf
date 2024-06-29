@@ -32,7 +32,7 @@ params ["_supportType"];
 			//Close admin menu
 			_mainDisplay = (findDisplay 60000);
 			_mainDisplay closeDisplay 1;
-			[[], 'GUI\supportGUI\supportGUI.sqf'] remoteExec ['BIS_fnc_execVM', player];
+			[[true], 'GUI\supportGUI\supportGUI.sqf'] remoteExec ['BIS_fnc_execVM', player];
 		};
 		case "ClearWeather":
 		{

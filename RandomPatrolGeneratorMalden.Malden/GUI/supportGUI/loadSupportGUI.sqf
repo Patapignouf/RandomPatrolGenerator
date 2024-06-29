@@ -3,7 +3,7 @@
 
 #include "supportFunctions.sqf"
 
-params ["_mode", "_this"];
+params ["_mode", "_this", "_authorizeHalo"];
 
 private _mainDisplay = (findDisplay 60000);
 private _buttonOK = _mainDisplay displayCtrl 60001;
@@ -24,7 +24,7 @@ switch (_mode) do
 		[_lnbEntries] call addSupportForReinforcement;
 		[_lnbEntries] call addSupportForForceReinforcement;
 
-		if (enableHalo == 1) then 
+		if (enableHalo == 1 && _authorizeHalo) then 
 		{
 			[_lnbEntries] call addSupportForHALO;
 		};

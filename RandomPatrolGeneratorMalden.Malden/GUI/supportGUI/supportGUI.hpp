@@ -1,7 +1,6 @@
 class supportGUI
 {
 	idd = 60000;
-	onLoad = "[""onLoad"",_this] execVM 'GUI\supportGUI\loadSupportGUI.sqf';";
 	class controlsBackground
 	{
 		class back: RscText
