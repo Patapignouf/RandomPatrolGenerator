@@ -351,7 +351,7 @@ if (side player == blufor) then
 					};
 
 					//Tp player on carrier
-					player setPosASL [_spawnPos#0 + random 30,_spawnPos#1+random 30,_spawnPos#2+0.5];
+					player setPosASL [_spawnPos#0-105 + random 15,_spawnPos#1-18+random 15,_spawnPos#2+0.5];
 					titleCut ["WELCOME ON BOARD", "BLACK IN", 5];
 				};
 			};
@@ -364,7 +364,7 @@ if (side player == blufor) then
 				//Define parameters
 				params ["_object","_caller","_ID","_spawnPos"];
 
-				_caller setPosASL [_spawnPos#0,_spawnPos#1,_spawnPos#2+0.5];
+				_caller setPosASL [_spawnPos#0-105 + random 15,_spawnPos#1-18+random 15,_spawnPos#2+0.5];
 
 			},_spawnPos,1.5,true,false,"","(initBlueforLocation distance _this <150)"];
 			player setUserActionText [_actionIdCarrier, "Move to the carrier", "<img size='3' image='\a3\ui_f_oldman\data\IGUI\Cfg\holdactions\map_ca.paa'/>"];
@@ -486,7 +486,7 @@ if (side player == blufor) then
 			//Define parameters
 			params ["_object","_caller","_ID","_avalaibleVehicle"];
 
-			[[], 'GUI\supportGUI\supportGUI.sqf'] remoteExec ['BIS_fnc_execVM', _caller];
+			[[true], 'GUI\supportGUI\supportGUI.sqf'] remoteExec ['BIS_fnc_execVM', _caller];
 	},_x,3,true,false,"","_target distance _this <5"];
 
 	TPFlag1 addAction ["<img size='2' image='\a3\ui_f_oldman\data\IGUI\Cfg\holdactions\holdAction_market_ca.paa'/><t size='1'>Open team member shop</t>",{
@@ -561,6 +561,10 @@ if (didJIP) then
 	player call RemoveArsenalActionFromGivenObject;
 };
 
+//Setup default TFAR radio frequency
+if (isClass (configFile >> "CfgPatches" >> "task_force_radio")) then {
+	"50" call TFAR_fnc_setPersonalRadioFrequency;
+};
 
 //Heal player if mission's setup wasn't safe 
 if (isClass (configFile >> "CfgPatches" >> "ace_medical")) then 
