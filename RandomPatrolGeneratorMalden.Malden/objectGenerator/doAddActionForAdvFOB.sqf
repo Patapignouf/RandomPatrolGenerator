@@ -73,9 +73,16 @@ params ["_deployableFOBItem", "_deployableFOBMounted"];
 			TPFlag2 addAction [format ["<img size='2' image='\a3\ui_f_oldman\data\IGUI\Cfg\holdactions\holdAction_market_ca.paa'/><t size='1'>Open support shop</t>"],{
 				//Define parameters
 				params ["_object","_caller","_ID","_avalaibleVehicle"];
-					[[], 'GUI\supportGUI\supportGUI.sqf'] remoteExec ['BIS_fnc_execVM', player];
+					[[false], 'GUI\supportGUI\supportGUI.sqf'] remoteExec ['BIS_fnc_execVM', _caller];
 				}
 			];
+
+			TPFlag2 addAction [format ["<img size='2' image='\a3\ui_f_oldman\data\IGUI\Cfg\holdactions\holdAction_market_ca.paa'/><t size='1'>Open vehicle shop</t>"],{
+					//Define parameters
+					params ["_object","_caller","_ID","_avalaibleVehicle"];
+
+					[[], 'GUI\vehicleSpawnerGUI\vehicleSpawner.sqf'] remoteExec ['BIS_fnc_execVM', _caller];
+			},_x,3,true,false,"","(_target distance _this <5) && (_this getVariable 'role' == 'leader' || _this getVariable 'role' == 'pilot')"];
 
 			//Add action to redeploy FOB
 			[TPFlag2, ["Advanced FOB disassembly",{
@@ -95,7 +102,7 @@ params ["_deployableFOBItem", "_deployableFOBMounted"];
 				} foreach (nearestObjects [getPos _object, [], 50]);
 
 				//Create FOB box
-				_deployableFOBItem = createVehicle [deployableFOB, _currentTempPos, [], 0, "NONE"];
+				_deployableFOBItem = createVehicle ["B_supplyCrate_F", _currentTempPos, [], 0, "NONE"];
 				clearWeaponCargoGlobal _deployableFOBItem;
 				clearMagazineCargoGlobal _deployableFOBItem;
 				clearItemCargoGlobal _deployableFOBItem;
@@ -108,7 +115,7 @@ params ["_deployableFOBItem", "_deployableFOBMounted"];
 			//Remove Box
 			deleteVehicle _object;
 		} else {
-			hint "Too close to base";
+			hint "Too close from base";
 		};
 	}, 
 	{
