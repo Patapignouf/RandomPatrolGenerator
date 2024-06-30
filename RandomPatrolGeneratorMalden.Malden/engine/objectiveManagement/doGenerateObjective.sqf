@@ -9,6 +9,7 @@ generateObjective =
 	_completedObjectives = missionNamespace getVariable ["completedObjectives",[]];
 	_missionObjectives = missionNamespace getVariable ["MissionObjectives",[]];
 	_missionUncompletedObjectives = missionNamespace getVariable ["missionUncompletedObjectives",_missionObjectives];
+	_warEra = missionNamespace getVariable "warEra";
 
 	//Generate a new objective
 	SupplyObjects =  [];
@@ -57,15 +58,23 @@ generateObjective =
 			diag_log format ["_selectedObjectivePosition %1", _selectedObjectivePosition];
 			_objectiveCreated = [currentObjType, _selectedObjectivePosition] call generateObjectiveObject; 
 
-			if (random 100 < 80) then 
+			if (random 100 < 20 && _warEra != 0) then 
 			{
-				//80% normal objective with opfor forces
-				_handlePOIGeneration = [EnemyWaveLevel_1, baseEnemyVehicleGroup, baseEnemyLightArmoredVehicleGroup, baseEnemyHeavyArmoredVehicleGroup, civilian_group, _selectedObjectivePosition, _objectiveCreated] execVM 'enemyManagement\generationEngine\generatePOI.sqf'; 
+				//20% objective with hostile almost only civilian
+				//Not avalaible on WWII era
+				_handlePOIGeneration = [EnemyWaveLevel_1, baseEnemyVehicleGroup, baseEnemyLightArmoredVehicleGroup, baseEnemyHeavyArmoredVehicleGroup, civilian_group, _selectedObjectivePosition, _objectiveCreated] execVM 'enemyManagement\generationEngine\generateHostileCivPOI.sqf'; 
 				waitUntil {isNull _handlePOIGeneration};
 			} else 
 			{
-				//20% objective with hostile almost only civilian
-				_handlePOIGeneration = [EnemyWaveLevel_1, baseEnemyVehicleGroup, baseEnemyLightArmoredVehicleGroup, baseEnemyHeavyArmoredVehicleGroup, civilian_group, _selectedObjectivePosition, _objectiveCreated] execVM 'enemyManagement\generationEngine\generateHostileCivPOI.sqf'; 
+				//80% normal objective with opfor forces 
+				_handlePOIGeneration = objNull;
+				if (("EnableCiviliansOnObjectives" call BIS_fnc_getParamValue) == 1) then 
+				{
+					_handlePOIGeneration = [EnemyWaveLevel_1, baseEnemyVehicleGroup, baseEnemyLightArmoredVehicleGroup, baseEnemyHeavyArmoredVehicleGroup, civilian_group, _selectedObjectivePosition, _objectiveCreated] execVM 'enemyManagement\generationEngine\generatePOI.sqf'; 
+				} else 
+				{
+					_handlePOIGeneration = [EnemyWaveLevel_1, baseEnemyVehicleGroup, baseEnemyLightArmoredVehicleGroup, baseEnemyHeavyArmoredVehicleGroup, [], _selectedObjectivePosition, _objectiveCreated] execVM 'enemyManagement\generationEngine\generatePOI.sqf'; 
+				};
 				waitUntil {isNull _handlePOIGeneration};
 			};
 		};
@@ -83,11 +92,12 @@ generateObjectiveObject =
 	//Define specific objective data
 	_thisObjective = [];
 	_thistempObjectivePosition = [];
+	_warEra = missionNamespace getVariable "warEra";
 
 	//Try to find position with building if avalaible
 	if (_thisObjectiveType != "hostage") then 
 	{
-		_allBuildings = nearestTerrainObjects [_thisObjectivePosition, ["house"], 100, false, true];
+		_allBuildings = nearestTerrainObjects [_thisObjectivePosition, ["house", "FORTRESS", "BUNKER"], 100, false, true];
 		_allPositions = [];
 		_allBuildings apply {_allPositions append (_x buildingPos -1)};
 		_thistempObjectivePosition = selectRandom _allPositions;
@@ -100,15 +110,20 @@ generateObjectiveObject =
 		_thisObjectivePosition = _thistempObjectivePosition;
 	};
 
-	//Place IED
-	_possibleIEDLocation = [_thisObjectivePosition, 1000, round (random 4)] call findPositionsNearRoads;
-	if (count _possibleIEDLocation >0) then 
+	//Place IED 
+	//No IED on WWII
+	if (_warEra != 0) then 
 	{
+		_possibleIEDLocation = [_thisObjectivePosition, 1000, round (random 4)] call findPositionsNearRoads;
+		if (count _possibleIEDLocation >0) then 
 		{
-			_tempIED = createVehicle [selectRandom avalaibleIED, [[[_x, 10]], []] call BIS_fnc_randomPos, [], 0, "NONE"];
-			[_tempIED, selectRandom [1,2,3], false] execVM "objectGenerator\iedBlast.sqf";
-		} foreach _possibleIEDLocation;
+			{
+				_tempIED = createVehicle [selectRandom avalaibleIED, [[[_x, 10]], []] call BIS_fnc_randomPos, [], 0, "NONE"];
+				[_tempIED, selectRandom [1,2,3], false] execVM "objectGenerator\iedBlast.sqf";
+			} foreach _possibleIEDLocation;
+		};
 	};
+
 
 	//Place roadblock
 	_possibleRoadBlockLocation = [_thisObjectivePosition, 1500, round (random 2)] call findPositionsNearRoads;
