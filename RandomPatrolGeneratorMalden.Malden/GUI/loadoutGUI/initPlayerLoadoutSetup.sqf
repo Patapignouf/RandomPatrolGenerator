@@ -57,7 +57,11 @@ refreshCustomLoadoutDisplay = {
 if (!ironMan) then 
 {
 	//Loadout validated loadout (compared with spawn loadout)
-	[player] call validateLoadout;
+	//Validate loadout only if there is no restriction
+	if (("EnableLoadoutRestriction" call BIS_fnc_getParamValue) == 1) then 
+	{
+		[player] call validateLoadout;
+	};
 	[] call refreshCustomLoadoutDisplay;
 };
 
@@ -117,7 +121,22 @@ _buttonArsenal ctrlAddEventHandler[ "ButtonClick",
 	{ 
 		hint "Open arsenal";
 		(findDisplay 7000) closeDisplay 1;
-		[] execVM 'database\openArsenal.sqf';
+		if (("EnableLoadoutRestriction" call BIS_fnc_getParamValue) == 1) then 
+		{
+			//open restricted arsenal
+			[] execVM 'database\openArsenal.sqf';
+		} else 
+		{
+			//open full arsenal
+			if (isClass (configFile >> "CfgPatches" >> "ace_medical")) then 
+			{
+				[player, player, true] call ace_arsenal_fnc_openBox;
+			} else 
+			{
+				//Setup regular arsenal
+				["Open", [true]] call BIS_fnc_arsenal;
+			};
+		};
 	}];
 
 //clear item 

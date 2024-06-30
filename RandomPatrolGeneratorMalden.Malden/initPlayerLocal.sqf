@@ -145,14 +145,17 @@ if (ironMan) then
 
 
 //Validate current player's stuff
-[missionNamespace, "arsenalClosed", {
-	disableSerialization;
-	params ["_display"];
+if (("EnableLoadoutRestriction" call BIS_fnc_getParamValue) == 1) then 
+{
+	[missionNamespace, "arsenalClosed", {
+		disableSerialization;
+		params ["_display"];
 
-	//Check loadout
-	[player] call validateLoadout;
-	["AmmoboxExit", player] call BIS_fnc_arsenal;
-}] call BIS_fnc_addScriptedEventHandler;
+		//Check loadout
+		[player] call validateLoadout;
+		["AmmoboxExit", player] call BIS_fnc_arsenal;
+	}] call BIS_fnc_addScriptedEventHandler;
+};
 
 
 //Init disableThermal
@@ -198,17 +201,20 @@ if !(isClass (configFile >> "CfgPatches" >> "ace_medical")) then
 	}];
 } else 
 {
-	//Add ACE cookoff high probability on enemy weapon
-	player addEventHandler["Fired",{
-		params ["_unit", "_weapon", "_muzzle", "_mode", "_ammo", "_magazine", "_projectile", "_gunner"];
-    	[_weapon] call adjustCookOf;
-  	}];
+	//Only do weapon jamming if loadout restriction is enable
+	if (("EnableLoadoutRestriction" call BIS_fnc_getParamValue) == 1) then 
+	{
+		//Add ACE cookoff high probability on enemy weapon
+		player addEventHandler["Fired",{
+			params ["_unit", "_weapon", "_muzzle", "_mode", "_ammo", "_magazine", "_projectile", "_gunner"];
+			[_weapon] call adjustCookOf;
+		}];
 
-	//Reduce cookoff on jammed weapon
-	["ace_weaponJammed", {
-		_this call reduceCookOff;
-	}] call CBA_fnc_addEventHandler;
-
+		//Reduce cookoff on jammed weapon
+		["ace_weaponJammed", {
+			_this call reduceCookOff;
+		}] call CBA_fnc_addEventHandler;
+	};
 };
 
 //Init player rank
