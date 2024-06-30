@@ -42,8 +42,8 @@ missionNamespace setVariable ["airDropSupportCounter", 0, true]; //default air d
 missionNamespace setVariable ["reinforcementSupportCounter", 0, true]; //default reinforcement support counter
 
 //Spawn bloc to avoid player swimming
-_spawnBloc = createVehicle ["BlockConcrete_F", [0,0,0], [], 0, "NONE"];
-_spawnBloc setPos [0,0,0];
+_spawnBloc = createVehicle ["BlockConcrete_F", [worldSize,worldSize,0], [], 0, "NONE"];
+_spawnBloc setPos [worldSize,worldSize,0];
 
 //Init scenario scripts
 [] execVM 'start.sqf'; 

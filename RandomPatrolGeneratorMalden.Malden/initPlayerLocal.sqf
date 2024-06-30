@@ -9,7 +9,7 @@ waitUntil {!isNull player && (getClientStateNumber>=10||!isMultiplayer)};
 diag_log format ["Setup Player %1 at position 0", name player];
 
 //init tp to be able to spawn on the ground on each map
-player setPos [0,0,1];
+player setPos [worldSize,worldSize,1];
 player allowdamage false;
 enableSentences false;
 
@@ -541,7 +541,7 @@ if (didJIP) then
 	if (count (_deadPlayerList select { _x == (name player) }) == 0) then 
 	{
 		//Disable specific respawn menu
-		player setPos [0,0,1];
+		player setPos [worldSize,worldSize,1];
 		player allowdamage false;
 		[[], 'GUI\respawnGUI\initPlayerRespawnMenu.sqf'] remoteExec ['BIS_fnc_execVM', player];
 	} else 
