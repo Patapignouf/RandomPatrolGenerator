@@ -23,7 +23,7 @@ if (isClass (configFile >> "CfgPatches" >> "lambs_danger")) then
 {
 	diag_log "Task_Garrison !";
 	//Determine building avalaible positions
-	_allBuildings = nearestTerrainObjects [_position, ["house"], _distance, false, true];
+	_allBuildings = nearestTerrainObjects [_position, ["house", "FORTRESS", "BUNKER"], _distance, false, true];
 	_allPositions = [];
 	_allBuildings apply {_allPositions append (_x buildingPos -1)};
 	//_allPositions = call BIS_fnc_arrayShuffle; 
@@ -32,18 +32,25 @@ if (isClass (configFile >> "CfgPatches" >> "lambs_danger")) then
 
 	//Place units in building (garrison)
 	_units = units _thisGroup; 
-	if (count _units > count _allPositions) then {_units resize (count _allPositions);};
+	//if (count _units > count _allPositions) then {_units resize (count _allPositions);};
 	{
 		_x disableAI "PATH";
+		_tempPosition = selectRandom _allPositions;
+		_allPositions = _allPositions - [_tempPosition];
 		_x setUnitPos selectRandom ["UP","UP","MIDDLE"];
-		_x setPos (selectRandom _allPositions);
-		_x addEventHandler["Fired",
-			{
-				params ["_unit"];
-				_unit enableAI "PATH";
-				_unit dofollow leader _unit;
-				_unit setUnitPos "AUTO";
-				_unit removeEventHandler ["Fired",_thisEventHandler];
-			}];
+		_x setPos (_tempPosition);
+
+		//80% to leave the position if fired
+		if (random 100>80) then 
+		{ 
+			_x addEventHandler["Fired",
+				{
+					params ["_unit"];
+					_unit enableAI "PATH";
+					_unit dofollow leader _unit;
+					_unit setUnitPos "AUTO";
+					_unit removeEventHandler ["Fired",_thisEventHandler];
+				}];
+		};
 	} foreach _units; 
 };

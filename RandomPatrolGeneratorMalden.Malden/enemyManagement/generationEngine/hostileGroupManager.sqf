@@ -5,7 +5,7 @@ generateOpforInBiggestBuildings = {
 
 
 	//Find the biggest building
-	_allBuildings = (nearestTerrainObjects [_center, ["house"], _maxRangeFromCenter, false, true]);
+	_allBuildings = (nearestTerrainObjects [_center, ["house", "FORTRESS", "BUNKER"], _maxRangeFromCenter, false, true]);
 
 	if (count _allBuildings > 0) then 
 	{
@@ -33,7 +33,7 @@ generateOpforInBiggestBuildings = {
 		_listOfAllavalaiblePos = _listOfAllavalaiblePos - [_avalaibleFreePos];
 
 		//Find all other buildings arround 
-		_allBuildingsAround = (nearestTerrainObjects [getPos (_buildingToKeep#0), ["house"], _maxRangeFromCenter, false, true]);
+		_allBuildingsAround = (nearestTerrainObjects [getPos (_buildingToKeep#0), ["house", "FORTRESS", "BUNKER"], _maxRangeFromCenter, false, true]);
 		_allBuildingsAround = [_allBuildingsAround, [], {(getPos _x) distance (getPos (_buildingToKeep#0))}, "ASCEND"] call BIS_fnc_sortBy;
 		_allBuildingsAround = _allBuildingsAround - [_buildingToKeep#0];
 		_allBuildingsAround apply {_listOfAllavalaiblePos append (_x buildingPos -1)};
