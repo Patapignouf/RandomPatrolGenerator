@@ -279,10 +279,15 @@ itemMedicList_WWII_USA = [
 
 // Those lists might not be correct...
 backPackList_WWII_USA = [
+	//Medium bags
 	"B_LIB_US_Backpack",
 	"B_LIB_US_M36",
 	"B_LIB_US_Radio",
-	"B_LIB_US_Bandoleer"
+	"B_LIB_US_Bandoleer",
+
+	//Parachute
+	"B_LIB_US_Type5",
+	"B_LIB_US_TypeA3"
 ];
 
 uniformList_WWII_USA = [
