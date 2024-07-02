@@ -358,7 +358,7 @@ if (!isNil "USS_FREEDOM_CARRIER") then
 			//Add custom plane catapult on WWII planes because of heavy bugs on USS Freedom
 			if (_warEra == 0) then 
 			{
-				_plane addAction [format ["<img size='2' image='\a3\data_f_destroyer\data\UI\IGUI\Cfg\holdactions\holdAction_unloadVehicle_ca.paa'/><t size='1'>Catapult the plane</t>"],{
+				[_plane, [format ["<img size='2' image='\a3\data_f_destroyer\data\UI\IGUI\Cfg\holdactions\holdAction_unloadVehicle_ca.paa'/><t size='1'>Catapult the plane</t>"],{
 					//Define parameters
 					params ["_object","_caller","_ID","_avalaibleVehicle"];
 
@@ -378,7 +378,7 @@ if (!isNil "USS_FREEDOM_CARRIER") then
 						(_vel select 2) // horizontal only
 					];
 					
-				},_x,3,true,false,"","(_target distance _this <3) && (_this getVariable 'role' == 'leader' || _this getVariable 'role' == 'pilot')"];
+				},_x,3,true,false,"","(_target distance _this <3) && (_this getVariable 'role' == 'leader' || _this getVariable 'role' == 'pilot')"]] remoteExec ["addAction", 0, true];
 			};
 
 			//Repair vehicle
