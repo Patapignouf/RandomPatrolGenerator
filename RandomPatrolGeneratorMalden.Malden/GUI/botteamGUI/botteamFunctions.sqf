@@ -9,7 +9,7 @@ params ["_caller", "_botteamClass", "_botteamType"];
 		{
 			//Spawn random unit
 			_customPos = [];
-			if (isNil "USS_FREEDOM_CARRIER") then 
+			if (isNil "USS_FREEDOM_CARRIER" || ((initBlueforLocation distance (getPos player))) > 150) then 
 			{
 				//Custom spawn on ground outside the FOB
 				_customPos = (position player) findEmptyPosition [20, 150, "Land_HelipadCircle_F"];
