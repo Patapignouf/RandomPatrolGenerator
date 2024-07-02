@@ -200,8 +200,11 @@ if (!isNil "USS_FREEDOM_CARRIER") then
 	waitUntil{!isNil "VA2"};
 	waitUntil{!isNil "TPFlag1"};
 	waitUntil{!isNil "deployableFOBItem"};
+
+	_warEra = missionNamespace getVariable "warEra";
+
 	VA2 setPosASL [initBlueforLocation#0-105, initBlueforLocation#1-18, initBlueforLocation#2];
-	TPFlag1 setPosASL [initBlueforLocation#0-115, initBlueforLocation#1-18, initBlueforLocation#2-1];
+	TPFlag1 setPosASL [initBlueforLocation#0-115, initBlueforLocation#1-18, initBlueforLocation#2-0.5];
 	deployableFOBItem setPosASL [initBlueforLocation#0-50, initBlueforLocation#1-15, initBlueforLocation#2];
 
 	//Move basic ammo box
@@ -351,6 +354,32 @@ if (!isNil "USS_FREEDOM_CARRIER") then
 			_plane setPosASL [_baseSpawnPlane#0, _baseSpawnPlane#1, _baseSpawnPlane#2];
 			_plane setDir 90;
 			_planeNumber = _planeNumber+1;
+
+			//Add custom plane catapult on WWII planes because of heavy bugs on USS Freedom
+			if (_warEra == 0) then 
+			{
+				_plane addAction [format ["<img size='2' image='\a3\data_f_destroyer\data\UI\IGUI\Cfg\holdactions\holdAction_unloadVehicle_ca.paa'/><t size='1'>Catapult the plane</t>"],{
+					//Define parameters
+					params ["_object","_caller","_ID","_avalaibleVehicle"];
+
+					//Move caller in the player
+    				_caller moveInAny _object;
+
+					//Start the plane
+    				_object engineOn true;
+					_objectPos = getPos _object;
+					_object setPosASL [_objectPos#0, _objectPos#1, _objectPos#2+300];
+					_vel = velocity _object;
+					_dir = getDir _object;
+					_additionalSpeed = 150; // in m/s
+					_object setVelocity [
+						(_vel select 0) + (sin _dir * _additionalSpeed),
+						(_vel select 1) + (cos _dir * _additionalSpeed),
+						(_vel select 2) // horizontal only
+					];
+					
+				},_x,3,true,false,"","(_target distance _this <3) && (_this getVariable 'role' == 'leader' || _this getVariable 'role' == 'pilot')"];
+			};
 
 			//Repair vehicle
 			[_plane] spawn {
