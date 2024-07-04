@@ -9,18 +9,42 @@ params ["_caller", "_botteamClass", "_botteamType"];
 		{
 			//Spawn random unit
 			_customPos = [];
-			if (isNil "USS_FREEDOM_CARRIER" || ((initBlueforLocation distance (getPos player))) > 150) then 
+			
+			//Determine if the player is on FOB/USS or Advance FOB
+			if ((initBlueforLocation distance (getPos player)) < 150) then 
 			{
-				//Custom spawn on ground outside the FOB
-				_customPos = (position player) findEmptyPosition [20, 150, "Land_HelipadCircle_F"];
+				//Define good position on blufor spawn 
+				if (isNil "USS_FREEDOM_CARRIER") then 
+				{
+					//Custom spawn on ground outside the FOB
+					_customPos = (position player) findEmptyPosition [20, 150, "Land_HelipadCircle_F"];
+				} else 
+				{
+					//Custom spawn on carrier
+					_customPos = getPosASL player;
+				};
 			} else 
 			{
-				//Custom spawn on carrier
-				_customPos = getPosASL player;
+				//Define a good position on advance fob 
+				_customPos = (position player) findEmptyPosition [2, 100];
 			};
-			
+
 			private _botUnit = group player createUnit ["B_Soldier_F", _customPos, [], 0, "NONE"];
 			
+			//Add teamkilled XP penalty event
+			_botUnit addEventHandler ["Killed", {
+				params ["_unit", "_killer", "_instigator", "_useEffects"];
+				diag_log format ["%1 has been killed by : %2", name _unit, name _instigator];
+				if (isPlayer _instigator) then 
+				{
+					[[format ["%1 has been killed by his teammate %2",name _unit, name _instigator], "teamkill"], 'engine\hintManagement\addCustomHint.sqf'] remoteExec ['BIS_fnc_execVM', side _instigator];
+					if (_instigator != _unit) then 
+					{
+						[[-50,5], 'engine\rankManagement\rankPenalty.sqf'] remoteExec ['BIS_fnc_execVM', _instigator];
+					};
+				};
+			}];
+
 			//Get custom stuff 
 			_listOfAvalaibleRole =[];
 			_currentFaction = 0;
@@ -50,9 +74,8 @@ params ["_caller", "_botteamClass", "_botteamType"];
 			//join player unit
 			_botUnit doFollow player;
 
-			//Close support menu
-			// _mainDisplay = (findDisplay 60000);
-			// _mainDisplay closeDisplay 1;
+			//Notify player
+			hint format ["%1 %2 has join your squad", rank _botUnit, name _botUnit];
 		};
 		default
 		{
