@@ -377,7 +377,10 @@ if (!isNil "USS_FREEDOM_CARRIER") then
 						(_vel select 1) + (cos _dir * _additionalSpeed),
 						(_vel select 2) // horizontal only
 					];
-					
+
+					//Delete the action 
+					[_object, _ID] remoteExec ["removeAction", 0, true];
+ 
 				},_x,3,true,false,"","(_target distance _this <3) && (_this getVariable 'role' == 'leader' || _this getVariable 'role' == 'pilot')"]] remoteExec ["addAction", 0, true];
 			};
 
