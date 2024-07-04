@@ -75,7 +75,8 @@ params ["_caller", "_botteamClass", "_botteamType"];
 			_botUnit doFollow player;
 
 			//Notify player
-			hint format ["%1 %2 has join your squad", rank _botUnit, name _botUnit];
+			//sleep 1;
+			hint format ["%1 %2 has join your squad", rank _botUnit, [_botUnit] call BIS_fnc_getName];
 		};
 		default
 		{
