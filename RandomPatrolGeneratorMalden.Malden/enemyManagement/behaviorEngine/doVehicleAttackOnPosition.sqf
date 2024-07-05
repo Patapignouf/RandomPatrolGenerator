@@ -32,6 +32,8 @@ _vehicleFromGroup addEventHandler ["HandleDamage", {
 			sleep 600;
 			deleteVehicle _unit;
 		};
+
+		[_unit] remoteExec ["removeAllActions", 0, true];
 	};
 }];
 
@@ -50,6 +52,8 @@ _killedForExp = _vehicleFromGroup addEventHandler ["Killed", {
 			sleep 600;
 			deleteVehicle _unit;
 		};
+
+		[_unit] remoteExec ["removeAllActions", 0, true];
 	};
 }];
 
@@ -85,6 +89,10 @@ _killedForExp = _vehicleFromGroup addEventHandler ["Killed", {
 			params ["_object"];
 			sleep 10;
 			_object setVehicleArmor 0;
+
+			//Clean vehicle
+			sleep 600;
+			deleteVehicle _object;
 		};
 	}, 
 	{

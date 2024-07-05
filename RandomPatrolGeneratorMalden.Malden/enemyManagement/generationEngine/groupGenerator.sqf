@@ -107,6 +107,8 @@ doGenerateEnemyGroup =
 					sleep 600;
 					deleteVehicle _unit;
 				};
+
+				[_unit] remoteExec ["removeAllActions", 0, true];
 			};
 		}];
 
@@ -125,6 +127,8 @@ doGenerateEnemyGroup =
 					sleep 600;
 					deleteVehicle _unit;
 				};
+
+				[_unit] remoteExec ["removeAllActions", 0, true];
 			};
 		}];
 
@@ -161,6 +165,10 @@ doGenerateEnemyGroup =
 					params ["_object"];
 					sleep 10;
 					_object setVehicleArmor 0;
+					
+					//Clean vehicle
+					sleep 600;
+					deleteVehicle _object;
 				};
 			}, 
 			{
