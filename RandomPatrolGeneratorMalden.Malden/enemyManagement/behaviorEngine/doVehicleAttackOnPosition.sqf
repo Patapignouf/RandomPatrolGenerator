@@ -53,6 +53,50 @@ _killedForExp = _vehicleFromGroup addEventHandler ["Killed", {
 	};
 }];
 
+//Add sabotage on vehicle 
+//Engineer only
+[
+	_vehicleFromGroup, 
+	"Sabotage the vehicle", 
+	"\a3\ui_f\data\IGUI\Cfg\holdactions\holdAction_search_ca.paa", 
+	"\a3\ui_f\data\IGUI\Cfg\holdactions\holdAction_search_ca.paa", 
+	"(_this distance _target < 5) && (_this getVariable 'role' == 'engineer') && (({alive _x} count (crew _target))==0)",		// Condition for the action to be shown
+	"_caller distance _target < 5",		// Condition for the action to progress
+	{
+		// Action start code
+	}, 
+	{
+		// Action on going code
+	},  
+	{
+		// Action successfull code
+		params ["_object","_caller","_ID","_objectParams","_progress","_maxProgress"];
+		
+		//Reward player
+		[[5, "RPG_ranking_vehicle_kill"], 'engine\rankManagement\rankUpdater.sqf'] remoteExec ['BIS_fnc_execVM', _caller];
+
+		//Destroy the vehicle
+		[_object, "HandleDamage"] remoteExec ["removeAllEventHandlers", 0, true];
+		_killedForExp = _object getVariable ["EHKilledForXP", 0];
+		[_object, ["Killed", _killedForExp]] remoteExec ["removeEventHandler", 0, true];
+		
+		//destroy vehicle
+		[_object] spawn {
+			params ["_object"];
+			sleep 10;
+			_object setVehicleArmor 0;
+		};
+	}, 
+	{
+		// Action failed code
+	}, 
+	[],  
+	15,
+	5, 
+	true, 
+	false
+] remoteExec ["BIS_fnc_holdActionAdd", 0, true];
+
 _vehicleFromGroup setVariable ["EHKilledForXP", _killedForExp, true];
 
 //Attack to position
