@@ -63,8 +63,8 @@ while {sleep 10; !RTBComplete} do
 
 		nbBluePlayer = {alive _x && side _x == blufor} count allPlayers;
 		nbIndPlayer = {alive _x && side _x == independent} count allPlayers;
-		nbBluePlayerBack = count ((allPlayers select {alive _x && side _x == blufor} ) inAreaArray bluforTrigger); //vehicles (all vehicles) inAreaArray (Returns list of Objects or Positions that are in the area _independantTrigger.)  
-		nbIndPlayerBack = count ((allPlayers select {alive _x && side _x == independent} ) inAreaArray independantTrigger);
+		nbBluePlayerBack = count ((allPlayers select {alive _x && side _x == blufor && (_x getVariable ["canRTB", true])} ) inAreaArray bluforTrigger); //vehicles (all vehicles) inAreaArray (Returns list of Objects or Positions that are in the area _independantTrigger.)  
+		nbIndPlayerBack = count ((allPlayers select {alive _x && side _x == independent && (_x getVariable ["canRTB", true])} ) inAreaArray independantTrigger);
 		nbPlayersNotExtracted = count ((allPlayers select {alive _x}) inAreaArray extractExtendedTriggerArea); 
 		if (((floor(nbBluePlayer/2) <= nbBluePlayerBack && floor(nbIndPlayer/2) <= nbIndPlayerBack) && (nbBluePlayerBack != 0 || nbIndPlayerBack != 0)) || 
 			((nbPlayersNotExtracted != (nbIndPlayer + nbBluePlayer)) && (nbPlayersNotExtracted <= round((nbIndPlayer+nbBluePlayer)/2)))) then 

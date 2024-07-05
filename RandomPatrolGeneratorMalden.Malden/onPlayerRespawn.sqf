@@ -6,6 +6,14 @@ setPlayerRespawnTime (missionNamespace getVariable "missionRespawnParam");
 //Setup respawn GUI
 [[], 'GUI\respawnGUI\initPlayerRespawnMenu.sqf'] remoteExec ['BIS_fnc_execVM', player];
 
+//Make the player doesn't count on RTB for 60 secs 
+player setVariable ["canRTB", false, true];
+[] spawn 
+{
+	uiSleep 60;
+	player setVariable ["canRTB", true, true];
+};
+
 // Fix player damaged on respawn 
 if (isClass (configFile >> "CfgPatches" >> "ace_medical")) then 
 {

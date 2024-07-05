@@ -563,9 +563,11 @@ if (didJIP) then
 
 //Remove arsenal from player 
 [] spawn {
-	uiSleep 10;
+	uiSleep 5;
 	player call RemoveArsenalActionFromGivenObject;
 };
+
+player setVariable ["canRTB", true, true];
 
 //Setup default TFAR radio frequency
 if (isClass (configFile >> "CfgPatches" >> "task_force_radio")) then {
