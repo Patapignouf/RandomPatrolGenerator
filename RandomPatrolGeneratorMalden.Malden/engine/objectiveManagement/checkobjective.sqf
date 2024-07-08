@@ -61,11 +61,11 @@ while {sleep 10; !RTBComplete} do
 			[[areaOfOperationPosition,[(extendedTriggerArea #0)+500,(extendedTriggerArea #1)+500]], "engine\objectiveManagement\drawAORectangle.sqf"] remoteExec ['BIS_fnc_execVM', 0, true];
 		};
 
-		nbBluePlayer = {alive _x && side _x == blufor} count allPlayers;
-		nbIndPlayer = {alive _x && side _x == independent} count allPlayers;
-		nbBluePlayerBack = count ((allPlayers select {alive _x && side _x == blufor && (_x getVariable ["canRTB", true])} ) inAreaArray bluforTrigger); //vehicles (all vehicles) inAreaArray (Returns list of Objects or Positions that are in the area _independantTrigger.)  
-		nbIndPlayerBack = count ((allPlayers select {alive _x && side _x == independent && (_x getVariable ["canRTB", true])} ) inAreaArray independantTrigger);
-		nbPlayersNotExtracted = count ((allPlayers select {alive _x}) inAreaArray extractExtendedTriggerArea); 
+		nbBluePlayer = {alive _x && side _x == blufor && (_x getVariable ["canRTB", false])} count allPlayers;
+		nbIndPlayer = {alive _x && side _x == independent && (_x getVariable ["canRTB", false])} count allPlayers;
+		nbBluePlayerBack = count ((allPlayers select {alive _x && side _x == blufor && (_x getVariable ["canRTB", false])} ) inAreaArray bluforTrigger); //vehicles (all vehicles) inAreaArray (Returns list of Objects or Positions that are in the area _independantTrigger.)  
+		nbIndPlayerBack = count ((allPlayers select {alive _x && side _x == independent && (_x getVariable ["canRTB", false])} ) inAreaArray independantTrigger);
+		nbPlayersNotExtracted = count ((allPlayers select {alive _x && (_x getVariable ["canRTB", false])}) inAreaArray extractExtendedTriggerArea); 
 		if (((floor(nbBluePlayer/2) <= nbBluePlayerBack && floor(nbIndPlayer/2) <= nbIndPlayerBack) && (nbBluePlayerBack != 0 || nbIndPlayerBack != 0)) || 
 			((nbPlayersNotExtracted != (nbIndPlayer + nbBluePlayer)) && (nbPlayersNotExtracted <= round((nbIndPlayer+nbBluePlayer)/2)))) then 
 		{
