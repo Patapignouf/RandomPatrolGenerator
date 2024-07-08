@@ -114,22 +114,20 @@ doGenerateEnemyGroup =
 
 		_killedForExp = _vehicleFromGroup addEventHandler ["Killed", {
 			params ["_unit", "_killer", "_instigator", "_useEffects"];
-			if ((_unit getHit "motor") > 0.7 && !(_unit getVariable ["isAlmostDead", false])) then 
-			{	
-				if (isPlayer _instigator) then 
-				{
-					[[5, "RPG_ranking_vehicle_kill"], 'engine\rankManagement\rankUpdater.sqf'] remoteExec ['BIS_fnc_execVM', _instigator];
-					[_unit, "HandleDamage"] remoteExec ["removeAllEventHandlers", 0, true];
-				}; 
-				//Clean vehicle
-				[_unit] spawn {
-					params ["_unit"];
-					sleep 600;
-					deleteVehicle _unit;
-				};
 
-				[_unit] remoteExec ["removeAllActions", 0, true];
+			if (isPlayer _instigator) then 
+			{
+				[[5, "RPG_ranking_vehicle_kill"], 'engine\rankManagement\rankUpdater.sqf'] remoteExec ['BIS_fnc_execVM', _instigator];
+				[_unit, "HandleDamage"] remoteExec ["removeAllEventHandlers", 0, true];
+			}; 
+			//Clean vehicle
+			[_unit] spawn {
+				params ["_unit"];
+				sleep 600;
+				deleteVehicle _unit;
 			};
+
+			[_unit] remoteExec ["removeAllActions", 0, true];
 		}];
 
 
