@@ -153,20 +153,35 @@ switch (sideRelation) do
 	case 0:
 	{
 		west setFriend [resistance, 1];
+		resistance setFriend [west, 1];
+
 		west setFriend [east, 0];
+		east setFriend [west, 0];
+
 		east setFriend [resistance, 0];
+		resistance setFriend [east, 0];
 	};
 	case 1:
 	{
 		west setFriend [resistance, 0];
+		resistance setFriend [west, 0];
+
 		west setFriend [east, 0];
+		east setFriend [west, 0];
+
 		east setFriend [resistance, 0];
+		resistance setFriend [east, 0];
 	};
 	case 2:
 	{
 		west setFriend [resistance, 0];
+		resistance setFriend [west, 0];
+
 		west setFriend [east, 0];
+		east setFriend [west, 0];
+
 		east setFriend [resistance, 1];
+		resistance setFriend [east, 1];
 	};
 	default
 	{
@@ -684,7 +699,7 @@ switch (startIntel) do
 			};
 
 			//Add blufor task to encounter independent
-			if (_mainPlayerSide == independent) then 
+			if (_mainPlayerSide == independent && sideRelation == 0) then 
 			{
 				//Setup init Civ city
 				//Init task for blufor to get informations
