@@ -310,7 +310,8 @@ itemList_RU_2020 = [
 ];
 
 itemEngineerList_RU_2020 = [
-
+	"ACE_DeadManSwitch",
+	"DemoCharge_Remote_Mag"
 ];
 	
 itemMedicList_RU_2020 = [
