@@ -135,6 +135,13 @@ class Params
 		texts[] = {"No","Yes"};
 		default = 1;
 	};
+	class SideRelation
+	{
+		title = "Determines side relations";
+		values[] = {0,1,2};
+		texts[] = {"Blufor friend with Independent against Opfor","Blufor against Independent against Opfor","Blufor against Independent and Opfor"};
+		default = 0;
+	};
 	class DisableZoom
 	{
 		title = "Temp Zoom (hold right clic)";

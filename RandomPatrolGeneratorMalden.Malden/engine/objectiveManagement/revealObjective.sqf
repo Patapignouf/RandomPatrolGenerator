@@ -48,7 +48,12 @@ if ((count _revealedObjectives != count _tempMissionObjectives)) then
 			{
 				_initCityLocationName = text (initCityLocationLocs#0);
 			};
-			
+
+			//Give tasks to all players of blufor and independent are enemies
+			if ([blufor, independent] call BIS_fnc_sideIsEnemy) then 
+			{
+				_side = true;
+			};
 
 			//Display custom dialogs according to the enemy position
 			switch (_objectiveToReveal select 1) do

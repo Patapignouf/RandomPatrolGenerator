@@ -37,12 +37,23 @@ if (isClass (configFile >> "CfgPatches" >> "ace_medical")) then
 player addEventHandler ["Killed", {
 	params ["_unit", "_killer", "_instigator", "_useEffects"];
 	diag_log format ["%1 has been killed by : %2", name _unit, name _instigator];
+
+	//Check if the killer is a player
 	if (isPlayer _instigator) then 
 	{
-		[[format ["%1 has been killed by his teammate %2",name _unit, name _instigator], "teamkill"], 'engine\hintManagement\addCustomHint.sqf'] remoteExec ['BIS_fnc_execVM', side _instigator];
-		if (_instigator != _unit) then 
+		//Check if player are on opposite side
+		if ([side _instigator, playerSide] call BIS_fnc_sideIsEnemy) then 
 		{
-			[[-50,5], 'engine\rankManagement\rankPenalty.sqf'] remoteExec ['BIS_fnc_execVM', _instigator];
+			//Reward PvP kill
+			[[1, "RPG_ranking_infantry_kill"], 'engine\rankManagement\rankUpdater.sqf'] remoteExec ['BIS_fnc_execVM', _instigator];
+		} else 
+		{
+			//Add penalty if the killer is a friend
+			[[format ["%1 has been killed by his teammate %2",name _unit, name _instigator], "teamkill"], 'engine\hintManagement\addCustomHint.sqf'] remoteExec ['BIS_fnc_execVM', side _instigator];
+			if (_instigator != _unit) then 
+			{
+				[[-50,5], 'engine\rankManagement\rankPenalty.sqf'] remoteExec ['BIS_fnc_execVM', _instigator];
+			};
 		};
 	};
 }];

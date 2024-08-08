@@ -12,6 +12,7 @@ enableInitBluAttack = "EnableInitBluAttack" call BIS_fnc_getParamValue;
 enableAutoDifficultyBalance = "EnableAutoDifficultyBalance" call BIS_fnc_getParamValue;
 timeOfDay = "TimeOfDay" call BIS_fnc_getParamValue;
 disableZoom = "DisableZoom" call BIS_fnc_getParamValue;
+sideRelation = "SideRelation" call BIS_fnc_getParamValue;
 
 //Init all environement database variable
 _handleEnvironmentInitialization = [] execVM 'initEnvironment.sqf'; 
@@ -144,6 +145,33 @@ _mainPlayerSide = blufor;
 if ({isPlayer _x && side _x == independent} count allPlayers != 0) then 
 {
 	_mainPlayerSide = independent;
+};
+
+//Determine side relation 
+switch (sideRelation) do
+{
+	case 0:
+	{
+		west setFriend [resistance, 1];
+		west setFriend [east, 0];
+		east setFriend [resistance, 0];
+	};
+	case 1:
+	{
+		west setFriend [resistance, 0];
+		west setFriend [east, 0];
+		east setFriend [resistance, 0];
+	};
+	case 2:
+	{
+		west setFriend [resistance, 0];
+		west setFriend [east, 0];
+		east setFriend [resistance, 1];
+	};
+	default
+	{
+		//Never happened
+	};
 };
 
 /////////////////////////
