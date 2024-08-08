@@ -6,6 +6,7 @@ missionNamespace setVariable ["civKilled", 0, true];
 
 //Blufor vehcile spawn counter
 missionNamespace setVariable ["bluforVehicleAvalaibleSpawn", 1000, true];
+missionNamespace setVariable ["independentVehicleAvalaibleSpawn", 1000, true];
 
 //Dead player base
 missionNamespace setVariable ["deadPlayer", [], true];

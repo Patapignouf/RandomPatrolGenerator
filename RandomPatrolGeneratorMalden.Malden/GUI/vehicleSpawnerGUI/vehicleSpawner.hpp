@@ -1,7 +1,7 @@
 class vehicleSpawner
 {
 	idd = 50000;
-	onLoad = "[""onLoad"",_this] execVM 'GUI\vehicleSpawnerGUI\loadVehicleSpawner.sqf';";
+	
 	class controlsBackground
 	{
 		class back: RscText

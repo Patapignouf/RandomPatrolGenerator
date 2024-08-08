@@ -282,6 +282,18 @@ if (side player == independent) then
 	//Manage arsenal	
 	[VA1] call setupPlayerLoadout;
 
+	//Add vehicle shop
+	VA1 addAction [format ["<img size='2' image='\a3\ui_f_oldman\data\IGUI\Cfg\holdactions\holdAction_market_ca.paa'/><t size='1'>Open vehicle shop</t>"],{
+			//Define parameters
+			params ["_object","_caller","_ID","_avalaibleVehicle"];
+
+			//Define independent shop vehicle
+			_independentUnarmedVehicle = bluforUnarmedVehicle_db select {_x select 1  == indFaction} select 0 select 0;
+			_independentUnarmedChopper = bluforUnarmedVehicleChopper_db select {_x select 1  == indFaction} select 0 select 0;
+
+			[["independentVehicleAvalaibleSpawn", _independentUnarmedVehicle, [], [], _independentUnarmedChopper, [], [], [], []], 'GUI\vehicleSpawnerGUI\vehicleSpawner.sqf'] remoteExec ['BIS_fnc_execVM', _caller];
+	},_x,3,true,false,"","(_target distance _this <5) && (_this getVariable 'role' == 'leader' || _this getVariable 'role' == 'pilot')"];
+
 	waituntil {!isNil "isBluforAttacked" && !isNil "isIndAttacked"};
 	if (isIndAttacked) then
 	{
@@ -484,7 +496,7 @@ if (side player == blufor) then
 					//Define parameters
 					params ["_object","_caller","_ID","_avalaibleVehicle"];
 
-					[[], 'GUI\vehicleSpawnerGUI\vehicleSpawner.sqf'] remoteExec ['BIS_fnc_execVM', _caller];
+					[["bluforVehicleAvalaibleSpawn", bluforUnarmedVehicle, bluforArmedVehicle, bluforArmoredVehicle, bluforUnarmedVehicleChopper, bluforArmedChopper, bluforDrone, bluforFixedWing, bluforBoat], 'GUI\vehicleSpawnerGUI\vehicleSpawner.sqf'] remoteExec ['BIS_fnc_execVM', _caller];
 			},_x,3,true,false,"","(_target distance _this <5) && (_this getVariable 'role' == 'leader' || _this getVariable 'role' == 'pilot')"];
 	};
 
@@ -523,15 +535,27 @@ setPlayerRespawnTime (missionNamespace getVariable "missionRespawnParam");
 [] spawn _generateCivDialogs;
 
 //Show a special message when there is a teamkill
+//Show a special message when there is a teamkill
 player addEventHandler ["Killed", {
 	params ["_unit", "_killer", "_instigator", "_useEffects"];
 	diag_log format ["%1 has been killed by : %2", name _unit, name _instigator];
+
+	//Check if the killer is a player
 	if (isPlayer _instigator) then 
 	{
-		[[format ["%1 has been killed by his teammate %2",name _unit, name _instigator], "teamkill"], 'engine\hintManagement\addCustomHint.sqf'] remoteExec ['BIS_fnc_execVM', side _instigator];
-		if (_instigator != _unit) then 
+		//Check if player are on opposite side
+		if ([side _instigator, playerSide] call BIS_fnc_sideIsEnemy) then 
 		{
-			[[-50,5], 'engine\rankManagement\rankPenalty.sqf'] remoteExec ['BIS_fnc_execVM', _instigator];
+			//Reward PvP kill
+			[[1, "RPG_ranking_infantry_kill"], 'engine\rankManagement\rankUpdater.sqf'] remoteExec ['BIS_fnc_execVM', _instigator];
+		} else 
+		{
+			//Add penalty if the killer is a friend
+			[[format ["%1 has been killed by his teammate %2",name _unit, name _instigator], "teamkill"], 'engine\hintManagement\addCustomHint.sqf'] remoteExec ['BIS_fnc_execVM', side _instigator];
+			if (_instigator != _unit) then 
+			{
+				[[-50,5], 'engine\rankManagement\rankPenalty.sqf'] remoteExec ['BIS_fnc_execVM', _instigator];
+			};
 		};
 	};
 }];

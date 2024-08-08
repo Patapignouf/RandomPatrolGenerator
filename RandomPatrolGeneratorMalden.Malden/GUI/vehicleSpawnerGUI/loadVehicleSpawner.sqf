@@ -2,14 +2,15 @@
 
 //Based on the work of 7erra
 //Github : https://github.com/7erra/LNBSort
-params ["_mode", "_this"];
-
+params ["_mode", "_this", "_VehicleAvalaibleSpawn","_UnarmedVehicle","_ArmedVehicle","_ArmoredVehicle","_UnarmedVehicleChopper","_ArmedChopper","_Drone","_FixedWing","_Boat"];
 private _mainDisplay = (findDisplay 50000);
 private _buttonOK = _mainDisplay displayCtrl 50001;
 private _buttonPreview = _mainDisplay displayCtrl 50003;
 private _vehicleShopTitle = _mainDisplay displayCtrl 49999;
 
-_vehicleShopTitle ctrlSetText (format ["Vehicle shop | Credits %1", missionNamespace getVariable "bluforVehicleAvalaibleSpawn"]);
+_vehicleShopTitle ctrlSetText (format ["Vehicle shop | Credits %1", missionNamespace getVariable _VehicleAvalaibleSpawn]);
+
+_mainDisplay setVariable ["VehicleAvalaibleSpawn", _VehicleAvalaibleSpawn];
 
 switch (_mode) do
 {
@@ -30,7 +31,7 @@ switch (_mode) do
 			_lnbEntries lnbSetData [[_ind, 0], _x];
 			_lnbEntries lnbSetData [[_ind, 1], _vehicleName];
 			_lnbEntries lnbSetData [[_ind, 2], str _price];
-		} foreach bluforUnarmedVehicle;
+		} foreach _UnarmedVehicle;
 
 		{
 			_price = 300;
@@ -41,7 +42,7 @@ switch (_mode) do
 			_lnbEntries lnbSetData [[_ind, 0], _x];
 			_lnbEntries lnbSetData [[_ind, 1], _vehicleName];
 			_lnbEntries lnbSetData [[_ind, 2], str _price];
-		} foreach bluforArmedVehicle;
+		} foreach _ArmedVehicle;
 
 		//Add armored vehicle for blufor
 		if (enableArmoredVehicle) then 
@@ -55,7 +56,7 @@ switch (_mode) do
 				_lnbEntries lnbSetData [[_ind, 0], _x];
 				_lnbEntries lnbSetData [[_ind, 1], _vehicleName];
 				_lnbEntries lnbSetData [[_ind, 2], str _price];
-			} foreach bluforArmoredVehicle;
+			} foreach _ArmoredVehicle;
 		};
 
 		//Unarmed Chopper
@@ -69,7 +70,7 @@ switch (_mode) do
 			_lnbEntries lnbSetData [[_ind, 0], _x];
 			_lnbEntries lnbSetData [[_ind, 1], _vehicleName];
 			_lnbEntries lnbSetData [[_ind, 2], str _price];
-		} foreach bluforUnarmedVehicleChopper;
+		} foreach _UnarmedVehicleChopper;
 
 		//Add armored vehicle for blufor
 		if (enableArmedAicraft) then 
@@ -83,7 +84,7 @@ switch (_mode) do
 				_lnbEntries lnbSetData [[_ind, 0], _x];
 				_lnbEntries lnbSetData [[_ind, 1], _vehicleName];
 				_lnbEntries lnbSetData [[_ind, 2], str _price];
-			} foreach bluforArmedChopper;
+			} foreach _ArmedChopper;
 
 			{
 				_price = 500;
@@ -94,7 +95,7 @@ switch (_mode) do
 				_lnbEntries lnbSetData [[_ind, 0], _x];
 				_lnbEntries lnbSetData [[_ind, 1], _vehicleName];
 				_lnbEntries lnbSetData [[_ind, 2], str _price];
-			} foreach bluforDrone;
+			} foreach _Drone;
 
 			{
 				_price = 600;
@@ -105,7 +106,7 @@ switch (_mode) do
 				_lnbEntries lnbSetData [[_ind, 0], _x];
 				_lnbEntries lnbSetData [[_ind, 1], _vehicleName];
 				_lnbEntries lnbSetData [[_ind, 2], str _price];
-			} foreach bluforFixedWing;
+			} foreach _FixedWing;
 		};
 
 		//Add ships
@@ -118,7 +119,7 @@ switch (_mode) do
 			_lnbEntries lnbSetData [[_ind, 0], _x];
 			_lnbEntries lnbSetData [[_ind, 1], _vehicleName];
 			_lnbEntries lnbSetData [[_ind, 2], str _price];
-		} foreach bluforBoat;
+		} foreach _Boat;
 
 
 		// for "_i" from 0 to 30 do {
@@ -131,7 +132,7 @@ switch (_mode) do
 			_btn = _display displayCtrl _idc;
 			_btn setVariable ["reverseSort",false];
 			_btn ctrlAddEventHandler ["ButtonClick",{
-				["sortCol",[ctrlParent (_this#0)] +_this] execVM "GUI\vehicleSpawnerGUI\loadVehicleSpawner.sqf";
+				["sortCol",[ctrlParent (_this#0)] +_this , _VehicleAvalaibleSpawn, _UnarmedVehicle, _ArmedVehicle, _ArmoredVehicle, _UnarmedVehicleChopper, _ArmedChopper, _Drone, _FixedWing, _Boat] execVM "GUI\vehicleSpawnerGUI\loadVehicleSpawner.sqf";
 			}];
 		};
 	};
@@ -162,8 +163,9 @@ _buttonOK ctrlAddEventHandler[ "ButtonClick",
 		_vehiclePriceToSpawn = parseNumber (_lnbEntries lnbData [lnbCurSelRow _lnbEntries, 2]);
 		_vehicleIsUAV = getText (configFile >> "CfgVehicles" >> _vehicleClassToSpawn >> "textSingular") == "UAV";
 
-		_bluforVehicleAvalaibleSpawnCounter = missionNamespace getVariable "bluforVehicleAvalaibleSpawn";
-
+		_VehicleAvalaibleSpawnName = _display getVariable "VehicleAvalaibleSpawn";
+		_bluforVehicleAvalaibleSpawnCounter = missionNamespace getVariable _VehicleAvalaibleSpawnName;
+		
 		if (_vehicleClassToSpawn != "") then 
 		{
 			if (_bluforVehicleAvalaibleSpawnCounter>=_vehiclePriceToSpawn) then 
@@ -172,8 +174,8 @@ _buttonOK ctrlAddEventHandler[ "ButtonClick",
 				if (_vehicleClassToSpawn isKindOf "Plane" && _vehicleIsUAV == false) then 
 				{
 						//Open map and spawn plane
-						[_vehicleClassToSpawn, _vehiclePriceToSpawn, _vehicleNameToSpawn, _bluforVehicleAvalaibleSpawnCounter] spawn {
-							params ["_vehicleClassToSpawn", "_vehiclePriceToSpawn", "_vehicleNameToSpawn", "_bluforVehicleAvalaibleSpawnCounter"];
+						[_vehicleClassToSpawn, _vehiclePriceToSpawn,_VehicleAvalaibleSpawnName, _vehicleNameToSpawn, _bluforVehicleAvalaibleSpawnCounter] spawn {
+							params ["_vehicleClassToSpawn", "_vehiclePriceToSpawn","_VehicleAvalaibleSpawnName", "_vehicleNameToSpawn", "_bluforVehicleAvalaibleSpawnCounter"];
 
 							//Click on map to spawn
 							selectedLoc = [0,0,0];
@@ -225,7 +227,7 @@ _buttonOK ctrlAddEventHandler[ "ButtonClick",
 									},[],1.5,true,true,"","(_target distance _this < 15) && ((assignedVehicleRole player)#0 == 'cargo')"]] remoteExec ["addAction", 0, true];
 
 								//Reduce avalaible spawn counter
-								missionNamespace setVariable ["bluforVehicleAvalaibleSpawn", _bluforVehicleAvalaibleSpawnCounter-_vehiclePriceToSpawn, true];
+								missionNamespace setVariable [_VehicleAvalaibleSpawnName, _bluforVehicleAvalaibleSpawnCounter-_vehiclePriceToSpawn, true];
 								hint format ["A %2 has spawned, %1 avdvanced spawn credit left.", _bluforVehicleAvalaibleSpawnCounter-_vehiclePriceToSpawn, _vehicleNameToSpawn];
 							};
 						};	
@@ -235,8 +237,8 @@ _buttonOK ctrlAddEventHandler[ "ButtonClick",
 					{
 						//Spawn ship
 						//Open map and spawn plane
-						[_vehicleClassToSpawn, _vehiclePriceToSpawn, _vehicleNameToSpawn, _bluforVehicleAvalaibleSpawnCounter] spawn {
-							params ["_vehicleClassToSpawn", "_vehiclePriceToSpawn", "_vehicleNameToSpawn", "_bluforVehicleAvalaibleSpawnCounter"];
+						[_vehicleClassToSpawn, _vehiclePriceToSpawn, _VehicleAvalaibleSpawnName, _vehicleNameToSpawn, _bluforVehicleAvalaibleSpawnCounter] spawn {
+							params ["_vehicleClassToSpawn", "_vehiclePriceToSpawn", "_VehicleAvalaibleSpawnName", "_vehicleNameToSpawn", "_bluforVehicleAvalaibleSpawnCounter"];
 
 							//Click on map to spawn
 							selectedLoc = [0,0,0];
@@ -252,27 +254,37 @@ _buttonOK ctrlAddEventHandler[ "ButtonClick",
 								//player moveInAny (vehicle _spawnedVehicle);
 
 								//Reduce avalaible spawn counter
-								missionNamespace setVariable ["bluforVehicleAvalaibleSpawn", _bluforVehicleAvalaibleSpawnCounter-_vehiclePriceToSpawn, true];
+								missionNamespace setVariable [_VehicleAvalaibleSpawnName, _bluforVehicleAvalaibleSpawnCounter-_vehiclePriceToSpawn, true];
 								hint format ["A %2 has spawned, %1 avdvanced spawn credit left.", _bluforVehicleAvalaibleSpawnCounter-_vehiclePriceToSpawn, _vehicleNameToSpawn];
 							};
 						};
 					} else 
 					{
 						//Else (other type of vehicle) do normal spawn around FOB
-						[_vehicleClassToSpawn, _vehicleIsUAV] spawn {
-							params ["_vehicleClassToSpawn", "_vehicleIsUAV"];
+						[_vehicleClassToSpawn, _vehicleIsUAV, _VehicleAvalaibleSpawnName, _bluforVehicleAvalaibleSpawnCounter, _vehiclePriceToSpawn] spawn {
+							params ["_vehicleClassToSpawn", "_vehicleIsUAV","_VehicleAvalaibleSpawnName", "_bluforVehicleAvalaibleSpawnCounter", "_vehiclePriceToSpawn"];
 
 							//Spawn the vehicle around the player or on blufor initial position if called from server
+							_spawnedVehicle = [];
 							if (hasInterface) then 
 							{
-								[getPos player, [[_vehicleClassToSpawn, _vehicleIsUAV]], 30, 100] call doGenerateVehicleForFOB;	
+								_spawnedVehicle = [getPos player, [[_vehicleClassToSpawn, _vehicleIsUAV]], 5, 100] call doGenerateVehicleForFOB;	
 							} else 
 							{
-								[initBlueforLocation, [[_vehicleClassToSpawn, _vehicleIsUAV]], 30, 100] call doGenerateVehicleForFOB;	
+								_spawnedVehicle = [initBlueforLocation, [[_vehicleClassToSpawn, _vehicleIsUAV]], 30, 100] call doGenerateVehicleForFOB;	
+							};
+
+							//Refund player if no vehicle can spawn
+							if (count _spawnedVehicle != 0) then 
+							{
+								missionNamespace setVariable [_VehicleAvalaibleSpawnName, _bluforVehicleAvalaibleSpawnCounter -_vehiclePriceToSpawn, true];
+							} else 
+							{
+								hint "No place for vehicle around here";
 							};
 						};	
 
-						missionNamespace setVariable ["bluforVehicleAvalaibleSpawn", _bluforVehicleAvalaibleSpawnCounter-_vehiclePriceToSpawn, true];
+						
 					};
 					//hint format ["A %2 has spawned, %1 avdvanced spawn credit left.", _bluforVehicleAvalaibleSpawnCounter-_vehiclePriceToSpawn, _vehicleNameToSpawn];
 				};
