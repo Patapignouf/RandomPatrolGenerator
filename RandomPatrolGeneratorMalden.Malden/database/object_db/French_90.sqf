@@ -1,3 +1,5 @@
+#include "..\classConstant.sqf"
+
 //Add specific AMF factions
 if (isClass (configFile >> "CfgPatches" >> "AMF_Patches")) then 
 {
@@ -62,21 +64,14 @@ bluforArmoredVehicle_French_90 = [
 //Loadout management////
 ////////////////////////
 
-c_leader = "leader";
-c_Medic = "medic";
-c_at = "at";
-c_rifleman = "rifleman";
-c_engineer = "engineer";
-c_autorifleman = "autorifleman";
-c_marksman = "marksman";
-c_Pilot = "pilot";
-
 
 //French
 loadout_French_90 = [		
 	[c_leader,[["AMF_Samas_G2_01_F","","","AMF_Eotech_552",["30Rnd_556x45_Stanag",30],[],""],[],["AMF_Pamas","","acc_flashlight_pistol","",["15Rnd_9x21_Mag",15],[],""],["amf_uniform_01_RE_OD_HX",[["30Rnd_556x45_Stanag",3,30],["Chemlight_red",1,1]]],["amf_S3_01_CE",[["30Rnd_556x45_Stanag_Tracer_Green",11,30]]],["AMF_rush24_01",[["FirstAidKit",1],["30Rnd_556x45_Stanag_Tracer_Green",2,30],["SmokeShell",1,1],["SmokeShellBlue",1,1],["SmokeShellRed",1,1]]],"AMF_FELIN_L06_CE","G_Balaclava_oli",["AMF_APX_M241","","","",[],[],""],["ItemMap","ItemGPS","ItemRadio","ItemCompass","",""]]],
-	[c_Medic,[["AMF_Samas_G2_01_F","","","AMF_Eotech_552",["30Rnd_556x45_Stanag",30],[],""],[],["AMF_Pamas","","acc_flashlight_pistol","",["15Rnd_9x21_Mag",15],[],""],["amf_uniform_01_RE_OD_HX",[["30Rnd_556x45_Stanag",3,30],["Chemlight_red",1,1]]],["amf_S3_01_CE",[["30Rnd_556x45_Stanag_Tracer_Green",11,30]]],["AMF_rush24_01",[["FirstAidKit",10],["Medikit",1],["30Rnd_556x45_Stanag_Tracer_Green",2,30],["SmokeShell",1,1],["SmokeShellBlue",1,1],["SmokeShellRed",1,1]]],"AMF_FELIN_L06_CE","G_Balaclava_oli",["AMF_APX_M241","","","",[],[],""],["ItemMap","ItemGPS","ItemRadio","ItemCompass","",""]]],
-	[c_rifleman,[["AMF_Samas_G2_01_F","","","AMF_Eotech_552",["30Rnd_556x45_Stanag",30],[],""],[],["AMF_Pamas","","acc_flashlight_pistol","",["15Rnd_9x21_Mag",15],[],""],["amf_uniform_01_RE_OD_HX",[["30Rnd_556x45_Stanag",3,30],["Chemlight_red",1,1]]],["amf_S3_01_CE",[["30Rnd_556x45_Stanag_Tracer_Green",11,30]]],["AMF_rush24_01",[["ToolKit",1],["MineDetector",1],["30Rnd_556x45_Stanag_Tracer_Green",2,30],["SmokeShell",1,1],["SmokeShellBlue",1,1],["SmokeShellRed",1,1],["DemoCharge_Remote_Mag",1,1]]],"AMF_FELIN_L06_CE","G_Balaclava_oli",["AMF_APX_M241","","","",[],[],""],["ItemMap","ItemGPS","ItemRadio","ItemCompass","",""]]],
+	[c_at,[["AMF_Samas_G2_01_F","","","AMF_Eotech_552",["30Rnd_556x45_Stanag",30],[],""],["AMF_AT4CS_F","","","",["AMF_84mm_AT4CS",1],[],""],["AMF_Pamas","","acc_flashlight_pistol","",["15Rnd_9x21_Mag",15],[],""],["amf_uniform_01_RE_OD_HX",[["30Rnd_556x45_Stanag",3,30],["Chemlight_red",1,1]]],["amf_S3_01_CE",[["30Rnd_556x45_Stanag_Tracer_Green",11,30]]],["AMF_rush24_01",[["FirstAidKit",1],["30Rnd_556x45_Stanag_Tracer_Green",2,30],["SmokeShell",1,1],["SmokeShellBlue",1,1],["SmokeShellRed",1,1]]],"AMF_FELIN_L06_CE","G_Balaclava_oli",["AMF_APX_M241","","","",[],[],""],["ItemMap","ItemGPS","ItemRadio","ItemCompass","",""]]],
+	[c_medic,[["AMF_Samas_G2_01_F","","","AMF_Eotech_552",["30Rnd_556x45_Stanag",30],[],""],[],["AMF_Pamas","","acc_flashlight_pistol","",["15Rnd_9x21_Mag",15],[],""],["amf_uniform_01_RE_OD_HX",[["30Rnd_556x45_Stanag",3,30],["Chemlight_red",1,1]]],["amf_S3_01_CE",[["30Rnd_556x45_Stanag_Tracer_Green",11,30]]],["AMF_rush24_01",[["FirstAidKit",10],["Medikit",1],["30Rnd_556x45_Stanag_Tracer_Green",2,30],["SmokeShell",1,1],["SmokeShellBlue",1,1],["SmokeShellRed",1,1]]],"AMF_FELIN_L06_CE","G_Balaclava_oli",["AMF_APX_M241","","","",[],[],""],["ItemMap","ItemGPS","ItemRadio","ItemCompass","",""]]],
+	[c_grenadier,[["AMF_Samas_G2_01_F","","","AMF_Eotech_552",["30Rnd_556x45_Stanag",30],["AMF_RFG_AC58",1],""],[],["AMF_Pamas","","acc_flashlight_pistol","",["15Rnd_9x21_Mag",15],[],""],["amf_uniform_01_RE_OD_HX",[["30Rnd_556x45_Stanag",3,30],["Chemlight_red",1,1]]],["amf_S3_01_CE",[["30Rnd_556x45_Stanag_Tracer_Green",11,30],["AMF_RFG_APAV40",5,1],["AMF_RFG_AC58",5,1]]],["AMF_rush24_01",[["FirstAidKit",1],["30Rnd_556x45_Stanag_Tracer_Green",2,30],["SmokeShell",1,1],["SmokeShellBlue",1,1],["SmokeShellRed",1,1]]],"AMF_FELIN_L06_CE","G_Balaclava_oli",["AMF_APX_M241","","","",[],[],""],["ItemMap","ItemGPS","ItemRadio","ItemCompass","",""]]],
+	[c_rifleman,[["AMF_Samas_G2_01_F","","","AMF_Eotech_552",["30Rnd_556x45_Stanag",30],[],""],[],["AMF_Pamas","","acc_flashlight_pistol","",["15Rnd_9x21_Mag",15],[],""],["amf_uniform_01_RE_OD_HX",[["30Rnd_556x45_Stanag",3,30],["Chemlight_red",1,1]]],["amf_S3_01_CE",[["30Rnd_556x45_Stanag_Tracer_Green",11,30]]],["AMF_rush24_01",[["FirstAidKit",1],["30Rnd_556x45_Stanag_Tracer_Green",2,30],["SmokeShell",1,1],["SmokeShellBlue",1,1],["SmokeShellRed",1,1]]],"AMF_FELIN_L06_CE","G_Balaclava_oli",["AMF_APX_M241","","","",[],[],""],["ItemMap","ItemGPS","ItemRadio","ItemCompass","",""]]],
 	[c_engineer,[["AMF_Samas_G2_01_F","","","AMF_Eotech_552",["30Rnd_556x45_Stanag",30],[],""],[],["AMF_Pamas","","acc_flashlight_pistol","",["15Rnd_9x21_Mag",15],[],""],["amf_uniform_01_RE_OD_HX",[["30Rnd_556x45_Stanag",3,30],["Chemlight_red",1,1]]],["amf_S3_01_CE",[["30Rnd_556x45_Stanag_Tracer_Green",11,30]]],["AMF_rush24_01",[["ToolKit",1],["MineDetector",1],["30Rnd_556x45_Stanag_Tracer_Green",2,30],["SmokeShell",1,1],["SmokeShellBlue",1,1],["SmokeShellRed",1,1],["DemoCharge_Remote_Mag",1,1]]],"AMF_FELIN_L06_CE","G_Balaclava_oli",["AMF_APX_M241","","","",[],[],""],["ItemMap","ItemGPS","ItemRadio","ItemCompass","",""]]],
 	[c_autorifleman,[["amf_mini_mg_tactical_mk3","","","AMF_EOTECH_553",["150Rnd_MINI_MG_mag",150],[],""],[],["AMF_Pamas","","acc_flashlight_pistol","",["15Rnd_9x21_Mag",15],[],""],["amf_uniform_01_RE_OD_HX",[["Chemlight_red",1,1],["15Rnd_9x21_Mag",3,15]]],["amf_S3_01_CE",[["150Rnd_MINI_MG_mag_Tracer_red",4,150]]],[],"AMF_FELIN_L06_CE","G_Balaclava_oli",["AMF_APX_M241","","","",[],[],""],["ItemMap","ItemGPS","ItemRadio","ItemCompass","",""]]],
 	[c_marksman,[["AMF_RFF2_01_F","","","optic_LRPS",["10Rnd_762x51_Mag",10],[],""],[],["AMF_Pamas","","acc_flashlight_pistol","",["15Rnd_9x21_Mag",15],[],""],["amf_uniform_01_RE_OD_HX",[["Chemlight_red",1,1],["10Rnd_762x51_Mag",3,10]]],["amf_S3_01_CE",[["10Rnd_762x51_Mag",12,10],["15Rnd_9x21_Mag",2,15]]],[],"AMF_FELIN_L06_CE","G_Balaclava_oli",["AMF_APX_M241","","","",[],[],""],["ItemMap","ItemGPS","","ItemCompass","",""]]],
@@ -218,17 +213,6 @@ itemEngineerList_French_90 = [
 	"DemoCharge_Remote_Mag"
 	];
 
-//item avalaible only for medics
-itemMedicList_French_90 = [
-	"Medikit",
-	"ACE_epinephrine",
-	"ACE_bloodIV",
-	"ACE_bloodIV_500",
-	"ACE_bloodIV_250",
-	"ACE_personalAidKit",
-	"ACE_surgicalKit",
-	"ACE_suture"
-	];
 
 
 //backpack avalaible for all unit
@@ -285,8 +269,4 @@ uniformList_French_90 = [
 
 	//
 	"amf_balaclava_tan"
-	];
-
-//Magazine avalaible for all unit
-magazineList_French_90 = [
 	];
