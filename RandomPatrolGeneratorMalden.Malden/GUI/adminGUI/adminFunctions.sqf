@@ -44,6 +44,10 @@ params ["_supportType"];
 		{
 			[] call doIncrementVehicleSpawnCounter; 
 		};
+		case "EndMission":
+		{
+			[['PLY_DEAD'], 'engine\objectiveManagement\endMission.sqf'] remoteExec ['BIS_fnc_execVM', 2];
+		};
 		default
 		{
 			//Do nothing
@@ -142,3 +146,15 @@ addClearWeather = {
 
 	[_ctrl, _supportName, _supportNameCode, _supportIcon, _supportType] call addSupportOption;
 };
+
+addEndMission = {
+	params ["_ctrl"];
+
+	_supportName = "End current mission";
+	_supportNameCode = "EndMission";
+	_supportIcon = "\a3\ui_f\data\igui\cfg\simpletasks\types\Radio_ca.paa";
+	_supportType = "Mission";
+
+	[_ctrl, _supportName, _supportNameCode, _supportIcon, _supportType] call addSupportOption;
+};
+
