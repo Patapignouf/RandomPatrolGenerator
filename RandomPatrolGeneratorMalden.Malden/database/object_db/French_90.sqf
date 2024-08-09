@@ -28,8 +28,7 @@ bluforUnarmedVehicleChopper_French_90 = [
 	"amf_cougar", 
 	"AMF_panther_FRA", 
 	"AMF_gazelle_afte_f", 
-	"B_AMF_Heli_Transport_01_F", 
-	"amf_nh90_tth_transport"
+	"B_AMF_Heli_Transport_01_F"
 ];
 
 bluforArmedChopper_French_90 = [
@@ -137,7 +136,8 @@ attachmentShortList_French_90	= [
 	"amf_red_dot_sight",
 	"AMF_EOTECH_553",
 	"AMF_EOTECH_553_painted",
-	"AMF_xps3"
+	"AMF_xps3",
+	"amf_scrome_j4_02"
 ];
 
 //Items avalaible only for marksman
