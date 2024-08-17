@@ -181,6 +181,7 @@ loadout_USA_2020 = [
 //USA
 rifleList_USA_2020 = [		
 	//M4A1
+	"rhs_weap_m4",
 	"rhs_weap_m4a1_mstock_grip3",
 	"rhs_weap_m4a1_grip3",
 	"rhs_weap_m4a1_mstock",
@@ -328,7 +329,7 @@ itemList_USA_2020 = [
 ];
 
 itemEngineerList_USA_2020 = [
-
+	"DemoCharge_Remote_Mag"
 ];
 	
 itemMedicList_USA_2020 = [
