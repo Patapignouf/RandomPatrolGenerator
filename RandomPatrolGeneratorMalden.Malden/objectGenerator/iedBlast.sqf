@@ -29,7 +29,7 @@ _fakeIed hideObjectGlobal true;
 		// Action on going code
 	},  
 	{
-		// Action successfull code
+		// Action successfull code	
 		params ["_object","_caller","_ID","_objectParams","_progress","_maxProgress"];
 		
 		_fakeIed = _objectParams#0;
@@ -37,14 +37,14 @@ _fakeIed hideObjectGlobal true;
 		_isACE = (isClass (configFile >> "CfgPatches" >> "ace_medical"));
 
 		//Test if the player has engineer skill
-		if (_caller getUnitTrait "Engineer" && ((!_isACE) || (_isACE && ("ACE_DefusalKit" in (items _caller))))) then
+		if ((_caller getUnitTrait "Engineer") && ((!_isACE) || (_isACE && ("ACE_DefusalKit" in (items _caller))))) then
 		{
 			//Tell the player that the IED has been defused
 			[1,["The IED has been defused", "PLAIN", 0.5]] remoteExec ["cutText", _caller];
 
 			//Reward the defuse
 			[[5, "RPG_ied_defuse"], "engine\rankManagement\rankUpdater.sqf"] remoteExec ['BIS_fnc_execVM', _caller];
-		} else 
+		} else 	
 		{
 			//Explode the IED
 			"Land_ShellCrater_01_F" createVehicle (getPos _object);
