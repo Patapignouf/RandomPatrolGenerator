@@ -200,8 +200,6 @@ rifleList_UKR_2024 = [
 	"rhs_weap_pya",
 	"rhs_weap_6p53",
 
-	
-
 	//Periscope
 	"rhs_weap_tr8",
 
@@ -209,6 +207,7 @@ rifleList_UKR_2024 = [
 	//Add USA Stuff
 	//M4A1
 	"rhs_weap_m4",
+	"rhs_weap_m4a1",
 	"rhs_weap_m4a1_mstock_grip3",
 	"rhs_weap_m4a1_grip3",
 	"rhs_weap_m4a1_mstock",
