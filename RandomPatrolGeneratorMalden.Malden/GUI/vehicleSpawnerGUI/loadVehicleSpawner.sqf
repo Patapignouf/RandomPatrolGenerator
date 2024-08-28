@@ -208,8 +208,8 @@ _buttonOK ctrlAddEventHandler[ "ButtonClick",
 												_whs = createVehicle ["WeaponHolderSimulated_Scripted",[0,0,0],[],0,"can_collide"];
 												_plyr action ["DropBag", _whs, _bpktype];
 												_plyr addBackpackGlobal "B_parachute";
-												waitUntil {0.5; !isNull objectParent _plyr or isTouchingGround _plyr};  
-												waitUntil {0.5; isNull objectParent _plyr or isTouchingGround _plyr};
+												waitUntil {0.5; !isNull objectParent _plyr or (position _plyr)#2<0.6}; 
+												waitUntil {0.5; isNull objectParent _plyr or (position _plyr)#2<0.6};
 												uiSleep 0.5;
 												if (!isNull _whs) then {
 													_plyr action ["AddBag",objectParent (_plyr getVariable "bpk"), _bpktype];

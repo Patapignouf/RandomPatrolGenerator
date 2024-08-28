@@ -21,6 +21,22 @@ if (_isFirstStart) then
 		_ctrl ctrlCommit 0;
 		_ctrl ctrlSetStructuredText parseText "<a color='#ff0000' size='4' href='https://discord.gg/S6Y6YTjT'><t color='#ff0000'>Join the PataCompany !</t><br/><t color='#ff0000'>Join the Discord</t></a>";
 	};
+
+	//Init all XP categories
+	_basicXPToInit = ["RPG_ranking_infantry_kill",
+					"RPG_ranking_vehicle_kill",
+					"deathNumber",
+					"RPG_ranking_suppress",
+					"RPG_ranking_heal",
+					"RPG_ranking_repair",
+					"RPG_ied_defuse",
+					"RPG_ranking_intel_collect",
+					"RPG_ranking_objective_complete"
+					];
+
+	{
+		_unit setVariable [_x, 0, true];
+	} foreach _basicXPToInit;
 };
 
 // //Kill ranking reward management
@@ -81,7 +97,7 @@ if (_isFirstStart) then
 // }];
 
 //Add repair event (no direct event for repair found, this is based on animation, it can obviously be improved)
-_unit addEventHandler ["AnimDone", {
+_animDoneEH = _unit addEventHandler ["AnimDone", {
 	params ["_unit", "_anim"];
 	if (_anim == "acts_carfixingwheel" || _anim == "amovpknlmstpsnonwnondnon") then 
 	{
@@ -90,8 +106,7 @@ _unit addEventHandler ["AnimDone", {
 		[[1, "RPG_ranking_repair"], 'engine\rankManagement\rankUpdater.sqf'] remoteExec ['BIS_fnc_execVM', _unit];
 	};
 }];
-
-
+player setVariable ["AnimDoneEH", _animDoneEH, true];
 
 
 //Medical ranking reward management

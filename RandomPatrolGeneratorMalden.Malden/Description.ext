@@ -114,6 +114,13 @@ class Params
 		texts[] = {"No","Yes"};
 		default = 0;
 	};
+	class EndlessMission
+	{
+		title = "Enable Endless Mission Mode (Start mission setup after each mission ending)";
+		values[] = {0,1};
+		texts[] = {"No","Yes"};
+		default = 0;
+	};
 	class EnableAutoDifficultyBalance
 	{
 		title = "Enable Automatic difficulty balance";

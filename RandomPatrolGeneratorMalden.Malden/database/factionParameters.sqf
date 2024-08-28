@@ -48,6 +48,7 @@ factionID = 41;
 #include "object_db\RU_2020.sqf"
 #include "object_db\RU_2020_reservists.sqf"
 #include "object_db\French_90.sqf"
+#include "object_db\UKR_2024.sqf"
 
 ////////////////////////////////////
 ///DO NOT CHANGE FACTION ORDER//////

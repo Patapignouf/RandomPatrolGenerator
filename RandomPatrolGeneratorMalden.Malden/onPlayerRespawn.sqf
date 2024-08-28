@@ -34,7 +34,7 @@ if (isClass (configFile >> "CfgPatches" >> "ace_medical")) then
 [[player, false], 'engine\rankManagement\rankManager.sqf'] remoteExec ['BIS_fnc_execVM', player];
 
 //Show a special message when there is a teamkill
-player addEventHandler ["Killed", {
+_KilledEH = player addEventHandler ["Killed", {
 	params ["_unit", "_killer", "_instigator", "_useEffects"];
 	diag_log format ["%1 has been killed by : %2", name _unit, name _instigator];
 
@@ -57,17 +57,19 @@ player addEventHandler ["Killed", {
 		};
 	};
 }];
+player setVariable ["KilledEH", _KilledEH, true];
 
 //Prevent players from instant death
 if !(isClass (configFile >> "CfgPatches" >> "ace_medical")) then 
 {
-	player addEventHandler ["HandleDamage",{
+	_handleDamageEH = player addEventHandler ["HandleDamage",{
 		private["_damage"];
 		if ((lifeState player == "INCAPACITATED")||(lifeState player == "SHOOTING")) then {
 			_damage = 0;
 		};    
 		_damage    
 	}];
+	player setVariable ["HandleDamageEH", _handleDamageEH, true];
 } else 
 {
 	//Add ACE cookoff high probability on enemy weapon

@@ -55,6 +55,9 @@ _scoreboardList   lnbSetCurSelRow 0;
 
 _scoreboardList ctrlCommit 0;
 
+player setVariable ["ScoreBoardDisplay", _thisDisplay];
+//_thisDisplay closeDisplay 1;
+
 /////////////////////////WIP////////////////
 // Function to update the scoreboard
 // scoreboardUpdate = {

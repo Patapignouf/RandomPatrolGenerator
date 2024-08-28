@@ -9,7 +9,7 @@ waitUntil {!isNull player && (getClientStateNumber>=10||!isMultiplayer)};
 diag_log format ["Setup Player %1 at position 0", name player];
 
 //init tp to be able to spawn on the ground on each map
-player setPos [worldSize,worldSize,1];
+player setPos [worldSize,worldSize];
 player allowdamage false;
 enableSentences false;
 
@@ -192,13 +192,14 @@ if (isClass (configFile >> "CfgPatches" >> "ace_medical")) then
 //Prevent players from instant death
 if !(isClass (configFile >> "CfgPatches" >> "ace_medical")) then 
 {
-	player addEventHandler ["HandleDamage",{
+	_handleDamageEH = player addEventHandler ["HandleDamage",{
 		private["_damage"];
 		if ((lifeState player == "INCAPACITATED")||(lifeState player == "SHOOTING")) then {
 			_damage = 0;
 		};    
 		_damage    
 	}];
+	player setVariable ["HandleDamageEH", _handleDamageEH, true];
 } else 
 {
 	//Only do weapon jamming if loadout restriction is enable
@@ -227,7 +228,7 @@ if !(isClass (configFile >> "CfgPatches" >> "ace_medical")) then
 [player, -1, true] call BIS_fnc_respawnTickets;
 
 //Corpse manager
-player addEventHandler ["Respawn",{ 
+_respawnEH = player addEventHandler ["Respawn",{ 
 	params ["_unit", "_corpse"];
 	_corpse setVariable ["isPlayerObject",true, true];
 	[_corpse] spawn {
@@ -236,6 +237,7 @@ player addEventHandler ["Respawn",{
 		deleteVehicle _corpse;
 	};
 }];
+player setVariable ["RespawnEH", _respawnEH, true];
 
 diag_log format ["Setup Player %1 at position 1", name player];
 
@@ -271,7 +273,7 @@ if (side player == independent) then
 	waitUntil {!isNil "missionGenerated"};
 
 	player setVariable ["sideBeforeDeath","independent"];
-	_spawnPos = [initCityLocation, 1, 30, 3, 0, 20, 0] call BIS_fnc_findSafePos;
+	_spawnPos = [initCityLocation, 1, 30, 3, 0, 20, 0, [], [initCityLocation,initCityLocation]] call BIS_fnc_findSafePos;
 	diag_log format ["Player %1 has spawn on position %2", name player, _spawnPos];
 	player setPos (_spawnPos);
 
@@ -403,7 +405,7 @@ if (side player == blufor) then
 	player setVariable ["spawnLoadout", getUnitLoadout player];
 
 	//Manage arsenal
-	waitUntil{!isNil "VA2"};
+	waitUntil{!isNil "bluforFOBBuild"};
 	[VA2] call setupPlayerLoadout;	
 
 	[] spawn {
@@ -535,8 +537,7 @@ setPlayerRespawnTime (missionNamespace getVariable "missionRespawnParam");
 [] spawn _generateCivDialogs;
 
 //Show a special message when there is a teamkill
-//Show a special message when there is a teamkill
-player addEventHandler ["Killed", {
+_KilledEH = player addEventHandler ["Killed", {
 	params ["_unit", "_killer", "_instigator", "_useEffects"];
 	diag_log format ["%1 has been killed by : %2", name _unit, name _instigator];
 
@@ -559,7 +560,7 @@ player addEventHandler ["Killed", {
 		};
 	};
 }];
-		
+player setVariable ["KilledEH", _KilledEH, true];
 
 //If a player join in progress he will be teleported to his teamleader (WIP feature)
 if (didJIP) then 
@@ -571,7 +572,7 @@ if (didJIP) then
 	if (count (_deadPlayerList select { _x == (name player) }) == 0) then 
 	{
 		//Disable specific respawn menu
-		player setPos [worldSize,worldSize,1];
+		player setPos [worldSize,worldSize];
 		player allowdamage false;
 		[[], 'GUI\respawnGUI\initPlayerRespawnMenu.sqf'] remoteExec ['BIS_fnc_execVM', player];
 	} else 

@@ -142,6 +142,11 @@ if ((_objectiveID call BIS_fnc_taskState ) != "SUCCEEDED" && !(missionNameSpace 
 		};
 	};
 
+	//Store every task id
+	_currentSideObjectives = missionNamespace getVariable ["currentSideObjectives", []];
+	_currentSideObjectives pushBack _objectiveID;
+	 missionNamespace setVariable ["currentSideObjectives", _currentSideObjectives, true];
+
 	//Generate the side task
 	[true , [_objectiveID, _mainSideQuestID], [_currentObjectiveDescription, _currentObjectiveTitle, "cookiemarker2_intel"], objNull, "CREATED", -1, true] call BIS_fnc_taskCreate;
 };

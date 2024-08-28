@@ -6,6 +6,7 @@ nb_blu_player_alive = 0;
 currentRandomAttack = objNull;
 currentGroupAttack = objNull;
 positionToAttack = [];
+_missionNumber = missionNamespace getVariable ["missionNumber", 0];
 
 //Init sleep before spawn
 diag_log "Init harass !";
@@ -13,7 +14,7 @@ sleep 800;
 
 if (isServer) then
 {
-	while {sleep 60; true} do  
+	while {sleep 60; (_missionNumber == (missionNamespace getVariable ["missionNumber", 0]))} do  
 	{
 		_thisDifficulty = missionNamespace getVariable "missionDifficultyParam"; //Default medium
 

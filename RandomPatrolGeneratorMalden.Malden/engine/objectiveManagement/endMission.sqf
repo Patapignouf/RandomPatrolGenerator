@@ -75,12 +75,25 @@ if (!_isEndMissionRunning) then
 	[{ player allowDamage false;}] remoteExec ["call", -2];
 
 	//Wait for player to read
-	sleep 20;
+	sleep 10;
 
-	//End Mission
-	if (isMultiplayer) then {
-		[_endingName] remoteExec ["BIS_fnc_endMission"];
-	} else {
-		_endingName call BIS_fnc_endMission;
+
+	//Check if the mission is in endless mod
+	if (("EndlessMission" call BIS_fnc_getParamValue) == 1) then 
+	{
+		//Close all currently displayed dialog 
+		[{ (player getVariable "ScoreBoardDisplay") closeDisplay 1;}] remoteExec ["call", 0];
+
+		//Clean mission
+		//Restart mission setup
+		[[], "cleanMission.sqf"] remoteExec ['BIS_fnc_execVM', 2];
+	} else 
+	{
+		//End Mission
+		if (isMultiplayer) then {
+			[_endingName] remoteExec ["BIS_fnc_endMission"];
+		} else {
+			_endingName call BIS_fnc_endMission;
+		};
 	};
 };

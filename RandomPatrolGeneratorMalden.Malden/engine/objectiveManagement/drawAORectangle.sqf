@@ -5,7 +5,7 @@ myEHParams = [_position,_triggerArea];
 //Display area of operation
 if (!isServer || hasInterface) then 
 {
-	(findDisplay 12 displayCtrl 51) ctrlAddEventHandler ["Draw",{
+	_ctrlID = (findDisplay 12 displayCtrl 51) ctrlAddEventHandler ["Draw",{
 			(_this select 0) drawRectangle [
 			myEHParams#0,
 			(myEHParams#1)#0,
@@ -15,4 +15,5 @@ if (!isServer || hasInterface) then
 			""
 		];
 	}];
+	player setVariable ["TaskRTBSquareDrawID", _ctrlID, true];
 };

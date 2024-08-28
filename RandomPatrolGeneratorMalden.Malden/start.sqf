@@ -39,6 +39,18 @@ if (isMultiplayer) then
 };
 publicVariable "adminExist";
 
+//Setup endmission
+missionNamespace setVariable ["isEndMissionRunning", false, true];
+missionNamespace setVariable ["generationSetup", false, true];
+missionGenerated = nil;
+publicvariable "missionGenerated";
+bluforFOBBuild = nil;
+publicvariable "bluforFOBBuild";
+PossibleObjectivePosition = nil;
+publicvariable "PossibleObjectivePosition";
+AllPossibleObjectivePosition = nil;
+publicvariable "AllPossibleObjectivePosition";
+
 //Mission settings waiting
 waitUntil {missionNamespace getVariable "generationSetup" == true};
 
@@ -619,7 +631,7 @@ missionNameSpace setVariable ["missionSetupMessage", "Generating opfor patrols, 
 //Generate Wave
 if (1 <= (count EnemyWaveSpawnPositions)) then 
 {
-	[EnemyWaveGroups,EnemyWaveSpawnPositions,initCityLocation, missionDifficultyParam] execVM 'enemyManagement\generationEngine\generateWave.sqf'; 
+	//[EnemyWaveGroups,EnemyWaveSpawnPositions,initCityLocation, missionDifficultyParam] execVM 'enemyManagement\generationEngine\generateWave.sqf'; 
 };
 
 //Generate mortar | 25% chance to spawn 

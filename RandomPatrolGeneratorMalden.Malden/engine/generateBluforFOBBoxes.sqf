@@ -1,4 +1,12 @@
 params ["_initBlueforLocation","_deployableFOBMounted","_deployableFOB"];
+//Init publicvariables
+VA2 = nil;
+publicvariable "VA2";
+deployableFOBItem = nil;
+publicvariable "deployableFOBItem";
+TPFlag1 = nil;
+publicvariable "TPFlag1";
+
 
 //Wait for Blufor FOB generation
 sleep 5;
@@ -74,7 +82,9 @@ publicvariable "deployableFOBItem";
 				};
 			};
 
-	},_x,1.5,true,true,"","(_target distance _this <5) && (_this getVariable 'role' == 'leader' || _this getVariable 'role' == 'pilot')"]] remoteExec ["addAction", 0, true];
+	},[],1.5,true,true,"","(_target distance _this <5) && (_this getVariable 'role' == 'leader' || _this getVariable 'role' == 'pilot')"
+	]
+] remoteExec ["addAction", 0, true];
 
 
 BluforAmmoBox = [];
@@ -415,3 +425,6 @@ _trgBluforGrassCutterFOB setTriggerArea [15, 15, 0, true];
 
 //Just cutting grass with a small trigger on Blufor FOB :p  
 [_trgBluforGrassCutterFOB, 20, 20] execvm "engine\grassCutter.sqf";
+
+bluforFOBBuild = true;
+publicvariable "bluforFOBBuild";

@@ -29,7 +29,7 @@ objectReturnedToCity = [];
 [] execVM "engine\respawnManagement\respawnSetup.sqf";
 
 
-while {sleep 10; !RTBComplete} do
+while {sleep 10; (!RTBComplete)&&(!(missionNamespace getVariable ["isEndMissionRunning", false]))} do
 {
 	_completedObjectives = missionNamespace getVariable ["completedObjectives",[]];
 	_missionObjectives = missionNamespace getVariable ["MissionObjectives",[]];
@@ -46,7 +46,7 @@ while {sleep 10; !RTBComplete} do
 	};
 	
 	//Check if mission is complete
-	if ((missionComplete && !enableCampaignMode)||(count _completedObjectives >= count AllPossibleObjectivePosition)) then 
+	if (((missionComplete && !enableCampaignMode)||(count _completedObjectives >= count AllPossibleObjectivePosition))&&((count _missionObjectives)>0)) then 
 	{
 		//Generate RTB mission
 		if (!isRTBMissionGenerated) then 
@@ -83,7 +83,9 @@ while {sleep 10; !RTBComplete} do
 	};
 };
 
-
-diag_log format ["All objectives completed !"];
-[['OBJ_OK'], 'engine\objectiveManagement\endMission.sqf'] remoteExec ['BIS_fnc_execVM', 2];
+if (!(missionNamespace getVariable ["isEndMissionRunning", false])) then 
+{
+	diag_log format ["All objectives completed !"];
+	[['OBJ_OK'], 'engine\objectiveManagement\endMission.sqf'] remoteExec ['BIS_fnc_execVM', 2];
+};
 
