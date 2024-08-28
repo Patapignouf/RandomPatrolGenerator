@@ -318,11 +318,13 @@ itemList_2035_NATO = [
 	"ACE_RangeCard",
 	"ACE_NVG_Wide_Black_WP",
 	"ACE_NVG_Wide_WP",
-	"ACE_NVG_Wide_Green_WP"
+	"ACE_NVG_Wide_Green_WP",
+	"ACE_HuntIR_monitor"
 	];
 
 //item avalaible for all engineer
 itemEngineerList_2035_NATO = [
+	"DemoCharge_Remote_Mag"
 ];
 
 //item avalaible for all medic
@@ -360,4 +362,5 @@ uniformList_2035_NATO = [
 
 //Magazine avalaible for all unit
 magazineList_2035_NATO = [
+	"ACE_HuntIR_M203"
 ];
