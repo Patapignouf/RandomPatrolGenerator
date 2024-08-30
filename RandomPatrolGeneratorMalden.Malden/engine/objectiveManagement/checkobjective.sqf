@@ -53,12 +53,13 @@ while {sleep 10; (!RTBComplete)&&(!(missionNamespace getVariable ["isEndMissionR
 		{
 			[true, "taskRTB", ["Return to your initial base or extract  area of operation", "RTB or Extract", ""], objNull, 1, 3, true] call BIS_fnc_taskCreate;
 			isRTBMissionGenerated = true;
+			safeMargin = 800;
 
 			extractExtendedTriggerArea = createTrigger ["EmptyDetector", areaOfOperationPosition]; //create a trigger area created at object with variable name my_object
-			extractExtendedTriggerArea setTriggerArea [(extendedTriggerArea #0)+800, (extendedTriggerArea #1)+800, 0, true]; // trigger area with a radius of 100m.
+			extractExtendedTriggerArea setTriggerArea [(extendedTriggerArea #0)+safeMargin, (extendedTriggerArea #1)+safeMargin, 0, true]; // trigger area with a radius of 100m.
 			
 			//Display area of operation
-			[[areaOfOperationPosition,[(extendedTriggerArea #0)+800,(extendedTriggerArea #1)+800]], "engine\objectiveManagement\drawAORectangle.sqf"] remoteExec ['BIS_fnc_execVM', 0, true];
+			[[areaOfOperationPosition,[(extendedTriggerArea #0)+safeMargin,(extendedTriggerArea #1)+safeMargin]], "engine\objectiveManagement\drawAORectangle.sqf"] remoteExec ['BIS_fnc_execVM', 0, true];
 		};
 
 		nbBluePlayer = {alive _x && side _x == blufor && (_x getVariable ["canRTB", false])} count allPlayers;
