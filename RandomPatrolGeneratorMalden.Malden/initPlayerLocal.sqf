@@ -525,7 +525,24 @@ if (side player == blufor) then
 			[[], 'GUI\botteamGUI\botteamGUI.sqf'] remoteExec ['BIS_fnc_execVM', _caller];
 	},_x,3,true,false,"","(_target distance _this <5) && (_this getVariable 'role' == 'leader')"];
 
-
+		//Add abort action to TPFlag1
+	_actionIdAbortMission = TPFlag1 addAction 
+	[
+		"<img size='2' image='\a3\ui_f\data\IGUI\Cfg\holdactions\holdAction_takeOff1_ca.paa'/><t color='#FF0000'>Abort mission</t>", 
+		{
+			[['ABORT', true], 'engine\objectiveManagement\endMission.sqf'] remoteExec ['BIS_fnc_execVM', 2];
+		},
+		nil,		// arguments
+		0,		// priority
+		true,		// showWindow
+		false,		// hideOnUse
+		"",			// shortcut
+		"_this getVariable 'role' == 'leader'",		// condition
+		5,			// radius
+		false,		// unconscious
+		"",			// selection
+		""			// memoryPoint
+	];
 	
 	waituntil {!isNil "isBluforAttacked" && !isNil "isIndAttacked"};
 	if (isBluforAttacked) then

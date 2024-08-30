@@ -1,4 +1,4 @@
-params ['_endingName'];
+params ['_endingName', '_forceEndSetting'];
 
 #include "..\..\engine\rankManagement\rankFunctions.sqf"
 
@@ -77,9 +77,14 @@ if (!_isEndMissionRunning) then
 	//Wait for player to read
 	sleep 10;
 
+	_forceEnd = false;
+	if (!isNil('_forceEndSetting')) then 
+	{
+		_forceEnd = _forceEndSetting;
+	};
 
 	//Check if the mission is in endless mod
-	if (("EndlessMission" call BIS_fnc_getParamValue) == 1) then 
+	if (("EndlessMission" call BIS_fnc_getParamValue) == 1 && _forceEnd == false) then 
 	{
 		//Close all currently displayed dialog 
 		[{ (player getVariable "ScoreBoardDisplay") closeDisplay 1;}] remoteExec ["call", 0];
