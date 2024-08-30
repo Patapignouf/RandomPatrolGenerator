@@ -125,6 +125,16 @@ generateObjectiveObject =
 	};
 
 
+	//50% chance to spawn mines around the objective
+	if (random 100 > 50) then 
+	{
+		_mineBlackListTrigger = createTrigger ["EmptyDetector", _thisObjectivePosition];
+		_mineBlackListTrigger setTriggerArea [400, 400, 0, true];
+		_pos = [[[_thisObjectivePosition, 1000]], ["water", _mineBlackListTrigger]] call BIS_fnc_randomPos;
+		[[_pos], 'objectGenerator\doGenerateMineField.sqf'] remoteExec ['BIS_fnc_execVM', 0];
+	};
+
+
 	//Place roadblock
 	_possibleRoadBlockLocation = [_thisObjectivePosition, 1500, round (random 2)] call findPositionsNearRoads;
 	if (count _possibleRoadBlockLocation >0) then 
