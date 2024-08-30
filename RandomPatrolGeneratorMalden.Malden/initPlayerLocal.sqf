@@ -419,19 +419,27 @@ if (side player == blufor) then
 	//Add heal action to VA2
 	_actionIdHeal = VA2 addAction 
 	[
-		"<img size='2' image='\a3\ui_f\data\IGUI\Cfg\holdactions\holdAction_reviveMedic_ca.paa'/><t color='#00bc1a'>Heal</t>", 
+		"<img size='2' image='\a3\ui_f\data\IGUI\Cfg\holdactions\holdAction_reviveMedic_ca.paa'/><t color='#00bc1a'>Heal all players around here</t>", 
 		{
-			//Heal player if mission's setup wasn't safe 
-			if (isClass (configFile >> "CfgPatches" >> "ace_medical")) then 
 			{
-				[objNull, player] call ace_medical_treatment_fnc_fullHeal;
-			} else 
-			{
-				player setDamage 0;
-			};
+				if ((_x distance player) < 50) then
+				{
+					//Heal player if mission's setup wasn't safe 
+					if (isClass (configFile >> "CfgPatches" >> "ace_medical")) then 
+					{
+						[objNull, _x] call ace_medical_treatment_fnc_fullHeal;
+					} else 
+					{
+						_x setDamage 0;
+					};
 
-			//Display heal message information
-			["<t color='#6AA84F' size='.8'>You have been healed</t>",0,0,2,0,0,789] spawn BIS_fnc_dynamicText;
+					//Display heal message information
+					[["<t color='#6AA84F' size='.8'>You have been healed</t>",0,0,2,0,0,789], BIS_fnc_dynamicText] remoteExec ["spawn", _x];
+				};
+			} foreach allPlayers;
+
+		
+			// ["<t color='#6AA84F' size='.8'>You have been healed</t>",0,0,2,0,0,789] spawn BIS_fnc_dynamicText;
 		},
 		nil,		// arguments
 		3,		// priority
@@ -444,6 +452,7 @@ if (side player == blufor) then
 		"",			// selection
 		""			// memoryPoint
 	];
+
 
 	//Add rank action to VA2
 	_actionIdRankManager = VA2 addAction 
@@ -515,6 +524,8 @@ if (side player == blufor) then
 
 			[[], 'GUI\botteamGUI\botteamGUI.sqf'] remoteExec ['BIS_fnc_execVM', _caller];
 	},_x,3,true,false,"","(_target distance _this <5) && (_this getVariable 'role' == 'leader')"];
+
+
 	
 	waituntil {!isNil "isBluforAttacked" && !isNil "isIndAttacked"};
 	if (isBluforAttacked) then
