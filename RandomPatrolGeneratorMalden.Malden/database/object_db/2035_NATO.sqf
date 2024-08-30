@@ -97,15 +97,15 @@ bluforArmedVehicle_2035_NATO = [
 //Chopper unarmed vehicle avalaible for blufor : Ex CH47
 bluforUnarmedVehicleChopper_2035_NATO = [
 	"B_Heli_Transport_03_unarmed_F",
-	"B_Heli_Light_01_F",
-	"B_Heli_Transport_01_F"
+	"B_Heli_Light_01_F"
 ];
 
 
 //Chopper armed choper avalaible for blufor : Ex AH-Z1
 bluforArmedChopper_2035_NATO = [
 	"B_Heli_Attack_01_dynamicLoadout_F",
-	"B_Heli_Light_01_dynamicLoadout_F"
+	"B_Heli_Light_01_dynamicLoadout_F",
+	"B_Heli_Transport_01_F"
 ];
 
 //Armored vehicle avalaible for blufor : Ex light tank
