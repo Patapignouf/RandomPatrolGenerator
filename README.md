@@ -4,6 +4,9 @@ This is a little project  to make a new experience for ArmA 3 players.
 Between DynamicReconOps, TRGM2 and DirectAction, RandomPatrolGenerator is a little missionGenerator, optimize to allow players to keep 60 FPS on modern configuration.
 It can be played RP or Arcade style with one or two factions doing the same mission on different way.
 
+Steam workshop link here to test the last build version :
+https://steamcommunity.com/sharedfiles/filedetails/?id=3146463759
+
 There are some features like :
 - Various objectives (VIP, Ammo cache, Defense, Take & Hold etc.),
 - Civilian conversation system,
