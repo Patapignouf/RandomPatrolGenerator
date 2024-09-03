@@ -125,6 +125,7 @@ doGenerateVehicleForFOB =
 		if (isClass (configFile >> "CfgPatches" >> "ace_medical")) then 
 		{
 			[_currentVehicle] call doAddKeys;
+			_currentVehicle setVehicleLock "LOCKED";
 		};
 
 		// hint format ["vehicle faction : %1",(_currentVehicle call BIS_fnc_objectSide)];
