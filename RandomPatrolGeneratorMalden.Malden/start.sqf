@@ -405,7 +405,8 @@ if ( count AvalaibleInitAttackPositions != 0 && (enableInitAttack == 1 || ((enab
 		[[], "engine\respawnManagement\respawnManager.sqf"] remoteExec ['BIS_fnc_execVM', 0];
 		[format ["%1 needs reinforcement", name _caller]] remoteExec ["hint",0,true];
 		missionNamespace setVariable ["usedRespawnFewTimeAgo",true,true];
-		sleep 1200;
+		_respawnTimer = missionNamespace getVariable "missionRespawnParam";
+		sleep _respawnTimer;
 		missionNamespace setVariable ["usedRespawnFewTimeAgo",false,true];
 	} else {
 		hint "You must wait before call reinforcements";

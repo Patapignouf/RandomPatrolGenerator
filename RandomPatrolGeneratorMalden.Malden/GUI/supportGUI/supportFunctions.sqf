@@ -26,7 +26,8 @@ params ["_caller", "_supportType"];
 						[[format ["<t align = 'center' shadow = '2' color='#0046ff' size='1.5' font='PuristaMedium' >High Command</t><br /><t color='#ffffff' size='1.5' font='PuristaMedium' shadow = '2' >%1</t>", _textToSpeech, name _caller], "PLAIN DOWN", -1, true, true]] remoteExec ["titleText", 0, true];
 						
 						missionNamespace setVariable ["usedRespawnFewTimeAgo",true,true];
-						sleep 1200;
+						_respawnTimer = missionNamespace getVariable "missionRespawnParam";
+						sleep _respawnTimer;
 						missionNamespace setVariable ["usedRespawnFewTimeAgo",false,true];
 					} else {
 						_textToSpeech = "There is no need for reinforcements";
