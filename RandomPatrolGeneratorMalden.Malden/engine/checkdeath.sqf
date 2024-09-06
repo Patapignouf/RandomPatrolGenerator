@@ -1,6 +1,6 @@
 sleep 180;
 
-enablePersistent = "EnablePersistent" call BIS_fnc_getParamValue;
+enablePersistent = missionNameSpace getVariable "enablePersistent";
 
 //Wait mission generation to init deatch check
 waituntil {count allPlayers != 0};

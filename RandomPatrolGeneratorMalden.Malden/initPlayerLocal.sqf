@@ -117,7 +117,7 @@ if (player getVariable ["isSetupMission", false]) then
 #include "objectGenerator\vehicleManagement.sqf"
 
 enableThermal = "EnableThermal" call BIS_fnc_getParamValue;
-enableHalo = "EnableHALO" call BIS_fnc_getParamValue;
+enableHalo = missionNamespace getVariable "enableHalo";
 
 bluFaction = missionNamespace getVariable "bluforFaction";
 indFaction = missionNamespace getVariable "independentFaction";

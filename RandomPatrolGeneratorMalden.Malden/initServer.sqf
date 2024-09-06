@@ -33,7 +33,7 @@ missionNamespace setVariable ["ironMan", false, true]; //Default disable ironman
 missionNamespace setVariable ["enableCampaignMode", false, true]; //Default armored vehicle are disabled
 missionNamespace setVariable ["missionLength", 2, true]; //Default armored vehicle are disabled
 missionNamespace setVariable ["missionDifficultyParam", 1, true]; //Default armored vehicle are disabled
-missionNamespace setVariable ["missionIASkill", 1, true]; //Default armored vehicle are disabled
+missionNamespace setVariable ["missionIASkillParam", 1, true]; //Default armored vehicle are disabled
 missionNamespace setVariable ["missionRespawnParam", 99999999999999, true]; //Default armored vehicle are disabled
 
 

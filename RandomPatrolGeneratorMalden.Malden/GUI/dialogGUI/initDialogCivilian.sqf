@@ -187,7 +187,7 @@ _RcsButtonObjective ctrlAddEventHandler[ "ButtonClick",
 		};
 
 		_civ = thisCivilian;
-		_civJoinableFaction = "CivJoinableFaction" call BIS_fnc_getParamValue;
+		_civJoinableFaction = missionNameSpace getVariable "CivJoinableFaction";
 		_hasToJoin = false;
 		switch (_civJoinableFaction) do
 		{

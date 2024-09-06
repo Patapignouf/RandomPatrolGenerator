@@ -44,3 +44,137 @@ missionRespawnParamSettings = [
 	[1800,"Respawn every 30 minutes"],
 	[99999999999999,"Respawn on objective completion only"]
 ];
+
+civiliansOnObjectivesParam = 
+[
+	[	
+		[0, "Disable"],
+		[1, "Enable"]
+	],
+	"Enable civilian population on objectives",
+	1,
+	"enableCiviliansOnObjectives"
+];
+
+enableRegularIncomeParam = 
+[
+	[	
+		[0, "Disable"],
+		[1, "Enable"]
+	],
+	"Enable regular income (when credits < 500)",
+	1,
+	"enableRegularIncome"
+];
+
+sideRelationParam =
+[
+	[	
+		[0, "Blufor friend with Independent against Opfor"],
+		[1, "Blufor against Independent against Opfor"],
+		[2, "Blufor against Independent and Opfor"]
+	],
+	"Determines side relations",
+	0,
+	"sideRelations"
+];
+
+enablePersistentParam = 
+[
+	[	
+		[0, "Disable"],
+		[1, "Enable"]
+	],
+	"Enable Persistent Mode (No fail on death)",
+	0,
+	"enablePersistent"
+];
+
+
+endlessMissionParam = 
+[
+	[	
+		[0, "Disable"],
+		[1, "Enable"]
+	],
+	"Enable Endless Mission Mode (Start mission setup after each mission ending)",
+	0,
+	"endlessMission"
+];
+
+
+disableZoomParam = 
+[
+	[	
+		[0, "Disable"],
+		[1, "Enable"]
+	],
+	"Temp Zoom (hold right clic)",
+	0,
+	"disableZoom"
+];
+
+
+
+
+enableAutoDifficultyBalanceParam = 
+[
+	[	
+		[0, "Disable"],
+		[1, "Enable"]
+	],
+	"Enable Automatic difficulty balance",
+	1,
+	"enableAutoDifficultyBalance"
+];
+
+
+enableLoadoutRestrictionParam = 
+[
+	[	
+		[0, "Disable"],
+		[1, "Enable"]
+	],
+	"Enable loadout restriction",
+	1,
+	"enableLoadoutRestriction"
+];
+
+enableHaloParam = 
+[
+	[	
+		[0, "Disable"],
+		[1, "Enable"]
+	],
+	"Enable HALO JUMP",
+	1,
+	"enableHalo"
+];
+
+timeOfDayParam = 
+[
+	[	
+		[0, "Random"],
+		[1, "Morning"],
+		[2, "Day"],
+		[3, "Afternoon"],
+		[4, "Night"]
+	],
+	"Choose time of day",
+	2,
+	"timeOfDay"
+];
+
+
+civJoinableFactionParam = 
+[
+	[	
+		[0, "Nobody can recruit civilian"],
+		[1, "Only indepedent can recruit civilian"],
+		[2, "Only blufor can recruit civilian"],
+		[3, "Both independent and blufor can recruit civilian"]
+	],
+	"Allow player to recruit civilian",
+	1,
+	"civJoinableFaction"
+];

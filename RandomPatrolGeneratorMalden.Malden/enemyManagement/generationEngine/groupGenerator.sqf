@@ -19,7 +19,7 @@ doGenerateEnemyGroup =
 	};
 	
 	//Set IA Skills
-	[_currentGroupPatrol, missionIASkill] call doSetGroupSkills;
+	[_currentGroupPatrol, missionIASkillParam] call doSetGroupSkills;
 
 	//Adjust ACE Medic items 
 	if (isClass (configFile >> "CfgPatches" >> "ace_medical")) then 
@@ -256,7 +256,7 @@ doGenerateHostileCivilianGroup =
 	};
 	
 	//Set IA Skills
-	[_currentGroupPatrol, missionIASkill] call doSetGroupSkills;
+	[_currentGroupPatrol, missionIASkillParam] call doSetGroupSkills;
 
 
 	//Manage civilian specific feature

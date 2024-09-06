@@ -32,7 +32,7 @@ enableCampaignModeSelected = _comboBoxEnableCampaignMode lbData (lbCurSel _combo
 missionLengthSelected = _comboBoxMissionLength lbData (lbCurSel _comboBoxMissionLength);
 missionDifficultySelected = _comboBoxMissionDifficulty lbData (lbCurSel _comboBoxMissionDifficulty);
 missionStartIntel = _comboBoxStartIntel lbData (lbCurSel _comboBoxStartIntel);
-missionIASkill = _comboBoxIASkill lbData (lbCurSel _comboBoxIASkill);
+missionIASkillParam = _comboBoxIASkill lbData (lbCurSel _comboBoxIASkill);
 missionRespawnParam = _comboBoxRespawnParam lbData (lbCurSel _comboBoxRespawnParam);
 
 //Display combo box value for debug
@@ -56,11 +56,11 @@ missionNamespace setVariable ["missionLength", parseNumber missionLengthSelected
 missionNamespace setVariable ["missionDifficultyParam", parseNumber missionDifficultySelected, true]; //Default armored vehicle are disabled
 missionNamespace setVariable ["ironMan", [ironManSelected, "true"] call BIS_fnc_inString, true]; //Default disable ironman mode
 missionNamespace setVariable ["startIntel", parseNumber missionStartIntel, true]; //Default disable ironman mode
-missionNamespace setVariable ["missionIASkill", parseNumber missionIASkill, true]; //Default medium difficulty
+missionNamespace setVariable ["missionIASkillParam", parseNumber missionIASkillParam, true]; //Default medium difficulty
 missionNamespace setVariable ["missionRespawnParam", parseNumber missionRespawnParam, true]; //Default disable ironman mode
 
 //Go to objective selection
-[[], 'GUI\setupGUI\startGUIMenuLocation.sqf'] remoteExec ['BIS_fnc_execVM', player];
+[[], 'GUI\setupGUI\advancedSetup.sqf'] remoteExec ['BIS_fnc_execVM', player];
 
 //Close setup menu
 _mainDisplay closeDisplay 1;

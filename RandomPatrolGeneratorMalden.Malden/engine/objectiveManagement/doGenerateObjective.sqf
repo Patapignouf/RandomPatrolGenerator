@@ -68,7 +68,7 @@ generateObjective =
 			{
 				//80% normal objective with opfor forces 
 				_handlePOIGeneration = objNull;
-				if (("EnableCiviliansOnObjectives" call BIS_fnc_getParamValue) == 1) then 
+				if ((missionNamespace getVariable "enableCiviliansOnObjectives") == 1) then 
 				{
 					_handlePOIGeneration = [EnemyWaveLevel_1, baseEnemyVehicleGroup, baseEnemyLightArmoredVehicleGroup, baseEnemyHeavyArmoredVehicleGroup, civilian_group, _selectedObjectivePosition, _objectiveCreated] execVM 'enemyManagement\generationEngine\generatePOI.sqf'; 
 				} else 

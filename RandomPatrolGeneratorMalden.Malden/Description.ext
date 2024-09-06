@@ -107,62 +107,8 @@ class Params
 		texts[] = { "" };
 		default = "";
 	};
-	class EnablePersistent
-	{
-		title = "Enable Persistent Mode (No fail on death)";
-		values[] = {0,1};
-		texts[] = {"No","Yes"};
-		default = 0;
-	};
-	class EndlessMission
-	{
-		title = "Enable Endless Mission Mode (Start mission setup after each mission ending)";
-		values[] = {0,1};
-		texts[] = {"No","Yes"};
-		default = 0;
-	};
-	class EnableAutoDifficultyBalance
-	{
-		title = "Enable Automatic difficulty balance";
-		values[] = {0,1};
-		texts[] = {"No","Yes"};
-		default = 1;
-	};
-	class EnableLoadoutRestriction
-	{
-		title = "Enable loadout restriction";
-		values[] = {0,1};
-		texts[] = {"No","Yes"};
-		default = 1;
-	};
-	class EnableCiviliansOnObjectives
-	{
-		title = "Enable civilians on objectives";
-		values[] = {0,1};
-		texts[] = {"No","Yes"};
-		default = 1;
-	};
-	class SideRelation
-	{
-		title = "Determines side relations";
-		values[] = {0,1,2};
-		texts[] = {"Blufor friend with Independent against Opfor","Blufor against Independent against Opfor","Blufor against Independent and Opfor"};
-		default = 0;
-	};
-	class DisableZoom
-	{
-		title = "Temp Zoom (hold right clic)";
-		values[] = {0,1};
-		texts[] = {"Enable","Disable"};
-		default = 0;
-	};
-	class EnableHalo
-	{
-		title = "Enable HALO JUMP";
-		values[] = {0,1};
-		texts[] = {"No","Yes"};
-		default = 1;
-	};
+
+
 	class RealismMode
 	{
 		title = "Enable realism mode (WIP)";
@@ -197,20 +143,6 @@ class Params
 		values[] = {0,1,2};
 		texts[] = {"No","Yes","Random"};
 		default = 0;
-	};
-	class CivJoinableFaction
-	{
-		title = "Allow player to recruit civilian";
-		values[] = {0,1,2,3};
-		texts[] = {"Nobody can recruit civilian","Only indepedent can recruit civilian","Only blufor can recruit civilian", "Both independent and blufor can recruit civilian"};
-		default = 1;             
-	};
-	class TimeOfDay
-	{
-		title = "Choose time of day";
-		values[] = {0,1,2,3,4};
-		texts[] = {"Random","Morning","Day","Afternoon","Night"};
-		default = 2;             
 	};
 };
 

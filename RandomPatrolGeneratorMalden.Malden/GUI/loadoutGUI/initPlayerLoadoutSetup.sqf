@@ -58,7 +58,7 @@ if (!ironMan) then
 {
 	//Loadout validated loadout (compared with spawn loadout)
 	//Validate loadout only if there is no restriction
-	if (("EnableLoadoutRestriction" call BIS_fnc_getParamValue) == 1) then 
+	if ((missionNameSpace getVariable "enableLoadoutRestriction") == 1) then 
 	{
 		[player] call validateLoadout;
 	};

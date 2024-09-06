@@ -9,10 +9,7 @@
 //Init base mission parameters 
 enableInitAttack = "EnableInitAttack" call BIS_fnc_getParamValue;
 enableInitBluAttack = "EnableInitBluAttack" call BIS_fnc_getParamValue;
-enableAutoDifficultyBalance = "EnableAutoDifficultyBalance" call BIS_fnc_getParamValue;
-timeOfDay = "TimeOfDay" call BIS_fnc_getParamValue;
-disableZoom = "DisableZoom" call BIS_fnc_getParamValue;
-sideRelation = "SideRelation" call BIS_fnc_getParamValue;
+
 
 //Init all environement database variable
 _handleEnvironmentInitialization = [] execVM 'initEnvironment.sqf'; 
@@ -72,6 +69,11 @@ enableCampaignMode = missionNamespace getVariable "enableCampaignMode"; //Defaul
 missionLength = missionNamespace getVariable "missionLength"; //Default 2 missions + 1 optional
 missionDifficultyParam = missionNamespace getVariable "missionDifficultyParam"; //Default medium
 startIntel = missionNamespace getVariable "startIntel"; //Default medium
+
+enableAutoDifficultyBalance = missionNamespace getVariable "enableAutoDifficultyBalance";
+timeOfDay = missionNamespace getVariable "timeOfDay";
+disableZoom = missionNamespace getVariable "disableZoom";
+
 
 /////////////////////////
 ////Setup IA Opti////////
@@ -160,7 +162,7 @@ if ({isPlayer _x && side _x == independent} count allPlayers != 0) then
 };
 
 //Determine side relation 
-switch (sideRelation) do
+switch (missionNameSpace getVariable "sideRelations") do
 {
 	case 0:
 	{
@@ -712,7 +714,7 @@ switch (startIntel) do
 			};
 
 			//Add blufor task to encounter independent
-			if (_mainPlayerSide == independent && sideRelation == 0) then 
+			if (_mainPlayerSide == independent && (missionNameSpace getVariable "sideRelations") == 0) then 
 			{
 				//Setup init Civ city
 				//Init task for blufor to get informations
@@ -853,6 +855,11 @@ forceWeatherChange;
 if (enableAutoDifficultyBalance==1) then 
 {
 	[] execVM 'engine\difficultyManagement.sqf'; 
+};
+
+if (enableRegularIncome == 1) then 
+{
+	[] execVM 'engine\regularIncomeManagement.sqf'; 
 };
 
 if (disableZoom == 1) then 

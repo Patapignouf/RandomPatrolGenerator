@@ -84,7 +84,7 @@ if (!_isEndMissionRunning) then
 	};
 
 	//Check if the mission is in endless mod
-	if (("EndlessMission" call BIS_fnc_getParamValue) == 1 && _forceEnd == false) then 
+	if ((missionNameSpace getVariable "endlessMission") == 1 && _forceEnd == false) then 
 	{
 		//Close all currently displayed dialog 
 		[{ (player getVariable "ScoreBoardDisplay") closeDisplay 1;}] remoteExec ["call", 0];
