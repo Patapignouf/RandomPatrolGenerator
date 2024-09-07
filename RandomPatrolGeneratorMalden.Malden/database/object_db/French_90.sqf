@@ -1,9 +1,9 @@
 #include "..\classConstant.sqf"
 
 //Add specific AMF factions
+factionID = factionID+1;
 if (isClass (configFile >> "CfgPatches" >> "AMF_Patches")) then 
 {
-	factionID = factionID+1;
 	factionInfos pushBack ["_French_90", factionID,"French 1990 [AMF]", true, false, false];
 };
 

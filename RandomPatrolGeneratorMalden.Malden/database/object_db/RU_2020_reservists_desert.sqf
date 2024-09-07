@@ -1,9 +1,9 @@
 #include "..\classConstant.sqf"
 
 //Add specific RHS factions
+factionID = factionID+1;
 if (isClass (configFile >> "CfgPatches" >> "rhs_main")) then 
 {
-	factionID = factionID+1;
 	//factionInfos pushBack [c_USA_SOCOM_2020,_USA_SOCOM_2020,"2020 USA SOCOM [RHS]", true, true, false];
 	factionInfos pushBack ["_RU_2020_reservists_desert", factionID,"2020 Russian regular and reservists desert CAMO [RHS]", false, true, false];
 };

@@ -3,9 +3,9 @@
 //Specific faction to Ukrainian with some French stuff from AMF 
 
 //Add specific RHS factions
+factionID = factionID+1;
 if (isClass (configFile >> "CfgPatches" >> "rhs_main")) then 
 {
-	factionID = factionID+1;
 	factionInfos pushBack ["_UKR_2024", factionID,"2024 Ukrainian [RHS]", true, false, false];
 };
 
