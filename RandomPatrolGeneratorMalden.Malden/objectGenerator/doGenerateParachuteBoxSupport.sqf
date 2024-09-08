@@ -130,10 +130,10 @@ if (_airDropSupportCounter > 0) then
 	//Add smoke to crate
 	for [{_i = 0}, {_i < 3}, {_i = _i + 1}] do
 	{
-		_supplyLight = "Chemlight_green" createVehicle (position deployableFOBItem);
-		_supplyLight attachTo [deployableFOBItem, [0,0,0]];
-		_supplySmoke = "SmokeShellGreen" createVehicle (position deployableFOBItem);
-		_supplySmoke attachTo [deployableFOBItem, [0,0,0]];
+		_supplyLight = "Chemlight_green" createVehicle (position _crate);
+		_supplyLight attachTo [_crate, [0,0,0]];
+		_supplySmoke = "SmokeShellGreen" createVehicle (position _crate);
+		_supplySmoke attachTo [_crate, [0,0,0]];
 		sleep 30;
 	};
 	
