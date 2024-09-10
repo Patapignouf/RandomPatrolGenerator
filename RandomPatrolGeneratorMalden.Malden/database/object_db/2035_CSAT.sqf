@@ -104,7 +104,8 @@ baseEnemyLightArmoredVehicleGroup_2035_CSAT = [
 baseEnemyHeavyArmoredVehicleGroup_2035_CSAT = [
 	"O_T_APC_Tracked_02_AA_ghex_F", 
 	"O_T_APC_Tracked_02_cannon_ghex_F", 
-	"O_T_APC_Wheeled_02_rcws_v2_ghex_F"
+	"O_T_APC_Wheeled_02_rcws_v2_ghex_F",
+	"O_MBT_02_cannon_F"
 ];
 
 //Basic enemy aircraft avalaible

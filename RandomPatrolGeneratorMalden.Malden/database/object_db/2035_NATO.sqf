@@ -112,7 +112,8 @@ bluforArmedChopper_2035_NATO = [
 bluforArmoredVehicle_2035_NATO = [
 	"B_APC_Wheeled_01_cannon_F",
 	"B_APC_Tracked_01_CRV_F",
-	"B_AFV_Wheeled_01_up_cannon_F"
+	"B_AFV_Wheeled_01_up_cannon_F",
+	"B_MBT_01_cannon_F"
 ];
 
 //Drone vehicle avalaible for blufor
