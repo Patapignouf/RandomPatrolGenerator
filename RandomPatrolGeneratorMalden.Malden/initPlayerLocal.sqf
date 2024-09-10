@@ -145,7 +145,7 @@ if (ironMan) then
 
 
 //Validate current player's stuff
-if (("EnableLoadoutRestriction" call BIS_fnc_getParamValue) == 1) then 
+if ((missionNameSpace getVariable "enableLoadoutRestriction") == 1) then 
 {
 	[missionNamespace, "arsenalClosed", {
 		disableSerialization;
@@ -203,7 +203,7 @@ if !(isClass (configFile >> "CfgPatches" >> "ace_medical")) then
 } else 
 {
 	//Only do weapon jamming if loadout restriction is enable
-	if (("EnableLoadoutRestriction" call BIS_fnc_getParamValue) == 1) then 
+	if ((missionNameSpace getVariable "enableLoadoutRestriction") == 1) then 
 	{
 		//Add ACE cookoff high probability on enemy weapon
 		player addEventHandler["Fired",{
