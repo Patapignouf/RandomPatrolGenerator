@@ -7,13 +7,13 @@ paramsToManage = [civiliansOnObjectivesParam, sideRelationParam, enablePersisten
 _display = (findDisplay 46) createDisplay "RscDisplayEmpty";
 
 _backGround = _display ctrlCreate[ "ctrlStaticPicture", -1 ];
-_backGround ctrlSetPosition[ 0, 0, 1, 1 ];
+_backGround ctrlSetPosition[ -0.1, -0.1, 1.2, 1.2 ];
 _backGround ctrlSetText "#(argb,8,8,3)color(0.35,0.35,0.35,1)";
 _backGround ctrlCommit 0;
 
-_RcsTitleDialog = _display ctrlCreate ["RscText", -1];
-_RcsTitleDialog ctrlSetText (format ["Advanced settings (not saved between missions)", name player]);
-_RcsTitleDialog ctrlSetPosition [ 0, 0, 1, 0.04 ];
+_RcsTitleDialog = _display ctrlCreate ["RscStructuredText", -1];
+_RcsTitleDialog ctrlSetStructuredText parseText "<t size='0.5'>&#160;</t><br/><t size='1' align='center'>Advanced Settings&#160;&#160;</t>";
+_RcsTitleDialog ctrlSetPosition [ -0.1, -0.1, 1.2, 0.07 ];
 _RcsTitleDialog ctrlSetBackgroundColor [0,0,0,0.8];
 _RcsTitleDialog ctrlSetTextColor [1, 1, 1, 1];
 _RcsTitleDialog ctrlCommit 0;
@@ -29,10 +29,11 @@ _yPosition = 0.10;
 	//Create dropdownlist title on the left side
 	_RcsBodyLeftDialog = _display ctrlCreate ["RscStructuredText", -1];
 	_RcsBodyLeftDialog ctrlSetStructuredText  (parseText _paramsName);
-	_RcsBodyLeftDialog ctrlSetPosition[0.05, _yPosition, 0.4, 0.7 ];
+	_RcsBodyLeftDialog ctrlSetPosition[-0.07, _yPosition, 0.5, 0.07 ];
 	_RcsBodyLeftDialog ctrlSetTextColor [1, 1, 1, 1];
+	//_RcsBodyLeftDialog ctrlSetBackgroundColor [0,0,0,0.8];
 	_RcsBodyLeftDialog ctrlCommit 0;
-
+ 
 	//Create dropdownlist next to the param title on the right side
 	_dropdown = _display ctrlCreate ["RscCombo", 100];
 	_dropdown ctrlSetPosition [0.5, _yPosition, 0.4, 0.04];
@@ -45,9 +46,10 @@ _yPosition = 0.10;
 	} forEach _paramsList;
 
 	//Set default value
-	_dropdown lbSetCurSel (_paramsList apply {_x#0} find _paramsDefaultValue);
+	_saveSetting = profileNameSpace getVariable [_paramsSettingName, _paramsDefaultValue];
+	_dropdown lbSetCurSel (_paramsList apply {_x#0} find _saveSetting);
 	_dropdown setVariable ["dataTitle", _paramsName];
-	missionNamespace setVariable [_paramsSettingName, _paramsDefaultValue, true];
+	missionNamespace setVariable [_paramsSettingName, _saveSetting, true];
 
 	//Change setting value dynamically
 	_dropdown ctrlAddEventHandler ["LBSelChanged",
@@ -61,17 +63,19 @@ _yPosition = 0.10;
 		//hint format ["%2 : %1 : %3", _selectedSetting, _selectedIndex, _diffusionParamName];
 
 		missionNamespace setVariable [_diffusionParamName, parseNumber _selectedSetting, true];
+		profileNameSpace setVariable [_diffusionParamName, parseNumber _selectedSetting];
+		saveProfileNamespace;
 	}];
 
 	//Move next input down 
-	_yPosition = _yPosition + 0.05;
+	_yPosition = _yPosition + 0.06;
 
 } foreach paramsToManage;
 
 
 //Button to go on the next setup
 _ButtonRight = _display ctrlCreate ["RscButton", 7804];
-_ButtonRight ctrlSetPosition [(0.45 * safezoneW + safezoneX),(0.7 * safezoneH + safezoneY),(0.09 * safezoneW),(0.025* safezoneH)];
+_ButtonRight ctrlSetPosition [(0.45 * safezoneW + safezoneX),(0.75 * safezoneH + safezoneY),(0.09 * safezoneW),(0.025* safezoneH)];
 _ButtonRight ctrlSetBackgroundColor [0,0,0,0.7];
 _ButtonRight ctrlCommit 0;
 ctrlSetFocus _ButtonRight;

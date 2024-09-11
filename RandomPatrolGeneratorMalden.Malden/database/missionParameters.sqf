@@ -1,4 +1,4 @@
-booleanSelection = [false, true];
+ booleanSelection = [false, true];
 
 warEraSelection = [
 	[0,"2nd War"],
@@ -62,7 +62,7 @@ enableRegularIncomeParam =
 		[0, "Disable"],
 		[1, "Enable"]
 	],
-	"Enable regular income (when credits < 500)",
+	"Enable regular income (when credits under 500)",
 	1,
 	"enableRegularIncome"
 ];
