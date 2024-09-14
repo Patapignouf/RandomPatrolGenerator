@@ -1,7 +1,7 @@
 //[[], 'GUI\setupGUI\advancedSetup.sqf'] remoteExec ['BIS_fnc_execVM', player];
 #include "..\..\database\missionParameters.sqf"
 
-paramsToManage = [civiliansOnObjectivesParam, sideRelationParam, enablePersistentParam, enableRegularIncomeParam, disableZoomParam, enableAutoDifficultyBalanceParam, civJoinableFactionParam, enableLoadoutRestrictionParam, enableHaloParam, timeOfDayParam, endlessMissionParam];
+paramsToManage = [civiliansOnObjectivesParam, sideRelationParam, enablePersistentParam, enableRegularIncomeParam, disableZoomParam, enableAutoDifficultyBalanceParam, civJoinableFactionParam, enableLoadoutRestrictionParam, enableHaloParam, timeOfDayParam, civSuicideBomberParam, civSuicideBomberProbabilityParam, endlessMissionParam];
 
 //Create display too choose reporter player
 _display = (findDisplay 46) createDisplay "RscDisplayEmpty";

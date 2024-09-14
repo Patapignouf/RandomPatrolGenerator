@@ -40,9 +40,8 @@ class CfgFunctions
 	#include "cfgFunctions.h"
 };
 
-class CfgSounds
-{
-	#include "cfgSounds.h"
+class CfgSounds {
+    #include "cfgSounds.h"
 };
 
 class Params

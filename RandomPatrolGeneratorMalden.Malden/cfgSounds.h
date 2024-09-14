@@ -1,9 +1,6 @@
-class cfgSounds 
+class suicideBomber
 {
-    class suicideBomber
-    {
-      name = "suicideBomber";
-      sound[] = {"Audios\suicideBomber.ogg", 5, 1, 20};
-      titles[] = {};
-    };
+  name = "suicideBomber";
+  sound[] = {"Audios\suicideBomber.ogg", 5, 1, 20};
+  titles[] = {};
 };
