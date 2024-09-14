@@ -178,3 +178,28 @@ civJoinableFactionParam =
 	1,
 	"civJoinableFaction"
 ];
+
+civSuicideBomberParam = 
+[
+	[	
+		[0, "Active suicide bomber"],
+		[1, "Disable suicide bomber"]
+	],
+	"Allowing a suicide bomber",
+	1,
+	"civSuicideBomber"
+];
+
+
+_percentages = [];
+for "_i" from 1 to 100 do {
+    _percentages pushBack [_i - 1, format ["%1%%", _i]];
+};
+
+civSuicideBomberProbabilityParam = 
+[
+	_percentages,
+	"Probability of suicide bomber",
+	0,
+	"civSuicideBomberProbability"
+];
