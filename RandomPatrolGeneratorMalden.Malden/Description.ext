@@ -9,7 +9,6 @@
 #include "GUI\vehicleSpawnerGUI\vehicleSpawner.hpp"
 #include "GUI\supportGUI\supportGUI.hpp"
 #include "GUI\botteamGUI\botteamGUI.hpp"
-#include "GUI\adminGUI\adminGUI.hpp"
 
 respawnDialog = 0;
 respawnOnStart = -1;

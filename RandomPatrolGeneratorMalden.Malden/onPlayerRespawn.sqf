@@ -121,8 +121,8 @@ showHUD [
 		player addAction ["<t color='#FF0000'>Open ADMIN MENU</t>",{
 			//Define parameters
 			params ["_object","_caller","_ID","_avalaibleVehicle"];
-			[[], 'GUI\adminGUI\adminGUIInit.sqf'] remoteExec ['BIS_fnc_execVM', _caller];
-		},_x,0,true,false,"","(_target distance _this <3) && (_target getVariable ['isAdmin', false])", 50, true];
+			[[], 'GUI\adminGUI\adminGUI.sqf'] remoteExec ['BIS_fnc_execVM', _caller];
+		},_x,0,true,false,"","(_target distance _this <3) && (_target getVariable ['isAdmin', false] || (hasInterface && isServer))", 50, true];
 	};
 };
 
