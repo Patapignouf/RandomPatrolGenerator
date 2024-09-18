@@ -105,24 +105,10 @@ showHUD [
 //Add admin menu action
 [] spawn {
 	//Add admin settings GUI action
-	if (player getVariable ["isAdmin", false]) then 
-	{	
-		//Add 3 spaces empty actions
-		for [{_i = 0}, {_i < 3}, {_i = _i + 1}] do
-		{
-			player addAction ["                       ",{
-				//Define parameters
-				params ["_object","_caller","_ID","_avalaibleVehicle"];
-				//Do
-			},_x,0.1,true,false,"","(_target distance _this <3) && (_target getVariable ['isAdmin', false] || (hasInterface && isServer))"];
-		};
-
+	if (player getVariable ["isAdmin", false] || (hasInterface && isServer)) then 
+	{
 		//Add admin settings GUI action
-		player addAction ["<t color='#FF0000'>Open ADMIN MENU</t>",{
-			//Define parameters
-			params ["_object","_caller","_ID","_avalaibleVehicle"];
-			[[], 'GUI\adminGUI\adminGUI.sqf'] remoteExec ['BIS_fnc_execVM', _caller];
-		},_x,0,true,false,"","(_target distance _this <3) && (_target getVariable ['isAdmin', false] || (hasInterface && isServer))", 50, true];
+		[player] call admin_fnc_addAdminAction; 
 	};
 };
 

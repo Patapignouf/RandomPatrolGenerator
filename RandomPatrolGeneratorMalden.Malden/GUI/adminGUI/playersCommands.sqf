@@ -51,6 +51,11 @@ teleportToHim = {
 	[format["%1 was teleport to %2", name player, name _player]] call addLogs;
 };
 
+rankManager = {
+	params ["_player"];
+	[[_player], 'GUI\rankGUI\rankGUI.sqf'] remoteExec ['BIS_fnc_execVM', player];
+};
+
 playersCommands = [];
 playersCommands pushBack ["Heal", "Heal player", healPlayer];
 playersCommands pushBack ["Revive", "Revive player", revivePlayer];
@@ -59,3 +64,4 @@ playersCommands pushBack ["Inconcious", "Set player inconcious", setInconcious];
 playersCommands pushBack ["Instant kill", "Instant kill player", instantKillPlayer];
 playersCommands pushBack ["Teleport to you", "Teleport player to you", teleportToYou];
 playersCommands pushBack ["Teleport to him", "Teleport you player to him", teleportToHim];
+playersCommands pushBack ["Rank manager", "See rank of player", rankManager];
