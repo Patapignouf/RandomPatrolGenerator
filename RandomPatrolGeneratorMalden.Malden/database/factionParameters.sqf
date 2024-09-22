@@ -50,6 +50,7 @@ factionID = 41;
 #include "object_db\French_90.sqf"
 #include "object_db\UKR_2024.sqf"
 #include "object_db\DSF_Taliban.sqf"
+#include "object_db\USA_2020_MA.sqf"
 
 ////////////////////////////////////
 ///DO NOT CHANGE FACTION ORDER//////
