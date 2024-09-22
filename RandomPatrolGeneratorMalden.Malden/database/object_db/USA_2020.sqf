@@ -187,6 +187,7 @@ rifleList_USA_2020 = [
 	"rhs_weap_m4a1_mstock",
 	"rhs_weap_m4a1_blockII_KAC_bk",
 	"rhs_weap_m4a1_blockII_grip_KAC_bk",
+	"rhs_weap_m4a1_blockII_grip_bk",
 	"rhs_weap_m4a1_blockII_grip",
 	"rhs_weap_m4a1_blockII",
 	"rhs_weap_m4a1_blockII_bk",
@@ -201,6 +202,7 @@ rifleList_USA_2020 = [
 	"rhs_weap_m16a4_imod_grip2",
 	"rhs_weap_m16a4_imod_grip3",
 	"rhs_weap_m16a4_carryhandle_grip2",
+	"rhs_weap_m16a4_carryhandle_grip3",
 
 	//M14
 	"rhs_weap_m14ebrri",
@@ -231,6 +233,7 @@ launcherList_USA_2020 = [
 
 autorifleList_USA_2020 = [			
 	"rhs_weap_m249_light_L",
+	"rhs_weap_m249_light_L_vfg3",
 	"rhs_weap_m249_pip",
 	"rhs_weap_m249",
 	"rhs_weap_m249_S",

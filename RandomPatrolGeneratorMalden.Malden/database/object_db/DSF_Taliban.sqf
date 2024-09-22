@@ -41,6 +41,7 @@ civilianTruck_taliban_DSF = [
 baseEnemyGroup_taliban_DSF = [
 	"DSF_TAL_SquadLeader", 
 	"DSF_TAL_Rifleman", 
+	"DSF_TAL_Rifleman",
 	"DSF_TAL_Marksman", 
 	"DSF_TAL_MachineGunner", 
 	"DSF_TAL_Medic", 
@@ -52,6 +53,7 @@ baseEnemyATGroup_taliban_DSF = [
 	"DSF_TAL_RPG7Grenadier", 
 	"DSF_TAL_AASoldier", 
 	"DSF_TAL_TeamLeader", 
+	"DSF_TAL_Rifleman",
 	"DSF_TAL_Rifleman"
 ];
 
@@ -60,7 +62,8 @@ baseEnemyDemoGroup_taliban_DSF = [
 	"DSF_TAL_Repair", 
 	"DSF_TAL_Engineer", 
 	"DSF_TAL_Explosives", 
-	"DSF_TAL_Marksman"
+	"DSF_TAL_Marksman",
+	"DSF_TAL_Rifleman"
 ];
 
 baseEnemyMortarGroup_taliban_DSF = [
