@@ -1,5 +1,8 @@
 #include "..\..\engine\searchLocation.sqf"
 
+waitUntil {!isNil"initBlueforLocation"};
+waitUntil {(!([initBlueforLocation, [0,0,0]] call BIS_fnc_areEqual))};
+
 //Generate Opfor small FOB
 //Protect player from nearby spawn
 _trgAOC = createTrigger ["EmptyDetector", initBlueforLocation];
