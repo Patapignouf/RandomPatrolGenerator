@@ -130,8 +130,14 @@ generateObjectiveObject =
 	{
 		_mineBlackListTrigger = createTrigger ["EmptyDetector", _thisObjectivePosition];
 		_mineBlackListTrigger setTriggerArea [400, 400, 0, true];
-		_pos = [[[_thisObjectivePosition, 1000]], ["water", _mineBlackListTrigger]] call BIS_fnc_randomPos;
-		[[_pos], 'objectGenerator\doGenerateMineField.sqf'] remoteExec ['BIS_fnc_execVM', 0];
+		
+		//generate 2 minefields
+		for [{_i = 0}, {_i < 2}, {_i = _i + 1}] do
+		{		
+
+			_pos = [[[_thisObjectivePosition, 1000]], ["water", _mineBlackListTrigger]] call BIS_fnc_randomPos;
+			[[_pos], 'objectGenerator\doGenerateMineField.sqf'] remoteExec ['BIS_fnc_execVM', 0];
+		};
 	};
 
 
