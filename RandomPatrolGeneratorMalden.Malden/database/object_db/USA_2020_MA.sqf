@@ -187,6 +187,8 @@ launcherList_USA_2020_MA = [
 autorifleList_USA_2020_MA = [			
 	"rhs_weap_m249_light_L",
 	"rhs_weap_m249_light_L_vfg3",
+	"rhs_weap_m249_pip_S_para_vfg3",
+	"rhs_weap_m249_pip_S_para",
 	"rhs_weap_m249_pip",
 	"rhs_weap_m249",
 	"rhs_weap_m249_S",
@@ -205,9 +207,11 @@ marksmanrifleList_USA_2020_MA = [
 	"rhs_weap_XM2010_d",
 	"srifle_LRR_F",
 	"rhs_weap_sr25",
-	"rhs_weap_sr25_ec"
+	"rhs_weap_sr25_ec",
+	"rhs_weap_m27iar_bipod_acog_usmc_sup_tan",
+	"rhs_weap_m27iar",
+	"rhs_weap_m27iar_grip3"
 ];
-
 
 smgList_USA_2020_MA = [		
 	"rhsusf_weap_MP7A2_folded",
@@ -297,33 +301,23 @@ backPackList_USA_2020_MA = [
 	"B_rhsusf_B_BACKPACK",
 	"rhsusf_falconii",
 	"rhsusf_falconii_mc",
+	"B_Carryall_cbr",
 	"rhsusf_assault_eagleaiii_ocp",
 	"TFAR_rt1523g",
-	"TFAR_rt1523g_green"
+	"TFAR_rt1523g_green",
+	"B_parachute"
 ];
 
 
 //Uniform, vest, headgear, avalaible for all unit
 uniformList_USA_2020_MA = [
-	"rhs_uniform_acu_oefcp",
-	"rhsusf_ach_helmet_ocp",
-	"rhsusf_ach_helmet_camo_ocp",
-	"rhsusf_ach_helmet_headset_ess_ocp",
-	"rhsusf_ach_helmet_headset_ocp",
-	"rhsusf_ach_helmet_ESS_ocp",
-	"rhsusf_ach_bare_des",
-	"rhsusf_iotv_ocp_Rifleman",
-	"rhsusf_iotv_ocp_Medic",
-	"rhsusf_iotv_ocp_Repair",
-	"rhsusf_iotv_ocp_Grenadier",
+	"rhs_uniform_FROG01_d",
 
 	//Plateframe
-	"rhsusf_plateframe_light",
-	"rhsusf_plateframe_machinegunner",
-	"rhsusf_plateframe_marksman",
-	"rhsusf_plateframe_medic",
-	"rhsusf_plateframe_rifleman",
-	"rhsusf_plateframe_teamleader",
+	"rhsusf_spc_light",
+	"rhsusf_spc_iar",
+	"rhsusf_spc_mg",
+	"rhsusf_spc_teamleader",
 
 	//Shemag 
 	"rhsusf_shemagh_gogg_tan",
@@ -332,7 +326,11 @@ uniformList_USA_2020_MA = [
 	"rhsusf_shemagh2_gogg_od",
 	"rhsusf_oakley_goggles_blk",
 	"rhsusf_oakley_goggles_clr",
-	"rhsusf_oakley_goggles_ylw"
+	"rhs_booniehat2_marpatd",
+	"rhsusf_mich_helmet_marpatd_norotos",
+	"rhsusf_opscore_ut",
+	"rhsusf_mich_bare_norotos_arc_tan",
+	"rhsusf_lwh_helmet_marpatd_ess"
 ];
 
 
