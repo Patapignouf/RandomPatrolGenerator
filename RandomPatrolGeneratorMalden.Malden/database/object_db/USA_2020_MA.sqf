@@ -188,6 +188,7 @@ autorifleList_USA_2020_MA = [
 	"rhs_weap_m249_light_L",
 	"rhs_weap_m249_light_L_vfg3",
 	"rhs_weap_m249_pip_S_para_vfg3",
+	"rhs_weap_m249_S_para_vfg3",
 	"rhs_weap_m249_pip_S_para",
 	"rhs_weap_m249_pip",
 	"rhs_weap_m249",
