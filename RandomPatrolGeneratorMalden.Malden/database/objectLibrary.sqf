@@ -85,6 +85,13 @@ if (isClass (configFile >> "CfgPatches" >> "rhs_main")) then
 	avalaibleVIP pushBack "rhsusf_airforce_jetpilot";
 };
 
+if (isClass (configFile >> "CfgPatches" >> "DSF_core")) then 
+{
+	avalaibleVIP pushBack "DSF_COP_VIP";
+	avalaibleVIP pushBack "DSF_COP_VIP2";
+	avalaibleVIP pushBack "DSF_COP_Fed";
+};
+
 
 avalaibleStealVehicle = [
 	"C_Truck_02_box_F", 
