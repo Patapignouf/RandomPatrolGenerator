@@ -51,6 +51,9 @@ factionID = 41;
 #include "object_db\UKR_2024.sqf"
 #include "object_db\DSF_Taliban.sqf"
 #include "object_db\USA_2020_MA.sqf"
+#include "object_db\DSF_IDF.sqf"
+#include "object_db\DSF_Hezbollah.sqf"
+#include "object_db\DSF_Hamas.sqf"
 
 ////////////////////////////////////
 ///DO NOT CHANGE FACTION ORDER//////
