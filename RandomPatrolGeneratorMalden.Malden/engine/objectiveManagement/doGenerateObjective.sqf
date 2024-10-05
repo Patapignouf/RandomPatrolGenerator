@@ -257,6 +257,21 @@ generateObjectiveObject =
 				diag_log format ["VIP task setup ! : %1", _objectiveObject];
 				_objectiveObject setPos _thisObjectivePosition;
 
+				//Play random dialog to help players to find objective
+				[_objectiveObject] spawn {
+					params ["_objectiveObject"];
+					while {sleep 10; alive _objectiveObject} do 
+					{
+						_currentlyVoice = ["a3\dubbing_f_epc\c_in1\14_ambient_talk_04\c_in1_14_ambient_talk_04_abb_1.ogg",
+											"a3\dubbing_f_epc\c_in1\14_ambient_talk_04\c_in1_14_ambient_talk_04_abb_0.ogg",
+											"a3\dubbing_f_epc\c_in1\14_ambient_talk_04\c_in1_14_ambient_talk_04_aba_0.ogg",
+											"a3\dubbing_f_epc\c_in1\13_ambient_talk_03\c_in1_13_ambient_talk_03_aba_0.ogg",
+											"a3\dubbing_f_epc\c_in1\11_ambient_talk_01\c_in1_11_ambient_talk_01_aba_1.ogg"
+										];
+						playSound3D [selectRandom _currentlyVoice, _objectiveObject, true, getPosASL _objectiveObject, 3, 1, 20, 0, false];
+					};
+				};
+
 				//Use ACE function to set hancuffed
 				if (isClass (configFile >> "CfgPatches" >> "ace_medical")) then 
 				{
@@ -513,6 +528,15 @@ generateObjectiveObject =
 				_objectiveObject setVariable ["isObjectiveObject", true, true];
 				_thisObjective = [_objectiveObject, _thisObjectiveType] call generateObjectiveTracker;
 
+				//play sound to help player
+				[_objectiveObject] spawn {
+					params ["_objectiveObject"];
+					while {sleep 10; alive _objectiveObject} do 
+					{
+						playSound3D ["a3\sounds_f\debugsound.wss", _objectiveObject, true, getPosASL _objectiveObject, 3, 1, 20, 0, false];
+					};
+				};
+
 				//Add intel action to the intel case
 				_objectiveObject setPos _thisObjectivePosition;
 				[_objectiveObject, ["<img size='2' image='\a3\ui_f_oldman\data\IGUI\Cfg\holdactions\map_ca.paa'/><t size='1'>Collect intel</t>",{
@@ -654,10 +678,26 @@ generateObjectiveObject =
 				_objectiveObject setVariable ["isObjectiveObject", true, true];
 				_thisObjective = [_objectiveObject, _thisObjectiveType] call generateObjectiveTracker;
 				_objectiveObject disableAI "PATH";
-				
+
 				//Add dialog to the informant
 				diag_log format ["Informant task setup ! : %1", _objectiveObject];
 				_objectiveObject setPos ( _thisObjectivePosition);
+
+				//Play random dialog to help players to find objective
+				[_objectiveObject] spawn {
+					params ["_objectiveObject"];
+					while {sleep 10; alive _objectiveObject} do 
+					{
+						_currentlyVoice = ["a3\dubbing_f_epc\c_in1\14_ambient_talk_04\c_in1_14_ambient_talk_04_abb_1.ogg",
+											"a3\dubbing_f_epc\c_in1\14_ambient_talk_04\c_in1_14_ambient_talk_04_abb_0.ogg",
+											"a3\dubbing_f_epc\c_in1\14_ambient_talk_04\c_in1_14_ambient_talk_04_aba_0.ogg",
+											"a3\dubbing_f_epc\c_in1\13_ambient_talk_03\c_in1_13_ambient_talk_03_aba_0.ogg",
+											"a3\dubbing_f_epc\c_in1\11_ambient_talk_01\c_in1_11_ambient_talk_01_aba_1.ogg"
+										];
+						playSound3D [selectRandom _currentlyVoice, _objectiveObject, true, getPosASL _objectiveObject, 3, 1, 20, 0, false];
+					};
+				};
+				
 				
 				[
 					_objectiveObject, 
