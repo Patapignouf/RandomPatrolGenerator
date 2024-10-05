@@ -21,6 +21,8 @@ for [{_i = 0}, {_i < missionDifficultyParam+1}, {_i = _i + 1}] do
 };
 
 //Add more opfor to the area
+[[_thisTrigger] , "GUI\dominationGUI\dominationGUI.sqf"] remoteExec ['BIS_fnc_execVM', 0, true];
+
 while {sleep 15; _nbBluePlayer + _nbIndPlayer == 0 || _nbOpfor > 2} do 
 {
 	_nbBluePlayer = count ((allPlayers select {alive _x && side _x == blufor} ) inAreaArray _thisTrigger);
