@@ -21,6 +21,9 @@ class Utility {
 	{
 		file = "functions\Utils";
 		class doAProbability {}; 
+<<<<<<< HEAD
 		class getNearestPlayer {};
+=======
+>>>>>>> 10def1933c79638409099c9e57da9e15855b4c09
 	};
 };
