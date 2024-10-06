@@ -35,6 +35,14 @@ class Header
 	maxPlayers = 20;	// maximum number of players the mission supports
 };
 
+class CfgFunctions
+{
+	#include "cfgFunctions.h"
+};
+
+class CfgSounds {
+    #include "cfgSounds.h"
+};
 
 class Params
 {
