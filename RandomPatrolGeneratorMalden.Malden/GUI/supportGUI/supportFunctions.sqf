@@ -191,6 +191,34 @@ params ["_caller", "_supportType"];
 			_mainDisplay = (findDisplay 60000);
 			_mainDisplay closeDisplay 1;
 		};
+		case "TacInsert":
+		{
+			[_caller] spawn {
+				params ["_caller"];
+				//Click on map to do a tactical insert
+				selectedHaloLoc = [0,0,0];
+				openMap true;
+				uiSleep 1;
+				["<t color='#ffffff' size='.8'>Click on map do a tactical insertion<br />All players around you will will be moved</t>",0,0,4,1,0,789] spawn BIS_fnc_dynamicText;
+				onMapSingleClick "selectedHaloLoc = _pos; onMapSingleClick ''; openMap false; true;";
+				waitUntil{!(visibleMap)};  
+				if (!([selectedHaloLoc, [0,0,0]] call BIS_fnc_areEqual)) then 
+				{	
+					//Get all players near the caller
+					_playerNearby = allPlayers select {(_x distance _caller)<30};
+
+					//Move all players nearby
+					{
+						[1,["", "BLACK IN", 2]] remoteExec ["cutText", _x];
+						_x setPos ([[[selectedHaloLoc, 15]], []] call BIS_fnc_randomPos);
+					} foreach _playerNearby;
+				};
+			};
+
+			//Close support menu
+			_mainDisplay = (findDisplay 60000);
+			_mainDisplay closeDisplay 1;
+		};
 		case "DroneRecon":
 		{
 			[_caller] spawn {
@@ -310,6 +338,18 @@ addSupportForHALO = {
 	_supportName = "Halo Jump";
 	_supportNameCode = "HALOJump";
 	_supportIcon = "\a3\Ui_f\data\GUI\Cfg\CommunicationMenu\supplydrop_ca.paa";
+	_supportType = "Movement";
+
+	[_ctrl, _supportName, _supportNameCode, _supportIcon, _price, _supportType] call addSupportOption;
+};
+
+addSupportForTacInsert = {
+	params ["_ctrl"];
+	//Add support for INTEL
+	_price = 500;
+	_supportName = "Tactical Insertion";
+	_supportNameCode = "TacInsert";
+	_supportIcon = "\a3\Ui_f\data\GUI\Cfg\CommunicationMenu\transport_ca.paa";
 	_supportType = "Movement";
 
 	[_ctrl, _supportName, _supportNameCode, _supportIcon, _price, _supportType] call addSupportOption;

@@ -45,6 +45,11 @@ switch (_mode) do
 			// {
 			// 	[_lnbEntries] call addSupportForDroneRecon;
 			// };
+
+			if (_authorizeHalo) then 
+			{
+				[_lnbEntries] call addSupportForTacInsert;
+			};
 		};
 
 		for "_idc" from 602400 to 602402 do {
