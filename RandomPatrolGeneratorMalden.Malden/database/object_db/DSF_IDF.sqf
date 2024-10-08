@@ -68,7 +68,7 @@ loadout_DSF_IDF = [
 	[c_marksman, [["srifle_LRR_F","","","optic_LRPS",["7Rnd_408_Mag",7],[],""],[],["hgun_P07_F","","","",["16Rnd_9x21_Mag",16],[],""],["DSF_IDF_BDU",[["FirstAidKit",1],["16Rnd_9x21_Mag",2,16]]],["V_CarrierRigKBT_01_light_Olive_F",[["7Rnd_408_Mag",9,7],["Chemlight_green",1,1],["Chemlight_red",1,1]]],[],"H_HelmetB_snakeskin","",["Rangefinder","","","",[],[],""],["ItemMap","","ItemRadio","ItemCompass","ItemWatch",""]]],
 	[c_medic,"DSF_IDF_Medic"], //Taken from Navy (No medic in USMC)
 	[c_grenadier, "DSF_IDF_Grenadier"],
-	[c_pilot,"DSF_IDF_HeliPilot"]
+	[c_pilot,"DSF_IDF_Pilot"]
 ];
 
 
@@ -81,6 +81,17 @@ rifleList_DSF_IDF = [
 	"arifle_TRG20_F",
 	"hgun_P07_F"
 ];	
+
+if (isClass (configFile >> "CfgPatches" >> "rhs_main")) then 
+{
+	rifleList_DSF_IDF = rifleList_DSF_IDF + 
+	[
+		"rhs_weap_m16a4_carryhandle",
+		"rhs_weap_m4a1_carryhandle"
+	];
+};
+
+
 
 //Grenade launcher or weapon with grenade launcher option
 grenadeLauncherList_DSF_IDF = [		
@@ -103,6 +114,14 @@ marksmanrifleList_DSF_IDF = [
 	"srifle_LRR_F"
 ];
 
+if (isClass (configFile >> "CfgPatches" >> "rhs_main")) then 
+{
+	marksmanrifleList_DSF_IDF = marksmanrifleList_DSF_IDF + 
+	[
+		"rhs_weap_m14_rail"
+	];
+};
+
 smgList_DSF_IDF = [		
 
 ];
@@ -111,7 +130,8 @@ smgList_DSF_IDF = [
 //////////////////////////
 attachmentShortList_DSF_IDF	= [
 	"optic_Arco_blk_F",
-	"optic_MRCO"
+	"optic_MRCO",
+	"optic_Holosight_blk_F"
 ];
 
 attachmentLongList_DSF_IDF	= [
@@ -160,6 +180,13 @@ backPackList_DSF_IDF = [
 	"B_parachute"
 ];
 
+if (isClass (configFile >> "CfgPatches" >> "rhs_main")) then 
+{
+	backPackList_DSF_IDF = backPackList_DSF_IDF + 
+	[
+		"B_rhsusf_B_BACKPACK"
+	];
+};
 
 //Uniform, vest, headgear, avalaible for all unit
 uniformList_DSF_IDF = [
