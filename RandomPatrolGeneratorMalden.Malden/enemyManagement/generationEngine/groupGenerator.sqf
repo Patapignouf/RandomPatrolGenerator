@@ -108,13 +108,6 @@ doGenerateEnemyGroup =
 	if (_thisFaction == civilian) then 
 	{
 		{		
-			//Manage hostile civilian
-			// 20% chance not to be hostile at all
-			if (random 100 < 20) then 
-			{
-				[_x, 30] execVM "enemyManagement\behaviorEngine\manageHostileCivilian.sqf";
-			};
-
 			//Add eventhandler civKilled
 			_x addEventHandler ["Killed", {
 				params ["_unit", "_killer", "_instigator", "_useEffects"];
@@ -140,6 +133,22 @@ doGenerateEnemyGroup =
 					[[-50,5], 'engine\rankManagement\rankPenalty.sqf'] remoteExec ['BIS_fnc_execVM', _instigator];
 				}; 
 			}];
+
+			//Manage hostile civilian
+			// 20% chance not to be hostile at all
+			if (random 100 < 20) then 
+			{
+				//80% Hostile armed civilian 
+				if (random 100 < 80) then 
+				{
+					[_x, 30] execVM "enemyManagement\behaviorEngine\manageHostileCivilian.sqf";
+				} else 
+				//20% suicide bomber
+				{
+					//diag_log ["Hostile suicide bomber civilian at %1",getPos _x];
+					[_x] spawn civils_fnc_suicidebomber;
+				};
+			};
 		} foreach (units _currentGroupPatrol);
 	};
 
