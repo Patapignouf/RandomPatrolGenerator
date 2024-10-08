@@ -69,7 +69,7 @@ _fakeIed hideObjectGlobal true;
 	}, 
 	[_fakeIed],  
 	2,
-	0, 
+	1000, 
 	true, 
 	false
 ] remoteExec ["BIS_fnc_holdActionAdd", 0, true];
