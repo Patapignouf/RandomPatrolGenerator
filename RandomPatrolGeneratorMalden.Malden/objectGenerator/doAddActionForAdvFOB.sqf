@@ -69,6 +69,7 @@ params ["_deployableFOBItem", "_deployableFOBMounted"];
 				};
 			},objNull,1.5,true,false,"","_target distance _this <5"]] remoteExec [ "addAction", 0, true ];
 
+
 			//Add action to make all player respawn
 			TPFlag2 addAction [format ["<img size='2' image='\a3\ui_f_oldman\data\IGUI\Cfg\holdactions\holdAction_market_ca.paa'/><t size='1'>Open support shop</t>"],{
 				//Define parameters
@@ -77,19 +78,33 @@ params ["_deployableFOBItem", "_deployableFOBMounted"];
 				}
 			];
 
-			TPFlag2 addAction [format ["<img size='2' image='\a3\ui_f_oldman\data\IGUI\Cfg\holdactions\holdAction_market_ca.paa'/><t size='1'>Open vehicle shop</t>"],{
+			//Add support shop
+			[TPFlag2, [format ["<img size='2' image='\a3\ui_f_oldman\data\IGUI\Cfg\holdactions\holdAction_market_ca.paa'/><t size='1'>Open support shop</t>"],{
+				//Define parameters
+				params ["_object","_caller","_ID","_avalaibleVehicle"];
+					[[false], 'GUI\supportGUI\supportGUI.sqf'] remoteExec ['BIS_fnc_execVM', _caller];
+				}
+			]] remoteExec [ "addAction", 0, true ];
+
+
+			//Add action vehicle shop
+			[TPFlag2, [format ["<img size='2' image='\a3\ui_f_oldman\data\IGUI\Cfg\holdactions\holdAction_market_ca.paa'/><t size='1'>Open vehicle shop</t>"],{
 					//Define parameters
 					params ["_object","_caller","_ID","_avalaibleVehicle"];
 
 					[["bluforVehicleAvalaibleSpawn", bluforUnarmedVehicle, bluforArmedVehicle, bluforArmoredVehicle, bluforUnarmedVehicleChopper, bluforArmedChopper, bluforDrone, bluforFixedWing, bluforBoat], 'GUI\vehicleSpawnerGUI\vehicleSpawner.sqf'] remoteExec ['BIS_fnc_execVM', _caller];
-			},_x,3,true,false,"","(_target distance _this <5) && (_this getVariable 'role' == 'leader' || _this getVariable 'role' == 'pilot')"];
+			},_x,3,true,false,"","(_target distance _this <5) && (_this getVariable 'role' == 'leader' || _this getVariable 'role' == 'pilot')"]] remoteExec [ "addAction", 0, true ];
 
-			TPFlag2 addAction ["<img size='2' image='\a3\ui_f_oldman\data\IGUI\Cfg\holdactions\holdAction_market_ca.paa'/><t size='1'>Open team member shop</t>",{
+
+			//Add action open team member shop
+			[TPFlag2, ["<img size='2' image='\a3\ui_f_oldman\data\IGUI\Cfg\holdactions\holdAction_market_ca.paa'/><t size='1'>Open team member shop</t>",{
 			//Define parameters
 			params ["_object","_caller","_ID","_avalaibleVehicle"];
 
 			[[], 'GUI\botteamGUI\botteamGUI.sqf'] remoteExec ['BIS_fnc_execVM', _caller];
-			},_x,3,true,false,"","(_target distance _this <5) && (_this getVariable 'role' == 'leader')"];
+			},_x,3,true,false,"","(_target distance _this <5) && (_this getVariable 'role' == 'leader')"]] remoteExec [ "addAction", 0, true ];
+
+
 
 			//Add action to redeploy FOB
 			[TPFlag2, ["Advanced FOB disassembly",{
