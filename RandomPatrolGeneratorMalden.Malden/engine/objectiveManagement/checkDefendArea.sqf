@@ -11,6 +11,8 @@ _nbOpfor = count ((allUnits select {alive _x && side _x == opfor} ) inAreaArray 
 
 //diag_log format ["Log : checkDefendArea , _nbBluePlayer = %1, _nbIndPlayer = %2, _nbOpfor = %3", _nbBluePlayer, _nbIndPlayer, _nbOpfor];
 
+[[_thisTrigger] , "GUI\dominationGUI\dominationGUI.sqf"] remoteExec ['BIS_fnc_execVM', 0, true];
+
 //Check if there's IA on the area on the beginning
 while {sleep 15; _nbBluePlayer + _nbIndPlayer == 0 || _nbOpfor > 2} do 
 {
