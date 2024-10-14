@@ -41,42 +41,45 @@ if (random 100 < 75) then
 	_numberOfVehicle = _thisDifficulty;
 
 	//Generate vehicle
-	for [{_i = 0}, {_i < _numberOfVehicle}, {_i = _i + 1}] do 
-	{	
-		//50% chance to spawn armored vehicle
-		if (random 100 < 50 && enableArmoredVehicle) then 
-		{
-			//50% chance to spawn light armored vehicle
-			if (random 100 < 50) then 
+	if ((missionNameSpace getVariable ["enableOpforVehicle", 0]) == 1) then 
+	{
+		for [{_i = 0}, {_i < _numberOfVehicle}, {_i = _i + 1}] do 
+		{	
+			//50% chance to spawn armored vehicle
+			if (random 100 < 50 && enableArmoredVehicle) then 
 			{
-				if (count _thisAvailableOpforLightArmoredVehicle != 0 ) then 
+				//50% chance to spawn light armored vehicle
+				if (random 100 < 50) then 
+				{
+					if (count _thisAvailableOpforLightArmoredVehicle != 0 ) then 
+					{
+						_safeVehicleSpawn = [_thisAvailablePosition, 2, 200, 7, 10, 1, 0, [], [[0,0,0],[0,0,0]]] call BIS_fnc_findSafePos;
+						if !([_safeVehicleSpawn , [0,0,0]] call BIS_fnc_areEqual) then 
+						{
+							_currentEnemyCars = [[selectRandom _thisAvailableOpforLightArmoredVehicle], _safeVehicleSpawn, east, "LightArmored"] call doGenerateEnemyGroup;
+						};
+					};
+				} else {
+					//50% generate heavy vehicle
+					if (count _thisAvailableOpforHeavyArmoredVehicle != 0) then 
+					{
+						_safeVehicleSpawn = [_thisAvailablePosition, 2, 200, 7, 10, 1, 0, [], [[0,0,0],[0,0,0]]] call BIS_fnc_findSafePos;
+						if !([_safeVehicleSpawn , [0,0,0]] call BIS_fnc_areEqual) then 
+						{
+							_currentEnemyCars = [[selectRandom _thisAvailableOpforHeavyArmoredVehicle], _safeVehicleSpawn, east, "HeavyArmored"] call doGenerateEnemyGroup;
+						};
+					};
+				};
+			} else 
+			{
+				//50% generate light vehicle
+				if (count _thisAvailableOpforCars != 0) then 
 				{
 					_safeVehicleSpawn = [_thisAvailablePosition, 2, 200, 7, 10, 1, 0, [], [[0,0,0],[0,0,0]]] call BIS_fnc_findSafePos;
 					if !([_safeVehicleSpawn , [0,0,0]] call BIS_fnc_areEqual) then 
 					{
-						_currentEnemyCars = [[selectRandom _thisAvailableOpforLightArmoredVehicle], _safeVehicleSpawn, east, "LightArmored"] call doGenerateEnemyGroup;
+						_currentEnemyCars = [[selectRandom _thisAvailableOpforCars], _safeVehicleSpawn, east, "Car"] call doGenerateEnemyGroup;
 					};
-				};
-			} else {
-				//50% generate heavy vehicle
-				if (count _thisAvailableOpforHeavyArmoredVehicle != 0) then 
-				{
-					_safeVehicleSpawn = [_thisAvailablePosition, 2, 200, 7, 10, 1, 0, [], [[0,0,0],[0,0,0]]] call BIS_fnc_findSafePos;
-					if !([_safeVehicleSpawn , [0,0,0]] call BIS_fnc_areEqual) then 
-					{
-						_currentEnemyCars = [[selectRandom _thisAvailableOpforHeavyArmoredVehicle], _safeVehicleSpawn, east, "HeavyArmored"] call doGenerateEnemyGroup;
-					};
-				};
-			};
-		} else 
-		{
-			//50% generate light vehicle
-			if (count _thisAvailableOpforCars != 0) then 
-			{
-				_safeVehicleSpawn = [_thisAvailablePosition, 2, 200, 7, 10, 1, 0, [], [[0,0,0],[0,0,0]]] call BIS_fnc_findSafePos;
-				if !([_safeVehicleSpawn , [0,0,0]] call BIS_fnc_areEqual) then 
-				{
-					_currentEnemyCars = [[selectRandom _thisAvailableOpforCars], _safeVehicleSpawn, east, "Car"] call doGenerateEnemyGroup;
 				};
 			};
 		};

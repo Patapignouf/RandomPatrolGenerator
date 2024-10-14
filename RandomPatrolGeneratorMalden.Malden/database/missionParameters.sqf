@@ -182,8 +182,8 @@ civJoinableFactionParam =
 civSuicideBomberParam = 
 [
 	[	
-		[0, "Active suicide bomber"],
-		[1, "Disable suicide bomber"]
+		[1, "Active suicide bomber"],
+		[0, "Disable suicide bomber"]
 	],
 	"Allowing a suicide bomber",
 	1,
@@ -202,4 +202,15 @@ civSuicideBomberProbabilityParam =
 	"Probability of suicide bomber",
 	0,
 	"civSuicideBomberProbability"
+];
+
+enableOpforVehicleParam = 
+[
+	[	
+		[1, "Enable"],
+		[0, "Disable"]
+	],
+	"Opfor vehicle",
+	1,
+	"enableOpforVehicle"
 ];

@@ -135,18 +135,24 @@ doGenerateEnemyGroup =
 			}];
 
 			//Manage hostile civilian
-			// 20% chance not to be hostile at all
-			if (random 100 < 20) then 
+			// 25% chance not to be hostile at all
+			if (random 100 < 25) then 
 			{
-				//80% Hostile armed civilian 
-				if (random 100 < 80) then 
+				//50% Hostile armed civilian 
+				if (random 100 < 50) then 
 				{
 					[_x, 30] execVM "enemyManagement\behaviorEngine\manageHostileCivilian.sqf";
 				} else 
-				//20% suicide bomber
+				//50% suicide bomber
 				{
-					//diag_log ["Hostile suicide bomber civilian at %1",getPos _x];
-					[_x] spawn civils_fnc_suicidebomber;
+					if ((missionNameSpace getVariable ["civSuicideBomber", 0]) == 1) then 
+					{
+						if ((random 100) < (missionNameSpace getVariable ["civSuicideBomberProbability", 100])) then 
+						{
+							//diag_log ["Hostile suicide bomber civilian at %1",getPos _x];
+							[_x] spawn civils_fnc_suicidebomber;
+						};
+					};
 				};
 			};
 		} foreach (units _currentGroupPatrol);
