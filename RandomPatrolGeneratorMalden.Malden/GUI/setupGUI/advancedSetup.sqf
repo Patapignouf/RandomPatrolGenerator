@@ -1,7 +1,23 @@
 //[[], 'GUI\setupGUI\advancedSetup.sqf'] remoteExec ['BIS_fnc_execVM', player];
 #include "..\..\database\missionParameters.sqf"
 
-paramsToManage = [civiliansOnObjectivesParam, sideRelationParam, enablePersistentParam, enableRegularIncomeParam, disableZoomParam, enableAutoDifficultyBalanceParam, civJoinableFactionParam, enableLoadoutRestrictionParam, enableOpforVehicleParam, enableHaloParam, timeOfDayParam, civSuicideBomberParam, civSuicideBomberProbabilityParam, endlessMissionParam];
+params ["_NextParamsToManage"];
+
+paramsToManage = [];
+
+if !(isNil "_NextParamsToManage") then 
+{
+	paramsToManage = _NextParamsToManage;
+} else 
+{
+	paramsToManage = [civiliansOnObjectivesParam, sideRelationParam, enablePersistentParam, enableRegularIncomeParam, disableZoomParam, enableAutoDifficultyBalanceParam, civJoinableFactionParam, enableLoadoutRestrictionParam, enableOpforVehicleParam, enableHaloParam, timeOfDayParam, civSuicideBomberParam, civSuicideBomberProbabilityParam, endlessMissionParam, enableOpforMortarParam];
+};
+
+
+paramsToManageNow = +paramsToManage ;
+paramsToManageNow resize 10; //max 7 parameters per page
+paramsToManageNow = paramsToManageNow arrayIntersect paramsToManage;
+paramsToManageLater = paramsToManage - paramsToManageNow;
 
 //Create display too choose reporter player
 _display = (findDisplay 46) createDisplay "RscDisplayEmpty";
@@ -59,7 +75,7 @@ _yPosition = 0.10;
 		_selectedSetting = _control lbData (lbCurSel _control);
 
 		//Select specific player
-		_diffusionParamName = (paramsToManage select {_x#1 == _label})#0#3;
+		_diffusionParamName = (paramsToManageNow select {_x#1 == _label})#0#3;
 		//hint format ["%2 : %1 : %3", _selectedSetting, _selectedIndex, _diffusionParamName];
 
 		missionNamespace setVariable [_diffusionParamName, parseNumber _selectedSetting, true];
@@ -70,7 +86,7 @@ _yPosition = 0.10;
 	//Move next input down 
 	_yPosition = _yPosition + 0.06;
 
-} foreach paramsToManage;
+} foreach paramsToManageNow;
 
 
 //Button to go on the next setup
@@ -82,10 +98,14 @@ ctrlSetFocus _ButtonRight;
 _ButtonRight ctrlEnable true;
 _ButtonRight ctrlSetText "Next";
 _ButtonRight ctrlAddEventHandler ["ButtonClick",{
-	params ["_ctrl"];
-	_display = ctrlParent _ctrl;
-	_display closeDisplay 1;
-
-	[[], 'GUI\setupGUI\startGUIMenuLocation.sqf'] remoteExec ['BIS_fnc_execVM', player];
-
+		params ["_ctrl"];
+		_display = ctrlParent _ctrl;
+		_display closeDisplay 1;
+		if (count paramsToManageLater == 0) then 
+		{
+			[[], 'GUI\setupGUI\startGUIMenuLocation.sqf'] remoteExec ['BIS_fnc_execVM', player];
+		} else 
+		{
+			[[paramsToManageLater], 'GUI\setupGUI\advancedSetup.sqf'] remoteExec ['BIS_fnc_execVM', player];
+		};
 	}];	
