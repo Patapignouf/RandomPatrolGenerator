@@ -82,14 +82,14 @@ if (isClass (configFile >> "CfgPatches" >> "CUP_BaseData")) then
 if (isClass (configFile >> "CfgPatches" >> "rhs_main")) then 
 {
 	avalaibleVIP pushBack "rhs_pilot";
-	avalaibleVIP pushBack "rhsusf_airforce_jetpilot";
+	//avalaibleVIP pushBack "rhsusf_airforce_jetpilot";
 };
 
 if (isClass (configFile >> "CfgPatches" >> "DSF_core")) then 
 {
 	avalaibleVIP pushBack "DSF_COP_VIP";
 	avalaibleVIP pushBack "DSF_COP_VIP2";
-	avalaibleVIP pushBack "DSF_COP_Fed";
+	//avalaibleVIP pushBack "DSF_COP_Fed";
 };
 
 
@@ -576,6 +576,11 @@ avalaibleRoadBlock = [
 	RoadBlock3
 ];
 
+TurretBunker1 = [["Sign_Arrow_Large_F",[-0.150879,0.385742,-0.00143909],1.7425,1,0,[0,0],"","",true,false],["Land_BagFence_Round_F",[1.58545,-1.10754,-0.00143909],302.86,1,0,[0,0],"","",true,false],["Land_BagFence_Round_F",[-2.45605,-0.71814,-0.00143909],65.5576,1,0,[0,0],"","",true,false],["Land_BagFence_Round_F",[0.0288086,3.08667,-0.00143909],182.881,1,0,[0,0],"","",true,false]];
+
+avalaibleTurretBunker = [
+	TurretBunker1
+];
 
 MineField1 = 
 [["Land_Sign_MinesTall_F",[2.60706,-4.48071,-0.00143909],247.275,1,0,[0,0],"","",true,false],["APERSMine_Range_Ammo",[2.97339,5.7605,-0.0243235],0,0,0,[0,0],"","",true,false],["APERSMine_Range_Ammo",[-8.4165,6.65894,-0.0243235],0,0,0,[0,0],"","",true,false],["ATMine_Range_Ammo",[-11.01,0.510254,-0.0895429],0,0,0,[0,0],"","",true,false],["ATMine_Range_Ammo",[13.1555,4.4939,-0.0895429],0,0,0,[0,0],"","",true,false],["Land_Sign_MinesTall_F",[-14.6516,-3.56201,-0.00143909],116.195,1,0,[0,-0],"","",true,false],["APERSMine_Range_Ammo",[-11.9653,-11.1782,-0.0243235],0,0,0,[0,0],"","",true,false],["ATMine_Range_Ammo",[4.79382,-16.4299,-0.0895429],0,0,0,[0,0],"","",true,false],["Land_Sign_Mines_F",[-3.70459,17.9524,-0.00143909],229.074,1,0,[0,0],"","",true,false],["ATMine_Range_Ammo",[-6.96094,-18.6804,-0.0895429],0,0,0,[0,0],"","",true,false],["ATMine_Range_Ammo",[15.9874,-14.1992,-0.0895429],0,0,0,[0,0],"","",true,false],["ATMine_Range_Ammo",[19.2009,9.42798,-0.0895429],0,0,0,[0,0],"","",true,false],["Land_Sign_Mines_F",[8.65344,-20.542,-0.00143909],0,1,0,[0,0],"","",true,false],["APERSMine_Range_Ammo",[-25.2982,9.55908,-0.0243235],0,0,0,[0,0],"","",true,false],["ATMine_Range_Ammo",[8.50366,25.9482,-0.0895429],0,0,0,[0,0],"","",true,false],["APERSMine_Range_Ammo",[27.8556,-1.55493,-0.0243235],0,0,0,[0,0],"","",true,false],["Land_Sign_MinesTall_F",[29.1173,-2.02026,-0.00143909],212.517,1,0,[0,0],"","",true,false],["APERSMine_Range_Ammo",[4.8877,-28.7891,-0.0243235],0,0,0,[0,0],"","",true,false],["APERSMine_Range_Ammo",[-22.5498,-20.6921,-0.0243235],0,0,0,[0,0],"","",true,false],["APERSMine_Range_Ammo",[-30.171,-5.88599,-0.0243235],0,0,0,[0,0],"","",true,false],["Land_Sign_MinesTall_F",[-14.7567,-29.4446,-0.00143909],23.9111,1,0,[0,0],"","",true,false],["ATMine_Range_Ammo",[16.1252,-28.8884,-0.0895429],0,0,0,[0,0],"","",true,false],["Land_Sign_Mines_F",[-29.1547,-17.3125,-0.00143909],40.4167,1,0,[0,0],"","",true,false],["ATMine_Range_Ammo",[-19.7467,29.0825,-0.0895429],0,0,0,[0,0],"","",true,false],["APERSMine_Range_Ammo",[-1.15601,-36.9021,-0.0243235],0,0,0,[0,0],"","",true,false],["APERSMine_Range_Ammo",[-9.03003,36.2053,-0.0243235],0,0,0,[0,0],"","",true,false],["APERSMine_Range_Ammo",[29.6077,-24.0015,-0.0243235],0,0,0,[0,0],"","",true,false],["Land_Sign_MinesTall_F",[-28.7363,26.7258,-0.00143909],133.621,1,0,[0,-0],"","",true,false],["Land_Sign_MinesTall_F",[-39.0922,11.2024,-0.00143909],247.275,1,0,[0,0],"","",true,false],["Land_Sign_MinesTall_F",[36.2255,-26.2844,-0.00143909],307.663,1,0,[0,0],"","",true,false],["APERSMine_Range_Ammo",[9.26794,-45.6338,-0.0243235],0,0,0,[0,0],"","",true,false],["ATMine_Range_Ammo",[3.45093,47.218,-0.0895429],0,0,0,[0,0],"","",true,false],["Land_Sign_MinesTall_F",[9.02185,-47.5356,-0.00143909],2.86756,1,0,[0,0],"","",true,false],["APERSMine_Range_Ammo",[-41.9222,24.9702,-0.0243235],0,0,0,[0,0],"","",true,false],["Land_Sign_MinesTall_F",[-1.70752,52.9905,-0.00143909],223.343,1,0,[0,0],"","",true,false],["Land_Sign_Mines_F",[-42.5483,39.0137,-0.00143909],238.3,1,0,[0,0],"","",true,false],["APERSMine_Range_Ammo",[-29.3917,56.0637,-0.0243235],0,0,0,[0,0],"","",true,false],["APERSMine_Range_Ammo",[-12.2014,67.5745,-0.0243235],0,0,0,[0,0],"","",true,false],["Land_Sign_MinesTall_F",[-25.5245,70.2356,-0.00143909],152.441,1,0,[0,-0],"","",true,false]];

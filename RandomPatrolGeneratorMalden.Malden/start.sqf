@@ -135,6 +135,7 @@ baseEnemyATGroup = baseEnemyATGroup_db select {_x select 1  == opFaction} select
 baseEnemyDemoGroup = baseEnemyDemoGroup_db select {_x select 1  == opFaction} select 0 select 0;
 baseEnemyMortarGroup = baseEnemyMortarGroup_db select {_x select 1  == opFaction} select 0 select 0;
 baseEnemyVehicleGroup = baseEnemyVehicleGroup_db select {_x select 1  == opFaction} select 0 select 0;
+baseEnemyTurretGroup = ((baseEnemyTurretGroup_db select {_x#1  == opFaction})#0)#0;
 baseEnemyLightArmoredVehicleGroup = baseEnemyLightArmoredVehicleGroup_db select {_x select 1  == opFaction} select 0 select 0;
 baseEnemyHeavyArmoredVehicleGroup = baseEnemyHeavyArmoredVehicleGroup_db select {_x select 1  == opFaction} select 0 select 0;
 baseEnemyUnarmedChopperGroup = baseEnemyUnarmedChopperGroup_db select {_x select 1  == opFaction} select 0 select 0;
@@ -295,7 +296,7 @@ for [{_i = 0}, {_i <= 2}, {_i = _i + 1}] do //Peut être optimisé
 if (random 100 < 20 && (count (allPlayers select {side _x == independent})== 0)) then 
 {
 	//Generate enemy forces on main civilian city environement
-	_handlePOIGeneration = [EnemyWaveLevel_1, baseEnemyVehicleGroup, [], [], [], initCityLocation, objNull] execVM 'enemyManagement\generationEngine\generatePOI.sqf'; 
+	_handlePOIGeneration = [EnemyWaveLevel_1, baseEnemyVehicleGroup, [], [], [], [], initCityLocation, objNull] execVM 'enemyManagement\generationEngine\generatePOI.sqf'; 
 	waitUntil {isNull _handlePOIGeneration};
 };
 
@@ -638,7 +639,7 @@ if (1 <= (count EnemyWaveSpawnPositions)) then
 };
 
 //Generate mortar | 25% chance to spawn 
-if (count baseEnemyMortarGroup > 0) then 
+if (count baseEnemyMortarGroup > 0 && (missionNameSpace getVariable ["enableOpforMortar", 0]==1)) then 
 {
 	if (random 100 < 25) then 
 	{ 
