@@ -94,3 +94,5 @@ if (_thisFOBCheck) then
 	_OpforFOBCleared = missionNamespace getVariable ["OpforFOBCleared", 0];
 	missionNamespace setVariable ["OpforFOBCleared", _OpforFOBCleared+1, true];	
 };
+
+_thisTrigger enableSimulation false;
