@@ -46,14 +46,16 @@ baseEnemyVehicleGroup_KORSAC_KS  = [
 	"vtf_kf_O_Offroad_01_covered_F",
 	"vtf_kf_O_Offroad_01_AT_F",
 	"vtf_kf_O_LSV_02_unarmed_F",
-	"vtf_kf_O_Van_02_transport_F",
-
-	//Turrets 
-	"vtf_kf_O_HMG_02_high_F", 
-	"vtf_kf_O_Rifleman_F", 
-	"vtf_kf_O_static_AA_F", 
-	"vtf_kf_O_static_AT_F"
+	"vtf_kf_O_Van_02_transport_F"
 ];
+
+baseEnemyTurretGroup_KORSAC_KS = [
+	//Turrets 
+	["vtf_kf_O_HMG_02_high_F", "SMALLBUNKER"],
+	["vtf_kf_O_static_AA_F", "SMALLBUNKER"],
+	["vtf_kf_O_static_AT_F", "SMALLBUNKER"]
+];
+
 
 baseEnemyLightArmoredVehicleGroup_KORSAC_KS = [
 

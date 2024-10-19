@@ -62,6 +62,14 @@ baseEnemyHeavyArmoredVehicleGroup_RU_2020 = [
 	"rhs_sprut_vdv"
 ];
 
+baseEnemyTurretGroup_RU_2020 = [
+	//Turrets 
+	["rhs_Kornet_9M133_2_VDV", "SMALLBUNKER"],
+	["rhs_KORD_high_VDV", "SMALLBUNKER"],
+	["RHS_ZU23_VDV", "SMALLBUNKER"]
+];
+
+
 baseEnemyUnarmedChopperGroup_RU_2020 = [
 	"RHS_Mi8mt_vdv"
 ];

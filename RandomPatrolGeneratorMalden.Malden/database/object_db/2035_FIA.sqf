@@ -81,10 +81,12 @@ baseEnemyVehicleGroup_2035_FIA = [
 	"O_G_Offroad_01_AT_F", 
 	"O_G_Van_02_vehicle_F", 
 	"O_G_Van_01_transport_F", 
-	"O_G_Offroad_01_armed_F",
+	"O_G_Offroad_01_armed_F"
+];
 
-	//Turret
-	"O_G_HMG_02_high_F"
+baseEnemyTurretGroup_2035_FIA = [
+	//Turrets 
+	["O_G_HMG_02_high_F", "SMALLBUNKER"]
 ];
 
 //Basic enemy light armored vehicle avalaible must be destroyed without heavy AT (ex : BMP)

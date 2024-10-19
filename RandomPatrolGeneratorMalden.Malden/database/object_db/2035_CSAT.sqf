@@ -87,11 +87,14 @@ baseEnemyMortarGroup_2035_CSAT = [
 baseEnemyVehicleGroup_2035_CSAT = [
 	"O_LSV_02_AT_F", 
 	"O_LSV_02_armed_F",
-	"O_MRAP_02_F",
+	"O_MRAP_02_F"
+];
 
-	//Turrets
-	"O_HMG_01_high_F", 
-	"O_static_AA_F"
+
+baseEnemyTurretGroup_2035_CSAT = [
+	//Turrets 
+	["O_HMG_01_high_F", "SMALLBUNKER"],
+	["O_static_AA_F", "SMALLBUNKER"]
 ];
 
 //Basic enemy light armored vehicle avalaible must be destroyed without heavy AT (ex : BMP)

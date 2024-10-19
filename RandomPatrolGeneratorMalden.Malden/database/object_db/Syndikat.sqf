@@ -79,7 +79,7 @@ baseEnemyVehicleGroup_Syndikat = [
 
 baseEnemyTurretGroup_Syndikat = [
 	//Turrets 
-	"I_C_HMG_02_high_F"
+	["I_C_HMG_02_high_F", "SMALLBUNKER"]
 ];
 
 baseEnemyLightArmoredVehicleGroup_Syndikat = [

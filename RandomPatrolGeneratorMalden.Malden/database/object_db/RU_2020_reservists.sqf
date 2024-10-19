@@ -54,6 +54,13 @@ baseEnemyVehicleGroup_RU_2020_reservists = [
 	"rhs_Igla_AA_pod_msv" //AA Turret
 ];
 
+baseEnemyTurretGroup_RU_2020_reservists = [
+	//Turrets 
+	["rhs_Kornet_9M133_2_msv", "SMALLBUNKER"],
+	["rhs_KORD_high_MSV", "SMALLBUNKER"],
+	["RHS_ZU23_MSV", "SMALLBUNKER"]
+];
+
 baseEnemyLightArmoredVehicleGroup_RU_2020_reservists = [
 	//Btr
 	"rhs_btr60_vv", 

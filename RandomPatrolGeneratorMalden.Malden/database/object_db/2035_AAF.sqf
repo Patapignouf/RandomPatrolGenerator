@@ -95,6 +95,16 @@ baseEnemyHeavyArmoredVehicleGroup_2035_AAF = [
 	"I_APC_tracked_03_cannon_F"
 ];
 
+baseEnemyTurretGroup_2035_AAF = [
+	//Turrets 
+	["I_HMG_01_high_F", "SMALLBUNKER"],
+	["I_static_AT_F", "SMALLBUNKER"],
+	["I_static_AA_F", "SMALLBUNKER"],
+	["I_HMG_02_high_F", "SMALLBUNKER"]
+
+];
+
+
 baseEnemyUnarmedChopperGroup_2035_AAF = [
 	"I_Heli_Transport_02_F", 
 	"I_Heli_light_03_unarmed_F"
