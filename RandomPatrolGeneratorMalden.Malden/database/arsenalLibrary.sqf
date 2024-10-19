@@ -577,11 +577,11 @@ isAreaEligibleForArsenal = {
 	_controlDistance = "";
 	if (side _caller == blufor) then 
 	{
-		_controlDistance = "(_this distance _target < 10) && ((_target distance initBlueforLocation < 150) || (_target distance (missionNamespace getVariable 'advancedBlueforLocation') < 30))"
+		_controlDistance = "(_this distance _target < 15) && ((_target distance initBlueforLocation < 150) || (_target distance (missionNamespace getVariable 'advancedBlueforLocation') < 30))"
 	};
 	if (side _caller == independent) then 
 	{
-		_controlDistance = "(_this distance _target < 10) && (_target distance (initCityLocation) < 1000)";
+		_controlDistance = "(_this distance _target < 15) && (_target distance (initCityLocation) < 1000)";
 	};
 	_controlDistance;
 };
