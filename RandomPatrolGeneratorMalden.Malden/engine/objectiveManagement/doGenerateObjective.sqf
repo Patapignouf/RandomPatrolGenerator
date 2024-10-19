@@ -268,7 +268,7 @@ generateObjectiveObject =
 											"a3\dubbing_f_epc\c_in1\13_ambient_talk_03\c_in1_13_ambient_talk_03_aba_0.ogg",
 											"a3\dubbing_f_epc\c_in1\11_ambient_talk_01\c_in1_11_ambient_talk_01_aba_1.ogg"
 										];
-						playSound3D [selectRandom _currentlyVoice, _objectiveObject, true, getPosASL _objectiveObject, 3, 1, 20, 0, false];
+						playSound3D [selectRandom _currentlyVoice, _objectiveObject, true, getPosASL _objectiveObject, 5, 1, 20, 0, false];
 					};
 				};
 
@@ -694,7 +694,7 @@ generateObjectiveObject =
 											"a3\dubbing_f_epc\c_in1\13_ambient_talk_03\c_in1_13_ambient_talk_03_aba_0.ogg",
 											"a3\dubbing_f_epc\c_in1\11_ambient_talk_01\c_in1_11_ambient_talk_01_aba_1.ogg"
 										];
-						playSound3D [selectRandom _currentlyVoice, _objectiveObject, true, getPosASL _objectiveObject, 3, 1, 20, 0, false];
+						playSound3D [selectRandom _currentlyVoice, _objectiveObject, true, getPosASL _objectiveObject, 5, 1, 20, 0, false];
 					};
 				};
 				
