@@ -1,7 +1,7 @@
 #include "..\classConstant.sqf"
 
 factionID = factionID+1;
-factionInfos pushBack ["_2035_LDF", 13,"2035 LDF", false, true, false];
+factionInfos pushBack ["_2035_LDF", factionID,"2035 LDF", false, true, false];
 
 //////////////////////////////
 ///Define enemy group data////

@@ -55,6 +55,7 @@ factionID = 41;
 #include "object_db\DSF_Hezbollah.sqf"
 #include "object_db\DSF_Hamas.sqf"
 #include "object_db\2035_LDF.sqf"
+#include "object_db\2035_NATO_jungle.sqf"
 
 ////////////////////////////////////
 ///DO NOT CHANGE FACTION ORDER//////
