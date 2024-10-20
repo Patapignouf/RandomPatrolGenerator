@@ -51,7 +51,7 @@ if (isServer) then
 				//Alert players
 				if (random 100>50) then 
 				{
-					_textToSpeech = format ["An opfor reinforcement is coming to %1, be ready</t>", mapGridPosition (positionToAttack)];
+					_textToSpeech = format ["An opfor reinforcement is coming to %1, be ready", mapGridPosition (positionToAttack)];
 					[[format ["<t align = 'center' shadow = '2' color='#0046ff' size='1.5' font='PuristaMedium' >High Command</t><br /><t color='#ffffff' size='1.5' font='PuristaMedium' shadow = '2' >%1</t>", _textToSpeech], "PLAIN DOWN", -1, true, true]] remoteExec ["titleText", 0, true];
 				};
 				
