@@ -69,7 +69,9 @@ avalaibleVIP = [
 	"C_Man_smart_casual_2_F_tanoan", 
 	"C_IDAP_Man_EOD_01_F", 
 	"C_IDAP_Man_AidWorker_09_F", 
-	"C_scientist_01_formal_F"
+	"C_scientist_01_formal_F",
+	"C_Nikos",
+	"C_Man_smart_casual_2_F"
 ];
 
 if (isClass (configFile >> "CfgPatches" >> "CUP_BaseData")) then 
@@ -577,9 +579,11 @@ avalaibleRoadBlock = [
 ];
 
 TurretBunker1 = [["Sign_Arrow_Large_F",[-0.150879,0.385742,-0.00143909],1.7425,1,0,[0,0],"","",true,false],["Land_BagFence_Round_F",[1.58545,-1.10754,-0.00143909],302.86,1,0,[0,0],"","",true,false],["Land_BagFence_Round_F",[-2.45605,-0.71814,-0.00143909],65.5576,1,0,[0,0],"","",true,false],["Land_BagFence_Round_F",[0.0288086,3.08667,-0.00143909],182.881,1,0,[0,0],"","",true,false]];
+TurretBunker2 = [["Land_CamoNetVar_EAST_EP1",[-1.18408,0.427856,-0.00143909],90,1,0,[0,-0],"","",true,false],["Land_fort_bagfence_round",[-3.43311,0.866577,-0.00143909],270,1,0,[0,0],"","",true,false],["Land_fort_bagfence_round",[3.98877,0.861694,-0.00143909],90,1,0,[0,-0],"","",true,false],["Land_fort_bagfence_long",[0.262695,3.59998,-0.00143909],0,1,0,[0,0],"","",true,false],["Sign_Arrow_Large_F",[0.108887,0.910767,-0.00143909],1.7425,1,0,[0,0],"","",true,false],["AmmoCrates_NoInteractive_Large",[-2.6123,-3.11096,-0.00143909],135,1,0,[0,-0],"","",true,false],["Land_Pallets_F",[1.57373,-3.0769,-0.00143909],90,1,0,[0,-0],"","",true,false]];
 
 avalaibleTurretBunker = [
-	TurretBunker1
+	TurretBunker1,
+	TurretBunker2
 ];
 
 MineField1 = 

@@ -251,6 +251,7 @@ generateObjectiveObject =
 			{
 				//Generate objective object
 				_objectiveObject =  leader ([_currentRandomPos, civilian, [selectRandom avalaibleVIP],[],[],[],[],[], random 360] call BIS_fnc_spawnGroup);
+				removeAllWeapons _objectiveObject;
 				_objectiveObject setVariable ["isObjectiveObject", true, true];
 				_thisObjective = [_objectiveObject, _thisObjectiveType] call generateObjectiveTracker;
 
@@ -363,6 +364,7 @@ generateObjectiveObject =
 						[_object, ""] remoteExec ["switchMove", 0, true];
 						_object setBehaviour "CARELESS";   
 						_object enableAI "PATH";
+						removeAllWeapons _object;
 
 						_textToSpeech = format ["Thank you"];
 						[[format ["<t align = 'center' shadow = '2' color='#0046ff' size='1.5' font='PuristaMedium' >Hostage</t><br /><t color='#ffffff' size='1.5' font='PuristaMedium' shadow = '2' >%1</t>", _textToSpeech], "PLAIN DOWN", -1, true, true]] remoteExec ["titleText", side _caller, true];
@@ -678,6 +680,7 @@ generateObjectiveObject =
 				_objectiveObject setVariable ["isObjectiveObject", true, true];
 				_thisObjective = [_objectiveObject, _thisObjectiveType] call generateObjectiveTracker;
 				_objectiveObject disableAI "PATH";
+				removeAllWeapons _objectiveObject;
 
 				//Add dialog to the informant
 				diag_log format ["Informant task setup ! : %1", _objectiveObject];
