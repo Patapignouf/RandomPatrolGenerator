@@ -15,9 +15,12 @@ _vehicleFromGroup = vehicle (leader _vehicleAirAttackGroup);
 
 
 //Attack to position
-wp2 = _vehicleAirAttackGroup addWaypoint [_destinationPos, 100];
-wp2 setwaypointtype"MOVE"; 
-wp2 setWaypointBehaviour "COMBAT";
+_wp1 = _vehicleAirAttackGroup addWaypoint [_destinationPos, 100];
+_wp1 setWaypointBehaviour "COMBAT";
+_wp1 setWaypointType "SAD";
+_wp1 setWaypointBehaviour "COMBAT";
+_wp1 setWaypointCombatMode "RED";
+_wp1 setWaypointStatements ["TRUE", ""];
 
 //TEMP feature - In the future there will be a dynamic side quest assignement
 //50% chance to setup the side mission 
