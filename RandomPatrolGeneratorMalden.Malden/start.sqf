@@ -204,6 +204,15 @@ switch (missionNameSpace getVariable "sideRelations") do
 	};
 };
 
+//Init bunker FOB depending of war era and mod
+if (isClass (configFile >> "CfgPatches" >> "fow_main")) then 
+{
+	if (warEra == 0) then 
+	{
+		avalaibleEnemyFOB = avalaibleEnemyFOB_FOW;
+	};
+};
+
 /////////////////////////
 /////Find locations//////
 /////////////////////////
@@ -867,6 +876,7 @@ if (disableZoom == 1) then
 {
 	[[], 'engine\disableZoom.sqf'] remoteExec ['BIS_fnc_execVM', 0, true];
 };
+
 
 //Init checkdeath
 [] execVM 'engine\checkdeath.sqf';
