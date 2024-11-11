@@ -8,7 +8,8 @@ modToCheck = [
 	["vtf_kf_main", "MOD_KORSAC", "KORSAC TERRAIN","CfgPatches"],
 	["rhs_main", "MOD_RHS", "[RHS] RED HAMMER STUDIOS","CfgPatches"],
 	["RT", "MOD_RT", "Realistic Driving Terrains","CfgPatches"],
-	["DSF_core", "MOD_DSF", "[DSF] Drongos Simple Factions","CfgPatches"]
+	["DSF_core", "MOD_DSF", "[DSF] Drongos Simple Factions","CfgPatches"],
+	["fow_main", "MOD_FOW", "[FOW] Faces Of War","CfgPatches"]
 ];
 
 doCheckRunningModsOnServer = {
