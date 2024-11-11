@@ -161,15 +161,10 @@ itemList_FOW_US = [
 	"ItemMap",
 	"ItemCompass",
 	"ItemWatch",
-	"NVGoggles",
 	"Binocular",
-	"Laserdesignator",
-	"Rangefinder",
 	"ACE_MapTools",
-	"ACE_microDAGR",
 	"ACE_SpraypaintRed",
 	"ACE_CableTie",
-	"ACE_DAGR",
 	"ACE_WaterBottle",
 	"ACE_EarPlugs",
 	"ACE_fieldDressing",
@@ -183,7 +178,6 @@ itemList_FOW_US = [
 	"ACE_RangeTable_82mm",
 	"acc_flashlight",
 	"ACE_Banana",
-	"muzzle_snds_H_snd_F",
 	"HandGrenade",
 	"MiniGrenade",
 	"ACE_SpraypaintBlack",
@@ -217,10 +211,6 @@ backPackList_FOW_US = [
 
 //Uniform, vest, headgear, avalaible for all unit
 uniformList_FOW_US = [
-
-];
-
-uniformListSniper_FOW_US = [
 	//Uniform
 	"fow_u_usmc_p41_01_private",
 	"fow_u_usmc_p42_01_camo01_1_private",
@@ -236,6 +226,10 @@ uniformListSniper_FOW_US = [
 	"fow_h_usmc_m1_camo_01",
 	"fow_h_us_daisy_mae_01",
 	"fow_h_us_daisy_mae_02"
+];
+
+uniformListSniper_FOW_US = [
+
 ];
 
 
