@@ -59,19 +59,31 @@ baseFixedWingGroup_USA_2020_MA = [
 bluforUnarmedVehicle_USA_2020_MA = [
 	"rhsusf_m1025_d_s", 
 	"rhsusf_m998_d_s_2dr",
-	"rhsusf_CGRCAT1A2_usmc_d"
+	"rhsusf_CGRCAT1A2_usmc_d",
+	"rhsusf_m1152_usmc_wd", 
+	"rhsusf_m1165_usmc_wd", 
+	"rhsusf_m998_w_s_2dr"
 ];
 
 bluforArmedVehicle_USA_2020_MA = [
 	"rhsusf_m1025_d_s_m2", 
-	"rhsusf_m1151_m2_v3_usmc_d"
+	"rhsusf_m1151_m2_v3_usmc_d",
+	"rhsusf_m1151_m240_v3_usmc_wd", 
+	"rhsusf_m1151_m2_v3_usmc_wd", 
+	"rhsusf_m1043_w_s_m2", 
+	"rhsusf_m1151_m2crows_usmc_wd"
 ];
 
 //Armored vehicle avalaible for blufor : Ex light tank
 bluforArmoredVehicle_USA_2020_MA = [
 	"rhsusf_m1a1fep_d",
 	"rhsusf_m1240a1_m2crows_usmc_d", 
-	"rhsusf_CGRCAT1A2_M2_usmc_d"
+	"rhsusf_CGRCAT1A2_M2_usmc_d",
+	"rhsusf_m1a1fep_wd", 
+	"rhsusf_m1a1hc_wd", 
+	"rhsusf_m1240a1_m2crows_usmc_wd", 
+	"rhsusf_m1240a1_m240_usmc_wd", 
+	"rhsusf_M1232_MC_M2_usmc_wd"
 ];
 
 bluforUnarmedVehicleChopper_USA_2020_MA = [
@@ -313,6 +325,7 @@ backPackList_USA_2020_MA = [
 //Uniform, vest, headgear, avalaible for all unit
 uniformList_USA_2020_MA = [
 	"rhs_uniform_FROG01_d",
+	"rhs_uniform_FROG01_wd", //Woodland
 
 	//Plateframe
 	"rhsusf_spc_light",
@@ -331,7 +344,15 @@ uniformList_USA_2020_MA = [
 	"rhsusf_mich_helmet_marpatd_norotos",
 	"rhsusf_opscore_ut",
 	"rhsusf_mich_bare_norotos_arc_tan",
-	"rhsusf_lwh_helmet_marpatd_ess"
+	"rhsusf_lwh_helmet_marpatd_ess",
+
+	//Woodland
+	"rhsusf_lwh_helmet_marpatwd_ess",
+	"rhsusf_lwh_helmet_marpatwd_headset",
+	"rhsusf_lwh_helmet_marpatwd_headset_blk",
+	"rhsusf_lwh_helmet_marpatwd_headset_blk_2",
+	"rhsusf_lwh_helmet_marpatwd",
+	"rhs_8point_marpatwd"
 ];
 
 

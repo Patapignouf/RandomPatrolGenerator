@@ -1,12 +1,4 @@
-c_leader = "leader";
-c_at = "at";
-c_rifleman = "rifleman";
-c_grenadier = "grenadier";
-c_engineer = "engineer";
-c_autorifleman = "autorifleman";
-c_marksman = "marksman"; 
-c_medic = "medic";
-c_pilot = "pilot";
+#include "..\classConstant.sqf"
 
 factionInfos pushBack ["_2035_Spetsnaz",22,"2035 Spetsnaz", true, true, false];
 
@@ -118,8 +110,8 @@ bluforDrone_2035_Spetsnaz = [
 
 //Boat vehicle avalaible for blufor
 bluforBoat_2035_Spetsnaz = [
-
-
+	"O_T_Boat_Transport_01_F", 
+	"O_T_Boat_Armed_01_hmg_F"
 ];
 
 //FixedWing vehicle avalaible for blufor
@@ -130,7 +122,7 @@ bluforFixedWing_2035_Spetsnaz = [
 
 //Vehicule able to do HQ features (Loadout management and more)
 bluforHQVehicle_2035_Spetsnaz = [
-
+	"O_T_Truck_03_covered_ghex_F"
 ];
 
 
@@ -150,7 +142,8 @@ loadout_2035_Spetsnaz = [
 	[c_autorifleman,"O_R_Patrol_Soldier_AR_F"],
 	[c_marksman,"O_R_Patrol_Soldier_M2_F"],
 	[c_medic,"O_R_Patrol_Soldier_Medic"],
-	[c_grenadier,"O_R_Soldier_GL_F"]
+	[c_grenadier,"O_R_Soldier_GL_F"],
+	[c_drone,"O_R_recon_JTAC_F"]
 ];
 
 ////////////////////////
@@ -160,34 +153,55 @@ loadout_2035_Spetsnaz = [
 //Rifle avalaible for all unit
 rifleList_2035_Spetsnaz = [		
 	"arifle_AK12_lush_F",
-	"arifle_AK12U_lush_F"
+	"arifle_AK12U_lush_F",
+	"arifle_AK12_arid_F",
+	"arifle_AK12U_arid_F",
+	"arifle_AK12_F",
+	"arifle_AK12U_F",
+	"hgun_Rook40_F"
 ];	
 
+// if (isClass (configFile >> "CfgPatches" >> "rhs_main")) then 
+// {
+// 	rifleList_2035_Spetsnaz = rifleList_2035_Spetsnaz + 
+// 	[
+// 		"rhs_weap_ak74m_zenitco01_b33"
+// 	];
+// };
+
+
 grenadeLauncherList_2035_Spetsnaz = [
-	"arifle_AK12_GL_lush_F"
+	"arifle_AK12_GL_lush_F",
+	"arifle_AK12_GL_F",
+	"arifle_AK12_GL_arid_F"
 ];
 
 
 //Launcher avalaible for AT
 launcherList_2035_Spetsnaz = [
-	"launch_RPG32_green_F"
-
+	"launch_RPG32_green_F",
+	"launch_RPG32_F"
 ];	
 
 //Autorifle avalaible for autorifleman
 autorifleList_2035_Spetsnaz = [
-	"arifle_RPK12_lush_F"
+	"arifle_RPK12_lush_F",
+	"arifle_RPK12_arid_F",
+	"arifle_RPK12_F"
 ];	
 
 //Rifle avalaible for marksman
 marksmanrifleList_2035_Spetsnaz = [
-	"srifle_DMR_04_F"
-
+	"srifle_DMR_04_F",
+	"srifle_DMR_01_F",
+	"srifle_DMR_04_tan_F",
+	"srifle_DMR_05_blk_F",
+	"srifle_DMR_05_tan_F"
 ];
+
 
 //Smg avalaible for all unit
 smgList_2035_Spetsnaz = [
-	"hgun_Rook40_F"
 
 ];
 
@@ -298,9 +312,18 @@ itemMedicList_2035_Spetsnaz = [
 
 //backpack avalaible for all unit
 backPackList_2035_Spetsnaz = [
-	"tfar_mr3000"
-
+	"tfar_mr3000",
+	"B_FieldPack_green_F",
+	"B_Carryall_F"
 ];
+
+if (isClass (configFile >> "CfgPatches" >> "rhs_main")) then 
+{
+	backPackList_2035_Spetsnaz = backPackList_2035_Spetsnaz + 
+	[
+		"rhs_assault_umbts"
+	];
+};
 
 factionDefaultRadios_2035_Spetsnaz = [
 	"tfar_fadak"
@@ -309,12 +332,29 @@ factionDefaultRadios_2035_Spetsnaz = [
 //Uniform, vest, headgear, avalaible for all unit
 uniformList_2035_Spetsnaz = [
 	"H_HelmetAggressor_cover_taiga_F",
+	// "H_HelmetO_ghex_F", // Basic helmet for those who do not own the contact DLC
+	// "V_TacChestrig_grn_F", // Basic vest for those who do not own the contact DLC
+	// "U_O_T_Soldier_F", // Basic uniform for those who do not own the contact DLC
 	"U_O_R_Gorka_01_F",
 	"V_SmershVest_01_F",
 	"B_FieldPack_taiga_F",
 	"U_O_R_Gorka_01_camo_F",
 	"G_Balaclava_blk"
 ];
+
+if (isClass (configFile >> "CfgPatches" >> "rhs_main")) then 
+{
+	uniformList_2035_Spetsnaz = uniformList_2035_Spetsnaz + 
+	[
+		"rhs_uniform_gorka_r_y_gloves",
+		"rhs_uniform_gorka_r_g_gloves",
+		"rhs_uniform_gorka_r_y",
+		"rhs_uniform_gorka_r_g",
+		"rhs_6b23_digi_6sh92_Spetsnaz",
+		"rhs_6b7_1m_bala1_olive"
+	];
+};
+
 
 //Magazine avalaible for all unit
 //Special note throwing items must be placed here too

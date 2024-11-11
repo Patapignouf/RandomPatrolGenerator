@@ -76,7 +76,8 @@ baseEnemyUnarmedChopperGroup_RU_2020 = [
 
 baseEnemyArmedChopperGroup_RU_2020 = [
 	"RHS_Mi24P_vdv", 
-	"RHS_Mi8MTV3_heavy_vdv"
+	"RHS_Mi8MTV3_heavy_vdv",
+	"RHS_Ka52_vvsc"
 ];
 
 baseFixedWingGroup_RU_2020 = [
