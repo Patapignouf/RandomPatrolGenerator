@@ -58,6 +58,8 @@ factionID = 41;
 #include "object_db\2035_NATO_jungle.sqf"
 #include "object_db\FOW_US.sqf"
 #include "object_db\FOW_JAP.sqf"
+#include "object_db\FOW_GER.sqf"
+#include "object_db\FOW_UK.sqf"
 
 ////////////////////////////////////
 ///DO NOT CHANGE FACTION ORDER//////
