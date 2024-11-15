@@ -38,7 +38,7 @@ missionNamespace setVariable ["missionRespawnParam", 99999999999999, true]; //De
 
 
 //Blufor Initilization 
-missionNamespace setVariable ["advancedBlueforLocation", [0,0], true]; //Default armored vehicle are disabled
+missionNamespace setVariable ["advancedBlueforLocation", [0,0,0], true]; //Default armored vehicle are disabled
 missionNamespace setVariable ["artlillerySupportCounter", 0, true]; //default artillery support counter
 missionNamespace setVariable ["extractSupportCounter", 0, true]; //default extract support counter
 missionNamespace setVariable ["transportSupportCounter", 0, true]; //default transport support counter

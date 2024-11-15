@@ -48,5 +48,16 @@ class playerRespawnMenu
 			w = 10 * GUI_GRID_CENTER_W;
 			h = 1 * GUI_GRID_CENTER_H;
 		};
+
+		//AdvFOB respawn button
+		class RespawnOnFOBStart: RscButton
+		{
+			idc = 8201;
+			text = "Respawn at Advanced FOB position";
+			x = GUI_GRID_CENTER_X + 5 * GUI_GRID_CENTER_W;
+			y = GUI_GRID_CENTER_Y + 7 * GUI_GRID_CENTER_H;
+			w = 10 * GUI_GRID_CENTER_W;
+			h = 1 * GUI_GRID_CENTER_H;
+		};
 	};
 };

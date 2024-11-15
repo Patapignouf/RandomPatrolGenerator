@@ -132,6 +132,8 @@ params ["_deployableFOBItem", "_deployableFOBMounted"];
 				_deployableFOBItem allowDamage false; 
 				[_deployableFOBItem, _avalaibleOutpost] execVM 'objectGenerator\doAddActionForAdvFOB.sqf'; 
 
+				missionNamespace setVariable ["advancedBlueforLocation", [0,0,0], true];
+
 			},[_avalaibleOutpost],0.5,true,false,"","_target distance _this <5"]] remoteExec [ "addAction", 0, true ];
 
 			//Remove Box

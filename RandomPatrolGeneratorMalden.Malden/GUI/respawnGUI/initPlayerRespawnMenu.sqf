@@ -9,6 +9,7 @@ createDialog "playerRespawnMenu";
 //Define a comboBox foreach faction
 private _mainDisplay = (findDisplay 8000);
 private _buttonRespawnStart = _mainDisplay displayCtrl 8200;
+private _buttonRespawnAdvFOB = _mainDisplay displayCtrl 8201;
 
 //Faction params
 bluFaction = missionNamespace getVariable "bluforFaction";
@@ -29,12 +30,41 @@ if (!ironMan) then
 	if (player getVariable "sideBeforeDeath" == "independent") then 
 	{
 		//Independent
+		
 		_listOfAvalaibleRole = [indFaction] call setupRoleSwitchToList;
+
 
 	} else 
 	{
 		//Blufor
 		_listOfAvalaibleRole = [bluFaction] call setupRoleSwitchToList;
+	};
+
+	//Hide advanced fob respawn if independent or if there is no Adv FOB setup
+	_advFOBLocation = missionNamespace getVariable ["advancedBlueforLocation", [0,0,0]];
+	if (playerSide == blufor && !([_advFOBLocation, [0,0,0]] call BIS_fnc_areEqual)) then 
+	{
+			_buttonRespawnAdvFOB ctrlAddEventHandler[ "ButtonClick",
+			{
+				//Close mission setup
+				params ["_ctrl"];
+
+				normalClose = true;
+				_advFOBLocation = missionNamespace getVariable ["advancedBlueforLocation", [0,0,0]];
+				player setPos _advFOBLocation;
+
+				["Respawn on advanced FOB position", format ["Year %1", date select 0], mapGridPosition player] spawn BIS_fnc_infoText;
+
+				//Initialize player
+				[] call doInitializePlayer;
+
+				_display = ctrlParent _ctrl;
+				_display closeDisplay 1;
+			}];
+	
+	} else 
+	{
+		_buttonRespawnAdvFOB ctrlShow false;
 	};
 
 	//Load every class for current player's faction
