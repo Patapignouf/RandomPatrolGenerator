@@ -39,7 +39,7 @@ if (!([_OpforFobLocation] call isLocationOnMap)) then
 	_opforFOBGarrison = [selectRandom EnemyWaveLevel_1 + selectRandom EnemyWaveLevel_1, _OpforFobLocation , east, "DefenseFOBInfantry"] call doGenerateEnemyGroup;
 	{
 		_randomAvalaiblePos = selectRandom _OpforFobStandardOpforLocation;
-		_x setPos (getPos _randomAvalaiblePos);
+		_x setPosASL (getPosASL _randomAvalaiblePos);
 		_x disableAI "PATH";
 		_x setDir (getDir _randomAvalaiblePos);
 		deleteVehicle _randomAvalaiblePos;
