@@ -3,7 +3,7 @@
 factionID = factionID+1;
 if (isClass (configFile >> "CfgPatches" >> "fow_main")) then 
 {
-	factionInfos pushBack["_FOW_UK", factionID,"United Kingdom [FOW]", true, false, false];
+	factionInfos pushBack["FOW_US_Pacific", factionID,"US Army Pacific [FOW]", true, false, false];
 };
 
 ////////////////////////
@@ -12,58 +12,62 @@ if (isClass (configFile >> "CfgPatches" >> "fow_main")) then
 
 
 //Light vehicle avalaible for blufor : Ex light hummvee, quad
-//USA version
-bluforUnarmedVehicle_FOW_UK = [
-	"fow_v_gmc_usa", 
+bluforUnarmedVehicleFOW_US_Pacific = [
 	"fow_v_willys_usa", 
+	"fow_v_gmc_usa", 
 	"fow_v_gmc_open_usa"
 ];
 
 //Armed vehicle avalaible for blufor : Ex heavy hummvee
-bluforArmedVehicle_FOW_UK = [
+bluforArmedVehicleFOW_US_Pacific = [
 
 ];
 
 //Chopper unarmed vehicle avalaible for blufor : Ex CH47
-bluforUnarmedVehicleChopper_FOW_UK = [
+bluforUnarmedVehicleChopperFOW_US_Pacific = [
 
 ];
 
 
 //Chopper armed choper avalaible for blufor : Ex AH-Z1
-bluforArmedChopper_FOW_UK = [
+bluforArmedChopperFOW_US_Pacific = [
 
 ];
 
-bluforExtractVehicleChopper_FOW_UK = [
+bluforExtractVehicleChopperFOW_US_Pacific = [
 
 ];
 
 //Armored vehicle avalaible for blufor : Ex light tank
-bluforArmoredVehicle_FOW_UK = [
-	"fow_v_universalCarrier",
-	"fow_v_cromwell_uk"
+bluforArmoredVehicleFOW_US_Pacific = [
+	"fow_v_m4a2_usa",
+	"fow_v_m5a1_usa",
+	"fow_v_lvta2_usa_p"
 ];
 
+
+
 //Drone vehicle avalaible for blufor
-bluforDrone_FOW_UK = [
+bluforDroneFOW_US_Pacific = [
 	
 ];
 
 //Boat vehicle avalaible for blufor
-bluforBoat_FOW_UK = [
+bluforBoatFOW_US_Pacific = [
 	"fow_usa_lcvp"
 ];
 
 //FixedWing vehicle avalaible for bluforq
-bluforFixedWing_FOW_UK = [
-	"fow_va_f6f_faa", 
-	"fow_va_f6f_c_faa"
+bluforFixedWingFOW_US_Pacific = [
+	"fow_va_f6f",
+	"fow_va_f6f_c",
+	"fow_va_f6f_c_sweet",
+	"fow_va_f6f_c_kick"
 ];
 
 //Vehicule able to do HQ features (Loadout management and more)
-bluforHQVehicle_FOW_UK = [
-	"fow_v_universalCarrier"
+bluforHQVehicleFOW_US_Pacific = [
+	"fow_v_lvta2_usa"
 ];
 
 ////////////////////////
@@ -75,16 +79,17 @@ bluforHQVehicle_FOW_UK = [
 // - ACE Arsenal : [["AMF_Samas_VALO_01_F","","","AMF_Aimpoint_CompM5",["25Rnd_samas_f1_mag",25],[],""],[],["AMF_Glock_17","","","",["16Rnd_9x21_Mag",17],[],""],["amf_uniform_02_CE",[["ACE_EarPlugs",1],["16Rnd_9x21_Mag",2,17]]],["amf_smb_tlb_famas_grn",[["ACE_MapTools",1],["ACE_CableTie",1],["25Rnd_samas_f1_mag",10,25],["CUP_HandGrenade_M67",2,1],["SmokeShellBlue",2,1],["SmokeShell",2,1]]],[],"AMF_FELIN_MOUNT_EARPROT_OD","",["Laserdesignator","","","",["Laserbatteries",1],[],""],["ItemMap","ItemGPS","","ItemCompass","TFAR_microdagr",""]]
 // - Game unit : "I_C_Soldier_Bandit_4_F"
 
-loadout_FOW_UK = [		
-	[c_leader, "fow_s_uk_officer"],
-	[c_at, "fow_s_uk_at"],
-	[c_rifleman, "fow_s_uk_rifleman"],//Default stuff
-	[c_engineer, [[["fow_w_leeenfield_no4mk1","","","",["fow_10Rnd_303",10],[],""],[],[],["fow_u_uk_bd40_01_private",[["FirstAidKit",1],["fow_e_no36mk1",2,1],["fow_10Rnd_303",5,10]]],["fow_v_uk_base_green",[["fow_30Rnd_303_bren",2,30]]],["fow_b_uk_bergenpack",[["ACE_DefusalKit",1],["ToolKit",1]]],"fow_h_uk_mk2","",[],["ItemMap","","","ItemCompass","ItemWatch",""]],[]]],
-	[c_autorifleman, "fow_s_uk_bren_gunner"],
-	[c_marksman, "fow_s_hi_sniper_m1903a1"],
-	[c_medic, "fow_s_uk_medic"],
-	[c_pilot, "fow_s_uk_crewman"],
-	["radioman", "fow_s_uk_radio_operator"]
+loadoutFOW_US_Pacific = [		
+	[c_leader, "fow_s_us_mm_officer"],
+	[c_at, "fow_s_us_mm_at"],
+	[c_rifleman, "fow_s_us_mm_rifleman"],//Default stuff
+	//[c_grenadier, "fow_s_us_p_rifleman_gl"], //There is a bug, the GL cannot be launched
+	[c_engineer, "fow_s_us_p_engineer"],
+	[c_autorifleman, "fow_s_us_mm_bar_gunner"],
+	[c_marksman, "fow_s_us_p_sniper_m1903a1"],
+	[c_medic, "fow_s_us_mm_medic"],
+	[c_pilot, "fow_s_us_pilot_green"],
+	[c_radioman, "fow_s_us_mm_radio_operator"]
 ];
 
 
@@ -93,37 +98,43 @@ loadout_FOW_UK = [
 ////////////////////////
 
 //Rifle avalaible for all unit
-rifleList_FOW_UK = [		
-	"fow_w_leeenfield_no4mk1",
-	"fow_w_m1_thompson",
-	"fow_w_webley"
+rifleListFOW_US_Pacific = [		
+	"fow_w_m1a1_thompson",
+	"fow_w_m1_garand",
+	"fow_w_m1_carbine",
+	"fow_w_m1903A1",
+	"fow_w_M1912",
+	"fow_w_ithaca37",
+	"fow_w_m1911"
 ];	
 
 //Launcher avalaible for AT
-launcherList_FOW_UK = [
-	"fow_1Rnd_piat_HEAT"
+launcherListFOW_US_Pacific = [
+	"fow_w_m1a1_bazooka"
 ];	
 
-grenadeLauncherList_FOW_UK =  [		
+grenadeLauncherListFOW_US_Pacific =  [		
 	//Vanilla
 
 ];	
 
 
 //Autorifle avalaible for autorifleman
-autorifleList_FOW_UK = [
-	"fow_w_bren"
+autorifleListFOW_US_Pacific = [
+	"fow_w_m1919a6",
+	"fow_w_m1919a4",
+	"fow_w_m1918a2"
 ];	
 
 //Rifle avalaible for marksman
-marksmanrifleList_FOW_UK = [
+marksmanrifleListFOW_US_Pacific = [
 	"fow_w_m1903A1_sniper"
 ];
 
 //Smg avalaible for all unit
-smgList_FOW_UK = [
-	"fow_w_sten_mk5",
-	"fow_w_sten_mk2"
+smgListFOW_US_Pacific = [
+	"fow_w_m3",
+	"fow_w_m55_reising"
 ];
 
 //////////////////////////
@@ -131,12 +142,14 @@ smgList_FOW_UK = [
 //////////////////////////
 
 //Short range scope for all unit
-attachmentShortList_FOW_UK	= [
-	"fow_w_acc_no4_bayo"
+attachmentShortListFOW_US_Pacific	= [
+	"fow_w_acc_m1918a2_bipod",
+	"fow_w_acc_m1918a2_handle",
+	"fow_w_acc_m1_bayo"
 ];
 
 //Long range scope avalaible for marksman
-attachmentLongList_FOW_UK	= [
+attachmentLongListFOW_US_Pacific	= [
 
 ];
 
@@ -145,7 +158,7 @@ attachmentLongList_FOW_UK	= [
 ////////////////////////
 
 //item avalaible for all unit
-itemList_FOW_UK = [
+itemListFOW_US_Pacific = [
 	"FirstAidKit",
 	"ItemMap",
 	"ItemCompass",
@@ -177,50 +190,51 @@ itemList_FOW_UK = [
 	];
 
 //item avalaible for all engineer
-itemEngineerList_FOW_UK = [
+itemEngineerListFOW_US_Pacific = [
 	"DemoCharge_Remote_Mag"
 ];
 
 //item avalaible for all medic
-itemMedicList_FOW_UK = [
+itemMedicListFOW_US_Pacific = [
 ];
 
 
 //backpack avalaible for all unit
-backPackList_FOW_UK = [
-	"fow_b_uk_piat_at",
-	"fow_b_uk_bergenpack",
-	"fow_b_uk_p37_radio_blanco",
-	"fow_b_uk_p37"
+backPackListFOW_US_Pacific = [
+	"fow_b_us_m1928",
+	"fow_b_us_bandoleer",
+	"fow_b_us_m1944_ropes",
+	"fow_b_us_m2_mortar_support",
+	"fow_b_us_m2_mortar_weapon",
+	"fow_b_us_radio"
 ];
 
 
 //Uniform, vest, headgear, avalaible for all unit
-uniformList_FOW_UK = [
+uniformListFOW_US_Pacific = [
 	//Uniform
-	"fow_u_uk_parasmock",
-	"fow_u_uk_bd40_kieffer_02",
-	"fow_u_uk_bd40_pib_01_private",
-	"fow_u_uk_bd40_bp_01_private",
+	"fow_u_us_hbt_01_private",
+	"fow_u_us_hbt_02_private",
 	
 	//Vest
-	"fow_v_uk_para_bren_green",
-	"fow_v_uk_sten_green",
-	"fow_v_uk_bren_green",
+	"fow_v_us_asst_mg",
+	"fow_v_us_45",
 
 	//Head
-	"fow_h_uk_mk2_para",
-	"fow_h_uk_beret_commando_kieffer",
-	"fow_h_uk_mk2_net",
-	"fow_h_uk_mk2"
-
-];
-
-uniformListSniper_FOW_UK = [
-
+	"fow_h_us_m1_folded",
+	"fow_h_us_m1_net",
+	"fow_h_us_m1",
+	"fow_h_us_daisy_mae_01",
+	"fow_h_us_daisy_mae_02"
 ];
 
 
-magazineList_FOW_UK = [
+
+uniformListSniperFOW_US_Pacific = [
+
+];
+
+
+magazineListFOW_US_Pacific = [
 
 ];
