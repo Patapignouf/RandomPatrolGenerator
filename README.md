@@ -15,13 +15,16 @@ There are some features like :
 - Custom XP system (cosmetic rank implemented),
 - Opfor reinforcement from ground and air,
 - Opfor FOB (challenging tasks),
+- Opfor roadblocks and turrets bunkers.
 - Intel management,
 - Support and vehicle shops for blufor,
 - Civilian recruits for independent,
 - Hostile civilians,
+- Suicide bombers,
 - Blufor aircraft carrier,
 - Custom mission setup,
 - Custom scoreboard on mission's end,
+- Endless mode (restart mission when finish),
 - Ironman mod (stuff loose on death).
 
 Support for factions from :
@@ -31,7 +34,9 @@ Support for factions from :
 - IFA3,
 - RHS,
 - KORSAC,
-- AMF.
+- AMF,
+- Faces of War,
+- Drongos Simple Factions.
 
 Highly recommand to play with LAMBS_Danger, VCOM and ACE3 for the best experience.
 
