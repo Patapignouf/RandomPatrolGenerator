@@ -69,7 +69,10 @@ publicvariable "deployableFOBItem";
 				
 				//Place crate on the ground
 				_object setPos [(position _object)#0, (position _object)#1, 1];
-				_object setVelocity [0,0,0];  
+				_object setVelocity [0,0,0]; 
+
+				//Setup a map marker
+				[["Advanced FOB Drop", "ColorBlue", "hd_end", getPos _object, blufor], 'objectGenerator\doGenerateMarker.sqf'] remoteExec ['BIS_fnc_execVM', 0, true]; 
 
 				//Add smoke to crate
 				for [{_i = 0}, {_i < 3}, {_i = _i + 1}] do
