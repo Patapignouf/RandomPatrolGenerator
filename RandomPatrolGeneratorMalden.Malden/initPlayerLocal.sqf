@@ -11,6 +11,12 @@ diag_log format ["Setup Player %1 at position 0", name player];
 //init tp to be able to spawn on the ground on each map
 player setPos [worldSize,worldSize];
 player allowdamage false;
+
+//prevent player from drowning in loading
+while {!isTouchingGround player} do { 
+	player setOxygenRemaining 100; 
+};
+
 enableSentences false;
 
 //player enableSimulationGlobal false;
