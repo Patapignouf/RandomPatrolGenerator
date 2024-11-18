@@ -56,6 +56,17 @@ civiliansOnObjectivesParam =
 	"enableCiviliansOnObjectives"
 ];
 
+enableObjectiveExactLocationParam = 
+[
+	[	
+		[0, "Disable"],
+		[1, "Enable"]
+	],
+	"Objective exact location markers",
+	0,
+	"enableObjectiveExactLocation"
+];
+
 enableRegularIncomeParam = 
 [
 	[	

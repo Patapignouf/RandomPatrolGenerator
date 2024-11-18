@@ -692,6 +692,12 @@ switch (startIntel) do
 			initCityLocationTrigger = createTrigger ["EmptyDetector", initCityLocation]; //create a trigger area created at object with variable name my_object
 			initCityLocationTrigger setTriggerArea [100, 100, 0, false]; // trigger area with a radius of 100m.
 			
+			//Set task exact location 
+			if (missionNameSpace getVariable ["enableObjectiveExactLocation", 0] == 1) then 
+			{
+				["taskContactCiv", initCityLocation] call BIS_fnc_taskSetDestination;
+			};
+
 			//Setup task completion
 			[] spawn {
 				_hasContactCivilian = false;
@@ -732,6 +738,12 @@ switch (startIntel) do
 				initCityLocationTrigger = createTrigger ["EmptyDetector", initCityLocation]; //create a trigger area created at object with variable name my_object
 				initCityLocationTrigger setTriggerArea [100, 100, 0, false]; // trigger area with a radius of 100m.
 				
+				//Set task exact location 
+				if (missionNameSpace getVariable ["enableObjectiveExactLocation", 0] == 1) then 
+				{
+					["taskContactCiv", initCityLocation] call BIS_fnc_taskSetDestination;
+				};
+
 				//Setup task completion
 				[] spawn {
 					_hasContactCivilian = false;

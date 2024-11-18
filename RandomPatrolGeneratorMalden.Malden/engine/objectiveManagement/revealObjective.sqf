@@ -26,7 +26,7 @@ if ((count _revealedObjectives != count _tempMissionObjectives)) then
 		if (_realismMode == 1) then 
 		{
 			//Search the nearestLocation from the intel
-			_thisObject = _objectiveToReveal select 0;
+			_thisObject = _objectiveToReveal#0;
 			_nearestLocs = nearestLocations [getPos (_thisObject), ["NameLocal","NameVillage","NameCity","NameCityCapital"], 300];
 
 			_objectiveLocationName = "";
@@ -133,6 +133,13 @@ if ((count _revealedObjectives != count _tempMissionObjectives)) then
 					default { 
 						//hint "default" 
 						};
+				};
+
+				//Set task exact location 
+				if (missionNameSpace getVariable ["enableObjectiveExactLocation",0] == 1) then 
+				{
+					//hint format ["Task ID : %1",_objectiveToReveal#2];
+					[_objectiveToReveal#2, getPos (_thisObject)] call BIS_fnc_taskSetDestination;
 				};
 
 				//Display dialog on screen if necessary
