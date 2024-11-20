@@ -37,25 +37,25 @@ with uiNamespace do {
 		_RcsBackDialog ctrlSetBackgroundColor [0,0,0,1];
 		_RcsBackDialog ctrlSetForegroundColor [1, 0, 0, 1];
 		_RcsBackDialog ctrlSetTextColor [1, 1, 1, 1];
-		_RcsBackDialog ctrlCommit 0;
+		_RcsBackDialog ctrlCommit 1;
 
 		//Prepare background
 		_backGround ctrlSetPosition[ 0.98, -0.05, 0.30, 0.10 ];
 		_backGround ctrlSetText "#(argb,8,8,3)color(0.35,0.35,0.35,0.5)";
-		_backGround ctrlCommit 0;
+		_backGround ctrlCommit 1;
 
 		//Prepare title display
 		_RcsTitleDialog ctrlSetText "Sector control";
 		_RcsTitleDialog ctrlSetPosition[ 1, -0.08, 0.25, 0.1 ];
 		_RcsTitleDialog ctrlSetTextColor [1, 1, 1, 1];
-		_RcsTitleDialog ctrlCommit 0;
+		_RcsTitleDialog ctrlCommit 1;
 
 		//Prepare progressbar
 		_ProgressBar ctrlSetPosition [1,0,0.25,0.03];
 		_ProgressBar ctrlSetBackgroundColor [0,0,0,1];
 		_ProgressBar ctrlSetForegroundColor [1, 0, 0, 1];
 		_ProgressBar ctrlSetTextColor [0, 0, 1, 1];
-		_ProgressBar ctrlCommit 0;
+		_ProgressBar ctrlCommit 1;
 
 		//Prepare progression state
 		if (_total != 0) then 
