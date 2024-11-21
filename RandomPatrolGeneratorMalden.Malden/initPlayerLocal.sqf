@@ -13,8 +13,10 @@ player setPos [worldSize,worldSize];
 player allowdamage false;
 
 //prevent player from drowning in loading
-while {!isTouchingGround player} do { 
-	player setOxygenRemaining 100; 
+[] spawn {
+	while {!isTouchingGround player} do { 
+		player setOxygenRemaining 100; 
+	};
 };
 
 enableSentences false;
@@ -205,6 +207,7 @@ if !(isClass (configFile >> "CfgPatches" >> "ace_medical")) then
 		};    
 		_damage    
 	}];
+	
 	player setVariable ["HandleDamageEH", _handleDamageEH, true];
 } else 
 {
@@ -222,6 +225,36 @@ if !(isClass (configFile >> "CfgPatches" >> "ace_medical")) then
 			_this call reduceCookOff;
 		}] call CBA_fnc_addEventHandler;
 	};
+
+	//Display message to abort when unconscious
+	["ace_unconscious", {
+		params ["_unit", "_status"];
+		
+		//Exclude other players
+		if (player != _unit) exitWith {}; 
+
+		//If unit become unconscious
+		if (_status) then 
+		{
+			[_unit] spawn {
+				params ["_unit"];
+				sleep 60;
+				if (lifeState _unit == "INCAPACITATED" && count (allPlayers select {alive _x && _x distance _unit <5 && lifeState _x != "INCAPACITATED"}) == 0) then 
+				{
+					private _result = ["No one seems to be helping you, die and go to spectate ?", "Confirm", true, true] call BIS_fnc_guiMessage;
+
+					if (_result) then {
+						//systemChat "The player is sure.";
+						_unit setDamage 1;
+					} else {
+						//systemChat "The player is not sure.";
+					};
+				};
+			};
+
+			[[_unit] , "GUI\displayNearestMedicGUI\displayNearestMedicGUI.sqf"] remoteExec ['BIS_fnc_execVM', _unit];
+		};
+	}] call CBA_fnc_addEventHandler;
 };
 
 //Init player rank
