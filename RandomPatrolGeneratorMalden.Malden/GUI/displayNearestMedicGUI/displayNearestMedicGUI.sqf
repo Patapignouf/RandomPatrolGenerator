@@ -54,22 +54,22 @@ with uiNamespace do {
 		_nearestMedicPlayer = "";
 		if (count _sortedPlayerMedicList != 0) then 
 		{
-			_nearestMedicPlayer = _sortedPlayerList#0;
+			_nearestMedicPlayer = _sortedPlayerMedicList#0;
 		};
 		
 
 		//Prepare progressbar
-		_Info ctrlSetPosition [1,0,0.3,0.03];
+		_Info ctrlSetPosition [1,0,0.5,0.04];
 		_Info ctrlSetTextColor [1, 1, 1, 1];
-		_Info ctrlSetStructuredText parseText format ["%1 is at %2m", name _nearestPlayer, _nearestPlayer distance _unit];
+		_Info ctrlSetStructuredText parseText format ["%1 is at %2m", name _nearestPlayer, (round ((_nearestPlayer distance _unit)*100))/100];
 		_Info ctrlCommit 0.5;
 
 		//Prepare progressbar
-		_Info2 ctrlSetPosition [1,0.1,0.3,0.03];
+		_Info2 ctrlSetPosition [1,0.1,0.5,0.04];
 		_Info2 ctrlSetTextColor [1, 1, 1, 1];
 		if (count _sortedPlayerMedicList != 0) then 
 		{
-			_Info2 ctrlSetStructuredText parseText format ["%1 is at %2m", name _nearestMedicPlayer, _nearestMedicPlayer distance _unit];
+			_Info2 ctrlSetStructuredText parseText format ["%1 is at %2m", name _nearestMedicPlayer, (round ((_nearestMedicPlayer distance _unit)*100))/100];
 		} else 
 		{
 			_Info2 ctrlSetStructuredText parseText format ["No medic nearby"];
