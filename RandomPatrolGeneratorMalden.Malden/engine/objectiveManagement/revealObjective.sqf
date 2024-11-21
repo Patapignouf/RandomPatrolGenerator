@@ -26,7 +26,7 @@ if ((count _revealedObjectives != count _tempMissionObjectives)) then
 		if (_realismMode == 1) then 
 		{
 			//Search the nearestLocation from the intel
-			_thisObject = _objectiveToReveal select 0;
+			_thisObject = _objectiveToReveal#0;
 			_nearestLocs = nearestLocations [getPos (_thisObject), ["NameLocal","NameVillage","NameCity","NameCityCapital"], 300];
 
 			_objectiveLocationName = "";
@@ -48,7 +48,12 @@ if ((count _revealedObjectives != count _tempMissionObjectives)) then
 			{
 				_initCityLocationName = text (initCityLocationLocs#0);
 			};
-			
+
+			//Give tasks to all players of blufor and independent are enemies
+			if ([blufor, independent] call BIS_fnc_sideIsEnemy) then 
+			{
+				_side = true;
+			};
 
 			//Display custom dialogs according to the enemy position
 			switch (_objectiveToReveal select 1) do
@@ -75,6 +80,12 @@ if ((count _revealedObjectives != count _tempMissionObjectives)) then
 						{
 							_currentObjectiveDescription = format ["I have a friend who's captured near %2. He looks like %1. Can you bring it to %3...", getText (configFile >> "cfgVehicles" >> typeOf _thisObject >> "displayName"),_objectiveLocationName, _initCityLocationName];
 							[_side, _objectiveToReveal select 2, [_currentObjectiveDescription, "VIP", "cookiemarker2"], objNull, 1, 3, true] call BIS_fnc_taskCreate;
+							[_objectiveToReveal select 2,"talk1"] call BIS_fnc_taskSetType;
+						};
+					case "hostage":
+						{
+							_currentObjectiveDescription = format ["I have a spotted the hostage captured near %2. He looks like %1.", getText (configFile >> "cfgVehicles" >> typeOf _thisObject >> "displayName"),_objectiveLocationName, _initCityLocationName];
+							[_side, _objectiveToReveal select 2, [_currentObjectiveDescription, "Hostage", "cookiemarker2"], objNull, 1, 3, true] call BIS_fnc_taskCreate;
 							[_objectiveToReveal select 2,"talk1"] call BIS_fnc_taskSetType;
 						};
 					case "steal":
@@ -122,6 +133,13 @@ if ((count _revealedObjectives != count _tempMissionObjectives)) then
 					default { 
 						//hint "default" 
 						};
+				};
+
+				//Set task exact location 
+				if (missionNameSpace getVariable ["enableObjectiveExactLocation",0] == 1) then 
+				{
+					//hint format ["Task ID : %1",_objectiveToReveal#2];
+					[_objectiveToReveal#2, getPos (_thisObject)] call BIS_fnc_taskSetDestination;
 				};
 
 				//Display dialog on screen if necessary

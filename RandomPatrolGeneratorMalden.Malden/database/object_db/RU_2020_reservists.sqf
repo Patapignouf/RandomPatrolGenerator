@@ -15,27 +15,28 @@ baseEnemyGroup_RU_2020_reservists = [
 	"rhs_mvd_izlom_sergeant", 
 	"rhs_mvd_izlom_marksman", 
 	"rhs_mvd_izlom_machinegunner", 
-	"rhs_mvd_izlom_grenadier_rpg", 
+	"rhs_mvd_izlom_rifleman", 
 	"rhs_mvd_izlom_arifleman", 
 	"rhs_mvd_izlom_arifleman_rpk", 
 	"rhs_mvd_izlom_rifleman", 
-	"rhs_mvd_izlom_rifleman_LAT"
+	"rhs_mvd_izlom_machinegunner"
 ];
 
 baseEnemyATGroup_RU_2020_reservists = [
 	"rhs_msv_emr_engineer", 
-	"rhs_msv_emr_medic", 
+	"rhs_msv_emr_medic",
+	"rhs_msv_emr_engineer",
 	"rhs_msv_emr_junior_sergeant", 
 	"rhs_msv_emr_at", 
 	"rhs_msv_emr_aa"
 ];
 
 baseEnemyDemoGroup_RU_2020_reservists = [
-	"rhs_mvd_izlom_arifleman_rpk", 
-	"rhs_mvd_izlom_grenadier_rpg", 
-	"rhs_mvd_izlom_sergeant", 
-	"rhs_mvd_izlom_rifleman_LAT", 
-	"rhs_mvd_izlom_rifleman_asval"
+	"rhs_msv_emr_sergeant", 
+	"rhs_msv_emr_engineer", 
+	"rhs_msv_emr_arifleman",
+	"rhs_msv_emr_arifleman", 
+	"rhs_msv_emr_rifleman"
 ];
 
 baseEnemyMortarGroup_RU_2020_reservists = [
@@ -51,6 +52,13 @@ baseEnemyVehicleGroup_RU_2020_reservists = [
 	"rhs_tigr_sts_vv", 
 	"rhs_tigr_m_vv",
 	"rhs_Igla_AA_pod_msv" //AA Turret
+];
+
+baseEnemyTurretGroup_RU_2020_reservists = [
+	//Turrets 
+	["rhs_Kornet_9M133_2_msv", "SMALLBUNKER"],
+	["rhs_KORD_high_MSV", "SMALLBUNKER"],
+	["RHS_ZU23_MSV", "SMALLBUNKER"]
 ];
 
 baseEnemyLightArmoredVehicleGroup_RU_2020_reservists = [

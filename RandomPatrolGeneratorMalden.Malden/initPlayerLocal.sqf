@@ -9,8 +9,16 @@ waitUntil {!isNull player && (getClientStateNumber>=10||!isMultiplayer)};
 diag_log format ["Setup Player %1 at position 0", name player];
 
 //init tp to be able to spawn on the ground on each map
-player setPos [0,0,1];
+player setPos [worldSize,worldSize];
 player allowdamage false;
+
+//prevent player from drowning in loading
+[] spawn {
+	while {!isTouchingGround player} do { 
+		player setOxygenRemaining 100; 
+	};
+};
+
 enableSentences false;
 
 //player enableSimulationGlobal false;
@@ -84,7 +92,7 @@ if (!didJIP) then
 			//Define parameters
 			params ["_object","_caller","_ID","_avalaibleVehicle"];
 			[[], 'GUI\adminGUI\adminGUIInit.sqf'] remoteExec ['BIS_fnc_execVM', _caller];
-		},_x,0,true,false,"","(_target distance _this <3) && (_target getVariable ['isAdmin', false] || (hasInterface && isServer))"];
+		},_x,0,true,false,"","(_target distance _this <3) && (_target getVariable ['isAdmin', false] || (hasInterface && isServer))", 50, true];
 	};
 };
 
@@ -117,7 +125,7 @@ if (player getVariable ["isSetupMission", false]) then
 #include "objectGenerator\vehicleManagement.sqf"
 
 enableThermal = "EnableThermal" call BIS_fnc_getParamValue;
-enableHalo = "EnableHALO" call BIS_fnc_getParamValue;
+enableHalo = missionNamespace getVariable "enableHalo";
 
 bluFaction = missionNamespace getVariable "bluforFaction";
 indFaction = missionNamespace getVariable "independentFaction";
@@ -145,14 +153,17 @@ if (ironMan) then
 
 
 //Validate current player's stuff
-[missionNamespace, "arsenalClosed", {
-	disableSerialization;
-	params ["_display"];
+if ((missionNameSpace getVariable "enableLoadoutRestriction") == 1) then 
+{
+	[missionNamespace, "arsenalClosed", {
+		disableSerialization;
+		params ["_display"];
 
-	//Check loadout
-	[player] call validateLoadout;
-	["AmmoboxExit", player] call BIS_fnc_arsenal;
-}] call BIS_fnc_addScriptedEventHandler;
+		//Check loadout
+		[player] call validateLoadout;
+		["AmmoboxExit", player] call BIS_fnc_arsenal;
+	}] call BIS_fnc_addScriptedEventHandler;
+};
 
 
 //Init disableThermal
@@ -189,30 +200,65 @@ if (isClass (configFile >> "CfgPatches" >> "ace_medical")) then
 //Prevent players from instant death
 if !(isClass (configFile >> "CfgPatches" >> "ace_medical")) then 
 {
-	player addEventHandler ["HandleDamage",{
+	_handleDamageEH = player addEventHandler ["HandleDamage",{
 		private["_damage"];
 		if ((lifeState player == "INCAPACITATED")||(lifeState player == "SHOOTING")) then {
 			_damage = 0;
 		};    
 		_damage    
 	}];
+	
+	player setVariable ["HandleDamageEH", _handleDamageEH, true];
 } else 
 {
-	//Add ACE cookoff high probability on enemy weapon
-	player addEventHandler["Fired",{
-		params ["_unit", "_weapon", "_muzzle", "_mode", "_ammo", "_magazine", "_projectile", "_gunner"];
-    	[_weapon] call adjustCookOf;
-  	}];
+	//Only do weapon jamming if loadout restriction is enable
+	if ((missionNameSpace getVariable "enableLoadoutRestriction") == 1) then 
+	{
+		//Add ACE cookoff high probability on enemy weapon
+		player addEventHandler["Fired",{
+			params ["_unit", "_weapon", "_muzzle", "_mode", "_ammo", "_magazine", "_projectile", "_gunner"];
+			[_weapon] call adjustCookOf;
+		}];
 
-	//Reduce cookoff on jammed weapon
-	["ace_weaponJammed", {
-		_this call reduceCookOff;
+		//Reduce cookoff on jammed weapon
+		["ace_weaponJammed", {
+			_this call reduceCookOff;
+		}] call CBA_fnc_addEventHandler;
+	};
+
+	//Display message to abort when unconscious
+	["ace_unconscious", {
+		params ["_unit", "_status"];
+		
+		//Exclude other players
+		if (player != _unit) exitWith {}; 
+
+		//If unit become unconscious
+		if (_status) then 
+		{
+			[_unit] spawn {
+				params ["_unit"];
+				sleep 60;
+				if (lifeState _unit == "INCAPACITATED" && count (allPlayers select {alive _x && _x distance _unit <5 && lifeState _x != "INCAPACITATED"}) == 0) then 
+				{
+					private _result = ["No one seems to be helping you, die and go to spectate ?", "Confirm", true, true] call BIS_fnc_guiMessage;
+
+					if (_result) then {
+						//systemChat "The player is sure.";
+						_unit setDamage 1;
+					} else {
+						//systemChat "The player is not sure.";
+					};
+				};
+			};
+
+			[[_unit] , "GUI\displayNearestMedicGUI\displayNearestMedicGUI.sqf"] remoteExec ['BIS_fnc_execVM', _unit];
+		};
 	}] call CBA_fnc_addEventHandler;
-
 };
 
 //Init player rank
-[[player], 'engine\rankManagement\rankManager.sqf'] remoteExec ['BIS_fnc_execVM', player];
+[[player, true], 'engine\rankManagement\rankManager.sqf'] remoteExec ['BIS_fnc_execVM', player];
 
 //Init player survivor objective
 [[player], 'engine\objectiveManagement\survivorObjectiveManagement.sqf'] remoteExec ['BIS_fnc_execVM', player];
@@ -221,7 +267,7 @@ if !(isClass (configFile >> "CfgPatches" >> "ace_medical")) then
 [player, -1, true] call BIS_fnc_respawnTickets;
 
 //Corpse manager
-player addEventHandler ["Respawn",{ 
+_respawnEH = player addEventHandler ["Respawn",{ 
 	params ["_unit", "_corpse"];
 	_corpse setVariable ["isPlayerObject",true, true];
 	[_corpse] spawn {
@@ -230,6 +276,7 @@ player addEventHandler ["Respawn",{
 		deleteVehicle _corpse;
 	};
 }];
+player setVariable ["RespawnEH", _respawnEH, true];
 
 diag_log format ["Setup Player %1 at position 1", name player];
 
@@ -265,7 +312,7 @@ if (side player == independent) then
 	waitUntil {!isNil "missionGenerated"};
 
 	player setVariable ["sideBeforeDeath","independent"];
-	_spawnPos = [initCityLocation, 1, 30, 3, 0, 20, 0] call BIS_fnc_findSafePos;
+	_spawnPos = [initCityLocation, 1, 30, 3, 0, 20, 0, [], [initCityLocation,initCityLocation]] call BIS_fnc_findSafePos;
 	diag_log format ["Player %1 has spawn on position %2", name player, _spawnPos];
 	player setPos (_spawnPos);
 
@@ -275,6 +322,18 @@ if (side player == independent) then
 
 	//Manage arsenal	
 	[VA1] call setupPlayerLoadout;
+
+	//Add vehicle shop
+	VA1 addAction [format ["<img size='2' image='\a3\ui_f_oldman\data\IGUI\Cfg\holdactions\holdAction_market_ca.paa'/><t size='1'>Open vehicle shop</t>"],{
+			//Define parameters
+			params ["_object","_caller","_ID","_avalaibleVehicle"];
+
+			//Define independent shop vehicle
+			_independentUnarmedVehicle = bluforUnarmedVehicle_db select {_x select 1  == indFaction} select 0 select 0;
+			_independentUnarmedChopper = bluforUnarmedVehicleChopper_db select {_x select 1  == indFaction} select 0 select 0;
+
+			[["independentVehicleAvalaibleSpawn", _independentUnarmedVehicle, [], [], _independentUnarmedChopper, [], [], [], []], 'GUI\vehicleSpawnerGUI\vehicleSpawner.sqf'] remoteExec ['BIS_fnc_execVM', _caller];
+	},_x,3,true,false,"","(_target distance _this <5) && (_this getVariable 'role' == 'leader' || _this getVariable 'role' == 'pilot')"];
 
 	waituntil {!isNil "isBluforAttacked" && !isNil "isIndAttacked"};
 	if (isIndAttacked) then
@@ -351,7 +410,7 @@ if (side player == blufor) then
 					};
 
 					//Tp player on carrier
-					player setPosASL [_spawnPos#0 + random 30,_spawnPos#1+random 30,_spawnPos#2+0.5];
+					player setPosASL [_spawnPos#0-105 + random 15,_spawnPos#1-18+random 15,_spawnPos#2+0.5];
 					titleCut ["WELCOME ON BOARD", "BLACK IN", 5];
 				};
 			};
@@ -364,7 +423,7 @@ if (side player == blufor) then
 				//Define parameters
 				params ["_object","_caller","_ID","_spawnPos"];
 
-				_caller setPosASL [_spawnPos#0,_spawnPos#1,_spawnPos#2+0.5];
+				_caller setPosASL [_spawnPos#0-105 + random 15,_spawnPos#1-18+random 15,_spawnPos#2+0.5];
 
 			},_spawnPos,1.5,true,false,"","(initBlueforLocation distance _this <150)"];
 			player setUserActionText [_actionIdCarrier, "Move to the carrier", "<img size='3' image='\a3\ui_f_oldman\data\IGUI\Cfg\holdactions\map_ca.paa'/>"];
@@ -385,7 +444,7 @@ if (side player == blufor) then
 	player setVariable ["spawnLoadout", getUnitLoadout player];
 
 	//Manage arsenal
-	waitUntil{!isNil "VA2"};
+	waitUntil{!isNil "bluforFOBBuild"};
 	[VA2] call setupPlayerLoadout;	
 
 	[] spawn {
@@ -399,19 +458,52 @@ if (side player == blufor) then
 	//Add heal action to VA2
 	_actionIdHeal = VA2 addAction 
 	[
-		"<t color='#00bc1a'>Heal</t>", 
+		"<img size='2' image='\a3\ui_f\data\IGUI\Cfg\holdactions\holdAction_reviveMedic_ca.paa'/><t color='#00bc1a'>Heal all players around here</t>", 
 		{
-			//Heal player if mission's setup wasn't safe 
-			if (isClass (configFile >> "CfgPatches" >> "ace_medical")) then 
 			{
-				[objNull, player] call ace_medical_treatment_fnc_fullHeal;
-			} else 
-			{
-				player setDamage 0;
-			};
+				if ((_x distance player) < 50) then
+				{
+					//Heal player if mission's setup wasn't safe 
+					if (isClass (configFile >> "CfgPatches" >> "ace_medical")) then 
+					{
+						[objNull, _x] call ace_medical_treatment_fnc_fullHeal;
+					} else 
+					{
+						_x setDamage 0;
+					};
+
+					//Display heal message information
+					[["<t color='#6AA84F' size='.8'>You have been healed</t>",0,0,2,0,0,789], BIS_fnc_dynamicText] remoteExec ["spawn", _x];
+				};
+			} foreach allPlayers;
+
+		
+			// ["<t color='#6AA84F' size='.8'>You have been healed</t>",0,0,2,0,0,789] spawn BIS_fnc_dynamicText;
 		},
 		nil,		// arguments
-		1.5,		// priority
+		3,		// priority
+		true,		// showWindow
+		false,		// hideOnUse
+		"",			// shortcut
+		"true",		// condition
+		50,			// radius
+		false,		// unconscious
+		"",			// selection
+		""			// memoryPoint
+	];
+
+
+	//Add rank action to VA2
+	_actionIdRankManager = VA2 addAction 
+	[
+		"<img size='2' image='\a3\ui_f\data\IGUI\Cfg\holdactions\holdAction_thumbsup_ca.paa'/><t color='#0433b1'>Show rank and experience</t>", 
+		{
+			//Open player rank manager
+			[[], 'GUI\rankGUI\rankGUI.sqf'] remoteExec ['BIS_fnc_execVM', player];
+
+		},
+		nil,		// arguments
+		4,		// priority
 		true,		// showWindow
 		false,		// hideOnUse
 		"",			// shortcut
@@ -426,7 +518,7 @@ if (side player == blufor) then
 	//Add heal action to VA2
 	_actionShowRoles = VA2 addAction 
 	[
-		"<t color='#5400ac'>Show roles</t>", 
+		"<img size='2' image='\a3\missions_f_oldman\data\img\holdactions\holdAction_follow_start_ca.paa'/><t color='#5400ac'>Show roles</t>", 
 		{
 			_playerRoles = "";
 			{
@@ -435,7 +527,7 @@ if (side player == blufor) then
 			hint _playerRoles;
 		},
 		nil,		// arguments
-		1,		// priority
+		3,		// priority
 		true,		// showWindow
 		false,		// hideOnUse
 		"",			// shortcut
@@ -450,20 +542,46 @@ if (side player == blufor) then
 	waitUntil{!isNil "TPFlag1"};
 	if (isNil "USS_FREEDOM_CARRIER") then 
 	{
-		TPFlag1 addAction [format ["Open vehicle shop"],{
+		TPFlag1 addAction [format ["<img size='2' image='\a3\ui_f_oldman\data\IGUI\Cfg\holdactions\holdAction_market_ca.paa'/><t size='1'>Open vehicle shop</t>"],{
 					//Define parameters
 					params ["_object","_caller","_ID","_avalaibleVehicle"];
 
-					[[], 'GUI\vehicleSpawnerGUI\vehicleSpawner.sqf'] remoteExec ['BIS_fnc_execVM', _caller];
+					[["bluforVehicleAvalaibleSpawn", bluforUnarmedVehicle, bluforArmedVehicle, bluforArmoredVehicle, bluforUnarmedVehicleChopper, bluforArmedChopper, bluforDrone, bluforFixedWing, bluforBoat], 'GUI\vehicleSpawnerGUI\vehicleSpawner.sqf'] remoteExec ['BIS_fnc_execVM', _caller];
 			},_x,3,true,false,"","(_target distance _this <5) && (_this getVariable 'role' == 'leader' || _this getVariable 'role' == 'pilot')"];
 	};
 
-	TPFlag1 addAction [format ["Open support shop"],{
+	TPFlag1 addAction ["<img size='2' image='\a3\ui_f_oldman\data\IGUI\Cfg\holdactions\holdAction_market_ca.paa'/><t size='1'>Open support shop</t>",{
 			//Define parameters
 			params ["_object","_caller","_ID","_avalaibleVehicle"];
 
-			[[], 'GUI\supportGUI\supportGUI.sqf'] remoteExec ['BIS_fnc_execVM', _caller];
+			[[true], 'GUI\supportGUI\supportGUI.sqf'] remoteExec ['BIS_fnc_execVM', _caller];
 	},_x,3,true,false,"","_target distance _this <5"];
+
+	TPFlag1 addAction ["<img size='2' image='\a3\ui_f_oldman\data\IGUI\Cfg\holdactions\holdAction_market_ca.paa'/><t size='1'>Open team member shop</t>",{
+			//Define parameters
+			params ["_object","_caller","_ID","_avalaibleVehicle"];
+
+			[[], 'GUI\botteamGUI\botteamGUI.sqf'] remoteExec ['BIS_fnc_execVM', _caller];
+	},_x,3,true,false,"","(_target distance _this <5) && (_this getVariable 'role' == 'leader')"];
+
+		//Add abort action to TPFlag1
+	_actionIdAbortMission = TPFlag1 addAction 
+	[
+		"<img size='2' image='\a3\ui_f\data\IGUI\Cfg\holdactions\holdAction_takeOff1_ca.paa'/><t color='#FF0000'>Abort mission</t>", 
+		{
+			[['ABORT', true], 'engine\objectiveManagement\endMission.sqf'] remoteExec ['BIS_fnc_execVM', 2];
+		},
+		nil,		// arguments
+		0,		// priority
+		true,		// showWindow
+		false,		// hideOnUse
+		"",			// shortcut
+		"_this getVariable 'role' == 'leader'",		// condition
+		5,			// radius
+		false,		// unconscious
+		"",			// selection
+		""			// memoryPoint
+	];
 	
 	waituntil {!isNil "isBluforAttacked" && !isNil "isIndAttacked"};
 	if (isBluforAttacked) then
@@ -486,19 +604,30 @@ setPlayerRespawnTime (missionNamespace getVariable "missionRespawnParam");
 [] spawn _generateCivDialogs;
 
 //Show a special message when there is a teamkill
-player addEventHandler ["Killed", {
+_KilledEH = player addEventHandler ["Killed", {
 	params ["_unit", "_killer", "_instigator", "_useEffects"];
 	diag_log format ["%1 has been killed by : %2", name _unit, name _instigator];
+
+	//Check if the killer is a player
 	if (isPlayer _instigator) then 
 	{
-		[[format ["%1 has been killed by his teammate %2",name _unit, name _instigator], "teamkill"], 'engine\hintManagement\addCustomHint.sqf'] remoteExec ['BIS_fnc_execVM', side _instigator];
-		if (_instigator != _unit) then 
+		//Check if player are on opposite side
+		if ([side _instigator, playerSide] call BIS_fnc_sideIsEnemy) then 
 		{
-			[[-50,5], 'engine\rankManagement\rankPenalty.sqf'] remoteExec ['BIS_fnc_execVM', _instigator];
+			//Reward PvP kill
+			[[1, "RPG_ranking_infantry_kill"], 'engine\rankManagement\rankUpdater.sqf'] remoteExec ['BIS_fnc_execVM', _instigator];
+		} else 
+		{
+			//Add penalty if the killer is a friend
+			[[format ["%1 has been killed by his teammate %2",name _unit, name _instigator], "teamkill"], 'engine\hintManagement\addCustomHint.sqf'] remoteExec ['BIS_fnc_execVM', side _instigator];
+			if (_instigator != _unit) then 
+			{
+				[[-50,5], 'engine\rankManagement\rankPenalty.sqf'] remoteExec ['BIS_fnc_execVM', _instigator];
+			};
 		};
-	};	
+	};
 }];
-		
+player setVariable ["KilledEH", _KilledEH, true];
 
 //If a player join in progress he will be teleported to his teamleader (WIP feature)
 if (didJIP) then 
@@ -510,7 +639,7 @@ if (didJIP) then
 	if (count (_deadPlayerList select { _x == (name player) }) == 0) then 
 	{
 		//Disable specific respawn menu
-		player setPos [0,0,1];
+		player setPos [worldSize,worldSize];
 		player allowdamage false;
 		[[], 'GUI\respawnGUI\initPlayerRespawnMenu.sqf'] remoteExec ['BIS_fnc_execVM', player];
 	} else 
@@ -526,10 +655,16 @@ if (didJIP) then
 
 //Remove arsenal from player 
 [] spawn {
-	uiSleep 10;
+	uiSleep 5;
 	player call RemoveArsenalActionFromGivenObject;
 };
 
+player setVariable ["canRTB", true, true];
+
+//Setup default TFAR radio frequency
+if (isClass (configFile >> "CfgPatches" >> "task_force_radio")) then {
+	"50" call TFAR_fnc_setPersonalRadioFrequency;
+};
 
 //Heal player if mission's setup wasn't safe 
 if (isClass (configFile >> "CfgPatches" >> "ace_medical")) then 

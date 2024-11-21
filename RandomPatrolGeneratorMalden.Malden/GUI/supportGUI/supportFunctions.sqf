@@ -26,7 +26,8 @@ params ["_caller", "_supportType"];
 						[[format ["<t align = 'center' shadow = '2' color='#0046ff' size='1.5' font='PuristaMedium' >High Command</t><br /><t color='#ffffff' size='1.5' font='PuristaMedium' shadow = '2' >%1</t>", _textToSpeech, name _caller], "PLAIN DOWN", -1, true, true]] remoteExec ["titleText", 0, true];
 						
 						missionNamespace setVariable ["usedRespawnFewTimeAgo",true,true];
-						sleep 1200;
+						_respawnTimer = missionNamespace getVariable "missionRespawnParam";
+						sleep _respawnTimer;
 						missionNamespace setVariable ["usedRespawnFewTimeAgo",false,true];
 					} else {
 						_textToSpeech = "There is no need for reinforcements";
@@ -153,7 +154,7 @@ params ["_caller", "_supportType"];
 				if (!([selectedHaloLoc, [0,0,0]] call BIS_fnc_areEqual)) then 
 				{
 					_caller setPos selectedHaloLoc;
-					
+
 					//Halo jump script of pierremgi
 					player setpos (getpos player vectorAdd [0,0,1000]);
 					0 = player spawn {
@@ -165,8 +166,10 @@ params ["_caller", "_supportType"];
 							_whs = createVehicle ["WeaponHolderSimulated_Scripted",[0,0,0],[],0,"can_collide"];
 							_plyr action ["DropBag", _whs, _bpktype];
 							_plyr addBackpackGlobal "B_parachute";
-							waitUntil {0.5; !isNull objectParent _plyr or isTouchingGround _plyr};  
-							waitUntil {0.5; isNull objectParent _plyr or isTouchingGround _plyr};
+
+							waitUntil {0.5; !isNull objectParent _plyr or (position _plyr)#2<0.6}; 
+							waitUntil {0.5; isNull objectParent _plyr or (position _plyr)#2<0.6};
+
 							uiSleep 0.5;
 							if (!isNull _whs) then {
 								_plyr action ["AddBag",objectParent (_plyr getVariable "bpk"), _bpktype];
@@ -181,6 +184,34 @@ params ["_caller", "_supportType"];
 					};
 
 					[format ["In the %1 airspace", worldName], format ["Year %1", date select 0], mapGridPosition player] spawn BIS_fnc_infoText;
+				};
+			};
+
+			//Close support menu
+			_mainDisplay = (findDisplay 60000);
+			_mainDisplay closeDisplay 1;
+		};
+		case "TacInsert":
+		{
+			[_caller] spawn {
+				params ["_caller"];
+				//Click on map to do a tactical insert
+				selectedHaloLoc = [0,0,0];
+				openMap true;
+				uiSleep 1;
+				["<t color='#ffffff' size='.8'>Click on map do a tactical insertion<br />All players around you will will be moved</t>",0,0,4,1,0,789] spawn BIS_fnc_dynamicText;
+				onMapSingleClick "selectedHaloLoc = _pos; onMapSingleClick ''; openMap false; true;";
+				waitUntil{!(visibleMap)};  
+				if (!([selectedHaloLoc, [0,0,0]] call BIS_fnc_areEqual)) then 
+				{	
+					//Get all players near the caller
+					_playerNearby = allPlayers select {(_x distance _caller)<30};
+
+					//Move all players nearby
+					{
+						[1,["", "BLACK IN", 2]] remoteExec ["cutText", _x];
+						_x setPos ([[[selectedHaloLoc, 15]], []] call BIS_fnc_randomPos);
+					} foreach _playerNearby;
 				};
 			};
 
@@ -307,6 +338,18 @@ addSupportForHALO = {
 	_supportName = "Halo Jump";
 	_supportNameCode = "HALOJump";
 	_supportIcon = "\a3\Ui_f\data\GUI\Cfg\CommunicationMenu\supplydrop_ca.paa";
+	_supportType = "Movement";
+
+	[_ctrl, _supportName, _supportNameCode, _supportIcon, _price, _supportType] call addSupportOption;
+};
+
+addSupportForTacInsert = {
+	params ["_ctrl"];
+	//Add support for INTEL
+	_price = 500;
+	_supportName = "Tactical Insertion";
+	_supportNameCode = "TacInsert";
+	_supportIcon = "\a3\Ui_f\data\GUI\Cfg\CommunicationMenu\transport_ca.paa";
 	_supportType = "Movement";
 
 	[_ctrl, _supportName, _supportNameCode, _supportIcon, _price, _supportType] call addSupportOption;

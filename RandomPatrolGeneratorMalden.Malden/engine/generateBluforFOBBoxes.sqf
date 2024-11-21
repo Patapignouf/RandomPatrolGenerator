@@ -1,4 +1,12 @@
 params ["_initBlueforLocation","_deployableFOBMounted","_deployableFOB"];
+//Init publicvariables
+VA2 = nil;
+publicvariable "VA2";
+deployableFOBItem = nil;
+publicvariable "deployableFOBItem";
+TPFlag1 = nil;
+publicvariable "TPFlag1";
+
 
 //Wait for Blufor FOB generation
 sleep 5;
@@ -23,6 +31,64 @@ publicvariable "deployableFOBItem";
 
 //Add action to deploy advanced outpost
 [deployableFOBItem, _deployableFOBMounted] execVM 'objectGenerator\doAddActionForAdvFOB.sqf'; 
+
+//Add airdrop on blufor FOB
+[deployableFOBItem, [
+	"<img size='2' image='\a3\data_f_destroyer\data\UI\IGUI\Cfg\holdactions\holdAction_unloadVehicle_ca.paa'/><t>Air drop the advanced FOB</t>",
+	{
+			params ["_object","_caller","_ID","_viewDistance"];
+
+			//Open map 
+			//Click on map to spawn
+			selectedLoc = [0,0,0];
+			openMap true;
+			uiSleep 1;
+
+			["<t color='#ffffff' size='.8'>Select the FOB crate airdrop position<br /></t>",0,0,2,0,0,789] spawn BIS_fnc_dynamicText;
+			onMapSingleClick "selectedLoc = _pos; onMapSingleClick ''; openMap false; true;";
+			waitUntil{!(visibleMap)};  
+			if (!([selectedLoc, [0,0,0]] call BIS_fnc_areEqual)) then 
+			{
+				//Remove this action
+				[_object, _ID] remoteExec ["removeAction", 0, true];
+
+				//Call air drop 
+				_positionLZ = selectedLoc findEmptyPosition [0, 200,"Land_HelipadCircle_F"];
+
+				_parachute = createVehicle ["B_Parachute_02_F", [(_positionLZ select 0), (_positionLZ select 1), ((_positionLZ select 2)+500)], [], 0, 'FLY'];
+				_object attachTo [_parachute, [0, 0, -1.3]];
+				_object allowdamage false;
+
+				
+				//Wait for care almost hit ground
+				//Fix bug where crate go under the ground
+				waitUntil {((((position _object)#2) < 0.6) || (isNil "_parachute"))};
+				detach _object;
+				_object setVelocity [0,0,-5];
+				sleep 0.3;
+				
+				//Place crate on the ground
+				_object setPos [(position _object)#0, (position _object)#1, 1];
+				_object setVelocity [0,0,0]; 
+
+				//Setup a map marker
+				[["Advanced FOB Drop", "ColorBlue", "hd_end", getPos _object, blufor], 'objectGenerator\doGenerateMarker.sqf'] remoteExec ['BIS_fnc_execVM', 0, true]; 
+
+				//Add smoke to crate
+				for [{_i = 0}, {_i < 3}, {_i = _i + 1}] do
+				{
+					_supplyLight = "Chemlight_green" createVehicle (position deployableFOBItem);
+					_supplyLight attachTo [deployableFOBItem, [0,0,0]];
+					_supplySmoke = "SmokeShellGreen" createVehicle (position deployableFOBItem);
+					_supplySmoke attachTo [deployableFOBItem, [0,0,0]];
+					sleep 30;
+				};
+			};
+
+	},[],1.5,true,true,"","(_target distance _this <5) && (_this getVariable 'role' == 'leader' || _this getVariable 'role' == 'pilot')"
+	]
+] remoteExec ["addAction", 0, true];
+
 
 BluforAmmoBox = [];
 
@@ -147,8 +213,11 @@ if (!isNil "USS_FREEDOM_CARRIER") then
 	waitUntil{!isNil "VA2"};
 	waitUntil{!isNil "TPFlag1"};
 	waitUntil{!isNil "deployableFOBItem"};
+
+	_warEra = missionNamespace getVariable "warEra";
+
 	VA2 setPosASL [initBlueforLocation#0-105, initBlueforLocation#1-18, initBlueforLocation#2];
-	TPFlag1 setPosASL [initBlueforLocation#0-115, initBlueforLocation#1-18, initBlueforLocation#2-1];
+	TPFlag1 setPosASL [initBlueforLocation#0-115, initBlueforLocation#1-18, initBlueforLocation#2-0.5];
 	deployableFOBItem setPosASL [initBlueforLocation#0-50, initBlueforLocation#1-15, initBlueforLocation#2];
 
 	//Move basic ammo box
@@ -260,11 +329,12 @@ if (!isNil "USS_FREEDOM_CARRIER") then
 		};
 	} foreach bluforUnarmedVehicle;
 
-	_baseSpawnShip = [initBlueforLocation#0-40, initBlueforLocation#1+70, initBlueforLocation#2];
+	_baseSpawnShip = [initBlueforLocation#0-100, initBlueforLocation#1+70, 0];
 	{
-		_baseSpawnShip = [_baseSpawnShip#0+30, _baseSpawnShip#1, 0];
+		_baseSpawnShip = [_baseSpawnShip#0+40, _baseSpawnShip#1, 0];
 		_ship = createVehicle [_x,  _baseSpawnShip, [], 0, "NONE"];
 		sleep 1;
+		_ship setPos _baseSpawnShip;
 		_ship setfuel 1;
 		_ship setdamage 0;
 		if (!(alive _ship)) then 
@@ -298,6 +368,35 @@ if (!isNil "USS_FREEDOM_CARRIER") then
 			_plane setDir 90;
 			_planeNumber = _planeNumber+1;
 
+			//Add custom plane catapult on WWII planes because of heavy bugs on USS Freedom
+			if (_warEra == 0) then 
+			{
+				[_plane, [format ["<img size='2' image='\a3\data_f_destroyer\data\UI\IGUI\Cfg\holdactions\holdAction_unloadVehicle_ca.paa'/><t size='1'>Catapult the plane</t>"],{
+					//Define parameters
+					params ["_object","_caller","_ID","_avalaibleVehicle"];
+
+					//Move caller in the player
+    				_caller moveInAny _object;
+
+					//Start the plane
+    				_object engineOn true;
+					_objectPos = getPos _object;
+					_object setPosASL [_objectPos#0, _objectPos#1, _objectPos#2+300];
+					_vel = velocity _object;
+					_dir = getDir _object;
+					_additionalSpeed = 150; // in m/s
+					_object setVelocity [
+						(_vel select 0) + (sin _dir * _additionalSpeed),
+						(_vel select 1) + (cos _dir * _additionalSpeed),
+						(_vel select 2) // horizontal only
+					];
+
+					//Delete the action 
+					[_object, _ID] remoteExec ["removeAction", 0, true];
+ 
+				},_x,3,true,false,"","(_target distance _this <3) && (_this getVariable 'role' == 'leader' || _this getVariable 'role' == 'pilot')"]] remoteExec ["addAction", 0, true];
+			};
+
 			//Repair vehicle
 			[_plane] spawn {
 				params ["_vehicle"];
@@ -329,3 +428,6 @@ _trgBluforGrassCutterFOB setTriggerArea [15, 15, 0, true];
 
 //Just cutting grass with a small trigger on Blufor FOB :p  
 [_trgBluforGrassCutterFOB, 20, 20] execvm "engine\grassCutter.sqf";
+
+bluforFOBBuild = true;
+publicvariable "bluforFOBBuild";

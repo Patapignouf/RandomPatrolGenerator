@@ -49,7 +49,7 @@ baseEnemyGroup_2035_AAF = [
 	"I_Soldier_GL_F", 
 	"I_medic_F",
 	"I_Soldier_M_F", 
-	"I_Soldier_LAT2_F", 
+	"I_engineer_F", 
 	"I_soldier_F", 
 	"I_medic_F"
 ];
@@ -65,16 +65,15 @@ baseEnemyATGroup_2035_AAF = [
 
 baseEnemyDemoGroup_2035_AAF = [
 	"I_soldier_F", 
-	"I_Soldier_AAT_F", 
-	"I_Soldier_GL_F", 
+	"I_Soldier_exp_F", 
+	"I_Soldier_AA_F", 
 	"I_soldier_mine_F",
 	"I_soldier_UAV_F"
 ];
 
 baseEnemyMortarGroup_2035_AAF = [
 	"I_Mortar_01_F",
-	"I_soldier_F", 
-	"I_Soldier_AR_F", 
+	"I_ghillie_lsh_F", 
 	"I_ghillie_sard_F"
 ];
 
@@ -95,6 +94,16 @@ baseEnemyHeavyArmoredVehicleGroup_2035_AAF = [
 	"I_APC_Wheeled_03_cannon_F", 
 	"I_APC_tracked_03_cannon_F"
 ];
+
+baseEnemyTurretGroup_2035_AAF = [
+	//Turrets 
+	["I_HMG_01_high_F", "SMALLBUNKER"],
+	["I_static_AT_F", "SMALLBUNKER"],
+	["I_static_AA_F", "SMALLBUNKER"],
+	["I_HMG_02_high_F", "SMALLBUNKER"]
+
+];
+
 
 baseEnemyUnarmedChopperGroup_2035_AAF = [
 	"I_Heli_Transport_02_F", 

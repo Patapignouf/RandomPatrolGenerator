@@ -6,7 +6,10 @@ modToCheck = [
 	["uns_main", "MOD_UNSUNG", "UNSUNG","CfgPatches"],
 	["AMF_Patches", "MOD_AMF", "AMF","CfgPatches"],
 	["vtf_kf_main", "MOD_KORSAC", "KORSAC TERRAIN","CfgPatches"],
-	["RT", "MOD_RT", "Realistic Driving Terrains","CfgPatches"]
+	["rhs_main", "MOD_RHS", "[RHS] RED HAMMER STUDIOS","CfgPatches"],
+	["RT", "MOD_RT", "Realistic Driving Terrains","CfgPatches"],
+	["DSF_core", "MOD_DSF", "[DSF] Drongos Simple Factions","CfgPatches"],
+	["fow_main", "MOD_FOW", "[FOW] Faces Of War","CfgPatches"]
 ];
 
 doCheckRunningModsOnServer = {
@@ -20,18 +23,7 @@ doCheckRunningModsOnServer = {
 			};
 		} else 
 		{
-			switch (_x#0) do {
-				// case "RealisticDriving":
-				// {
-				// 	if (gettext ( configfile >> "CfgSurfaces" >> "arm_rock" >> "RTTYPE") != "") then {
-				// 		missionNamespace setVariable [_x#1, true, true];
-				// 	};
-				// };
-				default
-				{
-					//Do nothing
-				};
-			};
+			//Do nothing
 		};
 	} foreach modToCheck;
 };
@@ -75,18 +67,8 @@ doCheckRunningModsOnClient = {
 			} else 
 			{
 				//Check custom mods
-				switch (_x#0) do {
-					// case "RealisticDriving":
-					// {
-					// 	if (!(gettext ( configfile >> "CfgSurfaces" >> "arm_rock" >> "RTTYPE") != "")) then {
-					// 		_modNotPresent pushBack _x#1;
-					// 	};
-					// };
-					default
-					{
 						//Do nothing
-					};
-				};
+			
 			};
 		};
 	} foreach modToCheck;

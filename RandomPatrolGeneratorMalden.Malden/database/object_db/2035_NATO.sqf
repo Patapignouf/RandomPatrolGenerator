@@ -97,22 +97,23 @@ bluforArmedVehicle_2035_NATO = [
 //Chopper unarmed vehicle avalaible for blufor : Ex CH47
 bluforUnarmedVehicleChopper_2035_NATO = [
 	"B_Heli_Transport_03_unarmed_F",
-	"B_Heli_Light_01_F",
-	"B_Heli_Transport_01_F"
+	"B_Heli_Light_01_F"
 ];
 
 
 //Chopper armed choper avalaible for blufor : Ex AH-Z1
 bluforArmedChopper_2035_NATO = [
 	"B_Heli_Attack_01_dynamicLoadout_F",
-	"B_Heli_Light_01_dynamicLoadout_F"
+	"B_Heli_Light_01_dynamicLoadout_F",
+	"B_Heli_Transport_01_F"
 ];
 
 //Armored vehicle avalaible for blufor : Ex light tank
 bluforArmoredVehicle_2035_NATO = [
 	"B_APC_Wheeled_01_cannon_F",
 	"B_APC_Tracked_01_CRV_F",
-	"B_AFV_Wheeled_01_up_cannon_F"
+	"B_AFV_Wheeled_01_up_cannon_F",
+	"B_MBT_01_cannon_F"
 ];
 
 //Drone vehicle avalaible for blufor
@@ -318,11 +319,13 @@ itemList_2035_NATO = [
 	"ACE_RangeCard",
 	"ACE_NVG_Wide_Black_WP",
 	"ACE_NVG_Wide_WP",
-	"ACE_NVG_Wide_Green_WP"
+	"ACE_NVG_Wide_Green_WP",
+	"ACE_HuntIR_monitor"
 	];
 
 //item avalaible for all engineer
 itemEngineerList_2035_NATO = [
+	"DemoCharge_Remote_Mag"
 ];
 
 //item avalaible for all medic
@@ -360,4 +363,5 @@ uniformList_2035_NATO = [
 
 //Magazine avalaible for all unit
 magazineList_2035_NATO = [
+	"ACE_HuntIR_M203"
 ];

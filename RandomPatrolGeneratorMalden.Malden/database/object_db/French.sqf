@@ -40,8 +40,7 @@ bluforDrone_French = [
 ];
 
 bluforBoat_French = [
-	"CUP_B_RHIB_HIL",
-	"CUP_B_Zodiac_USMC"
+
 ];
 
 bluforFixedWing_French = [
@@ -146,20 +145,10 @@ rifleList_French = [
 	"arifle_SPAR_01_snd_F",
 	"arifle_SPAR_01_blk_F",
 	"arifle_SPAR_01_khk_F",
-	"CUP_arifle_HK416_Desert",
-	"CUP_arifle_HK416_CQB_Desert",
 	"AMF_Pamas"
 ];	
 
 grenadeLauncherList_French =  [		
-	//CUP 
-	"CUP_arifle_HK416_AGL_Desert",
-	"CUP_arifle_HK416_AGL_Wood",
-	"CUP_arifle_HK416_CQB_AG36",
-	"CUP_arifle_HK416_CQB_M203_Desert",
-	"CUP_arifle_HK416_CQB_AG36_Wood",
-	"CUP_arifle_HK_M27_AG36",
-
 	//Vanilla
 	"arifle_SPAR_01_GL_snd_F",
 	"arifle_SPAR_01_GL_blk_F",
@@ -175,7 +164,6 @@ launcherList_French = [
 autorifleList_French = [			
 	"amf_mini_mg_01_f",
 	"amf_mini_mg_tactical_mk3",
-	"CUP_lmg_FNMAG_RIS_modern",
 	"LMG_03_F"
 ];	
 
@@ -188,12 +176,6 @@ marksmanrifleList_French = [
 	"AMF_RFF2_01_F",
 	"AMF_714_long_tan_f",
 	"amf_perseis_ii_poly_02_F",
-
-	//CUP variant
-	"CUP_arifle_Mk17_STD",
-	"CUP_arifle_Mk20",
-	"CUP_arifle_HK417_20",
-	"CUP_arifle_HK417_20_Desert",
 
 	//Vanilla variant
 	"arifle_SPAR_03_snd_F",
@@ -336,12 +318,9 @@ itemMedicList_French = [
 backPackList_French = [
 	"B_Mortar_01_weapon_F",
 	"B_Mortar_01_support_F",
-	"CUP_B_USMC_MOLLE_MG",
 	"AMF_TVMMP_weapon",
 	"AMF_WiredMMP_weapon",
 	"AMF_MMP_support",
-	"CUP_B_M2_Gun_Bag",
-	"CUP_B_M2_Tripod_Bag",
 	"AMF_rush24_01_TDF",
 	"amf_tecpack_30L",
 	"TFAR_rt1523g",
@@ -422,10 +401,6 @@ uniformList_French = [
 //Magazine avalaible for all unit
 magazineList_French = [
 	"30Rnd_556x45_Stanag_Tracer_Green",
-	"CUP_1Rnd_HEDP_M203",
-	"CUP_1Rnd_HE_M203",
-	"CUP_FlareWhite_M203",
-	"CUP_HandGrenade_M67",
 	"SmokeShell",
 	"SmokeShellBlue",
 	"SmokeShellGreen",

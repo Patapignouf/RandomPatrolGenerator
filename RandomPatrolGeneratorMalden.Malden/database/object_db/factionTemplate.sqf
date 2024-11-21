@@ -3,7 +3,8 @@
 //Faction format :
 // [ Number : Faction Code, String : Faction string Name , String : Faction Name to display, Enabled for Blufor/Independant, Enabled for Opfor, Enabled for Civilian],
 //Add specific factions
-//factionInfos pushBack ["_newFaction", 9999, "New Faction name", true, true, true];
+//factionID = factionID+1;
+//factionInfos pushBack ["_newFaction", factionID, "New Faction name", true, true, true];
 
 
 //////////////////////////////

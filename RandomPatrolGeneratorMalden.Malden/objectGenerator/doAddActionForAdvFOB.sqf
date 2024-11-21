@@ -25,7 +25,6 @@ params ["_deployableFOBItem", "_deployableFOBMounted"];
 			_spawnFOBObjects = [getPos _object, (random 360), _avalaibleOutpost] call BIS_fnc_ObjectsMapper;
 			
 			//diag_log format ["FOB object : %1", _spawnFOBObjects];
-
 			{
 				_x setVariable ["isAdvancedFOB", true, true];
 			} foreach _spawnFOBObjects;
@@ -36,7 +35,7 @@ params ["_deployableFOBItem", "_deployableFOBMounted"];
 			missionNamespace setVariable ["advancedBlueforLocation", getPos TPFlag2, true];
 
 			//Add action to rest and skip 6 hours
-			[TPFlag2, ["Take a nap",{
+			[TPFlag2, ["<img size='2' image='\a3\ui_f_oldman\data\IGUI\Cfg\holdactions\holdAction_sleep2_ca.paa'/>Take a nap</t>",{
 				params ["_object","_caller","_ID","_param"];
 				
 				if (!(missionNamespace getVariable ["usedFewTimeAgo",false])) then 
@@ -50,10 +49,10 @@ params ["_deployableFOBItem", "_deployableFOBMounted"];
 				} else {
 					hint "No need to rest";
 				};
-			},objNull,1.5,true,false,"","_target distance _this <5"]] remoteExec [ "addAction", 0, true ];
+			},objNull,1.5,true,false,"","_target distance _this <7"]] remoteExec [ "addAction", 0, true ];
 
 			//Add action to rest until morning
-			[TPFlag2, ["Sleep until next morning",{
+			[TPFlag2, ["<img size='2' image='\a3\ui_f_oldman\data\IGUI\Cfg\holdactions\holdAction_sleep2_ca.paa'/>Sleep until next morning</t>",{
 				params ["_object","_caller","_ID","_param"];
 				
 				if (!(missionNamespace getVariable ["usedFewTimeAgo",false])) then 
@@ -67,18 +66,38 @@ params ["_deployableFOBItem", "_deployableFOBMounted"];
 				} else {
 					hint "No need to rest";
 				};
-			},objNull,1.5,true,false,"","_target distance _this <5"]] remoteExec [ "addAction", 0, true ];
+			},objNull,1.5,true,false,"","_target distance _this <7"]] remoteExec [ "addAction", 0, true ];
 
-			//Add action to make all player respawn
-			TPFlag2 addAction [format ["Open support shop"],{
+			//Add support shop
+			[TPFlag2, [format ["<img size='2' image='\a3\ui_f_oldman\data\IGUI\Cfg\holdactions\holdAction_market_ca.paa'/><t size='1'>Open support shop</t>"],{
 				//Define parameters
 				params ["_object","_caller","_ID","_avalaibleVehicle"];
-					[[], 'GUI\supportGUI\supportGUI.sqf'] remoteExec ['BIS_fnc_execVM', player];
+					[[false], 'GUI\supportGUI\supportGUI.sqf'] remoteExec ['BIS_fnc_execVM', _caller];
 				}
-			];
+			]] remoteExec [ "addAction", 0, true ];
+
+
+			//Add action vehicle shop
+			[TPFlag2, [format ["<img size='2' image='\a3\ui_f_oldman\data\IGUI\Cfg\holdactions\holdAction_market_ca.paa'/><t size='1'>Open vehicle shop</t>"],{
+					//Define parameters
+					params ["_object","_caller","_ID","_avalaibleVehicle"];
+
+					[["bluforVehicleAvalaibleSpawn", bluforUnarmedVehicle, bluforArmedVehicle, bluforArmoredVehicle, bluforUnarmedVehicleChopper, bluforArmedChopper, bluforDrone, bluforFixedWing, bluforBoat], 'GUI\vehicleSpawnerGUI\vehicleSpawner.sqf'] remoteExec ['BIS_fnc_execVM', _caller];
+			},_x,3,true,false,"","(_target distance _this <7) && (_this getVariable 'role' == 'leader' || _this getVariable 'role' == 'pilot')"]] remoteExec [ "addAction", 0, true ];
+
+
+			//Add action open team member shop
+			[TPFlag2, ["<img size='2' image='\a3\ui_f_oldman\data\IGUI\Cfg\holdactions\holdAction_market_ca.paa'/><t size='1'>Open team member shop</t>",{
+			//Define parameters
+			params ["_object","_caller","_ID","_avalaibleVehicle"];
+
+			[[], 'GUI\botteamGUI\botteamGUI.sqf'] remoteExec ['BIS_fnc_execVM', _caller];
+			},_x,3,true,false,"","(_target distance _this <7) && (_this getVariable 'role' == 'leader')"]] remoteExec [ "addAction", 0, true ];
+
+
 
 			//Add action to redeploy FOB
-			[TPFlag2, ["Advanced FOB disassembly",{
+			[TPFlag2, ["<img size='2' image='\a3\ui_f\data\IGUI\Cfg\holdactions\holdAction_unbind_ca.paa'/>Advanced FOB disassembly</t>",{
 				params ["_object","_caller","_ID","_param"];
 				_avalaibleOutpost = _param select 0;
 				_respawnSetting = _param select 1;
@@ -95,7 +114,7 @@ params ["_deployableFOBItem", "_deployableFOBMounted"];
 				} foreach (nearestObjects [getPos _object, [], 50]);
 
 				//Create FOB box
-				_deployableFOBItem = createVehicle [deployableFOB, _currentTempPos, [], 0, "NONE"];
+				_deployableFOBItem = createVehicle ["B_supplyCrate_F", _currentTempPos, [], 0, "NONE"];
 				clearWeaponCargoGlobal _deployableFOBItem;
 				clearMagazineCargoGlobal _deployableFOBItem;
 				clearItemCargoGlobal _deployableFOBItem;
@@ -103,12 +122,14 @@ params ["_deployableFOBItem", "_deployableFOBMounted"];
 				_deployableFOBItem allowDamage false; 
 				[_deployableFOBItem, _avalaibleOutpost] execVM 'objectGenerator\doAddActionForAdvFOB.sqf'; 
 
-			},[_avalaibleOutpost],0.5,true,false,"","_target distance _this <5"]] remoteExec [ "addAction", 0, true ];
+				missionNamespace setVariable ["advancedBlueforLocation", [0,0,0], true];
+
+			},[_avalaibleOutpost],0.5,true,false,"","_target distance _this <7"]] remoteExec [ "addAction", 0, true ];
 
 			//Remove Box
 			deleteVehicle _object;
 		} else {
-			hint "Too close to base";
+			hint "Too close from base";
 		};
 	}, 
 	{

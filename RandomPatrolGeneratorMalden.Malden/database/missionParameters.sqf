@@ -1,18 +1,18 @@
-booleanSelection = [false, true];
+ booleanSelection = [false, true];
 
 warEraSelection = [
 	[0,"2nd War"],
 	[1,"Cold War"],
 	[2,"Modern Warfare"],
-	[3,"Actual Warfare"],
+	[3,"Current Warfare"],
 	[4,"Future Warfare"]
 ];
 
 missionLengthSelection = [
-	[1,"Short (2 objectives)"], //Begin at 1
-	[2,"Medium (3 objectives)"],
-	[3,"Long (4 objectives)"],
-	[4,"Very long (5 objectives)"]
+	[1,"Short (1 objective)"], //Begin at 1
+	[2,"Medium (2 objectives)"],
+	[3,"Long (3 objectives)"],
+	[4,"Very long (4 objectives)"]
 ];
 
 missionDifficultySelection = [
@@ -42,5 +42,198 @@ missionRespawnParamSettings = [
 	[600,"Respawn every 10 minutes"],
 	[1200,"Respawn every 20 minutes"],
 	[1800,"Respawn every 30 minutes"],
-	[99999999999999,"Respawn on objective completion"]
+	[99999999999999,"Respawn on objective completion only"]
+];
+
+civiliansOnObjectivesParam = 
+[
+	[	
+		[0, "Disable"],
+		[1, "Enable"]
+	],
+	"Enable civilian population on objectives",
+	1,
+	"enableCiviliansOnObjectives"
+];
+
+enableObjectiveExactLocationParam = 
+[
+	[	
+		[0, "Disable"],
+		[1, "Enable"]
+	],
+	"Objective exact location markers",
+	0,
+	"enableObjectiveExactLocation"
+];
+
+enableRegularIncomeParam = 
+[
+	[	
+		[0, "Disable"],
+		[1, "Enable"]
+	],
+	"Enable regular income (when credits under 500)",
+	1,
+	"enableRegularIncome"
+];
+
+sideRelationParam =
+[
+	[	
+		[0, "Blufor friend with Independent against Opfor"],
+		[1, "Blufor against Independent against Opfor"],
+		[2, "Blufor against Independent and Opfor"]
+	],
+	"Determines side relations",
+	0,
+	"sideRelations"
+];
+
+enablePersistentParam = 
+[
+	[	
+		[0, "Disable"],
+		[1, "Enable"]
+	],
+	"Enable Persistent Mode (No fail on death)",
+	0,
+	"enablePersistent"
+];
+
+
+endlessMissionParam = 
+[
+	[	
+		[0, "Disable"],
+		[1, "Enable"]
+	],
+	"Enable Endless Mission Mode (Start mission setup after each mission ending)",
+	0,
+	"endlessMission"
+];
+
+
+disableZoomParam = 
+[
+	[	
+		[0, "Disable"],
+		[1, "Enable"]
+	],
+	"Temp Zoom (hold right clic)",
+	0,
+	"disableZoom"
+];
+
+
+
+
+enableAutoDifficultyBalanceParam = 
+[
+	[	
+		[0, "Disable"],
+		[1, "Enable"]
+	],
+	"Enable Automatic difficulty balance",
+	1,
+	"enableAutoDifficultyBalance"
+];
+
+
+enableLoadoutRestrictionParam = 
+[
+	[	
+		[0, "Disable"],
+		[1, "Enable"]
+	],
+	"Enable loadout restriction",
+	1,
+	"enableLoadoutRestriction"
+];
+
+enableHaloParam = 
+[
+	[	
+		[0, "Disable"],
+		[1, "Enable"]
+	],
+	"Enable HALO JUMP",
+	1,
+	"enableHalo"
+];
+
+timeOfDayParam = 
+[
+	[	
+		[0, "Random"],
+		[1, "Morning"],
+		[2, "Day"],
+		[3, "Afternoon"],
+		[4, "Night"]
+	],
+	"Choose time of day",
+	2,
+	"timeOfDay"
+];
+
+
+civJoinableFactionParam = 
+[
+	[	
+		[0, "Nobody can recruit civilian"],
+		[1, "Only indepedent can recruit civilian"],
+		[2, "Only blufor can recruit civilian"],
+		[3, "Both independent and blufor can recruit civilian"]
+	],
+	"Allow player to recruit civilian",
+	1,
+	"civJoinableFaction"
+];
+
+civSuicideBomberParam = 
+[
+	[	
+		[0, "Disable suicide bomber"],
+		[1, "Active suicide bomber"]
+		
+	],
+	"Allowing a suicide bomber",
+	1,
+	"civSuicideBomber"
+];
+
+
+_percentages = [];
+for "_i" from 1 to 100 do {
+    _percentages pushBack [_i - 1, format ["%1%%", _i]];
+};
+
+civSuicideBomberProbabilityParam = 
+[
+	_percentages,
+	"Probability of suicide bomber",
+	0,
+	"civSuicideBomberProbability"
+];
+
+enableOpforVehicleParam = 
+[
+	[	
+		[0, "Disable"],
+		[1, "Enable"]
+	],
+	"Opfor vehicle",
+	1,
+	"enableOpforVehicle"
+];
+
+enableOpforMortarParam = 
+[
+	[	
+		[0, "Disable"],
+		[1, "Enable"]
+	],
+	"Opfor mortar",
+	1,
+	"enableOpforMortar"
 ];

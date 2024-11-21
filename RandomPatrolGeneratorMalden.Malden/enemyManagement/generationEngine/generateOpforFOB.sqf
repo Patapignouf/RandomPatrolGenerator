@@ -1,5 +1,8 @@
 #include "..\..\engine\searchLocation.sqf"
 
+waitUntil {!isNil"initBlueforLocation"};
+waitUntil {(!([initBlueforLocation, [0,0,0]] call BIS_fnc_areEqual))};
+
 //Generate Opfor small FOB
 //Protect player from nearby spawn
 _trgAOC = createTrigger ["EmptyDetector", initBlueforLocation];
@@ -33,16 +36,19 @@ if (!([_OpforFobLocation] call isLocationOnMap)) then
 	diag_log format ["Display _OpforFobTurretOpforLocation : %1 ",_OpforFobTurretOpforLocation];
 
 	//Spawn Garrison units
-	_opforFOBGarrison = [selectRandom EnemyWaveLevel_1 + selectRandom EnemyWaveLevel_1, _OpforFobLocation , east, "DefenseFOBInfantry"] call doGenerateEnemyGroup;
+	for [{_i = 0}, {_i <= 2}, {_i = _i + 1}] do
 	{
-		_randomAvalaiblePos = selectRandom _OpforFobStandardOpforLocation;
-		_x setPos (getPos _randomAvalaiblePos);
-		_x disableAI "PATH";
-		_x setDir (getDir _randomAvalaiblePos);
-		deleteVehicle _randomAvalaiblePos;
-		_OpforFobStandardOpforLocation = _OpforFobStandardOpforLocation - [_randomAvalaiblePos];
-	}
-	foreach units _opforFOBGarrison;
+		_opforFOBGarrison = [selectRandom EnemyWaveLevel_1, _OpforFobLocation , east, "DefenseFOBInfantry"] call doGenerateEnemyGroup;
+		{
+			_randomAvalaiblePos = selectRandom _OpforFobStandardOpforLocation;
+			_x setPosASL (getPosASL _randomAvalaiblePos);
+			_x disableAI "PATH";
+			_x setDir (getDir _randomAvalaiblePos);
+			deleteVehicle _randomAvalaiblePos;
+			_OpforFobStandardOpforLocation = _OpforFobStandardOpforLocation - [_randomAvalaiblePos];
+		} foreach units _opforFOBGarrison;
+	};
+
 
 	//Spawn turret Units
 	_opforFOBGarrisonTurret = [selectRandom EnemyWaveLevel_1, _OpforFobLocation , east, ""] call doGenerateEnemyGroup;
@@ -50,14 +56,17 @@ if (!([_OpforFobLocation] call isLocationOnMap)) then
 		_randomAvalaiblePos = selectRandom _OpforFobTurretOpforLocation;
 		if (!isNil "_randomAvalaiblePos") then 
 		{
-			_turret = createVehicle ["B_G_HMG_02_high_F", getPosASL _randomAvalaiblePos, [], 0, "NONE"];
+			_turret = createVehicle ["B_G_HMG_02_high_F", getPosATL _randomAvalaiblePos, [], 0, "CAN_COLLIDE"];
 			_turret setDir (getDir _randomAvalaiblePos);
 			_x moveInAny _turret;
 			_x disableAI "PATH";
 			deleteVehicle _randomAvalaiblePos;
 			_OpforFobTurretOpforLocation = _OpforFobTurretOpforLocation - [_randomAvalaiblePos];
+		} else 
+		{
+			//Clean unit without turret
+			deleteVehicle _x;
 		};
-
 	}
 	foreach units _opforFOBGarrisonTurret;
 

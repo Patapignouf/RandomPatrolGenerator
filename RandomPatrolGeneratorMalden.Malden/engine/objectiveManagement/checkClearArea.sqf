@@ -21,11 +21,14 @@ for [{_i = 0}, {_i < missionDifficultyParam+1}, {_i = _i + 1}] do
 };
 
 //Add more opfor to the area
+[[_thisTrigger] , "GUI\dominationGUI\dominationGUI.sqf"] remoteExec ['BIS_fnc_execVM', 0, true];
+
 while {sleep 15; _nbBluePlayer + _nbIndPlayer == 0 || _nbOpfor > 2} do 
 {
 	_nbBluePlayer = count ((allPlayers select {alive _x && side _x == blufor} ) inAreaArray _thisTrigger);
 	_nbIndPlayer = count ((allPlayers select {alive _x && side _x == independent} ) inAreaArray _thisTrigger);
 	_nbOpfor = count ((allUnits select {alive _x && side _x == opfor} ) inAreaArray _thisTrigger);
+	//diag_log format ["Log : checkClearArea , _nbBluePlayer = %1, _nbIndPlayer = %2, _nbOpfor = %3", _nbBluePlayer, _nbIndPlayer, _nbOpfor];
 };
 
 //Check tasks
@@ -54,9 +57,13 @@ _thisFOBCheck = _thisTrigger getVariable ["isFOBAssociated", false];
 if (_thisFOBCheck) then 
 {
 	//Hint players for cleared FOB
-	[format ["The FOB at position %1 has been cleared",mapGridPosition (getPos _thisTrigger)]] remoteExec ["hint", 0, true];	
+	_textToSpeech = format ["The FOB at position %1 has been cleared", mapGridPosition (getPos _thisTrigger)];
+	[[format ["<t align = 'center' shadow = '2' color='#0046ff' size='1.5' font='PuristaMedium' >High Command</t><br /><t color='#ffffff' size='1.5' font='PuristaMedium' shadow = '2' >%1</t>", _textToSpeech], "PLAIN DOWN", -1, true, true]] remoteExec ["titleText", 0, true];	
 
 	//Add this FOB to cleared FOB
 	_OpforFOBCleared = missionNamespace getVariable ["OpforFOBCleared", 0];
 	missionNamespace setVariable ["OpforFOBCleared", _OpforFOBCleared+1, true];	
 };
+
+
+_thisTrigger enableSimulation false;

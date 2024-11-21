@@ -16,21 +16,28 @@ factionInfos pushBack ["_2035_CSAT", 25, "2035 CSAT", true, true, true];
 //////////////////////////////
 
 //Light civilian group
-civilian_group_2035_CSAT = ["C_Man_casual_7_F_euro", 
-"C_Man_smart_casual_1_F_euro", 
-"C_Man_smart_casual_2_F_euro"];
+civilian_group_2035_CSAT = [
+	"C_Man_casual_7_F_euro", 
+	"C_Man_smart_casual_1_F_euro", 
+	"C_Man_smart_casual_2_F_euro"
+];
 
 //Heavy civilian group
-civilian_big_group_2035_CSAT = ["C_man_p_beggar_F_euro", 
-"C_man_polo_4_F_euro", 
-"C_man_shorts_1_F_euro", 
-"C_man_shorts_2_F_euro", 
-"C_scientist_02_formal_F", 
-"C_scientist_01_formal_F", 
-"C_scientist_02_informal_F"];
+civilian_big_group_2035_CSAT = [
+	"C_man_p_beggar_F_euro", 
+	"C_man_polo_4_F_euro", 
+	"C_man_shorts_1_F_euro", 
+	"C_man_shorts_2_F_euro", 
+	"C_scientist_02_formal_F", 
+	"C_scientist_01_formal_F", 
+	"C_scientist_02_informal_F"
+];
 
 //Vehicle avalaible on civilian city
-civilianTruck_2035_CSAT = ["C_SUV_01_F","C_Offroad_01_repair_F"];
+civilianTruck_2035_CSAT = [
+	"C_SUV_01_F",
+	"C_Offroad_01_repair_F"
+];
 
 //////////////////////////////
 ///Define enemy group data////
@@ -40,7 +47,7 @@ civilianTruck_2035_CSAT = ["C_SUV_01_F","C_Offroad_01_repair_F"];
 baseEnemyGroup_2035_CSAT = [
 	"O_Soldier_SL_F", 
 	"O_Soldier_F", 
-	"O_Soldier_LAT_F", 
+	"O_Soldier_F", 
 	"O_soldier_M_F", 
 	"O_Soldier_TL_F", 
 	"O_Soldier_AR_F", 
@@ -50,20 +57,21 @@ baseEnemyGroup_2035_CSAT = [
 
 //Basic anti tank enemy group | 5 men max (Leader, MG, AT)
 baseEnemyATGroup_2035_CSAT = [
-	"O_Soldier_TL_F", 
-	"O_Soldier_HAT_F", 
-	"O_Soldier_HAT_F",
-	"O_Soldier_AHAT_F",
-	"O_support_AMG_F", 
-	"O_support_MG_F"
+	"O_SoldierU_SL_F", 
+	"O_soldierU_AT_F", 
+	"O_soldierU_LAT_F", 
+	"O_soldierU_M_F", 
+	"O_Urban_HeavyGunner_F", 
+	"O_soldierU_medic_F"
 ];
 
 //Basic demolition enemy group | 8 men max (Leader, Explosive)
 baseEnemyDemoGroup_2035_CSAT = [
-	"O_Soldier_AA_F",
-	"O_soldier_exp_F", 
-	"O_soldier_UAV_F", 
-	"O_Soldier_AAT_F"
+	"O_V_Soldier_TL_hex_F", 
+	"O_V_Soldier_Medic_hex_F", 
+	"O_V_Soldier_Exp_hex_F", 
+	"O_V_Soldier_JTAC_hex_F", 
+	"O_V_Soldier_hex_F"
 ];
 
 //Basic Mortar enemy group | 8 men max (Mortar, Rifleman)
@@ -78,7 +86,15 @@ baseEnemyMortarGroup_2035_CSAT = [
 //Basic enemy vehicle avalaible (light) must be destroyed without AT (ex : jeep)
 baseEnemyVehicleGroup_2035_CSAT = [
 	"O_LSV_02_AT_F", 
-	"O_LSV_02_armed_F"
+	"O_LSV_02_armed_F",
+	"O_MRAP_02_F"
+];
+
+
+baseEnemyTurretGroup_2035_CSAT = [
+	//Turrets 
+	["O_HMG_01_high_F", "SMALLBUNKER"],
+	["O_static_AA_F", "SMALLBUNKER"]
 ];
 
 //Basic enemy light armored vehicle avalaible must be destroyed without heavy AT (ex : BMP)
@@ -91,12 +107,14 @@ baseEnemyLightArmoredVehicleGroup_2035_CSAT = [
 baseEnemyHeavyArmoredVehicleGroup_2035_CSAT = [
 	"O_T_APC_Tracked_02_AA_ghex_F", 
 	"O_T_APC_Tracked_02_cannon_ghex_F", 
-	"O_T_APC_Wheeled_02_rcws_v2_ghex_F"
+	"O_T_APC_Wheeled_02_rcws_v2_ghex_F",
+	"O_MBT_02_cannon_F"
 ];
 
 //Basic enemy aircraft avalaible
 baseFixedWingGroup_2035_CSAT = [
-	"O_Plane_CAS_02_dynamicLoadout_F"
+	"O_Plane_CAS_02_dynamicLoadout_F",
+	"O_Plane_Fighter_02_F"
 ];
 
 
@@ -108,10 +126,6 @@ baseEnemyUnarmedChopperGroup_2035_CSAT = [
 baseEnemyArmedChopperGroup_2035_CSAT = [
 	"O_Heli_Attack_02_dynamicLoadout_F", 
 	"O_Heli_Light_02_dynamicLoadout_F"
-];
-
-baseEnemyArmedChopperGroup_2035_CSAT = [
-
 ];
 
 ////////////////////////

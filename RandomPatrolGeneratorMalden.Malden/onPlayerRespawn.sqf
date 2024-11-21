@@ -6,6 +6,14 @@ setPlayerRespawnTime (missionNamespace getVariable "missionRespawnParam");
 //Setup respawn GUI
 [[], 'GUI\respawnGUI\initPlayerRespawnMenu.sqf'] remoteExec ['BIS_fnc_execVM', player];
 
+//Make the player doesn't count on RTB for 60 secs 
+player setVariable ["canRTB", false, true];
+[] spawn 
+{
+	uiSleep 60;
+	player setVariable ["canRTB", true, true];
+};
+
 // Fix player damaged on respawn 
 if (isClass (configFile >> "CfgPatches" >> "ace_medical")) then 
 {
@@ -23,32 +31,45 @@ if (isClass (configFile >> "CfgPatches" >> "ace_medical")) then
 };
 
 //Init player rank
-[[player], 'engine\rankManagement\rankManager.sqf'] remoteExec ['BIS_fnc_execVM', player];
+[[player, false], 'engine\rankManagement\rankManager.sqf'] remoteExec ['BIS_fnc_execVM', player];
 
 //Show a special message when there is a teamkill
-player addEventHandler ["Killed", {
+_KilledEH = player addEventHandler ["Killed", {
 	params ["_unit", "_killer", "_instigator", "_useEffects"];
 	diag_log format ["%1 has been killed by : %2", name _unit, name _instigator];
+
+	//Check if the killer is a player
 	if (isPlayer _instigator) then 
 	{
-		[[format ["%1 has been killed by his teammate %2",name _unit, name _instigator], "teamkill"], 'engine\hintManagement\addCustomHint.sqf'] remoteExec ['BIS_fnc_execVM', side _instigator];
-		if (_instigator != _unit) then 
+		//Check if player are on opposite side
+		if ([side _instigator, playerSide] call BIS_fnc_sideIsEnemy) then 
 		{
-			[[-50,5], 'engine\rankManagement\rankPenalty.sqf'] remoteExec ['BIS_fnc_execVM', _instigator];
+			//Reward PvP kill
+			[[1, "RPG_ranking_infantry_kill"], 'engine\rankManagement\rankUpdater.sqf'] remoteExec ['BIS_fnc_execVM', _instigator];
+		} else 
+		{
+			//Add penalty if the killer is a friend
+			[[format ["%1 has been killed by his teammate %2",name _unit, name _instigator], "teamkill"], 'engine\hintManagement\addCustomHint.sqf'] remoteExec ['BIS_fnc_execVM', side _instigator];
+			if (_instigator != _unit) then 
+			{
+				[[-50,5], 'engine\rankManagement\rankPenalty.sqf'] remoteExec ['BIS_fnc_execVM', _instigator];
+			};
 		};
 	};
 }];
+player setVariable ["KilledEH", _KilledEH, true];
 
 //Prevent players from instant death
 if !(isClass (configFile >> "CfgPatches" >> "ace_medical")) then 
 {
-	player addEventHandler ["HandleDamage",{
+	_handleDamageEH = player addEventHandler ["HandleDamage",{
 		private["_damage"];
 		if ((lifeState player == "INCAPACITATED")||(lifeState player == "SHOOTING")) then {
 			_damage = 0;
 		};    
 		_damage    
 	}];
+	player setVariable ["HandleDamageEH", _handleDamageEH, true];
 } else 
 {
 	//Add ACE cookoff high probability on enemy weapon
@@ -101,7 +122,7 @@ showHUD [
 			//Define parameters
 			params ["_object","_caller","_ID","_avalaibleVehicle"];
 			[[], 'GUI\adminGUI\adminGUIInit.sqf'] remoteExec ['BIS_fnc_execVM', _caller];
-		},_x,0,true,false,"","(_target distance _this <3) && (_target getVariable ['isAdmin', false])"];
+		},_x,0,true,false,"","(_target distance _this <3) && (_target getVariable ['isAdmin', false])", 50, true];
 	};
 };
 

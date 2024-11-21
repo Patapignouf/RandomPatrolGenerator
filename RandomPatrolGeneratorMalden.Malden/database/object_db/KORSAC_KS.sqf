@@ -24,6 +24,7 @@ baseEnemyATGroup_KORSAC_KS  = [
 	"vtf_kf_O_SquadLeader_F",
 	"vtf_kf_O_Rifleman_AT_F",
 	"vtf_kf_O_Rifleman_AT_F",
+	"vtf_kf_O_Rifleman_AA_F",
 	"vtf_kf_O_Autorifleman_F"
 ];
 
@@ -47,6 +48,14 @@ baseEnemyVehicleGroup_KORSAC_KS  = [
 	"vtf_kf_O_LSV_02_unarmed_F",
 	"vtf_kf_O_Van_02_transport_F"
 ];
+
+baseEnemyTurretGroup_KORSAC_KS = [
+	//Turrets 
+	["vtf_kf_O_HMG_02_high_F", "SMALLBUNKER"],
+	["vtf_kf_O_static_AA_F", "SMALLBUNKER"],
+	["vtf_kf_O_static_AT_F", "SMALLBUNKER"]
+];
+
 
 baseEnemyLightArmoredVehicleGroup_KORSAC_KS = [
 

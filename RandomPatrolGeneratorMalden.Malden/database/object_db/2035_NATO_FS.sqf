@@ -1,39 +1,6 @@
-c_leader = "leader";
-c_at = "at";
-c_rifleman = "rifleman";
-c_grenadier = "grenadier";
-c_engineer = "engineer";
-c_autorifleman = "autorifleman";
-c_marksman = "marksman"; 
-c_medic = "medic";
-c_pilot = "pilot";
+#include "..\classConstant.sqf"
 
 factionInfos pushBack ["_2035_NATO_FS", 19,"2035 NATO Special Forces", true, true, false];
-
-//////////////////////////////
-////Define civ group data/////
-//////////////////////////////
-
-//Light civilian group
-civilian_group_2035_NATO_FS = ["C_Man_casual_7_F_euro", 
-"C_Man_smart_casual_1_F_euro", 
-"C_Man_smart_casual_2_F_euro"];
-
-//Heavy civilian group
-civilian_big_group_2035_NATO_FS = ["C_man_p_beggar_F_euro", 
-"C_man_polo_4_F_euro", 
-"C_man_shorts_1_F_euro", 
-"C_man_shorts_2_F_euro", 
-"C_scientist_02_formal_F", 
-"C_scientist_01_formal_F", 
-"C_scientist_02_informal_F"];
-
-//Vehicle avalaible on civilian city
-civilianTruck_2035_NATO_FS = ["C_SUV_01_F","C_Offroad_01_repair_F"];
-
-//////////////////////////////
-///Define enemy group data////
-//////////////////////////////
 
 //Basic enemy group | 8 men (Leader, Medic, MG, Sniper, Rifleman)
 baseEnemyGroup_2035_NATO_FS = ["B_W_Soldier_SL_F", 
@@ -193,15 +160,18 @@ rifleList_2035_NATO_FS = [
 	"arifle_SPAR_01_snd_F",
 	"arifle_SPAR_01_blk_F",
 	"arifle_SPAR_01_khk_F",
-	"CUP_arifle_HK416_Desert",
-	"CUP_arifle_HK416_CQB_Desert"
+	"arifle_Mk20_F",
+	"arifle_Mk20_plain_F",
+	"arifle_Mk20C_F",
+	"arifle_Mk20C_plain_F"
 ];	
 
 grenadeLauncherList_2035_NATO_FS = [
 	"arifle_SPAR_01_GL_snd_F",
 	"arifle_SPAR_01_GL_blk_F",
 	"arifle_SPAR_01_GL_khk_F",
-	"CUP_arifle_HK416_CQB_M203_Desert"
+	"arifle_Mk20_GL_F",
+	"arifle_Mk20_GL_plain_F"
 ];
 
 
@@ -216,17 +186,24 @@ launcherList_2035_NATO_FS = [
 //Autorifle avalaible for autorifleman
 autorifleList_2035_NATO_FS = [
 	"LMG_Mk200_F",
+	"LMG_Mk200_black_F",
 	"MMG_02_camo_F",
-	"MMG_02_sand_F"
+	"MMG_02_sand_F",
+	"arifle_SPAR_02_blk_F",
+	"arifle_SPAR_01_blk_F"
 ];	
 
 //Rifle avalaible for marksman
 marksmanrifleList_2035_NATO_FS = [
 	"srifle_LRR_F",
+	"srifle_LRR_camo_F",
 	"arifle_SPAR_03_snd_F",
 	"srifle_EBR_F",
-	"CUP_arifle_HK417_20_Desert",
-	"srifle_DMR_02_F"
+	"srifle_DMR_02_F",
+	"srifle_DMR_06_camo_F",
+	"srifle_DMR_06_olive_F",
+	"srifle_GM6_camo_F",
+	"srifle_GM6_F"
 ];
 
 //Smg avalaible for all unit
@@ -270,7 +247,9 @@ attachmentShortList_2035_NATO_FS	= [
 	"optic_ERCO_snd_F",
 	"muzzle_snds_m_snd_F",
 	"muzzle_snds_m_khk_F",
-	"muzzle_snds_m_blk_F"
+	"muzzle_snds_m_blk_F",
+	"bipod_01_F_khk",
+	"bipod_01_F_blk"
 ];
 
 //Long range scope avalaible for marksman
@@ -317,7 +296,6 @@ itemList_2035_NATO_FS = [
 	"ACE_RangeTable_82mm",
 	"acc_flashlight",
 	"ACE_Banana",
-	"muzzle_snds_H_snd_F",
 	"ACE_SpraypaintBlack",
 	"ACE_SpraypaintBlue",
 	"ACE_SpraypaintGreen",
@@ -333,30 +311,10 @@ itemList_2035_NATO_FS = [
 
 //item avalaible for all engineer
 itemEngineerList_2035_NATO_FS = [
-	"ToolKit",
-	"MineDetector",
-	"ACE_wirecutter",
-	"ACE_Fortify",
-	"ACE_DefusalKit",
-	"ACE_DeadManSwitch",
-	"ACE_Clacker",
-	"DemoCharge_Remote_Mag"
 ];
 
 //item avalaible for all medic
 itemMedicList_2035_NATO_FS = [
-	"Medikit",
-	"ACE_epinephrine",
-	"ACE_morphine",
-	"ACE_splint",
-	"ACE_tourniquet",
-	"ACE_bloodIV",
-	"ACE_bloodIV_500",
-	"ACE_bloodIV_250",
-	"ACE_personalAidKit",
-	"ACE_surgicalKit",
-	"ACE_suture",
-	"ACE_bodyBag"
 ];
 
 
@@ -426,7 +384,6 @@ uniformList_2035_NATO_FS = [
 //Special note throwing items must be placed here too
 magazineList_2035_NATO_FS = [
 	"30Rnd_556x45_Stanag_Sand",
-	"CUP_20Rnd_762x51_HK417",
 	"11Rnd_45ACP_Mag",
 	"50Rnd_570x28_SMG_03",
 	"30Rnd_556x45_Stanag_Sand_Tracer_Green",
@@ -450,6 +407,3 @@ magazineList_2035_NATO_FS = [
 	"SmokeShellYellow",
 	"O_IR_Grenade"
 ];
-
-//Get magazine with following command
-//getArray (configfile >> "CfgWeapons" >> weaponName >> "magazines");

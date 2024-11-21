@@ -11,6 +11,8 @@ _nbOpfor = count ((allUnits select {alive _x && side _x == opfor} ) inAreaArray 
 
 //diag_log format ["Log : checkDefendArea , _nbBluePlayer = %1, _nbIndPlayer = %2, _nbOpfor = %3", _nbBluePlayer, _nbIndPlayer, _nbOpfor];
 
+[[_thisTrigger] , "GUI\dominationGUI\dominationGUI.sqf"] remoteExec ['BIS_fnc_execVM', 0, true];
+
 //Check if there's IA on the area on the beginning
 while {sleep 15; _nbBluePlayer + _nbIndPlayer == 0 || _nbOpfor > 2} do 
 {
@@ -42,7 +44,7 @@ if (!([_thisObjectiveToComplete,[]] call BIS_fnc_areEqual)) then
 _thisFOBCheck = _thisTrigger getVariable ["isFOBAssociated", false];
 if (_thisFOBCheck) then 
 {
-	_textToSpeech = format ["An opfor reinforcement is coming to %1, be ready to defend the FOB</t>", mapGridPosition (getPos _thisTrigger)];
+	_textToSpeech = format ["An opfor reinforcement is coming to %1, be ready to defend the FOB", mapGridPosition (getPos _thisTrigger)];
 	[[format ["<t align = 'center' shadow = '2' color='#0046ff' size='1.5' font='PuristaMedium' >High Command</t><br /><t color='#ffffff' size='1.5' font='PuristaMedium' shadow = '2' >%1</t>", _textToSpeech], "PLAIN DOWN", -1, true, true]] remoteExec ["titleText", 0, true];
 };
 
@@ -86,9 +88,12 @@ if (!([_thisObjectiveToComplete,[]] call BIS_fnc_areEqual)) then
 if (_thisFOBCheck) then 
 {
 	//Hint players for cleared FOB
-	[format ["The FOB at position %1 has been cleared", mapGridPosition (getPos _thisTrigger)]] remoteExec ["hint", 0, true];	
+	_textToSpeech = format ["The FOB at position %1 has been cleared", mapGridPosition (getPos _thisTrigger)];
+	[[format ["<t align = 'center' shadow = '2' color='#0046ff' size='1.5' font='PuristaMedium' >High Command</t><br /><t color='#ffffff' size='1.5' font='PuristaMedium' shadow = '2' >%1</t>", _textToSpeech], "PLAIN DOWN", -1, true, true]] remoteExec ["titleText", 0, true];	
 
 	//Add this FOB to cleared FOB
 	_OpforFOBCleared = missionNamespace getVariable ["OpforFOBCleared", 0];
 	missionNamespace setVariable ["OpforFOBCleared", _OpforFOBCleared+1, true];	
 };
+
+_thisTrigger enableSimulation false;

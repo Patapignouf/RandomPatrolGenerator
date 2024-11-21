@@ -2,7 +2,6 @@ disableSerialization;
 #include "..\..\database\factionParameters.sqf"
 #include "..\..\database\missionParameters.sqf"
 #include "..\..\database\arsenalLibrary.sqf"
-#include "..\..\database\arsenalLibrary.sqf"
 #include "..\..\engine\rankManagement\rankFunctions.sqf"
 
 //Create GUI
@@ -58,7 +57,11 @@ refreshCustomLoadoutDisplay = {
 if (!ironMan) then 
 {
 	//Loadout validated loadout (compared with spawn loadout)
-	[player] call validateLoadout;
+	//Validate loadout only if there is no restriction
+	if ((missionNameSpace getVariable "enableLoadoutRestriction") == 1) then 
+	{
+		[player] call validateLoadout;
+	};
 	[] call refreshCustomLoadoutDisplay;
 };
 
@@ -118,7 +121,22 @@ _buttonArsenal ctrlAddEventHandler[ "ButtonClick",
 	{ 
 		hint "Open arsenal";
 		(findDisplay 7000) closeDisplay 1;
-		[] execVM 'database\openArsenal.sqf';
+		if ((missionNameSpace getVariable "enableLoadoutRestriction") == 1) then 
+		{
+			//open restricted arsenal
+			[] execVM 'database\openArsenal.sqf';
+		} else 
+		{
+			//open full arsenal
+			if (isClass (configFile >> "CfgPatches" >> "ace_medical")) then 
+			{
+				[player, player, true] call ace_arsenal_fnc_openBox;
+			} else 
+			{
+				//Setup regular arsenal
+				["Open", [true]] call BIS_fnc_arsenal;
+			};
+		};
 	}];
 
 //clear item 
@@ -131,7 +149,7 @@ _buttonClearItems ctrlAddEventHandler[ "ButtonClick",
 //show rank
 _buttonRank ctrlAddEventHandler[ "ButtonClick", 
 	{ 
-		player call displayCurrentRank;
+		[[], 'GUI\rankGUI\rankGUI.sqf'] remoteExec ['BIS_fnc_execVM', player];
 	}];
 
 //Force 3D Optics
@@ -265,6 +283,7 @@ _currentComboBox = _comboBoxClassSelection;
 {
 	_currentComboBox lbAdd format ["%1", _x];
 	_currentComboBox lbSetData [(lbSize _currentComboBox)-1, format ["%1",(lbSize _currentComboBox)-1]];
+	_currentComboBox lbSetTooltip [(lbSize _currentComboBox)-1, [_x] call getClassInformation];
 } foreach _listOfAvalaibleRole;
 
 //Default value of role combo box 

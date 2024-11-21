@@ -195,7 +195,6 @@ rifleList_WWII_USA = [
 	"LIB_M1_Carbine",
 	"LIB_M1_Garand",
 	"LIB_M1903A3_Springfield",
-	"LIB_M1903A4_Springfield",
 	"LIB_Colt_M1911",
 	"LIB_M3_GreaseGun"
 ];	
@@ -280,12 +279,15 @@ itemMedicList_WWII_USA = [
 
 // Those lists might not be correct...
 backPackList_WWII_USA = [
-	"B_LIB_UK_HSack",
-	"B_LIB_UK_HSack_Blanco",
-	"B_LIB_UK_HSack_Blanco_Cape",
-	"B_LIB_UK_HSack_Cape",
-	"B_LIB_UK_HSack_Blanco_Tea",
-	"B_LIB_UK_HSack_Tea"
+	//Medium bags
+	"B_LIB_US_Backpack",
+	"B_LIB_US_M36",
+	"B_LIB_US_Radio",
+	"B_LIB_US_Bandoleer",
+
+	//Parachute
+	"B_LIB_US_Type5",
+	"B_LIB_US_TypeA3"
 ];
 
 uniformList_WWII_USA = [

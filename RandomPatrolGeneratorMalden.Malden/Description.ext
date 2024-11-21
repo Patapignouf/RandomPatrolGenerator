@@ -8,6 +8,7 @@
 #include "GUI\dialogGUI\dialogCivilian.hpp"
 #include "GUI\vehicleSpawnerGUI\vehicleSpawner.hpp"
 #include "GUI\supportGUI\supportGUI.hpp"
+#include "GUI\botteamGUI\botteamGUI.hpp"
 #include "GUI\adminGUI\adminGUI.hpp"
 
 respawnDialog = 0;
@@ -34,6 +35,14 @@ class Header
 	maxPlayers = 20;	// maximum number of players the mission supports
 };
 
+class CfgFunctions
+{
+	#include "cfgFunctions.h"
+};
+
+class CfgSounds {
+    #include "cfgSounds.h"
+};
 
 class Params
 {
@@ -106,20 +115,8 @@ class Params
 		texts[] = { "" };
 		default = "";
 	};
-	class DisableZoom
-	{
-		title = "Temp Zoom (hold right clic)";
-		values[] = {0,1};
-		texts[] = {"Enable","Disable"};
-		default = 0;
-	};
-	class EnableHalo
-	{
-		title = "Enable HALO JUMP";
-		values[] = {0,1};
-		texts[] = {"No","Yes"};
-		default = 1;
-	};
+
+
 	class RealismMode
 	{
 		title = "Enable realism mode (WIP)";
@@ -154,20 +151,6 @@ class Params
 		values[] = {0,1,2};
 		texts[] = {"No","Yes","Random"};
 		default = 0;
-	};
-	class CivJoinableFaction
-	{
-		title = "Allow player to recruit civilian";
-		values[] = {0,1,2,3};
-		texts[] = {"Nobody can recruit civilian","Only indepedent can recruit civilian","Only blufor can recruit civilian", "Both independent and blufor can recruit civilian"};
-		default = 1;             
-	};
-	class TimeOfDay
-	{
-		title = "Choose time of day";
-		values[] = {0,1,2,3,4};
-		texts[] = {"Random","Morning","Day","Afternoon","Night"};
-		default = 2;             
 	};
 };
 
@@ -217,6 +200,14 @@ class CfgDebriefing
    {
 		title = "Mission Failed";
 		subtitle = "ONE OF THE REQUIRED OBJECTIVE IS DEAD OR DESTROYED";
+		description = "";
+		picture = "";
+		pictureColor[] = {0.5,0.4,0.4,1};
+   };
+   class ABORT
+   {
+		title = "Mission Failed";
+		subtitle = "MISSION ABORTED";
 		description = "";
 		picture = "";
 		pictureColor[] = {0.5,0.4,0.4,1};

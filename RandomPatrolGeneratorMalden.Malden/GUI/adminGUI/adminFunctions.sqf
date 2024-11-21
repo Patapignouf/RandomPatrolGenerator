@@ -9,8 +9,6 @@ params ["_supportType"];
 			_actualDifficulty = missionNamespace getVariable "missionDifficultyParam";
 			missionNamespace setVariable ["missionDifficultyParam", _actualDifficulty+1, true];
 			[[format ["OPFOR has increased its presence in the area"], "intel"], 'engine\hintManagement\addCustomHint.sqf'] remoteExec ['BIS_fnc_execVM', 0];
-
-			[[format ["OPFOR has reduced its presence in the area"], "intel"], 'engine\hintManagement\addCustomHint.sqf'] remoteExec ['BIS_fnc_execVM', 0];
 		};
 		case "Decreasedifficulty":
 		{
@@ -27,31 +25,28 @@ params ["_supportType"];
 			//Close admin menu
 			_mainDisplay = (findDisplay 60000);
 			_mainDisplay closeDisplay 1;
-			[[], 'GUI\vehicleSpawnerGUI\vehicleSpawner.sqf'] remoteExec ['BIS_fnc_execVM', player];
+			[["bluforVehicleAvalaibleSpawn", bluforUnarmedVehicle, bluforArmedVehicle, bluforArmoredVehicle, bluforUnarmedVehicleChopper, bluforArmedChopper, bluforDrone, bluforFixedWing, bluforBoat], 'GUI\vehicleSpawnerGUI\vehicleSpawner.sqf'] remoteExec ['BIS_fnc_execVM', player];
 		};
 		case "SupportShop":
 		{
 			//Close admin menu
 			_mainDisplay = (findDisplay 60000);
 			_mainDisplay closeDisplay 1;
-			[[], 'GUI\supportGUI\supportGUI.sqf'] remoteExec ['BIS_fnc_execVM', player];
+			[[true], 'GUI\supportGUI\supportGUI.sqf'] remoteExec ['BIS_fnc_execVM', player];
 		};
 		case "ClearWeather":
 		{
-			//Close admin menu
-			_mainDisplay = (findDisplay 60000);
-			_mainDisplay closeDisplay 1;
-
-			//Clear weather without transition
-			0 setOvercast 0;
-			0 setRain 0;
-			forceWeatherChange;
+			[[], 'engine\clearWeather.sqf'] remoteExec ['BIS_fnc_execVM', 0];
 
 			hint "Weather cleared";
 		};
 		case "AddCredit":
 		{
 			[] call doIncrementVehicleSpawnCounter; 
+		};
+		case "EndMission":
+		{
+			[['PLY_DEAD'], 'engine\objectiveManagement\endMission.sqf'] remoteExec ['BIS_fnc_execVM', 2];
 		};
 		default
 		{
@@ -151,3 +146,15 @@ addClearWeather = {
 
 	[_ctrl, _supportName, _supportNameCode, _supportIcon, _supportType] call addSupportOption;
 };
+
+addEndMission = {
+	params ["_ctrl"];
+
+	_supportName = "End current mission";
+	_supportNameCode = "EndMission";
+	_supportIcon = "\a3\ui_f\data\igui\cfg\simpletasks\types\Radio_ca.paa";
+	_supportType = "Mission";
+
+	[_ctrl, _supportName, _supportNameCode, _supportIcon, _supportType] call addSupportOption;
+};
+

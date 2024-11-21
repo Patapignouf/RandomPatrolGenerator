@@ -62,13 +62,22 @@ baseEnemyHeavyArmoredVehicleGroup_RU_2020 = [
 	"rhs_sprut_vdv"
 ];
 
+baseEnemyTurretGroup_RU_2020 = [
+	//Turrets 
+	["rhs_Kornet_9M133_2_VDV", "SMALLBUNKER"],
+	["rhs_KORD_high_VDV", "SMALLBUNKER"],
+	["RHS_ZU23_VDV", "SMALLBUNKER"]
+];
+
+
 baseEnemyUnarmedChopperGroup_RU_2020 = [
 	"RHS_Mi8mt_vdv"
 ];
 
 baseEnemyArmedChopperGroup_RU_2020 = [
 	"RHS_Mi24P_vdv", 
-	"RHS_Mi8MTV3_heavy_vdv"
+	"RHS_Mi8MTV3_heavy_vdv",
+	"RHS_Ka52_vvsc"
 ];
 
 baseFixedWingGroup_RU_2020 = [
@@ -200,8 +209,8 @@ rifleList_RU_2020 = [
 	"rhs_weap_ak105_npz_grip1",
 	"rhs_weap_ak105_zenitco01_grip1",
 	"rhs_weap_ak105_zenitco01_b33_grip1",
-
-
+	"rhs_weap_45th_akms",
+	"rhs_weap_akms",
 
 	"rhs_weap_pya",
 	"rhs_weap_6p53",
@@ -249,6 +258,7 @@ marksmanrifleList_RU_2020 = [
 	"rhs_weap_t5000",
 	"rhs_weap_svds_npz",
 	"rhs_weap_vss_grip_npz",
+	"rhs_weap_vss_grip_npz_grip1",
 	"rhs_weap_svdp"
 ];
 
@@ -274,6 +284,7 @@ attachmentShortList_RU_2020	= [
 	"rhs_acc_2dpZenit",
 	"rhs_acc_okp7_picatinny",
 	"rhs_acc_perst1ik_ris",
+	"rhs_acc_perst1ik",
 	"rhs_acc_pkas_pkp",
 	"rhs_acc_pgo7v3_pkp",
 	"rhs_acc_pgo7v3_ak",
@@ -308,7 +319,8 @@ itemList_RU_2020 = [
 ];
 
 itemEngineerList_RU_2020 = [
-
+	"ACE_DeadManSwitch",
+	"DemoCharge_Remote_Mag"
 ];
 	
 itemMedicList_RU_2020 = [

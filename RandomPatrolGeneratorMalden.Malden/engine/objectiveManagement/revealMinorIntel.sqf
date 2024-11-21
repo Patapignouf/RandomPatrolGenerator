@@ -24,6 +24,11 @@ switch (_infoName) do
 		_intelCivilianRevelated = format ["This morning i saw a mortar position near %1. I don't know if they are there for you, be careful.",text _nearestCity];
 		_intelDocumentRevelated = format ["There is a mortar position on %1.", mapGridPosition _infoPos];
 	};
+	case "Turret":
+	{
+		_intelCivilianRevelated = format ["This morning i saw a turret position near %1. Be careful.",text _nearestCity];
+		_intelDocumentRevelated = format ["There is a turret position on %1.", mapGridPosition _infoPos];
+	};
 	case "Patrol":
 	{
 		_intelCivilianRevelated = format ["I've heard there's soldiers patrolling around %1. About %2 men.", text _nearestCity, count units _infoGroup];

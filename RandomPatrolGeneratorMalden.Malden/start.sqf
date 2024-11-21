@@ -9,8 +9,7 @@
 //Init base mission parameters 
 enableInitAttack = "EnableInitAttack" call BIS_fnc_getParamValue;
 enableInitBluAttack = "EnableInitBluAttack" call BIS_fnc_getParamValue;
-timeOfDay = "TimeOfDay" call BIS_fnc_getParamValue;
-disableZoom = "DisableZoom" call BIS_fnc_getParamValue;
+
 
 //Init all environement database variable
 _handleEnvironmentInitialization = [] execVM 'initEnvironment.sqf'; 
@@ -37,6 +36,18 @@ if (isMultiplayer) then
 };
 publicVariable "adminExist";
 
+//Setup endmission
+missionNamespace setVariable ["isEndMissionRunning", false, true];
+missionNamespace setVariable ["generationSetup", false, true];
+missionGenerated = nil;
+publicvariable "missionGenerated";
+bluforFOBBuild = nil;
+publicvariable "bluforFOBBuild";
+PossibleObjectivePosition = nil;
+publicvariable "PossibleObjectivePosition";
+AllPossibleObjectivePosition = nil;
+publicvariable "AllPossibleObjectivePosition";
+
 //Mission settings waiting
 waitUntil {missionNamespace getVariable "generationSetup" == true};
 
@@ -58,6 +69,11 @@ enableCampaignMode = missionNamespace getVariable "enableCampaignMode"; //Defaul
 missionLength = missionNamespace getVariable "missionLength"; //Default 2 missions + 1 optional
 missionDifficultyParam = missionNamespace getVariable "missionDifficultyParam"; //Default medium
 startIntel = missionNamespace getVariable "startIntel"; //Default medium
+
+enableAutoDifficultyBalance = missionNamespace getVariable "enableAutoDifficultyBalance";
+timeOfDay = missionNamespace getVariable "timeOfDay";
+disableZoom = missionNamespace getVariable "disableZoom";
+
 
 /////////////////////////
 ////Setup IA Opti////////
@@ -119,6 +135,7 @@ baseEnemyATGroup = baseEnemyATGroup_db select {_x select 1  == opFaction} select
 baseEnemyDemoGroup = baseEnemyDemoGroup_db select {_x select 1  == opFaction} select 0 select 0;
 baseEnemyMortarGroup = baseEnemyMortarGroup_db select {_x select 1  == opFaction} select 0 select 0;
 baseEnemyVehicleGroup = baseEnemyVehicleGroup_db select {_x select 1  == opFaction} select 0 select 0;
+baseEnemyTurretGroup = ((baseEnemyTurretGroup_db select {_x#1  == opFaction})#0)#0;
 baseEnemyLightArmoredVehicleGroup = baseEnemyLightArmoredVehicleGroup_db select {_x select 1  == opFaction} select 0 select 0;
 baseEnemyHeavyArmoredVehicleGroup = baseEnemyHeavyArmoredVehicleGroup_db select {_x select 1  == opFaction} select 0 select 0;
 baseEnemyUnarmedChopperGroup = baseEnemyUnarmedChopperGroup_db select {_x select 1  == opFaction} select 0 select 0;
@@ -143,6 +160,57 @@ _mainPlayerSide = blufor;
 if ({isPlayer _x && side _x == independent} count allPlayers != 0) then 
 {
 	_mainPlayerSide = independent;
+};
+
+//Determine side relation 
+switch (missionNameSpace getVariable "sideRelations") do
+{
+	case 0:
+	{
+		west setFriend [resistance, 1];
+		resistance setFriend [west, 1];
+
+		west setFriend [east, 0];
+		east setFriend [west, 0];
+
+		east setFriend [resistance, 0];
+		resistance setFriend [east, 0];
+	};
+	case 1:
+	{
+		west setFriend [resistance, 0];
+		resistance setFriend [west, 0];
+
+		west setFriend [east, 0];
+		east setFriend [west, 0];
+
+		east setFriend [resistance, 0];
+		resistance setFriend [east, 0];
+	};
+	case 2:
+	{
+		west setFriend [resistance, 0];
+		resistance setFriend [west, 0];
+
+		west setFriend [east, 0];
+		east setFriend [west, 0];
+
+		east setFriend [resistance, 1];
+		resistance setFriend [east, 1];
+	};
+	default
+	{
+		//Never happened
+	};
+};
+
+//Init bunker FOB depending of war era and mod
+if (isClass (configFile >> "CfgPatches" >> "fow_main")) then 
+{
+	if (warEra == 0) then 
+	{
+		avalaibleEnemyFOB = avalaibleEnemyFOB_FOW;
+	};
 };
 
 /////////////////////////
@@ -180,7 +248,7 @@ publicvariable "initCityLocation";
 possiblePOILocation = ([initCityLocation, 3000] call getLocationsAroundWithBuilding) - [initCityLocationLoc];
 dangerAreaList = [];
 
-if ( count possiblePOILocation < missionLength + 1) then 
+if ( count possiblePOILocation < missionLength) then 
 {
 	possiblePOILocation = ([initCityLocation, 5000] call getLocationsAroundWithBuilding) - [initCityLocationLoc];
 };
@@ -237,7 +305,7 @@ for [{_i = 0}, {_i <= 2}, {_i = _i + 1}] do //Peut être optimisé
 if (random 100 < 20 && (count (allPlayers select {side _x == independent})== 0)) then 
 {
 	//Generate enemy forces on main civilian city environement
-	_handlePOIGeneration = [EnemyWaveLevel_1, baseEnemyVehicleGroup, [], [], [], initCityLocation, objNull] execVM 'enemyManagement\generationEngine\generatePOI.sqf'; 
+	_handlePOIGeneration = [EnemyWaveLevel_1, baseEnemyVehicleGroup, [], [], [], [], initCityLocation, objNull] execVM 'enemyManagement\generationEngine\generatePOI.sqf'; 
 	waitUntil {isNull _handlePOIGeneration};
 };
 
@@ -260,7 +328,7 @@ currentRandObj = objNull;
 //Generate objectives according to the mission's length parameter
 _minNumberOfMission = missionLength min(count AllPossibleObjectivePosition);
 
-for [{_counterOfMission = 0}, {_counterOfMission <= _minNumberOfMission}, {_counterOfMission = _counterOfMission + 1}] do //Peut être optimisé
+for [{_counterOfMission = 0}, {_counterOfMission < _minNumberOfMission}, {_counterOfMission = _counterOfMission + 1}] do //Peut être optimisé
 {
 	//Randomize objective locations or not
 	if (NeedToRandomizePOI) then 
@@ -349,7 +417,8 @@ if ( count AvalaibleInitAttackPositions != 0 && (enableInitAttack == 1 || ((enab
 		[[], "engine\respawnManagement\respawnManager.sqf"] remoteExec ['BIS_fnc_execVM', 0];
 		[format ["%1 needs reinforcement", name _caller]] remoteExec ["hint",0,true];
 		missionNamespace setVariable ["usedRespawnFewTimeAgo",true,true];
-		sleep 1200;
+		_respawnTimer = missionNamespace getVariable "missionRespawnParam";
+		sleep _respawnTimer;
 		missionNamespace setVariable ["usedRespawnFewTimeAgo",false,true];
 	} else {
 		hint "You must wait before call reinforcements";
@@ -533,9 +602,9 @@ diag_log format ["Generating blufor vehicle : %1",selectedBluforVehicle];
 			publicVariable "bluforMobileHQ";
 
 			//Add support action 
-			[bluforMobileHQ, ["Open support shop",{
+			[bluforMobileHQ, ["<img size='2' image='\a3\ui_f_oldman\data\IGUI\Cfg\holdactions\holdAction_market_ca.paa'/>Open support shop</t>",{
 				params ["_object","_caller","_ID","_param"];
-				[[], 'GUI\supportGUI\supportGUI.sqf'] remoteExec ['BIS_fnc_execVM', _caller];
+				[[false], 'GUI\supportGUI\supportGUI.sqf'] remoteExec ['BIS_fnc_execVM', _caller];
 			},[],1.5,true,false,"","_target distance _this <10 && side _this == blufor"]] remoteExec [ "addAction", blufor, true ];
 		};
 	};
@@ -575,11 +644,11 @@ missionNameSpace setVariable ["missionSetupMessage", "Generating opfor patrols, 
 //Generate Wave
 if (1 <= (count EnemyWaveSpawnPositions)) then 
 {
-	[EnemyWaveGroups,EnemyWaveSpawnPositions,initCityLocation, missionDifficultyParam] execVM 'enemyManagement\generationEngine\generateWave.sqf'; 
+	//[EnemyWaveGroups,EnemyWaveSpawnPositions,initCityLocation, missionDifficultyParam] execVM 'enemyManagement\generationEngine\generateWave.sqf'; 
 };
 
 //Generate mortar | 25% chance to spawn 
-if (count baseEnemyMortarGroup > 0) then 
+if (count baseEnemyMortarGroup > 0 && (missionNameSpace getVariable ["enableOpforMortar", 0]==1)) then 
 {
 	if (random 100 < 25) then 
 	{ 
@@ -602,7 +671,7 @@ if (count baseEnemyMortarGroup > 0) then
 };
 
 
-for [{_i = 0}, {_i <= missionLength}, {_i = _i + 1}] do //Peut être optimisé
+for [{_i = 0}, {_i < missionLength}, {_i = _i + 1}] do //Peut être optimisé
 {
 	[] execVM 'enemyManagement\generationEngine\generateOpforFOB.sqf';
 };
@@ -623,6 +692,12 @@ switch (startIntel) do
 			initCityLocationTrigger = createTrigger ["EmptyDetector", initCityLocation]; //create a trigger area created at object with variable name my_object
 			initCityLocationTrigger setTriggerArea [100, 100, 0, false]; // trigger area with a radius of 100m.
 			
+			//Set task exact location 
+			if (missionNameSpace getVariable ["enableObjectiveExactLocation", 0] == 1) then 
+			{
+				["taskContactCiv", initCityLocation] call BIS_fnc_taskSetDestination;
+			};
+
 			//Setup task completion
 			[] spawn {
 				_hasContactCivilian = false;
@@ -655,7 +730,7 @@ switch (startIntel) do
 			};
 
 			//Add blufor task to encounter independent
-			if (_mainPlayerSide == independent) then 
+			if (_mainPlayerSide == independent && (missionNameSpace getVariable "sideRelations") == 0) then 
 			{
 				//Setup init Civ city
 				//Init task for blufor to get informations
@@ -663,6 +738,12 @@ switch (startIntel) do
 				initCityLocationTrigger = createTrigger ["EmptyDetector", initCityLocation]; //create a trigger area created at object with variable name my_object
 				initCityLocationTrigger setTriggerArea [100, 100, 0, false]; // trigger area with a radius of 100m.
 				
+				//Set task exact location 
+				if (missionNameSpace getVariable ["enableObjectiveExactLocation", 0] == 1) then 
+				{
+					["taskContactCiv", initCityLocation] call BIS_fnc_taskSetDestination;
+				};
+
 				//Setup task completion
 				[] spawn {
 					_hasContactCivilian = false;
@@ -793,12 +874,21 @@ switch (timeOfDay) do
 forceWeatherChange;
 
 //Setup difficulty management
-[] execVM 'engine\difficultyManagement.sqf'; 
+if (enableAutoDifficultyBalance==1) then 
+{
+	[] execVM 'engine\difficultyManagement.sqf'; 
+};
+
+if (enableRegularIncome == 1) then 
+{
+	[] execVM 'engine\regularIncomeManagement.sqf'; 
+};
 
 if (disableZoom == 1) then 
 {
 	[[], 'engine\disableZoom.sqf'] remoteExec ['BIS_fnc_execVM', 0, true];
 };
+
 
 //Init checkdeath
 [] execVM 'engine\checkdeath.sqf';
@@ -832,7 +922,7 @@ if (enableCampaignMode) then
 			{
 				hint "Not enough mission completed";
 			};
-		},missionLength,1.5,true,true,"","_target distance _this <5"]] remoteExec ["addAction", 0, true];
+		},missionLength,1.5,true,true,"","_target distance _this <5 && side _this == blufor"]] remoteExec ["addAction", 0, true];
 
 	//Add this action on campaign mode independent side
 	[VA1, ["<t color='#0a5e00'>Complete mission</t>",{
@@ -848,7 +938,7 @@ if (enableCampaignMode) then
 			{
 				hint "Not enough mission completed";
 			};
-		},missionLength,1.5,true,true,"","_target distance _this <5"]] remoteExec ["addAction", 0, true];
+		},missionLength,1.5,true,true,"","_target distance _this <5 && side _this == independent"]] remoteExec ["addAction", 0, true];
 
 
 	//Loop until maximum number of possible objective are generated

@@ -126,6 +126,16 @@ if (_airDropSupportCounter > 0) then
 	//Place crate on the ground
 	_crate setPos [(position _crate)#0, (position _crate)#1, 1];
 	_crate setVelocity [0,0,0];  
+
+	//Add smoke to crate
+	for [{_i = 0}, {_i < 3}, {_i = _i + 1}] do
+	{
+		_supplyLight = "Chemlight_green" createVehicle (position _crate);
+		_supplyLight attachTo [_crate, [0,0,0]];
+		_supplySmoke = "SmokeShellGreen" createVehicle (position _crate);
+		_supplySmoke attachTo [_crate, [0,0,0]];
+		sleep 30;
+	};
 	
 } else 
 {

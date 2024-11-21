@@ -4,6 +4,9 @@ This is a little project  to make a new experience for ArmA 3 players.
 Between DynamicReconOps, TRGM2 and DirectAction, RandomPatrolGenerator is a little missionGenerator, optimize to allow players to keep 60 FPS on modern configuration.
 It can be played RP or Arcade style with one or two factions doing the same mission on different way.
 
+Steam workshop link here to test the last build version :
+https://steamcommunity.com/sharedfiles/filedetails/?id=3146463759
+
 There are some features like :
 - Various objectives (VIP, Ammo cache, Defense, Take & Hold etc.),
 - Civilian conversation system,
@@ -12,13 +15,16 @@ There are some features like :
 - Custom XP system (cosmetic rank implemented),
 - Opfor reinforcement from ground and air,
 - Opfor FOB (challenging tasks),
+- Opfor roadblocks and turrets bunkers.
 - Intel management,
 - Support and vehicle shops for blufor,
 - Civilian recruits for independent,
 - Hostile civilians,
+- Suicide bombers,
 - Blufor aircraft carrier,
 - Custom mission setup,
 - Custom scoreboard on mission's end,
+- Endless mode (restart mission when finish),
 - Ironman mod (stuff loose on death).
 
 Support for factions from :
@@ -28,7 +34,9 @@ Support for factions from :
 - IFA3,
 - RHS,
 - KORSAC,
-- AMF.
+- AMF,
+- Faces of War,
+- Drongos Simple Factions.
 
 Highly recommand to play with LAMBS_Danger, VCOM and ACE3 for the best experience.
 

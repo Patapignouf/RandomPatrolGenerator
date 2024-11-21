@@ -187,7 +187,7 @@ _RcsButtonObjective ctrlAddEventHandler[ "ButtonClick",
 		};
 
 		_civ = thisCivilian;
-		_civJoinableFaction = "CivJoinableFaction" call BIS_fnc_getParamValue;
+		_civJoinableFaction = missionNameSpace getVariable "CivJoinableFaction";
 		_hasToJoin = false;
 		switch (_civJoinableFaction) do
 		{
@@ -220,7 +220,7 @@ _RcsButtonObjective ctrlAddEventHandler[ "ButtonClick",
 			_tempGroup = createGroup (side player); //Specific line to debug unit which doesn't change side
 			[_civ] joinSilent _tempGroup;
 			[_civ] joinSilent (group player); //join player group
-
+			_civ doFollow player;
 			
 			//Manage loadout
 			_civLoadout = getUnitLoadout _civ;

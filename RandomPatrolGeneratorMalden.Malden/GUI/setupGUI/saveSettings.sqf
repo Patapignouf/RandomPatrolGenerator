@@ -16,7 +16,7 @@ profileNamespace setVariable ["RPG_missionLength", missionLength]; //Default arm
 profileNamespace setVariable ["RPG_missionDifficultyParam", missionDifficultyParam]; //Default armored vehicle are disabled
 profileNamespace setVariable ["RPG_ironMan", ironMan]; //Default disable ironman mode
 profileNamespace setVariable ["RPG_startIntel", startIntel]; //Default disable ironman mode
-profileNamespace setVariable ["RPG_missionIASkill", missionIASkill]; //Default disable ironman mode
+profileNamespace setVariable ["RPG_missionIASkill", missionIASkillParam]; //Default disable ironman mode
 profileNamespace setVariable ["RPG_missionRespawnParam", missionRespawnParam]; //Default disable ironman mode
 
 //Mission objectives

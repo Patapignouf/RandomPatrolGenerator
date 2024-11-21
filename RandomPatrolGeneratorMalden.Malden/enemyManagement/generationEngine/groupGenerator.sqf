@@ -1,3 +1,5 @@
+#include "..\..\objectGenerator\vehicleXPManagement.sqf" 
+
 doGenerateEnemyGroup = 
 {
 	//Get parameters
@@ -19,7 +21,7 @@ doGenerateEnemyGroup =
 	};
 	
 	//Set IA Skills
-	[_currentGroupPatrol, missionIASkill] call doSetGroupSkills;
+	[_currentGroupPatrol, missionIASkillParam] call doSetGroupSkills;
 
 	//Adjust ACE Medic items 
 	if (isClass (configFile >> "CfgPatches" >> "ace_medical")) then 
@@ -87,37 +89,7 @@ doGenerateEnemyGroup =
 	{
 		_vehicleFromGroup = vehicle (leader _currentGroupPatrol);
 
-		//Add eventhandler killed
-		_vehicleFromGroup addEventHandler ["HandleDamage", {
-			params ["_unit", "_selection", "_damage", "_source", "_projectile", "_hitIndex", "_instigator", "_hitPoint", "_directHit", "_context"];
-			if ((_unit getHit "motor") > 0.7 && !(_unit getVariable ["isAlmostDead", false])) then 
-			{
-				_unit setVariable ["isAlmostDead", true, true];
-				_unit setDamage 1;
-				
-				if (isPlayer _instigator) then 
-				{
-					[[5, "RPG_ranking_vehicle_kill"], 'engine\rankManagement\rankUpdater.sqf'] remoteExec ['BIS_fnc_execVM', _instigator];
-					_killedForExp = _unit getVariable ["EHKilledForXP", 0];
-					[_unit, ["Killed", _killedForExp]] remoteExec ["removeEventHandler", 0, true];
-				}; 
-			};
-		}];
-
-		_killedForExp = _vehicleFromGroup addEventHandler ["Killed", {
-			params ["_unit", "_killer", "_instigator", "_useEffects"];
-			if ((_unit getHit "motor") > 0.7 && !(_unit getVariable ["isAlmostDead", false])) then 
-			{	
-				if (isPlayer _instigator) then 
-				{
-					[[5, "RPG_ranking_vehicle_kill"], 'engine\rankManagement\rankUpdater.sqf'] remoteExec ['BIS_fnc_execVM', _instigator];
-					[_unit, "HandleDamage"] remoteExec ["removeAllEventHandlers", 0, true];
-				}; 
-			};
-		}];
-
-		_vehicleFromGroup setVariable ["EHKilledForXP", _killedForExp, true];
-
+		[_vehicleFromGroup] call addVehicleXPSetup;
 		
 		//Add side quest
 		if (_thisGroupType == "LightArmored" || _thisGroupType == "HeavyArmored") then 
@@ -136,13 +108,6 @@ doGenerateEnemyGroup =
 	if (_thisFaction == civilian) then 
 	{
 		{		
-			//Manage hostile civilian
-			// 20% chance not to be hostile at all
-			if (random 100 < 20) then 
-			{
-				[_x, 30] execVM "enemyManagement\behaviorEngine\manageHostileCivilian.sqf";
-			};
-
 			//Add eventhandler civKilled
 			_x addEventHandler ["Killed", {
 				params ["_unit", "_killer", "_instigator", "_useEffects"];
@@ -168,6 +133,28 @@ doGenerateEnemyGroup =
 					[[-50,5], 'engine\rankManagement\rankPenalty.sqf'] remoteExec ['BIS_fnc_execVM', _instigator];
 				}; 
 			}];
+
+			//Manage hostile civilian
+			// 25% chance not to be hostile at all
+			if (random 100 < 25) then 
+			{
+				//50% Hostile armed civilian 
+				if (random 100 < 50) then 
+				{
+					[_x, 30] execVM "enemyManagement\behaviorEngine\manageHostileCivilian.sqf";
+				} else 
+				//50% suicide bomber
+				{
+					if ((missionNameSpace getVariable ["civSuicideBomber", 0]) == 1) then 
+					{
+						if ((random 100) < (missionNameSpace getVariable ["civSuicideBomberProbability", 100])) then 
+						{
+							//diag_log ["Hostile suicide bomber civilian at %1",getPos _x];
+							[_x] spawn civils_fnc_suicidebomber;
+						};
+					};
+				};
+			};
 		} foreach (units _currentGroupPatrol);
 	};
 
@@ -196,7 +183,7 @@ doGenerateHostileCivilianGroup =
 	};
 	
 	//Set IA Skills
-	[_currentGroupPatrol, missionIASkill] call doSetGroupSkills;
+	[_currentGroupPatrol, missionIASkillParam] call doSetGroupSkills;
 
 
 	//Manage civilian specific feature

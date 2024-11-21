@@ -1,4 +1,6 @@
-params ['_endingName'];
+params ['_endingName', '_forceEndSetting'];
+
+#include "..\..\engine\rankManagement\rankFunctions.sqf"
 
 //Test if there is already a mission ending running 
 _isEndMissionRunning = missionNamespace getVariable ["isEndMissionRunning", false];
@@ -30,7 +32,7 @@ if (!_isEndMissionRunning) then
 	//Get all players info for thanks credit
 	{
 		_playerName = name _x;
-		playersRankName = format ["%1<br />%2", playersRankName, format ["%2 %1", _playerName, rank _x]];
+		playersRankName = format ["%1<br />%2", playersRankName, format ["%2 %1", _playerName, [_x] call getPlayerRankCompleteName]];
 	} foreach ([allPlayers, [], {_x getVariable ["currentXP", 0]}, "DESCEND"] call BIS_fnc_sortBy);
 
 	//Thanks player
@@ -44,7 +46,7 @@ if (!_isEndMissionRunning) then
 		_currentPlayerScore = [];
 		_currentPlayer = _x;
 		_playerName = name _currentPlayer;
-		_playerRank = rank _currentPlayer;
+		_playerRank = [_x] call getPlayerRankCompleteName;
 		_startingXP = _currentPlayer getVariable ["startingXP", 0];
 		_currentXP = _currentPlayer getVariable ["currentXP", 0];
 		_playerProgressXP = _currentXP - _startingXP;
@@ -73,12 +75,30 @@ if (!_isEndMissionRunning) then
 	[{ player allowDamage false;}] remoteExec ["call", -2];
 
 	//Wait for player to read
-	sleep 20;
+	sleep 10;
 
-	//End Mission
-	if (isMultiplayer) then {
-		[_endingName] remoteExec ["BIS_fnc_endMission"];
-	} else {
-		_endingName call BIS_fnc_endMission;
+	_forceEnd = false;
+	if (!isNil('_forceEndSetting')) then 
+	{
+		_forceEnd = _forceEndSetting;
+	};
+
+	//Check if the mission is in endless mod
+	if ((missionNameSpace getVariable "endlessMission") == 1 && _forceEnd == false) then 
+	{
+		//Close all currently displayed dialog 
+		[{ (player getVariable "ScoreBoardDisplay") closeDisplay 1;}] remoteExec ["call", 0];
+
+		//Clean mission
+		//Restart mission setup
+		[[], "cleanMission.sqf"] remoteExec ['BIS_fnc_execVM', 2];
+	} else 
+	{
+		//End Mission
+		if (isMultiplayer) then {
+			[_endingName] remoteExec ["BIS_fnc_endMission"];
+		} else {
+			_endingName call BIS_fnc_endMission;
+		};
 	};
 };

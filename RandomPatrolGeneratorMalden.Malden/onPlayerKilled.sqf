@@ -17,19 +17,28 @@ addMissionEventHandler ["EachFrame",
 //Update dead counter 
 player setVariable ["deathNumber", (player getVariable ["deathNumber", 0])+1, true];
 
+//Add experience penalty on death
+[[-10, 1], 'engine\rankManagement\rankPenalty.sqf'] remoteExec ['BIS_fnc_execVM', player];
+
 //Add player to a dead player base | This will block disconnection/connection method to respawn 
 _deadPlayerList = missionNamespace getVariable "deadPlayer";
 _deadPlayerList pushBack (name player);
 missionNamespace setVariable ["deadPlayer", _deadPlayerList, true];
 
-//Add experience penalty on death
-[[-10, 1], 'engine\rankManagement\rankPenalty.sqf'] remoteExec ['BIS_fnc_execVM', player];
-
 //Start spectator mod only ally players
 ["Terminate"] call BIS_fnc_EGSpectator;
 ["Initialize", [player, [] , false, false ]] call BIS_fnc_EGSpectator;
 
-if (isClass (configFile >> "CfgPatches" >> "task_force_radio")) then {
-	[player, true] call TFAR_fnc_forceSpectator;
-	player setVariable ["tf_voiceVolume",1,true];
+if (isMultiplayer) then 
+{
+	if (isClass (configFile >> "CfgPatches" >> "task_force_radio")) then {
+		[player, true] call TFAR_fnc_forceSpectator;
+		player setVariable ["tf_voiceVolume",1,true];
+	};
 };
+
+
+//Show information about respawn settings
+_title = "You will respawn on one of these conditions : ";
+_textToSpeech = format ["<br /> - Wait %1 seconds <br /> - Wait for a call reinforcement from your allies<br /> - Wait for an objective accomplishment",  _respawnTimer];
+titleText [format ["<t align = 'center' shadow = '2' color='#0046ff' size='1.5' font='PuristaMedium' >System</t><br /><t color='#ffffff' size='1.5' font='PuristaMedium' shadow = '2' >%1<t align = 'center'>%2</t></t>", _title, _textToSpeech], "PLAIN DOWN", -1, true, true];
