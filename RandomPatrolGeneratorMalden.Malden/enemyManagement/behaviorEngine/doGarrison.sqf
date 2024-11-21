@@ -34,23 +34,27 @@ if (isClass (configFile >> "CfgPatches" >> "lambs_danger")) then
 	_units = units _thisGroup; 
 	//if (count _units > count _allPositions) then {_units resize (count _allPositions);};
 	{
-		_x disableAI "PATH";
-		_tempPosition = selectRandom _allPositions;
-		_allPositions = _allPositions - [_tempPosition];
-		_x setUnitPos selectRandom ["UP","UP","MIDDLE"];
-		_x setPos (_tempPosition);
+		//Force unit to go inside a building only if there is a building :p
+		if (count _allPositions != 0) then 
+		{
+			_x disableAI "PATH";
+			_tempPosition = selectRandom _allPositions;
+			_allPositions = _allPositions - [_tempPosition];
+			_x setUnitPos selectRandom ["UP","UP","MIDDLE"];
+			_x setPos (_tempPosition);
 
-		//80% to leave the position if fired
-		if (random 100>80) then 
-		{ 
-			_x addEventHandler["Fired",
-				{
-					params ["_unit"];
-					_unit enableAI "PATH";
-					_unit dofollow leader _unit;
-					_unit setUnitPos "AUTO";
-					_unit removeEventHandler ["Fired",_thisEventHandler];
-				}];
+			//80% to leave the position if fired
+			if (random 100>80) then 
+			{ 
+				_x addEventHandler["Fired",
+					{
+						params ["_unit"];
+						_unit enableAI "PATH";
+						_unit dofollow leader _unit;
+						_unit setUnitPos "AUTO";
+						_unit removeEventHandler ["Fired",_thisEventHandler];
+					}];
+			};
 		};
 	} foreach _units; 
 };
