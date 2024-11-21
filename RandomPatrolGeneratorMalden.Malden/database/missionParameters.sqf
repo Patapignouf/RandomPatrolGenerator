@@ -237,3 +237,14 @@ enableOpforMortarParam =
 	1,
 	"enableOpforMortar"
 ];
+
+enableReAirDropAdvFOBParam = 
+[
+	[	
+		[0, "Disable"],
+		[1, "Enable"]
+	],
+	"Aidrop Adv FOB after disassembly",
+	0,
+	"enableReAirDropAdvFOB"
+];
