@@ -180,29 +180,30 @@ _civilian addEventHandler ["Killed", {
 		_attachedMine = _civilian getVariable "AttachedMine";
         _nearestPlayer = [_civilian] call utils_fnc_getNearestPlayer;
 
-        if (_nearestPlayer isNotEqualTo false && (_nearestPlayer distance _civilian) < 30) then {
-
+        if (_nearestPlayer isNotEqualTo false) then {
+			if ((_nearestPlayer distance _civilian) < 30) then 
 			{
-				deleteWaypoint _x
-			} forEachReversed waypoints (group _civilian);
+				{
+					deleteWaypoint _x
+				} forEachReversed waypoints (group _civilian);
 
-			_GroupWayPoint = (group _civilian) addWaypoint [(position _nearestPlayer), 0];
-			_GroupWayPoint setWaypointType "MOVE";
+				_GroupWayPoint = (group _civilian) addWaypoint [(position _nearestPlayer), 0];
+				_GroupWayPoint setWaypointType "MOVE";
 
-			for "_i" from 0 to 10 do {
-				_distance = _nearestPlayer distance _civilian;
-				if (_distance <= 15) then {
-					[_civilian, "suicideBomber"] remoteExec ["say3D", 0];
+				for "_i" from 0 to 10 do {
+					_distance = _nearestPlayer distance _civilian;
+					if (_distance <= 15) then {
+						[_civilian, "suicideBomber"] remoteExec ["say3D", 0];
+					};
+					// Trigger explosion if within 5 meters
+					if (_distance <= 5) exitWith {
+						["M_Titan_AT", (getPos _civilian), false] call explosions_fnc_doAnExplosion;
+						deleteVehicle _attachedMine;
+						_civilian setVariable ["exploded", true];
+					};
+					sleep 1;
 				};
-				// Trigger explosion if within 5 meters
-				if (_distance <= 5) exitWith {
-					["M_Titan_AT", (getPos _civilian), false] call explosions_fnc_doAnExplosion;
-					deleteVehicle _attachedMine;
-					_civilian setVariable ["exploded", true];
-				};
-				sleep 1;
 			};
-
         };
 	};
 };
