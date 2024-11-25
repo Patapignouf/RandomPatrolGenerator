@@ -248,3 +248,14 @@ enableReAirDropAdvFOBParam =
 	0,
 	"enableReAirDropAdvFOB"
 ];
+
+randomizeObjectiveOrderParam = 
+[
+	[	
+		[0, "Disable"],
+		[1, "Enable"]
+	],
+	"Randomize objective order",
+	1,
+	"randomizeObjectiveOrder"
+];

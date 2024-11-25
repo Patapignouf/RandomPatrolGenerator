@@ -281,12 +281,11 @@ for [{_i = 0}, {_i < numberOfAmbush}, {_i = _i + 1}] do
 };
 
 //Manually Determine objective location will not be randomize
-NeedToRandomizePOI = false;
+NeedToRandomizePOI = missionNameSpace getVariable ["randomizeObjectiveOrder", 1];
 
 if (typeName PossibleObjectivePosition != "ARRAY") then 
 {
-	NeedToRandomizePOI = true;
-	PossibleObjectivePosition = [];
+ 	PossibleObjectivePosition = [];
 	{
 		PossibleObjectivePosition pushBack (getPos (_x));
 	}	foreach possiblePOILocation;
@@ -331,7 +330,7 @@ _minNumberOfMission = missionLength min(count AllPossibleObjectivePosition);
 for [{_counterOfMission = 0}, {_counterOfMission < _minNumberOfMission}, {_counterOfMission = _counterOfMission + 1}] do //Peut être optimisé
 {
 	//Randomize objective locations or not
-	if (NeedToRandomizePOI) then 
+	if (NeedToRandomizePOI == 1) then 
 	{
 		PossibleObjectivePosition = [avalaibleTypeOfObj, PossibleObjectivePosition] call generateObjective;
 	} else 
@@ -953,7 +952,7 @@ if (enableCampaignMode) then
 		} else 
 		{
 			//Randomize objective locations or not
-			if (NeedToRandomizePOI) then 
+			if (NeedToRandomizePOI == 1) then 
 			{
 				PossibleObjectivePosition = [avalaibleTypeOfObj, PossibleObjectivePosition] call generateObjective;
 			} else 
