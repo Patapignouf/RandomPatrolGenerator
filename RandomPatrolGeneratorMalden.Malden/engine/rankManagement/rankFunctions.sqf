@@ -1,3 +1,5 @@
+#include "..\..\GUI\scoreBoardGUI\scoreFunctions.sqf"
+
 rankList = [
 	["PRIVATE",0],
 	["CORPORAL",200],
@@ -79,6 +81,12 @@ addExperience = {
 	//Save rank
 	[_experience + _unitExperience] call saveRank;
 
+	//Display score
+	if (missionNameSpace getVariable ["xpDisplay", 0] == 1) then 
+	{
+		[_experience, _experienceType] call doDisplayScore;
+	};
+	
 	true
 };
 

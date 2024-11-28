@@ -259,3 +259,14 @@ randomizeObjectiveOrderParam =
 	1,
 	"randomizeObjectiveOrder"
 ];
+
+xpDisplayParam = 
+[
+	[	
+		[0, "Disable"],
+		[1, "Enable"]
+	],
+	"Experience real time display",
+	0,
+	"xpDisplay"
+];

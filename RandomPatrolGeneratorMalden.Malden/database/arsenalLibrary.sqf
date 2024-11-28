@@ -797,43 +797,43 @@ RemoveArsenalActionFromGivenObject = {
 
 
 saveCustomLoadout = {
-		params ["_currentPlayer", "_defaultParam"];
+	params ["_currentPlayer", "_defaultParam"];
 
-		//Case where no player's is given as parameter
-		if (isNull _currentPlayer) then 
+	//Case where no player's is given as parameter
+	if (isNull _currentPlayer) then 
+	{
+		_currentPlayer = player;
+	};
+
+	_defaultStuff = [];
+
+	//Determine default loadout
+	switch (_defaultParam) do
 		{
-			_currentPlayer = player;
-		};
-
-		_defaultStuff = [];
-
-		//Determine default loadout
-		switch (_defaultParam) do
+		case "personal":
 			{
-			case "personal":
-				{
-					_defaultStuff = getUnitLoadout _currentPlayer;
-				};
-			case "spawnLoadout":
-				{
-					_defaultStuff = _currentPlayer getVariable ["spawnLoadout", []];
-				};
-			default
-				{
-					//Do nothing
-				};
-		};
+				_defaultStuff = getUnitLoadout _currentPlayer;
+			};
+		case "spawnLoadout":
+			{
+				_defaultStuff = _currentPlayer getVariable ["spawnLoadout", []];
+			};
+		default
+			{
+				//Do nothing
+			};
+	};
 
-		if (isClass (configFile >> "CfgPatches" >> "task_force_radio")) then {
-			//Remove TFAR radio ID 
-			_defaultStuff = [_defaultStuff] call removeTFARID;
-		};
+	if (isClass (configFile >> "CfgPatches" >> "task_force_radio")) then {
+		//Remove TFAR radio ID 
+		_defaultStuff = [_defaultStuff] call removeTFARID;
+	};
 
-		//Save personnal loadout
-		profileNamespace setVariable [format [loadoutSaveName, name _currentPlayer, _currentPlayer call getPlayerFaction, _currentPlayer getVariable "role"], _defaultStuff];
+	//Save personnal loadout
+	profileNamespace setVariable [format [loadoutSaveName, name _currentPlayer, _currentPlayer call getPlayerFaction, _currentPlayer getVariable "role"], _defaultStuff];
 
-		//diag_log format ["Loadout saved on : RPG_%1_%2_%3 = %4", name player, indFaction, player getVariable "role", _defaultStuff];
-		saveProfileNamespace;
+	//diag_log format ["Loadout saved on : RPG_%1_%2_%3 = %4", name player, indFaction, player getVariable "role", _defaultStuff];
+	saveProfileNamespace;
 };
 
 validateLoadout = 
