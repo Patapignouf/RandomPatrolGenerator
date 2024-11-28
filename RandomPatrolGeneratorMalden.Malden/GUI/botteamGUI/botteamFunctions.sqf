@@ -3,6 +3,7 @@
 
 doAddBot = {
 params ["_caller", "_botteamClass", "_botteamType"];
+	botResult = objNull;
 	switch (_botteamType) do
 	{
 		case "Infantry":
@@ -11,25 +12,25 @@ params ["_caller", "_botteamClass", "_botteamType"];
 			_customPos = [];
 			
 			//Determine if the player is on FOB/USS or Advance FOB
-			if ((initBlueforLocation distance (getPos player)) < 150) then 
+			if ((initBlueforLocation distance (getPos _caller)) < 150) then 
 			{
 				//Define good position on blufor spawn 
 				if (isNil "USS_FREEDOM_CARRIER") then 
 				{
 					//Custom spawn on ground outside the FOB
-					_customPos = (position player) findEmptyPosition [20, 150, "Land_HelipadCircle_F"];
+					_customPos = (position _caller) findEmptyPosition [20, 150, "Land_HelipadCircle_F"];
 				} else 
 				{
 					//Custom spawn on carrier
-					_customPos = getPosASL player;
+					_customPos = getPosASL _caller;
 				};
 			} else 
 			{
 				//Define a good position on advance fob 
-				_customPos = (position player) findEmptyPosition [2, 100];
+				_customPos = (position _caller) findEmptyPosition [2, 100];
 			};
 
-			private _botUnit = group player createUnit ["B_Soldier_F", _customPos, [], 0, "NONE"];
+			private _botUnit = (createGroup (side _caller)) createUnit ["B_Soldier_F", _customPos, [], 0, "NONE"];
 			
 			//Add teamkilled XP penalty event
 			_botUnit addEventHandler ["Killed", {
@@ -37,7 +38,10 @@ params ["_caller", "_botteamClass", "_botteamType"];
 				diag_log format ["%1 has been killed by : %2", name _unit, name _instigator];
 				if (isPlayer _instigator) then 
 				{
-					[[format ["%1 has been killed by his teammate %2",name _unit, name _instigator], "teamkill"], 'engine\hintManagement\addCustomHint.sqf'] remoteExec ['BIS_fnc_execVM', side _instigator];
+					// [[format ["%1 has been killed by his teammate %2",name _unit, name _instigator], "teamkill"], 'engine\hintManagement\addCustomHint.sqf'] remoteExec ['BIS_fnc_execVM', side _instigator];
+					_textToSpeech = format ["%1 has been killed by his teammate %2, watch your fire",name _unit, name _instigator];
+					[[format ["<t align = 'center' shadow = '2' color='#0046ff' size='1.5' font='PuristaMedium' >High Command</t><br /><t color='#ffffff' size='1.5' font='PuristaMedium' shadow = '2' >%1</t>", _textToSpeech], "PLAIN DOWN", -1, true, true]] remoteExec ["titleText", side _instigator, true];
+					
 					if (_instigator != _unit) then 
 					{
 						[[-50,5], 'engine\rankManagement\rankPenalty.sqf'] remoteExec ['BIS_fnc_execVM', _instigator];
@@ -49,7 +53,7 @@ params ["_caller", "_botteamClass", "_botteamType"];
 			_listOfAvalaibleRole =[];
 			_currentFaction = 0;
 
-			if (player getVariable "sideBeforeDeath" == "independent") then 
+			if (_caller getVariable "sideBeforeDeath" == "independent") then 
 			{
 				//Independent
 				_listOfAvalaibleRole = [indFaction] call setupRoleSwitchToList;
@@ -64,6 +68,11 @@ params ["_caller", "_botteamClass", "_botteamType"];
 			
 			//hint format ["_currentFaction %1\n _botteamClass %2",_currentFaction, _botteamClass];
 
+			if (_botteamClass == "random") then 
+			{
+				_botteamClass = (selectRandom ((loadout_db select {_x #1 == _currentFaction}) #0 #0)) #0;
+			};
+
 			_stuffToApply = ((loadout_db select {_x select 1 == _currentFaction}) select 0 select 0) select {_x select 0 == _botteamClass} select 0 select 1;
 			[_botUnit, _botUnit, _currentFaction , _botteamClass, false] call switchToRole;
 			//[TODO] Add ACE adjust stuff
@@ -71,18 +80,18 @@ params ["_caller", "_botteamClass", "_botteamType"];
 			//apply custom stuff 
 			_botUnit setUnitLoadout _stuffToApply;
 
-			//join player unit
-			_botUnit doFollow player;
+			botResult = _botUnit;
 
 			//Notify player
 			//sleep 1;
-			hint format ["%1 %2 has join your squad", rank _botUnit, [_botUnit] call BIS_fnc_getName];
+			
 		};
 		default
 		{
 			//Do nothing
 		};
 	};
+	botResult;
 };
 
 

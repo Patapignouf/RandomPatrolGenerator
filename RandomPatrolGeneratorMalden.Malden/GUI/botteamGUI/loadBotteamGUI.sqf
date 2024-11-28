@@ -66,7 +66,11 @@ _buttonOK ctrlAddEventHandler [ "ButtonClick",
 				
 					//Else (other type of vehicle) do normal spawn around FOB
 					//Do something
-					[player, _supportClass, _supportType] call doAddBot;
+					_bot = [player, _supportClass, _supportType] call doAddBot;
+
+					//join player unit
+					[_bot] joinSilent player;
+					_bot doFollow player;
 
 					missionNamespace setVariable ["bluforVehicleAvalaibleSpawn", _bluforVehicleAvalaibleSpawnCounter-_supportPrice, true];
 				

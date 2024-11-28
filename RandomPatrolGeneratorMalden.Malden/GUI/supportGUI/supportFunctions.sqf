@@ -1,4 +1,5 @@
 //supportFunctions.sqf 
+#include "..\botteamGUI\botteamFunctions.sqf"
 
 doSupport = {
 params ["_caller", "_supportType"];
@@ -219,6 +220,45 @@ params ["_caller", "_supportType"];
 			_mainDisplay = (findDisplay 60000);
 			_mainDisplay closeDisplay 1;
 		};
+		case "attackSquad":
+		{
+			[_caller] spawn {
+				params ["_caller"];
+				//Click on map to do a tactical insert
+				selectedHaloLoc = [0,0,0];
+				openMap true;
+				uiSleep 1;
+				["<t color='#ffffff' size='.8'>Click on map do a tactical insertion<br />Select a position it will be attacked in 10 minutes</t>",0,0,4,1,0,789] spawn BIS_fnc_dynamicText;
+				onMapSingleClick "selectedHaloLoc = _pos; onMapSingleClick ''; openMap false; true;";
+				waitUntil{!(visibleMap)};  
+				if (!([selectedHaloLoc, [0,0,0]] call BIS_fnc_areEqual)) then 
+				{	
+					_AvalaibleInitAttackPositions = [selectedHaloLoc, 1000, 1500, 3] call getListOfPositionsAroundTarget;
+					_AvalaibleInitAttackPositionsToMove = selectRandom _AvalaibleInitAttackPositions;
+					_attackSquad = createGroup (side _caller);
+					for [{_i = 0}, {_i < 10}, {_i = _i + 1}] do
+					{
+						//Spawn bot
+						private _bot = [_caller, "random", "Infantry"] call doAddBot;
+
+						//If successfull bot spawn
+						if (!isNull _bot) then 
+						{
+							[_bot] joinSilent _attackSquad; 
+
+							//Move bot near attack position  
+							_bot setPos ([_AvalaibleInitAttackPositionsToMove, 1, 10, 3, 0, 20, 0] call BIS_fnc_findSafePos);
+						};
+					};
+					// ask squad to attack position 
+					[_attackSquad, selectedHaloLoc] execVM 'enemyManagement\behaviorEngine\doAttack.sqf';
+				};
+			};
+
+			//Close support menu
+			_mainDisplay = (findDisplay 60000);
+			_mainDisplay closeDisplay 1;
+		};
 		case "DroneRecon":
 		{
 			[_caller] spawn {
@@ -351,6 +391,18 @@ addSupportForTacInsert = {
 	_supportNameCode = "TacInsert";
 	_supportIcon = "\a3\Ui_f\data\GUI\Cfg\CommunicationMenu\transport_ca.paa";
 	_supportType = "Movement";
+
+	[_ctrl, _supportName, _supportNameCode, _supportIcon, _price, _supportType] call addSupportOption;
+};
+
+addAttackSquad = {
+	params ["_ctrl"];
+	//Add support for INTEL
+	_price = 500;
+	_supportName = "Recruit a squad to attack position";
+	_supportNameCode = "attackSquad";
+	_supportIcon = "\a3\Ui_f\data\GUI\Cfg\CommunicationMenu\attack_ca.paa";
+	_supportType = "Attack";
 
 	[_ctrl, _supportName, _supportNameCode, _supportIcon, _price, _supportType] call addSupportOption;
 };

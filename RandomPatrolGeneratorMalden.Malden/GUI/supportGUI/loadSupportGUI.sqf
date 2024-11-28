@@ -34,6 +34,7 @@ switch (_mode) do
 		{
 			[_lnbEntries] call addCallForReinforcement;
 			[_lnbEntries] call addSupportForArtillery;
+			[_lnbEntries] call addAttackSquad;
 			[_lnbEntries] call addSupportForIntel;
 			[_lnbEntries] call addSupportForAirDrop;
 			if (count (bluforUnarmedVehicleChopper+bluforExtractVehicleChopper) > 0) then 
