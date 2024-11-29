@@ -22,11 +22,17 @@ doDisplayScore = {
 		{
 			params ["_score", "_type"];
 
-			ctrl = findDisplay 46 ctrlCreate ["RscStructuredText", -1];
 
-			ctrl ctrlSetPosition [0,0,0,0.1];
-			ctrl ctrlCommit 0;
+			_ctrl = findDisplay 46 ctrlCreate ["RscStructuredText", -1];
+
+			_ctrl ctrlSetPosition [0,0,0,0.1];
+			_ctrl ctrlCommit 0;
 			_scoreText = "";
+			_baseY=0.04;
+
+			//Define position of the current score to display
+			_numberOfScoreDisplay = player getVariable ["scoreDisplayNumber", 0];
+			player setVariable ["scoreDisplayNumber", _numberOfScoreDisplay+1]; //Prepare next score position
 
 			//Show specific type
 			switch (_type) do
@@ -76,23 +82,23 @@ doDisplayScore = {
 			//Don't show text if XP type is not supported
 			if (_scoreText != "") then 
 			{
-				ctrl ctrlSetStructuredText parseText format ["<t color='#00ff00' size='1.5'>+ %1 </t><t color='#FFFFFF' size='1.5'>%2</t>", _score, _scoreText];
+				_ctrl ctrlSetStructuredText parseText format ["<t color='#00ff00' size='1.5'>+ %1 </t><t color='#FFFFFF' size='1.5'>%2</t>", _score, _scoreText];
 			};
 			if (_type == "RPG_ranking_player_death") then 
 			{
-				ctrl ctrlSetStructuredText parseText format ["<t color='#ff0000' size='1.5'> %1 </t><t color='#FFFFFF' size='1.5'>%2</t>", _score, _scoreText];
+				_ctrl ctrlSetStructuredText parseText format ["<t color='#ff0000' size='1.5'> %1 </t><t color='#FFFFFF' size='1.5'>%2</t>", _score, _scoreText];
 			};
 
-			ctrl ctrlSetPosition [0.5, 0.4, ctrlTextWidth ctrl, 0.1];
-			ctrl ctrlCommit 0;
+			_ctrl ctrlSetPosition [0.5, 0.4+_baseY*_numberOfScoreDisplay, ctrlTextWidth _ctrl, 0.1];
+			_ctrl ctrlCommit 0;
 
-			waitUntil {ctrlCommitted ctrl};
-			sleep 1;
+			waitUntil {ctrlCommitted _ctrl};
+			sleep 1.5;
 
-			ctrlDelete ctrl;
+			_numberOfScoreDisplay = player getVariable ["scoreDisplayNumber", 0];
+			player setVariable ["scoreDisplayNumber", (_numberOfScoreDisplay-1) max 0];
+
+			ctrlDelete _ctrl;
 		};
 	};
 };
-
-
-
