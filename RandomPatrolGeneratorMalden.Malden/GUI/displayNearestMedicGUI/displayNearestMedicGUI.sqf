@@ -23,21 +23,22 @@ with uiNamespace do {
 	_RcsTitleDialog = _display ctrlCreate ["RscText", -1];
 	_RcsTitleDialog2 = _display ctrlCreate ["RscText", -1];
 
+	_baseY = 0.07;
 
 	//Prepare background
-	_backGround ctrlSetPosition[ 0.98, -0.05, 0.30, 0.20 ];
+	_backGround ctrlSetPosition[ 0.98, _baseY-0.05, 0.30, 0.20 ];
 	_backGround ctrlSetText "#(argb,8,8,3)color(0.35,0.35,0.35,0.5)";
 	_backGround ctrlCommit 0;
 
 	//Prepare title display
 	_RcsTitleDialog ctrlSetText "Nearest player";
-	_RcsTitleDialog ctrlSetPosition[ 1, -0.08, 0.25, 0.1 ];
+	_RcsTitleDialog ctrlSetPosition[ 1, _baseY-0.08, 0.25, 0.1 ];
 	_RcsTitleDialog ctrlSetTextColor [1, 1, 1, 1];
 	_RcsTitleDialog ctrlCommit 0;
 
 	//Prepare title display
 	_RcsTitleDialog2 ctrlSetText "Nearest Medic player";
-	_RcsTitleDialog2 ctrlSetPosition[ 1, 0.03, 0.25, 0.1 ];
+	_RcsTitleDialog2 ctrlSetPosition[ 1, _baseY+0.03, 0.25, 0.1 ];
 	_RcsTitleDialog2 ctrlSetTextColor [1, 1, 1, 1];
 	_RcsTitleDialog2 ctrlCommit 0;
 
@@ -47,7 +48,10 @@ with uiNamespace do {
 		//Will crash if the player is alone 
 		_allPlayersAlive = allPlayers select {alive _x && side _x == playerSide && lifeState _x != "INCAPACITATED"};
 		_sortedPlayerList = [_allPlayersAlive, [], {_unit distance _x}, "ASCEND"] call BIS_fnc_sortBy;
-		_nearestPlayer = _sortedPlayerList#0;
+		if (count _sortedPlayerList != 0) then 
+		{
+			_nearestPlayer = _sortedPlayerList#0;
+		};
 
 		_allPlayersMedicAlive = allPlayers select {alive _x && side _x == playerSide && lifeState _x != "INCAPACITATED" && (_x getVariable ["role", "rifleman"]) == "medic"};
 		_sortedPlayerMedicList = [_allPlayersMedicAlive, [], {_unit distance _x}, "ASCEND"] call BIS_fnc_sortBy;
@@ -59,13 +63,19 @@ with uiNamespace do {
 		
 
 		//Prepare progressbar
-		_Info ctrlSetPosition [1,0,0.5,0.04];
+		_Info ctrlSetPosition [1,_baseY-0.01,0.5,0.04];
 		_Info ctrlSetTextColor [1, 1, 1, 1];
-		_Info ctrlSetStructuredText parseText format ["%1 is at %2m", name _nearestPlayer, (round ((_nearestPlayer distance _unit)*100))/100];
+		if (count _sortedPlayerList != 0) then 
+		{
+			_Info ctrlSetStructuredText parseText format ["%1 is at %2m", name _nearestPlayer, (round ((_nearestPlayer distance _unit)*100))/100];
+		} else 
+		{
+			_Info ctrlSetStructuredText parseText format ["No player nearby"];
+		};
 		_Info ctrlCommit 0.5;
 
 		//Prepare progressbar
-		_Info2 ctrlSetPosition [1,0.1,0.5,0.04];
+		_Info2 ctrlSetPosition [1,_baseY+0.1,0.5,0.04];
 		_Info2 ctrlSetTextColor [1, 1, 1, 1];
 		if (count _sortedPlayerMedicList != 0) then 
 		{
