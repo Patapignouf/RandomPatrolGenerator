@@ -82,14 +82,14 @@ doDisplayScore = {
 			//Don't show text if XP type is not supported
 			if (_scoreText != "") then 
 			{
-				_ctrl ctrlSetStructuredText parseText format ["<t color='#00ff00' size='1.5'>+ %1 </t><t color='#FFFFFF' size='1.5'>%2</t>", _score, _scoreText];
+				_ctrl ctrlSetStructuredText parseText format ["<t color='#00ff00' size='1.2'>+ %1 </t><t color='#FFFFFF' size='1.3'>%2</t>", _score, _scoreText];
 			};
 			if (_type == "RPG_ranking_player_death") then 
 			{
-				_ctrl ctrlSetStructuredText parseText format ["<t color='#ff0000' size='1.5'> %1 </t><t color='#FFFFFF' size='1.5'>%2</t>", _score, _scoreText];
+				_ctrl ctrlSetStructuredText parseText format ["<t color='#ff0000' size='1.3'> %1 </t><t color='#FFFFFF' size='1.3'>%2</t>", _score, _scoreText];
 			};
 
-			_ctrl ctrlSetPosition [0.5, 0.4+_baseY*_numberOfScoreDisplay, ctrlTextWidth _ctrl, 0.1];
+			_ctrl ctrlSetPosition [0.6, 0.4+_baseY*_numberOfScoreDisplay, ctrlTextWidth _ctrl, 0.1];
 			_ctrl ctrlCommit 0;
 
 			waitUntil {ctrlCommitted _ctrl};
