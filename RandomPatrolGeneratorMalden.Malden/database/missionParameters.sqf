@@ -219,10 +219,11 @@ civSuicideBomberProbabilityParam =
 enableOpforVehicleParam = 
 [
 	[	
-		[0, "Disable"],
-		[1, "Enable"]
+		[0, "None"],
+		[1, "Medium"],
+		[2, "Too many"]
 	],
-	"Opfor vehicle",
+	"Number Opfor vehicle",
 	1,
 	"enableOpforVehicle"
 ];

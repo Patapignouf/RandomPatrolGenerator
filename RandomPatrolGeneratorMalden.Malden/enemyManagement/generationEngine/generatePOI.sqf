@@ -67,13 +67,19 @@ if (random 100 <50) then
 	};
 };
 
-//75% chance enemy have vehicle
-if (random 100 < 75) then 
+//Generate vehicle
+if ((missionNameSpace getVariable ["enableOpforVehicle", 0]) != 0) then 
 {
 	_numberOfVehicle = _thisDifficulty;
 
-	//Generate vehicle
-	if ((missionNameSpace getVariable ["enableOpforVehicle", 0]) == 1) then 
+	//Increase the number of vehicule on specific settings
+	if ((missionNameSpace getVariable ["enableOpforVehicle", 0]) == 2) then 
+	{
+		_numberOfVehicle = _numberOfVehicle+1;
+	};
+
+	//75% chance enemy have vehicle
+	if (random 100 < 75 || (missionNameSpace getVariable ["enableOpforVehicle", 0]) == 2) then 
 	{
 		for [{_i = 0}, {_i < _numberOfVehicle}, {_i = _i + 1}] do 
 		{	

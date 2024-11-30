@@ -58,25 +58,33 @@ if (isServer) then
 				//Define harass group 
 				_tempVehicleGroup = [];
 
-				//Generate light vehicle 33% chance to spawn
-				if (count _thisAvailableOpforCars != 0 && random 100 < 33) then 
+				if ((missionNameSpace getVariable ["enableOpforVehicle", 0]) != 2) then 
 				{
-					_tempVehicleGroup pushBack [selectRandom _thisAvailableOpforCars];
+					//Generate light vehicle 33% chance to spawn
+					if (count _thisAvailableOpforCars != 0 && random 100 < 33) then 
+					{
+						_tempVehicleGroup pushBack [selectRandom _thisAvailableOpforCars];
+					};
+
+					//Generate Light armored vehicle spawn chance 
+					if (count _thisAvailableOpforLightArmoredVehicle != 0 && enableArmoredVehicle && random 100 < 20) then 
+					{
+						//Light armored vehicle spawn chance 20%
+						_tempVehicleGroup pushBack [selectRandom _thisAvailableOpforLightArmoredVehicle];
+					};
+
+					//Generate Light armored vehicle spawn chance
+					if (count _thisAvailableOpforHeavyArmoredVehicle != 0 && enableArmoredVehicle && random 100 < 15) then 
+					{
+						//Heavy armored vehicle spawn chance 15%
+						_tempVehicleGroup pushBack [selectRandom _thisAvailableOpforHeavyArmoredVehicle];
+					};
+				} else 
+				{
+					//Force at least one vehicle to spawn
+					_tempVehicleGroup pushBack [selectRandom (_thisAvailableOpforCars+_thisAvailableOpforLightArmoredVehicle+_thisAvailableOpforHeavyArmoredVehicle)];
 				};
 
-				//Generate Light armored vehicle spawn chance 
-				if (count _thisAvailableOpforLightArmoredVehicle != 0 && enableArmoredVehicle && random 100 < 20) then 
-				{
-					//Light armored vehicle spawn chance 20%
-					_tempVehicleGroup pushBack [selectRandom _thisAvailableOpforLightArmoredVehicle];
-				};
-
-				//Generate Light armored vehicle spawn chance
-				if (count _thisAvailableOpforHeavyArmoredVehicle != 0 && enableArmoredVehicle && random 100 < 15) then 
-				{
-					//Heavy armored vehicle spawn chance 15%
-					_tempVehicleGroup pushBack [selectRandom _thisAvailableOpforHeavyArmoredVehicle];
-				};
 
 				//Chopper reinforcement 50%
 				if (count _thisAvailableOpforUnarmedChopperVehicle != 0 &&  random 100 < 50) then 
