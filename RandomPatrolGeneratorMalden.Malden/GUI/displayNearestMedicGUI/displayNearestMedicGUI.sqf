@@ -23,7 +23,7 @@ with uiNamespace do {
 	_RcsTitleDialog = _display ctrlCreate ["RscText", -1];
 	_RcsTitleDialog2 = _display ctrlCreate ["RscText", -1];
 
-	_baseY = 0.07;
+	_baseY = 0.15;
 
 	//Prepare background
 	_backGround ctrlSetPosition[ 0.98, _baseY-0.05, 0.30, 0.20 ];
