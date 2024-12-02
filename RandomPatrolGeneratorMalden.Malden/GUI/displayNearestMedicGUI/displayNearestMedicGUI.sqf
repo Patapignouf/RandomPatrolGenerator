@@ -48,6 +48,7 @@ with uiNamespace do {
 		//Will crash if the player is alone 
 		_allPlayersAlive = allPlayers select {alive _x && side _x == playerSide && lifeState _x != "INCAPACITATED"};
 		_sortedPlayerList = [_allPlayersAlive, [], {_unit distance _x}, "ASCEND"] call BIS_fnc_sortBy;
+		_nearestPlayer = "";
 		if (count _sortedPlayerList != 0) then 
 		{
 			_nearestPlayer = _sortedPlayerList#0;
