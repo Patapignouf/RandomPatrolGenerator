@@ -93,7 +93,7 @@ doDisplayScore = {
 			_ctrl ctrlCommit 0;
 
 			waitUntil {ctrlCommitted _ctrl};
-			sleep 1.5;
+			sleep 2;
 
 			_numberOfScoreDisplay = player getVariable ["scoreDisplayNumber", 0];
 			player setVariable ["scoreDisplayNumber", (_numberOfScoreDisplay-1) max 0];
