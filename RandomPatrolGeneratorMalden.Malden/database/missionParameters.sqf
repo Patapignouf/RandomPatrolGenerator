@@ -108,7 +108,7 @@ endlessMissionParam =
 		[0, "Disable"],
 		[1, "Enable"]
 	],
-	"Enable Endless Mission Mode (Start mission setup after each mission ending)",
+	"Restart after mission end",
 	0,
 	"endlessMission"
 ];
@@ -271,3 +271,18 @@ xpDisplayParam =
 	0,
 	"xpDisplay"
 ];
+
+opforReinforcementParam = 
+[
+	[	
+		[0, "Few"],
+		[1, "Normal"],
+		[2, "Often"]
+	],
+	"Opfor Reinforcement frequency",
+	1,
+	"opforReinforcement"
+];
+
+
+baseParamsToManage = [civiliansOnObjectivesParam, sideRelationParam, enableObjectiveExactLocationParam, enablePersistentParam, enableRegularIncomeParam, disableZoomParam, enableAutoDifficultyBalanceParam, civJoinableFactionParam, enableLoadoutRestrictionParam, enableOpforVehicleParam, enableHaloParam, timeOfDayParam, civSuicideBomberParam, civSuicideBomberProbabilityParam, endlessMissionParam, enableOpforMortarParam, enableReAirDropAdvFOBParam, randomizeObjectiveOrderParam, xpDisplayParam, opforReinforcementParam];
