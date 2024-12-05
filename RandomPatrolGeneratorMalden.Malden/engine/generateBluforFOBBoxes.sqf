@@ -210,7 +210,7 @@ TPFlag1 setVectorUp surfaceNormal position TPFlag1;
 TPFlag1 setObjectTexture [0, _mapTexture];
 publicvariable "TPFlag1";
 
-[["Shop", (getPos TPFlag1) vectorAdd [0,0,2],"\a3\ui_f\data\igui\cfg\simpletasks\types\Radio_ca.paa" , [1,0,0,1]], 'GUI\3DNames\3DNames.sqf'] remoteExec ['BIS_fnc_execVM', blufor, true];
+[["Shop", (getPos TPFlag1) vectorAdd [0,0,2.5],"\a3\ui_f\data\igui\cfg\simpletasks\types\Radio_ca.paa" , [1,0,0,1]], 'GUI\3DNames\3DNames.sqf'] remoteExec ['BIS_fnc_execVM', blufor, true];
 
 
 //Manage carrier 
