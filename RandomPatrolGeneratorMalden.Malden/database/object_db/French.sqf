@@ -18,7 +18,11 @@ bluforUnarmedVehicle_French = [
 bluforArmedVehicle_French = [
 	"amf_pvp_01_top_CE_f",
 	"amf_pvp_01_mag_CE_f",
-	"B_AMF_VAB_ULTIMA_TOP_X8_F"
+	"AMF_VB2L_DA_762_01_F", 
+	"AMF_VB2L_CE_762_01_F", 
+	"AMF_VB2L_TDF_762_01_F", 
+	"AMF_VBL_DA_762_01_F", 
+	"AMF_VBL_TDF_127_01_F"
 	
 ];
 
@@ -36,7 +40,8 @@ bluforArmedChopper_French = [
 	];
 
 bluforDrone_French = [
-	"B_AMF_REAPER_dynamicLoadout_F"
+	"B_AMF_REAPER_dynamicLoadout_F",
+	"AMF_Anafi_01_F"
 ];
 
 bluforBoat_French = [
@@ -66,7 +71,11 @@ bluforArmoredVehicle_French = [
 	"B_AMF_AMX10_RCR_SEPAR_02_F", 
 	"B_AMF_AMX10_RCR_01_F", 
 	"B_AMF_TANK_01", 
-	"B_AMF_TANK_TDF_01_F"
+	"B_AMF_TANK_TDF_01_F",
+	"amf_CAESAR_01_CE_f", 
+	"amf_CAESAR_01_TDF_f",
+	"amf_VBAE_01_CE_f", 
+	"amf_VBAE_02_TDF_f"
 ];
 
 ////////////////////////
@@ -253,6 +262,8 @@ itemList_French = [
 	"ItemWatch",
 	"amf_balaclava_sordin_tantan",
 	"AMF_BINYX_BLK_NVG",
+	"AMF_BINYX_TAN_NVG",
+	"AMF_ONYX_NVG",
 	"B_UavTerminal",
 	"ItemGPS",
 	"Binocular",
@@ -279,9 +290,7 @@ itemList_French = [
 	"ACE_IR_Strobe_Item",
 	"ACE_RangeCard",
 	"AMF_APX_M241",
-	"ACE_NVG_Wide_Black_WP",
-	"ACE_NVG_Wide_WP",
-	"ACE_NVG_Wide_Green_WP"
+	"AMF_OB72_SOPHIE"
 	];
 
 //items avalaible only for engineer
@@ -367,6 +376,7 @@ uniformList_French = [
 	"amf_DCS_01_MTP",
 	"amf_JPC_01_MTP",
 	"amf_SMB_AUXSAN_FAMAS_TDF",
+	"amf_SMB_AUXSAN_TDF",
 	"amf_SMB_FUS_TDF",
 	"amf_SMB_FUS_TAN",
 	"amf_SMB_FUS_BME",
@@ -397,6 +407,8 @@ uniformList_French = [
 	"amf_uniform_02_TU_HS",
 	"amf_uniform_02_TC_HS"
 	];
+
+	
 
 //Magazine avalaible for all unit
 magazineList_French = [
