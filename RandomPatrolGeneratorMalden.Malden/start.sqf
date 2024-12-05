@@ -596,7 +596,7 @@ diag_log format ["Generating blufor vehicle : %1",selectedBluforVehicle];
 		if (count _bluforHQVehicleSpawned >0) then 
 		{
 			// //Change vehicle name
-			createVehicle ["Flag_Blue_F", getPos (_bluforHQVehicleSpawned select 0) , [], 0, "NONE"];
+			// createVehicle ["Flag_Blue_F", getPos (_bluforHQVehicleSpawned select 0) , [], 0, "NONE"];
 			bluforMobileHQ = _bluforHQVehicleSpawned select 0;
 			publicVariable "bluforMobileHQ";
 
@@ -605,6 +605,9 @@ diag_log format ["Generating blufor vehicle : %1",selectedBluforVehicle];
 				params ["_object","_caller","_ID","_param"];
 				[[false], 'GUI\supportGUI\supportGUI.sqf'] remoteExec ['BIS_fnc_execVM', _caller];
 			},[],1.5,true,false,"","_target distance _this <10 && side _this == blufor"]] remoteExec [ "addAction", blufor, true ];
+
+			//3D Display
+			[["HQ Vehicle", (getPos bluforMobileHQ) vectorAdd [0,0,5],"\a3\ui_f\data\igui\cfg\simpletasks\types\truck_ca.paa" , [0,0,1,1]], 'GUI\3DNames\3DNames.sqf'] remoteExec ['BIS_fnc_execVM', blufor, true];
 		};
 	};
 };

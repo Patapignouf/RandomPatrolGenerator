@@ -20,6 +20,8 @@ clearBackpackCargoGlobal VA2;
 VA2 allowDamage false; 
 publicvariable "VA2";
 
+[["Loadout", (getPos VA2) vectorAdd [0,0,2],"\a3\ui_f\data\igui\cfg\simpletasks\types\rifle_ca.paa" , [1,1,0,1]], 'GUI\3DNames\3DNames.sqf'] remoteExec ['BIS_fnc_execVM', blufor, true];
+
 //Create portable FOB 
 deployableFOBItem = createVehicle [deployableFOB, [_initBlueforLocation, 20, 50, 3, 0, 20, 0] call BIS_fnc_findSafePos, [], 0, "NONE"];
 clearWeaponCargoGlobal deployableFOBItem;
@@ -28,6 +30,8 @@ clearItemCargoGlobal deployableFOBItem;
 clearBackpackCargoGlobal deployableFOBItem;
 deployableFOBItem allowDamage false; 
 publicvariable "deployableFOBItem";
+
+[["Advanced FOB", (getPos deployableFOBItem) vectorAdd [0,0,2],"\A3\ui_f\data\map\markers\military\flag_CA.paa" , [0,1,0,1]], 'GUI\3DNames\3DNames.sqf'] remoteExec ['BIS_fnc_execVM', blufor, true];
 
 //Add action to deploy advanced outpost
 [deployableFOBItem, _deployableFOBMounted] execVM 'objectGenerator\doAddActionForAdvFOB.sqf'; 
@@ -205,6 +209,9 @@ TPFlag1 = createVehicle ["Land_MapBoard_Enoch_F", [_initBlueforLocation, 1, 10, 
 TPFlag1 setVectorUp surfaceNormal position TPFlag1;
 TPFlag1 setObjectTexture [0, _mapTexture];
 publicvariable "TPFlag1";
+
+[["Shop", (getPos TPFlag1) vectorAdd [0,0,2],"\a3\ui_f\data\igui\cfg\simpletasks\types\Radio_ca.paa" , [1,0,0,1]], 'GUI\3DNames\3DNames.sqf'] remoteExec ['BIS_fnc_execVM', blufor, true];
+
 
 //Manage carrier 
 if (!isNil "USS_FREEDOM_CARRIER") then 
