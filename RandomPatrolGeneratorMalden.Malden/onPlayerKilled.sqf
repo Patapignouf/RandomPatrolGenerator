@@ -37,6 +37,8 @@ if (isMultiplayer) then
 	};
 };
 
+//Wait before display respawn advices
+uiSleep 10;
 
 //Show information about respawn settings
 _title = "You will respawn on one of these conditions : ";

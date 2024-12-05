@@ -4,6 +4,8 @@ player setUnitLoadout (player getVariable "spawnLoadout");
 setPlayerRespawnTime (missionNamespace getVariable "missionRespawnParam");
 
 //Setup respawn GUI
+cutText ["", "BLACK FADED", 4];
+uiSleep 3;
 [[], 'GUI\respawnGUI\initPlayerRespawnMenu.sqf'] remoteExec ['BIS_fnc_execVM', player];
 
 //Make the player doesn't count on RTB for 60 secs 
@@ -34,33 +36,33 @@ if (isClass (configFile >> "CfgPatches" >> "ace_medical")) then
 [[player, false], 'engine\rankManagement\rankManager.sqf'] remoteExec ['BIS_fnc_execVM', player];
 
 //Show a special message when there is a teamkill
-_KilledEH = player addEventHandler ["Killed", {
-	params ["_unit", "_killer", "_instigator", "_useEffects"];
-	diag_log format ["%1 has been killed by : %2", name _unit, name _instigator];
+// _KilledEH = player addEventHandler ["Killed", {
+// 	params ["_unit", "_killer", "_instigator", "_useEffects"];
+// 	diag_log format ["%1 has been killed by : %2", name _unit, name _instigator];
 
-	//Check if the killer is a player
-	if (isPlayer _instigator) then 
-	{
-		//Check if player are on opposite side
-		if ([side _instigator, playerSide] call BIS_fnc_sideIsEnemy) then 
-		{
-			//Reward PvP kill
-			[[1, "RPG_ranking_infantry_kill"], 'engine\rankManagement\rankUpdater.sqf'] remoteExec ['BIS_fnc_execVM', _instigator];
-		} else 
-		{
-			//Add penalty if the killer is a friend
-			// [[format ["%1 has been killed by his teammate %2",name _unit, name _instigator], "teamkill"], 'engine\hintManagement\addCustomHint.sqf'] remoteExec ['BIS_fnc_execVM', side _instigator];
-			_textToSpeech = format ["%1 has been killed by his teammate %2, watch your fire",name _unit, name _instigator];
-			[[format ["<t align = 'center' shadow = '2' color='#0046ff' size='1.5' font='PuristaMedium' >High Command</t><br /><t color='#ffffff' size='1.5' font='PuristaMedium' shadow = '2' >%1</t>", _textToSpeech], "PLAIN DOWN", -1, true, true]] remoteExec ["titleText", side _instigator, true];
+// 	//Check if the killer is a player
+// 	if (isPlayer _instigator) then 
+// 	{
+// 		//Check if player are on opposite side
+// 		if ([side _instigator, playerSide] call BIS_fnc_sideIsEnemy) then 
+// 		{
+// 			//Reward PvP kill
+// 			[[1, "RPG_ranking_infantry_kill"], 'engine\rankManagement\rankUpdater.sqf'] remoteExec ['BIS_fnc_execVM', _instigator];
+// 		} else 
+// 		{
+// 			//Add penalty if the killer is a friend
+// 			// [[format ["%1 has been killed by his teammate %2",name _unit, name _instigator], "teamkill"], 'engine\hintManagement\addCustomHint.sqf'] remoteExec ['BIS_fnc_execVM', side _instigator];
+// 			_textToSpeech = format ["%1 has been killed by his teammate %2, watch your fire",name _unit, name _instigator];
+// 			[[format ["<t align = 'center' shadow = '2' color='#0046ff' size='1.5' font='PuristaMedium' >High Command</t><br /><t color='#ffffff' size='1.5' font='PuristaMedium' shadow = '2' >%1</t>", _textToSpeech], "PLAIN DOWN", -1, true, true]] remoteExec ["titleText", side _instigator, true];
 			
-			if (_instigator != _unit) then 
-			{
-				[[-50,5], 'engine\rankManagement\rankPenalty.sqf'] remoteExec ['BIS_fnc_execVM', _instigator];
-			};
-		};
-	};
-}];
-player setVariable ["KilledEH", _KilledEH, true];
+// 			if (_instigator != _unit) then 
+// 			{
+// 				[[-50,5], 'engine\rankManagement\rankPenalty.sqf'] remoteExec ['BIS_fnc_execVM', _instigator];
+// 			};
+// 		};
+// 	};
+// }];
+// player setVariable ["KilledEH", _KilledEH, true];
 
 //Prevent players from instant death
 if !(isClass (configFile >> "CfgPatches" >> "ace_medical")) then 
