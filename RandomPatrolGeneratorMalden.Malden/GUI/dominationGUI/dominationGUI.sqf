@@ -9,6 +9,9 @@ disableSerialization;
 
 diag_log format ["Domination GUI : %1", getPos _thisAreaTrigger];
 
+//Fix trigger area
+_thisAreaTrigger setTriggerArea [200, 200, 0, false];
+
 with uiNamespace do {
 
 	(format ["%1%2", getPos _thisAreaTrigger, random 1000]) cutRsc ["RscTitleDisplayEmpty", "PLAIN"];
