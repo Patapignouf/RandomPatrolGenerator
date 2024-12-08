@@ -628,7 +628,9 @@ _KilledEH = player addEventHandler ["Killed", {
 		if ([side _instigator, playerSide] call BIS_fnc_sideIsEnemy) then 
 		{
 			//Reward PvP kill
-			[[1, "RPG_ranking_infantry_kill"], 'engine\rankManagement\rankUpdater.sqf'] remoteExec ['BIS_fnc_execVM', _instigator];
+			_distance = _instigator distance _unit;
+			if (_distance<100) then {_distance = nil};
+			[[1, "RPG_ranking_infantry_kill", _distance], 'engine\rankManagement\rankUpdater.sqf'] remoteExec ['BIS_fnc_execVM', _instigator];
 		} else 
 		{
 			_textToSpeech = format ["%1 has been killed by his teammate %2, watch your fire",name _unit, name _instigator];

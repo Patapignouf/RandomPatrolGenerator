@@ -60,7 +60,9 @@ doGenerateEnemyGroup =
 
 				if (isPlayer _instigator) then 
 				{
-					[[1, "RPG_ranking_infantry_kill"], 'engine\rankManagement\rankUpdater.sqf'] remoteExec ['BIS_fnc_execVM', _instigator];
+					_distance = _instigator distance _unit;
+					if (_distance<100) then {_distance = nil};
+					[[1, "RPG_ranking_infantry_kill", _distance], 'engine\rankManagement\rankUpdater.sqf'] remoteExec ['BIS_fnc_execVM', _instigator];				
 				} else {
 					//Debug IA killed log
 					diag_log format ["The IA %1 has been killed by %2", name _unit, name _instigator];

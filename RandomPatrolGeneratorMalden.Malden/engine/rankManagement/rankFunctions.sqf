@@ -69,7 +69,7 @@ adjustRank = {
 
 
 addExperience = {
-	params ["_experience", "_experienceType"];
+	params ["_experience", "_experienceType", "_experienceCustomParam"];
 
 	//Unit current experience
 	_unitExperience = profileNamespace getVariable ["RPG_ranking", 0];
@@ -84,7 +84,7 @@ addExperience = {
 	//Display score
 	if (missionNameSpace getVariable ["xpDisplay", 0] == 1) then 
 	{
-		[_experience, _experienceType] call doDisplayScore;
+		[_experience, _experienceType, _experienceCustomParam] call doDisplayScore;
 	};
 	
 	true

@@ -51,12 +51,14 @@ _civilian setVariable ["AttachedMine", _attachedMine, true];
 
 // Event handler for when the civilian is killed
 _civilian addEventHandler ["Killed", {
-	params ["_unit", "_killer"];
+	params ["_unit", "_killer", "_instigator", "_useEffects"];
 
 	_attachedMine = _unit getVariable "AttachedMine";
 
 	// Reward the kill
-	[[1, "RPG_ranking_infantry_kill"], "engine\rankManagement\rankUpdater.sqf"] remoteExec ['BIS_fnc_execVM', _killer];
+	_distance = _instigator distance _unit;
+	if (_distance<100) then {_distance = nil};
+	[[1, "RPG_ranking_infantry_kill", _distance], 'engine\rankManagement\rankUpdater.sqf'] remoteExec ['BIS_fnc_execVM', _instigator];
 
 	// Check if the civilian has already exploded
 	_exploded = _unit getVariable "exploded";

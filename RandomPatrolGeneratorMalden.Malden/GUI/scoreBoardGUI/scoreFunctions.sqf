@@ -2,25 +2,25 @@
 //#include "GUI\scoreBoardGUI\scoreFunctions.sqf"
 //[5,"RPG_ranking_infantry_kill"] call doDisplayScore;
 
-[["RPG_ranking_infantry_kill","infantry kill"],
-					["RPG_ranking_vehicle_kill","vehicle kill"],
-					["deathNumber","death"],
-					["RPG_ranking_suppress","suppress"],
-					["RPG_ranking_heal","heal"],
-					["RPG_ranking_repair","repair"],
-					["RPG_ied_defuse","IED defuse"],
-					["RPG_ranking_intel_collect","intel collect"],
-					["RPG_ranking_objective_complete","objective complete"]
-					];
-
 doDisplayScore = {
-	params ["_score", "_type"];
+	params ["_score", "_type","_scoreParam1"];
+
+
+	//Initialize custom param to avoid null reference
+	if (isNil "_scoreParam1") then 
+	{
+		_scoreParam1 = "";
+	} else 
+	{
+		
+    	_scoreParam1 = str _scoreParam1;
+	};
 
 	with uiNamespace do
 	{
-		[_score, _type] spawn
+		[_score, _type, _scoreParam1] spawn
 		{
-			params ["_score", "_type"];
+			params ["_score", "_type", "_scoreParam1"];
 
 
 			_ctrl = findDisplay 46 ctrlCreate ["RscStructuredText", -1];
@@ -87,6 +87,10 @@ doDisplayScore = {
 			if (_type == "RPG_ranking_player_death") then 
 			{
 				_ctrl ctrlSetStructuredText parseText format ["<t color='#ff0000' size='1.3'> %1 </t><t color='#FFFFFF' size='1.3'>%2</t>", _score, _scoreText];
+			};
+			if (_type == "RPG_ranking_infantry_kill" && _scoreParam1 != "") then 
+			{
+				_ctrl ctrlSetStructuredText parseText format ["<t color='#00ff00' size='1.3'>+ %1 </t><t color='#FFFFFF' size='1.3'>%2  %3m</t>", _score, _scoreText, _scoreParam1];
 			};
 
 			_ctrl ctrlSetPosition [0.6, 0.4+_baseY*_numberOfScoreDisplay, ctrlTextWidth _ctrl, 0.1];
