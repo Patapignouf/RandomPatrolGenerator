@@ -1,6 +1,6 @@
 #include "..\GUI\botteamGUI\botteamFunctions.sqf"
 
-while {sleep 10; true; missionNameSpace getVariable ["enableAmbiantWar", 0] == 1} do {
+while {sleep 600; true; missionNameSpace getVariable ["enableAmbiantWar", 0] == 1} do {
 	_missionUncompletedObjectives = missionNamespace getVariable ["missionUncompletedObjectives",[]];
 
 	if (count  _missionUncompletedObjectives != 0) then 
