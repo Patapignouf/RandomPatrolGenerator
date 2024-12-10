@@ -72,7 +72,6 @@ baseEnemyMortarGroup_Syndikat = [
 baseEnemyVehicleGroup_Syndikat = [
 	"I_C_Offroad_02_LMG_F", 
 	"I_C_Offroad_02_AT_F", 
-	"I_C_Offroad_02_unarmed_F",
 	"I_C_HMG_02_high_F",
 	"I_C_Van_02_transport_F"
 ];
@@ -83,7 +82,7 @@ baseEnemyTurretGroup_Syndikat = [
 ];
 
 baseEnemyLightArmoredVehicleGroup_Syndikat = [
-
+	"I_C_Offroad_02_AT_F" //Balanced infantry gameplay
 ];
 
 baseEnemyUnarmedChopperGroup_Syndikat = [
