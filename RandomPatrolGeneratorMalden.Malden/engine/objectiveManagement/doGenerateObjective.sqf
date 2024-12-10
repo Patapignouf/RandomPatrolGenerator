@@ -790,9 +790,17 @@ generateObjectiveObject =
 			//hint "default" 
 			};
 	};
+
+	//Setup all missions database
 	currentMissionObjectives = missionNamespace getVariable ["MissionObjectives",[]];
 	currentMissionObjectives pushBack _thisObjective;
 	missionNamespace setVariable ["MissionObjectives",currentMissionObjectives,true];
+
+	//Setup all uncompleted missions database
+	_currentUncompletedObjectives = missionNamespace getVariable ["missionUncompletedObjectives",[]];
+	_currentUncompletedObjectives pushBack _thisObjective;
+	missionNamespace setVariable ["missionUncompletedObjectives",_currentUncompletedObjectives,true];
+
 	diag_log format ["MissionObjectives setup ! : %1", currentMissionObjectives];
 	_thisObjective;
 };
