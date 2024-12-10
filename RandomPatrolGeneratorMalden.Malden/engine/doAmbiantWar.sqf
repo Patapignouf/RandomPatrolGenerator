@@ -3,7 +3,7 @@
 while {sleep 600; true; missionNameSpace getVariable ["enableAmbiantWar", 0] == 1} do {
 	_missionUncompletedObjectives = missionNamespace getVariable ["missionUncompletedObjectives",[]];
 
-	if (count  _missionUncompletedObjectives != 0) then 
+	if (count  _missionUncompletedObjectives != 0 && count (allUnits select {side _x == blufor && isPlayer _x == false}) <20) then 
 	{
 		_locationToAttack = getPos ((selectRandom _missionUncompletedObjectives)#0);
 
