@@ -233,25 +233,8 @@ params ["_caller", "_supportType"];
 				waitUntil{!(visibleMap)};  
 				if (!([selectedHaloLoc, [0,0,0]] call BIS_fnc_areEqual)) then 
 				{	
-					_AvalaibleInitAttackPositions = [selectedHaloLoc, 1000, 1500, 3] call getListOfPositionsAroundTarget;
-					_AvalaibleInitAttackPositionsToMove = selectRandom _AvalaibleInitAttackPositions;
-					_attackSquad = createGroup (side _caller);
-					for [{_i = 0}, {_i < 10}, {_i = _i + 1}] do
-					{
-						//Spawn bot
-						private _bot = [_caller, "random", "Infantry"] call doAddBot;
-
-						//If successfull bot spawn
-						if (!isNull _bot) then 
-						{
-							[_bot] joinSilent _attackSquad; 
-
-							//Move bot near attack position  
-							_bot setPos ([_AvalaibleInitAttackPositionsToMove, 1, 10, 3, 0, 20, 0] call BIS_fnc_findSafePos);
-						};
-					};
-					// ask squad to attack position 
-					[_attackSquad, selectedHaloLoc] execVM 'enemyManagement\behaviorEngine\doAttack.sqf';
+					//Spawn attack squad
+					[_caller, selectedHaloLoc, side _caller] execVM 'engine\doSpawnAttackSquad.sqf';
 				};
 			};
 

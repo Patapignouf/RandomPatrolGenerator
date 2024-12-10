@@ -86,7 +86,7 @@ _comboBoxClassSelection ctrlAddEventHandler[ "LBSelChanged",
 			//Setup arsenal loadout
 			_listOfAvalaibleRole = [player call getPlayerFaction] call setupRoleSwitchToList;
 			_role = (_listOfAvalaibleRole select parseNumber ((_comboBoxClassSelection lbData (lbCurSel _comboBoxClassSelection))));
-			[player, player, player call getPlayerFaction , _role, false] call switchToRole;
+			[player, player, player call getPlayerFaction , _role, false, false] call switchToRole;
 			[player, player, player call getPlayerFaction] call setupArsenalToItem;
 
 			//Refresh load button

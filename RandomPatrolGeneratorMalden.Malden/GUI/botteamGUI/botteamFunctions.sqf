@@ -74,7 +74,7 @@ params ["_caller", "_botteamClass", "_botteamType"];
 			};
 
 			_stuffToApply = ((loadout_db select {_x select 1 == _currentFaction}) select 0 select 0) select {_x select 0 == _botteamClass} select 0 select 1;
-			[_botUnit, _botUnit, _currentFaction , _botteamClass, false] call switchToRole;
+			[_botUnit, _botUnit, _currentFaction , _botteamClass, false, true] call switchToRole;
 			//[TODO] Add ACE adjust stuff
 
 			//apply custom stuff 

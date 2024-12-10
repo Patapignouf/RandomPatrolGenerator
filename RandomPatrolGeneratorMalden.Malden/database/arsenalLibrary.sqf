@@ -513,11 +513,14 @@ doInitializeLoadout = {
 
 switchToRole = {
 	//Init params
-	params ["_arsenalItem", "_caller", "_faction", "_role", "_allowCustomLoad"];
+	params ["_arsenalItem", "_caller", "_faction", "_role", "_allowCustomLoad", "_skipAnimation"];
 
 	//Switch to role
 	diag_log format ["Player %1 has switched to role %2 in faction %3", name _caller, _role, _faction];
-	titleCut [format ["Switching to role %1", _role], "BLACK FADED", 5];
+	if (!_skipAnimation) then 
+	{
+		titleCut [format ["Switching to role %1", _role], "BLACK FADED", 5];
+	};
 
 	//Manage Unit trait
 	//Reset unit trait
@@ -556,8 +559,11 @@ switchToRole = {
 	};
 
 	_caller setVariable ["spawnLoadout", getUnitLoadout _caller];
-
-	titleCut ["", "BLACK IN", 5];
+	
+	if (!_skipAnimation) then 
+	{
+		titleCut ["", "BLACK IN", 5];
+	};
 };
 
 

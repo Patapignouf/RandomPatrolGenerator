@@ -87,7 +87,7 @@ if (!ironMan) then
 			//Setup arsenal loadout
 			_listOfAvalaibleRole = [player call getPlayerFaction] call setupRoleSwitchToList;
 			_role = (_listOfAvalaibleRole select parseNumber ((_control lbData (lbCurSel _control))));
-			[player, player, player call getPlayerFaction , _role, false] call switchToRole;
+			[player, player, player call getPlayerFaction , _role, false, false] call switchToRole;
 			[player, player, player call getPlayerFaction] call setupArsenalToItem;
 
 			//Load personnal loadout
