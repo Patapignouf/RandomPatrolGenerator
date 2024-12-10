@@ -45,6 +45,19 @@ missionRespawnParamSettings = [
 	[99999999999999,"Respawn on objective completion only"]
 ];
 
+missionAreaSizeParam = 
+[
+	[	
+		[0, "Small"],
+		[1, "Normal"],
+		[2, "Huge"]
+	],
+	"Mission area size",
+	0,
+	"missionAreaSize"
+];
+
+
 civiliansOnObjectivesParam = 
 [
 	[	
@@ -285,4 +298,4 @@ opforReinforcementParam =
 ];
 
 
-baseParamsToManage = [civiliansOnObjectivesParam, sideRelationParam, enableObjectiveExactLocationParam, enablePersistentParam, enableRegularIncomeParam, disableZoomParam, enableAutoDifficultyBalanceParam, civJoinableFactionParam, enableLoadoutRestrictionParam, enableOpforVehicleParam, enableHaloParam, timeOfDayParam, civSuicideBomberParam, civSuicideBomberProbabilityParam, endlessMissionParam, enableOpforMortarParam, enableReAirDropAdvFOBParam, randomizeObjectiveOrderParam, xpDisplayParam, opforReinforcementParam];
+baseParamsToManage = [missionAreaSizeParam, civiliansOnObjectivesParam, sideRelationParam, enableObjectiveExactLocationParam, enablePersistentParam, enableRegularIncomeParam, disableZoomParam, enableAutoDifficultyBalanceParam, civJoinableFactionParam, enableLoadoutRestrictionParam, enableOpforVehicleParam, enableHaloParam, timeOfDayParam, civSuicideBomberParam, civSuicideBomberProbabilityParam, endlessMissionParam, enableOpforMortarParam, enableReAirDropAdvFOBParam, randomizeObjectiveOrderParam, xpDisplayParam, opforReinforcementParam];

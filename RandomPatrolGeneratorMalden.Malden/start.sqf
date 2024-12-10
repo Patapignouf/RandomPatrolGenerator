@@ -245,12 +245,32 @@ if (count initCityLocationLocs >=1) then
 
 
 publicvariable "initCityLocation";
-possiblePOILocation = ([initCityLocation, 3000] call getLocationsAroundWithBuilding) - [initCityLocationLoc];
+
+_searchRadius = 3000; //Default
+
+//Define search area for objective
+switch (missionNameSpace getVariable ["missionAreaSize", 0]) do
+{
+	case 0:
+	{
+		_searchRadius = 3000;
+	};
+	case 1:
+	{
+		_searchRadius = 6000;
+	};
+	case 2:
+	{
+		_searchRadius = worldSize;
+	};
+};
+
+possiblePOILocation = ([initCityLocation, _searchRadius] call getLocationsAroundWithBuilding) - [initCityLocationLoc];
 dangerAreaList = [];
 
 if ( count possiblePOILocation < missionLength) then 
 {
-	possiblePOILocation = ([initCityLocation, 5000] call getLocationsAroundWithBuilding) - [initCityLocationLoc];
+	possiblePOILocation = ([initCityLocation, _searchRadius+2000] call getLocationsAroundWithBuilding) - [initCityLocationLoc];
 };
 
 //Search road around AO
@@ -482,6 +502,13 @@ if !(_isOnWater) then
 				initBlueforLocation = [initCityLocation, _minBluforCityRadius, _maxBluforCityRadius, 3, 0, 0.25, 0, [areaOfOperation], [[0,0,0],[0,0,0]]] call BIS_fnc_findSafePos;
 				_spawnAttempts = _spawnAttempts +1;
 			};
+
+			//Last chance to find a good position
+			//It will ignore the area of operation
+			if ([initBlueforLocation, [0,0,0]] call BIS_fnc_areEqual) then {
+				initBlueforLocation = [initCityLocation, _minBluforCityRadius, _maxBluforCityRadius+3000, 3, 0, 0.25, 0, [], [[0,0,0],[0,0,0]]] call BIS_fnc_findSafePos;
+			};
+
 			
 			//Safe position
 			initBlueforLocation = [selectMax [selectMin [initBlueforLocation select 0, worldSize-75 ],75],selectMax [selectMin [initBlueforLocation select 1, worldSize-75],75]]; 
@@ -582,7 +609,7 @@ diag_log format ["Generating blufor vehicle : %1",selectedBluforVehicle];
 [initBlueforLocation, selectedBluforVehicle, bluforHQVehicle] spawn {
 	params ["_initBlueforLocation", "_selectedBluforVehicle" ,"_bluforHQVehicle"];
 
-	sleep 10;
+	sleep 15;
 	_spawnedVehicle = [_initBlueforLocation, _selectedBluforVehicle, 30, 100] call doGenerateVehicleForFOB;
 	diag_log format ["Generating blufor vehicle spawned : %1", _spawnedVehicle];
 	//TODO: get each vehicule and set the lock parameter to LOCKED;
