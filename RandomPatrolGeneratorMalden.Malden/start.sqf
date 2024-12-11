@@ -640,7 +640,7 @@ diag_log format ["Generating blufor vehicle : %1",selectedBluforVehicle];
 			},[],1.5,true,false,"","_target distance _this <10 && side _this == blufor"]] remoteExec [ "addAction", blufor, true ];
 
 			//3D Display
-			[["HQ Vehicle", (getPos bluforMobileHQ) vectorAdd [0,0,5],"\a3\ui_f\data\igui\cfg\simpletasks\types\truck_ca.paa" , [0,0,1,1]], 'GUI\3DNames\3DNames.sqf'] remoteExec ['BIS_fnc_execVM', blufor, true];
+			[["HQ Vehicle", (getPos bluforMobileHQ) vectorAdd [0,0,6],"\a3\ui_f\data\igui\cfg\simpletasks\types\truck_ca.paa" , [0,0,1,1]], 'GUI\3DNames\3DNames.sqf'] remoteExec ['BIS_fnc_execVM', blufor, true];
 		};
 	};
 };
