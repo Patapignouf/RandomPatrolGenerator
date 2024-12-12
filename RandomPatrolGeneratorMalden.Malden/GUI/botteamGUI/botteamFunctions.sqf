@@ -2,7 +2,7 @@
 #include "..\..\database\arsenalLibrary.sqf"
 
 doAddBot = {
-params ["_caller", "_botteamClass", "_botteamType"];
+params ["_caller", "_currentFaction", "_botteamClass", "_botteamType"];
 	botResult = objNull;
 	switch (_botteamType) do
 	{
@@ -51,20 +51,7 @@ params ["_caller", "_botteamClass", "_botteamType"];
 
 			//Get custom stuff 
 			_listOfAvalaibleRole =[];
-			_currentFaction = 0;
-
-			if (_caller getVariable "sideBeforeDeath" == "independent") then 
-			{
-				//Independent
-				_listOfAvalaibleRole = [indFaction] call setupRoleSwitchToList;
-				_currentFaction = indFaction;
-
-			} else 
-			{
-				//Blufor
-				_listOfAvalaibleRole = [bluFaction] call setupRoleSwitchToList;
-				_currentFaction = bluFaction;
-			};
+			_listOfAvalaibleRole = [_currentFaction] call setupRoleSwitchToList;
 			
 			//hint format ["_currentFaction %1\n _botteamClass %2",_currentFaction, _botteamClass];
 

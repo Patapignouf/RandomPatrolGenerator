@@ -1,12 +1,26 @@
 params ["_caller", "_locationToAttack", "_side"];
 
-_AvalaibleInitAttackPositions = [_locationToAttack, 1000, 1500, 3] call getListOfPositionsAroundTarget;
+_AvalaibleInitAttackPositions = [_locationToAttack, 800, 1300, 3] call getListOfPositionsAroundTarget;
 _AvalaibleInitAttackPositionsToMove = selectRandom _AvalaibleInitAttackPositions;
 _attackSquad = createGroup (_side);
-for [{_i = 0}, {_i < 10}, {_i = _i + 1}] do
+_missionDifficulty = missionNamespace getVariable ["missionDifficultyParam", 1];
+for [{_i = 0}, {_i < 5}, {_i = _i + 1}] do
 {
 	//Spawn bot
-	private _bot = [_caller, "random", "Infantry"] call doAddBot;
+	_currentFaction = 0;
+	if (side _caller == independent) then 
+	{
+		//Independent
+		_currentFaction = indFaction;
+
+	} else 
+	{
+		//Blufor
+		_currentFaction = bluFaction;
+	};
+
+
+	private _bot = [_caller, _currentFaction, "random", "Infantry"] call doAddBot;
 
 	//If successfull bot spawn
 	if (!isNull _bot) then 

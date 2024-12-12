@@ -66,7 +66,20 @@ _buttonOK ctrlAddEventHandler [ "ButtonClick",
 				
 					//Else (other type of vehicle) do normal spawn around FOB
 					//Do something
-					_bot = [player, _supportClass, _supportType] call doAddBot;
+
+					_currentFaction = 0;
+					if (side player == independent) then 
+					{
+						//Independent
+						_currentFaction = indFaction;
+
+					} else 
+					{
+						//Blufor
+						_currentFaction = bluFaction;
+					};
+
+					_bot = [player, _currentFaction, _supportClass, _supportType] call doAddBot;
 
 					//join player unit
 					[_bot] joinSilent player;
