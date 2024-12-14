@@ -233,8 +233,12 @@ params ["_caller", "_supportType"];
 				waitUntil{!(visibleMap)};  
 				if (!([selectedHaloLoc, [0,0,0]] call BIS_fnc_areEqual)) then 
 				{	
-					//Spawn attack squad
-					[_caller, selectedHaloLoc, side _caller] execVM 'engine\doSpawnAttackSquad.sqf';
+					_missionDifficulty = missionNamespace getVariable ["missionDifficultyParam", 1];
+					for [{_iteration = 0}, {_iteration < _missionDifficulty}, {_iteration = _iteration + 1}] do
+					{	
+						//Spawn attack squad
+						[_caller, selectedHaloLoc, side _caller] call doSpawnAttackSquad;;
+					};
 				};
 			};
 

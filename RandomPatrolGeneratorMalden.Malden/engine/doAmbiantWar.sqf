@@ -4,7 +4,7 @@ if (isServer) then
 {
 	_missionDifficulty = missionNamespace getVariable ["missionDifficultyParam", 1];
 
-	while {sleep 600; true; missionNameSpace getVariable ["enableAmbiantWar", 0] == 1} do {
+	while {sleep 500; true; missionNameSpace getVariable ["enableAmbiantWar", 0] == 1} do {
 		_missionUncompletedObjectives = missionNamespace getVariable ["missionUncompletedObjectives",[]];
 
 		if (count  _missionUncompletedObjectives != 0 && count (allUnits select {side _x == blufor && isPlayer _x == false}) < (6*_missionDifficulty)) then 
@@ -24,10 +24,12 @@ if (isServer) then
 			//Spawn attack squad
 			if (count _callers != 0) then 
 			{
+				_callerForSupport = selectRandom _callers;
 				//Spawn multiples squads
-				for [{_i = 0}, {_i < _missionDifficulty}, {_i = _i + 1}] do
-				{				
-					[selectRandom _callers, _locationToAttack, blufor] execVM 'engine\doSpawnAttackSquad.sqf';
+				for [{_iteration = 0}, {_iteration < _missionDifficulty}, {_iteration = _iteration + 1}] do
+				{	
+					//(format ["iteration %1, difficulty %2", _iteration, _missionDifficulty]) remoteExec ["systemChat", 0, true]; //Display message to every client
+					[_callerForSupport, _locationToAttack, blufor] call  doSpawnAttackSquad;
 				};
 
 				//Send message

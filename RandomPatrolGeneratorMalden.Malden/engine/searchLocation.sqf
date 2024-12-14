@@ -82,6 +82,22 @@ getListOfPositionsAroundTarget =
 	AvalaiblePositions
 };
 
+getPositionAroundTargetNoSafeZone = 
+{
+	//Define parameters
+	_targetPosition = _this select 0;
+	_minDistance = _this select 1;
+	_maxDistance = _this select 2;
+	_numberOfPosition = _this select 3;
+	
+	AvalaiblePositions = [];
+	
+
+	AvalaiblePositions pushBack ([_targetPosition, (_minDistance), (_maxDistance), 3, 0, 0.25, 0, [], [[0,0,0],[0,0,0]]] call BIS_fnc_findSafePos);
+	
+	AvalaiblePositions#0
+};
+
 isLocationOnMap = {
 	params ["_testedLocation"];
 	_isLocationOnMap = false;
