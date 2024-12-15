@@ -2,13 +2,11 @@ if (isServer) then
 {
 	_missionDifficulty = missionNamespace getVariable ["missionDifficultyParam", 1];
 
-	while {sleep 300; true; missionNameSpace getVariable ["enableAmbiantWar", 0] == 1} do {
+	while {sleep 1; true; missionNameSpace getVariable ["enableAmbiantWar", 0] == 1} do {
 		_missionUncompletedObjectives = missionNamespace getVariable ["missionUncompletedObjectives",[]];
 
 		if (count  _missionUncompletedObjectives != 0 && count (allUnits select {side _x == blufor && isPlayer _x == false}) < (6*_missionDifficulty)) then 
 		{
-			_locationToAttack = getPos ((selectRandom _missionUncompletedObjectives)#0);
-
 			//Spawn blufor unit
 			_callers = [];
 			if (missionNameSpace getVariable "sideRelations" == 0) then 
@@ -19,10 +17,17 @@ if (isServer) then
 				_callers = allPlayers select {side _x == blufor};
 			};
 
+
 			//Spawn attack squad
 			if (count _callers != 0) then 
 			{
+				//Select a caller
 				_callerForSupport = selectRandom _callers;
+				
+				//Select closest objective 
+				_sortedMissionUncompletedObjectives = [_missionUncompletedObjectives, [], {(getPos (_x#0)) distance (getPos _callerForSupport)}, "ASCEND"] call BIS_fnc_sortBy;
+				_locationToAttack = getPos (_sortedMissionUncompletedObjectives#0#0);
+
 				//Spawn multiples squads
 				for [{_iteration = 0}, {_iteration < _missionDifficulty}, {_iteration = _iteration + 1}] do
 				{	
@@ -42,7 +47,6 @@ if (isServer) then
 							if (count _missionUncompletedObjectives != 0) then 
 							{
 								_sortedMissionUncompletedObjectives = [_missionUncompletedObjectives, [], {(getPos (_x#0)) distance (getPos (leader _unitsGroup))}, "ASCEND"] call BIS_fnc_sortBy;
-								//hint format ["IA Will attack %1", getPos (_sortedMissionUncompletedObjectives#0#0)];
 								[_unitsGroup, getPos (_sortedMissionUncompletedObjectives#0#0)] call doAttack;
 							};
 							sleep 600;
