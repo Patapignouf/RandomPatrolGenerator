@@ -136,11 +136,8 @@ if ((count _revealedObjectives != count _tempMissionObjectives)) then
 				};
 
 				//Set task exact location 
-				if (missionNameSpace getVariable ["enableObjectiveExactLocation",0] == 1) then 
-				{
-					//hint format ["Task ID : %1",_objectiveToReveal#2];
-					[_objectiveToReveal#2, getPos (_thisObject)] call BIS_fnc_taskSetDestination;
-				};
+				[[_objectiveToReveal#2, getPos (_thisObject)], "engine\objectiveManagement\drawObjectiveLocation.sqf"] remoteExec ['BIS_fnc_execVM', 0, true];
+
 
 				//Display dialog on screen if necessary
 				if (!isNil "_caller") then 

@@ -5,6 +5,8 @@
 #include "objectGenerator\vehicleManagement.sqf"
 #include "enemyManagement\generationEngine\groupGenerator.sqf"
 #include "engine\modManager.sqf"
+#include "GUI\botteamGUI\botteamFunctions.sqf"
+#include "enemyManagement\behaviorEngine\unitsBehaviorFunctions.sqf"
 
 //Init base mission parameters 
 enableInitAttack = "EnableInitAttack" call BIS_fnc_getParamValue;
@@ -392,7 +394,7 @@ for [{_i = 0}, {_i <= 2}, {_i = _i + 1}] do
 
 //Garrison or camp every civ group
 {
-	[_x, getPos (leader _x), 80, true] execVM 'enemyManagement\behaviorEngine\doGarrison.sqf';
+	[_x, getPos (leader _x), 80, true] call doGarrison;
 } foreach civsGroup;
 
 
@@ -693,7 +695,7 @@ if (count baseEnemyMortarGroup > 0 && (missionNameSpace getVariable ["enableOpfo
 			if !([_mortarSpawnPosition , [0,0,0]] call BIS_fnc_areEqual) then 
 			{
 				_mortarGroup = [baseEnemyMortarGroup, _mortarSpawnPosition, east, "Mortar"] call doGenerateEnemyGroup;
-				[_mortarGroup, getPos (leader _mortarGroup), 200 + random 250] execVM 'enemyManagement\behaviorEngine\doPatrol.sqf';
+				[_mortarGroup, getPos (leader _mortarGroup), 200 + random 250] call doPatrol;
 				//TEMP feature - In the future there will be a dynamic side quest assignement
 				//75% chance to setup the side mission 
 				if (random 100 < 75) then 
@@ -728,10 +730,8 @@ switch (startIntel) do
 			initCityLocationTrigger setTriggerArea [100, 100, 0, false]; // trigger area with a radius of 100m.
 			
 			//Set task exact location 
-			if (missionNameSpace getVariable ["enableObjectiveExactLocation", 0] == 1) then 
-			{
-				["taskContactCiv", initCityLocation] call BIS_fnc_taskSetDestination;
-			};
+			[["taskContactCiv", initCityLocation], "engine\objectiveManagement\drawObjectiveLocation.sqf"] remoteExec ['BIS_fnc_execVM', 0, true];
+
 
 			//Setup task completion
 			[] spawn {
@@ -774,10 +774,8 @@ switch (startIntel) do
 				initCityLocationTrigger setTriggerArea [100, 100, 0, false]; // trigger area with a radius of 100m.
 				
 				//Set task exact location 
-				if (missionNameSpace getVariable ["enableObjectiveExactLocation", 0] == 1) then 
-				{
-					["taskContactCiv", initCityLocation] call BIS_fnc_taskSetDestination;
-				};
+				[["taskContactCiv", initCityLocation], "engine\objectiveManagement\drawObjectiveLocation.sqf"] remoteExec ['BIS_fnc_execVM', 0, true];
+
 
 				//Setup task completion
 				[] spawn {

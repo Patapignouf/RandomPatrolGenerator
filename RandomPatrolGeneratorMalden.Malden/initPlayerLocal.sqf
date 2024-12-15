@@ -1,5 +1,6 @@
 #include "engine\modManager.sqf"
 #include "database\missionParameters.sqf"
+#include "enemyManagement\behaviorEngine\unitsBehaviorFunctions.sqf"
 
 forceBluforSetup = "ForceBluforSetup" call BIS_fnc_getParamValue;
 

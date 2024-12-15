@@ -17,49 +17,76 @@ _infoGroup = _infoToReveal select 2;
 _nearestCity = nearestLocations [_infoPos, ["NameLocal","NameVillage","NameCity","NameCityCapital"], 1500] select 0;
 _intelCivilianRevelated = ""; //Description when player is talking to a civilian
 _intelDocumentRevelated = ""; //Description when player is looting corpse or document
+_mapMarkerName = "";
+_mapMarkerIcon = "";
+_color = "ColorRed";
+
 switch (_infoName) do 
 {
 	case "Mortar":
 	{
 		_intelCivilianRevelated = format ["This morning i saw a mortar position near %1. I don't know if they are there for you, be careful.",text _nearestCity];
 		_intelDocumentRevelated = format ["There is a mortar position on %1.", mapGridPosition _infoPos];
+		_mapMarkerName = "Mortar";
+		_mapMarkerIcon = "b_mortar";
 	};
 	case "Turret":
 	{
 		_intelCivilianRevelated = format ["This morning i saw a turret position near %1. Be careful.",text _nearestCity];
 		_intelDocumentRevelated = format ["There is a turret position on %1.", mapGridPosition _infoPos];
+		_mapMarkerName = "Bunker";
+		_mapMarkerIcon = "b_installation";
 	};
 	case "Patrol":
 	{
 		_intelCivilianRevelated = format ["I've heard there's soldiers patrolling around %1. About %2 men.", text _nearestCity, count units _infoGroup];
 		_intelDocumentRevelated = format ["There are %2 men patrolling on position %1.", mapGridPosition _infoPos, count units _infoGroup];
+		_mapMarkerName = format ["patrol %1 men", count units _infoGroup];
+		_mapMarkerIcon = "b_inf";
 	};
 	case "Car":
 	{
 		_intelCivilianRevelated = format ["I saw a %2 around %1 this morning, be careful...",text _nearestCity, getText (configFile >> "cfgVehicles" >> typeOf (vehicle leader (_infoGroup)) >> "displayName")];
 		_intelDocumentRevelated = format ["There is an enemy vehicle %2 on position %1.", mapGridPosition _infoPos, getText (configFile >> "cfgVehicles" >> typeOf (vehicle leader (_infoGroup)) >> "displayName")];
+		_mapMarkerName = getText (configFile >> "cfgVehicles" >> typeOf (vehicle leader (_infoGroup)) >> "displayName");
+		_mapMarkerIcon = "b_motor_inf";
 	};
 	case "LightArmored";
 	case "HeavyArmored":
 	{
 		_intelCivilianRevelated = format ["I saw a armored vehicle around %1, be careful it's dangerous...",text _nearestCity];
 		_intelDocumentRevelated = format ["There is a armored vehicle %2 on position %1.", mapGridPosition _infoPos, getText (configFile >> "cfgVehicles" >> typeOf (vehicle leader (_infoGroup)) >> "displayName")];
+		_mapMarkerName = getText (configFile >> "cfgVehicles" >> typeOf (vehicle leader (_infoGroup)) >> "displayName");
+		_mapMarkerIcon = "b_armor";
 	};
 	case "DefenseFOBInfantry":
 	{
 		_intelCivilianRevelated = format ["I know there is an enemy base around %1, this location seems dangerous", mapGridPosition _infoPos];
 		_intelDocumentRevelated = format ["There is an enemy FOB on position %1.", mapGridPosition _infoPos];
+ 		//No marker
 	};
 	case "DefenseInfantry":
 	{
 		_intelCivilianRevelated = format ["I know there is a group of %2 soldiers defending %1, this location seems dangerous",text _nearestCity, count units _infoGroup];
 		_intelDocumentRevelated = format ["There are %2 soldiers defending position %1", mapGridPosition _infoPos, count units _infoGroup];
+		_mapMarkerName = format ["squad %1 men", count units _infoGroup];
+		_mapMarkerIcon = "b_inf";
 	};
 	case "Civilian":
 	{
 		_intelCivilianRevelated = format ["Be careful, there are civilian in %1. Watch your fire...", text _nearestCity];
 		_intelDocumentRevelated = format ["Be careful, there are civilian on position %1. Watch your fire...", mapGridPosition _infoPos];
+		_mapMarkerName = "Civilians";
+		_mapMarkerIcon = "loc_CivilDefense";
+		_color = "ColorCIV";
 	};
+};
+
+//Locate on map
+if (missionNameSpace getVariable ["enableObjectiveExactLocation", 0] != 0) then 
+{ 
+	_randomPos = [[[_infoPos, 15]], []] call BIS_fnc_randomPos; 
+	[[_mapMarkerName, _color, _mapMarkerIcon, _randomPos, "All"], 'objectGenerator\doGenerateMarker.sqf'] remoteExec ['BIS_fnc_execVM', 0, true];
 };
 
 _intelToReveal = "";

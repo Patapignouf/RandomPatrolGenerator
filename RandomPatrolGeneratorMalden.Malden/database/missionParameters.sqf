@@ -83,10 +83,11 @@ civiliansOnObjectivesParam =
 enableObjectiveExactLocationParam = 
 [
 	[	
-		[0, "Disable"],
-		[1, "Enable"]
+		[0, "None"],
+		[1, "Near"],
+		[2, "Exact"]
 	],
-	"Objective exact location markers",
+	"Objective location markers",
 	0,
 	"enableObjectiveExactLocation"
 ];
