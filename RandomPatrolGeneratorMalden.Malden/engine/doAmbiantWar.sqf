@@ -2,7 +2,7 @@ if (isServer) then
 {
 	_missionDifficulty = missionNamespace getVariable ["missionDifficultyParam", 1];
 
-	while {sleep 1; true; missionNameSpace getVariable ["enableAmbiantWar", 0] == 1} do {
+	while {sleep 300; true; missionNameSpace getVariable ["enableAmbiantWar", 0] == 1} do {
 		_missionUncompletedObjectives = missionNamespace getVariable ["missionUncompletedObjectives",[]];
 
 		if (count  _missionUncompletedObjectives != 0 && count (allUnits select {side _x == blufor && isPlayer _x == false}) < (6*_missionDifficulty)) then 
