@@ -48,17 +48,23 @@ baseEnemyMortarGroup_RU_2020_reservists = [
 ];
 
 baseEnemyVehicleGroup_RU_2020_reservists = [
-	"rhs_tigr_vv", 
-	"rhs_tigr_sts_vv", 
-	"rhs_tigr_m_vv",
-	"rhs_Igla_AA_pod_msv" //AA Turret
+	"RHS_UAZ_MSV_01", 
+	"rhs_tigr_msv", 
+	"rhs_tigr_sts_msv", 
+	"rhs_tigr_sts_3camo_msv", 
+	"rhs_tigr_m_msv", 
+	"rhs_tigr_m_3camo_msv",
+	"rhs_gaz66_msv", 
+	"RHS_Ural_MSV_01", 
+	"rhs_kamaz5350_open_msv"
 ];
 
 baseEnemyTurretGroup_RU_2020_reservists = [
 	//Turrets 
 	["rhs_Kornet_9M133_2_msv", "SMALLBUNKER"],
 	["rhs_KORD_high_MSV", "SMALLBUNKER"],
-	["RHS_ZU23_MSV", "SMALLBUNKER"]
+	["RHS_ZU23_MSV", "SMALLBUNKER"],
+	["rhs_Igla_AA_pod_msv", "SMALLBUNKER"]
 ];
 
 baseEnemyLightArmoredVehicleGroup_RU_2020_reservists = [
