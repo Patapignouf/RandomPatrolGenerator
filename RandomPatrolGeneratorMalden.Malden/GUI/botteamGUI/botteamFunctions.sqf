@@ -125,7 +125,6 @@ doSpawnAttackSquad = {
 	};
 
 	// ask squad to attack position 
-	//[_attackSquad, _locationToAttack] execVM 'enemyManagement\behaviorEngine\doAttack.sqf';
 	[_attackSquad, _locationToAttack] call doAttack;
 	_attackSquad
 };

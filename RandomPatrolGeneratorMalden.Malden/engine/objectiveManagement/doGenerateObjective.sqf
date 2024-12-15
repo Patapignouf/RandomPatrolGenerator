@@ -609,7 +609,7 @@ generateObjectiveObject =
 								foreach (units _x);
 								
 								//Ask opfor group to go to the flag
-								[_x, getPos _object] execVM 'enemyManagement\behaviorEngine\doAttack.sqf';
+								[_x, getPos _object] call doAttack;
 							};
 						} foreach (allGroups select {side _x == opfor});
 					}, 
