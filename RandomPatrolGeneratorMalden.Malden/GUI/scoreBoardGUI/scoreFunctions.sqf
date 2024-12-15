@@ -12,8 +12,13 @@ doDisplayScore = {
 		_scoreParam1 = "";
 	} else 
 	{
-		
-    	_scoreParam1 = str _scoreParam1;
+		if (typeName _scoreParam1 == "STRING") then 
+		{
+
+		} else 
+		{
+			_scoreParam1 = str _scoreParam1;
+		};
 	};
 
 	with uiNamespace do

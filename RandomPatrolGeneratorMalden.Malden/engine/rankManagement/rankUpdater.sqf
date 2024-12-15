@@ -3,6 +3,11 @@
 #include "rankFunctions.sqf"
 params ["_experienceBonus", "_experienceType", "_experienceCustomParam"];
 
+if (isNil "_experienceCustomParam") then 
+{
+	_experienceCustomParam = "";
+};
+
 //add experience
 [_experienceBonus, _experienceType, _experienceCustomParam] call addExperience;
 
