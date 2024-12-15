@@ -27,7 +27,7 @@ missionNamespace setVariable ["deadPlayer", _deadPlayerList, true];
 
 //Start spectator mod only ally players
 ["Terminate"] call BIS_fnc_EGSpectator;
-["Initialize", [player, [] , false, false ]] call BIS_fnc_EGSpectator;
+["Initialize", [player, [playerSide] , true, false ]] call BIS_fnc_EGSpectator;
 
 if (isMultiplayer) then 
 {
