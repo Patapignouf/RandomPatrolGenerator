@@ -27,7 +27,7 @@ if (isServer) then
 			diag_log format ["Create group : %1 at position %2 and assault to position %3", _currentGroup, getPos (leader _currentGroup), _thisTargetPosition];
 
 			//Assault for infantry
-			[_currentGroup, _thisTargetPosition] execVM 'enemyManagement\behaviorEngine\doAttack.sqf';
+			[_currentGroup, _thisTargetPosition] call doAttack;
 			//[currentGroup, (currentPosition distance _thisTargetPosition) + 500] spawn lambs_wp_fnc_taskHunt;
 			_currentGroup setFormation "DIAMOND";
 			diag_log format ["Group %1 ready to assault", _j ];

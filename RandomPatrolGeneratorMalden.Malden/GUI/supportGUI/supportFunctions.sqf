@@ -237,7 +237,20 @@ params ["_caller", "_supportType"];
 					for [{_iteration = 0}, {_iteration < _missionDifficulty}, {_iteration = _iteration + 1}] do
 					{	
 						//Spawn attack squad
-						[_caller, selectedHaloLoc, side _caller] call doSpawnAttackSquad;;
+						_allyGroup = [_caller, selectedHaloLoc, side _caller] call doSpawnAttackSquad;
+
+
+						//Clean bots after attack
+						{
+							[_x] spawn 
+							{	
+								params ["_bot"];
+
+								//Delete bot the optimize server after 30 minutes
+								sleep 2500;
+								deleteVehicle _bot;
+							};
+						}	foreach (units _allyGroup);
 					};
 				};
 			};

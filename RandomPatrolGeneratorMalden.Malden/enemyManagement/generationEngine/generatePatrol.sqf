@@ -9,6 +9,6 @@ currentGroupPatrol = objNull;
 		//Patrol generation
 		_currentRandomPatrol = selectRandom _thisAvailableGroup;
 		currentGroupPatrol = [_currentRandomPatrol, getPos _x, east, "Patrol"] call doGenerateEnemyGroup;
-		[currentGroupPatrol, getPos (leader currentGroupPatrol), 200 + random 250] execVM 'enemyManagement\behaviorEngine\doPatrol.sqf';
+		[currentGroupPatrol, getPos (leader currentGroupPatrol), 200 + random 250] call doPatrol;
 	};
 } foreach _thisAvailablePosition;

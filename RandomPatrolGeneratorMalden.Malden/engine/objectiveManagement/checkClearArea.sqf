@@ -16,7 +16,7 @@ for [{_i = 0}, {_i < missionDifficultyParam+1}, {_i = _i + 1}] do
 	currentGroup = [currentRandomGroup, getPos _thisTrigger, east, "DefenseInfantry"] call doGenerateEnemyGroup;
 	
 	//Spawn group
-	[currentGroup, getPos (leader currentGroup), _baseRadius, false] execVM 'enemyManagement\behaviorEngine\doGarrison.sqf';
+	[currentGroup, getPos (leader currentGroup), _baseRadius, false] call doGarrison;
 	_baseRadius = _baseRadius + 20;
 };
 
