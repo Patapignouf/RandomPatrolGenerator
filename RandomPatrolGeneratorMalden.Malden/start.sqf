@@ -995,6 +995,11 @@ if (enableCampaignMode) then
 				PossibleObjectivePosition = PossibleObjectivePosition - [PossibleObjectivePosition#0];
 			};
 
+			//Generate opfor FOB in campaign mode
+			if (random 100<25) then {
+				[] execVM 'enemyManagement\generationEngine\generateOpforFOB.sqf';
+			};
+
 			//Reveal objective to the player
 			if (startIntel == 2) then 
 			{
