@@ -236,7 +236,7 @@ generateObjectiveObject =
 					{
 						[] call doIncrementVehicleSpawnCounter;	
 						[_thisObjectiveToComplete] execVM 'engine\objectiveManagement\completeObjective.sqf'; 
-						[[50, "RPG_ranking_objective_complete"], "engine\rankManagement\rankUpdater.sqf"] remoteExec ['BIS_fnc_execVM', 0];
+						[{[50, "RPG_ranking_objective_complete"] call doUpdateRank}] remoteExec ["call", 0];
 					};
 					//Manage respawn 
 					if (["Respawn",1] call BIS_fnc_getParamValue == 1) then 
@@ -374,7 +374,7 @@ generateObjectiveObject =
 						{
 							[] call doIncrementVehicleSpawnCounter;	
 							[_thisObjective] execVM 'engine\objectiveManagement\completeObjective.sqf'; 
-							[[50, "RPG_ranking_objective_complete"], "engine\rankManagement\rankUpdater.sqf"] remoteExec ['BIS_fnc_execVM', 0];
+							[{[50, "RPG_ranking_objective_complete"] call doUpdateRank}] remoteExec ["call", 0];
 						};
 						//Manage respawn and remove actions from NPC 
 						removeAllActions _object;
@@ -560,7 +560,7 @@ generateObjectiveObject =
 					{
 						[] call doIncrementVehicleSpawnCounter;	
 						[_thisObjective] execVM 'engine\objectiveManagement\completeObjective.sqf'; 
-						[[50, "RPG_ranking_objective_complete"], "engine\rankManagement\rankUpdater.sqf"] remoteExec ['BIS_fnc_execVM', 0];
+						[{[50, "RPG_ranking_objective_complete"] call doUpdateRank}] remoteExec ["call", 0];
 					};
 					//Manage respawn and delete object
 					deleteVehicle _object;
@@ -650,7 +650,7 @@ generateObjectiveObject =
 						{
 							[] call doIncrementVehicleSpawnCounter;	
 							[_thisObjective] execVM 'engine\objectiveManagement\completeObjective.sqf'; 
-							[[50, "RPG_ranking_objective_complete"], "engine\rankManagement\rankUpdater.sqf"] remoteExec ['BIS_fnc_execVM', 0];
+							[{[50, "RPG_ranking_objective_complete"] call doUpdateRank}] remoteExec ["call", 0];
 							
 						};
 						//Manage respawn and remove actions from NPC
@@ -737,7 +737,7 @@ generateObjectiveObject =
 						{
 							[] call doIncrementVehicleSpawnCounter;	
 							[_thisObjective] execVM 'engine\objectiveManagement\completeObjective.sqf'; 
-							[[50, "RPG_ranking_objective_complete"], "engine\rankManagement\rankUpdater.sqf"] remoteExec ['BIS_fnc_execVM', 0];
+							[{[50, "RPG_ranking_objective_complete"] call doUpdateRank}] remoteExec ["call", 0];
 						};
 						//Manage respawn and remove actions from NPC
 						removeAllActions _object;

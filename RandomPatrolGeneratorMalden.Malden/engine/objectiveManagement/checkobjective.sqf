@@ -72,7 +72,7 @@ while {sleep 10; (!RTBComplete)&&(!(missionNamespace getVariable ["isEndMissionR
 		{
 			["taskRTB","SUCCEEDED"] call BIS_fnc_taskSetState;
 			//Reward player for RTB
-			[[50, "RPG_ranking_objective_complete"], "engine\rankManagement\rankUpdater.sqf"] remoteExec ['BIS_fnc_execVM', 0];
+			[{[50, "RPG_ranking_objective_complete"] call doUpdateRank}] remoteExec ["call", 0];
 			RTBComplete = true;
 
 			//Save current loadout

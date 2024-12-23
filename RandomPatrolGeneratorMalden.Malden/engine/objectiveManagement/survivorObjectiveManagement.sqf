@@ -13,7 +13,7 @@
 		[format ["RPG_%1_Death", name player], "SUCCEEDED"] call BIS_fnc_taskSetState;
 
 		//Give player 50 xp point
-		[[50, "RPG_ranking_objective_complete"], "engine\rankManagement\rankUpdater.sqf"] remoteExec ['BIS_fnc_execVM', player];
+		[{[50, "RPG_ranking_objective_complete"] call doUpdateRank}] remoteExec ["call", player];
 	};
 
 };

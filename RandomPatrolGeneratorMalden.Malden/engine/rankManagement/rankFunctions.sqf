@@ -120,7 +120,17 @@ getDisplayableCurrentRank = {
 
 	//Unit current experience
 	_unitExperience = profileNamespace getVariable ["RPG_ranking", 0];
-	_unitFloorRank = (rankList select {_x#1 <= _unitExperience}) #-1;
+
+	//init rank next objective
+	_unitFloorRank = [];
+	if (_unitExperience <0) then 
+	{
+		_unitFloorRank = rankList#0;
+	} else 
+	{
+		_unitFloorRank = (rankList select {_x#1 <= _unitExperience}) #-1;
+	};
+	
 	_unitNextRankList = (rankList select {_x#1 > _unitExperience});
 	
 	if (count _unitNextRankList == 0) then 
@@ -199,4 +209,21 @@ increasePrestige = {
 		[[parseText format ["<img image='\a3\ui_f\data\IGUI\Cfg\holdactions\holdAction_requestleadership_ca.paa' size='3'/><br/><br/><t size='1.2'>You have been promoted to prestige %1</t>", _currentPrestige+1], "intel"], 'engine\hintManagement\addCustomHint.sqf'] remoteExec ['BIS_fnc_execVM', player]; 
 		[[parseText format ["<img image='\a3\ui_f\data\IGUI\Cfg\holdactions\holdAction_requestleadership_ca.paa' size='3'/><br/><br/><t size='1.2'>%2 has been promoted to prestige %1</t>", _currentPrestige+1, name player], "intel"], 'engine\hintManagement\addCustomHint.sqf'] remoteExec ['BIS_fnc_execVM', -clientOwner]; 
 	};
+};
+
+doUpdateRank = {
+	params ["_experienceBonus", "_experienceType", "_experienceCustomParam"];
+
+	if (isNil "_experienceCustomParam") then 
+	{
+		_experienceCustomParam = "";
+	};
+
+	//add experience
+	[_experienceBonus, _experienceType, _experienceCustomParam] call addExperience;
+
+	//adjustrank
+	[player, false] call adjustRank;
+
+	//diag_log format ["RPG_XP_Reward : %1 %2 %3", name player, _experienceBonus, _experienceType, _experienceCustomParam];
 };

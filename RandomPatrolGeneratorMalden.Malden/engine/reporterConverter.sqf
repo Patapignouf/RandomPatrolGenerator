@@ -18,7 +18,7 @@ _choosenPlayer addEventHandler ["Killed", {
 		//Get number of player under 30 meters (min 3 reporter included)
 		if (count ((allPlayers) select {(_choosenPlayer distance _x) < 30}) > 3) then
 		{
-			[[2, "RPG_ranking_objective_complete"], 'engine\rankManagement\rankUpdater.sqf'] remoteExec ['BIS_fnc_execVM', _choosenPlayer];
+			[{[2, "RPG_ranking_objective_complete"] call doUpdateRank}] remoteExec ["call", _choosenPlayer];
 		};
 	};
 };
