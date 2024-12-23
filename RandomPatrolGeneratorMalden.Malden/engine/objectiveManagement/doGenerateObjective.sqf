@@ -180,8 +180,7 @@ generateObjectiveObject =
 					missionNamespace setVariable ["missionFailedObjectives", _missionFailedObjectives, true];
 
 					//Add penalty
-					[[-50,5], 'engine\rankManagement\rankPenalty.sqf'] remoteExec ['BIS_fnc_execVM', _instigator];
-
+					[{[-50,5] call doUpdateRankWithPenalty}] remoteExec ["call", _instigator];
 
 					//Manage task system
 					if ("RealismMode" call BIS_fnc_getParamValue == 1 ) then 
@@ -298,7 +297,7 @@ generateObjectiveObject =
 					if (isPlayer _instigator) then 
 					{
 						//Add penalty
-						[[-50,5], 'engine\rankManagement\rankPenalty.sqf'] remoteExec ['BIS_fnc_execVM', _instigator];
+						[{[-50,5] call doUpdateRankWithPenalty}] remoteExec ["call", _instigator];
 					};
 
 					//Manage objective
@@ -407,7 +406,7 @@ generateObjectiveObject =
 					if (isPlayer _instigator) then 
 					{
 						//Add penalty
-						[[-50,5], 'engine\rankManagement\rankPenalty.sqf'] remoteExec ['BIS_fnc_execVM', _instigator];
+						[{[-50,5] call doUpdateRankWithPenalty}] remoteExec ["call", _instigator];
 					};
 
 					//Manage objective
@@ -446,7 +445,7 @@ generateObjectiveObject =
 					missionNamespace setVariable ["missionFailedObjectives", _missionFailedObjectives, true];
 
 					//Add penalty
-					[[-50,5], 'engine\rankManagement\rankPenalty.sqf'] remoteExec ['BIS_fnc_execVM', _instigator];
+					[{[-50,5] call doUpdateRankWithPenalty}] remoteExec ["call", _instigator];
 
 					//Manage task system
 					if ("RealismMode" call BIS_fnc_getParamValue == 1 ) then 
@@ -776,7 +775,7 @@ generateObjectiveObject =
 					if (isPlayer _instigator) then 
 					{
 						//Add penalty
-						[[-50,5], 'engine\rankManagement\rankPenalty.sqf'] remoteExec ['BIS_fnc_execVM', _instigator];
+						[{[-50,5] call doUpdateRankWithPenalty}] remoteExec ["call", _instigator];
 					};
 
 					//Manage task system

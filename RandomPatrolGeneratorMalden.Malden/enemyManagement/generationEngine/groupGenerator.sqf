@@ -132,7 +132,7 @@ doGenerateEnemyGroup =
 					diag_log format ["Civilian has been killed by : %1 on side %2", name _instigator, side _instigator];
 					[[format ["Civilian has been killed by : %1", name _instigator], "civiliankilled"], 'engine\hintManagement\addCustomHint.sqf'] remoteExec ['BIS_fnc_execVM', side _instigator]; 
 					
-					[[-50,5], 'engine\rankManagement\rankPenalty.sqf'] remoteExec ['BIS_fnc_execVM', _instigator];
+					[{[-50,5] call doUpdateRankWithPenalty}] remoteExec ["call", _instigator];
 				}; 
 			}];
 
@@ -219,7 +219,7 @@ doGenerateHostileCivilianGroup =
 				diag_log format ["Civilian has been killed by : %1 on side %2", name _instigator, side _instigator];
 				[[format ["Civilian has been killed by : %1", name _instigator], "civiliankilled"], 'engine\hintManagement\addCustomHint.sqf'] remoteExec ['BIS_fnc_execVM', side _instigator]; 
 				
-				[[-50,5], 'engine\rankManagement\rankPenalty.sqf'] remoteExec ['BIS_fnc_execVM', _instigator];
+				[{[-50,5] call doUpdateRankWithPenalty}] remoteExec ["call", _instigator];
 			}; 
 		}];
 	} foreach (units _currentGroupPatrol);

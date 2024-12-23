@@ -639,7 +639,7 @@ _KilledEH = player addEventHandler ["Killed", {
 			[[format ["<t align = 'center' shadow = '2' color='#0046ff' size='1.5' font='PuristaMedium' >High Command</t><br /><t color='#ffffff' size='1.5' font='PuristaMedium' shadow = '2' >%1</t>", _textToSpeech], "PLAIN DOWN", -1, true, true]] remoteExec ["titleText", side _instigator, true];
 			if (_instigator != _unit) then 
 			{
-				[[-50,5], 'engine\rankManagement\rankPenalty.sqf'] remoteExec ['BIS_fnc_execVM', _instigator];
+				[{[-50,5] call doUpdateRankWithPenalty}] remoteExec ["call", _instigator];
 			};
 		};
 	};
