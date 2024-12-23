@@ -14,8 +14,10 @@ saveRank = {
 	params ["_experience"];
 
 	//Save unit rank
-	profileNamespace setVariable ["RPG_ranking", _experience];
-	saveProfileNamespace;
+	if (missionNameSpace getVariable ["enableExperienceSave", 0] == 1) then 
+	{
+		profileNamespace setVariable ["RPG_ranking", _experience];
+	};
 	true
 };
 
