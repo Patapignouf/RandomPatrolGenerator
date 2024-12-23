@@ -15,7 +15,7 @@ if !(isNil "_NextParamsToManage") then
 
 
 paramsToManageNow = +paramsToManage ;
-paramsToManageNow resize 10; //max 7 parameters per page
+paramsToManageNow resize 12; //max 7 parameters per page
 paramsToManageNow = paramsToManageNow arrayIntersect paramsToManage;
 paramsToManageLater = paramsToManage - paramsToManageNow;
 
