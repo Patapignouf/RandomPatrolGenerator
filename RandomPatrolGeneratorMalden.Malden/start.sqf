@@ -19,8 +19,9 @@ private _generateHarass = compile preprocessFileLineNumbers "enemyManagement\gen
 
 waitUntil {isNull _handleEnvironmentInitialization};
 
-//Clean area WIP
+//Wait players to connect
 waitUntil {count allPlayers != 0};
+waitUntil {  {getPlayerUID _x != ""} count allPlayers == count allPlayers};
 
 //Check server mods
 [] call doCheckRunningModsOnServer;
@@ -741,7 +742,7 @@ switch (startIntel) do
 					if (count((allPlayers select {alive _x && side _x == blufor} ) inAreaArray initCityLocationTrigger) >0) then 
 					{
 						_hasContactCivilian = true;
-						[[10, "RPG_ranking_objective_complete"], 'engine\rankManagement\rankUpdater.sqf'] remoteExec ['BIS_fnc_execVM', blufor];
+						[{[10, "RPG_ranking_objective_complete"] call doUpdateRank}] remoteExec ["call", blufor];
 						["taskContactCiv","SUCCEEDED"] call BIS_fnc_taskSetState;
 					};
 				};
@@ -786,7 +787,7 @@ switch (startIntel) do
 						{
 							_hasContactCivilian = true;
 							["taskContactCiv","SUCCEEDED"] call BIS_fnc_taskSetState;
-							[[10, "RPG_ranking_objective_complete"], 'engine\rankManagement\rankUpdater.sqf'] remoteExec ['BIS_fnc_execVM', blufor];
+							[{[10, "RPG_ranking_objective_complete"] call doUpdateRank}] remoteExec ["call", blufor];
 						};
 					};
 				};

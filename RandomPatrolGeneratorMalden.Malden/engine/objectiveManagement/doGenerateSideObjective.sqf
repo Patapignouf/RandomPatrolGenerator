@@ -45,7 +45,7 @@ if ((_objectiveID call BIS_fnc_taskState ) != "SUCCEEDED" && !(missionNameSpace 
 
 				[_objectiveID, "SUCCEEDED"] call BIS_fnc_taskSetState;
 				missionNameSpace setVariable [format ["RPG_%1", _objectiveID], true, true];
-				[[25, "RPG_ranking_objective_complete"], "engine\rankManagement\rankUpdater.sqf"] remoteExec ['BIS_fnc_execVM', 0];
+				[{[25, "RPG_ranking_objective_complete"] call doUpdateRank}] remoteExec ["call", 0];
 			};
 		};
 		case "DestroyAirVehicle":
@@ -65,14 +65,14 @@ if ((_objectiveID call BIS_fnc_taskState ) != "SUCCEEDED" && !(missionNameSpace 
 					_sideTaskID = _unit getVariable "sideTaskAssociated";
 					[_sideTaskID, "SUCCEEDED"] call BIS_fnc_taskSetState;
 					missionNameSpace setVariable [format ["RPG_%1", _unit getVariable "sideObjectiveID"], true, true];
-					[[25, "RPG_ranking_objective_complete"], "engine\rankManagement\rankUpdater.sqf"] remoteExec ['BIS_fnc_execVM', 0];
+					[{[25, "RPG_ranking_objective_complete"] call doUpdateRank}] remoteExec ["call", 0];
 				}];
 			} else 
 			{
 				//Already killed
 				[_objectiveID, "SUCCEEDED"] call BIS_fnc_taskSetState;
 				missionNameSpace setVariable [format ["RPG_%1", _objectiveID], true, true];
-				[[25, "RPG_ranking_objective_complete"], "engine\rankManagement\rankUpdater.sqf"] remoteExec ['BIS_fnc_execVM', 0];
+				[{[25, "RPG_ranking_objective_complete"] call doUpdateRank}] remoteExec ["call", 0];
 			};
 		};
 		case "DestroyArmored":
@@ -96,7 +96,7 @@ if ((_objectiveID call BIS_fnc_taskState ) != "SUCCEEDED" && !(missionNameSpace 
 						_sideTaskID = _unit getVariable "sideTaskAssociated";
 						[_sideTaskID, "SUCCEEDED"] call BIS_fnc_taskSetState;
 						missionNameSpace setVariable [format ["RPG_%1", _unit getVariable "sideObjectiveID"], true, true];
-						[[25, "RPG_ranking_objective_complete"], "engine\rankManagement\rankUpdater.sqf"] remoteExec ['BIS_fnc_execVM', 0];
+						[{[25, "RPG_ranking_objective_complete"] call doUpdateRank}] remoteExec ["call", 0];
 					};
 				}];
 
@@ -106,7 +106,7 @@ if ((_objectiveID call BIS_fnc_taskState ) != "SUCCEEDED" && !(missionNameSpace 
 				//Already killed
 				[_objectiveID, "SUCCEEDED"] call BIS_fnc_taskSetState;
 				missionNameSpace setVariable [format ["RPG_%1", _objectiveID], true, true];
-				[[25, "RPG_ranking_objective_complete"], "engine\rankManagement\rankUpdater.sqf"] remoteExec ['BIS_fnc_execVM', 0];
+				[{[25, "RPG_ranking_objective_complete"] call doUpdateRank}] remoteExec ["call", 0];
 			};
 		};
 		case "DestroyMortar":
@@ -126,14 +126,14 @@ if ((_objectiveID call BIS_fnc_taskState ) != "SUCCEEDED" && !(missionNameSpace 
 					_sideTaskID = _unit getVariable "sideTaskAssociated";
 					[_sideTaskID, "SUCCEEDED"] call BIS_fnc_taskSetState;
 					missionNameSpace setVariable [format ["RPG_%1", _unit getVariable "sideObjectiveID"], true, true];
-					[[25, "RPG_ranking_objective_complete"], "engine\rankManagement\rankUpdater.sqf"] remoteExec ['BIS_fnc_execVM', 0];
+					[{[25, "RPG_ranking_objective_complete"] call doUpdateRank}] remoteExec ["call", 0];
 				}];
 			} else 
 			{
 				//Already killed
 				[_objectiveID, "SUCCEEDED"] call BIS_fnc_taskSetState;
 				missionNameSpace setVariable [format ["RPG_%1", _objectiveID], true, true];
-				[[25, "RPG_ranking_objective_complete"], "engine\rankManagement\rankUpdater.sqf"] remoteExec ['BIS_fnc_execVM', 0];
+				[{[25, "RPG_ranking_objective_complete"] call doUpdateRank}] remoteExec ["call", 0];
 			};
 		};
 		default

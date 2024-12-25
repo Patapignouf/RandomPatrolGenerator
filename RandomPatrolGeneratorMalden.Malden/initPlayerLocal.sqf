@@ -7,6 +7,7 @@ forceBluforSetup = "ForceBluforSetup" call BIS_fnc_getParamValue;
 
 //Wait player load
 if (!hasInterface || isDedicated) exitWith {};
+waitUntil {alive player};
 waitUntil {!isNull player && (getClientStateNumber>=10||!isMultiplayer)};
 
 diag_log format ["Setup Player %1 at position 0", name player];
@@ -632,14 +633,14 @@ _KilledEH = player addEventHandler ["Killed", {
 			//Reward PvP kill
 			_distance = _instigator distance _unit;
 			if (_distance<100) then {_distance = nil};
-			[[1, "RPG_ranking_infantry_kill", _distance], 'engine\rankManagement\rankUpdater.sqf'] remoteExec ['BIS_fnc_execVM', _instigator];
+			[{[1, "RPG_ranking_infantry_kill", _distance] call doUpdateRank}] remoteExec ["call", _instigator];
 		} else 
 		{
 			_textToSpeech = format ["%1 has been killed by his teammate %2, watch your fire",name _unit, name _instigator];
 			[[format ["<t align = 'center' shadow = '2' color='#0046ff' size='1.5' font='PuristaMedium' >High Command</t><br /><t color='#ffffff' size='1.5' font='PuristaMedium' shadow = '2' >%1</t>", _textToSpeech], "PLAIN DOWN", -1, true, true]] remoteExec ["titleText", side _instigator, true];
 			if (_instigator != _unit) then 
 			{
-				[[-50,5], 'engine\rankManagement\rankPenalty.sqf'] remoteExec ['BIS_fnc_execVM', _instigator];
+				[{[-50,5] call doUpdateRankWithPenalty}] remoteExec ["call", _instigator];
 			};
 		};
 	};

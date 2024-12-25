@@ -44,7 +44,7 @@ params ["_caller", "_currentFaction", "_botteamClass", "_botteamType"];
 					
 					if (_instigator != _unit) then 
 					{
-						[[-50,5], 'engine\rankManagement\rankPenalty.sqf'] remoteExec ['BIS_fnc_execVM', _instigator];
+						[{[-50,5] call doUpdateRankWithPenalty}] remoteExec ["call", _instigator];
 					};
 				};
 

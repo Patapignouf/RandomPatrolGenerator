@@ -99,11 +99,11 @@ if (_isFirstStart) then
 //Add repair event (no direct event for repair found, this is based on animation, it can obviously be improved)
 _animDoneEH = _unit addEventHandler ["AnimDone", {
 	params ["_unit", "_anim"];
-	if (_anim == "acts_carfixingwheel" || _anim == "amovpknlmstpsnonwnondnon") then 
+	if ((_anim == "acts_carfixingwheel" || _anim == "amovpknlmstpsnonwnondnon") && isplayer _unit) then 
 	{
 		// diag_log _anim;
 		// hint format ["P1 : %1\nP2 : %2",_unit,_anim];
-		[[1, "RPG_ranking_repair"], 'engine\rankManagement\rankUpdater.sqf'] remoteExec ['BIS_fnc_execVM', _unit];
+		[{[1, "RPG_ranking_repair"] call doUpdateRank}] remoteExec ["call", _unit];
 	};
 }];
 player setVariable ["AnimDoneEH", _animDoneEH, true];
@@ -254,7 +254,7 @@ if (isClass (configFile >> "CfgPatches" >> "ace_medical")) then
 					// Grant 1 XP reward for every 4 points of value of medical treatments
 					if (_valueOfMedicItemsUsed_tmp >= 4) then 
 					{
-						[[(floor (_valueOfMedicItemsUsed_tmp / 4)), "RPG_ranking_heal"], 'engine\rankManagement\rankUpdater.sqf'] remoteExec ['BIS_fnc_execVM', _caller];
+						[{[(floor (_valueOfMedicItemsUsed_tmp / 4)), "RPG_ranking_heal"] call doUpdateRank}] remoteExec ["call", _caller];
 						_caller setVariable ["valueOfMedicItemsUsed", (_valueOfMedicItemsUsed_tmp % 4)];
 					} else 
 					{
@@ -291,7 +291,7 @@ if (isClass (configFile >> "CfgPatches" >> "ace_medical")) then
 
 				{
 					// Grant portion of the shared xp to players based on individual participation.
-					[[round(_totalXpReward * ((_y select 1) / _totalParticipationScore)), "RPG_ranking_heal"], 'engine\rankManagement\rankUpdater.sqf'] remoteExec ['BIS_fnc_execVM', _y select 0];
+					[{[round(_totalXpReward * ((_y select 1) / _totalParticipationScore)), "RPG_ranking_heal"] call doUpdateRank}] remoteExec ["call", _y select 0];
 				} forEach _medicalParticipationHashMap;
 			};
 		};
@@ -319,7 +319,7 @@ if (isClass (configFile >> "CfgPatches" >> "ace_medical")) then
 			if (!([_healer,_injured] call BIS_fnc_areEqual)) then 
 			{
 				if (damage _injured < _damage) then {
-					[[1, 'RPG_ranking_heal'], 'engine\rankManagement\rankUpdater.sqf'] remoteExec ['BIS_fnc_execVM', _healer];
+					[{[1, 'RPG_ranking_heal'] call doUpdateRank}] remoteExec ['call', _healer];
 				};
 			};
 		};

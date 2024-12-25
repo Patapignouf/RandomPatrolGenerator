@@ -42,7 +42,7 @@ doGenerateEnemyGroup =
 				{
 					_unit setVariable ["isSuppressed", true, true];
 					//hint format ["unit : %1 \ndistance : %2 \ninstigator : %3\n suppression level : %4",name _unit, _distance, name _instigator, getSuppression _unit];
-					[[1, "RPG_ranking_suppress"], 'engine\rankManagement\rankUpdater.sqf'] remoteExec ['BIS_fnc_execVM', _instigator];
+					[{[1, "RPG_ranking_suppress"] call doUpdateRank}] remoteExec ["call", _instigator];
 					
 					//Reset suppressed score on the unit after 60 sec
 					[_unit] spawn {
@@ -62,7 +62,7 @@ doGenerateEnemyGroup =
 				{
 					_distance = _instigator distance _unit;
 					if (_distance<100) then {_distance = nil};
-					[[1, "RPG_ranking_infantry_kill", _distance], 'engine\rankManagement\rankUpdater.sqf'] remoteExec ['BIS_fnc_execVM', _instigator];				
+					[{[1, "RPG_ranking_infantry_kill", _distance] call doUpdateRank}] remoteExec ["call", _instigator];
 				} else {
 					//Debug IA killed log
 					diag_log format ["The IA %1 has been killed by %2", name _unit, name _instigator];
@@ -132,7 +132,7 @@ doGenerateEnemyGroup =
 					diag_log format ["Civilian has been killed by : %1 on side %2", name _instigator, side _instigator];
 					[[format ["Civilian has been killed by : %1", name _instigator], "civiliankilled"], 'engine\hintManagement\addCustomHint.sqf'] remoteExec ['BIS_fnc_execVM', side _instigator]; 
 					
-					[[-50,5], 'engine\rankManagement\rankPenalty.sqf'] remoteExec ['BIS_fnc_execVM', _instigator];
+					[{[-50,5] call doUpdateRankWithPenalty}] remoteExec ["call", _instigator];
 				}; 
 			}];
 
@@ -219,7 +219,7 @@ doGenerateHostileCivilianGroup =
 				diag_log format ["Civilian has been killed by : %1 on side %2", name _instigator, side _instigator];
 				[[format ["Civilian has been killed by : %1", name _instigator], "civiliankilled"], 'engine\hintManagement\addCustomHint.sqf'] remoteExec ['BIS_fnc_execVM', side _instigator]; 
 				
-				[[-50,5], 'engine\rankManagement\rankPenalty.sqf'] remoteExec ['BIS_fnc_execVM', _instigator];
+				[{[-50,5] call doUpdateRankWithPenalty}] remoteExec ["call", _instigator];
 			}; 
 		}];
 	} foreach (units _currentGroupPatrol);

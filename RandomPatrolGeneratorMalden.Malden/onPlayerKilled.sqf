@@ -18,7 +18,7 @@ addMissionEventHandler ["EachFrame",
 player setVariable ["deathNumber", (player getVariable ["deathNumber", 0])+1, true];
 
 //Add experience penalty on death
-[[-10, 1], 'engine\rankManagement\rankPenalty.sqf'] remoteExec ['BIS_fnc_execVM', player];
+[{[-10, 1] call doUpdateRankWithPenalty}] remoteExec ["call", player];
 
 //Add player to a dead player base | This will block disconnection/connection method to respawn 
 _deadPlayerList = missionNamespace getVariable "deadPlayer";

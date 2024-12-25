@@ -134,7 +134,7 @@ _RcsButtonObjective ctrlAddEventHandler[ "ButtonClick",
 			//Reveal minor intel for the caller
 			[[player, "civilianAsking"], 'engine\objectiveManagement\revealMinorIntel.sqf'] remoteExec ['BIS_fnc_execVM', player];
 
-			[[1, "RPG_ranking_intel_collect"], 'engine\rankManagement\rankUpdater.sqf'] remoteExec ['BIS_fnc_execVM', player];
+			[{[1, "RPG_ranking_intel_collect"] call doUpdateRank}] remoteExec ["call", player];
 			missionNamespace setVariable ["TAG_fnc_civsAsked",(round random 1),true];
 		};
 

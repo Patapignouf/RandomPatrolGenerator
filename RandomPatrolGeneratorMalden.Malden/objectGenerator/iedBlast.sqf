@@ -43,7 +43,7 @@ _fakeIed hideObjectGlobal true;
 			[1,["The IED has been defused", "PLAIN", 0.5]] remoteExec ["cutText", _caller];
 
 			//Reward the defuse
-			[[5, "RPG_ied_defuse"], "engine\rankManagement\rankUpdater.sqf"] remoteExec ['BIS_fnc_execVM', _caller];
+			[{[5, "RPG_ied_defuse"] call doUpdateRank}] remoteExec ["call", _caller];
 		} else 	
 		{
 			//Explode the IED

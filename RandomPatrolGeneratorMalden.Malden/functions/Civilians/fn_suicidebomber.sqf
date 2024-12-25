@@ -58,7 +58,7 @@ _civilian addEventHandler ["Killed", {
 	// Reward the kill
 	_distance = _instigator distance _unit;
 	if (_distance<100) then {_distance = nil};
-	[[1, "RPG_ranking_infantry_kill", _distance], 'engine\rankManagement\rankUpdater.sqf'] remoteExec ['BIS_fnc_execVM', _instigator];
+	[{[1, "RPG_ranking_infantry_kill", _distance] call doUpdateRank}] remoteExec ["call", _instigator];
 
 	// Check if the civilian has already exploded
 	_exploded = _unit getVariable "exploded";
@@ -113,7 +113,8 @@ _civilian addEventHandler ["Killed", {
 				[1, ["The vest has been defused", "PLAIN", 0.5]] remoteExec ["cutText", _caller];
 
 				// Reward the defuse
-				[[5, "RPG_ied_defuse"], "engine\rankManagement\rankUpdater.sqf"] remoteExec ['BIS_fnc_execVM', _caller];
+				[{[5, "RPG_ied_defuse"] call doUpdateRank}] remoteExec ["call", _caller];
+
 			} else {
 				// Explode the vest
 				["M_Titan_AT", (getPos _object), false] call explosions_fnc_doAnExplosion;

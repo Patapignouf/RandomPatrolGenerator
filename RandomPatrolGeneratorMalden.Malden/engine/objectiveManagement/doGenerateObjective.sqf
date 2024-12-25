@@ -180,8 +180,7 @@ generateObjectiveObject =
 					missionNamespace setVariable ["missionFailedObjectives", _missionFailedObjectives, true];
 
 					//Add penalty
-					[[-50,5], 'engine\rankManagement\rankPenalty.sqf'] remoteExec ['BIS_fnc_execVM', _instigator];
-
+					[{[-50,5] call doUpdateRankWithPenalty}] remoteExec ["call", _instigator];
 
 					//Manage task system
 					if ("RealismMode" call BIS_fnc_getParamValue == 1 ) then 
@@ -236,7 +235,7 @@ generateObjectiveObject =
 					{
 						[] call doIncrementVehicleSpawnCounter;	
 						[_thisObjectiveToComplete] execVM 'engine\objectiveManagement\completeObjective.sqf'; 
-						[[50, "RPG_ranking_objective_complete"], "engine\rankManagement\rankUpdater.sqf"] remoteExec ['BIS_fnc_execVM', 0];
+						[{[50, "RPG_ranking_objective_complete"] call doUpdateRank}] remoteExec ["call", 0];
 					};
 					//Manage respawn 
 					if (["Respawn",1] call BIS_fnc_getParamValue == 1) then 
@@ -298,7 +297,7 @@ generateObjectiveObject =
 					if (isPlayer _instigator) then 
 					{
 						//Add penalty
-						[[-50,5], 'engine\rankManagement\rankPenalty.sqf'] remoteExec ['BIS_fnc_execVM', _instigator];
+						[{[-50,5] call doUpdateRankWithPenalty}] remoteExec ["call", _instigator];
 					};
 
 					//Manage objective
@@ -374,7 +373,7 @@ generateObjectiveObject =
 						{
 							[] call doIncrementVehicleSpawnCounter;	
 							[_thisObjective] execVM 'engine\objectiveManagement\completeObjective.sqf'; 
-							[[50, "RPG_ranking_objective_complete"], "engine\rankManagement\rankUpdater.sqf"] remoteExec ['BIS_fnc_execVM', 0];
+							[{[50, "RPG_ranking_objective_complete"] call doUpdateRank}] remoteExec ["call", 0];
 						};
 						//Manage respawn and remove actions from NPC 
 						removeAllActions _object;
@@ -407,7 +406,7 @@ generateObjectiveObject =
 					if (isPlayer _instigator) then 
 					{
 						//Add penalty
-						[[-50,5], 'engine\rankManagement\rankPenalty.sqf'] remoteExec ['BIS_fnc_execVM', _instigator];
+						[{[-50,5] call doUpdateRankWithPenalty}] remoteExec ["call", _instigator];
 					};
 
 					//Manage objective
@@ -446,7 +445,7 @@ generateObjectiveObject =
 					missionNamespace setVariable ["missionFailedObjectives", _missionFailedObjectives, true];
 
 					//Add penalty
-					[[-50,5], 'engine\rankManagement\rankPenalty.sqf'] remoteExec ['BIS_fnc_execVM', _instigator];
+					[{[-50,5] call doUpdateRankWithPenalty}] remoteExec ["call", _instigator];
 
 					//Manage task system
 					if ("RealismMode" call BIS_fnc_getParamValue == 1 ) then 
@@ -560,7 +559,7 @@ generateObjectiveObject =
 					{
 						[] call doIncrementVehicleSpawnCounter;	
 						[_thisObjective] execVM 'engine\objectiveManagement\completeObjective.sqf'; 
-						[[50, "RPG_ranking_objective_complete"], "engine\rankManagement\rankUpdater.sqf"] remoteExec ['BIS_fnc_execVM', 0];
+						[{[50, "RPG_ranking_objective_complete"] call doUpdateRank}] remoteExec ["call", 0];
 					};
 					//Manage respawn and delete object
 					deleteVehicle _object;
@@ -650,7 +649,7 @@ generateObjectiveObject =
 						{
 							[] call doIncrementVehicleSpawnCounter;	
 							[_thisObjective] execVM 'engine\objectiveManagement\completeObjective.sqf'; 
-							[[50, "RPG_ranking_objective_complete"], "engine\rankManagement\rankUpdater.sqf"] remoteExec ['BIS_fnc_execVM', 0];
+							[{[50, "RPG_ranking_objective_complete"] call doUpdateRank}] remoteExec ["call", 0];
 							
 						};
 						//Manage respawn and remove actions from NPC
@@ -737,7 +736,7 @@ generateObjectiveObject =
 						{
 							[] call doIncrementVehicleSpawnCounter;	
 							[_thisObjective] execVM 'engine\objectiveManagement\completeObjective.sqf'; 
-							[[50, "RPG_ranking_objective_complete"], "engine\rankManagement\rankUpdater.sqf"] remoteExec ['BIS_fnc_execVM', 0];
+							[{[50, "RPG_ranking_objective_complete"] call doUpdateRank}] remoteExec ["call", 0];
 						};
 						//Manage respawn and remove actions from NPC
 						removeAllActions _object;
@@ -776,7 +775,7 @@ generateObjectiveObject =
 					if (isPlayer _instigator) then 
 					{
 						//Add penalty
-						[[-50,5], 'engine\rankManagement\rankPenalty.sqf'] remoteExec ['BIS_fnc_execVM', _instigator];
+						[{[-50,5] call doUpdateRankWithPenalty}] remoteExec ["call", _instigator];
 					};
 
 					//Manage task system
