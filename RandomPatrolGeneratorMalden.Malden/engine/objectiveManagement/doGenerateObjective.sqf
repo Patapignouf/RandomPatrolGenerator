@@ -365,8 +365,7 @@ generateObjectiveObject =
 						_object enableAI "PATH";
 						removeAllWeapons _object;
 
-						_textToSpeech = format ["Thank you"];
-						[[format ["<t align = 'center' shadow = '2' color='#0046ff' size='1.5' font='PuristaMedium' >Hostage</t><br /><t color='#ffffff' size='1.5' font='PuristaMedium' shadow = '2' >%1</t>", _textToSpeech], "PLAIN DOWN", -1, true, true]] remoteExec ["titleText", side _caller, true];
+						[{["STR_RPG_OBJ_HOSTAGE", "STR_RPG_OBJ_HOSTAGE_THANK"] call doDialog}] remoteExec ["call", side _caller];
 
 						//Manage player's feedback
 						if ("RealismMode" call BIS_fnc_getParamValue == 1) then 
@@ -502,8 +501,7 @@ generateObjectiveObject =
 					_objectiveObject setVariable ["associatedTask", _thisObjective, true];
 							
 					//Tell the player that enemy wave is incoming
-					_textToSpeech = format ["We have spotted enemies around your position, be ready"];
-					[[format ["<t align = 'center' shadow = '2' color='#0046ff' size='1.5' font='PuristaMedium' >High Command</t><br /><t color='#ffffff' size='1.5' font='PuristaMedium' shadow = '2' >%1</t>", _textToSpeech], "PLAIN DOWN", -1, true, true]] remoteExec ["titleText", _caller, true];
+					[{["STR_RPG_HC_NAME", "STR_RPG_HC_OPFOR_AROUND"] call doDialog}] remoteExec ["call", side _caller];
 
 					//Start defend
 					[[_objectiveObject], 'engine\objectiveManagement\checkDefendArea.sqf'] remoteExec ['BIS_fnc_execVM', 2];

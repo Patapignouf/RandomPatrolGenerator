@@ -16,8 +16,7 @@ if (_extractSupportCounter > 0) then
 	[[selectRandom (bluforUnarmedVehicleChopper+bluforExtractVehicleChopper), _position], 'engine\doVehicleVehicleExtract.sqf'] remoteExec ['BIS_fnc_execVM', 2];
 
 	//Hint to extract call
-	_textToSpeech = format ["Extract called on position %1", mapGridPosition _position];
-	[[format ["<t align = 'center' shadow = '2' color='#0046ff' size='1.5' font='PuristaMedium' >High Command</t><br /><t color='#ffffff' size='1.5' font='PuristaMedium' shadow = '2' >%1</t>", _textToSpeech], "PLAIN DOWN", -1, true, true]] remoteExec ["titleText", blufor, true];
+	[{["STR_RPG_HC_NAME", "STR_RPG_HC_ARTILLERY", mapGridPosition _position] call doDialog}] remoteExec ["call", blufor];
 
 	//Play random radio sound
 	[] spawn {

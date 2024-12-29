@@ -55,9 +55,7 @@ if (isServer) then
 				};
 
 				//Send message
-				_textToSpeech = format ["A friendly squad will attack %1, could you support them ?", mapGridPosition (_locationToAttack)];
-				[[format ["<t align = 'center' shadow = '2' color='#0046ff' size='1.5' font='PuristaMedium' >High Command</t><br /><t color='#ffffff' size='1.5' font='PuristaMedium' shadow = '2' >%1</t>", _textToSpeech], "PLAIN DOWN", -1, true, true]] remoteExec ["titleText", blufor, true];
-
+				[{["STR_RPG_HC_NAME", "STR_RPG_HC_FRIENDLY_SQUAD", mapGridPosition (_locationToAttack)] call doDialog}] remoteExec ["call", blufor];
 				sleep (300 + random 300);
 			};
 		};

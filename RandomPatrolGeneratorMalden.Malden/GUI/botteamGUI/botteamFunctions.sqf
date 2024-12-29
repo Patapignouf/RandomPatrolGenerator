@@ -38,9 +38,7 @@ params ["_caller", "_currentFaction", "_botteamClass", "_botteamType"];
 				diag_log format ["%1 has been killed by : %2", name _unit, name _instigator];
 				if (isPlayer _instigator) then 
 				{
-					// [[format ["%1 has been killed by his teammate %2",name _unit, name _instigator], "teamkill"], 'engine\hintManagement\addCustomHint.sqf'] remoteExec ['BIS_fnc_execVM', side _instigator];
-					_textToSpeech = format ["%1 has been killed by his teammate %2, watch your fire",name _unit, name _instigator];
-					[[format ["<t align = 'center' shadow = '2' color='#0046ff' size='1.5' font='PuristaMedium' >High Command</t><br /><t color='#ffffff' size='1.5' font='PuristaMedium' shadow = '2' >%1</t>", _textToSpeech], "PLAIN DOWN", -1, true, true]] remoteExec ["titleText", side _instigator, true];
+					[{["STR_RPG_HC_NAME", "STR_RPG_HC_TEAMKILL", name _unit, name _instigator] call doDialog}] remoteExec ["call", side _instigator];
 					
 					if (_instigator != _unit) then 
 					{

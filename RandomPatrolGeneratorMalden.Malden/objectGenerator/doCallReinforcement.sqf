@@ -13,8 +13,7 @@ if (_reinforcementSupportCounter > 0) then
 	};
 
 	//Hint to extract call
-	_textToSpeech = format ["Copy %1, we will send you reinforcement in 60 seconds", name _caller];
-	[[format ["<t align = 'center' shadow = '2' color='#0046ff' size='1.5' font='PuristaMedium' >High Command</t><br /><t color='#ffffff' size='1.5' font='PuristaMedium' shadow = '2' >%1</t>", _textToSpeech], "PLAIN DOWN", -1, true, true]] remoteExec ["titleText", blufor, true];
+	[{["STR_RPG_HC_NAME", "STR_RPG_HC_ARTILLERY", name _caller] call doDialog}] remoteExec ["call", blufor];
 
 	//Play random radio sound
 	[] spawn {

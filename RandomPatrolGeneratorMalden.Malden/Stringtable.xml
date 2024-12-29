@@ -1,0 +1,508 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<Project name="RPG">
+	<Package name="TOBEOPTIMIZE">
+		<Container name="SETUP">
+			<Key ID="STR_RPG_LOADING_WAIT">
+				<Original>Please wait while mission is generating</Original>
+				<English>Please wait while mission is generating</English>
+				<French>Génération de la mission en cours merci de patienter</French>
+			</Key>
+            <Key ID="STR_RPG_SETUP_FACTIONS">
+				<Original>Setup factions database</Original>
+				<English>Setup factions database</English>
+				<French>Mise en place des factions</French>
+			</Key>
+            <Key ID="STR_RPG_SETUP_AREA">
+				<Original>Finding the best operation area</Original>
+				<English>Finding the best operation area</English>
+				<French>Recherche des meilleurs emplacements de missions</French>
+			</Key>
+            <Key ID="STR_RPG_SETUP_OBJ">
+				<Original>Generating objectives</Original>
+				<English>Generating objectives</English>
+				<French>Génération des objectifs</French>
+			</Key>
+            <Key ID="STR_RPG_SETUP_CIV">
+				<Original>Generating civilians city</Original>
+				<English>Generating civilians city</English>
+				<French>Génération des civils</French>
+			</Key>
+            <Key ID="STR_RPG_SETUP_IND">
+				<Original>Generating independent base</Original>
+				<English>Generating independent base</English>
+				<French>Génération des civils</French>
+			</Key>
+            <Key ID="STR_RPG_SETUP_BLU">
+				<Original>Generating blufor base</Original>
+				<English>Generating blufor base</English>
+				<French>Génération de BLUFOR</French>
+			</Key>
+            <Key ID="STR_RPG_SETUP_OPF">
+				<Original>Generating opfor patrols, mortars and FOB</Original>
+				<English>Generating opfor patrols, mortars and FOB</English>
+				<French>Génération d'OPFOR</French>
+			</Key>
+            <Key ID="STR_RPG_SETUP_LAST">
+				<Original>One last thing...</Original>
+				<English>One last thing...</English>
+				<French>Une dernière chose...</French>
+			</Key>
+		</Container>
+        <Container name="OBJECTIVES">
+            <Key ID="STR_RPG_OBJ_SURVIVE">
+				<Original>Survive</Original>
+				<English>Survive</English>
+				<French>Survivre</French>
+			</Key>
+            <Key ID="STR_RPG_OBJ_SURVIVE_TEXT">
+				<Original>Finish the mission without dying</Original>
+				<English>Finish the mission without dying</English>
+				<French>Terminer la mission sans mourir</French>
+			</Key>
+            <Key ID="STR_RPG_OBJ_CONTACT_CIV">
+				<Original>Contact civilians</Original>
+				<English>Contact civilians</English>
+				<French>Contacter les civils</French>
+			</Key>
+            <Key ID="STR_RPG_OBJ_CONTACT_CIV_TEXT">
+				<Original>Contact civilians at %1 to get tasks</Original>
+				<English>Prendre contact avec les civils près de %1. Ils sauront vous donner les localisations des objectifs clefs de la région.</English>
+				<French></French>
+			</Key>
+            <Key ID="STR_RPG_OBJ_EXTRACT">
+				<Original>RTB or Extract</Original>
+				<English>RTB or Extract</English>
+				<French>Retour base ou extraction</French>
+			</Key>
+            <Key ID="STR_RPG_OBJ_EXTRACT_TEXT">
+				<Original>Return to your initial base or extract area of operation</Original>
+				<English>Return to your initial base or extract area of operation</English>
+				<French>Retournez à votre base ou quittez la zone de mission</French>
+			</Key>
+            <Key ID="STR_RPG_OBJ_SUPPLY">
+				<Original>Supply case</Original>
+				<English>Supply case</English>
+				<French>Caisse de ravitaillement</French>
+			</Key>
+            <Key ID="STR_RPG_OBJ_SUPPLY_TEXT">
+				<Original>There's %1 near %2. Can you bring it to %3...</Original>
+				<English>There's %1 near %2. Can you bring it to %3...</English>
+				<French>%1 a été repéré près de %2. Pouvez-vous l'apporter à %3</French>
+			</Key>
+            <Key ID="STR_RPG_OBJ_AMMO">
+				<Original>Ammo cache</Original>
+				<English>Ammo cache</English>
+				<French>Cache de munitions</French>
+			</Key>
+            <Key ID="STR_RPG_OBJ_AMMO_TEXT">
+				<Original>There's %1 near %2. Can you bring it to %3 or destroy it...</Original>
+				<English>There's %1 near %2. Can you bring it to %3 or destroy it...</English>
+				<French>Il y a une %1 près de %2. Pouvez vous l'apporter à %3 ou bien la détruire</French>
+			</Key>
+            <Key ID="STR_RPG_OBJ_HVT">
+				<Original>HVT</Original>
+				<English>HVT</English>
+				<French>Cible</French>
+			</Key>
+            <Key ID="STR_RPG_OBJ_HVT_TEXT">
+				<Original>There's an enemy %1 near %2. You have to kill him...</Original>
+				<English>There's an enemy %1 near %2. You have to kill him...</English>
+				<French>Il y a une cible importante %1 à %2. Vous devez l'éliminer... </French>
+			</Key>
+            <Key ID="STR_RPG_OBJ_VIP">
+				<Original>VIP</Original>
+				<English>VIP</English>
+				<French>VIP</French>
+			</Key>
+            <Key ID="STR_RPG_OBJ_VIP_TEXT">
+				<Original>I have a friend who's captured near %2. He looks like %1. Can you bring it to %3...</Original>
+				<English>I have a friend who's captured near %2. He looks like %1. Can you bring it to %3...</English>
+				<French>J'ai un ami qui s'est fait capturé près de %2. Il ressemble à %1. Pouvez-vous l'apporter à %3</French>
+			</Key>
+            <Key ID="STR_RPG_OBJ_HOSTAGE">
+				<Original>Hostage</Original>
+				<English>Hostage</English>
+				<French>Otage</French>
+			</Key>
+            <Key ID="STR_RPG_OBJ_HOSTAGE_THANK">
+				<Original>Thank you, i can continue by myself</Original>
+				<English>Thank you, i can continue by myself</English>
+				<French>Merci, à présent je peux continuer par moi même</French>
+			</Key>  
+            <Key ID="STR_RPG_OBJ_HOSTAGE_TEXT">
+				<Original>I have a spotted the hostage captured near %2. He looks like %1.</Original>
+				<English>I have a spotted the hostage captured near %2. He looks like %1.</English>
+				<French>J'ai repéré un otage près de %2. Il ressemble à %1. Vous devez le libérer.</French>
+			</Key>
+            <Key ID="STR_RPG_OBJ_STEAL">
+				<Original>Steal vehicle</Original>
+				<English>Steal vehicle</English>
+				<French>Récupérer un véhicule</French>
+			</Key>
+            <Key ID="STR_RPG_OBJ_STEAL_TEXT">
+				<Original>Some people stole our vehicle %1. I think it's located in %2. Can you bring it to %3...</Original>
+				<English>Some people stole our vehicle %1. I think it's located in %2. Can you bring it to %3...</English>
+				<French>Un véhicule %1 a été volé. Il a été aperçu vers %2. Vous devez le ramener à %3</French>
+			</Key>
+            <Key ID="STR_RPG_OBJ_INFORMANT">
+				<Original>Talk to the informant</Original>
+				<English>Talk to the informant</English>
+				<French>Parler à l'informateur</French>
+			</Key>
+            <Key ID="STR_RPG_OBJ_INFORMANT_TEXT">
+				<Original>I have a friend who lives near %2. He looks like %1. Can you talk to him...</Original>
+				<English>I have a friend who lives near %2. He looks like %1. Can you talk to him...</English>
+				<French>Je connais un informateur près de %2. Il ressemble à %1. Il faut aller lui parler.</French>
+			</Key>
+            <Key ID="STR_RPG_OBJ_CLEAR">
+				<Original>Clear area</Original>
+				<English>Clear area</English>
+				<French>Pacifier la zone</French>
+			</Key>
+            <Key ID="STR_RPG_OBJ_CLEAR_TEXT">
+				<Original>There is a lot of enemies in %1, you have to clear the location...</Original>
+				<English>There is a lot of enemies in %1, you have to clear the location...</English>
+				<French>Vous devez prendre le contrôle de la zone près de %1.</French>
+			</Key>
+            <Key ID="STR_RPG_OBJ_DEFEND">
+				<Original>Defend area</Original>
+				<English>Defend area</English>
+				<French>Défendre</French>
+			</Key>
+            <Key ID="STR_RPG_OBJ_DEFEND_TEXT">
+				<Original>You have to defend ammobox at %1, go to the location, find it and defend it against enemy reinforcement</Original>
+				<English>You have to defend ammobox at %1, go to the location, find it and defend it against enemy reinforcement</English>
+				<French>Vous devez protéger la position %1. Il y a une caisse convoitée par l'ennemi. Ils viendront essayer de la récupérer par tous les moyens</French>
+			</Key>
+            <Key ID="STR_RPG_OBJ_TAKE">
+				<Original>Take And Hold</Original>
+				<English>Take And Hold</English>
+				<French>Prendre et tenir</French>
+			</Key>
+            <Key ID="STR_RPG_OBJ_TAKE_TEXT">
+				<Original>There is some enemies in %1, you have to take the location and defend it against enemy reinforcement</Original>
+				<English>There is some enemies in %1, you have to take the location and defend it against enemy reinforcement</English>
+				<French>Vous devez prendre le contrôle de %1 puis tenir la position. L'ennemi viendra essayer de vous déloger.</French>
+			</Key>
+            <Key ID="STR_RPG_OBJ_INTEL">
+				<Original>Collect intel</Original>
+				<English>Collect intel</English>
+				<French>Collecte d'informations</French>
+			</Key>
+            <Key ID="STR_RPG_OBJ_INTEL_TEXT">
+				<Original>I drop my %1 with a lot of intel about enemy's location in %2. Can you pick it up ?</Original>
+				<English>I drop my %1 with a lot of intel about enemy's location in %2. Can you pick it up ?</English>
+				<French>J'ai perdu un %1 avec des informations importantes près de %2. Vous devez le récupérer</French>
+			</Key>
+            <Key ID="STR_RPG_OBJ_CAPTURE">
+				<Original>Capture the location</Original>
+				<English>Capture the location</English>
+				<French>Capturer la position</French>
+			</Key>
+            <Key ID="STR_RPG_OBJ_CAPTURE_TEXT">
+				<Original>You have to capture the flag of the location %2, this place has to be conquered !</Original>
+				<English>You have to capture the flag of the location %2, this place has to be conquered !</English>
+				<French>Vous devez capturer le drapeau situé à %2.</French>
+			</Key>
+            <Key ID="STR_RPG_OBJ_SIDE_MASTER">
+				<Original>Side objectives</Original>
+				<English>Side objectives</English>
+				<French>Objectifs secondaires</French>
+			</Key>
+            <Key ID="STR_RPG_OBJ_SIDE_MASTER_TEXT">
+				<Original>Contains all side objectives</Original>
+				<English>Contains all side objectives</English>
+				<French>Contient tous les objectifs secondaires</French>
+			</Key>
+            <Key ID="STR_RPG_OBJ_ATK_FOB">
+				<Original>Attack Opfor FOB</Original>
+				<English>Attack Opfor FOB</English>
+				<French>Attaquer la FOB ennemie</French>
+			</Key>
+            <Key ID="STR_RPG_OBJ_ATK_FOB_TEXT">
+				<Original>You have to control the opfor FOB on position %1.</Original>
+				<English>You have to control the opfor FOB on position %1.</English>
+				<French>Vous devez prendre le contrôle de la FOB ennemie près de %1</French>
+			</Key>
+            <Key ID="STR_RPG_OBJ_AIR_VCL">
+				<Original>Destroy OPFOR air vehicle</Original>
+				<English>Destroy OPFOR air vehicle</English>
+				<French>Détruire le véhicule aérien</French>
+			</Key>
+            <Key ID="STR_RPG_OBJ_AIR_VCL_TEXT">
+				<Original>You have to destroy the enemy air vehicle flying around the AO.</Original>
+				<English>You have to destroy the enemy air vehicle flying around the AO.</English>
+				<French>Vous devez détruire le véhicule aérien ennemi au dessus de la zone d'opération.</French>
+			</Key>
+            <Key ID="STR_RPG_OBJ_ARM_VCL">
+				<Original>Destroy armored vehicle</Original>
+				<English>Destroy armored vehicle</English>
+				<French>Détruire le véhicule blindé</French>
+			</Key>
+            <Key ID="STR_RPG_OBJ_ARM_VCL_TEXT">
+				<Original>You have to destroy the armored vehicle spotted earlier on position %1.</Original>
+				<English>You have to destroy the armored vehicle spotted earlier on position %1.</English>
+				<French>Vous devez détruire le véhicule blindé ennemi repéré à cette position %1.</French>
+			</Key>
+            <Key ID="STR_RPG_OBJ_MORTAR">
+				<Original>Destroy enemy mortar</Original>
+				<English>Destroy enemy mortar</English>
+				<French>Détruire le mortier ennemi</French>
+			</Key>
+            <Key ID="STR_RPG_OBJ_MORTAR_TEXT">
+				<Original>You have to destroy the enemy mortar spotted earlier on position %1.</Original>
+				<English>You have to destroy the enemy mortar spotted earlier on position %1.</English>
+				<French>Vous devez détruire le mortier ennemi repéré à cette position %1</French>
+			</Key>
+		</Container>
+        <Container name="DIALOG">
+			<Key ID="STR_RPG_HC_NAME">
+				<Original>High Command</Original>
+				<English>High Command</English>
+				<French>Haut commandement</French>
+			</Key>
+            <Key ID="STR_RPG_CHOPPER_NAME">
+				<Original>Helicopter crew</Original>
+				<English>Helicopter crew</English>
+				<French>Equipage de l'hélicoptère</French>
+			</Key>
+            <Key ID="STR_RPG_CIVILIAN_NAME">
+				<Original>Civilian</Original>
+				<English>Civilian</English>
+				<French>Civil</French>
+			</Key>
+            <Key ID="STR_RPG_CORPSE_NAME">
+				<Original>Intel found</Original>
+				<English>Intel found</English>
+				<French>Information trouvée sur le corps</French>
+			</Key>
+			<Key ID="STR_RPG_HC_TEAMKILL">
+				<Original>%1 has been killed by his teammate %2, watch your fire</Original>
+				<English>%1 has been killed by his teammate %2, watch your fire</English>
+				<French>%1 a été tué par son coéquipier %2, attention à vos tirs</French>
+			</Key>
+            <Key ID="STR_RPG_HC_ENEMY_TAKE_FOB">
+				<Original>Enemy has taken the blufor FOB %1, be ready to defend it</Original>
+				<English>Enemy has taken the blufor FOB %1, be ready to defend it</English>
+				<French>L'ennmi a pris le contrôle de la base BLUFOR %1, vous devez la défendre</French>
+			</Key>
+            <Key ID="STR_RPG_HC_ENEMY_REINFORCEMENT">
+				<Original>An opfor reinforcement is coming to %1, be ready</Original>
+				<English>An opfor reinforcement is coming to %1, be ready</English>
+				<French>Une vague de renforts ennemis arrive en %1, soyez prêts</French>
+			</Key>
+            <Key ID="STR_RPG_HC_ENEMY_REINFORCEMENT_FOB">
+				<Original>An opfor reinforcement is coming to %1, be ready to defend the FOB</Original>
+				<English>An opfor reinforcement is coming to %1, be ready to defend the FOB</English>
+				<French>Les renforts ennemis arrivent en %1, soyez prêts à défendre la FOB</French>
+			</Key>
+            <Key ID="STR_RPG_HC_ENEMY_ATK">
+				<Original>Opfor attack has begun on %1, be ready</Original>
+				<English>Opfor attack has begun on %1, be ready</English>
+				<French>L'ennemi a lancé une attaque contre la position %1, soyez prêts</French>
+			</Key>
+            <Key ID="STR_RPG_HC_FRIENDLY_SQUAD">
+				<Original>A friendly squad will attack %1, could you support them ?</Original>
+				<English>A friendly squad will attack %1, could you support them ?</English>
+				<French>Une vague de renforts alliés arrive en %1, vous devez les aider</French>
+			</Key>
+            <Key ID="STR_RPG_HC_FOB_CLEARED">
+				<Original>The FOB at position %1 has been cleared</Original>
+				<English>The FOB at position %1 has been cleared</English>
+				<French>La FOB en position %1 a été pacifiée</French>
+			</Key>
+            <Key ID="STR_RPG_HC_OPFOR_AROUND">
+				<Original>We have spotted enemies around your position, be ready</Original>
+				<English>We have spotted enemies around your position, be ready</English>
+				<French>Nous avons repéré des ennemis aux alentours de votre position, soyez prêts</French>
+			</Key>
+            <Key ID="STR_RPG_HC_NOT_ENOUGH_CREDIT">
+				<Original>You don't have enough credit left.</Original>
+				<English>You don't have enough credit left.</English>
+				<French>Vous n'avez pas assez de crédit.</French>
+			</Key>
+            <Key ID="STR_RPG_HC_ARTILLERY">
+				<Original>Artillery support called on position %1</Original>
+				<English>Artillery support called on position %1</English>
+				<French>De multiples tirs d'artilleries ont été appelés sur la position %1</French>
+			</Key>
+            <Key ID="STR_RPG_HC_ARTILLERY_READY">
+				<Original>Artillery unit 1789, ready to fire</Original>
+				<English>Artillery unit 1789, ready to fire</English>
+				<French>Unité d'artillerie 1789, à vos ordres</French>
+			</Key>
+            <Key ID="STR_RPG_HC_EXTRACT_CALL">
+				<Original>Extract called on position %1</Original>
+				<English>Extract called on position %1</English>
+				<French>Une extraction a été appelée en %1</French>
+			</Key>
+            <Key ID="STR_RPG_HC_REINFORCEMENT_CALL">
+				<Original>Copy %1, we will send you reinforcement in 60 seconds</Original>
+				<English>Copy %1, we will send you reinforcement in 60 seconds</English>
+				<French>Bien reçu %1, nous vous envoyons des renforts. Arrivée estimée dans 60 secondes.</French>
+			</Key>
+            <Key ID="STR_RPG_HC_REINFORCEMENT_CALL_2">
+				<Original>Copy %1, we send you some reinforcement</Original>
+				<English>Copy %1, we send you some reinforcement</English>
+				<French>Bien reçu %1, nous vous envoyons des renforts</French>
+			</Key>
+            <Key ID="STR_RPG_HC_REINFORCEMENT_CALL_3">
+				<Original>Copy %1, we send you some help quickly</Original>
+				<English>Copy %1, we send you some help quickly</English>
+				<French>Bien reçu %1, nous vous envoyons des renforts maintenant</French>
+			</Key>
+            <Key ID="STR_RPG_HC_REINFORCEMENT_CALL_WAIT">
+				<Original>You must wait before call reinforcements</Original>
+				<English>You must wait before call reinforcements</English>
+				<French>Vous devez attendre avant de pouvoir appeler des renforts</French>
+			</Key>
+            <Key ID="STR_RPG_HC_REINFORCEMENT_CALL_NO_NEED">
+				<Original>There is no need for reinforcements</Original>
+				<English>There is no need for reinforcements</English>
+				<French>Vous n'avez pas besoin de renfort</French>
+			</Key>
+            <Key ID="STR_RPG_HC_AIR_SUPPORT">
+				<Original>Air drop support called on position %1</Original>
+				<English>Air drop support called on position %1</English>
+				<French>Soutiens logistiques envoyés sur la position %1 par voie aérienne</French>
+			</Key>
+            <Key ID="STR_RPG_HC_TRANSPORT">
+				<Original>Transport called on position %1</Original>
+				<English>Transport called on position %1</English>
+				<French>Transport allié en approche sur la position %1</French>
+			</Key>
+            <Key ID="STR_RPG_HC_SUPPORT_UNIT">
+				<Original>Support unit 800, ready</Original>
+				<English>Support unit 800, ready</English>
+				<French>Unité de soutien 800, à vos ordres</French>
+			</Key>
+            <Key ID="STR_RPG_HC_EXTRACT_UNIT">
+				<Original>Helicopter unit 1515, ready for extract</Original>
+				<English>Helicopter unit 1515, ready for extract</English>
+				<French>Unité hélicoptère 1515, à vos ordres</French>
+			</Key>
+            <Key ID="STR_RPG_HC_TRANSPORT_UNIT">
+				<Original>Helicopter unit 1889, ready for transport</Original>
+				<English>Helicopter unit 1889, ready for transport</English>
+				<French>Unité de transport 1889, à vos ordres</French>
+			</Key>
+            <Key ID="STR_RPG_HC_LOGISTIC">
+				<Original>Logistic unit 1804, ready for air supply</Original>
+				<English>Logistic unit 1804, ready for air supply</English>
+				<French>Unité de logistique 1804, à vos ordres</French>
+			</Key>
+            <Key ID="STR_RPG_HC_CREW_READY_TO_TAKE_OFF">
+				<Original>We are ready to take off, let's go !</Original>
+				<English>We are ready to take off, let's go !</English>
+				<French>Nous sommes prêts à partir sur votre ordre.</French>
+			</Key>
+        </Container>
+        <Container name="INTEL_DIALOG">
+			<Key ID="STR_RPG_INTEL_MORTAR_CIV">
+				<Original>This morning i saw a mortar position near %1. I don't know if they are there for you, be careful.</Original>
+				<English>This morning i saw a mortar position near %1. I don't know if they are there for you, be careful.</English>
+				<French>J'ai vu une position de mortier ce matin vers %1. Je ne sais pas si ils sont là pour vous mais soyez prudents</French>
+			</Key>
+            <Key ID="STR_RPG_INTEL_MORTAR_DOC">
+				<Original>There is a mortar position on %1</Original>
+				<English>There is a mortar position on %1</English>
+				<French>Il y a une position de mortier près de %1</French>
+			</Key>
+            <Key ID="STR_RPG_INTEL_TURRET_CIV">
+				<Original>This morning i saw a turret position near %1. Be careful.</Original>
+				<English>This morning i saw a turret position near %1. Be careful.</English>
+				<French>Ce matin j'ai vue une tourelle près de la position %1. Soyez prudents</French>
+			</Key>
+            <Key ID="STR_RPG_INTEL_TURRET_DOC">
+				<Original>There is a turret position on %1.</Original>
+				<English>There is a turret position on %1.</English>
+				<French>Il y a une tourrelle à la position %1.</French>
+			</Key>
+            <Key ID="STR_RPG_INTEL_PATROL_CIV">
+				<Original>I've heard there's soldiers patrolling around %1. About %2 men.</Original>
+				<English>I've heard there's soldiers patrolling around %1. About %2 men.</English>
+				<French>J'ai entendu dire qu'une patrouille était autour de %1. Environ %2 hommes.</French>
+			</Key>
+            <Key ID="STR_RPG_INTEL_PATROL_DOC">
+				<Original>There are %2 men patrolling on position %1.</Original>
+				<English>There are %2 men patrolling on position %1.</English>
+				<French>Il y a %2 hommes patrouillant à la position %1.</French>
+			</Key>
+            <Key ID="STR_RPG_INTEL_CAR_CIV">
+				<Original>I saw a %2 around %1 this morning, be careful...</Original>
+				<English>I saw a %2 around %1 this morning, be careful...</English>
+				<French>J'ai vu un %2 autour de %1 ce matin. Soyez prudents...</French>
+			</Key>
+            <Key ID="STR_RPG_INTEL_CAR_DOC">
+				<Original>There is an enemy vehicle %2 on position %1.</Original>
+				<English>There is an enemy vehicle %2 on position %1.</English>
+				<French>Il y a un véhicule ennemi de type %2 à la position %1.</French>
+			</Key>
+            <Key ID="STR_RPG_INTEL_ARMORED_CIV">
+				<Original>I saw a armored vehicle around %1, be careful it's dangerous...</Original>
+				<English>I saw a armored vehicle around %1, be careful it's dangerous...</English>
+				<French>J'ai vu un véhicule blindé autoour de %1, attention il est dangereux...</French>
+			</Key>
+            <Key ID="STR_RPG_INTEL_ARMORED_DOC">
+				<Original>There is a armored vehicle %2 on position %1.</Original>
+				<English>There is a armored vehicle %2 on position %1.</English>
+				<French>Il y a un véhicule blindé de type %2 en position %1.</French>
+			</Key>
+            <Key ID="STR_RPG_INTEL_FOB_INF_CIV">
+				<Original>I know there is an enemy base around %1, this location seems dangerous</Original>
+				<English>I know there is an enemy base around %1, this location seems dangerous</English>
+				<French>Il y a une base ennemie aux environs de %1. Cet endroit semble très dangereux.</French>
+			</Key>
+            <Key ID="STR_RPG_INTEL_FOB_INF_DOC">
+				<Original>There is an enemy FOB on position %1.</Original>
+				<English>There is an enemy FOB on position %1.</English>
+				<French>Il y a une FOB ennemie en position %1</French>
+			</Key>
+            <Key ID="STR_RPG_INTEL_DEFENSE_INF_CIV">
+				<Original>I know there is a group of %2 soldiers defending %1, this location seems dangerous</Original>
+				<English>I know there is a group of %2 soldiers defending %1, this location seems dangerous</English>
+				<French>Je sais qu'il y a un groupe de %2 soldats qui défendent %1. Cet endroit est dangereux.</French>
+			</Key>
+            <Key ID="STR_RPG_INTEL_DEFENSE_INF_DOC">
+				<Original>There are %2 soldiers defending position %1</Original>
+				<English>There are %2 soldiers defending position %1</English>
+				<French>Il y a %2 soldats défendant la position %1</French>
+			</Key>
+            <Key ID="STR_RPG_INTEL_CIV_PRESENCE_CIV">
+				<Original>Be careful, there are civilian in %1. Watch your fire...</Original>
+				<English>Be careful, there are civilian in %1. Watch your fire...</English>
+				<French>Soyez prudent, il y a des civils à %1. Faites attention à vos tirs.</French>
+			</Key>
+            <Key ID="STR_RPG_INTEL_CIV_PRESENCE_DOC">
+				<Original>Be careful, there are civilian on position %1. Watch your fire...</Original>
+				<English>Be careful, there are civilian on position %1. Watch your fire...</English>
+				<French>Attention, il y a des civils détectés sur la position %1. Surveillez vos tirs.</French>
+			</Key>
+            <Key ID="STR_RPG_INTEL_NOTHING_FOUND">
+				<Original>No intel found</Original>
+				<English>No intel found</English>
+				<French>Aucune information trouvée</French>
+			</Key>
+            <Key ID="STR_RPG_INTEL_CIV_REFUSE_0">
+				<Original>No idea what you're talking about !</Original>
+				<English>No idea what you're talking about !</English>
+				<French>Je n'ai aucune idée de ce dont vous me parlez.</French>
+			</Key>  
+            <Key ID="STR_RPG_INTEL_CIV_REFUSE_1">
+				<Original>Go bother someone else ?</Original>
+				<English>Go bother someone else ?</English>
+				<French>Allez embêter quelqu'un d'autre !</French>
+			</Key>  
+              <Key ID="STR_RPG_INTEL_CIV_REFUSE_2">
+				<Original>Oh please leave me alone !</Original>
+				<English>Oh please leave me alone !</English>
+				<French>Laissez moi tranquille</French>
+			</Key>  
+            <Key ID="STR_RPG_INTEL_CIV_REFUSE_3">
+				<Original>Get out of this area !</Original>
+				<English>Get out of this area !</English>
+				<French>Quittez la région s'il vous plait</French>
+			</Key>          
+        </Container>
+	</Package>
+</Project>

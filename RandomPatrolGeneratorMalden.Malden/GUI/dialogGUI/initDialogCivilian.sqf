@@ -78,8 +78,9 @@ _RcsButtonObjective ctrlAddEventHandler[ "ButtonClick",
 		};
 
 		// hint format ["You have already talk to %1 ", name thisCivilian];
-		_randomAnswers = ["No idea what you're talking about!","Go bother someone else?","Oh please leave me alone !","Get out of this area !"];
-		[[format ["<t align = 'center' shadow = '2' color='#00ff00' size='1.5' font='PuristaMedium' >Civilian</t><br /><t color='#ffffff' size='1.5' font='PuristaMedium' shadow = '2' >%1</t>", selectRandom _randomAnswers], "PLAIN", -1, true, true]] remoteExec ["titleText", player];
+		_randomAnswers = ["STR_RPG_INTEL_CIV_REFUSE_0","STR_RPG_INTEL_CIV_REFUSE_1","STR_RPG_INTEL_CIV_REFUSE_2","STR_RPG_INTEL_CIV_REFUSE_3"];
+		[{["STR_RPG_CIVILIAN_NAME", selectRandom _randomAnswers] call doDialog}] remoteExec ["call", player];
+		
 
 		//Counter to limit civilian not to give enough intel
 		_counter = missionNamespace getVariable ["TAG_fnc_civsAsked",0];
@@ -88,8 +89,8 @@ _RcsButtonObjective ctrlAddEventHandler[ "ButtonClick",
 
 	} else {
 		// hint format ["You have already talk to %1 ", name thisCivilian];
-		_randomAnswers = ["No idea what you're talking about!","Go bother someone else?","Oh please leave me alone !","Get out of this area !"];
-		[[format ["<t align = 'center' shadow = '2' color='#00ff00' size='1.5' font='PuristaMedium' >Civilian</t><br /><t color='#ffffff' size='1.5' font='PuristaMedium' shadow = '2' >%1</t>", selectRandom _randomAnswers], "PLAIN", -1, true, true]] remoteExec ["titleText", player];
+		_randomAnswers = ["STR_RPG_INTEL_CIV_REFUSE_0","STR_RPG_INTEL_CIV_REFUSE_1","STR_RPG_INTEL_CIV_REFUSE_2","STR_RPG_INTEL_CIV_REFUSE_3"];
+		[{["STR_RPG_CIVILIAN_NAME", selectRandom _randomAnswers] call doDialog}] remoteExec ["call", player];
 	};
 }];
 
@@ -139,8 +140,8 @@ _RcsButtonObjective ctrlAddEventHandler[ "ButtonClick",
 		};
 
 		// hint format ["You have already talk to %1 ", name thisCivilian];
-		_randomAnswers = ["No idea what you're talking about!","Go bother someone else?","Oh please leave me alone !","Get out of this area !"];
-		[[format ["<t align = 'center' shadow = '2' color='#00ff00' size='1.5' font='PuristaMedium' >Civilian</t><br /><t color='#ffffff' size='1.5' font='PuristaMedium' shadow = '2' >%1</t>", selectRandom _randomAnswers], "PLAIN", -1, true, true]] remoteExec ["titleText", player];
+		_randomAnswers = ["STR_RPG_INTEL_CIV_REFUSE_0","STR_RPG_INTEL_CIV_REFUSE_1","STR_RPG_INTEL_CIV_REFUSE_2","STR_RPG_INTEL_CIV_REFUSE_3"];
+		[{["STR_RPG_CIVILIAN_NAME", selectRandom _randomAnswers] call doDialog}] remoteExec ["call", player];
 
 		//Counter to limit civilian not to give enough intel
 		_counter = missionNamespace getVariable ["TAG_fnc_civsAsked",0];
@@ -149,8 +150,8 @@ _RcsButtonObjective ctrlAddEventHandler[ "ButtonClick",
 
 	} else {
 		// hint format ["You have already talk to %1 ", name thisCivilian];
-		_randomAnswers = ["No idea what you're talking about!","Go bother someone else?","Oh please leave me alone !","Get out of this area !"];
-		[[format ["<t align = 'center' shadow = '2' color='#00ff00' size='1.5' font='PuristaMedium' >Civilian</t><br /><t color='#ffffff' size='1.5' font='PuristaMedium' shadow = '2' >%1</t>", selectRandom _randomAnswers], "PLAIN", -1, true, true]] remoteExec ["titleText", player];
+		_randomAnswers = ["STR_RPG_INTEL_CIV_REFUSE_0","STR_RPG_INTEL_CIV_REFUSE_1","STR_RPG_INTEL_CIV_REFUSE_2","STR_RPG_INTEL_CIV_REFUSE_3"];
+		[{["STR_RPG_CIVILIAN_NAME", selectRandom _randomAnswers] call doDialog}] remoteExec ["call", player];
 	};
 }];
 
@@ -240,14 +241,14 @@ _RcsButtonObjective ctrlAddEventHandler[ "ButtonClick",
 			reload _civ;
 		} else 
 		{
-			_randomAnswers = ["Oh please leave me alone !","I don't trust you !"];
-			[[format ["<t align = 'center' shadow = '2' color='#00ff00' size='1.5' font='PuristaMedium' >Civilian</t><br /><t color='#ffffff' size='1.5' font='PuristaMedium' shadow = '2' >%1</t>", selectRandom _randomAnswers], "PLAIN", -1, true, true]] remoteExec ["titleText", player];
+			_randomAnswers = ["STR_RPG_INTEL_CIV_REFUSE_0","STR_RPG_INTEL_CIV_REFUSE_1","STR_RPG_INTEL_CIV_REFUSE_2","STR_RPG_INTEL_CIV_REFUSE_3"];
+			[{["STR_RPG_CIVILIAN_NAME", selectRandom _randomAnswers] call doDialog}] remoteExec ["call", player];
 		};
 
 	} else {
 		// hint format ["You have already talk to %1 ", name thisCivilian];
-		_randomAnswers = ["No idea what you're talking about!","Go bother someone else?","Oh please leave me alone !","Get out of this area !"];
-		[[format ["<t align = 'center' shadow = '2' color='#00ff00' size='1.5' font='PuristaMedium' >Civilian</t><br /><t color='#ffffff' size='1.5' font='PuristaMedium' shadow = '2' >%1</t>", selectRandom _randomAnswers], "PLAIN", -1, true, true]] remoteExec ["titleText", player];
+		_randomAnswers = ["STR_RPG_INTEL_CIV_REFUSE_0","STR_RPG_INTEL_CIV_REFUSE_1","STR_RPG_INTEL_CIV_REFUSE_2","STR_RPG_INTEL_CIV_REFUSE_3"];
+		[{["STR_RPG_CIVILIAN_NAME", selectRandom _randomAnswers] call doDialog}] remoteExec ["call", player];
 	};
 }];
 

@@ -7,6 +7,7 @@
 #include "engine\modManager.sqf"
 #include "GUI\botteamGUI\botteamFunctions.sqf"
 #include "enemyManagement\behaviorEngine\unitsBehaviorFunctions.sqf"
+#include "engine\hintManagement\customDialog.sqf"
 
 //Init base mission parameters 
 enableInitAttack = "EnableInitAttack" call BIS_fnc_getParamValue;
@@ -54,7 +55,7 @@ publicvariable "AllPossibleObjectivePosition";
 //Mission settings waiting
 waitUntil {missionNamespace getVariable "generationSetup" == true};
 
-missionNameSpace setVariable ["missionSetupMessage", "Setup factions database", true];
+missionNameSpace setVariable ["missionSetupMessage", "STR_RPG_SETUP_FACTIONS", true];
 
 //faction definition
 warEra = missionNamespace getVariable "warEra"; // Default actual warfare
@@ -220,7 +221,7 @@ if (isClass (configFile >> "CfgPatches" >> "fow_main")) then
 /////Find locations//////
 /////////////////////////
 
-missionNameSpace setVariable ["missionSetupMessage", "Finding the best operation area", true];
+missionNameSpace setVariable ["missionSetupMessage", "STR_RPG_SETUP_AREA", true];
 
 //Initilize independent starting position 
 if (initCityLocationPosition isEqualType []) then 
@@ -335,7 +336,7 @@ if (random 100 < 20 && (count (allPlayers select {side _x == independent})== 0))
 ///Generate Objectives///
 /////////////////////////
 
-missionNameSpace setVariable ["missionSetupMessage", "Generating objectives", true];
+missionNameSpace setVariable ["missionSetupMessage", "STR_RPG_SETUP_OBJ", true];
 
 //Define 3 objectives
 SupplyPositions = [];
@@ -380,7 +381,7 @@ for [{_i = 0}, {_i < numberOfSpawnWave}, {_i = _i + 1}] do
 ////Generate Civ/////////
 /////////////////////////
 
-missionNameSpace setVariable ["missionSetupMessage", "Generating civilians city", true];
+missionNameSpace setVariable ["missionSetupMessage", "STR_RPG_SETUP_CIV", true];
 
 //IA civilian taskGarrison
 diag_log format ["Begin generation of civilian AO : %1 on position %2", civilian_big_group, initCityLocation];
@@ -412,7 +413,7 @@ publicvariable "VA1";
 ////Generate Ind/////////
 /////////////////////////
 
-missionNameSpace setVariable ["missionSetupMessage", "Generating independent base", true];
+missionNameSpace setVariable ["missionSetupMessage", "STR_RPG_SETUP_IND", true];
 
 //Init attack management on ind
 isIndAttacked = false;
@@ -471,7 +472,7 @@ publicVariable "extendedTriggerArea";
 ////Generate Blufor//////
 /////////////////////////
 
-missionNameSpace setVariable ["missionSetupMessage", "Generating blufor base", true];
+missionNameSpace setVariable ["missionSetupMessage", "STR_RPG_SETUP_BLU", true];
 
 //Init
 selectedBluforVehicle =[];
@@ -564,8 +565,7 @@ if !(_isOnWater) then
 	{
 		if ((count ((allUnits select {alive _x && side _x == opfor} ) inAreaArray _trgBluforFOB))>0) then 
 		{
-			_textToSpeech = format ["Enemy has taken the blufor FOB %1, be ready to defend it", mapGridPosition initBlueforLocation];
-			[[format ["<t align = 'center' shadow = '2' color='#0046ff' size='1.5' font='PuristaMedium' >High Command</t><br /><t color='#ffffff' size='1.5' font='PuristaMedium' shadow = '2' >%1</t>", _textToSpeech], "PLAIN DOWN", -1, true, true]] remoteExec ["titleText", blufor, true];
+			[{["STR_RPG_HC_NAME", "STR_RPG_HC_ENEMY_TAKE_FOB", mapGridPosition initBlueforLocation] call doDialog}] remoteExec ["call", blufor];
 			sleep 1000;
 		} else 
 		{
@@ -675,7 +675,7 @@ if ( count AvalaibleInitAttackPositions != 0 && (enableInitBluAttack == 1 || ((e
 /////////////////////////
 //IA taskPatrol with level 1 enemy
 
-missionNameSpace setVariable ["missionSetupMessage", "Generating opfor patrols, mortars and FOB", true];
+missionNameSpace setVariable ["missionSetupMessage", "STR_RPG_SETUP_OPF", true];
 
 [EnemyWaveLevel_1,AmbushPositions, missionDifficultyParam] execVM 'enemyManagement\generationEngine\generatePatrol.sqf'; 
 
@@ -726,7 +726,7 @@ switch (startIntel) do
 		{
 			//Setup init Civ city
 			//Init task for blufor to get informations
-			[blufor, "taskContactCiv", [format ["Contact civilians at %1 to get tasks", initCityLocationName], "Contact civilians", ""], objNull, 1, 3, true] call BIS_fnc_taskCreate;
+			[blufor, "taskContactCiv", [["STR_RPG_OBJ_CONTACT_CIV_TEXT", initCityLocationName], ["STR_RPG_OBJ_CONTACT_CIV"], ""], objNull, 1, 3, true] call BIS_fnc_taskCreate;
 			initCityLocationTrigger = createTrigger ["EmptyDetector", initCityLocation]; //create a trigger area created at object with variable name my_object
 			initCityLocationTrigger setTriggerArea [100, 100, 0, false]; // trigger area with a radius of 100m.
 			
@@ -799,7 +799,7 @@ switch (startIntel) do
 		};
 };
 
-missionNameSpace setVariable ["missionSetupMessage", "One last thing...", true];
+missionNameSpace setVariable ["missionSetupMessage", "STR_RPG_SETUP_LAST", true];
 
 //Adjust some ACE parameters 
 if (isClass (configFile >> "CfgPatches" >> "ace_common")) then 

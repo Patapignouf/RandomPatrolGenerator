@@ -23,20 +23,17 @@ params ["_caller", "_supportType"];
 						[[], "engine\respawnManagement\respawnManager.sqf"] remoteExec ['BIS_fnc_execVM', 0];
 
 						//Send message to everyone
-						_textToSpeech = format ["Copy %1, we send you some reinforcement",  name _caller];
-						[[format ["<t align = 'center' shadow = '2' color='#0046ff' size='1.5' font='PuristaMedium' >High Command</t><br /><t color='#ffffff' size='1.5' font='PuristaMedium' shadow = '2' >%1</t>", _textToSpeech, name _caller], "PLAIN DOWN", -1, true, true]] remoteExec ["titleText", 0, true];
+						[{["STR_RPG_HC_NAME", "STR_RPG_HC_REINFORCEMENT_CALL_2", name _caller] call doDialog}] remoteExec ["call", side _caller];
 						
 						missionNamespace setVariable ["usedRespawnFewTimeAgo",true,true];
 						_respawnTimer = missionNamespace getVariable "missionRespawnParam";
 						sleep _respawnTimer;
 						missionNamespace setVariable ["usedRespawnFewTimeAgo",false,true];
 					} else {
-						_textToSpeech = "There is no need for reinforcements";
-						[[format ["<t align = 'center' shadow = '2' color='#0046ff' size='1.5' font='PuristaMedium' >High Command</t><br /><t color='#ffffff' size='1.5' font='PuristaMedium' shadow = '2' >%1</t>", _textToSpeech], "PLAIN DOWN", -1, true, true]] remoteExec ["titleText", _caller, true];
+						[{["STR_RPG_HC_NAME", "STR_RPG_HC_REINFORCEMENT_CALL_NO_NEED", name _caller] call doDialog}] remoteExec ["call", _caller];
 					};
 				} else {
-					_textToSpeech = "You must wait before call reinforcements";
-					[[format ["<t align = 'center' shadow = '2' color='#0046ff' size='1.5' font='PuristaMedium' >High Command</t><br /><t color='#ffffff' size='1.5' font='PuristaMedium' shadow = '2' >%1</t>", _textToSpeech], "PLAIN DOWN", -1, true, true]] remoteExec ["titleText", _caller, true];
+					[{["STR_RPG_HC_NAME", "STR_RPG_HC_REINFORCEMENT_CALL_WAIT"] call doDialog}] remoteExec ["call", _caller];
 				};
 			};
 		};
@@ -45,8 +42,7 @@ params ["_caller", "_supportType"];
 			[_caller] spawn 
 			{
 				params ["_caller"];
-				_textToSpeech = "Support unit 800, ready";
-				[[format ["<t align = 'center' shadow = '2' color='#0046ff' size='1.5' font='PuristaMedium' >High Command</t><br /><t color='#ffffff' size='1.5' font='PuristaMedium' shadow = '2' >%1</t>", _textToSpeech, name _caller], "PLAIN DOWN", -1, true, true]] remoteExec ["titleText", side _caller, true];
+				[{["STR_RPG_HC_NAME", "STR_RPG_HC_SUPPORT_UNIT"] call doDialog}] remoteExec ["call", side _caller];
 
 				_reinforcementSupportCounter = missionNamespace getVariable ["reinforcementSupportCounter", 0]; 
 				missionNamespace setVariable ["reinforcementSupportCounter", _reinforcementSupportCounter+1, true];
@@ -69,16 +65,14 @@ params ["_caller", "_supportType"];
 				//set morning
 				skipTime 24;
 
-				_textToSpeech = format ["Copy %1, we send you some help quickly",  name _caller];
-				[[format ["<t align = 'center' shadow = '2' color='#0046ff' size='1.5' font='PuristaMedium' >High Command</t><br /><t color='#ffffff' size='1.5' font='PuristaMedium' shadow = '2' >%1</t>", _textToSpeech, name _caller], "PLAIN DOWN", -1, true, true]] remoteExec ["titleText", side _caller, true];
+				[{["STR_RPG_HC_NAME", "STR_RPG_HC_REINFORCEMENT_CALL_3", name _caller] call doDialog}] remoteExec ["call", side _caller];
 
 				[[], "engine\respawnManagement\respawnManager.sqf"] remoteExec ['BIS_fnc_execVM', 0];
 			};
 		};
 		case "Artillery":
 		{
-			_textToSpeech = "Artillery unit 1789, ready to fire";
-			[[format ["<t align = 'center' shadow = '2' color='#0046ff' size='1.5' font='PuristaMedium' >High Command</t><br /><t color='#ffffff' size='1.5' font='PuristaMedium' shadow = '2' >%1</t>", _textToSpeech, name _caller], "PLAIN DOWN", -1, true, true]] remoteExec ["titleText", side _caller, true];
+			[{["STR_RPG_HC_NAME", "STR_RPG_HC_ARTILLERY_READY"] call doDialog}] remoteExec ["call", side _caller];
 
 			_supportArtilleryCounter = missionNamespace getVariable ["artlillerySupportCounter", 0]; 
 			missionNamespace setVariable ["artlillerySupportCounter", _supportArtilleryCounter+1, true];
@@ -94,8 +88,7 @@ params ["_caller", "_supportType"];
 		};
 		case "Extract":
 		{
-			_textToSpeech = "Helicopter unit 1515, ready for extract";
-			[[format ["<t align = 'center' shadow = '2' color='#0046ff' size='1.5' font='PuristaMedium' >High Command</t><br /><t color='#ffffff' size='1.5' font='PuristaMedium' shadow = '2' >%1</t>", _textToSpeech, name _caller], "PLAIN DOWN", -1, true, true]] remoteExec ["titleText", side _caller, true];
+			[{["STR_RPG_HC_NAME", "STR_RPG_HC_EXTRACT_UNIT"] call doDialog}] remoteExec ["call", side _caller];
 
 			_supportextractCounter = missionNamespace getVariable ["extractSupportCounter", 0]; 
 			missionNamespace setVariable ["extractSupportCounter", _supportextractCounter+1, true];
@@ -110,8 +103,7 @@ params ["_caller", "_supportType"];
 		};
 		case "Transport":
 		{
-			_textToSpeech = "Helicopter unit 1889, ready for transport";
-			[[format ["<t align = 'center' shadow = '2' color='#0046ff' size='1.5' font='PuristaMedium' >High Command</t><br /><t color='#ffffff' size='1.5' font='PuristaMedium' shadow = '2' >%1</t>", _textToSpeech, name _caller], "PLAIN DOWN", -1, true, true]] remoteExec ["titleText", side _caller, true];
+			[{["STR_RPG_HC_NAME", "STR_RPG_HC_TRANSPORT_UNIT"] call doDialog}] remoteExec ["call", side _caller];
 
 			_supportTransportCounter = missionNamespace getVariable ["transportSupportCounter", 0]; 
 			missionNamespace setVariable ["transportSupportCounter", _supportTransportCounter+1, true];
@@ -126,8 +118,7 @@ params ["_caller", "_supportType"];
 		};
 		case "AirDrop":
 		{
-			_textToSpeech = "Logistic unit 1804, ready for air supply";
-			[[format ["<t align = 'center' shadow = '2' color='#0046ff' size='1.5' font='PuristaMedium' >High Command</t><br /><t color='#ffffff' size='1.5' font='PuristaMedium' shadow = '2' >%1</t>", _textToSpeech, name _caller], "PLAIN DOWN", -1, true, true]] remoteExec ["titleText", side _caller, true];
+			[{["STR_RPG_HC_NAME", "STR_RPG_HC_LOGISTIC"] call doDialog}] remoteExec ["call", side _caller];
 
 			_supportairDropCounter = missionNamespace getVariable ["airDropSupportCounter", 0]; 
 			missionNamespace setVariable ["airDropSupportCounter", _supportairDropCounter+1, true];
