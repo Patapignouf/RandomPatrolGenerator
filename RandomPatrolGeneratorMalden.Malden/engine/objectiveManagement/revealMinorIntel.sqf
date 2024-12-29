@@ -63,7 +63,8 @@ switch (_infoName) do
 	{
 		_intelCivilianRevelated = format ["I know there is an enemy base around %1, this location seems dangerous", mapGridPosition _infoPos];
 		_intelDocumentRevelated = format ["There is an enemy FOB on position %1.", mapGridPosition _infoPos];
- 		//No marker
+		_mapMarkerName = "FOB";
+		_mapMarkerIcon = "b_hq";
 	};
 	case "DefenseInfantry":
 	{
