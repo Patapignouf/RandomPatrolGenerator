@@ -96,7 +96,7 @@ doSpawnAttackSquad = {
 	_AvalaibleInitAttackPositionsToMove = [_locationToAttack, 800, 1300, 1] call getPositionAroundTargetNoSafeZone;
 	_attackSquad = createGroup (_side);
 
-	for [{_i = 0}, {_i < 5}, {_i = _i + 1}] do
+	for [{_i = 0}, {_i < 4}, {_i = _i + 1}] do
 	{
 		//Spawn bot
 		_currentFaction = 0;
