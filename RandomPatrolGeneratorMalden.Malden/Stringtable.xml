@@ -504,5 +504,73 @@
 				<French>Quittez la région s'il vous plait</French>
 			</Key>          
         </Container>
+		<Container name="SCORE_TXT">
+			<Key ID="STR_RPG_SCORE_INFANTRY_KILL">
+				<Original>Infantry kill</Original>
+				<English>Infantry kill</English>
+				<French>Infanterie éliminée</French>
+			</Key>
+			<Key ID="STR_RPG_SCORE_VEHICLE_KILL">
+				<Original>Vehicle kill</Original>
+				<English>Vehicle kill</English>
+				<French>Véhicule détruit</French>
+			</Key>
+			<Key ID="STR_RPG_SCORE_SUPPRESS">
+				<Original>Enemy suppress</Original>
+				<English>Enemy suppress</English>
+				<French>Suppression</French>
+			</Key>
+			<Key ID="STR_RPG_SCORE_HEAL">
+				<Original>Heal</Original>
+				<English>Heal</English>
+				<French>Soin</French>
+			</Key>
+			<Key ID="STR_RPG_SCORE_REPAIR">
+				<Original>Repair</Original>
+				<English>Repair</English>
+				<French>Réparation</French>
+			</Key>
+			<Key ID="STR_RPG_SCORE_IED_DEFUSE">
+				<Original>IED Defuse</Original>
+				<English>IED Defuse</English>
+				<French>Désamorçage</French>
+			</Key>
+			<Key ID="STR_RPG_SCORE_INTEL">
+				<Original>Intel Collect</Original>
+				<English>Intel Collect</English>
+				<French>Information collectée</French>
+			</Key>
+			<Key ID="STR_RPG_SCORE_OBJECTIVE">
+				<Original>Objective</Original>
+				<English>Objective</English>
+				<French>Objectif</French>
+			</Key>
+			<Key ID="STR_RPG_SCORE_PENALTY">
+				<Original>Penalty</Original>
+				<English>Penalty</English>
+				<French>Pénalité</French>
+			</Key>
+        </Container>
+		<Container name="3DNames">
+			<Key ID="STR_RPG_3D_SHOP">
+				<Original>Shop</Original>
+				<English>Shop</English>
+				<French>Magasin</French>
+			</Key>
+			<Key ID="STR_RPG_3D_HQ">
+				<Original>HQ Vehicle</Original>
+				<English>HQ Vehicle</English>
+				<French>Véhicule de commandement</French>
+			</Key>
+			<Key ID="STR_RPG_3D_LOADOUT">
+				<Original>Loadout</Original>
+				<English>Loadout</English>
+				<French>Equipement</French>
+			</Key>
+			<Key ID="STR_RPG_3D_ADV_FOB">
+				<Original>Advanced FOB</Original>
+				<English>Advanced FOB</English>
+				<French>Base avancée</French>
+			</Key>
 	</Package>
 </Project>

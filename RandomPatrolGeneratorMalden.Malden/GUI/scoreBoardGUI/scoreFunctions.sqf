@@ -44,39 +44,39 @@ doDisplayScore = {
 			{
 				case "RPG_ranking_infantry_kill":
 				{
-					_scoreText = "Infantry kill";
+					_scoreText = localize "STR_RPG_SCORE_INFANTRY_KILL";
 				};
 				case "RPG_ranking_vehicle_kill":
 				{
-					_scoreText = "Vehicle kill";
+					_scoreText = localize "STR_RPG_SCORE_VEHICLE_KILL";
 				};
 				case "RPG_ranking_suppress":
 				{
-					_scoreText = "Enemy suppress";
+					_scoreText = localize "STR_RPG_SCORE_SUPPRESS";
 				};
 				case "RPG_ranking_heal":
 				{
-					_scoreText = "Heal";
+					_scoreText = localize "STR_RPG_SCORE_HEAL";
 				};
 				case "RPG_ranking_repair":
 				{
-					_scoreText = "Repair";
+					_scoreText = localize "STR_RPG_SCORE_REPAIR";
 				};
 				case "RPG_ied_defuse":
 				{
-					_scoreText = "IED Defuse";
+					_scoreText = localize "STR_RPG_SCORE_IED_DEFUSE";
 				};
 				case "RPG_ranking_intel_collect":
 				{
-					_scoreText = "Intel Collect";
+					_scoreText = localize "STR_RPG_SCORE_INTEL";
 				};
 				case "RPG_ranking_objective_complete":
 				{
-					_scoreText = "Objective";
+					_scoreText = localize "STR_RPG_SCORE_OBJECTIVE";
 				};
 				case "RPG_ranking_player_death":
 				{
-					_scoreText = "Penalty";
+					_scoreText = localize "STR_RPG_SCORE_PENALTY";
 				};
 				default
 				{
