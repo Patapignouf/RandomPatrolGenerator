@@ -61,6 +61,8 @@ factionID = 41;
 #include "object_db\FOW_GER.sqf"
 #include "object_db\FOW_UK.sqf"
 #include "object_db\FOW_USMC.sqf"
+#include "object_db\JM_Empire.sqf"
+#include "object_db\JM_Rebels.sqf"
 
 
 ////////////////////////////////////
