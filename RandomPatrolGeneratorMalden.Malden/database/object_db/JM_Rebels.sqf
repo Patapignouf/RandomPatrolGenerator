@@ -114,14 +114,14 @@ bluforHQVehicle_JM_Rebels = [
 // - Game unit : "I_C_Soldier_Bandit_4_F"
 
 loadout_JM_Rebels = [		
-	[c_leader, "JMSLLTE_scum_desert_serg"],
-	[c_at, "JMSLLTE_scum_desert_trooperAT"],
-	[c_rifleman, "JMSLLTE_scum_desert_al_trooper"],//Default stuff
-	[c_engineer, "JMSLLTE_scum_desert_al_trooper"],
-	[c_autorifleman, "JMSLLTE_scum_desert_al_trooperH"],
-	[c_marksman, "JMSLLTE_scum_desert_snip"],
-	[c_medic, "JMSLLTE_scum_desert_medic"],
-	[c_pilot, "JMSLLTE_scum_navy_Xpilot"]
+	[c_leader, "JMSLLTE_scum_desert_serg", ["JMSLLTE_scum_commando_serg", "JMSLLTE_scum_snow_serg", "JMSLLTE_scum_navy_serg"], false],
+	[c_at, "JMSLLTE_scum_desert_trooperAT", ["JMSLLTE_scum_commando_trooperAT"], false],
+	[c_rifleman, "JMSLLTE_scum_desert_al_trooper", ["JMSLLTE_scum_commando_trooper", "JMSLLTE_scum_sf_desert_trooper", "JMSLLTE_scum_sf_desert_al_trooper"], false],//Default stuff
+	[c_engineer, "JMSLLTE_scum_desert_al_trooper", ["JMSLLTE_scum_commando_cpl", "JMSLLTE_scum_snow_trooper"], false],
+	[c_autorifleman, "JMSLLTE_scum_desert_al_trooperH", ["JMSLLTE_scum_commando_trooperH", "JMSLLTE_scum_commando_al_trooperH", "JMSLLTE_scum_snow_trooperH"], false],
+	[c_marksman, "JMSLLTE_scum_desert_snip", ["JMSLLTE_scum_sf_desert_snip", "JMSLLTE_scum_snow_snip", "JMSLLTE_scum_commando_snip", "JMSLLTE_scum_commando_marksman"], false],
+	[c_medic, "JMSLLTE_scum_desert_medic", ["JMSLLTE_scum_commando_medic", "JMSLLTE_scum_snow_medic"], false],
+	[c_pilot, "JMSLLTE_scum_navy_Xpilot", [], false]
 ];
 
 ////////////////////////
@@ -130,7 +130,9 @@ loadout_JM_Rebels = [
 
 //Rifle avalaible for all unit
 rifleList_JM_Rebels = [		
-
+	// "JMSLLTE_a280",
+	// "JMSLLTE_a280c",
+	// "JMSLLTE_dh17rifle_Scoped"
 ];	
 
 //Launcher avalaible for AT
@@ -146,12 +148,13 @@ grenadeLauncherList_JM_Rebels =  [
 
 //Autorifle avalaible for autorifleman
 autorifleList_JM_Rebels = [
-
+	// "JMSLLTE_rt97c_Scoped"
 ];	
 
 //Rifle avalaible for marksman
 marksmanrifleList_JM_Rebels = [
-
+	// "JMSLLTE_a310",
+	// "JMSLLTE_dlt20a"
 ];
 
 //Smg avalaible for all unit
@@ -159,18 +162,21 @@ smgList_JM_Rebels = [
 
 ];
 
-//////////////////////////
 //Attachement management//
 //////////////////////////
 
 //Short range scope for all unit
 attachmentShortList_JM_Rebels	= [
-
+	// "JMSLLTE_a280c_bl_Scope",
+	// "JMSLLTE_a280_bl_Scope",
+	// "JMSLLTE_rt97c_bl_Scope",
+	// "JMSLLTE_dh17_holo_Scope",
+	// "JMSLLTE_a280_holo_Scope"
 ];
 
 //Long range scope avalaible for marksman
 attachmentLongList_JM_Rebels	= [
-
+	// "JMSLLTE_a300_bl_Scope"
 ];
 
 ////////////////////////

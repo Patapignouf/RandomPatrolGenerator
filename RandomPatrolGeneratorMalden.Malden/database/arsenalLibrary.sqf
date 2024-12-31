@@ -22,6 +22,56 @@ getLoadoutByRole = {
 	_thisloadout
 };
 
+getAllPossibleLoadout = {
+	params ["_currentPlayer", "_currentFaction"];
+	_currentPlayerClass = _currentPlayer getVariable "role";
+	_thisloadout = [];
+	//Need to adapt a little thing to allow default loadout when there's no loadout found
+	_thisloadoutConfig = ((loadout_db select {_x select 1 == _currentFaction}) select 0 select 0) select {_x select 0 == _currentPlayerClass} select 0;
+
+	//Test if there are alternative role description
+	if (count _thisloadoutConfig == 4) then 
+	{
+		{
+			_thisloadout pushBack (getUnitLoadout _x)
+		} foreach _thisloadoutConfig#2;
+	};
+
+	//Get every item 
+	_thisloadout = [_thisloadout] call getAllStringInArray;
+	_thisloadout
+};
+
+getAllStringInArray = {
+	params ["_array"];
+
+	{
+		if (typeName _x == "ARRAY") then 
+		{
+			_array = _array - [_x];
+			_array = _array + ([_x] call getAllStringInArray);
+		};
+	} foreach _array;
+	_array
+};
+
+getParentsFromItems = {
+	params ["_candidateItemsList"];
+	_candidateItemsListResult = _candidateItemsList;
+
+	{
+		if (typeName _x == "STRING") then 
+		{
+			_possibleItems = [configFile >> "CfgWeapons" >> _x, true] call BIS_fnc_returnParents;
+			if (typeName _possibleItems == "ARRAY") then 
+			{
+				_candidateItemsListResult = _candidateItemsListResult + _possibleItems;
+			};
+		};
+	} foreach _candidateItemsList;
+	_candidateItemsListResult
+};
+
 getVirtualWeaponList = {
 	params ["_currentPlayer", "_currentFaction"];
 
@@ -353,6 +403,13 @@ setupArsenalToItem = {
 	{
 		_currentDefaultLoadout = getUnitLoadout _currentDefaultLoadout;
 	};
+
+	//Check other default units defined in faction file
+	_currentDefaultLoadout = _currentDefaultLoadout + ([_currentPlayer, _currentFaction] call getAllPossibleLoadout);
+
+	//Add inherited items
+	_currentDefaultLoadout = [_currentDefaultLoadout] call getParentsFromItems;
+
 	_whiteListDefaultStuff = [_currentPlayer, _currentDefaultLoadout, []] call listCurrentItemsLoadout;
 	diag_log format ["List of whitelist default items by listCurrentItemsLoadout %1", _whiteListDefaultStuff];
 
@@ -401,13 +458,13 @@ doInitializeLoadout = {
 	
 		//Check if loadout need adjustment
 		//If the faction doesn't implement well ACE, loadout will be adjusted (check boolean flag in role definition)
-		if (count _thisClasse == 2) then 
+		if (count _thisClasse <= 3) then 
 		{
 			[_player] call adjustLoadout;
 			
 		} else 
 		{
-			if (_thisClasse select 2 == false) then 
+			if (_thisClasse # 3 == false) then 
 			{
 				[_player] call adjustLoadout;
 			};
@@ -951,6 +1008,7 @@ validateSpecificItem =
 		diag_log "RPG_ERROR : validateSpecificItem";
 	};
 };
+
 
 
 listCurrentItemsLoadout = 
