@@ -550,6 +550,11 @@
 				<English>Penalty</English>
 				<French>Pénalité</French>
 			</Key>
+			<Key ID="STR_RPG_SCORE_DEATH">
+				<Original>Death</Original>
+				<English>Death</English>
+				<French>Mort</French>
+			</Key>
         </Container>
 		<Container name="3DNames">
 			<Key ID="STR_RPG_3D_SHOP">

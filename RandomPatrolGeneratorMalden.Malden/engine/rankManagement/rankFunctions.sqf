@@ -1,5 +1,3 @@
-#include "..\..\GUI\scoreBoardGUI\scoreFunctions.sqf"
-
 rankList = [
 	["PRIVATE",0],
 	["CORPORAL",200],
@@ -245,4 +243,62 @@ doUpdateRankWithPenalty = {
 	[player, false] call adjustRank;
 
 	diag_log format ["RPG_XP_Reward : %1 %2 %3", name player, _potentialExperienceLose min _experienceMalus, "RPG_ranking_player_death"];
+};
+
+
+doGetScoreName = {
+	params ["_type"];
+	_scoreName = "";
+
+	switch (_type) do
+	{
+		case "RPG_ranking_infantry_kill":
+		{
+			_scoreName = localize "STR_RPG_SCORE_INFANTRY_KILL";
+		};
+		case "RPG_ranking_vehicle_kill":
+		{
+			_scoreName = localize "STR_RPG_SCORE_VEHICLE_KILL";
+		};
+		case "RPG_ranking_suppress":
+		{
+			_scoreName = localize "STR_RPG_SCORE_SUPPRESS";
+		};
+		case "RPG_ranking_heal":
+		{
+			_scoreName = localize "STR_RPG_SCORE_HEAL";
+		};
+		case "RPG_ranking_repair":
+		{
+			_scoreName = localize "STR_RPG_SCORE_REPAIR";
+		};
+		case "RPG_ied_defuse":
+		{
+			_scoreName = localize "STR_RPG_SCORE_IED_DEFUSE";
+		};
+		case "RPG_ranking_intel_collect":
+		{
+			_scoreName = localize "STR_RPG_SCORE_INTEL";
+		};
+		case "RPG_ranking_objective_complete":
+		{
+			_scoreName = localize "STR_RPG_SCORE_OBJECTIVE";
+		};
+		case "RPG_ranking_player_death":
+		{
+			_scoreName = localize "STR_RPG_SCORE_PENALTY";
+		};
+		case "deathNumber" :
+		{
+			_scoreName = localize "STR_RPG_SCORE_DEATH";
+		};
+		default
+		{
+			
+		};
+	};
+
+	//hint format ["type %1 and scoreText %2", _type, _scoreName];
+
+	_scoreName;
 };

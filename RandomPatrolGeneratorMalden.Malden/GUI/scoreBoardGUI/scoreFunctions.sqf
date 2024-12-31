@@ -21,69 +21,26 @@ doDisplayScore = {
 		};
 	};
 
+	//Show specific type
+	_scoreText = [_type] call doGetScoreName;
+
 	with uiNamespace do
 	{
-		[_score, _type, _scoreParam1] spawn
+		[_score, _type, _scoreText, _scoreParam1] spawn
 		{
-			params ["_score", "_type", "_scoreParam1"];
+			params ["_score", "_type", "_scoreText", "_scoreParam1"];
 
 
 			_ctrl = findDisplay 46 ctrlCreate ["RscStructuredText", -1];
 
 			_ctrl ctrlSetPosition [0,0,0,0.1];
 			_ctrl ctrlCommit 0;
-			_scoreText = "";
 			_baseY=0.04;
 
 			//Define position of the current score to display
 			_numberOfScoreDisplay = player getVariable ["scoreDisplayNumber", 0];
 			player setVariable ["scoreDisplayNumber", _numberOfScoreDisplay+1]; //Prepare next score position
 
-			//Show specific type
-			switch (_type) do
-			{
-				case "RPG_ranking_infantry_kill":
-				{
-					_scoreText = localize "STR_RPG_SCORE_INFANTRY_KILL";
-				};
-				case "RPG_ranking_vehicle_kill":
-				{
-					_scoreText = localize "STR_RPG_SCORE_VEHICLE_KILL";
-				};
-				case "RPG_ranking_suppress":
-				{
-					_scoreText = localize "STR_RPG_SCORE_SUPPRESS";
-				};
-				case "RPG_ranking_heal":
-				{
-					_scoreText = localize "STR_RPG_SCORE_HEAL";
-				};
-				case "RPG_ranking_repair":
-				{
-					_scoreText = localize "STR_RPG_SCORE_REPAIR";
-				};
-				case "RPG_ied_defuse":
-				{
-					_scoreText = localize "STR_RPG_SCORE_IED_DEFUSE";
-				};
-				case "RPG_ranking_intel_collect":
-				{
-					_scoreText = localize "STR_RPG_SCORE_INTEL";
-				};
-				case "RPG_ranking_objective_complete":
-				{
-					_scoreText = localize "STR_RPG_SCORE_OBJECTIVE";
-				};
-				case "RPG_ranking_player_death":
-				{
-					_scoreText = localize "STR_RPG_SCORE_PENALTY";
-				};
-				default
-				{
-					
-				};
-			};
-			
 			//Don't show text if XP type is not supported
 			if (_scoreText != "") then 
 			{

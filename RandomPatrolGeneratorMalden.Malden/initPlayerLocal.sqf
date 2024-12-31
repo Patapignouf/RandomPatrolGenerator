@@ -3,6 +3,8 @@
 #include "enemyManagement\behaviorEngine\unitsBehaviorFunctions.sqf"
 #include "engine\searchLocation.sqf"
 #include "engine\hintManagement\customDialog.sqf"
+#include "GUI\scoreBoardGUI\scoreFunctions.sqf"
+
 
 forceBluforSetup = "ForceBluforSetup" call BIS_fnc_getParamValue;
 

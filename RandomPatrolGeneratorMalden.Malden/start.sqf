@@ -8,6 +8,8 @@
 #include "GUI\botteamGUI\botteamFunctions.sqf"
 #include "enemyManagement\behaviorEngine\unitsBehaviorFunctions.sqf"
 #include "engine\hintManagement\customDialog.sqf"
+#include "GUI\scoreBoardGUI\scoreFunctions.sqf"
+
 
 //Init base mission parameters 
 enableInitAttack = "EnableInitAttack" call BIS_fnc_getParamValue;
