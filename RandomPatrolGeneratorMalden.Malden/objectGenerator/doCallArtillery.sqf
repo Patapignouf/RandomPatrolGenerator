@@ -15,7 +15,7 @@ if (_artlillerySupportCounter > 0) then
 	missionNamespace setVariable ["artlillerySupportCounter", _artlillerySupportCounter-1, true];
 
 	//Hint to artillery call
-	[{["STR_RPG_HC_NAME", "STR_RPG_HC_ARTILLERY", mapGridPosition _position] call doDialog}] remoteExec ["call", blufor];
+	[[_position], {params ["_position"]; ["STR_RPG_HC_NAME", "STR_RPG_HC_ARTILLERY", mapGridPosition _position] call doDialog}] remoteExec ["spawn", blufor]; 
 
 	//Play random radio sound
 	[] spawn {

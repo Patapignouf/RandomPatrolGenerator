@@ -55,7 +55,7 @@ if (isServer) then
 				};
 
 				//Send message
-				[{["STR_RPG_HC_NAME", "STR_RPG_HC_FRIENDLY_SQUAD", mapGridPosition (_locationToAttack)] call doDialog}] remoteExec ["call", blufor];
+				[[_locationToAttack], {params ["_locationToAttack"]; ["STR_RPG_HC_NAME", "STR_RPG_HC_FRIENDLY_SQUAD", mapGridPosition (_locationToAttack)] call doDialog}] remoteExec ["spawn", blufor]; 
 				sleep (300 + random 300);
 			};
 		};

@@ -101,19 +101,19 @@ if (count _potentialMissionEnemyInfo >0) then
 		{
 			_intelToReveal = _intelCivilianRevelated;
 			//Display dialog to the player
-			[{["STR_RPG_CIVILIAN_NAME", _intelToReveal] call doDialogWithCustomParam}] remoteExec ["call", _caller];
+			[[_intelToReveal], {params ["_intelToReveal"]; ["STR_RPG_CIVILIAN_NAME", _intelToReveal] call doDialogWithCustomParam}] remoteExec ["spawn", _caller]; 
 		};
 		case "corpseLooting":
 		{
 			_intelToReveal = _intelDocumentRevelated;
 			//Display dialog to the player
-			[{["STR_RPG_CORPSE_NAME", _intelToReveal] call doDialogWithCustomParam}] remoteExec ["call", _caller];
+			[[_intelToReveal], {params ["_intelToReveal"]; ["STR_RPG_CORPSE_NAME", _intelToReveal] call doDialogWithCustomParam}] remoteExec ["spawn", _caller]; 
 		};
 		case "HQ":
 		{
 			_intelToReveal = _intelDocumentRevelated;
 			//Display dialog to the player
-			[{["STR_RPG_HC_NAME", _intelToReveal] call doDialogWithCustomParam}] remoteExec ["call", _caller];
+			[[_intelToReveal], {params ["_intelToReveal"]; ["STR_RPG_HC_NAME", _intelToReveal] call doDialogWithCustomParam}] remoteExec ["spawn", _caller]; 
 		};
 		default
 		{

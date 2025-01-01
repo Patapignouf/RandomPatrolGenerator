@@ -640,7 +640,7 @@ _KilledEH = player addEventHandler ["Killed", {
 		} else 
 		{
 			
-			[{["STR_RPG_HC_NAME", "STR_RPG_HC_TEAMKILL", name _unit, name _instigator] call doDialog}] remoteExec ["call", side _instigator];
+			[[_unit, _instigator], {params ["_unit", "_instigator"]; ["STR_RPG_HC_NAME", "STR_RPG_HC_TEAMKILL", name _unit, name _instigator] call doDialog}] remoteExec ["spawn", side _instigator]; 
 
 			if (_instigator != _unit) then 
 			{

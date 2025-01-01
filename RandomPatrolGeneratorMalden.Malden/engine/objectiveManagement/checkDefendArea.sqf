@@ -36,13 +36,13 @@ if (!([_thisObjectiveToComplete,[]] call BIS_fnc_areEqual)) then
 {
 
 	_nearestCity = nearestLocations [getPos _thisTrigger, ["NameLocal","NameVillage","NameCity","NameCityCapital"], 1500] select 0;
-	[{["STR_RPG_HC_NAME", "STR_RPG_HC_ENEMY_ATK", text _nearestCity] call doDialog}] remoteExec ["call", 0];
+	[[_nearestCity], {params ["_nearestCity"]; ["STR_RPG_HC_NAME", "STR_RPG_HC_ENEMY_ATK", text _nearestCity] call doDialog}] remoteExec ["spawn", 0]; 
 };
 
 _thisFOBCheck = _thisTrigger getVariable ["isFOBAssociated", false];
 if (_thisFOBCheck) then 
 {
-	[{["STR_RPG_HC_NAME", "STR_RPG_HC_ENEMY_REINFORCEMENT_FOB", mapGridPosition (getPos _thisTrigger)] call doDialog}] remoteExec ["call", 0];
+	[[_thisTrigger], {params ["_thisTrigger"]; ["STR_RPG_HC_NAME", "STR_RPG_HC_ENEMY_REINFORCEMENT_FOB", mapGridPosition (getPos _thisTrigger)] call doDialog}] remoteExec ["spawn", 0]; 
 };
 
 //Wait enemy reinforcement
@@ -85,7 +85,7 @@ if (!([_thisObjectiveToComplete,[]] call BIS_fnc_areEqual)) then
 if (_thisFOBCheck) then 
 {
 	//Hint players for cleared FOB
-	[{["STR_RPG_HC_NAME", "STR_RPG_HC_FOB_CLEARED", mapGridPosition (getPos _thisTrigger)] call doDialog}] remoteExec ["call", 0];
+	[[_thisTrigger], {params ["_thisTrigger"]; ["STR_RPG_HC_NAME", "STR_RPG_HC_FOB_CLEARED", mapGridPosition (getPos _thisTrigger)] call doDialog}] remoteExec ["spawn", 0]; 
 
 	//Add this FOB to cleared FOB
 	_OpforFOBCleared = missionNamespace getVariable ["OpforFOBCleared", 0];

@@ -142,7 +142,7 @@ if ((count _revealedObjectives != count _tempMissionObjectives)) then
 				//Display dialog on screen if necessary
 				if (!isNil "_caller") then 
 				{					
-					[{["STR_RPG_CIVILIAN_NAME", _currentObjectiveDescription] call doDialogWithCustomParam}] remoteExec ["call", _caller];
+					[[_currentObjectiveDescription], {params ["_currentObjectiveDescription"]; ["STR_RPG_CIVILIAN_NAME", _currentObjectiveDescription] call doDialogWithCustomParam}] remoteExec ["spawn", _caller]; 
 				};
 		};
 };

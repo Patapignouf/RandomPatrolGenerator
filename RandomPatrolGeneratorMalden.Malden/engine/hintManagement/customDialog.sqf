@@ -2,7 +2,15 @@ doDialog = {
 	params ["_speaker", "_message", "_customParam1", "_customParam2"];
 	_textToSpeech = format [localize _message, _customParam1, _customParam2];
 	_colorAndPos = [_speaker] call getSpeakerColorAndPosition;
-	titleText [format ["<t align = 'center' shadow = '2' color='%3' size='1.5' font='PuristaMedium' >%2</t><br /><t color='#ffffff' size='1.5' font='PuristaMedium' shadow = '2' >%1</t>", _textToSpeech, localize _speaker, _colorAndPos#0], _colorAndPos#1, -1, true, true];
+
+	//Localize speaker if necessary
+	_localizedSpeaker  = localize _speaker;
+	if (_localizedSpeaker == "") then 
+	{
+		_localizedSpeaker = _speaker;
+	};
+
+	titleText [format ["<t align = 'center' shadow = '2' color='%3' size='1.5' font='PuristaMedium' >%2</t><br /><t color='#ffffff' size='1.5' font='PuristaMedium' shadow = '2' >%1</t>", _textToSpeech, _localizedSpeaker, _colorAndPos#0], _colorAndPos#1, -1, true, true];
 };
 
 doDialogWithCustomParam = {
@@ -10,7 +18,15 @@ doDialogWithCustomParam = {
 	_message set [0, localize (_message#0)];
 	_textToSpeech = format _message;
 	_colorAndPos = [_speaker] call getSpeakerColorAndPosition;
-	titleText [format ["<t align = 'center' shadow = '2' color='%3' size='1.5' font='PuristaMedium' >%2</t><br /><t color='#ffffff' size='1.5' font='PuristaMedium' shadow = '2' >%1</t>", _textToSpeech, localize _speaker, _colorAndPos#0], _colorAndPos#1, -1, true, true];
+
+	//Localize speaker if necessary
+	_localizedSpeaker  = localize _speaker;
+	if (_localizedSpeaker == "") then 
+	{
+		_localizedSpeaker = _speaker;
+	};
+
+	titleText [format ["<t align = 'center' shadow = '2' color='%3' size='1.5' font='PuristaMedium' >%2</t><br /><t color='#ffffff' size='1.5' font='PuristaMedium' shadow = '2' >%1</t>", _textToSpeech, _localizedSpeaker, _colorAndPos#0], _colorAndPos#1, -1, true, true];
 };
 
 getSpeakerColorAndPosition = {
@@ -39,7 +55,9 @@ getSpeakerColorAndPosition = {
 		};
 		default
 		{
-			//Not a normal behaviour
+			//Opfor talking waiting for better implementation
+			_color = "#FF0000";
+			_position = "PLAIN DOWN";
 		};
 	};
 	[_color, _position];

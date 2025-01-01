@@ -15,7 +15,7 @@ if (_airDropSupportCounter > 0) then
 	missionNamespace setVariable ["airDropSupportCounter", _airDropSupportCounter-1, true];
 	
 	//Hint to airDrop call
-	[{["STR_RPG_HC_NAME", "STR_RPG_HC_AIR_SUPPORT", mapGridPosition _position] call doDialog}] remoteExec ["call", blufor];
+	[[_position], {params ["_position"]; ["STR_RPG_HC_NAME", "STR_RPG_HC_AIR_SUPPORT", mapGridPosition _position] call doDialog}] remoteExec ["spawn", blufor]; 
 
 	//Play random radio sound
 	[] spawn {

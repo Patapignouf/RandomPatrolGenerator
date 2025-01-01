@@ -23,7 +23,7 @@ params ["_caller", "_supportType"];
 						[[], "engine\respawnManagement\respawnManager.sqf"] remoteExec ['BIS_fnc_execVM', 0];
 
 						//Send message to everyone
-						[{["STR_RPG_HC_NAME", "STR_RPG_HC_REINFORCEMENT_CALL_2", name _caller] call doDialog}] remoteExec ["call", side _caller];
+						[[_caller], {params ["_caller"]; ["STR_RPG_HC_NAME", "STR_RPG_HC_REINFORCEMENT_CALL_2", name _caller] call doDialog}] remoteExec ["spawn", side _caller]; 
 						
 						missionNamespace setVariable ["usedRespawnFewTimeAgo",true,true];
 						_respawnTimer = missionNamespace getVariable "missionRespawnParam";

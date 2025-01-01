@@ -13,8 +13,8 @@ if (_reinforcementSupportCounter > 0) then
 	};
 
 	//Hint to extract call
-	[{["STR_RPG_HC_NAME", "STR_RPG_HC_ARTILLERY", name _caller] call doDialog}] remoteExec ["call", blufor];
-
+	[[_caller], {params ["_caller"]; ["STR_RPG_HC_NAME", "STR_RPG_HC_REINFORCEMENT_CALL", name _caller] call doDialog}] remoteExec ["spawn", side blufor]; 
+	
 	//Play random radio sound
 	[] spawn {
 		playMusic ["RadioAmbient5", 1];

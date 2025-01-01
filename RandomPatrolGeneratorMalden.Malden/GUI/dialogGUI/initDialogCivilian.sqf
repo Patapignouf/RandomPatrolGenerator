@@ -79,7 +79,7 @@ _RcsButtonObjective ctrlAddEventHandler[ "ButtonClick",
 
 		// hint format ["You have already talk to %1 ", name thisCivilian];
 		_randomAnswers = ["STR_RPG_INTEL_CIV_REFUSE_0","STR_RPG_INTEL_CIV_REFUSE_1","STR_RPG_INTEL_CIV_REFUSE_2","STR_RPG_INTEL_CIV_REFUSE_3"];
-		[{["STR_RPG_CIVILIAN_NAME", selectRandom _randomAnswers] call doDialog}] remoteExec ["call", player];
+		[[_randomAnswers], {params ["_randomAnswers"]; ["STR_RPG_CIVILIAN_NAME", selectRandom _randomAnswers] call doDialog}] remoteExec ["spawn", player]; 
 		
 
 		//Counter to limit civilian not to give enough intel
@@ -90,7 +90,7 @@ _RcsButtonObjective ctrlAddEventHandler[ "ButtonClick",
 	} else {
 		// hint format ["You have already talk to %1 ", name thisCivilian];
 		_randomAnswers = ["STR_RPG_INTEL_CIV_REFUSE_0","STR_RPG_INTEL_CIV_REFUSE_1","STR_RPG_INTEL_CIV_REFUSE_2","STR_RPG_INTEL_CIV_REFUSE_3"];
-		[{["STR_RPG_CIVILIAN_NAME", selectRandom _randomAnswers] call doDialog}] remoteExec ["call", player];
+		[[_randomAnswers], {params ["_randomAnswers"]; ["STR_RPG_CIVILIAN_NAME", selectRandom _randomAnswers] call doDialog}] remoteExec ["spawn", player]; 
 	};
 }];
 
@@ -141,7 +141,7 @@ _RcsButtonObjective ctrlAddEventHandler[ "ButtonClick",
 
 		// hint format ["You have already talk to %1 ", name thisCivilian];
 		_randomAnswers = ["STR_RPG_INTEL_CIV_REFUSE_0","STR_RPG_INTEL_CIV_REFUSE_1","STR_RPG_INTEL_CIV_REFUSE_2","STR_RPG_INTEL_CIV_REFUSE_3"];
-		[{["STR_RPG_CIVILIAN_NAME", selectRandom _randomAnswers] call doDialog}] remoteExec ["call", player];
+		[[_randomAnswers], {params ["_randomAnswers"]; ["STR_RPG_CIVILIAN_NAME", selectRandom _randomAnswers] call doDialog}] remoteExec ["spawn", player]; 
 
 		//Counter to limit civilian not to give enough intel
 		_counter = missionNamespace getVariable ["TAG_fnc_civsAsked",0];
@@ -151,7 +151,7 @@ _RcsButtonObjective ctrlAddEventHandler[ "ButtonClick",
 	} else {
 		// hint format ["You have already talk to %1 ", name thisCivilian];
 		_randomAnswers = ["STR_RPG_INTEL_CIV_REFUSE_0","STR_RPG_INTEL_CIV_REFUSE_1","STR_RPG_INTEL_CIV_REFUSE_2","STR_RPG_INTEL_CIV_REFUSE_3"];
-		[{["STR_RPG_CIVILIAN_NAME", selectRandom _randomAnswers] call doDialog}] remoteExec ["call", player];
+		[[_randomAnswers], {params ["_randomAnswers"]; ["STR_RPG_CIVILIAN_NAME", selectRandom _randomAnswers] call doDialog}] remoteExec ["spawn", player]; 
 	};
 }];
 
@@ -242,13 +242,13 @@ _RcsButtonObjective ctrlAddEventHandler[ "ButtonClick",
 		} else 
 		{
 			_randomAnswers = ["STR_RPG_INTEL_CIV_REFUSE_0","STR_RPG_INTEL_CIV_REFUSE_1","STR_RPG_INTEL_CIV_REFUSE_2","STR_RPG_INTEL_CIV_REFUSE_3"];
-			[{["STR_RPG_CIVILIAN_NAME", selectRandom _randomAnswers] call doDialog}] remoteExec ["call", player];
+			[[_randomAnswers], {params ["_randomAnswers"]; ["STR_RPG_CIVILIAN_NAME", selectRandom _randomAnswers] call doDialog}] remoteExec ["spawn", player]; 
 		};
 
 	} else {
 		// hint format ["You have already talk to %1 ", name thisCivilian];
 		_randomAnswers = ["STR_RPG_INTEL_CIV_REFUSE_0","STR_RPG_INTEL_CIV_REFUSE_1","STR_RPG_INTEL_CIV_REFUSE_2","STR_RPG_INTEL_CIV_REFUSE_3"];
-		[{["STR_RPG_CIVILIAN_NAME", selectRandom _randomAnswers] call doDialog}] remoteExec ["call", player];
+		[[_randomAnswers], {params ["_randomAnswers"]; ["STR_RPG_CIVILIAN_NAME", selectRandom _randomAnswers] call doDialog}] remoteExec ["spawn", player]; 
 	};
 }];
 
