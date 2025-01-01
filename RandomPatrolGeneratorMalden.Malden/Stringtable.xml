@@ -281,6 +281,11 @@
 				<English>%1 has been killed by his teammate %2, watch your fire</English>
 				<French>%1 a été tué par son coéquipier %2, attention à vos tirs</French>
 			</Key>
+			<Key ID="STR_RPG_HC_SURRENDER_KILL">
+				<Original>%1 has surrender and has been killed by %2, watch your fire</Original>
+				<English>%1 has surrender and has been killed by %2, watch your fire</English>
+				<French>%1 s'est rendu et a été tué par %2, attention à vos tirs</French>
+			</Key>
             <Key ID="STR_RPG_HC_ENEMY_TAKE_FOB">
 				<Original>Enemy has taken the blufor FOB %1, be ready to defend it</Original>
 				<English>Enemy has taken the blufor FOB %1, be ready to defend it</English>
@@ -395,6 +400,11 @@
 				<Original>We are ready to take off, let's go !</Original>
 				<English>We are ready to take off, let's go !</English>
 				<French>Nous sommes prêts à partir sur votre ordre.</French>
+			</Key>
+            <Key ID="STR_RPG_HC_SURRENDER_SPEAK">
+				<Original>Don't shoot i surrender, please spare me</Original>
+				<English>Don't shoot i surrender, please spare me</English>
+				<French>Ne tirez pas, je me rends épargnez moi !</French>
 			</Key>
         </Container>
         <Container name="INTEL_DIALOG">

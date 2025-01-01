@@ -84,6 +84,29 @@ doGenerateEnemyGroup =
 			
 
 		} foreach (units _currentGroupPatrol);
+
+		//Manage unit surrender
+		if (missionNameSpace getVariable ["enableSurrenderUnit", 1] == 1) then 
+		{
+			_currentGroupPatrol addEventHandler ["UnitKilled", {
+				params ["_group", "_unit", "_killer", "_instigator", "_useEffects"];
+
+				if (count ((units _group) select {alive _x}) <=2) then 
+				{
+					{
+						//Make unit surrender if the morale goes too low
+						if (morale _x < 0 && vehicle _x == _x && side _x == opfor) then 
+						{
+							//Add 75% chance not  to surrender
+							if (random 100 > 50) then 
+							{
+								[_x] call doSurrender;
+							};
+						};
+					} foreach (units _group)
+				};
+			}];
+		};
 	};
 	
 	//Define specific vehicle trigger
