@@ -62,9 +62,22 @@ getParentsFromItems = {
 	{
 		if (typeName _x == "STRING") then 
 		{
-			_possibleItems = [configFile >> "CfgWeapons" >> _x, true] call BIS_fnc_returnParents;
+			_possibleItems = ([configFile >> "CfgWeapons" >> _x, true] call BIS_fnc_returnParents);
 			if (typeName _possibleItems == "ARRAY") then 
-			{
+			{	
+				//Purge possible items list from basic game items (avoid allowing base game in mod factions)
+				if (count _possibleItems > 0) then 
+				{
+					_modAuthor = getText (configFile >> "CfgWeapons" >> _possibleItems#0 >> "author");
+					{
+						if (getText (configFile >> "CfgWeapons" >> _x >> "author") != _modAuthor) then 
+						{
+							_possibleItems = _possibleItems - [_x];
+						};
+					} foreach (_possibleItems);
+				};
+
+				//Add reste of item in futur allowed stuff
 				_candidateItemsListResult = _candidateItemsListResult + _possibleItems;
 			};
 		};
