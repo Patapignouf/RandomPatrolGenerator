@@ -36,7 +36,8 @@ baseEnemyDemoGroup_CHDSK_2020 = [
 	"rhsgref_ins_g_rifleman",
 	"rhsgref_ins_g_machinegunner",
 	"rhsgref_ins_g_machinegunner",
-	"rhsgref_ins_g_rifleman_RPG26"
+	"rhsgref_ins_g_rifleman",
+	"rhsgref_ins_g_saboteur"
 ];
 
 baseEnemyMortarGroup_CHDSK_2020 = [
