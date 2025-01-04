@@ -713,3 +713,15 @@ playMusic "";
 uiSleep 20;
 [format ["Somewhere on %1",worldName], format ["Year %1", date select 0], mapGridPosition player] spawn BIS_fnc_infoText;
 
+
+//Display tutorial for new players 
+_playerCurrentXP = [player] call getExperience;
+if (_playerCurrentXP == 0) then 
+{
+	localize "STR_RPG_TUTO_WELCOME" hintC [
+		localize "STR_RPG_TUTO_OBJ",
+		localize "STR_RPG_TUTO_LOADOUT",
+		localize "STR_RPG_TUTO_VEHICLE",
+		localize "STR_RPG_TUTO_RESPAWN"
+	];
+};

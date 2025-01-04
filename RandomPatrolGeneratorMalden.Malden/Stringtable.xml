@@ -588,4 +588,30 @@
 				<French>Base avancée</French>
 			</Key>
 	</Package>
+	<Container name="RPG_TUTO">
+		<Key ID="STR_RPG_TUTO_WELCOME">
+			<Original>Welcome to Random Patrol Generator</Original>
+			<English>Welcome to Random Patrol Generator</English>
+			<French>Bienvenue sur Random Patrol Generator</French>
+		</Key>
+		<Key ID="STR_RPG_TUTO_OBJ">
+			<Original>The goal is to complete all the tasks</Original>
+			<English>The goal is to complete all the tasks</English>
+			<French>Le but est de compléter tous les objectifs</French>
+		</Key>
+		<Key ID="STR_RPG_TUTO_LOADOUT">
+			<Original>You can customize your loadout on the ammo box</Original>
+			<English>You can customize your loadout on the ammo box</English>
+			<French>Vous pouvez personnaliser votre équipement à la caisse de munitions</French>
+		</Key>
+		<Key ID="STR_RPG_TUTO_VEHICLE">
+			<Original>You can take every every vehicles or buy them</Original>
+			<English>You can take every every vehicles or buy them</English>
+			<French>Vous pouvez prendre tous les véhicules autour ou en acheter de nouveaux</French>
+		</Key>
+		<Key ID="STR_RPG_TUTO_RESPAWN">
+			<Original>If you die you will respawn according to the mission settings (timer, objective complete, manual)</Original>
+			<English>If you die you will respawn according to the mission settings (timer, objective complete, manual)</English>
+			<French>Si vous mourrez, vous pourrez réapparaitre suivant les paramètres de missioon (temps, objectifs, demande)</French>
+		</Key>
 </Project>
