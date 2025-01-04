@@ -1,5 +1,4 @@
 disableSerialization;
-#include "..\..\database\factionParameters.sqf"
 #include "..\..\database\missionParameters.sqf"
 #include "loadSettings.sqf"
 
@@ -24,6 +23,7 @@ private _comboBoxStartIntel = _mainDisplay displayCtrl 6112;
 private _comboBoxIASkill = _mainDisplay displayCtrl 6113;
 private _comboBoxRespawnParam = _mainDisplay displayCtrl 6114;
 
+normalClose = false;
 
 //Specify all GUI content 
 //Populate faction comboBox
@@ -139,3 +139,14 @@ _comboBoxMissionDifficulty lbSetCurSel (missionDifficultySelection apply {_x sel
 _comboBoxStartIntel lbSetCurSel (missionStartIntelSelection apply {_x select 0} find (startIntel_loaded)); //Blufor must take intel
 _comboBoxIASkill lbSetCurSel (missionIASkill apply {_x select 0} find (missionIASkill_loaded)); //IA Skill default value : Balanced
 _comboBoxRespawnParam lbSetCurSel (missionRespawnParamSettings apply {_x select 0} find (missionRespawnParam_loaded)); //IA Skill default value : Balanced
+
+
+//Disable space button in dialog
+waituntil {(IsNull (findDisplay 6000))};
+
+//If the control is closed by bug, set normal respawn
+if (!normalClose) then 
+{
+	uiSleep 2;
+	[[], 'GUI\setupGUI\initMissionMenu.sqf'] remoteExec ['BIS_fnc_execVM', player];
+};

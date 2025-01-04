@@ -40,10 +40,10 @@ diag_log format ["Blufor faction choose : %1\nOpfor faction choose : %2\nIndepen
 
 //Define global faction variable 
 missionNamespace setVariable ["warEra", parseNumber warEraSelected, true]; // GUI generation mission boolean flag
-missionNamespace setVariable ["bluforFaction", parseNumber bluforFactionSelected, true]; //Default faction 14 -> OTAN 2035
-missionNamespace setVariable ["opforFaction", parseNumber opforFactionSelected, true]; //Default faction 3 -> Syndikat
-missionNamespace setVariable ["independentFaction", parseNumber independentFactionSelected, true]; //Default faction 3 -> Syndikat
-missionNamespace setVariable ["civilianFaction", parseNumber civilianFactionSelected, true]; //Default faction 3 -> Syndikat
+missionNamespace setVariable ["bluforFaction", bluforFactionSelected, true]; //Default faction 14 -> OTAN 2035
+missionNamespace setVariable ["opforFaction", opforFactionSelected, true]; //Default faction 3 -> Syndikat
+missionNamespace setVariable ["independentFaction", independentFactionSelected, true]; //Default faction 3 -> Syndikat
+missionNamespace setVariable ["civilianFaction", civilianFactionSelected, true]; //Default faction 3 -> Syndikat
 
 
 //Missions vehicle settings

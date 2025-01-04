@@ -1,5 +1,4 @@
 disableSerialization;
-#include "..\..\database\factionParameters.sqf"
 #include "..\..\database\missionParameters.sqf"
 #include "..\..\database\arsenalLibrary.sqf"
 #include "..\..\engine\rankManagement\rankFunctions.sqf"
@@ -167,7 +166,7 @@ _button3DItems ctrlAddEventHandler[ "ButtonClick",
 
 		//Switch optic mode
 		profileNamespace setVariable ["is3DOptics", !(profileNamespace getVariable ["is3DOptics", false])];
-		saveProfileNamespace;
+		//saveProfileNamespace;
 
 		//Set button color
 		if (profileNamespace getVariable ["is3DOptics", false]) then 
@@ -294,6 +293,12 @@ waituntil {!(IsNull (findDisplay 7000))};
 
 //Add 3D Optics Switch
 _currentOptics = (weaponsItems player)#0#3;	
+
+if (isNil "_currentOptics") then 
+{
+	_currentOptics = "";
+};
+
 if (["_PIP", _currentOptics] call BIS_fnc_inString && profileNamespace getVariable ["is3DOptics", false]) then 
 {
 	_opticsStringRework = _currentOptics regexReplace ["_PIP", "_3D"];

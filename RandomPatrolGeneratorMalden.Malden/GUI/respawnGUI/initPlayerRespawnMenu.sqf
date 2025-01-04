@@ -1,5 +1,4 @@
 disableSerialization;
-#include "..\..\database\factionParameters.sqf"
 
 //Create GUI
 cutText ["", "BLACK FADED", 100];

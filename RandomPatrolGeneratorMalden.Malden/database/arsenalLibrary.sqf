@@ -82,6 +82,7 @@ getParentsFromItems = {
 			};
 		};
 	} foreach _candidateItemsList;
+	//diag_log format ["_candidateItemsListResult %1", _candidateItemsListResult];
 	_candidateItemsListResult
 };
 
@@ -141,7 +142,7 @@ getVirtualWeaponList = {
 			 	_virtualWeaponList = _virtualWeaponList + (rifleList_db select {_x select 1  == _currentFaction} select 0 select 0); 
 			};
 	};
-	diag_log format ["Player %1 with role %2 has access to weapons %3", name _currentPlayer, _currentPlayerClass,_virtualWeaponList ];
+	//diag_log format ["Player %1 with role %2 has access to weapons %3", name _currentPlayer, _currentPlayerClass,_virtualWeaponList ];
 	_virtualWeaponList
 };
 
@@ -195,7 +196,7 @@ getItembyWarEra = {
 		};
 	};
 
-	diag_log format ["itemList : %1", _itemList];
+	//diag_log format ["itemList : %1", _itemList];
 	_itemList
 };
 
@@ -203,7 +204,7 @@ getVirtualItemList = {
 	params ["_currentPlayer","_currentFaction"];
 	currentPlayerClass = _currentPlayer getVariable "role";
 	virtualItemList = [warEra, _currentPlayer] call getItembyWarEra;
-	diag_log format ["virtualItemList : %1", virtualItemList];
+	//diag_log format ["virtualItemList : %1", virtualItemList];
 	switch (currentPlayerClass) do
 	{
 		case c_medic:
@@ -230,7 +231,7 @@ getVirtualItemList = {
 				virtualItemList = virtualItemList + basicItemsList;
 			};
 	};
-	diag_log format ["Player %1 with role %2 has access to items %3", name _currentPlayer, currentPlayerClass, virtualItemList ];
+	//diag_log format ["Player %1 with role %2 has access to items %3", name _currentPlayer, currentPlayerClass, virtualItemList ];
 	virtualItemList
 };
 
@@ -240,7 +241,7 @@ getVirtualUniform = {
 	currentFaction = _this select 1;
 	currentPlayerClass = currentPlayer getVariable "role";
 	virtualUniformList = [warEra, currentPlayer] call getItembyWarEra;
-	diag_log format ["virtualUniformList : %1", virtualUniformList];
+	//diag_log format ["virtualUniformList : %1", virtualUniformList];
 	switch (currentPlayerClass) do
 	{
 		case c_leader:
@@ -260,7 +261,7 @@ getVirtualUniform = {
 				virtualUniformList = virtualUniformList + (uniformList_db select {_x select 1  == currentFaction} select 0 select 0);
 			};
 	};
-	diag_log format ["Player %1 with role %2 has access to items %3", name currentPlayer, currentPlayerClass,virtualUniformList ];
+	//diag_log format ["Player %1 with role %2 has access to items %3", name currentPlayer, currentPlayerClass,virtualUniformList ];
 	virtualUniformList
 };
 
@@ -285,7 +286,7 @@ getVirtualAttachement = {
 				virtualAttachementList = virtualAttachementList + (attachmentShortList_db select {_x select 1  == currentFaction} select 0 select 0); 
 			};
 	};
-	diag_log format ["Player %1 with role %2 has access to items %3", name currentPlayer, currentPlayerClass, virtualAttachementList ];
+	//diag_log format ["Player %1 with role %2 has access to items %3", name currentPlayer, currentPlayerClass, virtualAttachementList ];
 	virtualAttachementList
 };
 
@@ -304,7 +305,7 @@ getVirtualBackPack = {
 				virtualBackpackList = virtualBackpackList + (backPackList_db select {_x select 1  == currentFaction} select 0 select 0);
 			};
 	};
-	diag_log format ["Player %1 with role %2 has access to items %3", name currentPlayer, currentPlayerClass, virtualBackpackList ];
+	//diag_log format ["Player %1 with role %2 has access to items %3", name currentPlayer, currentPlayerClass, virtualBackpackList ];
 	virtualBackpackList
 };
 
@@ -366,7 +367,7 @@ getVirtualMagazine = {
 		//In addition add basic smokes and grenades
 		virtualMagazineList = virtualMagazineList + basicAmmunitions; 
 
-	diag_log format ["Player %1 with role %2 has access to items %3", name currentPlayer, currentPlayerClass, virtualMagazineList ];
+	//diag_log format ["Player %1 with role %2 has access to items %3", name currentPlayer, currentPlayerClass, virtualMagazineList ];
 	virtualMagazineList
 };
 
@@ -998,7 +999,14 @@ validateSpecificItem =
 								//If it is a primaryWeaponItems then remove
 								if ((primaryWeaponItems _currentPlayer) findIf {_x == _itemToVerify } != -1) then 
 								{	
+									//Last chance for weapon if an ancestor is known the player can keep it 
+									//This code is here to prevent strange issue with RHS inherited items 
+									// _technicalParents = [configFile >> "CfgWeapons" >> _x, true] call BIS_fnc_returnParents;
+									// diag_log format ["technical parents"];
+									// if (getParentsFromItems)
 									_currentPlayer removeprimaryWeaponItem _itemToVerify;
+
+
 								};
 
 								//Remove this specific item
@@ -1007,7 +1015,7 @@ validateSpecificItem =
 
 								//Log this restriction
 								hint format ["%1 has been removed by loadout restriction", _itemToVerify];
-								diag_log format ["%1 has been removed from %2 loadout due to loadout restriction %3",_itemToVerify, name _currentPlayer, _restrictedItemsList];
+								//diag_log format ["%1 has been removed from %2 loadout due to loadout restriction %3",_itemToVerify, name _currentPlayer, _restrictedItemsList];
 							};
 						};
 					};
@@ -1041,7 +1049,7 @@ listCurrentItemsLoadout =
 		case "STRING":
 			{
 				//Test if it's a magazine
-				diag_log format ["listCurrentItemsLoadout testing item  %1 ",_currentItemToTest];
+				//diag_log format ["listCurrentItemsLoadout testing item  %1 ",_currentItemToTest];
 				//Test if the item exist in avalaible items list
 				_currenItemPos = (_listOfItems) findIf {_x == _currentItemToTest };
 				if (_currenItemPos == -1) then 
@@ -1050,7 +1058,7 @@ listCurrentItemsLoadout =
 					_listOfItems pushBack _currentItemToTest;
 
 					//Log this addition
-					diag_log format ["%1 has been added to %2 loadout basic items",_currentItemToTest, name _currentPlayer];
+					//diag_log format ["%1 has been added to %2 loadout basic items",_currentItemToTest, name _currentPlayer];
 				};
 			};
 		default

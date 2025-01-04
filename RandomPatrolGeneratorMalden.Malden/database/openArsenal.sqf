@@ -1,4 +1,3 @@
-#include "..\database\factionParameters.sqf"
 #include "..\database\arsenalLibrary.sqf"
 
 //Setup variable
@@ -42,8 +41,20 @@ if (isClass (configFile >> "CfgPatches" >> "ace_medical")) then
 if (!ironMan) then 
 {
 	player setVariable ["spawnLoadout", getUnitLoadout player];
-};
 
+	//Prevent player from loosing his current configuration
+	_newAvalaibleItems = player getVariable ["avalaibleItemsInArsenal", []];
+	_potentialStuff = ((getUnitLoadout player) call getAllStringInArray);
+	{
+		if (typeName _x != "STRING") then 
+		{
+			_potentialStuff = _potentialStuff - [_x];
+		};
+	} foreach _potentialStuff;
+
+	_newAvalaibleItems = _newAvalaibleItems + _potentialStuff;
+	player setVariable ["avalaibleItemsInArsenal", _newAvalaibleItems];
+};
 
 //Open setup loadout GUI
 [[], 'GUI\loadoutGUI\initPlayerLoadoutSetup.sqf'] remoteExec ['BIS_fnc_execVM', player];

@@ -31,7 +31,7 @@ class DialogSetupParams
 		{
 			idc = 6200;
 			text = "Next";
-			onButtonClick = "[_this] execVM 'GUI\setupGUI\startGUIMenu.sqf';";
+			onButtonClick = "normalClose = true; [_this] execVM 'GUI\setupGUI\startGUIMenu.sqf';";
 			x = GUI_GRID_CENTER_X + 10 * GUI_GRID_CENTER_W;
 			y = GUI_GRID_CENTER_Y + 22 * GUI_GRID_CENTER_H;
 			w = 20 * GUI_GRID_CENTER_W;

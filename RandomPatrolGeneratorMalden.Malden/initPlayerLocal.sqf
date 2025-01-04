@@ -1,3 +1,4 @@
+//#include "database\factionParameters.sqf"
 #include "engine\modManager.sqf"
 #include "database\missionParameters.sqf"
 #include "enemyManagement\behaviorEngine\unitsBehaviorFunctions.sqf"
@@ -12,6 +13,7 @@ forceBluforSetup = "ForceBluforSetup" call BIS_fnc_getParamValue;
 if (!hasInterface || isDedicated) exitWith {};
 waitUntil {alive player};
 waitUntil {!isNull player && (getClientStateNumber>=10||!isMultiplayer)};
+waitUntil {!isNil "factionInfos"};
 
 diag_log format ["Setup Player %1 at position 0", name player];
 
@@ -51,7 +53,9 @@ if (!didJIP) then
 			cutText ["", "BLACK FADED", 100];
 			player setVariable ["isSetupMission", true];
 			player setVariable ["isAdmin", true, true];
-			[[], 'GUI\setupGUI\initMissionMenu.sqf'] remoteExec ['BIS_fnc_execVM', player];
+
+				waitUntil { !isNull findDisplay 46 };
+				[[], 'GUI\setupGUI\initMissionMenu.sqf'] remoteExec ['BIS_fnc_execVM', player];
 		};
 	} else 
 	{
@@ -63,6 +67,8 @@ if (!didJIP) then
 				//Display setup menu
 				cutText ["", "BLACK FADED", 100];
 				player setVariable ["isSetupMission", true];
+				waitUntil { !isNull findDisplay 46 };
+
 				[[], 'GUI\setupGUI\initMissionMenu.sqf'] remoteExec ['BIS_fnc_execVM', player];
 			};
 		} else {
@@ -73,6 +79,8 @@ if (!didJIP) then
 				//Display setup menu
 				cutText ["", "BLACK FADED", 100];
 				player setVariable ["isSetupMission", true];
+
+				waitUntil { !isNull findDisplay 46 };
 				[[], 'GUI\setupGUI\initMissionMenu.sqf'] remoteExec ['BIS_fnc_execVM', player];
 			};
 		};
