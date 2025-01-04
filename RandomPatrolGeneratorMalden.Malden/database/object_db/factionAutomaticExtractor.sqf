@@ -2,6 +2,21 @@
 adjustRole = {
 	params ["_cfgRole", "_cfgName"];
 
+	//Bind role with wrole
+	switch (_cfgRole) do {
+		case "CombatLifeSaver": {_cfgRole = "medic"};
+		case "Grenadier": {_cfgRole = "grenadier"};
+		case "MachineGunner": {_cfgRole = "autorifleman"};
+		case "Marksman": {_cfgRole = "marksman"};
+		case "MissileSpecialist": {_cfgRole = "at"};
+		case "Assistant": {_cfgRole = "rifleman"}; //Assistant must go with basic rifleman
+		case "Rifleman": {_cfgRole = "rifleman"};
+		case "Sapper": {_cfgRole = "engineer"};		
+		case "Crewman": {_cfgRole = "pilot"}; //Assistant must go with basic rifleman
+		case "SpecialOperative": {_cfgRole = "rifleman"};
+	};
+
+
 	_iconToTest = (configFile >> "CfgVehicles" >> _cfgName >> "icon") call BIS_fnc_GetCfgData;
 
 	//Bind role with icon
@@ -34,20 +49,8 @@ adjustRole = {
 		};
 	};
 
-	//Bind role with wrole
-	switch (_cfgRole) do {
-		case "CombatLifeSaver": {_cfgRole = "medic"};
-		case "Grenadier": {_cfgRole = "grenadier"};
-		case "MachineGunner": {_cfgRole = "autorifleman"};
-		case "Marksman": {_cfgRole = "marksman"};
-		case "MissileSpecialist": {_cfgRole = "at"};
-		case "Rifleman": {_cfgRole = "rifleman"};
-		case "Sapper": {_cfgRole = "engineer"};
-		case "SpecialOperative": {_cfgRole = "rifleman"};
-	};
-
 	//Check if name contains specifics strings
-	if (["pilot", _cfgName] call BIS_fnc_inString) then 
+	if (["pilot", _cfgName] call BIS_fnc_inString || ["Pilot", _cfgName] call BIS_fnc_inString) then 
 	{
 		_cfgRole = "pilot";
 	};
@@ -56,13 +59,25 @@ adjustRole = {
 	{
 		_cfgRole = "marksman";
 	};
-	if (["sniper", _cfgName] call BIS_fnc_inString) then 
+	if (["sniper", _cfgName] call BIS_fnc_inString || ["ghillie", _cfgName] call BIS_fnc_inString) then 
 	{
 		_cfgRole = "sniper";
 	};
-	if (["grenadier", _cfgName] call BIS_fnc_inString) then 
+	if (["grenadier", _cfgName] call BIS_fnc_inString || ["_GL_", _cfgName] call BIS_fnc_inString) then 
 	{
 		_cfgRole = "grenadier";
+	};
+	if (["diver", _cfgName] call BIS_fnc_inString) then 
+	{
+		_cfgRole = "diver";
+	};
+	if (["_UGV_", _cfgName] call BIS_fnc_inString || ["_UAV_", _cfgName] call BIS_fnc_inString) then 
+	{
+		_cfgRole = "UAV operator";
+	};
+	if (["JTAC", _cfgName] call BIS_fnc_inString || ["radioman", _cfgName] call BIS_fnc_inString) then 
+	{
+		_cfgRole = "radioman";
 	};
 
 	_cfgRole
@@ -217,7 +232,7 @@ _potentialOpfor = [];
 publicVariable "factionInfos";
 
 //Role filtered to not bo added in faction
-_roleFilter = ["Unarmed", "Crewman"];
+_roleFilter = ["Unarmed"];
 
 //Get All blufor stuff for every factions
 {
@@ -231,33 +246,36 @@ _roleFilter = ["Unarmed", "Crewman"];
 		// 	[c_leader, "rhsgref_ins_g_squadleader", [], false],
 
 		// ];
-		_thisRole = ((_cfgVehName >> "role") call BIS_fnc_GetCfgData);
-		if (_roleFilter findIf {_thisRole == _x} == -1) then {
-			_currentFactionName = format ["loadout%1", _thisFac];
-			_currentStuffFaction = 	missionNamespace getVariable [_currentFactionName, []];
+		if !(["story", _cfgName, false] call BIS_fnc_inString || ["story", ((_cfgVehName >> "editorSubcategory") call BIS_fnc_GetCfgData), false] call BIS_fnc_inString) then 
+		{		
+			_thisRole = ((_cfgVehName >> "role") call BIS_fnc_GetCfgData);
+			if (_roleFilter findIf {_thisRole == _x} == -1) then {
+				_currentFactionName = format ["loadout%1", _thisFac];
+				_currentStuffFaction = 	missionNamespace getVariable [_currentFactionName, []];
 
-			_thisRole = [_thisRole, _cfgName] call adjustRole; 
+				_thisRole = [_thisRole, _cfgName] call adjustRole; 
 
-			_indexFound = _currentStuffFaction findIf {_thisRole == (_x#0)};
+				_indexFound = _currentStuffFaction findIf {_thisRole == (_x#0)};
 
-			if (_indexFound == -1) then 
-			{
-				_currentStuffFaction pushBack [_thisRole, _cfgName];
-				missionNamespace setVariable [_currentFactionName, _currentStuffFaction, true]; 
-			} else 
-			{
-				_currentStuffFactionCurrentRole = _currentStuffFaction#_indexFound;
-				if (count _currentStuffFactionCurrentRole == 2) then 
+				if (_indexFound == -1) then 
 				{
-					_currentStuffFactionCurrentRole pushBack [_cfgName];
-					_currentStuffFactionCurrentRole pushBack false;
-
+					_currentStuffFaction pushBack [_thisRole, _cfgName];
+					missionNamespace setVariable [_currentFactionName, _currentStuffFaction, true]; 
 				} else 
 				{
-					_currentStuffFactionCurrentRole#2 pushBack _cfgName;
+					_currentStuffFactionCurrentRole = _currentStuffFaction#_indexFound;
+					if (count _currentStuffFactionCurrentRole == 2) then 
+					{
+						_currentStuffFactionCurrentRole pushBack [_cfgName];
+						_currentStuffFactionCurrentRole pushBack false;
+
+					} else 
+					{
+						_currentStuffFactionCurrentRole#2 pushBack _cfgName;
+					};
+					_currentStuffFaction set [_indexFound, _currentStuffFactionCurrentRole];
+					missionNamespace setVariable [_currentFactionName, _currentStuffFaction, true]; 
 				};
-				_currentStuffFaction set [_indexFound, _currentStuffFactionCurrentRole];
-				missionNamespace setVariable [_currentFactionName, _currentStuffFaction, true]; 
 			};
 		};
 	};

@@ -392,7 +392,7 @@ setupArsenalToItem = {
 	//Add Weapon to arsenal
 	_currentWeaponItems = [_currentPlayer, _currentFaction] call getVirtualWeaponList;
 	[_itemToAttachArsenal, _currentWeaponItems, false, false] call BIS_fnc_addVirtualWeaponCargo;
-
+	
 	//Add backpack to arsenal
 	_currentBackpackItems = [_currentPlayer, _currentFaction] call getVirtualBackPack;
 	[_itemToAttachArsenal, _currentBackpackItems, false, false] call BIS_fnc_addVirtualBackpackCargo;
@@ -431,6 +431,12 @@ setupArsenalToItem = {
 	_whitelistOfArsenalItems = _currentWeaponItems+_currentBackpackItems+_currentMagazineItems+_currentItems + _whiteListDefaultStuff + ["ACE_key_west","ACE_key_east","ACE_key_civ","ACE_key_indp"];
 	_currentPlayer setVariable ["avalaibleItemsInArsenal", _whitelistOfArsenalItems, true];
 	diag_log format ["List of whitelist items by listCurrentItemsLoadout %1", _whitelistOfArsenalItems];
+
+	//Fix vanilla arsenal not showing all weapon 
+	[_itemToAttachArsenal, _whitelistOfArsenalItems, false, false] call BIS_fnc_addVirtualWeaponCargo;
+	[_itemToAttachArsenal, _whitelistOfArsenalItems, false, false] call BIS_fnc_addVirtualBackpackCargo;
+	[_itemToAttachArsenal, _whitelistOfArsenalItems, false, false] call BIS_fnc_addVirtualMagazineCargo;
+	[_itemToAttachArsenal, _whitelistOfArsenalItems,false, false] call BIS_fnc_addVirtualItemCargo;
 
 	//Remove arsenal action
 	player call RemoveArsenalActionFromGivenObject;

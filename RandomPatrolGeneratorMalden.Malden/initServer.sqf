@@ -19,9 +19,9 @@ missionNamespace setVariable ["generationSetup", false, true]; // GUI generation
 
 //Factions
 missionNamespace setVariable ["warEra", 3, true]; // GUI generation mission boolean flag
-missionNamespace setVariable ["bluforFaction", 14, true]; //Default faction 14 -> OTAN 2035
-missionNamespace setVariable ["opforFaction", 2, true]; //Default faction 2 -> Syndikat
-missionNamespace setVariable ["independentFaction", 2, true]; //Default faction 2 -> Syndikat
+missionNamespace setVariable ["bluforFaction", "BLU_F", true]; //Default faction 14 -> OTAN 2035
+missionNamespace setVariable ["opforFaction", "OPF_G_F", true]; //Default faction 2 -> Syndikat
+missionNamespace setVariable ["independentFaction", "IND_F", true]; //Default faction 2 -> Syndikat
 missionNamespace setVariable ["civilianFaction", 2, true]; //Default faction 2 -> Syndikat
 
 //Missions vehicle settings
