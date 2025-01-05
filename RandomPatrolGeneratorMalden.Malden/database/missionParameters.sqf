@@ -36,6 +36,7 @@ missionIASkill = [
 ];
 
 missionRespawnParamSettings = [
+	[30,"Respawn every 30 seconds"],
 	[60,"Respawn every minute"],
 	[180,"Respawn every 3 minutes"],
 	[300,"Respawn every 5 minutes"],
