@@ -39,7 +39,7 @@ if (isClass (configFile >> "CfgPatches" >> "ace_medical")) then
 if (!ironMan) then 
 {
 	player setVariable ["spawnLoadout", getUnitLoadout player];
-	uiSleep 1;
+	uiSleep 0.5;
 
 	//Prevent player from loosing his current configuration
 	_newAvalaibleItems = player getVariable ["avalaibleItemsInArsenal", []];
@@ -56,5 +56,5 @@ if (!ironMan) then
 };
 
 //Open setup loadout GUI
-[[], 'GUI\loadoutGUI\initPlayerLoadoutSetup.sqf'] remoteExec ['BIS_fnc_execVM', player];
+[] execVM 'GUI\loadoutGUI\initPlayerLoadoutSetup.sqf'; 
 
