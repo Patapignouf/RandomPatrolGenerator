@@ -179,18 +179,18 @@ if (ironMan) then
 };
 
 
-//Validate current player's stuff
-if ((missionNameSpace getVariable "enableLoadoutRestriction") == 1) then 
-{
-	[missionNamespace, "arsenalClosed", {
-		disableSerialization;
-		params ["_display"];
+// //Validate current player's stuff
+// if ((missionNameSpace getVariable "enableLoadoutRestriction") == 1) then 
+// {
+// 	[missionNamespace, "arsenalClosed", {
+// 		disableSerialization;
+// 		params ["_display"];
 
-		//Check loadout
-		[player] call validateLoadout;
-		["AmmoboxExit", player] call BIS_fnc_arsenal;
-	}] call BIS_fnc_addScriptedEventHandler;
-};
+// 		//Check loadout
+// 		[player] call validateLoadout;
+// 		["AmmoboxExit", player] call BIS_fnc_arsenal;
+// 	}] call BIS_fnc_addScriptedEventHandler;
+// };
 
 
 //Init disableThermal
@@ -254,7 +254,6 @@ if !(isClass (configFile >> "CfgPatches" >> "ace_medical")) then
 				_this call reduceCookOff;
 			}] call CBA_fnc_addEventHandler;
 		};
-	};
 	};
 
 	//Display message to abort when unconscious

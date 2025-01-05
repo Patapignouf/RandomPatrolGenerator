@@ -1,5 +1,3 @@
-#include "..\database\arsenalLibrary.sqf"
-
 //Setup variable
 bluFaction = missionNamespace getVariable "bluforFaction";
 indFaction = missionNamespace getVariable "independentFaction";
@@ -41,6 +39,7 @@ if (isClass (configFile >> "CfgPatches" >> "ace_medical")) then
 if (!ironMan) then 
 {
 	player setVariable ["spawnLoadout", getUnitLoadout player];
+	uiSleep 1;
 
 	//Prevent player from loosing his current configuration
 	_newAvalaibleItems = player getVariable ["avalaibleItemsInArsenal", []];
