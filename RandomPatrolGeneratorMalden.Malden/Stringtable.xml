@@ -612,6 +612,6 @@
 		<Key ID="STR_RPG_TUTO_RESPAWN">
 			<Original>If you die you will respawn according to the mission settings (timer, objective complete, manual)</Original>
 			<English>If you die you will respawn according to the mission settings (timer, objective complete, manual)</English>
-			<French>Si vous mourrez, vous pourrez réapparaitre suivant les paramètres de missioon (temps, objectifs, demande)</French>
+			<French>Si vous mourrez, vous pourrez réapparaitre suivant les paramètres de mission (temps, objectifs, demande)</French>
 		</Key>
 </Project>
