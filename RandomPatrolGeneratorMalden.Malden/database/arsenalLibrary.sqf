@@ -699,6 +699,10 @@ setupPlayerLoadout = {
 
 	//Setup initArsenal whitelist items
 	[player, player, player call getPlayerFaction] call setupArsenalToItem;
+
+	_whitelistOfArsenalItems = player getVariable ["avalaibleItemsInArsenal", []];
+	_whitelistOfArsenalItems append ([getUnitLoadout player] call getAllStringInArray);
+	player setVariable ["avalaibleItemsInArsenal", _whitelistOfArsenalItems, true];
 };
 
 setupSaveAndLoadRole = {
