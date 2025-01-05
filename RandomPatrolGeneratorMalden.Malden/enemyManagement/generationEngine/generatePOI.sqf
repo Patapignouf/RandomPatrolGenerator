@@ -15,7 +15,7 @@ if (_tempAvailablePosition distance _thisAvailablePosition < 200) then
 //Generate enemy infantry on AO
 diag_log format ["Infantry generation start on AO %1",_thisAvailablePosition];
 _baseRadius = 60;
-for [{_i = 0}, {_i < ((_thisDifficulty)*2)+1}, {_i = _i + 1}] do 
+for [{_i = 0}, {_i < ((_thisDifficulty)*2)}, {_i = _i + 1}] do 
 {
 	currentRandomGroup = selectRandom _thisAvailableOpforGroup;
 	currentGroup = [currentRandomGroup, _thisAvailablePosition, east, "DefenseInfantry"] call doGenerateEnemyGroup;
@@ -33,6 +33,22 @@ for [{_i = 0}, {_i < ((_thisDifficulty)*2)+1}, {_i = _i + 1}] do
 	[currentGroup, getPos (leader currentGroup), _baseRadius, false] call doGarrison;
 	_baseRadius = _baseRadius + 30;
 };
+
+//Add a patrol 
+currentGroup = [_thisAvailableOpforGroup#0, _thisAvailablePosition, east, "DefenseInfantry"] call doGenerateEnemyGroup;
+
+//Add intel to enemy
+if ((typeName _thisObjective) == "ARRAY") then 
+{
+	[currentGroup,_thisObjective] execVM 'engine\objectiveManagement\addObjectiveIntel.sqf';
+} else 
+{
+	diag_log format ["generatePOI : _thisObjective is null"];
+};
+
+//Spawn group
+[currentGroup, _thisAvailablePosition, 150, false] call doPatrol;
+
 
 //50% chance to spawn opfor turret
 if (random 100 <50) then 
