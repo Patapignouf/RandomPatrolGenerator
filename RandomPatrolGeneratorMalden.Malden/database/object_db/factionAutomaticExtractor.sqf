@@ -280,23 +280,42 @@ _roleFilter = ["Unarmed"];
 		};
 	};
 
-	if (_cfgName isKindOf 'Car' && !(_cfgName isKindOf 'Tank' || _cfgName isKindOf 'Wheeled_APC_F' || _cfgName isKindOf 'APC_Tracked_02_base_F')) then {	
-
+	if (_cfgName isKindOf 'Car' && !(_cfgName isKindOf 'Tank' || _cfgName isKindOf 'Wheeled_APC_F' || _cfgName isKindOf 'APC_Tracked_02_base_F' || ((configFile >> "CfgVehicles" >> _cfgName >> "artilleryScanner") call BIS_fnc_GetCfgData) == 1 )) then {	
+		if (count (_cfgName call BIS_fnc_allTurrets) == 0) then 
+		{
 			_currentFactionName = format ["bluforUnarmedVehicle%1", _thisFac];
 
 			_currentStuffFaction = 	missionNamespace getVariable [_currentFactionName, []];
 			_currentStuffFaction pushBack _cfgName;
 			missionNamespace setVariable [_currentFactionName, _currentStuffFaction, true]; 
+		} else 
+		{
+			_currentFactionName = format ["bluforArmedVehicle%1", _thisFac];
+
+			_currentStuffFaction = 	missionNamespace getVariable [_currentFactionName, []];
+			_currentStuffFaction pushBack _cfgName;
+
+			missionNamespace setVariable [_currentFactionName, _currentStuffFaction, true]; 
+		};
 	};
 	if (_cfgName isKindOf 'Helicopter') then {	
-
+		if (count (((configFile >> "CfgVehicles" >> _cfgName >> "weapons") call BIS_fnc_GetCfgData) select {_x != "CMFlareLauncher"})== 0) then 
+		{
 			_currentFactionName = format ["bluforUnarmedVehicleChopper%1", _thisFac];
 
 			_currentStuffFaction = 	missionNamespace getVariable [_currentFactionName, []];
 			_currentStuffFaction pushBack _cfgName;
 			missionNamespace setVariable [_currentFactionName, _currentStuffFaction, true]; 
+		} else 
+		{
+			_currentFactionName = format ["bluforArmedChopper%1", _thisFac];
+
+			_currentStuffFaction = 	missionNamespace getVariable [_currentFactionName, []];
+			_currentStuffFaction pushBack _cfgName;
+			missionNamespace setVariable [_currentFactionName, _currentStuffFaction, true]; 
+		};
 	};
-	if (_cfgName isKindOf 'Tank' || _cfgName isKindOf 'Wheeled_APC_F' || _cfgName isKindOf 'APC_Tracked_02_base_F') then {	
+	if ((_cfgName isKindOf 'Tank' || _cfgName isKindOf 'Wheeled_APC_F' || _cfgName isKindOf 'APC_Tracked_02_base_F') && ((configFile >> "CfgVehicles" >> _cfgName >> "artilleryScanner") call BIS_fnc_GetCfgData) == 0) then {	
 
 			_currentFactionName = format ["bluforArmoredVehicle%1", _thisFac];
 
@@ -414,6 +433,8 @@ _roleFilter = ["Unarmed"];
 	//Define vehicle
 	_currentFactionName = format ["bluforUnarmedVehicle%1", _thisFac];
 	_currentStuffFaction = 	missionNamespace getVariable [_currentFactionName, []];
+	_currentFactionName = format ["bluforArmedVehicle%1", _thisFac];
+	_currentStuffFaction = _currentStuffFaction + (missionNamespace getVariable [_currentFactionName, []]);
 	[_thisFac, "baseEnemyVehicleGroup", _currentStuffFaction] call doSetOpfor;
 
 	_currentFactionName = format ["bluforArmoredVehicle%1", _thisFac];
