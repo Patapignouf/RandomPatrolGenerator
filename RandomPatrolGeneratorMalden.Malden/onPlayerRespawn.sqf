@@ -48,17 +48,19 @@ if !(isClass (configFile >> "CfgPatches" >> "ace_medical")) then
 	player setVariable ["HandleDamageEH", _handleDamageEH, true];
 } else 
 {
-	//Add ACE cookoff high probability on enemy weapon
-	player addEventHandler["Fired",{
-		params ["_unit", "_weapon", "_muzzle", "_mode", "_ammo", "_magazine", "_projectile", "_gunner"];
-    	[_weapon] call adjustCookOf;
-  	}];
+	if (missionNameSpace getVariable ["enableOverHeat",1] == 1) then 
+	{
+		//Add ACE cookoff high probability on enemy weapon
+		player addEventHandler["Fired",{
+			params ["_unit", "_weapon", "_muzzle", "_mode", "_ammo", "_magazine", "_projectile", "_gunner"];
+			[_weapon] call adjustCookOf;
+		}];
 
-	//Reduce cookoff on jammed weapon
-	["ace_weaponJammed", {
-		_this call reduceCookOff;
-	}] call CBA_fnc_addEventHandler;
-
+		//Reduce cookoff on jammed weapon
+		["ace_weaponJammed", {
+			_this call reduceCookOff;
+		}] call CBA_fnc_addEventHandler;
+	};
 };
 
 
