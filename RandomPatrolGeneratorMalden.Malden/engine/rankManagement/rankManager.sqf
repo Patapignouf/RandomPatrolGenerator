@@ -254,7 +254,8 @@ if (isClass (configFile >> "CfgPatches" >> "ace_medical")) then
 					// Grant 1 XP reward for every 4 points of value of medical treatments
 					if (_valueOfMedicItemsUsed_tmp >= 4) then 
 					{
-						[{[(floor (_valueOfMedicItemsUsed_tmp / 4)), "RPG_ranking_heal"] call doUpdateRank}] remoteExec ["call", _caller];
+						[[floor (_valueOfMedicItemsUsed_tmp / 4)], {params ["_valueOfMedicItems"]; [_valueOfMedicItems, "RPG_ranking_heal"] call doUpdateRank}] remoteExec ["spawn", _caller]; 
+
 						_caller setVariable ["valueOfMedicItemsUsed", (_valueOfMedicItemsUsed_tmp % 4)];
 					} else 
 					{
@@ -279,7 +280,7 @@ if (isClass (configFile >> "CfgPatches" >> "ace_medical")) then
 				// Determine total participation score
 				private _totalParticipationScore = 0;
 				{
-					_totalParticipationScore = _totalParticipationScore + (_y select 1);
+					_totalParticipationScore = _totalParticipationScore + (_y # 1);
 				} forEach _medicalParticipationHashMap;
 
 				// Determine total shared xp reward
@@ -291,7 +292,8 @@ if (isClass (configFile >> "CfgPatches" >> "ace_medical")) then
 
 				{
 					// Grant portion of the shared xp to players based on individual participation.
-					[{[round(_totalXpReward * ((_y select 1) / _totalParticipationScore)), "RPG_ranking_heal"] call doUpdateRank}] remoteExec ["call", _y select 0];
+					[[_totalXpReward, _totalParticipationScore, _y], {params ["_totalXpReward", "_totalParticipationScore", "_y"]; [round(_totalXpReward * ((_y # 1) / _totalParticipationScore)), "RPG_ranking_heal"] call doUpdateRank}] remoteExec ["spawn",  _y # 0]; 
+
 				} forEach _medicalParticipationHashMap;
 			};
 		};
