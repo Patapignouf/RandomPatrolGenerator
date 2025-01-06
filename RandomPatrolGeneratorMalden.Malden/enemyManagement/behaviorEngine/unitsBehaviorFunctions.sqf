@@ -153,7 +153,7 @@ doSurrender = {
 		_unit action["Surrender", _unit]; // Surrender
 		_unit setCaptive true; // Set as captive
 
-		[[_unit], {params ["_unit"]; [name _unit, "STR_RPG_HC_SURRENDER_SPEAK"] call doDialog}] remoteExec ["spawn", 0]; 
+		[[_unit], {params ["_unit"]; [name _unit, "STR_RPG_HC_SURRENDER_SPEAK"] call doDialog}] remoteExec ["spawn", allPlayers select {_x distance _unit < 80}]; //Call every players under 80 meters
 
 		//Add penalty if a player kill a surrender unit
 		if (alive _unit) then 
