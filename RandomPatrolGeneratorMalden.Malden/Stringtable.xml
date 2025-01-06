@@ -605,8 +605,8 @@
 			<French>Vous pouvez personnaliser votre équipement à la caisse de munitions</French>
 		</Key>
 		<Key ID="STR_RPG_TUTO_VEHICLE">
-			<Original>You can take every every vehicles or buy them</Original>
-			<English>You can take every every vehicles or buy them</English>
+			<Original>You can take every vehicle or buy them</Original>
+			<English>You can take every vehicle or buy them</English>
 			<French>Vous pouvez prendre tous les véhicules autour ou en acheter de nouveaux</French>
 		</Key>
 		<Key ID="STR_RPG_TUTO_RESPAWN">
