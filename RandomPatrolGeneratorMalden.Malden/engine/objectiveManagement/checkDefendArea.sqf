@@ -91,6 +91,9 @@ if (_thisFOBCheck) then
 	_OpforFOBCleared = missionNamespace getVariable ["OpforFOBCleared", 0];
 	missionNamespace setVariable ["OpforFOBCleared", _OpforFOBCleared+1, true];	
 
+	//Give 25 XP for FOB clearing
+	[{[25, "RPG_ranking_objective_complete"] call doUpdateRank}] remoteExec ["call", 0];
+
 	//Respawn players 
 	[[], "engine\respawnManagement\respawnManager.sqf"] remoteExec ['BIS_fnc_execVM', 0];
 };

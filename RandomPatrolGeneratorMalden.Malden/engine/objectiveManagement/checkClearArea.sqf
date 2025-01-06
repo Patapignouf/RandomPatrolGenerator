@@ -59,6 +59,9 @@ if (_thisFOBCheck) then
 	//Hint players for cleared FOB
 	[[_thisTrigger], {params ["_thisTrigger"]; ["STR_RPG_HC_NAME", "STR_RPG_HC_FOB_CLEARED", mapGridPosition (getPos _thisTrigger)] call doDialog}] remoteExec ["spawn", 0]; 
 
+	//Give 25 XP for FOB clearing
+	[{[25, "RPG_ranking_objective_complete"] call doUpdateRank}] remoteExec ["call", 0];
+	
 	//Add this FOB to cleared FOB
 	_OpforFOBCleared = missionNamespace getVariable ["OpforFOBCleared", 0];
 	missionNamespace setVariable ["OpforFOBCleared", _OpforFOBCleared+1, true];	
