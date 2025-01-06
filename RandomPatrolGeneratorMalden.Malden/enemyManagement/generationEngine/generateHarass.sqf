@@ -51,7 +51,7 @@ if (isServer) then
 				//Alert players
 				if (random 100>50) then 
 				{
-					[[positionToAttack], {params ["positionToAttack"]; ["STR_RPG_HC_NAME", "STR_RPG_HC_ENEMY_REINFORCEMENT", mapGridPosition (positionToAttack)] call doDialog}] remoteExec ["spawn", 0]; 
+					[[positionToAttack], {params ["_positionToAttack"]; ["STR_RPG_HC_NAME", "STR_RPG_HC_ENEMY_REINFORCEMENT", mapGridPosition (_positionToAttack)] call doDialog}] remoteExec ["spawn", 0]; 
 				};
 				
 				//Define harass group 
