@@ -328,10 +328,15 @@ if (isClass (configFile >> "CfgPatches" >> "ace_medical")) then
 	};
 	"];
 
-
-	//Explore actions
-	// inGameUISetEventHandler ["Action", " 
-	// 	hint format ['%1',_this];
-	// };
-	// "];
+	//Reward player for reviving teammates
+	_animDoneEH = _unit addEventHandler ["AnimDone", {
+		params ["_unit", "_anim"];
+		if ((_anim == toLower "ainvpknlmstpsnonwrfldnon_medicend") && isplayer _unit) then 
+		{
+			// diag_log _anim;
+			// hint format ["P1 : %1\nP2 : %2",_unit,_anim];
+			[{[3, "RPG_ranking_heal"] call doUpdateRank}] remoteExec ["call", _unit];
+		};
+	}];
+	_unit setVariable ["AnimDoneMedicEH", _animDoneEH, true];
 };
