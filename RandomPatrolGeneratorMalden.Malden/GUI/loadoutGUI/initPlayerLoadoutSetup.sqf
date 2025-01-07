@@ -244,6 +244,22 @@ if (hasInterface) then
 				cutText ["Loadout loaded\nWipe custom loadout", "PLAIN", 0.3];
 			} else 
 			{
+				//Prevent player from loosing his current configuration
+				[] spawn {
+					uiSleep 0.5;
+					_newAvalaibleItems = player getVariable ["avalaibleItemsInArsenal", []];
+					_potentialStuff = ((getUnitLoadout player) call getAllStringInArray);
+					{
+						if (typeName _x != "STRING") then 
+						{
+							_potentialStuff = _potentialStuff - [_x];
+						};
+					} foreach _potentialStuff;
+
+					_newAvalaibleItems = _newAvalaibleItems + _potentialStuff;
+					player setVariable ["avalaibleItemsInArsenal", _newAvalaibleItems];
+				};
+				
 				cutText ["Loadout loaded", "PLAIN", 0.3];
 			};
 		}];
