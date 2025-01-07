@@ -59,5 +59,16 @@ class playerRespawnMenu
 			w = 10 * GUI_GRID_CENTER_W;
 			h = 1 * GUI_GRID_CENTER_H;
 		};
+
+		//Tent respawn button
+		class RespawnOnTent: RscButton
+		{
+			idc = 8202;
+			text = "Respawn at tent position";
+			x = GUI_GRID_CENTER_X + 5 * GUI_GRID_CENTER_W;
+			y = GUI_GRID_CENTER_Y + 9 * GUI_GRID_CENTER_H;
+			w = 10 * GUI_GRID_CENTER_W;
+			h = 1 * GUI_GRID_CENTER_H;
+		};
 	};
 };

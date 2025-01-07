@@ -329,6 +329,10 @@ if (isClass (configFile >> "CfgPatches" >> "ace_medical")) then
 	"];
 
 	//Reward player for reviving teammates
+	if (_unit setVariable ["AnimDoneMedicEH",-1]) then 
+	{
+
+	};
 	_animDoneEH = _unit addEventHandler ["AnimDone", {
 		params ["_unit", "_anim"];
 		if ((_anim == toLower "ainvpknlmstpsnonwrfldnon_medicend") && isplayer _unit) then 

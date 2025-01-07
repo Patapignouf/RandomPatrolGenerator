@@ -9,6 +9,9 @@ createDialog "playerRespawnMenu";
 private _mainDisplay = (findDisplay 8000);
 private _buttonRespawnStart = _mainDisplay displayCtrl 8200;
 private _buttonRespawnAdvFOB = _mainDisplay displayCtrl 8201;
+private _buttonRespawnTent = _mainDisplay displayCtrl 8202;
+
+
 
 //Faction params
 bluFaction = missionNamespace getVariable "bluforFaction";
@@ -64,6 +67,33 @@ if (!ironMan) then
 	} else 
 	{
 		_buttonRespawnAdvFOB ctrlShow false;
+	};
+
+	//Hide advanced fob respawn if independent or if there is no Adv FOB setup
+	_tentFOBLocation = missionNamespace getVariable [format ['bluforPositionAdvancedRespawn%1', str (group player)], [0,0,0]];
+	if (playerSide == blufor && !([_tentFOBLocation, [0,0,0]] call BIS_fnc_areEqual)) then 
+	{
+			_buttonRespawnTent ctrlAddEventHandler[ "ButtonClick",
+			{
+				//Close mission setup
+				params ["_ctrl"];
+
+				normalClose = true;
+				_advFOBLocation = missionNamespace getVariable [format ['bluforPositionAdvancedRespawn%1', str (group player)], [0,0,0]];
+				player setPos _advFOBLocation;
+
+				["Respawn on group tent position", format ["Year %1", date select 0], mapGridPosition player] spawn BIS_fnc_infoText;
+
+				//Initialize player
+				[] call doInitializePlayer;
+
+				_display = ctrlParent _ctrl;
+				_display closeDisplay 1;
+			}];
+	
+	} else 
+	{
+		_buttonRespawnTent ctrlShow false;
 	};
 
 	//Load every class for current player's faction

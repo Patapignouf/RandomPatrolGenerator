@@ -64,6 +64,7 @@ if !(isClass (configFile >> "CfgPatches" >> "ace_medical")) then
 };
 
 
+
 //Hide HUD group to debug the UI after death
 showHUD [
   true, // scriptedHUD
@@ -133,6 +134,85 @@ if (player getVariable "sideBeforeDeath" == "independent") then
 };
 ["Respawn on start position", format ["Year %1", date select 0], mapGridPosition player] spawn BIS_fnc_infoText;
 
+
+if (missionNameSpace getVariable ["enableAdvancedRespawn", 1] == 1) then 
+{
+	//Add vehicle shop
+	player addAction [format ["<img size='2' image='\a3\ui_f_oldman\data\IGUI\Cfg\holdactions\holdAction_sleep_ca.paa'/><t size='1'>Place respawn tent</t>"],{
+		//Define parameters
+		params ["_object","_caller","_ID","_avalaibleVehicle"];
+
+		missionNameSpace setVariable [format ['bluforAdvancedRespawn%1', str (group _caller)], false, true];
+		missionNameSpace setVariable [format ['bluforPositionAdvancedRespawn%1', str (group _caller)], getPos _object, true];
+
+		//Create tent
+		_createTent = createVehicle ["Land_TentDome_F", [getPos _caller, 1, 5, 3, 0, 20, 0, [], [getPos _caller, getPos _caller]] call BIS_fnc_findSafePos, [], 0, "NONE"];
+
+		[{["STR_RPG_HC_NAME", "STR_RPG_HC_RESPAWN_TENT"] call doDialog}] remoteExec ["call", units (group _caller)];
+
+		//Create action to authorize tent disassembly
+		[
+			_createTent, 
+			"Disassemble tent", 
+			"\a3\ui_f\data\IGUI\Cfg\holdactions\holdAction_unbind_ca.paa", 
+			"\a3\ui_f\data\IGUI\Cfg\holdactions\holdAction_unbind_ca.paa", 
+			"(_this distance _target < 3) && (_this getVariable 'role' == 'leader')",
+			"true", 
+			{
+				// Action start code
+			}, 
+			{
+				// Action on going code
+			},  
+			{
+				// Action successfull code
+				params ["_object","_caller","_ID","_param"];
+
+				//delete the tent and allow leader to place another one
+				deleteVehicle _object;
+				missionNameSpace setVariable [format ['bluforAdvancedRespawn%1', str (group _caller)], true, true];
+				missionNameSpace setVariable [format ['bluforPositionAdvancedRespawn%1', str (group _caller)], [0,0,0], true];
+			}, 
+			{
+				// Action failed code
+			}, 
+			[],  
+			2,
+			1000, 
+			true,
+			false
+		] remoteExec ["BIS_fnc_holdActionAdd", 0, true];
+
+	},_x,3,true,false,"","(_this getVariable 'role' == 'leader') && (missionNameSpace getVariable [ format ['bluforAdvancedRespawn%1', str (group _this)], true])"];
+};
+
+_KilledEH = player addEventHandler ["Killed", {
+	params ["_unit", "_killer", "_instigator", "_useEffects"];
+	diag_log format ["%1 has been killed by : %2", name _unit, name _instigator];
+
+	//Check if the killer is a player
+	if (isPlayer _instigator) then 
+	{
+		//Check if player are on opposite side
+		if ([side _instigator, playerSide] call BIS_fnc_sideIsEnemy) then 
+		{
+			//Reward PvP kill
+			_distance = _instigator distance _unit;
+			if (_distance<100) then {_distance = nil};
+			[[_distance], {params ["_distance"]; [1, "RPG_ranking_infantry_kill", _distance] call doUpdateRank}] remoteExec ["spawn", _instigator]; 
+		} else 
+		{
+			
+			[[_unit, _instigator], {params ["_unit", "_instigator"]; ["STR_RPG_HC_NAME", "STR_RPG_HC_TEAMKILL", name _unit, name _instigator] call doDialog}] remoteExec ["spawn", side _instigator]; 
+
+			if (_instigator != _unit) then 
+			{
+				[{[-50,5] call doUpdateRankWithPenalty}] remoteExec ["call", _instigator];
+			};
+		};
+	};
+}];
+player setVariable ["KilledEH", _KilledEH, true];
 
 //Allow damage post respawn
 sleep 30;

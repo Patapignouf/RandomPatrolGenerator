@@ -647,7 +647,7 @@ _KilledEH = player addEventHandler ["Killed", {
 			//Reward PvP kill
 			_distance = _instigator distance _unit;
 			if (_distance<100) then {_distance = nil};
-			[{[1, "RPG_ranking_infantry_kill", _distance] call doUpdateRank}] remoteExec ["call", _instigator];
+			[[_distance], {params ["_distance"]; [1, "RPG_ranking_infantry_kill", _distance] call doUpdateRank}] remoteExec ["spawn", _instigator]; 
 		} else 
 		{
 			
@@ -706,6 +706,58 @@ if (isClass (configFile >> "CfgPatches" >> "ace_medical")) then
 } else 
 {
   player setDamage 0;
+};
+
+//add respawn tent action
+if (missionNameSpace getVariable ["enableAdvancedRespawn", 1] == 1) then 
+{
+	//Add vehicle shop
+	player addAction [format ["<img size='2' image='\a3\ui_f_oldman\data\IGUI\Cfg\holdactions\holdAction_sleep_ca.paa'/><t size='1'>Place respawn tent</t>"],{
+		//Define parameters
+		params ["_object","_caller","_ID","_avalaibleVehicle"];
+
+		missionNameSpace setVariable [format ['bluforAdvancedRespawn%1', str (group _caller)], false, true];
+		missionNameSpace setVariable [format ['bluforPositionAdvancedRespawn%1', str (group _caller)], getPos _object, true];
+
+		//Create tent
+		_createTent = createVehicle ["Land_TentDome_F", [getPos _caller, 1, 5, 3, 0, 20, 0, [], [getPos _caller, getPos _caller]] call BIS_fnc_findSafePos, [], 0, "NONE"];
+
+		[{["STR_RPG_HC_NAME", "STR_RPG_HC_RESPAWN_TENT"] call doDialog}] remoteExec ["call", units (group _caller)];
+
+		//Create action to authorize tent disassembly
+		[
+			_createTent, 
+			"Disassemble tent", 
+			"\a3\ui_f\data\IGUI\Cfg\holdactions\holdAction_unbind_ca.paa", 
+			"\a3\ui_f\data\IGUI\Cfg\holdactions\holdAction_unbind_ca.paa", 
+			"(_this distance _target < 3) && (_this getVariable 'role' == 'leader')",
+			"true", 
+			{
+				// Action start code
+			}, 
+			{
+				// Action on going code
+			},  
+			{
+				// Action successfull code
+				params ["_object","_caller","_ID","_param"];
+
+				//delete the tent and allow leader to place another one
+				deleteVehicle _object;
+				missionNameSpace setVariable [format ['bluforAdvancedRespawn%1', str (group _caller)], true, true];
+				missionNameSpace setVariable [format ['bluforPositionAdvancedRespawn%1', str (group _caller)], [0,0,0], true];
+			}, 
+			{
+				// Action failed code
+			}, 
+			[],  
+			2,
+			1000, 
+			true,
+			false
+		] remoteExec ["BIS_fnc_holdActionAdd", 0, true];
+
+	},_x,3,true,false,"","(_this getVariable 'role' == 'leader') && (missionNameSpace getVariable [ format ['bluforAdvancedRespawn%1', str (group _this)], true])"];
 };
 
 //Display welcome message

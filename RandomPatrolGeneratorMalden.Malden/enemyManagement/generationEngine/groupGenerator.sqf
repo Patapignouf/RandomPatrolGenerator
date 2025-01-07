@@ -98,8 +98,8 @@ doGenerateEnemyGroup =
 						//Make unit surrender if the morale goes too low
 						if (morale _x < 0 && vehicle _x == _x && side _x == opfor) then 
 						{
-							//Add 75% chance not  to surrender
-							if (random 100 > 50) then 
+							//Add 60% chance not  to surrender
+							if (random 100 > 60) then 
 							{
 								[_x] call doSurrender;
 							};
