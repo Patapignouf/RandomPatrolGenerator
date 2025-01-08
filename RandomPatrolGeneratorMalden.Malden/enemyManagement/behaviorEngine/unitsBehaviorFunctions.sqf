@@ -106,6 +106,9 @@ doSurrender = {
 		// Get the parameters
 		_unit = _this select 0; // The unit to surrender
 
+		//Call every players under 80 meters
+		[[_unit], {params ["_unit"]; [name _unit, "STR_RPG_HC_SURRENDER_SPEAK"] call doDialog}] remoteExec ["spawn", allPlayers select {_x distance _unit < 80}]; 
+
 		//If lambs is enabled, disable unit task
 		if (isClass (configFile >> "CfgPatches" >> "lambs_danger")) then 
 		{
@@ -153,7 +156,7 @@ doSurrender = {
 		_unit action["Surrender", _unit]; // Surrender
 		_unit setCaptive true; // Set as captive
 
-		[[_unit], {params ["_unit"]; [name _unit, "STR_RPG_HC_SURRENDER_SPEAK"] call doDialog}] remoteExec ["spawn", allPlayers select {_x distance _unit < 80}]; //Call every players under 80 meters
+		uiSleep 1.5; //Add 1.5sec safe for player
 
 		//Add penalty if a player kill a surrender unit
 		if (alive _unit) then 
@@ -170,6 +173,21 @@ doSurrender = {
 					[{[-10, 1] call doUpdateRankWithPenalty}] remoteExec ["call", _instigator];
 				}; 
 			}];
+
+			//Reward HQ repport
+			_unit addAction ["<img size='2' image='\a3\ui_f\data\IGUI\Cfg\holdactions\holdAction_connect_ca.paa'/><t size='1'>Report prisoner</t>",{
+				//Define parameters
+				params ["_object","_caller","_ID","_avalaibleVehicle"];
+
+				//Remove action on other clients
+				[_object] remoteExec ["removeAllActions", 0, true];
+
+				//Give a feedback to the player
+				[[_caller], {params ["_caller"]; ["STR_RPG_HC_NAME", "STR_RPG_HC_SURRENDER_INTEL", name _caller] call doDialog}] remoteExec ["spawn", _caller]; 
+
+				//Reward player
+				[{[2, "RPG_ranking_intel_collect"] call doUpdateRank}] remoteExec ["call", _caller];
+			},_x,3,true,true,"","_target distance _this <5"];
 		};
 		
 		//Clean unit after 15 minutes

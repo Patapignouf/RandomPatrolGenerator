@@ -411,6 +411,11 @@
 				<English>Your leader has setup a respawn tent</English>
 				<French>Votre chef a monté une tente de réapparition</French>
 			</Key>
+			<Key ID="STR_RPG_HC_SURRENDER_INTEL">
+				<Original>Copy %1, let's continue the mission</Original>
+				<English>Copy %1, let's continue the mission</English>
+				<French>Reçu %1, poursuivez la mission</French>
+			</Key>
         </Container>
         <Container name="INTEL_DIALOG">
 			<Key ID="STR_RPG_INTEL_MORTAR_CIV">
