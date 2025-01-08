@@ -130,7 +130,9 @@ if (!ironMan) then
 		//Show black screen
 		cutText ["", "BLACK FADED", 100];
 	}];
+	
 };
+
 
 //Function params
 _buttonRespawnStart ctrlAddEventHandler[ "ButtonClick", 
@@ -175,44 +177,47 @@ _ypading = 0.06;
 // y = GUI_GRID_CENTER_Y + 5 * GUI_GRID_CENTER_H;
 // w = 10 * GUI_GRID_CENTER_W;
 // h = 1 * GUI_GRID_CENTER_H;
-avalaiblePlayer = player;
+if (missionNameSpace getVariable ["respawnOnOtherPlayers", 1] == 1) then 
 {
-	avalaiblePlayer = _x;
-
-	_RcsButtonObjective = _mainDisplay ctrlCreate ["RscButton", -1];
-	_RcsButtonObjective ctrlSetText format ["Respawn on %1", name avalaiblePlayer];
-
-	_RcsButtonObjective ctrlSetPosition [_coordinateX, _coordinateY, _weight, _height];
-	_RcsButtonObjective ctrlCommit 0;
-	_RcsButtonObjective ctrlSetTextColor [1, 1, 1, 1];
-	_RcsButtonObjective setVariable ["playerValue", avalaiblePlayer];
-
-	_coordinateY = _coordinateY + _ypading;
-	
-	_RcsButtonObjective ctrlAddEventHandler[ "ButtonClick", 
+	avalaiblePlayer = player;
 	{
-		params ["_ctrl"];
-		normalClose = true;
-		_currentRespawnPlayer = _ctrl getVariable "playerValue";
-			
-		//SetPlayer position on leader position if it is on vehicle
-		if !(player moveInAny (vehicle _currentRespawnPlayer)) then 
+		avalaiblePlayer = _x;
+
+		_RcsButtonObjective = _mainDisplay ctrlCreate ["RscButton", -1];
+		_RcsButtonObjective ctrlSetText format ["Respawn on %1", name avalaiblePlayer];
+
+		_RcsButtonObjective ctrlSetPosition [_coordinateX, _coordinateY, _weight, _height];
+		_RcsButtonObjective ctrlCommit 0;
+		_RcsButtonObjective ctrlSetTextColor [1, 1, 1, 1];
+		_RcsButtonObjective setVariable ["playerValue", avalaiblePlayer];
+
+		_coordinateY = _coordinateY + _ypading;
+		
+		_RcsButtonObjective ctrlAddEventHandler[ "ButtonClick", 
 		{
-			//Leader on vehicle with empty space
-			_tempPos = getPosASL _currentRespawnPlayer;
-			player setPosASL _tempPos;
-		};
+			params ["_ctrl"];
+			normalClose = true;
+			_currentRespawnPlayer = _ctrl getVariable "playerValue";
+				
+			//SetPlayer position on leader position if it is on vehicle
+			if !(player moveInAny (vehicle _currentRespawnPlayer)) then 
+			{
+				//Leader on vehicle with empty space
+				_tempPos = getPosASL _currentRespawnPlayer;
+				player setPosASL _tempPos;
+			};
 
-		[format ["Respawn on %1", name _currentRespawnPlayer], format ["Year %1", date select 0], mapGridPosition player] spawn BIS_fnc_infoText;
+			[format ["Respawn on %1", name _currentRespawnPlayer], format ["Year %1", date select 0], mapGridPosition player] spawn BIS_fnc_infoText;
 
-		//Initialize player
-		[] call doInitializePlayer;
+			//Initialize player
+			[] call doInitializePlayer;
 
-		//Close dialog
-		_display = ctrlParent _ctrl;
-		_display closeDisplay 1;
-	}];
-} foreach ((allPlayers - [player]) select {alive _x && side _x isEqualTo (side player) && !(_x getVariable ["isInRespawnMenu",false])}) ;
+			//Close dialog
+			_display = ctrlParent _ctrl;
+			_display closeDisplay 1;
+		}];
+	} foreach ((allPlayers - [player]) select {alive _x && side _x isEqualTo (side player) && !(_x getVariable ["isInRespawnMenu",false])}) ;
+};
 
 
 
