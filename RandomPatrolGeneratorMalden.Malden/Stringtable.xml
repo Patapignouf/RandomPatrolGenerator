@@ -407,8 +407,8 @@
 				<French>Ne tirez pas, je me rends épargnez moi !</French>
 			</Key>
 			<Key ID="STR_RPG_HC_RESPAWN_TENT">
-				<Original>Your leader has setup a respawn tent</Original>
-				<English>Your leader has setup a respawn tent</English>
+				<Original>Your leader has setup a reinforcement tent</Original>
+				<English>Your leader has setup a reinforcement tent</English>
 				<French>Votre chef a monté une tente de réapparition</French>
 			</Key>
 			<Key ID="STR_RPG_HC_SURRENDER_INTEL">

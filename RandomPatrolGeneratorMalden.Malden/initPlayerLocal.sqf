@@ -712,7 +712,7 @@ if (isClass (configFile >> "CfgPatches" >> "ace_medical")) then
 if (missionNameSpace getVariable ["enableAdvancedRespawn", 1] == 1) then 
 {
 	//Add vehicle shop
-	player addAction [format ["<img size='2' image='\a3\ui_f_oldman\data\IGUI\Cfg\holdactions\holdAction_sleep_ca.paa'/><t size='1'>Place respawn tent</t>"],{
+	player addAction [format ["<img size='2' image='\a3\ui_f_oldman\data\IGUI\Cfg\holdactions\holdAction_sleep_ca.paa'/><t size='1'>Place reinforcement tent</t>"],{
 		//Define parameters
 		params ["_object","_caller","_ID","_avalaibleVehicle"];
 
@@ -721,8 +721,11 @@ if (missionNameSpace getVariable ["enableAdvancedRespawn", 1] == 1) then
 
 		//Create tent
 		_createTent = createVehicle ["Land_TentDome_F", [getPos _caller, 1, 5, 3, 0, 20, 0, [], [getPos _caller, getPos _caller]] call BIS_fnc_findSafePos, [], 0, "NONE"];
+		_createTent setVariable [str (group _caller), true, true];
 
 		[{["STR_RPG_HC_NAME", "STR_RPG_HC_RESPAWN_TENT"] call doDialog}] remoteExec ["call", units (group _caller)];
+
+		[[str (group _caller), _createTent,"\a3\ui_f\data\IGUI\Cfg\holdactions\holdAction_requestleadership_ca.paa" , [0,0,1,1]], 'GUI\3DNames\3DNames.sqf'] remoteExec ['BIS_fnc_execVM', blufor, true];
 
 		//Create action to authorize tent disassembly
 		[
@@ -742,10 +745,17 @@ if (missionNameSpace getVariable ["enableAdvancedRespawn", 1] == 1) then
 				// Action successfull code
 				params ["_object","_caller","_ID","_param"];
 
-				//delete the tent and allow leader to place another one
-				deleteVehicle _object;
-				missionNameSpace setVariable [format ['bluforAdvancedRespawn%1', str (group _caller)], true, true];
-				missionNameSpace setVariable [format ['bluforPositionAdvancedRespawn%1', str (group _caller)], [0,0,0], true];
+				//If the tent is on your squad
+				if (_object getVariable [str (group _caller), false]) then 
+				{
+					//delete the tent and allow leader to place another one
+					deleteVehicle _object;
+					missionNameSpace setVariable [format ['bluforAdvancedRespawn%1', str (group _caller)], true, true];
+					missionNameSpace setVariable [format ['bluforPositionAdvancedRespawn%1', str (group _caller)], [0,0,0], true];
+				} else 
+				{
+					cutText ["This is not your tent", "PLAIN", 0.3];
+				};
 			}, 
 			{
 				// Action failed code
@@ -753,7 +763,7 @@ if (missionNameSpace getVariable ["enableAdvancedRespawn", 1] == 1) then
 			[],  
 			2,
 			1000, 
-			true,
+			false,
 			false
 		] remoteExec ["BIS_fnc_holdActionAdd", 0, true];
 
