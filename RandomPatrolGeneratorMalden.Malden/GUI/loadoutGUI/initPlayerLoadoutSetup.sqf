@@ -60,7 +60,11 @@ if (hasInterface) then
 		//Validate loadout only if there is no restriction
 		if ((missionNameSpace getVariable "enableLoadoutRestriction") == 1) then 
 		{
-			[player] call validateLoadout;
+			//async validate loadout
+			[player] spawn {
+				params ["_player"];
+				[_player] call validateLoadout;
+			};
 		};
 		[] call refreshCustomLoadoutDisplay;
 	};
