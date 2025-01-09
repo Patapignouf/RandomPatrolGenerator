@@ -9,13 +9,6 @@ addMissionEventHandler ["draw3D",
 	_icon = _thisArgs#2;
 	_colorArray = _thisArgs#3;
 
-	_localizedName = localize _name;
-
-	if (_localizedName != "") then 
-	{
-		_name = _localizedName;
-	};
-
 	//Distance filter 15m
 	_k = 1;
 	if (player distance _position < 15) then 
