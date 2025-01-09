@@ -16,7 +16,7 @@ if (_extractSupportCounter > 0) then
 	[[selectRandom (bluforUnarmedVehicleChopper+bluforExtractVehicleChopper), _position], 'engine\doVehicleVehicleExtract.sqf'] remoteExec ['BIS_fnc_execVM', 2];
 
 	//Hint to extract call
-	[[_position], {params ["_position"]; ["STR_RPG_HC_NAME", "STR_RPG_HC_ARTILLERY", mapGridPosition _position]call doDialog}] remoteExec ["spawn", blufor]; 
+	[[_position], {params ["_position"]; ["STR_RPG_HC_NAME", "STR_RPG_HC_EXTRACT_CALL", mapGridPosition _position]call doDialog}] remoteExec ["spawn", blufor]; 
 
 	//Play random radio sound
 	[] spawn {
