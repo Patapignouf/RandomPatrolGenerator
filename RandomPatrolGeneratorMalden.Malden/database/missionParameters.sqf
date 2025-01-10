@@ -95,7 +95,7 @@ enableOverHeatParam =
 [
 	[	
 		[0, "Disable"],
-		[1, "Enable"]
+		[1, "Enable (ACE Only)"]
 	],
 	"Enable overheat on enemy weapon",
 	1,
@@ -152,7 +152,7 @@ enableObjectiveExactLocationParam =
 [
 	[	
 		[0, "None"],
-		[1, "Near"],
+		[1, "Near (WIP)"],
 		[2, "Exact"]
 	],
 	"Objective location markers",
@@ -175,8 +175,8 @@ sideRelationParam =
 [
 	[	
 		[0, "Blufor friend with Independent against Opfor"],
-		[1, "Blufor against Independent against Opfor"],
-		[2, "Blufor against Independent and Opfor"]
+		[1, "Blufor against Independent against Opfor (PvP)"],
+		[2, "Blufor against Independent and Opfor (PvP)"]
 	],
 	"Determines side relations",
 	0,
@@ -199,7 +199,7 @@ endlessMissionParam =
 [
 	[	
 		[0, "Disable"],
-		[1, "Enable"]
+		[1, "Enable (WIP)"]
 	],
 	"Restart after mission end",
 	0,
@@ -211,7 +211,7 @@ disableZoomParam =
 [
 	[	
 		[0, "Disable"],
-		[1, "Enable"]
+		[1, "Enable (WIP)"]
 	],
 	"Temp Zoom (hold right clic)",
 	0,
@@ -225,10 +225,10 @@ enableAutoDifficultyBalanceParam =
 [
 	[	
 		[0, "Disable"],
-		[1, "Enable"]
+		[1, "Enable (WIP)"]
 	],
 	"Enable Automatic difficulty balance",
-	1,
+	0,
 	"enableAutoDifficultyBalance"
 ];
 
@@ -358,7 +358,7 @@ xpDisplayParam =
 [
 	[	
 		[0, "Disable"],
-		[1, "Enable"]
+		[1, "Enable (Arcade)"]
 	],
 	"Experience real time display",
 	0,
