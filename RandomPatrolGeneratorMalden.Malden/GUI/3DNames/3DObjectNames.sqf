@@ -5,7 +5,7 @@ addMissionEventHandler ["draw3D",
 {
 	//Params getter
 	_name = _thisArgs#0;
-	_position = getPos (_thisArgs#1);
+	_position = getPos (_thisArgs#1) vectorAdd [0,0,2];
 	_icon = _thisArgs#2;
 	_colorArray = _thisArgs#3;
 
