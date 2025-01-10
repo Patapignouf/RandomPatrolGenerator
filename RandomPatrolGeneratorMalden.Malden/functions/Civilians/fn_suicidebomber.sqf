@@ -57,8 +57,8 @@ _civilian addEventHandler ["Killed", {
 
 	// Reward the kill
 	_distance = _instigator distance _unit;
-	if (_distance<100) then {_distance = nil};
-	[{[1, "RPG_ranking_infantry_kill", _distance] call doUpdateRank}] remoteExec ["call", _instigator];
+	if (_distance<100 || _distance>5000) then {_distance = nil};
+	[[_distance], {params ["_distance"]; [1, "RPG_ranking_infantry_kill", _distance] call doUpdateRank}] remoteExec ["spawn", _instigator]; 
 
 	// Check if the civilian has already exploded
 	_exploded = _unit getVariable "exploded";

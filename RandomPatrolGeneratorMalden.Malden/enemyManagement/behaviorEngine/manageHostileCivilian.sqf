@@ -81,7 +81,7 @@ while {alive _thisUnit && (side _thisUnit == civilian) && !(_thisUnit getVariabl
 				if (isPlayer _instigator) then 
 				{
 					_distance = _instigator distance _unit;
-					if (_distance<100) then {_distance = nil};
+					if (_distance<100 || _distance>5000) then {_distance = nil};
 					[[_distance], {params ["_distance"]; [1, "RPG_ranking_infantry_kill", _distance] call doUpdateRank}] remoteExec ["spawn", _instigator]; 
 				} else {
 					//Debug IA killed log
