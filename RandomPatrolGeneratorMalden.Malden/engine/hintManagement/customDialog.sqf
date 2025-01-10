@@ -1,5 +1,16 @@
 doDialog = {
 	params ["_speaker", "_message", "_customParam1", "_customParam2"];
+
+	if (isNil "_customParam1") then 
+	{
+		_customParam1 = "";
+	};
+
+	if (isNil "_customParam2") then 
+	{
+		_customParam2 = "";
+	};
+
 	_textToSpeech = format [localize _message, _customParam1, _customParam2];
 	_colorAndPos = [_speaker] call getSpeakerColorAndPosition;
 
