@@ -147,8 +147,19 @@ if (missionNameSpace getVariable ["enableAdvancedRespawn", 1] == 1) then
 
 		//Create tent
 		_createTent = createVehicle ["Land_TentDome_F", [getPos _caller, 1, 5, 3, 0, 20, 0, [], [getPos _caller, getPos _caller]] call BIS_fnc_findSafePos, [], 0, "NONE"];
+		_createTent setVariable [str (group _caller), true, true];
 
 		[{["STR_RPG_HC_NAME", "STR_RPG_HC_RESPAWN_TENT"] call doDialog}] remoteExec ["call", units (group _caller)];
+
+		[[str (group _caller), _createTent,"\a3\ui_f\data\IGUI\Cfg\holdactions\holdAction_requestleadership_ca.paa" , [0,0,1,1]], 'GUI\3DNames\3DObjectNames.sqf'] remoteExec ['BIS_fnc_execVM', blufor, true];
+
+		//Add support action on tent
+		_createTent addAction ["<img size='2' image='\a3\ui_f_oldman\data\IGUI\Cfg\holdactions\holdAction_market_ca.paa'/><t size='1'>Open support shop</t>",{
+			//Define parameters
+			params ["_object","_caller","_ID","_avalaibleVehicle"];
+
+			[[false], 'GUI\supportGUI\supportGUI.sqf'] remoteExec ['BIS_fnc_execVM', _caller];
+		},_x,3,true,false,"","(_target distance _this <5) && (_target getVariable [str (group _this), false])"];
 
 		//Create action to authorize tent disassembly
 		[
@@ -156,7 +167,7 @@ if (missionNameSpace getVariable ["enableAdvancedRespawn", 1] == 1) then
 			"Disassemble tent", 
 			"\a3\ui_f\data\IGUI\Cfg\holdactions\holdAction_unbind_ca.paa", 
 			"\a3\ui_f\data\IGUI\Cfg\holdactions\holdAction_unbind_ca.paa", 
-			"(_this distance _target < 3) && (_this getVariable 'role' == 'leader')",
+			"(_this distance _target < 3) && (_this getVariable 'role' == 'leader') && (vehicle _this == _this)",
 			"true", 
 			{
 				// Action start code
@@ -168,10 +179,17 @@ if (missionNameSpace getVariable ["enableAdvancedRespawn", 1] == 1) then
 				// Action successfull code
 				params ["_object","_caller","_ID","_param"];
 
-				//delete the tent and allow leader to place another one
-				deleteVehicle _object;
-				missionNameSpace setVariable [format ['bluforAdvancedRespawn%1', str (group _caller)], true, true];
-				missionNameSpace setVariable [format ['bluforPositionAdvancedRespawn%1', str (group _caller)], [0,0,0], true];
+				//If the tent is on your squad
+				if (_object getVariable [str (group _caller), false]) then 
+				{
+					//delete the tent and allow leader to place another one
+					deleteVehicle _object;
+					missionNameSpace setVariable [format ['bluforAdvancedRespawn%1', str (group _caller)], true, true];
+					missionNameSpace setVariable [format ['bluforPositionAdvancedRespawn%1', str (group _caller)], [0,0,0], true];
+				} else 
+				{
+					cutText ["This is not your tent", "PLAIN", 0.3];
+				};
 			}, 
 			{
 				// Action failed code
@@ -179,11 +197,11 @@ if (missionNameSpace getVariable ["enableAdvancedRespawn", 1] == 1) then
 			[],  
 			2,
 			1000, 
-			true,
+			false,
 			false
 		] remoteExec ["BIS_fnc_holdActionAdd", 0, true];
 
-	},_x,3,true,false,"","(_this getVariable 'role' == 'leader') && (missionNameSpace getVariable [ format ['bluforAdvancedRespawn%1', str (group _this)], true])"];
+	},_x,3,true,false,"","(_this getVariable 'role' == 'leader') && (missionNameSpace getVariable [ format ['bluforAdvancedRespawn%1', str (group _this)], true]) && (vehicle _this == _this)"];
 };
 
 _KilledEH = player addEventHandler ["Killed", {
@@ -198,7 +216,7 @@ _KilledEH = player addEventHandler ["Killed", {
 		{
 			//Reward PvP kill
 			_distance = _instigator distance _unit;
-			if (_distance<100) then {_distance = nil};
+			if (_distance<100 || _distance>5000) then {_distance = nil};
 			[[_distance], {params ["_distance"]; [1, "RPG_ranking_infantry_kill", _distance] call doUpdateRank}] remoteExec ["spawn", _instigator]; 
 		} else 
 		{

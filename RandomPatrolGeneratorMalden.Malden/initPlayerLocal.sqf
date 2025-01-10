@@ -646,7 +646,7 @@ _KilledEH = player addEventHandler ["Killed", {
 		{
 			//Reward PvP kill
 			_distance = _instigator distance _unit;
-			if (_distance<100) then {_distance = nil};
+			if (_distance<100 || _distance>5000) then {_distance = nil};
 			[[_distance], {params ["_distance"]; [1, "RPG_ranking_infantry_kill", _distance] call doUpdateRank}] remoteExec ["spawn", _instigator]; 
 		} else 
 		{
@@ -727,13 +727,21 @@ if (missionNameSpace getVariable ["enableAdvancedRespawn", 1] == 1) then
 
 		[[str (group _caller), _createTent,"\a3\ui_f\data\IGUI\Cfg\holdactions\holdAction_requestleadership_ca.paa" , [0,0,1,1]], 'GUI\3DNames\3DObjectNames.sqf'] remoteExec ['BIS_fnc_execVM', blufor, true];
 
+		//Add support action on tent
+		_createTent addAction ["<img size='2' image='\a3\ui_f_oldman\data\IGUI\Cfg\holdactions\holdAction_market_ca.paa'/><t size='1'>Open support shop</t>",{
+			//Define parameters
+			params ["_object","_caller","_ID","_avalaibleVehicle"];
+
+			[[false], 'GUI\supportGUI\supportGUI.sqf'] remoteExec ['BIS_fnc_execVM', _caller];
+		},_x,3,true,false,"","(_target distance _this <5) && (_target getVariable [str (group _this), false])"];
+
 		//Create action to authorize tent disassembly
 		[
 			_createTent, 
 			"Disassemble tent", 
 			"\a3\ui_f\data\IGUI\Cfg\holdactions\holdAction_unbind_ca.paa", 
 			"\a3\ui_f\data\IGUI\Cfg\holdactions\holdAction_unbind_ca.paa", 
-			"(_this distance _target < 3) && (_this getVariable 'role' == 'leader')",
+			"(_this distance _target < 3) && (_this getVariable 'role' == 'leader') && (vehicle _this == _this)",
 			"true", 
 			{
 				// Action start code
@@ -767,7 +775,7 @@ if (missionNameSpace getVariable ["enableAdvancedRespawn", 1] == 1) then
 			false
 		] remoteExec ["BIS_fnc_holdActionAdd", 0, true];
 
-	},_x,3,true,false,"","(_this getVariable 'role' == 'leader') && (missionNameSpace getVariable [ format ['bluforAdvancedRespawn%1', str (group _this)], true])"];
+	},_x,3,true,false,"","(_this getVariable 'role' == 'leader') && (missionNameSpace getVariable [ format ['bluforAdvancedRespawn%1', str (group _this)], true]) && (vehicle _this == _this)"];
 };
 
 //Display welcome message
