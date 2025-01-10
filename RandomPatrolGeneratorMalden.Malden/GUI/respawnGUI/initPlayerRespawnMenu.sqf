@@ -78,17 +78,26 @@ if (!ironMan) then
 				//Close mission setup
 				params ["_ctrl"];
 
-				normalClose = true;
-				_advFOBLocation = missionNamespace getVariable [format ['bluforPositionAdvancedRespawn%1', str (group player)], [0,0,0]];
-				player setPos _advFOBLocation;
+				//Last test to check if the tent is still avalaible
+				_tentFOBLocation = missionNamespace getVariable [format ['bluforPositionAdvancedRespawn%1', str (group player)], [0,0,0]];
+				if (playerSide == blufor && !([_tentFOBLocation, [0,0,0]] call BIS_fnc_areEqual)) then 
+				{
+					normalClose = true;
+					_advFOBLocation = missionNamespace getVariable [format ['bluforPositionAdvancedRespawn%1', str (group player)], [0,0,0]];
+					player setPos _advFOBLocation;
 
-				["Respawn on group tent position", format ["Year %1", date select 0], mapGridPosition player] spawn BIS_fnc_infoText;
+					["Respawn on group tent position", format ["Year %1", date select 0], mapGridPosition player] spawn BIS_fnc_infoText;
 
-				//Initialize player
-				[] call doInitializePlayer;
+					//Initialize player
+					[] call doInitializePlayer;
 
-				_display = ctrlParent _ctrl;
-				_display closeDisplay 1;
+					_display = ctrlParent _ctrl;
+					_display closeDisplay 1;
+				} else 
+				{
+					hint "Tent not avalaible";
+					_ctrl ctrlShow false;
+				};
 			}];
 	
 	} else 
