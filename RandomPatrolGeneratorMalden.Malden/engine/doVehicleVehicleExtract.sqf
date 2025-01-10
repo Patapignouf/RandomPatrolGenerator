@@ -3,7 +3,9 @@ params ["_transportVehicle", "_destinationPos"];
 //spawn enemy vehicle
 //_vehicleTransportGroup = [[_transportVehicle], [selectRandom [0,worldSize],selectRandom [0,worldSize],500], east, ""] call doGenerateEnemyGroup;
 
-_vehicleTransportGroup = [[_transportVehicle], [selectRandom [0,worldSize],selectRandom [0,worldSize]], blufor, ""] call doGenerateEnemyGroup;
+_tempPos = [selectRandom [_destinationPos#0-2000 ,_destinationPos#0+2000],selectRandom [_destinationPos#1-2000 ,_destinationPos#1+2000]];
+
+_vehicleTransportGroup = [[_transportVehicle], _tempPos, blufor, ""] call doGenerateEnemyGroup;
 _heli = vehicle (leader _vehicleTransportGroup);
 
 //enable groups
