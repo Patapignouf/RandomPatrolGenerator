@@ -84,7 +84,7 @@ showHUD [
 //Add admin menu action
 [] spawn {
 	//Add admin settings GUI action
-	if (player getVariable ["isAdmin", false]) then 
+	if (player getVariable ["isAdmin", false] || (hasInterface && isServer)) then 
 	{	
 		//Add 3 spaces empty actions
 		for [{_i = 0}, {_i < 3}, {_i = _i + 1}] do
@@ -101,7 +101,7 @@ showHUD [
 			//Define parameters
 			params ["_object","_caller","_ID","_avalaibleVehicle"];
 			[[], 'GUI\adminGUI\adminGUIInit.sqf'] remoteExec ['BIS_fnc_execVM', _caller];
-		},_x,0,true,false,"","(_target distance _this <3) && (_target getVariable ['isAdmin', false])", 50, true];
+		},_x,0,true,false,"","(_target distance _this <3) && (_target getVariable ['isAdmin', false] || (hasInterface && isServer))", 50, true];
 	};
 };
 
@@ -138,7 +138,7 @@ if (player getVariable "sideBeforeDeath" == "independent") then
 if (missionNameSpace getVariable ["enableAdvancedRespawn", 1] == 1) then 
 {
 	//Add vehicle shop
-	player addAction [format ["<img size='2' image='\a3\ui_f_oldman\data\IGUI\Cfg\holdactions\holdAction_sleep_ca.paa'/><t size='1'>Place respawn tent</t>"],{
+	player addAction [format ["<img size='2' image='\a3\ui_f_oldman\data\IGUI\Cfg\holdactions\holdAction_sleep_ca.paa'/><t size='1'>Place reinforcement tent</t>"],{
 		//Define parameters
 		params ["_object","_caller","_ID","_avalaibleVehicle"];
 
