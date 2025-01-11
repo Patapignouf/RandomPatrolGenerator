@@ -30,7 +30,8 @@ for [{_i = 0}, {_i < round ((_thisDifficulty-1)/2)+1}, {_i = _i + 1}] do
 	};
 
 	//Spawn group
-	[currentGroup, getPos (leader currentGroup), _baseRadius, false] execVM 'enemyManagement\behaviorEngine\doGarrison.sqf';
+	[currentGroup, getPos (leader currentGroup), _baseRadius, false] call doGarrison;
+	
 	_baseRadius = _baseRadius + 30;
 };
 
@@ -90,7 +91,7 @@ if (count _thisAvailableCivGroup > 0) then
 	for [{_i = 0}, {_i < ((_thisDifficulty-1)*2)+1}, {_i = _i + 1}] do 
 	{
 		currentGroup = [_thisAvailableCivGroup, _thisAvailablePosition, 80] call doGenerateHostileCivilianGroup;
-		[currentGroup, getPos (leader currentGroup), 80, false] execVM 'enemyManagement\behaviorEngine\doGarrison.sqf';
+		[currentGroup, getPos (leader currentGroup), 80, false] call doGarrison;
 	};
 };
 

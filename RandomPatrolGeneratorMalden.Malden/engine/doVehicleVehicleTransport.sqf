@@ -2,8 +2,9 @@ params ["_transportVehicle", "_destinationPos"];
 
 //spawn enemy vehicle
 //_vehicleTransportGroup = [[_transportVehicle], [selectRandom [0,worldSize],selectRandom [0,worldSize],500], east, ""] call doGenerateEnemyGroup;
+_tempPos = [selectRandom [_destinationPos#0-2000 ,_destinationPos#0+2000],selectRandom [_destinationPos#1-2000 ,_destinationPos#1+2000]];
 
-_vehicleTransportGroup = [[_transportVehicle], [selectRandom [0,worldSize],selectRandom [0,worldSize]], blufor, ""] call doGenerateEnemyGroup;
+_vehicleTransportGroup = [[_transportVehicle], _tempPos, blufor, ""] call doGenerateEnemyGroup;
 _heli = vehicle (leader _vehicleTransportGroup);
 
 //enable groups
@@ -40,8 +41,7 @@ waitUntil {isTouchingGround (_heli)};
 				if (!([selectedHaloLoc, [0,0,0]] call BIS_fnc_areEqual)) then 
 				{
 					//Display information
-					_textToSpeech = format ["We are ready to take off, let's go !"];
-					[[format ["<t align = 'center' shadow = '2' color='#0046ff' size='1.5' font='PuristaMedium' >Helicopter crew</t><br /><t color='#ffffff' size='1.5' font='PuristaMedium' shadow = '2' >%1</t>", _textToSpeech], "PLAIN DOWN", -1, true, true]] remoteExec ["titleText", blufor, true];
+					[{["STR_RPG_CHOPPER_NAME", "STR_RPG_HC_CREW_READY_TO_TAKE_OFF"] call doDialog}] remoteExec ["call", blufor];
 
 					//Go to landing pos
 					_lzSafePos = [selectedHaloLoc, 0, 250, 10, 0, 0.25, 0, [], [selectedHaloLoc, selectedHaloLoc]] call BIS_fnc_findSafePos;

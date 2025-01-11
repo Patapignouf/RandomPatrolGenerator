@@ -9,7 +9,7 @@ class DialogSetupParams
 			idc = -1;
 			x = 0.229686 * safezoneW + safezoneX;
 			y = 0.117436 * safezoneH + safezoneY;
-			w = 45 * GUI_GRID_CENTER_W;
+			w = 55 * GUI_GRID_CENTER_W;
 			h = 30 * GUI_GRID_CENTER_H;
 			colorBackground[] = {1,1,1,0.5};
 		};
@@ -19,7 +19,7 @@ class DialogSetupParams
 			idc = -1;
 			x = 0.229686 * safezoneW + safezoneX;
 			y = 0.117436 * safezoneH + safezoneY;
-			w = 45 * GUI_GRID_CENTER_W;
+			w = 55 * GUI_GRID_CENTER_W;
 			h = 1.5 * GUI_GRID_CENTER_H;
 			colorBackground[] = {0.2,0.2,0.2,1};
 		};
@@ -31,7 +31,7 @@ class DialogSetupParams
 		{
 			idc = 6200;
 			text = "Next";
-			onButtonClick = "[_this] execVM 'GUI\setupGUI\startGUIMenu.sqf';";
+			onButtonClick = "normalClose = true; [_this] execVM 'GUI\setupGUI\startGUIMenu.sqf';";
 			x = GUI_GRID_CENTER_X + 10 * GUI_GRID_CENTER_W;
 			y = GUI_GRID_CENTER_Y + 22 * GUI_GRID_CENTER_H;
 			w = 20 * GUI_GRID_CENTER_W;
@@ -385,18 +385,5 @@ class DialogSetupParams
 			h = 0.0219952 * safezoneH;
 		};
 	};
-
 };
 
-/* #Qydyne
-$[
-	1.063,
-	["Test",[[0,0,1,1],0.025,0.04,"GUI_GRID"],0,0,0],
-	[1001,"",[2,"Test1",["1.15 * GUI_GRID_W + GUI_GRID_X","3.27 * GUI_GRID_H + GUI_GRID_Y","12 * GUI_GRID_W","1 * GUI_GRID_H"],[-1,-1,-1,-1],[-1,-1,-1,-1],[-1,-1,-1,-1],"","-1"],[]],
-	[2100,"",[2,"Test1C",["1.39 * GUI_GRID_W + GUI_GRID_X","4.73 * GUI_GRID_H + GUI_GRID_Y","10.5 * GUI_GRID_W","1 * GUI_GRID_H"],[-1,-1,-1,-1],[-1,-1,-1,-1],[-1,-1,-1,-1],"","-1"],[]],
-	[1002,"",[2,"Titre",["13.5 * GUI_GRID_W + GUI_GRID_X","1 * GUI_GRID_H + GUI_GRID_Y","14 * GUI_GRID_W","1 * GUI_GRID_H"],[-1,-1,-1,-1],[-1,-1,-1,-1],[-1,-1,-1,-1],"","-1"],[]],
-	[1600,"",[2,"ButtonVal",["27.97 * GUI_GRID_W + GUI_GRID_X","21.78 * GUI_GRID_H + GUI_GRID_Y","11 * GUI_GRID_W","2 * GUI_GRID_H"],[-1,-1,-1,-1],[-1,-1,-1,-1],[-1,-1,-1,-1],"","-1"],[]],
-	[1000,"",[2,"Test2",["1 * GUI_GRID_W + GUI_GRID_X","7 * GUI_GRID_H + GUI_GRID_Y","12 * GUI_GRID_W","1 * GUI_GRID_H"],[-1,-1,-1,-1],[-1,-1,-1,-1],[-1,-1,-1,-1],"","-1"],[]],
-	[2101,"",[2,"Test2C",["1.5 * GUI_GRID_W + GUI_GRID_X","8.5 * GUI_GRID_H + GUI_GRID_Y","10.5 * GUI_GRID_W","1 * GUI_GRID_H"],[-1,-1,-1,-1],[-1,-1,-1,-1],[-1,-1,-1,-1],"","-1"],[]]
-]
-*/

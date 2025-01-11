@@ -3,7 +3,7 @@
 factionID = factionID+1;
 if (isClass (configFile >> "CfgPatches" >> "fow_main")) then 
 {
-	factionInfos pushBack["_FOW_UK", factionID,"United Kingdom [FOW]", true, false, false];
+	factionInfos pushBack["_FOW_UK", factionID,"United Kingdoms [FOW]", true, false, false];
 };
 
 ////////////////////////

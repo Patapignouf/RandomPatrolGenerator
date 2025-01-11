@@ -53,6 +53,7 @@ sleep 2;
 	[{player removeEventHandler ["HandleDamage", player getVariable "HandleDamageEH"];}] remoteExec ["call", -2];
 	[{player removeEventHandler ["Respawn", player getVariable "RespawnEH"];}] remoteExec ["call", -2];
 	[{player removeEventHandler ["AnimDone", player getVariable "AnimDoneEH"];}] remoteExec ["call", -2];
+	[{player removeEventHandler ["AnimDone", player getVariable "AnimDoneMedicEH"];}] remoteExec ["call", -2];
 
 	//Clean objects
 	([format ["%1 cleaning vehicles and objects", time]]) remoteExec ["systemChat", 0, true];

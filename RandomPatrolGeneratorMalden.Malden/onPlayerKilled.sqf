@@ -18,7 +18,7 @@ addMissionEventHandler ["EachFrame",
 player setVariable ["deathNumber", (player getVariable ["deathNumber", 0])+1, true];
 
 //Add experience penalty on death
-[[-10, 1], 'engine\rankManagement\rankPenalty.sqf'] remoteExec ['BIS_fnc_execVM', player];
+[{[-10, 1] call doUpdateRankWithPenalty}] remoteExec ["call", player];
 
 //Add player to a dead player base | This will block disconnection/connection method to respawn 
 _deadPlayerList = missionNamespace getVariable "deadPlayer";
@@ -27,7 +27,7 @@ missionNamespace setVariable ["deadPlayer", _deadPlayerList, true];
 
 //Start spectator mod only ally players
 ["Terminate"] call BIS_fnc_EGSpectator;
-["Initialize", [player, [] , false, false ]] call BIS_fnc_EGSpectator;
+["Initialize", [player, [playerSide] , true, false ]] call BIS_fnc_EGSpectator;
 
 if (isMultiplayer) then 
 {
@@ -37,6 +37,8 @@ if (isMultiplayer) then
 	};
 };
 
+//Wait before display respawn advices
+uiSleep 10;
 
 //Show information about respawn settings
 _title = "You will respawn on one of these conditions : ";

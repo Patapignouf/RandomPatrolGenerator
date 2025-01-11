@@ -33,12 +33,14 @@ if (isClass (configFile >> "CfgPatches" >> "ace_medical")) then
 	"ACE_SpraypaintBlue",
 	"ACE_SpraypaintGreen",
 	"ACE_SpraypaintRed",
+	"ACE_RangeCard",
 	"ACE_SpareBarrel",
+	"ACE_artilleryTable",
 	"ACE_Flashlight_MX991",
+	"ACE_Kestrel4500",
 	"ACE_Flashlight_KSF1",
 	"ACE_Flashlight_XL50"];
 };
-
 
 //basic medic items that will be included with all factions
 //Include ACE items

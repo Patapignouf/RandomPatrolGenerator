@@ -61,7 +61,14 @@ factionID = 41;
 #include "object_db\FOW_GER.sqf"
 #include "object_db\FOW_UK.sqf"
 #include "object_db\FOW_USMC.sqf"
+#include "object_db\JM_Empire.sqf"
+#include "object_db\JM_Rebels.sqf"
+#include "object_db\CDF_2020.sqf"
+#include "object_db\CHDSK_2020.sqf"
 
+//Automatic include new faction by search in config file
+//Highly experimantal i recommend to no use these factions for serious game
+#include "object_db\factionAutomaticExtractor.sqf"
 
 ////////////////////////////////////
 ///DO NOT CHANGE FACTION ORDER//////

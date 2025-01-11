@@ -1,5 +1,4 @@
 disableSerialization;
-#include "..\..\database\factionParameters.sqf"
 
 //Create GUI
 cutText ["", "BLACK FADED", 100];
@@ -10,6 +9,9 @@ createDialog "playerRespawnMenu";
 private _mainDisplay = (findDisplay 8000);
 private _buttonRespawnStart = _mainDisplay displayCtrl 8200;
 private _buttonRespawnAdvFOB = _mainDisplay displayCtrl 8201;
+private _buttonRespawnTent = _mainDisplay displayCtrl 8202;
+
+
 
 //Faction params
 bluFaction = missionNamespace getVariable "bluforFaction";
@@ -67,6 +69,42 @@ if (!ironMan) then
 		_buttonRespawnAdvFOB ctrlShow false;
 	};
 
+	//Hide advanced fob respawn if independent or if there is no Adv FOB setup
+	_tentFOBLocation = missionNamespace getVariable [format ['bluforPositionAdvancedRespawn%1', str (group player)], [0,0,0]];
+	if (playerSide == blufor && !([_tentFOBLocation, [0,0,0]] call BIS_fnc_areEqual)) then 
+	{
+			_buttonRespawnTent ctrlAddEventHandler[ "ButtonClick",
+			{
+				//Close mission setup
+				params ["_ctrl"];
+
+				//Last test to check if the tent is still avalaible
+				_tentFOBLocation = missionNamespace getVariable [format ['bluforPositionAdvancedRespawn%1', str (group player)], [0,0,0]];
+				if (playerSide == blufor && !([_tentFOBLocation, [0,0,0]] call BIS_fnc_areEqual)) then 
+				{
+					normalClose = true;
+					_advFOBLocation = missionNamespace getVariable [format ['bluforPositionAdvancedRespawn%1', str (group player)], [0,0,0]];
+					player setPos _advFOBLocation;
+
+					["Respawn on group tent position", format ["Year %1", date select 0], mapGridPosition player] spawn BIS_fnc_infoText;
+
+					//Initialize player
+					[] call doInitializePlayer;
+
+					_display = ctrlParent _ctrl;
+					_display closeDisplay 1;
+				} else 
+				{
+					hint "Tent not avalaible";
+					_ctrl ctrlShow false;
+				};
+			}];
+	
+	} else 
+	{
+		_buttonRespawnTent ctrlShow false;
+	};
+
 	//Load every class for current player's faction
 	//Define list of role in the combo box
 	{
@@ -87,7 +125,7 @@ if (!ironMan) then
 			//Setup arsenal loadout
 			_listOfAvalaibleRole = [player call getPlayerFaction] call setupRoleSwitchToList;
 			_role = (_listOfAvalaibleRole select parseNumber ((_control lbData (lbCurSel _control))));
-			[player, player, player call getPlayerFaction , _role, false] call switchToRole;
+			[player, player, player call getPlayerFaction , _role, false, false] call switchToRole;
 			[player, player, player call getPlayerFaction] call setupArsenalToItem;
 
 			//Load personnal loadout
@@ -101,7 +139,9 @@ if (!ironMan) then
 		//Show black screen
 		cutText ["", "BLACK FADED", 100];
 	}];
+	
 };
+
 
 //Function params
 _buttonRespawnStart ctrlAddEventHandler[ "ButtonClick", 
@@ -146,44 +186,47 @@ _ypading = 0.06;
 // y = GUI_GRID_CENTER_Y + 5 * GUI_GRID_CENTER_H;
 // w = 10 * GUI_GRID_CENTER_W;
 // h = 1 * GUI_GRID_CENTER_H;
-avalaiblePlayer = player;
+if (missionNameSpace getVariable ["respawnOnOtherPlayers", 1] == 1) then 
 {
-	avalaiblePlayer = _x;
-
-	_RcsButtonObjective = _mainDisplay ctrlCreate ["RscButton", -1];
-	_RcsButtonObjective ctrlSetText format ["Respawn on %1", name avalaiblePlayer];
-
-	_RcsButtonObjective ctrlSetPosition [_coordinateX, _coordinateY, _weight, _height];
-	_RcsButtonObjective ctrlCommit 0;
-	_RcsButtonObjective ctrlSetTextColor [1, 1, 1, 1];
-	_RcsButtonObjective setVariable ["playerValue", avalaiblePlayer];
-
-	_coordinateY = _coordinateY + _ypading;
-	
-	_RcsButtonObjective ctrlAddEventHandler[ "ButtonClick", 
+	avalaiblePlayer = player;
 	{
-		params ["_ctrl"];
-		normalClose = true;
-		_currentRespawnPlayer = _ctrl getVariable "playerValue";
-			
-		//SetPlayer position on leader position if it is on vehicle
-		if !(player moveInAny (vehicle _currentRespawnPlayer)) then 
+		avalaiblePlayer = _x;
+
+		_RcsButtonObjective = _mainDisplay ctrlCreate ["RscButton", -1];
+		_RcsButtonObjective ctrlSetText format ["Respawn on %1", name avalaiblePlayer];
+
+		_RcsButtonObjective ctrlSetPosition [_coordinateX, _coordinateY, _weight, _height];
+		_RcsButtonObjective ctrlCommit 0;
+		_RcsButtonObjective ctrlSetTextColor [1, 1, 1, 1];
+		_RcsButtonObjective setVariable ["playerValue", avalaiblePlayer];
+
+		_coordinateY = _coordinateY + _ypading;
+		
+		_RcsButtonObjective ctrlAddEventHandler[ "ButtonClick", 
 		{
-			//Leader on vehicle with empty space
-			_tempPos = getPosASL _currentRespawnPlayer;
-			player setPosASL _tempPos;
-		};
+			params ["_ctrl"];
+			normalClose = true;
+			_currentRespawnPlayer = _ctrl getVariable "playerValue";
+				
+			//SetPlayer position on leader position if it is on vehicle
+			if !(player moveInAny (vehicle _currentRespawnPlayer)) then 
+			{
+				//Leader on vehicle with empty space
+				_tempPos = getPosASL _currentRespawnPlayer;
+				player setPosASL _tempPos;
+			};
 
-		[format ["Respawn on %1", name _currentRespawnPlayer], format ["Year %1", date select 0], mapGridPosition player] spawn BIS_fnc_infoText;
+			[format ["Respawn on %1", name _currentRespawnPlayer], format ["Year %1", date select 0], mapGridPosition player] spawn BIS_fnc_infoText;
 
-		//Initialize player
-		[] call doInitializePlayer;
+			//Initialize player
+			[] call doInitializePlayer;
 
-		//Close dialog
-		_display = ctrlParent _ctrl;
-		_display closeDisplay 1;
-	}];
-} foreach ((allPlayers - [player]) select {alive _x && side _x isEqualTo (side player) && !(_x getVariable ["isInRespawnMenu",false])}) ;
+			//Close dialog
+			_display = ctrlParent _ctrl;
+			_display closeDisplay 1;
+		}];
+	} foreach ((allPlayers - [player]) select {alive _x && side _x isEqualTo (side player) && !(_x getVariable ["isInRespawnMenu",false])}) ;
+};
 
 
 

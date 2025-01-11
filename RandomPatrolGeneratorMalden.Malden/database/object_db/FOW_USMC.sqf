@@ -3,8 +3,75 @@
 factionID = factionID+1;
 if (isClass (configFile >> "CfgPatches" >> "fow_main")) then 
 {
-	factionInfos pushBack["_FOW_USMC", factionID,"US Marines [FOW]", true, false, false];
+	factionInfos pushBack["_FOW_USMC", factionID,"US Marines [FOW]", true, true, false];
 };
+
+//////////////////////////////
+///Define enemy group data////
+//////////////////////////////
+
+baseEnemyGroup_FOW_USMC = [
+	"fow_s_usmc_nco", 
+	"fow_s_usmc_teamleader", 
+	"fow_s_usmc_bar_gunner", 
+	"fow_s_usmc_bar_asst", 
+	"fow_s_usmc_rifleman",
+	"fow_s_usmc_medic", 
+	"fow_s_usmc_rifleman_m1903", 
+	"fow_s_usmc_rifleman_ithaca37"
+];
+
+baseEnemyATGroup_FOW_USMC = [
+	"fow_s_usmc_at", 
+	"fow_s_usmc_at_asst", 
+	"fow_s_usmc_nco", 
+	"fow_s_usmc_bar_gunner"
+];
+
+baseEnemyDemoGroup_FOW_USMC = [
+	"fow_s_usmc_radio_operator", 
+	"fow_s_usmc_officer", 
+	"fow_s_usmc_m1919a6_gunner", 
+	"fow_s_usmc_bar_asst", 
+	"fow_s_usmc_bar_gunner"
+];
+
+baseEnemyMortarGroup_FOW_USMC = [
+	"fow_w_m2_mortar_usmc"
+];
+
+baseEnemyVehicleGroup_FOW_USMC = [
+	"fow_v_gmc_usmc",
+	"fow_v_gmc_open_usmc",
+	"fow_v_willys_usmc"
+];
+
+baseEnemyLightArmoredVehicleGroup_FOW_USMC = [
+	"fow_v_lvta2_usmc"
+];
+
+baseEnemyHeavyArmoredVehicleGroup_FOW_USMC = [
+	"fow_v_m5a1_usmc",
+	"fow_v_m4a2_usmc"
+];
+
+
+baseEnemyTurretGroup_FOW_USMC = [
+	//Turrets 
+	["fow_w_m1919a6_deployed_middle_usmc_camo02", "SMALLBUNKER"],
+	["fow_w_m1919a6_deployed_high_usmc_camo01", "SMALLBUNKER"]
+];
+
+
+//Basic enemy aircraft avalaible
+baseFixedWingGroup_FOW_USMC = [
+	"fow_va_f6f",
+	"fow_va_f6f_c",
+	"fow_va_f6f_c_sweet",
+	"fow_va_f6f_c_kick"
+];
+
+
 
 ////////////////////////
 //Vehicle management////

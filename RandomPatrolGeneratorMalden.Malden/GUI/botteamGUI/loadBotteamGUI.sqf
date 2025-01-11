@@ -66,7 +66,24 @@ _buttonOK ctrlAddEventHandler [ "ButtonClick",
 				
 					//Else (other type of vehicle) do normal spawn around FOB
 					//Do something
-					[player, _supportClass, _supportType] call doAddBot;
+
+					_currentFaction = 0;
+					if (side player == independent) then 
+					{
+						//Independent
+						_currentFaction = indFaction;
+
+					} else 
+					{
+						//Blufor
+						_currentFaction = bluFaction;
+					};
+
+					_bot = [player, _currentFaction, _supportClass, _supportType] call doAddBot;
+
+					//join player unit
+					[_bot] joinSilent player;
+					_bot doFollow player;
 
 					missionNamespace setVariable ["bluforVehicleAvalaibleSpawn", _bluforVehicleAvalaibleSpawnCounter-_supportPrice, true];
 				
@@ -76,8 +93,7 @@ _buttonOK ctrlAddEventHandler [ "ButtonClick",
 				//_display closeDisplay 1;
 			} else 
 			{
-				_textToSpeech = "You don't have enough credit left.";
-				[[format ["<t align = 'center' shadow = '2' color='#0046ff' size='1.5' font='PuristaMedium' >High Command</t><br /><t color='#ffffff' size='1.5' font='PuristaMedium' shadow = '2' >%1</t>", _textToSpeech], "PLAIN DOWN", -1, true, true]] remoteExec ["titleText", player, true];
+				[{["STR_RPG_HC_NAME", "STR_RPG_HC_NOT_ENOUGH_CREDIT"] call doDialog}] remoteExec ["call", player];
 			};
 		};
 	}

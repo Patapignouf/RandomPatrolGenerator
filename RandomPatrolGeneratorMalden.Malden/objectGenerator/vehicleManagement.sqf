@@ -136,6 +136,11 @@ doGenerateVehicleForFOB =
 			_vehicleSpawned pushback _currentVehicle;
 		};
 
+		//Generate 3D Icon 
+		_vehicleName = getText (configFile >> "cfgVehicles" >> _vehicleClass >> "displayName");
+		_vehiclePicture = getText (configFile >> "cfgVehicles" >> _vehicleClass >> "picture");
+		[[_vehicleName, (getPos _currentVehicle) vectorAdd [0,0,5],_vehiclePicture , [0,0,1,1]], 'GUI\3DNames\3DTempNames.sqf'] remoteExec ['BIS_fnc_execVM', blufor, true];
+
 	} forEach _thisVehicleList;
 	//Generate boat location on map
 	if !([_shipGoodPosition , [0,0,0]] call BIS_fnc_areEqual) then 

@@ -66,7 +66,7 @@ if (!_isEndMissionRunning) then
 		_dataToDisplay pushBack _currentPlayerScore;
 	} foreach ([allPlayers, [], {_x getVariable ["currentXP", 0]}, "DESCEND"] call BIS_fnc_sortBy);
 	
-	_categories = _basicInfoToGather + (_basicXPToGather apply {_x # 1});
+	_categories = _basicInfoToGather + (_basicXPToGather apply {[_x#0] call doGetScoreName});
 				
 	//Display scoreboard
 	//Show a black screen and disable damage

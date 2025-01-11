@@ -10,25 +10,23 @@ getRandomCenterLocations =
 {
 	_size = worldSize;
 	_worldCenter = (_size/2);
-	_LocList = nearestLocations [[_worldCenter, _worldCenter], ["NameLocal","NameVillage","NameCity","NameCityCapital"], _size];
+	_LocList = nearestLocations [[_worldCenter, _worldCenter], ["NameLocal","NameVillage","NameCity","NameCityCapital","CityCenter","Area", "Airport", "Name", "SafetyZone", "StrongpointArea"], _size];
 	_LocList
 };
 
 getLocationsAround = 
 {
-	_thisLocation = _this select 0;
-	_thisRadius = _this select 1;	
+	params ["_thisLocation", "_thisRadius"];
 	
-	_LocList = nearestLocations [[(getPos _thisLocation) select 0, (getPos _thisLocation) select 1], ["NameLocal","NameVillage","NameCity","NameCityCapital"], _thisRadius];
+	_LocList = nearestLocations [[(getPos _thisLocation) select 0, (getPos _thisLocation) select 1], ["NameLocal","NameVillage","NameCity","NameCityCapital","CityCenter","Area", "Airport", "Name", "SafetyZone", "StrongpointArea"], _thisRadius];
 	_LocList
 };
 
 getLocationsAroundWithBuilding = 
 {
-	_thisLocation = _this select 0;
-	_thisRadius = _this select 1;	
+	params ["_thisLocation", "_thisRadius"];
 	
-	_LocList = nearestLocations [[(_thisLocation) select 0, (_thisLocation) select 1], ["NameLocal","NameVillage","NameCity","NameCityCapital"], _thisRadius];
+	_LocList = nearestLocations [[(_thisLocation) select 0, (_thisLocation) select 1], ["NameLocal","NameVillage","NameCity","NameCityCapital","CityCenter","Area", "Airport", "Name", "SafetyZone", "StrongpointArea"], _thisRadius];
 	
 	//Clear location without building
 	{
@@ -82,6 +80,22 @@ getListOfPositionsAroundTarget =
 		AvalaiblePositions pushBack ([_targetPosition, (_minDistance), (_maxDistance), 8, 0, 0.25, 0, [], [[0,0,0],[0,0,0]]] call BIS_fnc_findSafePos);
 	};
 	AvalaiblePositions
+};
+
+getPositionAroundTargetNoSafeZone = 
+{
+	//Define parameters
+	_targetPosition = _this select 0;
+	_minDistance = _this select 1;
+	_maxDistance = _this select 2;
+	_numberOfPosition = _this select 3;
+	
+	AvalaiblePositions = [];
+	
+
+	AvalaiblePositions pushBack ([_targetPosition, (_minDistance), (_maxDistance), 3, 0, 0.25, 0, [], [[0,0,0],[0,0,0]]] call BIS_fnc_findSafePos);
+	
+	AvalaiblePositions#0
 };
 
 isLocationOnMap = {

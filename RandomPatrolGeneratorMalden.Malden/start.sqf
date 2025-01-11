@@ -5,6 +5,11 @@
 #include "objectGenerator\vehicleManagement.sqf"
 #include "enemyManagement\generationEngine\groupGenerator.sqf"
 #include "engine\modManager.sqf"
+#include "GUI\botteamGUI\botteamFunctions.sqf"
+#include "enemyManagement\behaviorEngine\unitsBehaviorFunctions.sqf"
+#include "engine\hintManagement\customDialog.sqf"
+#include "GUI\scoreBoardGUI\scoreFunctions.sqf"
+
 
 //Init base mission parameters 
 enableInitAttack = "EnableInitAttack" call BIS_fnc_getParamValue;
@@ -17,8 +22,9 @@ private _generateHarass = compile preprocessFileLineNumbers "enemyManagement\gen
 
 waitUntil {isNull _handleEnvironmentInitialization};
 
-//Clean area WIP
+//Wait players to connect
 waitUntil {count allPlayers != 0};
+waitUntil {  {getPlayerUID _x != ""} count allPlayers == count allPlayers};
 
 //Check server mods
 [] call doCheckRunningModsOnServer;
@@ -51,7 +57,7 @@ publicvariable "AllPossibleObjectivePosition";
 //Mission settings waiting
 waitUntil {missionNamespace getVariable "generationSetup" == true};
 
-missionNameSpace setVariable ["missionSetupMessage", "Setup factions database", true];
+missionNameSpace setVariable ["missionSetupMessage", "STR_RPG_SETUP_FACTIONS", true];
 
 //faction definition
 warEra = missionNamespace getVariable "warEra"; // Default actual warfare
@@ -217,7 +223,7 @@ if (isClass (configFile >> "CfgPatches" >> "fow_main")) then
 /////Find locations//////
 /////////////////////////
 
-missionNameSpace setVariable ["missionSetupMessage", "Finding the best operation area", true];
+missionNameSpace setVariable ["missionSetupMessage", "STR_RPG_SETUP_AREA", true];
 
 //Initilize independent starting position 
 if (initCityLocationPosition isEqualType []) then 
@@ -245,12 +251,32 @@ if (count initCityLocationLocs >=1) then
 
 
 publicvariable "initCityLocation";
-possiblePOILocation = ([initCityLocation, 3000] call getLocationsAroundWithBuilding) - [initCityLocationLoc];
+
+_searchRadius = 3000; //Default
+
+//Define search area for objective
+switch (missionNameSpace getVariable ["missionAreaSize", 0]) do
+{
+	case 0:
+	{
+		_searchRadius = 3000;
+	};
+	case 1:
+	{
+		_searchRadius = 6000;
+	};
+	case 2:
+	{
+		_searchRadius = worldSize;
+	};
+};
+
+possiblePOILocation = ([initCityLocation, _searchRadius] call getLocationsAroundWithBuilding) - [initCityLocationLoc];
 dangerAreaList = [];
 
 if ( count possiblePOILocation < missionLength) then 
 {
-	possiblePOILocation = ([initCityLocation, 5000] call getLocationsAroundWithBuilding) - [initCityLocationLoc];
+	possiblePOILocation = ([initCityLocation, _searchRadius+2000] call getLocationsAroundWithBuilding) - [initCityLocationLoc];
 };
 
 //Search road around AO
@@ -281,12 +307,11 @@ for [{_i = 0}, {_i < numberOfAmbush}, {_i = _i + 1}] do
 };
 
 //Manually Determine objective location will not be randomize
-NeedToRandomizePOI = false;
+NeedToRandomizePOI = missionNameSpace getVariable ["randomizeObjectiveOrder", 1];
 
 if (typeName PossibleObjectivePosition != "ARRAY") then 
 {
-	NeedToRandomizePOI = true;
-	PossibleObjectivePosition = [];
+ 	PossibleObjectivePosition = [];
 	{
 		PossibleObjectivePosition pushBack (getPos (_x));
 	}	foreach possiblePOILocation;
@@ -313,7 +338,7 @@ if (random 100 < 20 && (count (allPlayers select {side _x == independent})== 0))
 ///Generate Objectives///
 /////////////////////////
 
-missionNameSpace setVariable ["missionSetupMessage", "Generating objectives", true];
+missionNameSpace setVariable ["missionSetupMessage", "STR_RPG_SETUP_OBJ", true];
 
 //Define 3 objectives
 SupplyPositions = [];
@@ -331,7 +356,7 @@ _minNumberOfMission = missionLength min(count AllPossibleObjectivePosition);
 for [{_counterOfMission = 0}, {_counterOfMission < _minNumberOfMission}, {_counterOfMission = _counterOfMission + 1}] do //Peut être optimisé
 {
 	//Randomize objective locations or not
-	if (NeedToRandomizePOI) then 
+	if (NeedToRandomizePOI == 1) then 
 	{
 		PossibleObjectivePosition = [avalaibleTypeOfObj, PossibleObjectivePosition] call generateObjective;
 	} else 
@@ -358,7 +383,7 @@ for [{_i = 0}, {_i < numberOfSpawnWave}, {_i = _i + 1}] do
 ////Generate Civ/////////
 /////////////////////////
 
-missionNameSpace setVariable ["missionSetupMessage", "Generating civilians city", true];
+missionNameSpace setVariable ["missionSetupMessage", "STR_RPG_SETUP_CIV", true];
 
 //IA civilian taskGarrison
 diag_log format ["Begin generation of civilian AO : %1 on position %2", civilian_big_group, initCityLocation];
@@ -373,7 +398,7 @@ for [{_i = 0}, {_i <= 2}, {_i = _i + 1}] do
 
 //Garrison or camp every civ group
 {
-	[_x, getPos (leader _x), 80, true] execVM 'enemyManagement\behaviorEngine\doGarrison.sqf';
+	[_x, getPos (leader _x), 80, true] call doGarrison;
 } foreach civsGroup;
 
 
@@ -390,7 +415,7 @@ publicvariable "VA1";
 ////Generate Ind/////////
 /////////////////////////
 
-missionNameSpace setVariable ["missionSetupMessage", "Generating independent base", true];
+missionNameSpace setVariable ["missionSetupMessage", "STR_RPG_SETUP_IND", true];
 
 //Init attack management on ind
 isIndAttacked = false;
@@ -428,6 +453,12 @@ if ( count AvalaibleInitAttackPositions != 0 && (enableInitAttack == 1 || ((enab
 //Init perma harass on player
 [[baseEnemyGroup,baseEnemyATGroup,baseEnemyDemoGroup],baseEnemyVehicleGroup, baseEnemyLightArmoredVehicleGroup, baseEnemyHeavyArmoredVehicleGroup, baseEnemyUnarmedChopperGroup, baseFixedWingGroup, baseEnemyArmedChopperGroup] spawn _generateHarass; 
 
+//Init ambiant war 
+if (missionNameSpace getVariable ["enableAmbiantWar", 0] == 1) then 
+{
+	[] execVM 'engine\doAmbiantWar.sqf';
+};
+
 // Get smallest distance to an AO
 areaOfOperation = [AllPossibleObjectivePosition] call getAreaOfMission;
 aoSize = 1500;
@@ -443,7 +474,7 @@ publicVariable "extendedTriggerArea";
 ////Generate Blufor//////
 /////////////////////////
 
-missionNameSpace setVariable ["missionSetupMessage", "Generating blufor base", true];
+missionNameSpace setVariable ["missionSetupMessage", "STR_RPG_SETUP_BLU", true];
 
 //Init
 selectedBluforVehicle =[];
@@ -483,6 +514,13 @@ if !(_isOnWater) then
 				initBlueforLocation = [initCityLocation, _minBluforCityRadius, _maxBluforCityRadius, 3, 0, 0.25, 0, [areaOfOperation], [[0,0,0],[0,0,0]]] call BIS_fnc_findSafePos;
 				_spawnAttempts = _spawnAttempts +1;
 			};
+
+			//Last chance to find a good position
+			//It will ignore the area of operation
+			if ([initBlueforLocation, [0,0,0]] call BIS_fnc_areEqual) then {
+				initBlueforLocation = [initCityLocation, _minBluforCityRadius, _maxBluforCityRadius+3000, 3, 0, 0.25, 0, [], [[0,0,0],[0,0,0]]] call BIS_fnc_findSafePos;
+			};
+
 			
 			//Safe position
 			initBlueforLocation = [selectMax [selectMin [initBlueforLocation select 0, worldSize-75 ],75],selectMax [selectMin [initBlueforLocation select 1, worldSize-75],75]]; 
@@ -529,8 +567,7 @@ if !(_isOnWater) then
 	{
 		if ((count ((allUnits select {alive _x && side _x == opfor} ) inAreaArray _trgBluforFOB))>0) then 
 		{
-			_textToSpeech = format ["Enemy has taken the blufor FOB %1, be ready to defend it", mapGridPosition initBlueforLocation];
-			[[format ["<t align = 'center' shadow = '2' color='#0046ff' size='1.5' font='PuristaMedium' >High Command</t><br /><t color='#ffffff' size='1.5' font='PuristaMedium' shadow = '2' >%1</t>", _textToSpeech], "PLAIN DOWN", -1, true, true]] remoteExec ["titleText", blufor, true];
+			[{["STR_RPG_HC_NAME", "STR_RPG_HC_ENEMY_TAKE_FOB", mapGridPosition initBlueforLocation] call doDialog}] remoteExec ["call", blufor];
 			sleep 1000;
 		} else 
 		{
@@ -583,7 +620,7 @@ diag_log format ["Generating blufor vehicle : %1",selectedBluforVehicle];
 [initBlueforLocation, selectedBluforVehicle, bluforHQVehicle] spawn {
 	params ["_initBlueforLocation", "_selectedBluforVehicle" ,"_bluforHQVehicle"];
 
-	sleep 10;
+	sleep 15;
 	_spawnedVehicle = [_initBlueforLocation, _selectedBluforVehicle, 30, 100] call doGenerateVehicleForFOB;
 	diag_log format ["Generating blufor vehicle spawned : %1", _spawnedVehicle];
 	//TODO: get each vehicule and set the lock parameter to LOCKED;
@@ -597,7 +634,7 @@ diag_log format ["Generating blufor vehicle : %1",selectedBluforVehicle];
 		if (count _bluforHQVehicleSpawned >0) then 
 		{
 			// //Change vehicle name
-			createVehicle ["Flag_Blue_F", getPos (_bluforHQVehicleSpawned select 0) , [], 0, "NONE"];
+			// createVehicle ["Flag_Blue_F", getPos (_bluforHQVehicleSpawned select 0) , [], 0, "NONE"];
 			bluforMobileHQ = _bluforHQVehicleSpawned select 0;
 			publicVariable "bluforMobileHQ";
 
@@ -606,6 +643,9 @@ diag_log format ["Generating blufor vehicle : %1",selectedBluforVehicle];
 				params ["_object","_caller","_ID","_param"];
 				[[false], 'GUI\supportGUI\supportGUI.sqf'] remoteExec ['BIS_fnc_execVM', _caller];
 			},[],1.5,true,false,"","_target distance _this <10 && side _this == blufor"]] remoteExec [ "addAction", blufor, true ];
+
+			//3D Display
+			[["STR_RPG_3D_HQ", (getPos bluforMobileHQ) vectorAdd [0,0,6],"\a3\ui_f\data\igui\cfg\simpletasks\types\truck_ca.paa" , [0,0,1,1]], 'GUI\3DNames\3DNames.sqf'] remoteExec ['BIS_fnc_execVM', blufor, true];
 		};
 	};
 };
@@ -637,7 +677,7 @@ if ( count AvalaibleInitAttackPositions != 0 && (enableInitBluAttack == 1 || ((e
 /////////////////////////
 //IA taskPatrol with level 1 enemy
 
-missionNameSpace setVariable ["missionSetupMessage", "Generating opfor patrols, mortars and FOB", true];
+missionNameSpace setVariable ["missionSetupMessage", "STR_RPG_SETUP_OPF", true];
 
 [EnemyWaveLevel_1,AmbushPositions, missionDifficultyParam] execVM 'enemyManagement\generationEngine\generatePatrol.sqf'; 
 
@@ -658,7 +698,7 @@ if (count baseEnemyMortarGroup > 0 && (missionNameSpace getVariable ["enableOpfo
 			if !([_mortarSpawnPosition , [0,0,0]] call BIS_fnc_areEqual) then 
 			{
 				_mortarGroup = [baseEnemyMortarGroup, _mortarSpawnPosition, east, "Mortar"] call doGenerateEnemyGroup;
-				[_mortarGroup, getPos (leader _mortarGroup), 200 + random 250] execVM 'enemyManagement\behaviorEngine\doPatrol.sqf';
+				[_mortarGroup, getPos (leader _mortarGroup), 200 + random 250] call doPatrol;
 				//TEMP feature - In the future there will be a dynamic side quest assignement
 				//75% chance to setup the side mission 
 				if (random 100 < 75) then 
@@ -688,15 +728,13 @@ switch (startIntel) do
 		{
 			//Setup init Civ city
 			//Init task for blufor to get informations
-			[blufor, "taskContactCiv", [format ["Contact civilians at %1 to get tasks", initCityLocationName], "Contact civilians", ""], objNull, 1, 3, true] call BIS_fnc_taskCreate;
+			[blufor, "taskContactCiv", [["STR_RPG_OBJ_CONTACT_CIV_TEXT", initCityLocationName], ["STR_RPG_OBJ_CONTACT_CIV"], ""], objNull, 1, 3, true] call BIS_fnc_taskCreate;
 			initCityLocationTrigger = createTrigger ["EmptyDetector", initCityLocation]; //create a trigger area created at object with variable name my_object
 			initCityLocationTrigger setTriggerArea [100, 100, 0, false]; // trigger area with a radius of 100m.
 			
 			//Set task exact location 
-			if (missionNameSpace getVariable ["enableObjectiveExactLocation", 0] == 1) then 
-			{
-				["taskContactCiv", initCityLocation] call BIS_fnc_taskSetDestination;
-			};
+			[["taskContactCiv", initCityLocation], "engine\objectiveManagement\drawObjectiveLocation.sqf"] remoteExec ['BIS_fnc_execVM', 0, true];
+
 
 			//Setup task completion
 			[] spawn {
@@ -706,7 +744,7 @@ switch (startIntel) do
 					if (count((allPlayers select {alive _x && side _x == blufor} ) inAreaArray initCityLocationTrigger) >0) then 
 					{
 						_hasContactCivilian = true;
-						[[10, "RPG_ranking_objective_complete"], 'engine\rankManagement\rankUpdater.sqf'] remoteExec ['BIS_fnc_execVM', blufor];
+						[{[10, "RPG_ranking_objective_complete"] call doUpdateRank}] remoteExec ["call", blufor];
 						["taskContactCiv","SUCCEEDED"] call BIS_fnc_taskSetState;
 					};
 				};
@@ -739,10 +777,8 @@ switch (startIntel) do
 				initCityLocationTrigger setTriggerArea [100, 100, 0, false]; // trigger area with a radius of 100m.
 				
 				//Set task exact location 
-				if (missionNameSpace getVariable ["enableObjectiveExactLocation", 0] == 1) then 
-				{
-					["taskContactCiv", initCityLocation] call BIS_fnc_taskSetDestination;
-				};
+				[["taskContactCiv", initCityLocation], "engine\objectiveManagement\drawObjectiveLocation.sqf"] remoteExec ['BIS_fnc_execVM', 0, true];
+
 
 				//Setup task completion
 				[] spawn {
@@ -753,7 +789,7 @@ switch (startIntel) do
 						{
 							_hasContactCivilian = true;
 							["taskContactCiv","SUCCEEDED"] call BIS_fnc_taskSetState;
-							[[10, "RPG_ranking_objective_complete"], 'engine\rankManagement\rankUpdater.sqf'] remoteExec ['BIS_fnc_execVM', blufor];
+							[{[10, "RPG_ranking_objective_complete"] call doUpdateRank}] remoteExec ["call", blufor];
 						};
 					};
 				};
@@ -765,7 +801,7 @@ switch (startIntel) do
 		};
 };
 
-missionNameSpace setVariable ["missionSetupMessage", "One last thing...", true];
+missionNameSpace setVariable ["missionSetupMessage", "STR_RPG_SETUP_LAST", true];
 
 //Adjust some ACE parameters 
 if (isClass (configFile >> "CfgPatches" >> "ace_common")) then 
@@ -953,13 +989,18 @@ if (enableCampaignMode) then
 		} else 
 		{
 			//Randomize objective locations or not
-			if (NeedToRandomizePOI) then 
+			if (NeedToRandomizePOI == 1) then 
 			{
 				PossibleObjectivePosition = [avalaibleTypeOfObj, PossibleObjectivePosition] call generateObjective;
 			} else 
 			{
 				[avalaibleTypeOfObj, [PossibleObjectivePosition#0]] call generateObjective;
 				PossibleObjectivePosition = PossibleObjectivePosition - [PossibleObjectivePosition#0];
+			};
+
+			//Generate opfor FOB in campaign mode
+			if (random 100<25) then {
+				[] execVM 'enemyManagement\generationEngine\generateOpforFOB.sqf';
 			};
 
 			//Reveal objective to the player

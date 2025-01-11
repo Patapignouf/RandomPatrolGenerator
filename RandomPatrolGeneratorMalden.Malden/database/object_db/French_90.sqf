@@ -21,7 +21,9 @@ bluforUnarmedVehicle_French_90 = [
 bluforArmedVehicle_French_90 = [
 	"amf_pvp_01_top_CE_f",
 	"amf_pvp_01_mag_CE_f",
-	"B_AMF_VAB_ULTIMA_TOP_X8_F"
+	"B_AMF_VAB_ULTIMA_TOP_X8_F",
+	"AMF_VB2L_DA_762_01_F", 
+	"AMF_VBL_DA_762_01_F"
 ];
 
 bluforUnarmedVehicleChopper_French_90 = [

@@ -36,6 +36,7 @@ missionIASkill = [
 ];
 
 missionRespawnParamSettings = [
+	[30,"Respawn every 30 seconds"],
 	[60,"Respawn every minute"],
 	[180,"Respawn every 3 minutes"],
 	[300,"Respawn every 5 minutes"],
@@ -44,6 +45,86 @@ missionRespawnParamSettings = [
 	[1800,"Respawn every 30 minutes"],
 	[99999999999999,"Respawn on objective completion only"]
 ];
+
+enableExperienceSaveParam = 
+[
+	[	
+		[0, "Disable"],
+		[1, "Enable"]
+	],
+	"Enable experience (save on profile)",
+	1,
+	"enableExperienceSave"
+];
+
+enableSurrenderUnitParam = 
+[
+	[	
+		[0, "Disable"],
+		[1, "Enable"]
+	],
+	"Opfor units can surrender",
+	1,
+	"enableSurrenderUnit"
+];
+
+enableAdvancedRespawnParam = 
+[
+	[	
+		[0, "Disable"],
+		[1, "Enable"]
+	],
+	"Leader can place respawn point",
+	1,
+	"enableAdvancedRespawn"
+];
+
+
+enableRTBMissionParam = 
+[
+	[	
+		[0, "Disable"],
+		[1, "Enable"]
+	],
+	"Enable RTB mission after objectives",
+	1,
+	"enableRTBMission"
+];
+
+enableOverHeatParam = 
+[
+	[	
+		[0, "Disable"],
+		[1, "Enable (ACE Only)"]
+	],
+	"Enable overheat on enemy weapon",
+	1,
+	"enableOverHeat"
+];
+
+missionAreaSizeParam = 
+[
+	[	
+		[0, "Small"],
+		[1, "Normal"],
+		[2, "Huge"]
+	],
+	"Mission area size",
+	0,
+	"missionAreaSize"
+];
+
+enableAmbiantWarParam = 
+[
+	[	
+		[0, "Disable"],
+		[1, "Enable"]
+	],
+	"Ambiant War (friendly squad)",
+	0,
+	"enableAmbiantWar"
+];
+
 
 civiliansOnObjectivesParam = 
 [
@@ -56,13 +137,25 @@ civiliansOnObjectivesParam =
 	"enableCiviliansOnObjectives"
 ];
 
-enableObjectiveExactLocationParam = 
+respawnOnOtherPlayersParam = 
 [
 	[	
 		[0, "Disable"],
 		[1, "Enable"]
 	],
-	"Objective exact location markers",
+	"Enable respawn on other players",
+	1,
+	"respawnOnOtherPlayers"
+];
+
+enableObjectiveExactLocationParam = 
+[
+	[	
+		[0, "None"],
+		[1, "Near (WIP)"],
+		[2, "Exact"]
+	],
+	"Objective location markers",
 	0,
 	"enableObjectiveExactLocation"
 ];
@@ -82,8 +175,8 @@ sideRelationParam =
 [
 	[	
 		[0, "Blufor friend with Independent against Opfor"],
-		[1, "Blufor against Independent against Opfor"],
-		[2, "Blufor against Independent and Opfor"]
+		[1, "Blufor against Independent against Opfor (PvP)"],
+		[2, "Blufor against Independent and Opfor (PvP)"]
 	],
 	"Determines side relations",
 	0,
@@ -106,9 +199,9 @@ endlessMissionParam =
 [
 	[	
 		[0, "Disable"],
-		[1, "Enable"]
+		[1, "Enable (WIP)"]
 	],
-	"Enable Endless Mission Mode (Start mission setup after each mission ending)",
+	"Restart after mission end",
 	0,
 	"endlessMission"
 ];
@@ -118,7 +211,7 @@ disableZoomParam =
 [
 	[	
 		[0, "Disable"],
-		[1, "Enable"]
+		[1, "Enable (WIP)"]
 	],
 	"Temp Zoom (hold right clic)",
 	0,
@@ -132,10 +225,10 @@ enableAutoDifficultyBalanceParam =
 [
 	[	
 		[0, "Disable"],
-		[1, "Enable"]
+		[1, "Enable (WIP)"]
 	],
 	"Enable Automatic difficulty balance",
-	1,
+	0,
 	"enableAutoDifficultyBalance"
 ];
 
@@ -219,10 +312,11 @@ civSuicideBomberProbabilityParam =
 enableOpforVehicleParam = 
 [
 	[	
-		[0, "Disable"],
-		[1, "Enable"]
+		[0, "None"],
+		[1, "Medium"],
+		[2, "Too many"]
 	],
-	"Opfor vehicle",
+	"Number Opfor vehicle",
 	1,
 	"enableOpforVehicle"
 ];
@@ -237,3 +331,51 @@ enableOpforMortarParam =
 	1,
 	"enableOpforMortar"
 ];
+
+enableReAirDropAdvFOBParam = 
+[
+	[	
+		[0, "Disable"],
+		[1, "Enable"]
+	],
+	"Aidrop Adv FOB after disassembly",
+	0,
+	"enableReAirDropAdvFOB"
+];
+
+randomizeObjectiveOrderParam = 
+[
+	[	
+		[0, "Disable"],
+		[1, "Enable"]
+	],
+	"Randomize objective order",
+	1,
+	"randomizeObjectiveOrder"
+];
+
+xpDisplayParam = 
+[
+	[	
+		[0, "Disable"],
+		[1, "Enable (Arcade)"]
+	],
+	"Experience real time display",
+	0,
+	"xpDisplay"
+];
+
+opforReinforcementParam = 
+[
+	[	
+		[0, "Few"],
+		[1, "Normal"],
+		[2, "Often"]
+	],
+	"Opfor Reinforcement frequency",
+	1,
+	"opforReinforcement"
+];
+
+
+baseParamsToManage = [enableExperienceSaveParam, enableRTBMissionParam, missionAreaSizeParam, civiliansOnObjectivesParam, sideRelationParam, enableAmbiantWarParam, enableObjectiveExactLocationParam, enablePersistentParam, enableRegularIncomeParam, disableZoomParam, enableAutoDifficultyBalanceParam, civJoinableFactionParam, enableLoadoutRestrictionParam, enableOpforVehicleParam, enableSurrenderUnitParam, enableHaloParam, timeOfDayParam, civSuicideBomberParam, civSuicideBomberProbabilityParam, endlessMissionParam, enableOpforMortarParam, enableReAirDropAdvFOBParam, randomizeObjectiveOrderParam, xpDisplayParam, opforReinforcementParam, enableOverHeatParam, enableAdvancedRespawnParam, respawnOnOtherPlayersParam];

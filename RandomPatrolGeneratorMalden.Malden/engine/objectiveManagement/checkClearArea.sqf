@@ -16,7 +16,7 @@ for [{_i = 0}, {_i < missionDifficultyParam+1}, {_i = _i + 1}] do
 	currentGroup = [currentRandomGroup, getPos _thisTrigger, east, "DefenseInfantry"] call doGenerateEnemyGroup;
 	
 	//Spawn group
-	[currentGroup, getPos (leader currentGroup), _baseRadius, false] execVM 'enemyManagement\behaviorEngine\doGarrison.sqf';
+	[currentGroup, getPos (leader currentGroup), _baseRadius, false] call doGarrison;
 	_baseRadius = _baseRadius + 20;
 };
 
@@ -36,7 +36,7 @@ _thisObjectiveToComplete = _thisTrigger getVariable ["associatedTask",[]];
 if (!([_thisObjectiveToComplete,[]] call BIS_fnc_areEqual)) then 
 {
 	[_thisObjectiveToComplete] execVM 'engine\objectiveManagement\completeObjective.sqf'; 
-	[[50, "RPG_ranking_objective_complete"], "engine\rankManagement\rankUpdater.sqf"] remoteExec ['BIS_fnc_execVM', 0];
+	[{[50, "RPG_ranking_objective_complete"] call doUpdateRank}] remoteExec ["call", 0];
 
 	//Manage Completed Objective
 	_completedObjectives = missionNamespace getVariable ["completedObjectives",[]];
@@ -57,12 +57,17 @@ _thisFOBCheck = _thisTrigger getVariable ["isFOBAssociated", false];
 if (_thisFOBCheck) then 
 {
 	//Hint players for cleared FOB
-	_textToSpeech = format ["The FOB at position %1 has been cleared", mapGridPosition (getPos _thisTrigger)];
-	[[format ["<t align = 'center' shadow = '2' color='#0046ff' size='1.5' font='PuristaMedium' >High Command</t><br /><t color='#ffffff' size='1.5' font='PuristaMedium' shadow = '2' >%1</t>", _textToSpeech], "PLAIN DOWN", -1, true, true]] remoteExec ["titleText", 0, true];	
+	[[_thisTrigger], {params ["_thisTrigger"]; ["STR_RPG_HC_NAME", "STR_RPG_HC_FOB_CLEARED", mapGridPosition (getPos _thisTrigger)] call doDialog}] remoteExec ["spawn", 0]; 
 
+	//Give 25 XP for FOB clearing
+	[{[25, "RPG_ranking_objective_complete"] call doUpdateRank}] remoteExec ["call", 0];
+	
 	//Add this FOB to cleared FOB
 	_OpforFOBCleared = missionNamespace getVariable ["OpforFOBCleared", 0];
 	missionNamespace setVariable ["OpforFOBCleared", _OpforFOBCleared+1, true];	
+
+	//Respawn players 
+	[[], "engine\respawnManagement\respawnManager.sqf"] remoteExec ['BIS_fnc_execVM', 0];
 };
 
 

@@ -80,7 +80,9 @@ while {alive _thisUnit && (side _thisUnit == civilian) && !(_thisUnit getVariabl
 
 				if (isPlayer _instigator) then 
 				{
-					[[1, "RPG_ranking_infantry_kill"], 'engine\rankManagement\rankUpdater.sqf'] remoteExec ['BIS_fnc_execVM', _instigator];
+					_distance = _instigator distance _unit;
+					if (_distance<100 || _distance>5000) then {_distance = nil};
+					[[_distance], {params ["_distance"]; [1, "RPG_ranking_infantry_kill", _distance] call doUpdateRank}] remoteExec ["spawn", _instigator]; 
 				} else {
 					//Debug IA killed log
 					diag_log format ["The IA %1 has been killed by %2", name _unit, name _instigator];

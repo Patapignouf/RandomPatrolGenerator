@@ -10,7 +10,7 @@ if ((_objectiveID call BIS_fnc_taskState ) != "SUCCEEDED" && !(missionNameSpace 
 
 	if (!([_mainSideQuestID] call BIS_fnc_taskExists)) then 
 	{
-			[true, _mainSideQuestID, ["Contains all side objectives", "Side objectives", "cookiemarker_mainSideQuest"], objNull, "CREATED", -1, true] call BIS_fnc_taskCreate;
+			[true, _mainSideQuestID, [["STR_RPG_OBJ_SIDE_MASTER_TEXT"], ["STR_RPG_OBJ_SIDE_MASTER"], "cookiemarker_mainSideQuest"], objNull, "CREATED", -1, true] call BIS_fnc_taskCreate;
 	};
 
 	//Set task description
@@ -22,8 +22,8 @@ if ((_objectiveID call BIS_fnc_taskState ) != "SUCCEEDED" && !(missionNameSpace 
 		
 		case "AttackFOB":
 		{
-			_currentObjectiveTitle = "Attack OPFOR FOB";
-			_currentObjectiveDescription = format ["You have to control the opfor FOB on position %1.", mapGridPosition _objectiveLocation];
+			_currentObjectiveTitle = "STR_RPG_OBJ_ATK_FOB";
+			_currentObjectiveDescription = ["STR_RPG_OBJ_ATK_FOB_TEXT", mapGridPosition _objectiveLocation];
 			[_objectiveID, _objectiveLocation] spawn {
 				params ["_objectiveID", "_objectiveLocation"];
 				
@@ -45,13 +45,13 @@ if ((_objectiveID call BIS_fnc_taskState ) != "SUCCEEDED" && !(missionNameSpace 
 
 				[_objectiveID, "SUCCEEDED"] call BIS_fnc_taskSetState;
 				missionNameSpace setVariable [format ["RPG_%1", _objectiveID], true, true];
-				[[25, "RPG_ranking_objective_complete"], "engine\rankManagement\rankUpdater.sqf"] remoteExec ['BIS_fnc_execVM', 0];
+				[{[25, "RPG_ranking_objective_complete"] call doUpdateRank}] remoteExec ["call", 0];
 			};
 		};
 		case "DestroyAirVehicle":
 		{
-			_currentObjectiveTitle = "Destroy OPFOR air vehicle";
-			_currentObjectiveDescription = format ["You have to destroy the enemy air vehicle flying around the AO.", mapGridPosition _objectiveLocation, getText (configFile >> "cfgVehicles" >> typeOf (vehicle leader (_objectiveObject)) >> "displayName")];
+			_currentObjectiveTitle = "STR_RPG_OBJ_AIR_VCL";
+			_currentObjectiveDescription = ["STR_RPG_OBJ_AIR_VCL_TEXT", mapGridPosition _objectiveLocation, getText (configFile >> "cfgVehicles" >> typeOf (vehicle leader (_objectiveObject)) >> "displayName")];
 
 			_objectiveObject setVariable ["sideTaskAssociated", _objectiveID, true];
 			
@@ -65,20 +65,20 @@ if ((_objectiveID call BIS_fnc_taskState ) != "SUCCEEDED" && !(missionNameSpace 
 					_sideTaskID = _unit getVariable "sideTaskAssociated";
 					[_sideTaskID, "SUCCEEDED"] call BIS_fnc_taskSetState;
 					missionNameSpace setVariable [format ["RPG_%1", _unit getVariable "sideObjectiveID"], true, true];
-					[[25, "RPG_ranking_objective_complete"], "engine\rankManagement\rankUpdater.sqf"] remoteExec ['BIS_fnc_execVM', 0];
+					[{[25, "RPG_ranking_objective_complete"] call doUpdateRank}] remoteExec ["call", 0];
 				}];
 			} else 
 			{
 				//Already killed
 				[_objectiveID, "SUCCEEDED"] call BIS_fnc_taskSetState;
 				missionNameSpace setVariable [format ["RPG_%1", _objectiveID], true, true];
-				[[25, "RPG_ranking_objective_complete"], "engine\rankManagement\rankUpdater.sqf"] remoteExec ['BIS_fnc_execVM', 0];
+				[{[25, "RPG_ranking_objective_complete"] call doUpdateRank}] remoteExec ["call", 0];
 			};
 		};
 		case "DestroyArmored":
 		{
-			_currentObjectiveTitle = "Destroy armored vehicle";
-			_currentObjectiveDescription = format ["You have to destroy the armored vehicle spotted earlier on position %1.", mapGridPosition _objectiveLocation, getText (configFile >> "cfgVehicles" >> typeOf (vehicle leader (_objectiveObject)) >> "displayName")];
+			_currentObjectiveTitle = "STR_RPG_OBJ_ARM_VCL";
+			_currentObjectiveDescription = ["STR_RPG_OBJ_ARM_VCL_TEXT", mapGridPosition _objectiveLocation, getText (configFile >> "cfgVehicles" >> typeOf (vehicle leader (_objectiveObject)) >> "displayName")];
 
 			_objectiveObject setVariable ["sideTaskAssociated", _objectiveID, true];
 
@@ -96,7 +96,7 @@ if ((_objectiveID call BIS_fnc_taskState ) != "SUCCEEDED" && !(missionNameSpace 
 						_sideTaskID = _unit getVariable "sideTaskAssociated";
 						[_sideTaskID, "SUCCEEDED"] call BIS_fnc_taskSetState;
 						missionNameSpace setVariable [format ["RPG_%1", _unit getVariable "sideObjectiveID"], true, true];
-						[[25, "RPG_ranking_objective_complete"], "engine\rankManagement\rankUpdater.sqf"] remoteExec ['BIS_fnc_execVM', 0];
+						[{[25, "RPG_ranking_objective_complete"] call doUpdateRank}] remoteExec ["call", 0];
 					};
 				}];
 
@@ -106,13 +106,13 @@ if ((_objectiveID call BIS_fnc_taskState ) != "SUCCEEDED" && !(missionNameSpace 
 				//Already killed
 				[_objectiveID, "SUCCEEDED"] call BIS_fnc_taskSetState;
 				missionNameSpace setVariable [format ["RPG_%1", _objectiveID], true, true];
-				[[25, "RPG_ranking_objective_complete"], "engine\rankManagement\rankUpdater.sqf"] remoteExec ['BIS_fnc_execVM', 0];
+				[{[25, "RPG_ranking_objective_complete"] call doUpdateRank}] remoteExec ["call", 0];
 			};
 		};
 		case "DestroyMortar":
 		{
-			_currentObjectiveTitle = "Destroy enemy mortar";
-			_currentObjectiveDescription = format ["You have to destroy the enemy mortar spotted earlier on position %1.", mapGridPosition _objectiveLocation, getText (configFile >> "cfgVehicles" >> typeOf (vehicle leader (_objectiveObject)) >> "displayName")];
+			_currentObjectiveTitle = "STR_RPG_OBJ_MORTAR";
+			_currentObjectiveDescription = ["STR_RPG_OBJ_MORTAR_TEXT", mapGridPosition _objectiveLocation, getText (configFile >> "cfgVehicles" >> typeOf (vehicle leader (_objectiveObject)) >> "displayName")];
 
 			_objectiveObject setVariable ["sideTaskAssociated", _objectiveID, true];
 
@@ -126,14 +126,14 @@ if ((_objectiveID call BIS_fnc_taskState ) != "SUCCEEDED" && !(missionNameSpace 
 					_sideTaskID = _unit getVariable "sideTaskAssociated";
 					[_sideTaskID, "SUCCEEDED"] call BIS_fnc_taskSetState;
 					missionNameSpace setVariable [format ["RPG_%1", _unit getVariable "sideObjectiveID"], true, true];
-					[[25, "RPG_ranking_objective_complete"], "engine\rankManagement\rankUpdater.sqf"] remoteExec ['BIS_fnc_execVM', 0];
+					[{[25, "RPG_ranking_objective_complete"] call doUpdateRank}] remoteExec ["call", 0];
 				}];
 			} else 
 			{
 				//Already killed
 				[_objectiveID, "SUCCEEDED"] call BIS_fnc_taskSetState;
 				missionNameSpace setVariable [format ["RPG_%1", _objectiveID], true, true];
-				[[25, "RPG_ranking_objective_complete"], "engine\rankManagement\rankUpdater.sqf"] remoteExec ['BIS_fnc_execVM', 0];
+				[{[25, "RPG_ranking_objective_complete"] call doUpdateRank}] remoteExec ["call", 0];
 			};
 		};
 		default
@@ -148,5 +148,5 @@ if ((_objectiveID call BIS_fnc_taskState ) != "SUCCEEDED" && !(missionNameSpace 
 	 missionNamespace setVariable ["currentSideObjectives", _currentSideObjectives, true];
 
 	//Generate the side task
-	[true , [_objectiveID, _mainSideQuestID], [_currentObjectiveDescription, _currentObjectiveTitle, "cookiemarker2_intel"], objNull, "CREATED", -1, true] call BIS_fnc_taskCreate;
+	[true , [_objectiveID, _mainSideQuestID], [_currentObjectiveDescription, [_currentObjectiveTitle], "cookiemarker2_intel"], objNull, "CREATED", -1, true] call BIS_fnc_taskCreate;
 };

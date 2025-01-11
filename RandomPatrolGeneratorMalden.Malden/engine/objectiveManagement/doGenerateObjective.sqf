@@ -180,8 +180,7 @@ generateObjectiveObject =
 					missionNamespace setVariable ["missionFailedObjectives", _missionFailedObjectives, true];
 
 					//Add penalty
-					[[-50,5], 'engine\rankManagement\rankPenalty.sqf'] remoteExec ['BIS_fnc_execVM', _instigator];
-
+					[{[-50,5] call doUpdateRankWithPenalty}] remoteExec ["call", _instigator];
 
 					//Manage task system
 					if ("RealismMode" call BIS_fnc_getParamValue == 1 ) then 
@@ -236,7 +235,7 @@ generateObjectiveObject =
 					{
 						[] call doIncrementVehicleSpawnCounter;	
 						[_thisObjectiveToComplete] execVM 'engine\objectiveManagement\completeObjective.sqf'; 
-						[[50, "RPG_ranking_objective_complete"], "engine\rankManagement\rankUpdater.sqf"] remoteExec ['BIS_fnc_execVM', 0];
+						[{[50, "RPG_ranking_objective_complete"] call doUpdateRank}] remoteExec ["call", 0];
 					};
 					//Manage respawn 
 					if (["Respawn",1] call BIS_fnc_getParamValue == 1) then 
@@ -298,7 +297,7 @@ generateObjectiveObject =
 					if (isPlayer _instigator) then 
 					{
 						//Add penalty
-						[[-50,5], 'engine\rankManagement\rankPenalty.sqf'] remoteExec ['BIS_fnc_execVM', _instigator];
+						[{[-50,5] call doUpdateRankWithPenalty}] remoteExec ["call", _instigator];
 					};
 
 					//Manage objective
@@ -366,15 +365,14 @@ generateObjectiveObject =
 						_object enableAI "PATH";
 						removeAllWeapons _object;
 
-						_textToSpeech = format ["Thank you"];
-						[[format ["<t align = 'center' shadow = '2' color='#0046ff' size='1.5' font='PuristaMedium' >Hostage</t><br /><t color='#ffffff' size='1.5' font='PuristaMedium' shadow = '2' >%1</t>", _textToSpeech], "PLAIN DOWN", -1, true, true]] remoteExec ["titleText", side _caller, true];
+						[{["STR_RPG_OBJ_HOSTAGE", "STR_RPG_OBJ_HOSTAGE_THANK"] call doDialog}] remoteExec ["call", side _caller];
 
 						//Manage player's feedback
 						if ("RealismMode" call BIS_fnc_getParamValue == 1) then 
 						{
 							[] call doIncrementVehicleSpawnCounter;	
 							[_thisObjective] execVM 'engine\objectiveManagement\completeObjective.sqf'; 
-							[[50, "RPG_ranking_objective_complete"], "engine\rankManagement\rankUpdater.sqf"] remoteExec ['BIS_fnc_execVM', 0];
+							[{[50, "RPG_ranking_objective_complete"] call doUpdateRank}] remoteExec ["call", 0];
 						};
 						//Manage respawn and remove actions from NPC 
 						removeAllActions _object;
@@ -407,7 +405,7 @@ generateObjectiveObject =
 					if (isPlayer _instigator) then 
 					{
 						//Add penalty
-						[[-50,5], 'engine\rankManagement\rankPenalty.sqf'] remoteExec ['BIS_fnc_execVM', _instigator];
+						[{[-50,5] call doUpdateRankWithPenalty}] remoteExec ["call", _instigator];
 					};
 
 					//Manage objective
@@ -446,7 +444,7 @@ generateObjectiveObject =
 					missionNamespace setVariable ["missionFailedObjectives", _missionFailedObjectives, true];
 
 					//Add penalty
-					[[-50,5], 'engine\rankManagement\rankPenalty.sqf'] remoteExec ['BIS_fnc_execVM', _instigator];
+					[{[-50,5] call doUpdateRankWithPenalty}] remoteExec ["call", _instigator];
 
 					//Manage task system
 					if ("RealismMode" call BIS_fnc_getParamValue == 1 ) then 
@@ -503,8 +501,7 @@ generateObjectiveObject =
 					_objectiveObject setVariable ["associatedTask", _thisObjective, true];
 							
 					//Tell the player that enemy wave is incoming
-					_textToSpeech = format ["We have spotted enemies around your position, be ready"];
-					[[format ["<t align = 'center' shadow = '2' color='#0046ff' size='1.5' font='PuristaMedium' >High Command</t><br /><t color='#ffffff' size='1.5' font='PuristaMedium' shadow = '2' >%1</t>", _textToSpeech], "PLAIN DOWN", -1, true, true]] remoteExec ["titleText", _caller, true];
+					[{["STR_RPG_HC_NAME", "STR_RPG_HC_OPFOR_AROUND"] call doDialog}] remoteExec ["call", side _caller];
 
 					//Start defend
 					[[_objectiveObject], 'engine\objectiveManagement\checkDefendArea.sqf'] remoteExec ['BIS_fnc_execVM', 2];
@@ -560,7 +557,7 @@ generateObjectiveObject =
 					{
 						[] call doIncrementVehicleSpawnCounter;	
 						[_thisObjective] execVM 'engine\objectiveManagement\completeObjective.sqf'; 
-						[[50, "RPG_ranking_objective_complete"], "engine\rankManagement\rankUpdater.sqf"] remoteExec ['BIS_fnc_execVM', 0];
+						[{[50, "RPG_ranking_objective_complete"] call doUpdateRank}] remoteExec ["call", 0];
 					};
 					//Manage respawn and delete object
 					deleteVehicle _object;
@@ -609,7 +606,7 @@ generateObjectiveObject =
 								foreach (units _x);
 								
 								//Ask opfor group to go to the flag
-								[_x, getPos _object] execVM 'enemyManagement\behaviorEngine\doAttack.sqf';
+								[_x, getPos _object] call doAttack;
 							};
 						} foreach (allGroups select {side _x == opfor});
 					}, 
@@ -650,7 +647,7 @@ generateObjectiveObject =
 						{
 							[] call doIncrementVehicleSpawnCounter;	
 							[_thisObjective] execVM 'engine\objectiveManagement\completeObjective.sqf'; 
-							[[50, "RPG_ranking_objective_complete"], "engine\rankManagement\rankUpdater.sqf"] remoteExec ['BIS_fnc_execVM', 0];
+							[{[50, "RPG_ranking_objective_complete"] call doUpdateRank}] remoteExec ["call", 0];
 							
 						};
 						//Manage respawn and remove actions from NPC
@@ -737,7 +734,7 @@ generateObjectiveObject =
 						{
 							[] call doIncrementVehicleSpawnCounter;	
 							[_thisObjective] execVM 'engine\objectiveManagement\completeObjective.sqf'; 
-							[[50, "RPG_ranking_objective_complete"], "engine\rankManagement\rankUpdater.sqf"] remoteExec ['BIS_fnc_execVM', 0];
+							[{[50, "RPG_ranking_objective_complete"] call doUpdateRank}] remoteExec ["call", 0];
 						};
 						//Manage respawn and remove actions from NPC
 						removeAllActions _object;
@@ -776,7 +773,7 @@ generateObjectiveObject =
 					if (isPlayer _instigator) then 
 					{
 						//Add penalty
-						[[-50,5], 'engine\rankManagement\rankPenalty.sqf'] remoteExec ['BIS_fnc_execVM', _instigator];
+						[{[-50,5] call doUpdateRankWithPenalty}] remoteExec ["call", _instigator];
 					};
 
 					//Manage task system
@@ -790,9 +787,17 @@ generateObjectiveObject =
 			//hint "default" 
 			};
 	};
+
+	//Setup all missions database
 	currentMissionObjectives = missionNamespace getVariable ["MissionObjectives",[]];
 	currentMissionObjectives pushBack _thisObjective;
 	missionNamespace setVariable ["MissionObjectives",currentMissionObjectives,true];
+
+	//Setup all uncompleted missions database
+	_currentUncompletedObjectives = missionNamespace getVariable ["missionUncompletedObjectives",[]];
+	_currentUncompletedObjectives pushBack _thisObjective;
+	missionNamespace setVariable ["missionUncompletedObjectives",_currentUncompletedObjectives,true];
+
 	diag_log format ["MissionObjectives setup ! : %1", currentMissionObjectives];
 	_thisObjective;
 };

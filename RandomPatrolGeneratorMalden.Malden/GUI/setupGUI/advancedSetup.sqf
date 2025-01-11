@@ -10,12 +10,12 @@ if !(isNil "_NextParamsToManage") then
 	paramsToManage = _NextParamsToManage;
 } else 
 {
-	paramsToManage = [civiliansOnObjectivesParam, sideRelationParam, enableObjectiveExactLocationParam, enablePersistentParam, enableRegularIncomeParam, disableZoomParam, enableAutoDifficultyBalanceParam, civJoinableFactionParam, enableLoadoutRestrictionParam, enableOpforVehicleParam, enableHaloParam, timeOfDayParam, civSuicideBomberParam, civSuicideBomberProbabilityParam, endlessMissionParam, enableOpforMortarParam];
+	paramsToManage = baseParamsToManage;
 };
 
 
 paramsToManageNow = +paramsToManage ;
-paramsToManageNow resize 10; //max 7 parameters per page
+paramsToManageNow resize 12; //max 7 parameters per page
 paramsToManageNow = paramsToManageNow arrayIntersect paramsToManage;
 paramsToManageLater = paramsToManage - paramsToManageNow;
 

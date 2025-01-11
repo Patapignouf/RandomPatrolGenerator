@@ -64,7 +64,7 @@ baseEnemyHeavyArmoredVehicleGroup_FOW_GER = [
 baseEnemyTurretGroup_FOW_GER = [
 	//Turrets 
 	["fow_w_flak36_camo_ger_heer", "SMALLBUNKER"],
-	["fow_w_pak40_gray_ger_heer", "SMALLBUNKER"],
+	["fow_w_pak40_gray_ger_heer", "NOTHING"],
 	["fow_w_mg42_deployed_middle_ger_heer", "SMALLBUNKER"],
 	["fow_w_mg42_deployed_s_ger_heer", "NOTHING"]
 ];

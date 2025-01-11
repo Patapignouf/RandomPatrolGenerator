@@ -15,7 +15,7 @@ if (_tempAvailablePosition distance _thisAvailablePosition < 200) then
 //Generate enemy infantry on AO
 diag_log format ["Infantry generation start on AO %1",_thisAvailablePosition];
 _baseRadius = 60;
-for [{_i = 0}, {_i < ((_thisDifficulty-1)*2)+1}, {_i = _i + 1}] do 
+for [{_i = 0}, {_i < ((_thisDifficulty)*2)}, {_i = _i + 1}] do 
 {
 	currentRandomGroup = selectRandom _thisAvailableOpforGroup;
 	currentGroup = [currentRandomGroup, _thisAvailablePosition, east, "DefenseInfantry"] call doGenerateEnemyGroup;
@@ -30,9 +30,25 @@ for [{_i = 0}, {_i < ((_thisDifficulty-1)*2)+1}, {_i = _i + 1}] do
 	};
 
 	//Spawn group
-	[currentGroup, getPos (leader currentGroup), _baseRadius, false] execVM 'enemyManagement\behaviorEngine\doGarrison.sqf';
+	[currentGroup, getPos (leader currentGroup), _baseRadius, false] call doGarrison;
 	_baseRadius = _baseRadius + 30;
 };
+
+//Add a patrol 
+currentGroup = [_thisAvailableOpforGroup#0, _thisAvailablePosition, east, "DefenseInfantry"] call doGenerateEnemyGroup;
+
+//Add intel to enemy
+if ((typeName _thisObjective) == "ARRAY") then 
+{
+	[currentGroup,_thisObjective] execVM 'engine\objectiveManagement\addObjectiveIntel.sqf';
+} else 
+{
+	diag_log format ["generatePOI : _thisObjective is null"];
+};
+
+//Spawn group
+[currentGroup, _thisAvailablePosition, 150, false] call doPatrol;
+
 
 //50% chance to spawn opfor turret
 if (random 100 <50) then 
@@ -67,13 +83,19 @@ if (random 100 <50) then
 	};
 };
 
-//75% chance enemy have vehicle
-if (random 100 < 75) then 
+//Generate vehicle
+if ((missionNameSpace getVariable ["enableOpforVehicle", 0]) != 0) then 
 {
 	_numberOfVehicle = _thisDifficulty;
 
-	//Generate vehicle
-	if ((missionNameSpace getVariable ["enableOpforVehicle", 0]) == 1) then 
+	//Increase the number of vehicule on specific settings
+	if ((missionNameSpace getVariable ["enableOpforVehicle", 0]) == 2) then 
+	{
+		_numberOfVehicle = _numberOfVehicle+1;
+	};
+
+	//75% chance enemy have vehicle
+	if (random 100 < 75 || (missionNameSpace getVariable ["enableOpforVehicle", 0]) == 2) then 
 	{
 		for [{_i = 0}, {_i < _numberOfVehicle}, {_i = _i + 1}] do 
 		{	
@@ -125,7 +147,7 @@ if (random 100 < 25 && count _thisAvailableCivGroup > 0) then
 	for [{_i = 0}, {_i < _thisDifficulty}, {_i = _i + 1}] do 
 	{
 		currentGroup = [_thisAvailableCivGroup, _thisAvailablePosition, civilian, "Civilian"] call doGenerateEnemyGroup;
-		[currentGroup, getPos (leader currentGroup), 80, true] execVM 'enemyManagement\behaviorEngine\doGarrison.sqf';
+		[currentGroup, getPos (leader currentGroup), 80, true] call doGarrison;
 	};
 };
 

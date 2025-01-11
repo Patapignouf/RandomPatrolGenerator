@@ -41,7 +41,7 @@ if (alive _objectiveObject) then
 	{
 		[] call doIncrementVehicleSpawnCounter;	
 		[_objective] execVM 'engine\objectiveManagement\completeObjective.sqf'; 
-		[[50, "RPG_ranking_objective_complete"], "engine\rankManagement\rankUpdater.sqf"] remoteExec ['BIS_fnc_execVM', 0];
+		[{[50, "RPG_ranking_objective_complete"] call doUpdateRank}] remoteExec ["call", 0];
 	};
 
 	[[], "engine\respawnManagement\respawnManager.sqf"] remoteExec ['BIS_fnc_execVM', 0];

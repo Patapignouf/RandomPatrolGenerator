@@ -22,6 +22,70 @@ getLoadoutByRole = {
 	_thisloadout
 };
 
+getAllPossibleLoadout = {
+	params ["_currentPlayer", "_currentFaction"];
+	_currentPlayerClass = _currentPlayer getVariable "role";
+	_thisloadout = [];
+	//Need to adapt a little thing to allow default loadout when there's no loadout found
+	_thisloadoutConfig = ((loadout_db select {_x select 1 == _currentFaction}) select 0 select 0) select {_x select 0 == _currentPlayerClass} select 0;
+
+	//Test if there are alternative role description
+	if (count _thisloadoutConfig == 4) then 
+	{
+		{
+			_thisloadout pushBack (getUnitLoadout _x)
+		} foreach _thisloadoutConfig#2;
+	};
+
+	//Get every item 
+	_thisloadout = [_thisloadout] call getAllStringInArray;
+	_thisloadout
+};
+
+getAllStringInArray = {
+	params ["_array"];
+
+	{
+		if (typeName _x == "ARRAY") then 
+		{
+			_array = _array - [_x];
+			_array = _array + ([_x] call getAllStringInArray);
+		};
+	} foreach _array;
+	_array
+};
+
+getParentsFromItems = {
+	params ["_candidateItemsList"];
+	_candidateItemsListResult = _candidateItemsList;
+
+	{
+		if (typeName _x == "STRING") then 
+		{
+			_possibleItems = ([configFile >> "CfgWeapons" >> _x, true] call BIS_fnc_returnParents);
+			if (typeName _possibleItems == "ARRAY") then 
+			{	
+				//Purge possible items list from basic game items (avoid allowing base game in mod factions)
+				if (count _possibleItems > 0) then 
+				{
+					_modAuthor = getText (configFile >> "CfgWeapons" >> _possibleItems#0 >> "author");
+					{
+						if (getText (configFile >> "CfgWeapons" >> _x >> "author") != _modAuthor) then 
+						{
+							_possibleItems = _possibleItems - [_x];
+						};
+					} foreach (_possibleItems);
+				};
+
+				//Add reste of item in futur allowed stuff
+				_candidateItemsListResult = _candidateItemsListResult + _possibleItems;
+			};
+		};
+	} foreach _candidateItemsList;
+	//diag_log format ["_candidateItemsListResult %1", _candidateItemsListResult];
+	_candidateItemsListResult
+};
+
 getVirtualWeaponList = {
 	params ["_currentPlayer", "_currentFaction"];
 
@@ -78,7 +142,7 @@ getVirtualWeaponList = {
 			 	_virtualWeaponList = _virtualWeaponList + (rifleList_db select {_x select 1  == _currentFaction} select 0 select 0); 
 			};
 	};
-	diag_log format ["Player %1 with role %2 has access to weapons %3", name _currentPlayer, _currentPlayerClass,_virtualWeaponList ];
+	//diag_log format ["Player %1 with role %2 has access to weapons %3", name _currentPlayer, _currentPlayerClass,_virtualWeaponList ];
 	_virtualWeaponList
 };
 
@@ -132,7 +196,7 @@ getItembyWarEra = {
 		};
 	};
 
-	diag_log format ["itemList : %1", _itemList];
+	//diag_log format ["itemList : %1", _itemList];
 	_itemList
 };
 
@@ -140,7 +204,7 @@ getVirtualItemList = {
 	params ["_currentPlayer","_currentFaction"];
 	currentPlayerClass = _currentPlayer getVariable "role";
 	virtualItemList = [warEra, _currentPlayer] call getItembyWarEra;
-	diag_log format ["virtualItemList : %1", virtualItemList];
+	//diag_log format ["virtualItemList : %1", virtualItemList];
 	switch (currentPlayerClass) do
 	{
 		case c_medic:
@@ -167,7 +231,7 @@ getVirtualItemList = {
 				virtualItemList = virtualItemList + basicItemsList;
 			};
 	};
-	diag_log format ["Player %1 with role %2 has access to items %3", name _currentPlayer, currentPlayerClass, virtualItemList ];
+	//diag_log format ["Player %1 with role %2 has access to items %3", name _currentPlayer, currentPlayerClass, virtualItemList ];
 	virtualItemList
 };
 
@@ -177,7 +241,7 @@ getVirtualUniform = {
 	currentFaction = _this select 1;
 	currentPlayerClass = currentPlayer getVariable "role";
 	virtualUniformList = [warEra, currentPlayer] call getItembyWarEra;
-	diag_log format ["virtualUniformList : %1", virtualUniformList];
+	//diag_log format ["virtualUniformList : %1", virtualUniformList];
 	switch (currentPlayerClass) do
 	{
 		case c_leader:
@@ -197,7 +261,7 @@ getVirtualUniform = {
 				virtualUniformList = virtualUniformList + (uniformList_db select {_x select 1  == currentFaction} select 0 select 0);
 			};
 	};
-	diag_log format ["Player %1 with role %2 has access to items %3", name currentPlayer, currentPlayerClass,virtualUniformList ];
+	//diag_log format ["Player %1 with role %2 has access to items %3", name currentPlayer, currentPlayerClass,virtualUniformList ];
 	virtualUniformList
 };
 
@@ -222,7 +286,7 @@ getVirtualAttachement = {
 				virtualAttachementList = virtualAttachementList + (attachmentShortList_db select {_x select 1  == currentFaction} select 0 select 0); 
 			};
 	};
-	diag_log format ["Player %1 with role %2 has access to items %3", name currentPlayer, currentPlayerClass, virtualAttachementList ];
+	//diag_log format ["Player %1 with role %2 has access to items %3", name currentPlayer, currentPlayerClass, virtualAttachementList ];
 	virtualAttachementList
 };
 
@@ -241,7 +305,7 @@ getVirtualBackPack = {
 				virtualBackpackList = virtualBackpackList + (backPackList_db select {_x select 1  == currentFaction} select 0 select 0);
 			};
 	};
-	diag_log format ["Player %1 with role %2 has access to items %3", name currentPlayer, currentPlayerClass, virtualBackpackList ];
+	//diag_log format ["Player %1 with role %2 has access to items %3", name currentPlayer, currentPlayerClass, virtualBackpackList ];
 	virtualBackpackList
 };
 
@@ -303,7 +367,7 @@ getVirtualMagazine = {
 		//In addition add basic smokes and grenades
 		virtualMagazineList = virtualMagazineList + basicAmmunitions; 
 
-	diag_log format ["Player %1 with role %2 has access to items %3", name currentPlayer, currentPlayerClass, virtualMagazineList ];
+	//diag_log format ["Player %1 with role %2 has access to items %3", name currentPlayer, currentPlayerClass, virtualMagazineList ];
 	virtualMagazineList
 };
 
@@ -328,7 +392,7 @@ setupArsenalToItem = {
 	//Add Weapon to arsenal
 	_currentWeaponItems = [_currentPlayer, _currentFaction] call getVirtualWeaponList;
 	[_itemToAttachArsenal, _currentWeaponItems, false, false] call BIS_fnc_addVirtualWeaponCargo;
-
+	
 	//Add backpack to arsenal
 	_currentBackpackItems = [_currentPlayer, _currentFaction] call getVirtualBackPack;
 	[_itemToAttachArsenal, _currentBackpackItems, false, false] call BIS_fnc_addVirtualBackpackCargo;
@@ -353,6 +417,13 @@ setupArsenalToItem = {
 	{
 		_currentDefaultLoadout = getUnitLoadout _currentDefaultLoadout;
 	};
+
+	//Check other default units defined in faction file
+	_currentDefaultLoadout = _currentDefaultLoadout + ([_currentPlayer, _currentFaction] call getAllPossibleLoadout);
+
+	//Add inherited items
+	_currentDefaultLoadout = [_currentDefaultLoadout] call getParentsFromItems;
+
 	_whiteListDefaultStuff = [_currentPlayer, _currentDefaultLoadout, []] call listCurrentItemsLoadout;
 	diag_log format ["List of whitelist default items by listCurrentItemsLoadout %1", _whiteListDefaultStuff];
 
@@ -360,6 +431,12 @@ setupArsenalToItem = {
 	_whitelistOfArsenalItems = _currentWeaponItems+_currentBackpackItems+_currentMagazineItems+_currentItems + _whiteListDefaultStuff + ["ACE_key_west","ACE_key_east","ACE_key_civ","ACE_key_indp"];
 	_currentPlayer setVariable ["avalaibleItemsInArsenal", _whitelistOfArsenalItems, true];
 	diag_log format ["List of whitelist items by listCurrentItemsLoadout %1", _whitelistOfArsenalItems];
+
+	//Fix vanilla arsenal not showing all weapon 
+	[_itemToAttachArsenal, _whitelistOfArsenalItems, false, false] call BIS_fnc_addVirtualWeaponCargo;
+	[_itemToAttachArsenal, _whitelistOfArsenalItems, false, false] call BIS_fnc_addVirtualBackpackCargo;
+	[_itemToAttachArsenal, _whitelistOfArsenalItems, false, false] call BIS_fnc_addVirtualMagazineCargo;
+	[_itemToAttachArsenal, _whitelistOfArsenalItems,false, false] call BIS_fnc_addVirtualItemCargo;
 
 	//Remove arsenal action
 	player call RemoveArsenalActionFromGivenObject;
@@ -401,13 +478,13 @@ doInitializeLoadout = {
 	
 		//Check if loadout need adjustment
 		//If the faction doesn't implement well ACE, loadout will be adjusted (check boolean flag in role definition)
-		if (count _thisClasse == 2) then 
+		if (count _thisClasse <= 3) then 
 		{
 			[_player] call adjustLoadout;
 			
 		} else 
 		{
-			if (_thisClasse select 2 == false) then 
+			if (_thisClasse # 3 == false) then 
 			{
 				[_player] call adjustLoadout;
 			};
@@ -513,11 +590,14 @@ doInitializeLoadout = {
 
 switchToRole = {
 	//Init params
-	params ["_arsenalItem", "_caller", "_faction", "_role", "_allowCustomLoad"];
+	params ["_arsenalItem", "_caller", "_faction", "_role", "_allowCustomLoad", "_skipAnimation"];
 
 	//Switch to role
 	diag_log format ["Player %1 has switched to role %2 in faction %3", name _caller, _role, _faction];
-	titleCut [format ["Switching to role %1", _role], "BLACK FADED", 5];
+	if (!_skipAnimation) then 
+	{
+		titleCut [format ["Switching to role %1", _role], "BLACK FADED", 5];
+	};
 
 	//Manage Unit trait
 	//Reset unit trait
@@ -556,8 +636,11 @@ switchToRole = {
 	};
 
 	_caller setVariable ["spawnLoadout", getUnitLoadout _caller];
-
-	titleCut ["", "BLACK IN", 5];
+	
+	if (!_skipAnimation) then 
+	{
+		titleCut ["", "BLACK IN", 5];
+	};
 };
 
 
@@ -616,6 +699,10 @@ setupPlayerLoadout = {
 
 	//Setup initArsenal whitelist items
 	[player, player, player call getPlayerFaction] call setupArsenalToItem;
+
+	_whitelistOfArsenalItems = player getVariable ["avalaibleItemsInArsenal", []];
+	_whitelistOfArsenalItems append ([getUnitLoadout player] call getAllStringInArray);
+	player setVariable ["avalaibleItemsInArsenal", _whitelistOfArsenalItems, true];
 };
 
 setupSaveAndLoadRole = {
@@ -797,43 +884,43 @@ RemoveArsenalActionFromGivenObject = {
 
 
 saveCustomLoadout = {
-		params ["_currentPlayer", "_defaultParam"];
+	params ["_currentPlayer", "_defaultParam"];
 
-		//Case where no player's is given as parameter
-		if (isNull _currentPlayer) then 
+	//Case where no player's is given as parameter
+	if (isNull _currentPlayer) then 
+	{
+		_currentPlayer = player;
+	};
+
+	_defaultStuff = [];
+
+	//Determine default loadout
+	switch (_defaultParam) do
 		{
-			_currentPlayer = player;
-		};
-
-		_defaultStuff = [];
-
-		//Determine default loadout
-		switch (_defaultParam) do
+		case "personal":
 			{
-			case "personal":
-				{
-					_defaultStuff = getUnitLoadout _currentPlayer;
-				};
-			case "spawnLoadout":
-				{
-					_defaultStuff = _currentPlayer getVariable ["spawnLoadout", []];
-				};
-			default
-				{
-					//Do nothing
-				};
-		};
+				_defaultStuff = getUnitLoadout _currentPlayer;
+			};
+		case "spawnLoadout":
+			{
+				_defaultStuff = _currentPlayer getVariable ["spawnLoadout", []];
+			};
+		default
+			{
+				//Do nothing
+			};
+	};
 
-		if (isClass (configFile >> "CfgPatches" >> "task_force_radio")) then {
-			//Remove TFAR radio ID 
-			_defaultStuff = [_defaultStuff] call removeTFARID;
-		};
+	if (isClass (configFile >> "CfgPatches" >> "task_force_radio")) then {
+		//Remove TFAR radio ID 
+		_defaultStuff = [_defaultStuff] call removeTFARID;
+	};
 
-		//Save personnal loadout
-		profileNamespace setVariable [format [loadoutSaveName, name _currentPlayer, _currentPlayer call getPlayerFaction, _currentPlayer getVariable "role"], _defaultStuff];
+	//Save personnal loadout
+	profileNamespace setVariable [format [loadoutSaveName, name _currentPlayer, _currentPlayer call getPlayerFaction, _currentPlayer getVariable "role"], _defaultStuff];
 
-		//diag_log format ["Loadout saved on : RPG_%1_%2_%3 = %4", name player, indFaction, player getVariable "role", _defaultStuff];
-		saveProfileNamespace;
+	//diag_log format ["Loadout saved on : RPG_%1_%2_%3 = %4", name player, indFaction, player getVariable "role", _defaultStuff];
+	saveProfileNamespace;
 };
 
 validateLoadout = 
@@ -922,7 +1009,14 @@ validateSpecificItem =
 								//If it is a primaryWeaponItems then remove
 								if ((primaryWeaponItems _currentPlayer) findIf {_x == _itemToVerify } != -1) then 
 								{	
+									//Last chance for weapon if an ancestor is known the player can keep it 
+									//This code is here to prevent strange issue with RHS inherited items 
+									// _technicalParents = [configFile >> "CfgWeapons" >> _x, true] call BIS_fnc_returnParents;
+									// diag_log format ["technical parents"];
+									// if (getParentsFromItems)
 									_currentPlayer removeprimaryWeaponItem _itemToVerify;
+
+
 								};
 
 								//Remove this specific item
@@ -931,7 +1025,7 @@ validateSpecificItem =
 
 								//Log this restriction
 								hint format ["%1 has been removed by loadout restriction", _itemToVerify];
-								diag_log format ["%1 has been removed from %2 loadout due to loadout restriction %3",_itemToVerify, name _currentPlayer, _restrictedItemsList];
+								//diag_log format ["%1 has been removed from %2 loadout due to loadout restriction %3",_itemToVerify, name _currentPlayer, _restrictedItemsList];
 							};
 						};
 					};
@@ -945,6 +1039,7 @@ validateSpecificItem =
 		diag_log "RPG_ERROR : validateSpecificItem";
 	};
 };
+
 
 
 listCurrentItemsLoadout = 
@@ -964,7 +1059,7 @@ listCurrentItemsLoadout =
 		case "STRING":
 			{
 				//Test if it's a magazine
-				diag_log format ["listCurrentItemsLoadout testing item  %1 ",_currentItemToTest];
+				//diag_log format ["listCurrentItemsLoadout testing item  %1 ",_currentItemToTest];
 				//Test if the item exist in avalaible items list
 				_currenItemPos = (_listOfItems) findIf {_x == _currentItemToTest };
 				if (_currenItemPos == -1) then 
@@ -973,7 +1068,7 @@ listCurrentItemsLoadout =
 					_listOfItems pushBack _currentItemToTest;
 
 					//Log this addition
-					diag_log format ["%1 has been added to %2 loadout basic items",_currentItemToTest, name _currentPlayer];
+					//diag_log format ["%1 has been added to %2 loadout basic items",_currentItemToTest, name _currentPlayer];
 				};
 			};
 		default

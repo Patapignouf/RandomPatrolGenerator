@@ -12,8 +12,10 @@ saveRank = {
 	params ["_experience"];
 
 	//Save unit rank
-	profileNamespace setVariable ["RPG_ranking", _experience];
-	saveProfileNamespace;
+	if (missionNameSpace getVariable ["enableExperienceSave", 0] == 1) then 
+	{
+		profileNamespace setVariable ["RPG_ranking", _experience];
+	};
 	true
 };
 
@@ -67,7 +69,7 @@ adjustRank = {
 
 
 addExperience = {
-	params ["_experience", "_experienceType"];
+	params ["_experience", "_experienceType", "_experienceCustomParam"];
 
 	//Unit current experience
 	_unitExperience = profileNamespace getVariable ["RPG_ranking", 0];
@@ -79,6 +81,12 @@ addExperience = {
 	//Save rank
 	[_experience + _unitExperience] call saveRank;
 
+	//Display score
+	if (missionNameSpace getVariable ["xpDisplay", 0] == 1) then 
+	{
+		[_experience, _experienceType, _experienceCustomParam] call doDisplayScore;
+	};
+	
 	true
 };
 
@@ -112,7 +120,17 @@ getDisplayableCurrentRank = {
 
 	//Unit current experience
 	_unitExperience = profileNamespace getVariable ["RPG_ranking", 0];
-	_unitFloorRank = (rankList select {_x#1 <= _unitExperience}) #-1;
+
+	//init rank next objective
+	_unitFloorRank = [];
+	if (_unitExperience <0) then 
+	{
+		_unitFloorRank = rankList#0;
+	} else 
+	{
+		_unitFloorRank = (rankList select {_x#1 <= _unitExperience}) #-1;
+	};
+	
 	_unitNextRankList = (rankList select {_x#1 > _unitExperience});
 	
 	if (count _unitNextRankList == 0) then 
@@ -191,4 +209,96 @@ increasePrestige = {
 		[[parseText format ["<img image='\a3\ui_f\data\IGUI\Cfg\holdactions\holdAction_requestleadership_ca.paa' size='3'/><br/><br/><t size='1.2'>You have been promoted to prestige %1</t>", _currentPrestige+1], "intel"], 'engine\hintManagement\addCustomHint.sqf'] remoteExec ['BIS_fnc_execVM', player]; 
 		[[parseText format ["<img image='\a3\ui_f\data\IGUI\Cfg\holdactions\holdAction_requestleadership_ca.paa' size='3'/><br/><br/><t size='1.2'>%2 has been promoted to prestige %1</t>", _currentPrestige+1, name player], "intel"], 'engine\hintManagement\addCustomHint.sqf'] remoteExec ['BIS_fnc_execVM', -clientOwner]; 
 	};
+};
+
+doUpdateRank = {
+	params ["_experienceBonus", "_experienceType", "_experienceCustomParam"];
+
+	if (isNil "_experienceCustomParam") then 
+	{
+		_experienceCustomParam = "";
+	};
+
+	//add experience
+	[_experienceBonus, _experienceType, _experienceCustomParam] call addExperience;
+
+	//adjustrank
+	[player, false] call adjustRank;
+
+	//diag_log format ["RPG_XP_Reward : %1 %2 %3", name player, _experienceBonus, _experienceType, _experienceCustomParam];
+};
+
+doUpdateRankWithPenalty = {
+	params ["_experienceMalus", "_losePercentage"];
+
+	_currentUnitExperience = [] call getExperience;
+
+	//Determine potential lose
+	_potentialExperienceLose = floor (-_currentUnitExperience*_losePercentage/100);
+
+	//add experience
+	[_potentialExperienceLose min _experienceMalus, "RPG_ranking_player_death"] call addExperience;
+
+	//adjustrank
+	[player, false] call adjustRank;
+
+	diag_log format ["RPG_XP_Reward : %1 %2 %3", name player, _potentialExperienceLose min _experienceMalus, "RPG_ranking_player_death"];
+};
+
+
+doGetScoreName = {
+	params ["_type"];
+	_scoreName = "";
+
+	switch (_type) do
+	{
+		case "RPG_ranking_infantry_kill":
+		{
+			_scoreName = localize "STR_RPG_SCORE_INFANTRY_KILL";
+		};
+		case "RPG_ranking_vehicle_kill":
+		{
+			_scoreName = localize "STR_RPG_SCORE_VEHICLE_KILL";
+		};
+		case "RPG_ranking_suppress":
+		{
+			_scoreName = localize "STR_RPG_SCORE_SUPPRESS";
+		};
+		case "RPG_ranking_heal":
+		{
+			_scoreName = localize "STR_RPG_SCORE_HEAL";
+		};
+		case "RPG_ranking_repair":
+		{
+			_scoreName = localize "STR_RPG_SCORE_REPAIR";
+		};
+		case "RPG_ied_defuse":
+		{
+			_scoreName = localize "STR_RPG_SCORE_IED_DEFUSE";
+		};
+		case "RPG_ranking_intel_collect":
+		{
+			_scoreName = localize "STR_RPG_SCORE_INTEL";
+		};
+		case "RPG_ranking_objective_complete":
+		{
+			_scoreName = localize "STR_RPG_SCORE_OBJECTIVE";
+		};
+		case "RPG_ranking_player_death":
+		{
+			_scoreName = localize "STR_RPG_SCORE_PENALTY";
+		};
+		case "deathNumber" :
+		{
+			_scoreName = localize "STR_RPG_SCORE_DEATH";
+		};
+		default
+		{
+			
+		};
+	};
+
+	//hint format ["type %1 and scoreText %2", _type, _scoreName];
+
+	_scoreName;
 };

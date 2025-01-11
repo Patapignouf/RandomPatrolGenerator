@@ -51,32 +51,39 @@ if (isServer) then
 				//Alert players
 				if (random 100>50) then 
 				{
-					_textToSpeech = format ["An opfor reinforcement is coming to %1, be ready", mapGridPosition (positionToAttack)];
-					[[format ["<t align = 'center' shadow = '2' color='#0046ff' size='1.5' font='PuristaMedium' >High Command</t><br /><t color='#ffffff' size='1.5' font='PuristaMedium' shadow = '2' >%1</t>", _textToSpeech], "PLAIN DOWN", -1, true, true]] remoteExec ["titleText", 0, true];
+					[[positionToAttack], {params ["_positionToAttack"]; ["STR_RPG_HC_NAME", "STR_RPG_HC_ENEMY_REINFORCEMENT", mapGridPosition (_positionToAttack)] call doDialog}] remoteExec ["spawn", 0]; 
 				};
 				
 				//Define harass group 
 				_tempVehicleGroup = [];
 
-				//Generate light vehicle 33% chance to spawn
-				if (count _thisAvailableOpforCars != 0 && random 100 < 33) then 
+				if ((missionNameSpace getVariable ["enableOpforVehicle", 0]) != 2) then 
 				{
-					_tempVehicleGroup pushBack [selectRandom _thisAvailableOpforCars];
+					//Generate light vehicle 33% chance to spawn
+					if (count _thisAvailableOpforCars != 0 && random 100 < 33) then 
+					{
+						_tempVehicleGroup pushBack [selectRandom _thisAvailableOpforCars];
+					};
+
+					//Generate Light armored vehicle spawn chance 
+					if (count _thisAvailableOpforLightArmoredVehicle != 0 && enableArmoredVehicle && random 100 < 20) then 
+					{
+						//Light armored vehicle spawn chance 20%
+						_tempVehicleGroup pushBack [selectRandom _thisAvailableOpforLightArmoredVehicle];
+					};
+
+					//Generate Light armored vehicle spawn chance
+					if (count _thisAvailableOpforHeavyArmoredVehicle != 0 && enableArmoredVehicle && random 100 < 15) then 
+					{
+						//Heavy armored vehicle spawn chance 15%
+						_tempVehicleGroup pushBack [selectRandom _thisAvailableOpforHeavyArmoredVehicle];
+					};
+				} else 
+				{
+					//Force at least one vehicle to spawn
+					_tempVehicleGroup pushBack [selectRandom (_thisAvailableOpforCars+_thisAvailableOpforLightArmoredVehicle+_thisAvailableOpforHeavyArmoredVehicle)];
 				};
 
-				//Generate Light armored vehicle spawn chance 
-				if (count _thisAvailableOpforLightArmoredVehicle != 0 && enableArmoredVehicle && random 100 < 20) then 
-				{
-					//Light armored vehicle spawn chance 20%
-					_tempVehicleGroup pushBack [selectRandom _thisAvailableOpforLightArmoredVehicle];
-				};
-
-				//Generate Light armored vehicle spawn chance
-				if (count _thisAvailableOpforHeavyArmoredVehicle != 0 && enableArmoredVehicle && random 100 < 15) then 
-				{
-					//Heavy armored vehicle spawn chance 15%
-					_tempVehicleGroup pushBack [selectRandom _thisAvailableOpforHeavyArmoredVehicle];
-				};
 
 				//Chopper reinforcement 50%
 				if (count _thisAvailableOpforUnarmedChopperVehicle != 0 &&  random 100 < 50) then 
@@ -118,7 +125,28 @@ if (isServer) then
 				[ AvalaibleInitAttackPositions, positionToAttack, _thisAvailableOpforGroup, _tempVehicleGroup, (floor (_thisDifficulty/4))+1] execVM 'enemyManagement\behaviorEngine\doAmbush.sqf'; 
 				diag_log format ["Harass start on position %1", positionToAttack];
 
-				sleep (1200+round (random 600));
+				switch (missionNamespace getVariable ["opforReinforcement", 1])  do
+				{
+					//Few
+					case 0:
+					{
+						sleep (1800+round (random 600));
+					};
+					//Normal
+					case 1:
+					{
+						sleep (1200+round (random 600));
+					};
+					//Often
+					case 2:
+					{
+						sleep (600+round (random 600));
+					};
+					default
+					{
+						//Bug ?
+					};
+				};
 			};
 		};
 	};

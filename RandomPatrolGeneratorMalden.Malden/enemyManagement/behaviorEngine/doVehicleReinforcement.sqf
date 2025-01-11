@@ -37,8 +37,7 @@ waitUntil {isTouchingGround (_heli)};
 
 //Attack specific pos
 _currentEnemyGroup leaveVehicle _heli;
-[_currentEnemyGroup, _destinationPos] execVM 'enemyManagement\behaviorEngine\doAttack.sqf'; 
-
+[_currentEnemyGroup, _destinationPos] call doAttack; 
 
 //Add Experience
 //Add eventhandler killed

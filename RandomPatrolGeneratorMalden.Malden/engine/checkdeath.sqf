@@ -11,10 +11,11 @@ missionOver = false;
 
 
 //TODO Remplacer la plupart de ces tests par des eventHandler
-while {sleep 3; !missionOver} do
+while {sleep 5; !missionOver} do
 {
 	_nb_ind_alive = {alive _x && side _x == independent} count allPlayers;
 	_nb_blu_alive = {alive _x && side _x == blufor} count allPlayers;
+	_allPlayersNotIncapacited = {alive _x && (lifeState _x != "INCAPACITATED")} count allPlayers;
 
 	if (_nb_blu_alive == 0 && _nb_ind_alive == 0) then
 	{ 
@@ -31,6 +32,13 @@ while {sleep 3; !missionOver} do
 			missionOver = true;
 			[['PLY_DEAD'], 'engine\objectiveManagement\endMission.sqf'] remoteExec ['BIS_fnc_execVM', 2];
 			[99999999] remoteExec ['setPlayerRespawnTime', 2];
+		};
+	} else 
+	{
+		//Ask player if they want to abort game if nobody is standing up
+		if (_allPlayersNotIncapacited == 0) then
+		{ 
+				[[], 'GUI\playerAbortGUI\playerAbortGUI.sqf'] remoteExec ['BIS_fnc_execVM', allPlayers select {alive _x}, true];
 		};
 	};
 };

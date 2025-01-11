@@ -1,10 +1,19 @@
+//#include "database\factionParameters.sqf"
 #include "engine\modManager.sqf"
+#include "database\missionParameters.sqf"
+#include "enemyManagement\behaviorEngine\unitsBehaviorFunctions.sqf"
+#include "engine\searchLocation.sqf"
+#include "engine\hintManagement\customDialog.sqf"
+#include "GUI\scoreBoardGUI\scoreFunctions.sqf"
+
 
 forceBluforSetup = "ForceBluforSetup" call BIS_fnc_getParamValue;
 
 //Wait player load
 if (!hasInterface || isDedicated) exitWith {};
+waitUntil {alive player};
 waitUntil {!isNull player && (getClientStateNumber>=10||!isMultiplayer)};
+waitUntil {!isNil "factionInfos"};
 
 diag_log format ["Setup Player %1 at position 0", name player];
 
@@ -44,7 +53,9 @@ if (!didJIP) then
 			cutText ["", "BLACK FADED", 100];
 			player setVariable ["isSetupMission", true];
 			player setVariable ["isAdmin", true, true];
-			[[], 'GUI\setupGUI\initMissionMenu.sqf'] remoteExec ['BIS_fnc_execVM', player];
+
+				waitUntil { !isNull findDisplay 46 };
+				[[], 'GUI\setupGUI\initMissionMenu.sqf'] remoteExec ['BIS_fnc_execVM', player];
 		};
 	} else 
 	{
@@ -56,6 +67,8 @@ if (!didJIP) then
 				//Display setup menu
 				cutText ["", "BLACK FADED", 100];
 				player setVariable ["isSetupMission", true];
+				waitUntil { !isNull findDisplay 46 };
+
 				[[], 'GUI\setupGUI\initMissionMenu.sqf'] remoteExec ['BIS_fnc_execVM', player];
 			};
 		} else {
@@ -66,6 +79,8 @@ if (!didJIP) then
 				//Display setup menu
 				cutText ["", "BLACK FADED", 100];
 				player setVariable ["isSetupMission", true];
+
+				waitUntil { !isNull findDisplay 46 };
 				[[], 'GUI\setupGUI\initMissionMenu.sqf'] remoteExec ['BIS_fnc_execVM', player];
 			};
 		};
@@ -114,6 +129,18 @@ if (!didJIP) then
 //Wait mission setup
 waitUntil {missionNamespace getVariable "generationSetup" == true};
 
+
+//Format mission settings display to other players
+_missionSettings = "";
+{
+	_currentParam = _x;
+	_paramName = _currentParam#1;
+	_paramValue = ((_currentParam#0) select {(missionNameSpace getVariable [_currentParam#3,0]) == _x#0})#0#1;
+	_missionSettings = format ["%1%2 : %3<br />", _missionSettings, _paramName, _paramValue];
+} foreach baseParamsToManage;
+[format ["<t color='#ffffff' align='left' size='.6'>Mission settings :<br /><br />%1</t>", _missionSettings],1,-0.1,10,1,0,789] spawn BIS_fnc_dynamicText;
+
+
 if (player getVariable ["isSetupMission", false]) then 
 {
 	player setVariable ["isSetupMission", false];
@@ -152,18 +179,18 @@ if (ironMan) then
 };
 
 
-//Validate current player's stuff
-if ((missionNameSpace getVariable "enableLoadoutRestriction") == 1) then 
-{
-	[missionNamespace, "arsenalClosed", {
-		disableSerialization;
-		params ["_display"];
+// //Validate current player's stuff
+// if ((missionNameSpace getVariable "enableLoadoutRestriction") == 1) then 
+// {
+// 	[missionNamespace, "arsenalClosed", {
+// 		disableSerialization;
+// 		params ["_display"];
 
-		//Check loadout
-		[player] call validateLoadout;
-		["AmmoboxExit", player] call BIS_fnc_arsenal;
-	}] call BIS_fnc_addScriptedEventHandler;
-};
+// 		//Check loadout
+// 		[player] call validateLoadout;
+// 		["AmmoboxExit", player] call BIS_fnc_arsenal;
+// 	}] call BIS_fnc_addScriptedEventHandler;
+// };
 
 
 //Init disableThermal
@@ -214,16 +241,19 @@ if !(isClass (configFile >> "CfgPatches" >> "ace_medical")) then
 	//Only do weapon jamming if loadout restriction is enable
 	if ((missionNameSpace getVariable "enableLoadoutRestriction") == 1) then 
 	{
-		//Add ACE cookoff high probability on enemy weapon
-		player addEventHandler["Fired",{
-			params ["_unit", "_weapon", "_muzzle", "_mode", "_ammo", "_magazine", "_projectile", "_gunner"];
-			[_weapon] call adjustCookOf;
-		}];
+		if (missionNameSpace getVariable ["enableOverHeat",1] == 1) then 
+		{
+			//Add ACE cookoff high probability on enemy weapon
+			player addEventHandler["Fired",{
+				params ["_unit", "_weapon", "_muzzle", "_mode", "_ammo", "_magazine", "_projectile", "_gunner"];
+				[_weapon] call adjustCookOf;
+			}];
 
-		//Reduce cookoff on jammed weapon
-		["ace_weaponJammed", {
-			_this call reduceCookOff;
-		}] call CBA_fnc_addEventHandler;
+			//Reduce cookoff on jammed weapon
+			["ace_weaponJammed", {
+				_this call reduceCookOff;
+			}] call CBA_fnc_addEventHandler;
+		};
 	};
 
 	//Display message to abort when unconscious
@@ -615,14 +645,17 @@ _KilledEH = player addEventHandler ["Killed", {
 		if ([side _instigator, playerSide] call BIS_fnc_sideIsEnemy) then 
 		{
 			//Reward PvP kill
-			[[1, "RPG_ranking_infantry_kill"], 'engine\rankManagement\rankUpdater.sqf'] remoteExec ['BIS_fnc_execVM', _instigator];
+			_distance = _instigator distance _unit;
+			if (_distance<100 || _distance>5000) then {_distance = nil};
+			[[_distance], {params ["_distance"]; [1, "RPG_ranking_infantry_kill", _distance] call doUpdateRank}] remoteExec ["spawn", _instigator]; 
 		} else 
 		{
-			//Add penalty if the killer is a friend
-			[[format ["%1 has been killed by his teammate %2",name _unit, name _instigator], "teamkill"], 'engine\hintManagement\addCustomHint.sqf'] remoteExec ['BIS_fnc_execVM', side _instigator];
+			
+			[[_unit, _instigator], {params ["_unit", "_instigator"]; ["STR_RPG_HC_NAME", "STR_RPG_HC_TEAMKILL", name _unit, name _instigator] call doDialog}] remoteExec ["spawn", side _instigator]; 
+
 			if (_instigator != _unit) then 
 			{
-				[[-50,5], 'engine\rankManagement\rankPenalty.sqf'] remoteExec ['BIS_fnc_execVM', _instigator];
+				[{[-50,5] call doUpdateRankWithPenalty}] remoteExec ["call", _instigator];
 			};
 		};
 	};
@@ -675,6 +708,76 @@ if (isClass (configFile >> "CfgPatches" >> "ace_medical")) then
   player setDamage 0;
 };
 
+//add respawn tent action
+if (missionNameSpace getVariable ["enableAdvancedRespawn", 1] == 1) then 
+{
+	//Add vehicle shop
+	player addAction [format ["<img size='2' image='\a3\ui_f_oldman\data\IGUI\Cfg\holdactions\holdAction_sleep_ca.paa'/><t size='1'>Place reinforcement tent</t>"],{
+		//Define parameters
+		params ["_object","_caller","_ID","_avalaibleVehicle"];
+
+		missionNameSpace setVariable [format ['bluforAdvancedRespawn%1', str (group _caller)], false, true];
+		missionNameSpace setVariable [format ['bluforPositionAdvancedRespawn%1', str (group _caller)], getPos _object, true];
+
+		//Create tent
+		_createTent = createVehicle ["Land_TentDome_F", [getPos _caller, 1, 5, 3, 0, 20, 0, [], [getPos _caller, getPos _caller]] call BIS_fnc_findSafePos, [], 0, "NONE"];
+		_createTent setVariable [str (group _caller), true, true];
+
+		[{["STR_RPG_HC_NAME", "STR_RPG_HC_RESPAWN_TENT"] call doDialog}] remoteExec ["call", units (group _caller)];
+
+		[[str (group _caller), _createTent,"\a3\ui_f\data\IGUI\Cfg\holdactions\holdAction_requestleadership_ca.paa" , [0,0,1,1]], 'GUI\3DNames\3DObjectNames.sqf'] remoteExec ['BIS_fnc_execVM', blufor, true];
+
+		//Add support action on tent
+		_createTent addAction ["<img size='2' image='\a3\ui_f_oldman\data\IGUI\Cfg\holdactions\holdAction_market_ca.paa'/><t size='1'>Open support shop</t>",{
+			//Define parameters
+			params ["_object","_caller","_ID","_avalaibleVehicle"];
+
+			[[false], 'GUI\supportGUI\supportGUI.sqf'] remoteExec ['BIS_fnc_execVM', _caller];
+		},_x,3,true,false,"","(_target distance _this <5) && (_target getVariable [str (group _this), false])"];
+
+		//Create action to authorize tent disassembly
+		[
+			_createTent, 
+			"Disassemble tent", 
+			"\a3\ui_f\data\IGUI\Cfg\holdactions\holdAction_unbind_ca.paa", 
+			"\a3\ui_f\data\IGUI\Cfg\holdactions\holdAction_unbind_ca.paa", 
+			"(_this distance _target < 3) && (_this getVariable 'role' == 'leader') && (vehicle _this == _this)",
+			"true", 
+			{
+				// Action start code
+			}, 
+			{
+				// Action on going code
+			},  
+			{
+				// Action successfull code
+				params ["_object","_caller","_ID","_param"];
+
+				//If the tent is on your squad
+				if (_object getVariable [str (group _caller), false]) then 
+				{
+					//delete the tent and allow leader to place another one
+					deleteVehicle _object;
+					missionNameSpace setVariable [format ['bluforAdvancedRespawn%1', str (group _caller)], true, true];
+					missionNameSpace setVariable [format ['bluforPositionAdvancedRespawn%1', str (group _caller)], [0,0,0], true];
+				} else 
+				{
+					cutText ["This is not your tent", "PLAIN", 0.3];
+				};
+			}, 
+			{
+				// Action failed code
+			}, 
+			[],  
+			2,
+			1000, 
+			false,
+			false
+		] remoteExec ["BIS_fnc_holdActionAdd", 0, true];
+
+	},_x,3,true,false,"","(_this getVariable 'role' == 'leader') && (missionNameSpace getVariable [ format ['bluforAdvancedRespawn%1', str (group _this)], true]) && (vehicle _this == _this)"];
+};
+
 //Display welcome message
 5 fadeMusic 0;
 uiSleep 5;
@@ -683,3 +786,15 @@ playMusic "";
 uiSleep 20;
 [format ["Somewhere on %1",worldName], format ["Year %1", date select 0], mapGridPosition player] spawn BIS_fnc_infoText;
 
+
+//Display tutorial for new players 
+_playerCurrentXP = [player] call getExperience;
+if (_playerCurrentXP < 50) then 
+{
+	localize "STR_RPG_TUTO_WELCOME" hintC [
+		localize "STR_RPG_TUTO_OBJ",
+		localize "STR_RPG_TUTO_LOADOUT",
+		localize "STR_RPG_TUTO_VEHICLE",
+		localize "STR_RPG_TUTO_RESPAWN"
+	];
+};

@@ -123,7 +123,7 @@ params ["_currentGroup", "_thisObjective"];
 								[_side, [format ["%1%2",_thisObjectiveCode ,"_Intel"], _thisObjectiveCode], [_currentObjectiveDescription, "Updated intel", "cookiemarker2_intel"], objNull, 1, 3, true] call BIS_fnc_taskCreate;
 								[format ["%1%2",_thisObjectiveCode ,"_Intel"],"documents"] call BIS_fnc_taskSetType;
 								//Reward with experience 
-								[[3, "RPG_ranking_intel_collect"], 'engine\rankManagement\rankUpdater.sqf'] remoteExec ['BIS_fnc_execVM', _caller];
+								[{[3, "RPG_ranking_intel_collect"] call doUpdateRank}] remoteExec ["call", _caller];
 							} else 
 							{
 								//75% chance to get a minor intel
@@ -133,11 +133,11 @@ params ["_currentGroup", "_thisObjective"];
 									[[_caller, "corpseLooting"], 'engine\objectiveManagement\revealMinorIntel.sqf'] remoteExec ['BIS_fnc_execVM', _caller];
 								} else 
 								{
-									//Display no intel found message
-									[[format ["<t align = 'center' shadow = '2' color='#FF0000' size='1.5' font='PuristaMedium' >Corpse</t><br /><t color='#ffffff' size='1.5' font='PuristaMedium' shadow = '2' >No intel found</t>"], "PLAIN DOWN", -1, true, true]] remoteExec ["titleText", _caller];
+									//Display no intel found message					
+									[{["STR_RPG_CORPSE_NAME", "STR_RPG_INTEL_NOTHING_FOUND"] call doDialog}] remoteExec ["call", _caller];
 								};
 								//Reward with less experience 
-								[[1, "RPG_ranking_intel_collect"], 'engine\rankManagement\rankUpdater.sqf'] remoteExec ['BIS_fnc_execVM', _caller];
+								[{[1, "RPG_ranking_intel_collect"] call doUpdateRank}] remoteExec ["call", _caller];
 							};
 					}, 
 					{

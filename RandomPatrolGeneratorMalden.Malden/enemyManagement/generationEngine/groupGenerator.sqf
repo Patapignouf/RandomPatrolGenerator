@@ -42,7 +42,7 @@ doGenerateEnemyGroup =
 				{
 					_unit setVariable ["isSuppressed", true, true];
 					//hint format ["unit : %1 \ndistance : %2 \ninstigator : %3\n suppression level : %4",name _unit, _distance, name _instigator, getSuppression _unit];
-					[[1, "RPG_ranking_suppress"], 'engine\rankManagement\rankUpdater.sqf'] remoteExec ['BIS_fnc_execVM', _instigator];
+					[{[1, "RPG_ranking_suppress"] call doUpdateRank}] remoteExec ["call", _instigator];
 					
 					//Reset suppressed score on the unit after 60 sec
 					[_unit] spawn {
@@ -60,7 +60,10 @@ doGenerateEnemyGroup =
 
 				if (isPlayer _instigator) then 
 				{
-					[[1, "RPG_ranking_infantry_kill"], 'engine\rankManagement\rankUpdater.sqf'] remoteExec ['BIS_fnc_execVM', _instigator];
+					_distance = _instigator distance _unit;
+					if (_distance<100 || _distance>5000) then {_distance = nil};
+					[[_distance], {params ["_distance"]; [1, "RPG_ranking_infantry_kill", _distance] call doUpdateRank}] remoteExec ["spawn", _instigator]; 
+					
 				} else {
 					//Debug IA killed log
 					diag_log format ["The IA %1 has been killed by %2", name _unit, name _instigator];
@@ -82,6 +85,29 @@ doGenerateEnemyGroup =
 			
 
 		} foreach (units _currentGroupPatrol);
+
+		//Manage unit surrender
+		if (missionNameSpace getVariable ["enableSurrenderUnit", 1] == 1) then 
+		{
+			_currentGroupPatrol addEventHandler ["UnitKilled", {
+				params ["_group", "_unit", "_killer", "_instigator", "_useEffects"];
+
+				if (count ((units _group) select {alive _x}) <=2) then 
+				{
+					{
+						//Make unit surrender if the morale goes too low
+						if (morale _x < 0 && vehicle _x == _x && side _x == opfor) then 
+						{
+							//Add 60% chance not  to surrender
+							if (random 100 > 60) then 
+							{
+								[_x] call doSurrender;
+							};
+						};
+					} foreach (units _group)
+				};
+			}];
+		};
 	};
 	
 	//Define specific vehicle trigger
@@ -130,7 +156,7 @@ doGenerateEnemyGroup =
 					diag_log format ["Civilian has been killed by : %1 on side %2", name _instigator, side _instigator];
 					[[format ["Civilian has been killed by : %1", name _instigator], "civiliankilled"], 'engine\hintManagement\addCustomHint.sqf'] remoteExec ['BIS_fnc_execVM', side _instigator]; 
 					
-					[[-50,5], 'engine\rankManagement\rankPenalty.sqf'] remoteExec ['BIS_fnc_execVM', _instigator];
+					[{[-50,5] call doUpdateRankWithPenalty}] remoteExec ["call", _instigator];
 				}; 
 			}];
 
@@ -217,7 +243,7 @@ doGenerateHostileCivilianGroup =
 				diag_log format ["Civilian has been killed by : %1 on side %2", name _instigator, side _instigator];
 				[[format ["Civilian has been killed by : %1", name _instigator], "civiliankilled"], 'engine\hintManagement\addCustomHint.sqf'] remoteExec ['BIS_fnc_execVM', side _instigator]; 
 				
-				[[-50,5], 'engine\rankManagement\rankPenalty.sqf'] remoteExec ['BIS_fnc_execVM', _instigator];
+				[{[-50,5] call doUpdateRankWithPenalty}] remoteExec ["call", _instigator];
 			}; 
 		}];
 	} foreach (units _currentGroupPatrol);

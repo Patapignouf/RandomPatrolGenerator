@@ -1,6 +1,6 @@
 
 //Create survivor task
-[player, format ["RPG_%1_Death", name player], ["Finish the mission without dying", "Survive", ""], objNull, 1, 3, true] call BIS_fnc_taskCreate;
+[player, format ["RPG_%1_Death", name player], [localize "STR_RPG_OBJ_SURVIVE_TEXT", localize "STR_RPG_OBJ_SURVIVE", ""], objNull, 1, 3, true] call BIS_fnc_taskCreate;
 
 //Wait mission complete
 [] spawn {
@@ -13,7 +13,7 @@
 		[format ["RPG_%1_Death", name player], "SUCCEEDED"] call BIS_fnc_taskSetState;
 
 		//Give player 50 xp point
-		[[50, "RPG_ranking_objective_complete"], "engine\rankManagement\rankUpdater.sqf"] remoteExec ['BIS_fnc_execVM', player];
+		[{[50, "RPG_ranking_objective_complete"] call doUpdateRank}] remoteExec ["call", player];
 	};
 
 };

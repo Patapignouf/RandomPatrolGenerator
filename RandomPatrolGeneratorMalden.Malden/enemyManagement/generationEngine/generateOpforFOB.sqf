@@ -94,8 +94,13 @@ if (!([_OpforFobLocation] call isLocationOnMap)) then
 	if (random 100 < 50) then 
 	{
 		[[format ["%1%2","_sideQuestFOB", random 10000],"AttackFOB", _OpforFobLocation, objNull], "engine\objectiveManagement\doGenerateSideObjective.sqf"] remoteExec ['BIS_fnc_execVM', 2];
+
+		//Locate on map
+		if (missionNameSpace getVariable ["enableObjectiveExactLocation", 0] != 0) then 
+		{
+			[["FOB", "ColorRed", "b_hq", _OpforFobLocation, blufor], 'objectGenerator\doGenerateMarker.sqf'] remoteExec ['BIS_fnc_execVM', 0, true];
+		};
 	};
-	
 };
 
 deletevehicle _trgAOC;

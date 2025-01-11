@@ -51,12 +51,14 @@ _civilian setVariable ["AttachedMine", _attachedMine, true];
 
 // Event handler for when the civilian is killed
 _civilian addEventHandler ["Killed", {
-	params ["_unit", "_killer"];
+	params ["_unit", "_killer", "_instigator", "_useEffects"];
 
 	_attachedMine = _unit getVariable "AttachedMine";
 
 	// Reward the kill
-	[[1, "RPG_ranking_infantry_kill"], "engine\rankManagement\rankUpdater.sqf"] remoteExec ['BIS_fnc_execVM', _killer];
+	_distance = _instigator distance _unit;
+	if (_distance<100 || _distance>5000) then {_distance = nil};
+	[[_distance], {params ["_distance"]; [1, "RPG_ranking_infantry_kill", _distance] call doUpdateRank}] remoteExec ["spawn", _instigator]; 
 
 	// Check if the civilian has already exploded
 	_exploded = _unit getVariable "exploded";
@@ -111,7 +113,8 @@ _civilian addEventHandler ["Killed", {
 				[1, ["The vest has been defused", "PLAIN", 0.5]] remoteExec ["cutText", _caller];
 
 				// Reward the defuse
-				[[5, "RPG_ied_defuse"], "engine\rankManagement\rankUpdater.sqf"] remoteExec ['BIS_fnc_execVM', _caller];
+				[{[5, "RPG_ied_defuse"] call doUpdateRank}] remoteExec ["call", _caller];
+
 			} else {
 				// Explode the vest
 				["M_Titan_AT", (getPos _object), false] call explosions_fnc_doAnExplosion;
@@ -180,29 +183,30 @@ _civilian addEventHandler ["Killed", {
 		_attachedMine = _civilian getVariable "AttachedMine";
         _nearestPlayer = [_civilian] call utils_fnc_getNearestPlayer;
 
-        if (_nearestPlayer isNotEqualTo false && (_nearestPlayer distance _civilian) < 30) then {
-
+        if (_nearestPlayer isNotEqualTo false) then {
+			if ((_nearestPlayer distance _civilian) < 30) then 
 			{
-				deleteWaypoint _x
-			} forEachReversed waypoints (group _civilian);
+				{
+					deleteWaypoint _x
+				} forEachReversed waypoints (group _civilian);
 
-			_GroupWayPoint = (group _civilian) addWaypoint [(position _nearestPlayer), 0];
-			_GroupWayPoint setWaypointType "MOVE";
+				_GroupWayPoint = (group _civilian) addWaypoint [(position _nearestPlayer), 0];
+				_GroupWayPoint setWaypointType "MOVE";
 
-			for "_i" from 0 to 10 do {
-				_distance = _nearestPlayer distance _civilian;
-				if (_distance <= 15) then {
-					[_civilian, "suicideBomber"] remoteExec ["say3D", 0];
+				for "_i" from 0 to 10 do {
+					_distance = _nearestPlayer distance _civilian;
+					if (_distance <= 15) then {
+						[_civilian, "suicideBomber"] remoteExec ["say3D", 0];
+					};
+					// Trigger explosion if within 5 meters
+					if (_distance <= 5) exitWith {
+						["M_Titan_AT", (getPos _civilian), false] call explosions_fnc_doAnExplosion;
+						deleteVehicle _attachedMine;
+						_civilian setVariable ["exploded", true];
+					};
+					sleep 1;
 				};
-				// Trigger explosion if within 5 meters
-				if (_distance <= 5) exitWith {
-					["M_Titan_AT", (getPos _civilian), false] call explosions_fnc_doAnExplosion;
-					deleteVehicle _attachedMine;
-					_civilian setVariable ["exploded", true];
-				};
-				sleep 1;
 			};
-
         };
 	};
 };
