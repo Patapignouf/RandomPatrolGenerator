@@ -1,3 +1,5 @@
+#include "..\..\database\missionParameters.sqf"
+
 //Define global faction variable 
 profileNamespace setVariable ["RPG_warEra", warEra]; // GUI generation mission boolean flag
 profileNamespace setVariable ["RPG_bluforFaction", bluforFaction]; //Default faction 14 -> OTAN 2035
@@ -21,4 +23,18 @@ profileNamespace setVariable ["RPG_missionRespawnParam", missionRespawnParam]; /
 
 //Mission objectives
 profileNamespace setVariable ["RPG_avalaibleTypeOfObj", avalaibleTypeOfObj]; //Default disable ironman mode
+
+//Save advanced settings when first setup UI is OK
+{
+	_paramsList = _x#0;
+	_paramsName = _x#1;
+	_paramsDefaultValue = _x#2;
+	_paramsSettingName = _x#3;
+
+
+	//Set default value
+	_saveSetting = profileNameSpace getVariable [_paramsSettingName, _paramsDefaultValue];
+	missionNamespace setVariable [_paramsSettingName, _saveSetting, true];
+} foreach baseParamsToManage;
+
 saveProfileNamespace;
