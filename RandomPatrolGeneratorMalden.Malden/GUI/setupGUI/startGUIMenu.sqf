@@ -59,8 +59,20 @@ missionNamespace setVariable ["startIntel", parseNumber missionStartIntel, true]
 missionNamespace setVariable ["missionIASkillParam", parseNumber missionIASkillParam, true]; //Default medium difficulty
 missionNamespace setVariable ["missionRespawnParam", parseNumber missionRespawnParam, true]; //Default disable ironman mode
 
+//Fix type of obj not saved
+missionNameSpace setVariable ["avalaibleTypeOfObj", profileNamespace getVariable ["RPG_avalaibleTypeOfObj", []], true];
+
 //Go to objective selection
-[[], 'GUI\setupGUI\advancedSetup.sqf'] remoteExec ['BIS_fnc_execVM', player];
+if (_thisButtonValidate) then 
+{
+	[[], 'GUI\setupGUI\startGUIMenuLocation.sqf'] remoteExec ['BIS_fnc_execVM', player];
+
+} else 
+{
+	_execSave = [] execVM 'GUI\setupGUI\saveSettings.sqf';
+	waitUntil { isNull _execSave};
+	[[], 'GUI\setupGUI\advancedSetup.sqf'] remoteExec ['BIS_fnc_execVM', player];
+};
 
 //Close setup menu
 _mainDisplay closeDisplay 1;

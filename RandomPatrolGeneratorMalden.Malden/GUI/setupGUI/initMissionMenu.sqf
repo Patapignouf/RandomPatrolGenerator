@@ -1,5 +1,4 @@
 disableSerialization;
-#include "..\..\database\missionParameters.sqf"
 #include "loadSettings.sqf"
 
 //Create GUI
