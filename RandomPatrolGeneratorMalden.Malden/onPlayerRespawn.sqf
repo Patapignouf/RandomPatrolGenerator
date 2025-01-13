@@ -66,19 +66,22 @@ if !(isClass (configFile >> "CfgPatches" >> "ace_medical")) then
 
 
 //Hide HUD group to debug the UI after death
-showHUD [
-  true, // scriptedHUD
-  true, // info
-  true, // radar
-  true, // compass
-  true, // direction
-  true, // menu
-  false, // group
-  true, // cursors
-  true, // panels
-  false, // kills
-  false  // showIcon3D
-];
+if (isClass (configFile >> "CfgPatches" >> "ace_medical")) then 
+{
+	showHUD [
+	true, // scriptedHUD
+	true, // info
+	true, // radar
+	true, // compass
+	true, // direction
+	true, // menu
+	false, // group
+	true, // cursors
+	true, // panels
+	false, // kills
+	false  // showIcon3D
+	];
+};
 //#####
 
 //Add admin menu action
