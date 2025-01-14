@@ -1,3 +1,7 @@
+//init tp to be able to spawn on the ground on each map
+player setPos [worldSize,worldSize,0];
+player allowdamage false;
+
 //#include "database\factionParameters.sqf"
 #include "engine\modManager.sqf"
 #include "database\missionParameters.sqf"
@@ -16,9 +20,6 @@ waitUntil {!isNil "factionInfos"};
 
 diag_log format ["Setup Player %1 at position 0", name player];
 
-//init tp to be able to spawn on the ground on each map
-player setPos [worldSize,worldSize,0];
-player allowdamage false;
 
 //prevent player from drowning in loading
 [] spawn {
