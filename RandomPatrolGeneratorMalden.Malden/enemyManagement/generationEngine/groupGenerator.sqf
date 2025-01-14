@@ -98,10 +98,19 @@ doGenerateEnemyGroup =
 						//Make unit surrender if the morale goes too low
 						if (morale _x < 0 && vehicle _x == _x && side _x == opfor) then 
 						{
+							_currentUnit = _x;
 							//Add 60% chance not  to surrender
 							if (random 100 > 60) then 
 							{
-								[_x] call doSurrender;
+								//Trigger only if there is a player at less than 50m
+								if (count (allPlayers select {_x distance _currentUnit < 50})!=0) then 
+								{							
+									//Make unit surrender async
+									[_currentUnit] spawn {
+										params ["_currentUnit"];
+										[_currentUnit] call doSurrender;
+									};
+								};
 							};
 						};
 					} foreach (units _group)

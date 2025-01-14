@@ -156,7 +156,7 @@ doSurrender = {
 		_unit action["Surrender", _unit]; // Surrender
 		_unit setCaptive true; // Set as captive
 
-		uiSleep 1.5; //Add 1.5sec safe for player
+		sleep 3; //Add 3 sec safe for player
 
 		//Add penalty if a player kill a surrender unit
 		if (alive _unit) then 
