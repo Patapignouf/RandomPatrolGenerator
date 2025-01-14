@@ -6,7 +6,6 @@
 #include "engine\hintManagement\customDialog.sqf"
 #include "GUI\scoreBoardGUI\scoreFunctions.sqf"
 
-
 forceBluforSetup = "ForceBluforSetup" call BIS_fnc_getParamValue;
 
 //Wait player load
@@ -18,7 +17,7 @@ waitUntil {!isNil "factionInfos"};
 diag_log format ["Setup Player %1 at position 0", name player];
 
 //init tp to be able to spawn on the ground on each map
-player setPos [worldSize,worldSize];
+player setPos [worldSize,worldSize,0];
 player allowdamage false;
 
 //prevent player from drowning in loading
@@ -672,7 +671,7 @@ if (didJIP) then
 	if (count (_deadPlayerList select { _x == (name player) }) == 0) then 
 	{
 		//Disable specific respawn menu
-		player setPos [worldSize,worldSize];
+		player setPos [worldSize,worldSize,0];
 		player allowdamage false;
 		[[], 'GUI\respawnGUI\initPlayerRespawnMenu.sqf'] remoteExec ['BIS_fnc_execVM', player];
 	} else 
