@@ -280,82 +280,94 @@ _roleFilter = ["Unarmed"];
 		};
 	};
 
-	if (_cfgName isKindOf 'Car' && !(_cfgName isKindOf 'Tank' || _cfgName isKindOf 'Wheeled_APC_F' || _cfgName isKindOf 'APC_Tracked_02_base_F' || ((configFile >> "CfgVehicles" >> _cfgName >> "artilleryScanner") call BIS_fnc_GetCfgData) == 1 )) then {	
-		if (count (_cfgName call BIS_fnc_allTurrets) == 0) then 
-		{
-			_currentFactionName = format ["bluforUnarmedVehicle%1", _thisFac];
+	//Detect UAV 
+	_vehicleClass = (configFile >> "CfgVehicles" >> _cfgName >> "vehicleClass") call BIS_fnc_GetCfgData;
+	if (_vehicleClass == "Autonomous") then 
+	{
+		_currentFactionName = format ["bluforDrone%1", _thisFac];
 
-			_currentStuffFaction = 	missionNamespace getVariable [_currentFactionName, []];
-			_currentStuffFaction pushBack _cfgName;
-			missionNamespace setVariable [_currentFactionName, _currentStuffFaction, true]; 
-		} else 
-		{
-			_currentFactionName = format ["bluforArmedVehicle%1", _thisFac];
+		_currentStuffFaction = 	missionNamespace getVariable [_currentFactionName, []];
+		_currentStuffFaction pushBack _cfgName;
+		missionNamespace setVariable [_currentFactionName, _currentStuffFaction, true]; 
+	} else 
+	{
+		if (_cfgName isKindOf 'Car' && !(_cfgName isKindOf 'Tank' || _cfgName isKindOf 'Wheeled_APC_F' || _cfgName isKindOf 'APC_Tracked_02_base_F' || ((configFile >> "CfgVehicles" >> _cfgName >> "artilleryScanner") call BIS_fnc_GetCfgData) == 1 )) then {	
+			if (count (_cfgName call BIS_fnc_allTurrets) == 0) then 
+			{
+				_currentFactionName = format ["bluforUnarmedVehicle%1", _thisFac];
 
-			_currentStuffFaction = 	missionNamespace getVariable [_currentFactionName, []];
-			_currentStuffFaction pushBack _cfgName;
+				_currentStuffFaction = 	missionNamespace getVariable [_currentFactionName, []];
+				_currentStuffFaction pushBack _cfgName;
+				missionNamespace setVariable [_currentFactionName, _currentStuffFaction, true]; 
+			} else 
+			{
+				_currentFactionName = format ["bluforArmedVehicle%1", _thisFac];
 
-			missionNamespace setVariable [_currentFactionName, _currentStuffFaction, true]; 
+				_currentStuffFaction = 	missionNamespace getVariable [_currentFactionName, []];
+				_currentStuffFaction pushBack _cfgName;
+
+				missionNamespace setVariable [_currentFactionName, _currentStuffFaction, true]; 
+			};
 		};
-	};
-	if (_cfgName isKindOf 'Helicopter') then {	
-		if (count (((configFile >> "CfgVehicles" >> _cfgName >> "weapons") call BIS_fnc_GetCfgData) select {_x != "CMFlareLauncher"})== 0) then 
-		{
-			_currentFactionName = format ["bluforUnarmedVehicleChopper%1", _thisFac];
+		if (_cfgName isKindOf 'Helicopter') then {	
+			if (count (((configFile >> "CfgVehicles" >> _cfgName >> "weapons") call BIS_fnc_GetCfgData) select {_x != "CMFlareLauncher"})== 0) then 
+			{
+				_currentFactionName = format ["bluforUnarmedVehicleChopper%1", _thisFac];
 
-			_currentStuffFaction = 	missionNamespace getVariable [_currentFactionName, []];
-			_currentStuffFaction pushBack _cfgName;
-			missionNamespace setVariable [_currentFactionName, _currentStuffFaction, true]; 
-		} else 
-		{
-			_currentFactionName = format ["bluforArmedChopper%1", _thisFac];
+				_currentStuffFaction = 	missionNamespace getVariable [_currentFactionName, []];
+				_currentStuffFaction pushBack _cfgName;
+				missionNamespace setVariable [_currentFactionName, _currentStuffFaction, true]; 
+			} else 
+			{
+				_currentFactionName = format ["bluforArmedChopper%1", _thisFac];
 
-			_currentStuffFaction = 	missionNamespace getVariable [_currentFactionName, []];
-			_currentStuffFaction pushBack _cfgName;
-			missionNamespace setVariable [_currentFactionName, _currentStuffFaction, true]; 
+				_currentStuffFaction = 	missionNamespace getVariable [_currentFactionName, []];
+				_currentStuffFaction pushBack _cfgName;
+				missionNamespace setVariable [_currentFactionName, _currentStuffFaction, true]; 
+			};
 		};
+		if ((_cfgName isKindOf 'Tank' || _cfgName isKindOf 'Wheeled_APC_F' || _cfgName isKindOf 'APC_Tracked_02_base_F') && ((configFile >> "CfgVehicles" >> _cfgName >> "artilleryScanner") call BIS_fnc_GetCfgData) == 0) then {	
+
+				_currentFactionName = format ["bluforArmoredVehicle%1", _thisFac];
+
+				_currentStuffFaction = 	missionNamespace getVariable [_currentFactionName, []];
+				_currentStuffFaction pushBack _cfgName;
+				missionNamespace setVariable [_currentFactionName, _currentStuffFaction, true]; 
+		};
+		if (_cfgName isKindOf 'Ship') then {	
+
+				_currentFactionName = format ["bluforBoat%1", _thisFac];
+
+				_currentStuffFaction = 	missionNamespace getVariable [_currentFactionName, []];
+				_currentStuffFaction pushBack _cfgName;
+				missionNamespace setVariable [_currentFactionName, _currentStuffFaction, true]; 
+		};
+		if (_cfgName isKindOf 'Plane') then {	
+
+				_currentFactionName = format ["bluforFixedWing%1", _thisFac];
+
+				_currentStuffFaction = 	missionNamespace getVariable [_currentFactionName, []];
+				_currentStuffFaction pushBack _cfgName;
+				missionNamespace setVariable [_currentFactionName, _currentStuffFaction, true]; 
+		};
+		if (_cfgName isKindOf 'StaticWeapon') then {	
+
+			if (["82mm", _cfgName] call BIS_fnc_inString || ["Mortar", _cfgName] call BIS_fnc_inString) then 
+			{
+				_currentFactionName = format ["bluforMortar%1", _thisFac];
+
+				_currentStuffFaction = 	missionNamespace getVariable [_currentFactionName, []];
+				_currentStuffFaction pushBack _cfgName;
+				missionNamespace setVariable [_currentFactionName, _currentStuffFaction, true]; 
+			} else {
+				_currentFactionName = format ["bluforStaticWeapon%1", _thisFac];
+
+				_currentStuffFaction = 	missionNamespace getVariable [_currentFactionName, []];
+				_currentStuffFaction pushBack _cfgName;
+				missionNamespace setVariable [_currentFactionName, _currentStuffFaction, true]; 
+			}
+		};	
 	};
-	if ((_cfgName isKindOf 'Tank' || _cfgName isKindOf 'Wheeled_APC_F' || _cfgName isKindOf 'APC_Tracked_02_base_F') && ((configFile >> "CfgVehicles" >> _cfgName >> "artilleryScanner") call BIS_fnc_GetCfgData) == 0) then {	
-
-			_currentFactionName = format ["bluforArmoredVehicle%1", _thisFac];
-
-			_currentStuffFaction = 	missionNamespace getVariable [_currentFactionName, []];
-			_currentStuffFaction pushBack _cfgName;
-			missionNamespace setVariable [_currentFactionName, _currentStuffFaction, true]; 
-	};
-	if (_cfgName isKindOf 'Ship') then {	
-
-			_currentFactionName = format ["bluforBoat%1", _thisFac];
-
-			_currentStuffFaction = 	missionNamespace getVariable [_currentFactionName, []];
-			_currentStuffFaction pushBack _cfgName;
-			missionNamespace setVariable [_currentFactionName, _currentStuffFaction, true]; 
-	};
-	if (_cfgName isKindOf 'Plane') then {	
-
-			_currentFactionName = format ["bluforFixedWing%1", _thisFac];
-
-			_currentStuffFaction = 	missionNamespace getVariable [_currentFactionName, []];
-			_currentStuffFaction pushBack _cfgName;
-			missionNamespace setVariable [_currentFactionName, _currentStuffFaction, true]; 
-	};
-	if (_cfgName isKindOf 'StaticWeapon') then {	
-
-		if (["82mm", _cfgName] call BIS_fnc_inString || ["Mortar", _cfgName] call BIS_fnc_inString) then 
-		{
-			_currentFactionName = format ["bluforMortar%1", _thisFac];
-
-			_currentStuffFaction = 	missionNamespace getVariable [_currentFactionName, []];
-			_currentStuffFaction pushBack _cfgName;
-			missionNamespace setVariable [_currentFactionName, _currentStuffFaction, true]; 
-		} else {
-			_currentFactionName = format ["bluforStaticWeapon%1", _thisFac];
-
-			_currentStuffFaction = 	missionNamespace getVariable [_currentFactionName, []];
-			_currentStuffFaction pushBack _cfgName;
-			missionNamespace setVariable [_currentFactionName, _currentStuffFaction, true]; 
-		}
-	};	
 
 } foreach ("(getNumber (_x >> 'scope') == 2)" configClasses (configFile / "CfgVehicles"));
 
