@@ -53,6 +53,8 @@ switch (_mode) do
 			};
 		};
 
+		[_lnbEntries] call addSupportForTent;
+
 		for "_idc" from 602400 to 602402 do {
 			_btn = _display displayCtrl _idc;
 			_btn setVariable ["reverseSort",false];
