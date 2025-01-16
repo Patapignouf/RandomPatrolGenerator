@@ -2,84 +2,92 @@
 adjustRole = {
 	params ["_cfgRole", "_cfgName"];
 
-	//Bind role with wrole
-	switch (_cfgRole) do {
-		case "CombatLifeSaver": {_cfgRole = "medic"};
-		case "Grenadier": {_cfgRole = "grenadier"};
-		case "MachineGunner": {_cfgRole = "autorifleman"};
-		case "Marksman": {_cfgRole = "marksman"};
-		case "MissileSpecialist": {_cfgRole = "at"};
-		case "Assistant": {_cfgRole = "rifleman"}; //Assistant must go with basic rifleman
-		case "Rifleman": {_cfgRole = "rifleman"};
-		case "Sapper": {_cfgRole = "engineer"};		
-		case "Crewman": {_cfgRole = "pilot"}; //Assistant must go with basic rifleman
-		case "SpecialOperative": {_cfgRole = "rifleman"};
-	};
+	_cfgRole = "";
+	_backpackToTest = (configFile >> "CfgVehicles" >> _cfgName >> "backpack") call BIS_fnc_GetCfgData;
 
-
-	_iconToTest = (configFile >> "CfgVehicles" >> _cfgName >> "icon") call BIS_fnc_GetCfgData;
-
-	//Bind role with icon
-	switch (_iconToTest) do {
-		case "iconManLeader";
-		case "iconManOfficer":
-		{
-			_cfgRole = "leader";
+	if (["_Ammo_", _backpackToTest] call BIS_fnc_inString) then 
+	{
+		_cfgRole = "empty";
+	} else 
+	{
+		//Bind role with wrole
+		switch (_cfgRole) do {
+			case "CombatLifeSaver": {_cfgRole = "medic"};
+			case "Grenadier": {_cfgRole = "grenadier"};
+			case "MachineGunner": {_cfgRole = "autorifleman"};
+			case "Marksman": {_cfgRole = "marksman"};
+			case "MissileSpecialist": {_cfgRole = "at"};
+			case "Assistant": {_cfgRole = "rifleman"}; //Assistant must go with basic rifleman
+			case "Rifleman": {_cfgRole = "rifleman"};
+			case "Sapper": {_cfgRole = "engineer"};		
+			case "Crewman": {_cfgRole = "pilot"}; //Assistant must go with basic rifleman
+			case "SpecialOperative": {_cfgRole = "rifleman"};
 		};
-		case "iconManAT":
-		{
-			_cfgRole = "at";
-		};
-		case "iconManMedic":
-		{
-			_cfgRole = "medic";
-		};
-		case "iconManExplosive";
-		case "iconManEngineer":
-		{
-			_cfgRole = "engineer";
-		};		
-		case "iconManMG":
-		{
-			_cfgRole = "autorifleman";
-		};
-		default
-		{
-			//Just _cfgRole
-		};
-	};
 
-	//Check if name contains specifics strings
-	if (["pilot", _cfgName] call BIS_fnc_inString || ["Pilot", _cfgName] call BIS_fnc_inString) then 
-	{
-		_cfgRole = "pilot";
-	};
 
-	if (["marksman", _cfgName] call BIS_fnc_inString) then 
-	{
-		_cfgRole = "marksman";
-	};
-	if (["sniper", _cfgName] call BIS_fnc_inString || ["ghillie", _cfgName] call BIS_fnc_inString) then 
-	{
-		_cfgRole = "sniper";
-	};
-	if (["grenadier", _cfgName] call BIS_fnc_inString || ["_GL_", _cfgName] call BIS_fnc_inString) then 
-	{
-		_cfgRole = "grenadier";
-	};
-	if (["diver", _cfgName] call BIS_fnc_inString) then 
-	{
-		_cfgRole = "diver";
-	};
-	if (["_UGV_", _cfgName] call BIS_fnc_inString || ["_UAV_", _cfgName] call BIS_fnc_inString) then 
-	{
-		_cfgRole = "UAV operator";
-	};
-	if (["JTAC", _cfgName] call BIS_fnc_inString || ["radioman", _cfgName] call BIS_fnc_inString) then 
-	{
-		_cfgRole = "radioman";
-	};
+		_iconToTest = (configFile >> "CfgVehicles" >> _cfgName >> "icon") call BIS_fnc_GetCfgData;
 
+		//Bind role with icon
+		switch (_iconToTest) do {
+			case "iconManLeader";
+			case "iconManOfficer":
+			{
+				_cfgRole = "leader";
+			};
+			case "iconManAT":
+			{
+				_cfgRole = "at";
+			};
+			case "iconManMedic":
+			{
+				_cfgRole = "medic";
+			};
+			case "iconManExplosive";
+			case "iconManEngineer":
+			{
+				_cfgRole = "engineer";
+			};		
+			case "iconManMG":
+			{
+				_cfgRole = "autorifleman";
+			};
+			default
+			{
+				//Just _cfgRole
+			};
+		};
+
+		//Check if name contains specifics strings
+		if (["pilot", _cfgName] call BIS_fnc_inString || ["Pilot", _cfgName] call BIS_fnc_inString) then 
+		{
+			_cfgRole = "pilot";
+		};
+
+		if (["marksman", _cfgName] call BIS_fnc_inString) then 
+		{
+			_cfgRole = "marksman";
+		};
+		if (["sniper", _cfgName] call BIS_fnc_inString || ["ghillie", _cfgName] call BIS_fnc_inString) then 
+		{
+			_cfgRole = "sniper";
+		};
+		if (["grenadier", _cfgName] call BIS_fnc_inString || ["_GL_", _cfgName] call BIS_fnc_inString) then 
+		{
+			_cfgRole = "grenadier";
+		};
+		if (["diver", _cfgName] call BIS_fnc_inString) then 
+		{
+			_cfgRole = "diver";
+		};
+		if (["_UGV_", _cfgName] call BIS_fnc_inString || ["_UAV_", _cfgName] call BIS_fnc_inString) then 
+		{
+			_cfgRole = "UAV operator";
+		};
+		if (["JTAC", _cfgName] call BIS_fnc_inString || ["radioman", _cfgName] call BIS_fnc_inString) then 
+		{
+			_cfgRole = "radioman";
+		};
+	};
 	_cfgRole
 };
 
@@ -255,26 +263,29 @@ _roleFilter = ["Unarmed"];
 
 				_thisRole = [_thisRole, _cfgName] call adjustRole; 
 
-				_indexFound = _currentStuffFaction findIf {_thisRole == (_x#0)};
+				if (_thisRole != "empty" && _thisRole != "") then 
+				{
+					_indexFound = _currentStuffFaction findIf {_thisRole == (_x#0)};
 
-				if (_indexFound == -1) then 
-				{
-					_currentStuffFaction pushBack [_thisRole, _cfgName];
-					missionNamespace setVariable [_currentFactionName, _currentStuffFaction, true]; 
-				} else 
-				{
-					_currentStuffFactionCurrentRole = _currentStuffFaction#_indexFound;
-					if (count _currentStuffFactionCurrentRole == 2) then 
+					if (_indexFound == -1) then 
 					{
-						_currentStuffFactionCurrentRole pushBack [_cfgName];
-						_currentStuffFactionCurrentRole pushBack false;
-
+						_currentStuffFaction pushBack [_thisRole, _cfgName];
+						missionNamespace setVariable [_currentFactionName, _currentStuffFaction, true]; 
 					} else 
 					{
-						_currentStuffFactionCurrentRole#2 pushBack _cfgName;
+						_currentStuffFactionCurrentRole = _currentStuffFaction#_indexFound;
+						if (count _currentStuffFactionCurrentRole == 2) then 
+						{
+							_currentStuffFactionCurrentRole pushBack [_cfgName];
+							_currentStuffFactionCurrentRole pushBack false;
+
+						} else 
+						{
+							_currentStuffFactionCurrentRole#2 pushBack _cfgName;
+						};
+						_currentStuffFaction set [_indexFound, _currentStuffFactionCurrentRole];
+						missionNamespace setVariable [_currentFactionName, _currentStuffFaction, true]; 
 					};
-					_currentStuffFaction set [_indexFound, _currentStuffFactionCurrentRole];
-					missionNamespace setVariable [_currentFactionName, _currentStuffFaction, true]; 
 				};
 			};
 		};
