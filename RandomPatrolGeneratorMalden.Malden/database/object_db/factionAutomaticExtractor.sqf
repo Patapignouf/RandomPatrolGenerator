@@ -479,12 +479,15 @@ _roleFilter = ["Unarmed"];
 } foreach _potentialOpfor;
 
 //Manage specific faction merging 
-if ("EnableRHSUSAMerge" call BIS_fnc_getParamValue == 1) then 
+if ("EnableRHSMerge" call BIS_fnc_getParamValue == 1) then 
 {
 	["rhs_faction_usmc_d", "rhs_faction_usaf"] call mergeFactions;
 	["rhs_faction_usmc_d", "rhs_faction_usn"] call mergeFactions;
 	["rhs_faction_usmc_w", "rhs_faction_usaf"] call mergeFactions;
 	["rhs_faction_usmc_w", "rhs_faction_usn"] call mergeFactions;
+	["rhsgref_faction_cdf_ground", "rhsgref_faction_cdf_air"] call mergeFactions;
+	["rhs_faction_msv", "rhs_faction_vvs_c"] call mergeFactions;
+	["rhsgref_faction_cdf_ground_b", "rhsgref_faction_cdf_air_b"] call mergeFactions;
 };
 
 
