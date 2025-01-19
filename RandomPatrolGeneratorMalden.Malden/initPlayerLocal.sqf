@@ -475,7 +475,13 @@ if (side player == blufor) then
 
 	//Manage arsenal
 	waitUntil{!isNil "bluforFOBBuild"};
-	[VA2] call setupPlayerLoadout;	
+	if (ironMan) then 
+	{
+		[VA2] call setupPlayerLoadout;	
+	} else 
+	{
+		[VA2] call setupPlayerLoadoutRemake;	
+	};
 
 	[] spawn {
 		waitUntil {!isNil "bluformobilehq"};

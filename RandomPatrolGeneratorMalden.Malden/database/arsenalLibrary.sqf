@@ -619,6 +619,10 @@ switchToRole = {
 		_caller setUnitTrait ["ExplosiveSpecialist", true];
 		_caller setVariable ["ace_isEngineer", 2, true]; //add special ACE medic trait advanced engineer
 	};
+	if (_role == c_leader) then 
+	{
+		group _caller selectLeader _caller;
+	};
 
 	//Manage player's role
 	_caller setVariable ["role", _role, true];
@@ -647,6 +651,26 @@ switchToRole = {
 setupRoleSwitchToList = {
 	//InitParam
 	params ["_currentFaction"];
+
+	//Check if current faction has specific role definition
+	listOfRoles = ((loadout_db select {_x # 1 == _currentFaction}) # 0 # 0) apply {_x # 0};
+
+ 	listOfRoles;
+};
+
+setupSimpleRoleSwitchWithToList = {
+	//InitParam
+	params ["_player"];
+
+	_bluFaction = missionNamespace getVariable "bluforFaction";
+	_indFaction = missionNamespace getVariable "independentFaction";
+
+	_currentFaction = _bluFaction;
+
+	if (PlayerSide == independent) then 
+	{
+		_currentFaction = _indFaction;
+	};
 
 	//Check if current faction has specific role definition
 	listOfRoles = ((loadout_db select {_x # 1 == _currentFaction}) # 0 # 0) apply {_x # 0};
@@ -694,6 +718,27 @@ setupPlayerLoadout = {
 		params ["_object","_caller","_ID","_parameters"];
 
 		[[], 'GUI\loadoutGUI\initPlayerLoadoutSetup.sqf'] remoteExec ['BIS_fnc_execVM', _caller];
+
+	},[],1000,true, false,"",[player] call isAreaEligibleForArsenal];
+
+	//Setup initArsenal whitelist items
+	[player, player, player call getPlayerFaction] call setupArsenalToItem;
+
+	_whitelistOfArsenalItems = player getVariable ["avalaibleItemsInArsenal", []];
+	_whitelistOfArsenalItems append ([getUnitLoadout player] call getAllStringInArray);
+	player setVariable ["avalaibleItemsInArsenal", _whitelistOfArsenalItems, true];
+};
+
+setupPlayerLoadoutRemake = {
+
+	//InitParam
+	params ["_itemToAttachArsenal"];
+
+	_actionLoadoutSetup = _itemToAttachArsenal addAction ["<img size='3' image='\a3\missions_f_oldman\data\img\holdactions\holdAction_box_ca.paa'/><t size='1.2'>Setup loadout</t>",{
+		//Define parameters
+		params ["_object","_caller","_ID","_parameters"];
+
+		[] execVM "GUI\LoadoutGUI\initPlayerLoadoutSetupRemake.sqf"
 
 	},[],1000,true, false,"",[player] call isAreaEligibleForArsenal];
 
