@@ -59,12 +59,26 @@ refreshCustomLoadoutDisplay = {
 		params ["_mainDisplay"];
 		_buttonLoad = (_mainDisplay) displayCtrl 12001;
 		_loadoutDisplay = (_mainDisplay) displayCtrl 12002;
+		_dropdown = (_mainDisplay) displayCtrl 12004;
+
 
 		//refresh loadout display
 		_loadoutDisplay ctrlSetStructuredText parseText ([] call getLoadoutPicture);
 
 		//Refresh load loadout button
 		_loadableLoadout = profileNamespace getVariable [format [loadoutSaveName, name player, player call getPlayerFaction, player getVariable "role"], []];
+
+		//Refresh dropDownlist custom 
+		lbClear _dropdown; 
+		_listOfAvalaibleRole = [player] call setupSimpleRoleSwitchWithToList;
+		{
+			_dropdown lbAdd format ["%1", format ["%1 (%2)", [_x] call getClassInformation, [player, _x] call getNumberOfClassInSquad]];
+			_dropdown lbSetData [(lbSize _dropdown)-1, format ["%1",(lbSize _dropdown)-1]];
+			_dropdown lbSetTooltip [(lbSize _dropdown)-1, [_x] call getDescClassInformation];
+		} foreach _listOfAvalaibleRole;
+
+
+		_dropdown lbSetCurSel (_listOfAvalaibleRole find (player getVariable "role")); //Actual Warfare
 
 		if (count _loadableLoadout == 0) then 
 		{
@@ -110,7 +124,7 @@ _RcsBodyLoadoutDisplayDialog ctrlSetTextColor [1, 1, 1, 1];
 _RcsBodyLoadoutDisplayDialog ctrlCommit 0;
 
 //Create dropdownlist next to the param title on the right side
-_dropdown = _display ctrlCreate ["RscCombo", 100];
+_dropdown = _display ctrlCreate ["RscCombo", 12004];
 _dropdown ctrlSetPosition [0.5, 0.10, 0.4, 0.04];
 _dropdown ctrlCommit 0;
 
@@ -127,9 +141,9 @@ _loadableLoadout = profileNamespace getVariable [format [loadoutSaveName, name p
 //Load every class for current player's faction
 //Define list of role in the combo box
 {
-	_dropdown lbAdd format ["%1", _x];
+	_dropdown lbAdd format ["%1", format ["%1 (%2)", [_x] call getClassInformation, [player, _x] call getNumberOfClassInSquad]];
 	_dropdown lbSetData [(lbSize _dropdown)-1, format ["%1",(lbSize _dropdown)-1]];
-	_dropdown lbSetTooltip [(lbSize _dropdown)-1, [_x] call getClassInformation];
+	_dropdown lbSetTooltip [(lbSize _dropdown)-1, [_x] call getDescClassInformation];
 } foreach _listOfAvalaibleRole;
 
 
@@ -145,11 +159,15 @@ _dropdown ctrlAddEventHandler[ "LBSelChanged",
 		//Setup arsenal loadout
 		_listOfAvalaibleRole = [player call getPlayerFaction] call setupRoleSwitchToList;
 		_role = (_listOfAvalaibleRole select parseNumber ((_comboBoxClassSelection lbData (lbCurSel _comboBoxClassSelection))));
-		[player, player, player call getPlayerFaction , _role, false, false] call switchToRole;
-		[player, player, player call getPlayerFaction] call setupArsenalToItem;
 
-		//Refresh load button
-		[ctrlParent _ctrl] call refreshCustomLoadoutDisplay;
+		if (_role != player getVariable ["role", ""]) then 
+		{
+			[player, player, player call getPlayerFaction , _role, false, false] call switchToRole;
+			[player, player, player call getPlayerFaction] call setupArsenalToItem;
+
+			//Refresh load button
+			[ctrlParent _ctrl] call refreshCustomLoadoutDisplay;
+		};
 
 		//Hint switch role
 		//[[format ["%1 has switched to role %2", name player, player getVariable "role"], "arsenal"], 'engine\hintManagement\addCustomHint.sqf'] remoteExec ['BIS_fnc_execVM', -clientOwner]; 

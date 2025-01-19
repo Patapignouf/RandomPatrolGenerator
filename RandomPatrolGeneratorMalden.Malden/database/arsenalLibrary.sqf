@@ -1199,6 +1199,12 @@ isElementOfArrayInString =
 	_result
 };
 
+getNumberOfClassInSquad = {
+	params ["_caller", "_role"];
+	_numberOfClass = count ((units group _caller) select {(_x getVariable ["role", ""]) == _role});
+	_numberOfClass
+};
+
 getClassInformation = {
 	params ["_class"];
 
@@ -1208,43 +1214,99 @@ getClassInformation = {
 		{
 			case c_leader:
 				{
-					_classDescription = "The leader have access to multiple options such as complete vehicle shop and support shop";
+					_classDescription = localize "STR_RPG_LOADOUT_ROLE_LEADER";
 				};
 			case c_at:
 				{
-					_classDescription = "The AT have access to Anti-Tank and Anti-Aircraft launchers";
+					_classDescription = localize "STR_RPG_LOADOUT_ROLE_AT";
 				};
 			case c_rifleman:
 				{
-					_classDescription = "The rifleman has a basic class without any speciality";
+					_classDescription = localize "STR_RPG_LOADOUT_ROLE_RIFLEMAN";
 				};
 			case c_engineer:
 				{
-					_classDescription = "The engineer has access to the toolbox, he can defuse IED and build fortifications";
+					_classDescription = localize "STR_RPG_LOADOUT_ROLE_ENGINEER";
 				};
 			case c_autorifleman:
 				{
-					_classDescription = "The autorifleman has access to machinegun, he can provide suppressive fire to his teammates";
+					_classDescription = localize "STR_RPG_LOADOUT_ROLE_AUTORIFLEMAN";
 				};
 			case c_marksman:
 				{
-					_classDescription = "The marksman has access to marksman rifle and accurate scopes";
+					_classDescription = localize "STR_RPG_LOADOUT_ROLE_MARKSMAN";
 				};
 			case c_sniper: 
 				{
-					_classDescription = "The sniper has access to marksman rifle and accurate scopes and specific camoflage";
+					_classDescription = localize "STR_RPG_LOADOUT_ROLE_SNIPER";
 				};
 			case c_medic:
 				{
-					_classDescription = "The medic has access to Medikit, he's able to heal his teammates";
+					_classDescription = localize "STR_RPG_LOADOUT_ROLE_MEDIC";
 				};	
 			case c_grenadier:
 				{
-					_classDescription = "The grenadier has access to grenade launcher";
+					_classDescription = localize "STR_RPG_LOADOUT_ROLE_GRENADIER";
 				};
 			case c_pilot:
 				{
-					_classDescription = "The pilot has access to air vehicle shop";
+					_classDescription = localize "STR_RPG_LOADOUT_ROLE_PILOT";
+				};						
+			default
+				{
+					//Non implemented role
+					//_classDescription = "Custom class";
+				};
+		};
+	_classDescription;
+};
+
+getDescClassInformation = {
+	params ["_class"];
+
+	_classDescription = "";
+
+	switch (_class) do
+		{
+			case c_leader:
+				{
+					_classDescription = localize "STR_RPG_LOADOUT_ROLE_LEADER_DESC";
+				};
+			case c_at:
+				{
+					_classDescription = localize "STR_RPG_LOADOUT_ROLE_AT_DESC";
+				};
+			case c_rifleman:
+				{
+					_classDescription = localize "STR_RPG_LOADOUT_ROLE_RIFLEMAN_DESC";
+				};
+			case c_engineer:
+				{
+					_classDescription = localize "STR_RPG_LOADOUT_ROLE_ENGINEER_DESC";
+				};
+			case c_autorifleman:
+				{
+					_classDescription = localize "STR_RPG_LOADOUT_ROLE_AUTORIFLEMAN_DESC";
+				};
+			case c_marksman:
+				{
+					_classDescription = localize "STR_RPG_LOADOUT_ROLE_MARKSMAN_DESC";
+				};
+			case c_sniper: 
+				{
+					_classDescription = localize "STR_RPG_LOADOUT_ROLE_SNIPER_DESC";
+				};
+			case c_medic:
+				{
+					_classDescription = localize "STR_RPG_LOADOUT_ROLE_MEDIC_DESC";
+				};	
+			case c_grenadier:
+				{
+					_classDescription = localize "STR_RPG_LOADOUT_ROLE_GRENADIER_DESC";
+				};
+			case c_pilot:
+				{
+					_classDescription = localize "STR_RPG_LOADOUT_ROLE_PILOT_DESC";
 				};						
 			default
 				{

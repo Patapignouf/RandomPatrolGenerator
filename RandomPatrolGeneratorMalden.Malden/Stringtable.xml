@@ -646,9 +646,9 @@
 			<French>Chef</French>
 		</Key>
 		<Key ID="STR_RPG_LOADOUT_ROLE_LEADER_DESC">
-			<Original>Leader</Original>
-			<English>Leader</English>
-			<French>Chef</French>
+			<Original>The leader have access to multiple options such as complete vehicle shop and support shop</Original>
+			<English>The leader have access to multiple options such as complete vehicle shop and support shop</English>
+			<French></French>
 		</Key>
 		<Key ID="STR_RPG_LOADOUT_ROLE_RIFLEMAN">
 			<Original>Rifleman</Original>
@@ -656,8 +656,8 @@
 			<French>Fusiller</French>
 		</Key>
 		<Key ID="STR_RPG_LOADOUT_ROLE_RIFLEMAN_DESC">
-			<Original></Original>
-			<English></English>
+			<Original>The rifleman has a basic class without any speciality</Original>
+			<English>The rifleman has a basic class without any speciality</English>
 			<French></French>
 		</Key>
 		<Key ID="STR_RPG_LOADOUT_ROLE_AUTORIFLEMAN">
@@ -666,8 +666,8 @@
 			<French>Mitrailleur</French>
 		</Key>
 		<Key ID="STR_RPG_LOADOUT_ROLE_AUTORIFLEMAN_DESC">
-			<Original></Original>
-			<English></English>
+			<Original>The autorifleman has access to machinegun, he can provide suppressive fire to his teammates</Original>
+			<English>The autorifleman has access to machinegun, he can provide suppressive fire to his teammates</English>
 			<French></French>
 		</Key>
 		<Key ID="STR_RPG_LOADOUT_ROLE_MEDIC">
@@ -676,8 +676,8 @@
 			<French>Médecin</French>
 		</Key>
 		<Key ID="STR_RPG_LOADOUT_ROLE_MEDIC_DESC">
-			<Original></Original>
-			<English></English>
+			<Original>The medic has access to Medikit, he's able to heal his teammates</Original>
+			<English>The medic has access to Medikit, he's able to heal his teammates</English>
 			<French></French>
 		</Key>
 		<Key ID="STR_RPG_LOADOUT_ROLE_ENGINEER">
@@ -686,8 +686,8 @@
 			<French>Ingénieur</French>
 		</Key>
 		<Key ID="STR_RPG_LOADOUT_ROLE_ENGINEER_DESC">
-			<Original></Original>
-			<English></English>
+			<Original>The engineer has access to the toolbox, he can defuse IED and build fortifications</Original>
+			<English>The engineer has access to the toolbox, he can defuse IED and build fortifications</English>
 			<French></French>
 		</Key>
 		<Key ID="STR_RPG_LOADOUT_ROLE_PILOT">
@@ -696,8 +696,8 @@
 			<French>Pilote</French>
 		</Key>
 		<Key ID="STR_RPG_LOADOUT_ROLE_PILOT_DESC">
-			<Original></Original>
-			<English></English>
+			<Original>The pilot has access to air vehicle shop</Original>
+			<English>The pilot has access to air vehicle shop</English>
 			<French></French>
 		</Key>
 		<Key ID="STR_RPG_LOADOUT_ROLE_GRENADIER">
@@ -706,8 +706,8 @@
 			<French>Grenadier</French>
 		</Key>
 		<Key ID="STR_RPG_LOADOUT_ROLE_GRENADIER_DESC">
-			<Original></Original>
-			<English></English>
+			<Original>The grenadier has access to grenade launcher</Original>
+			<English>The grenadier has access to grenade launcher</English>
 			<French></French>
 		</Key>
 		<Key ID="STR_RPG_LOADOUT_ROLE_DIVER">
@@ -726,8 +726,8 @@
 			<French>Tireur de précision</French>
 		</Key>
 		<Key ID="STR_RPG_LOADOUT_ROLE_MARKSMAN_DESC">
-			<Original></Original>
-			<English></English>
+			<Original>The marksman has access to marksman rifle and accurate scopes</Original>
+			<English>The marksman has access to marksman rifle and accurate scopes</English>
 			<French></French>
 		</Key>
 		<Key ID="STR_RPG_LOADOUT_ROLE_SNIPER">
@@ -736,8 +736,8 @@
 			<French>Tireur d'élite</French>
 		</Key>
 		<Key ID="STR_RPG_LOADOUT_ROLE_SNIPER_DESC">
-			<Original></Original>
-			<English></English>
+			<Original>The sniper has access to marksman rifle and accurate scopes and specific camoflage</Original>
+			<English>The sniper has access to marksman rifle and accurate scopes and specific camoflage</English>
 			<French></French>
 		</Key>
 		<Key ID="STR_RPG_LOADOUT_ROLE_UAV">
@@ -766,8 +766,8 @@
 			<French>AT</French>
 		</Key>
 		<Key ID="STR_RPG_LOADOUT_ROLE_AT_DESC">
-			<Original></Original>
-			<English></English>
+			<Original>The AT have access to Anti-Tank and Anti-Aircraft launchers</Original>
+			<English>The AT have access to Anti-Tank and Anti-Aircraft launchers</English>
 			<French></French>
 		</Key>
 	<Container name="RPG_GUI_GENERAL">
