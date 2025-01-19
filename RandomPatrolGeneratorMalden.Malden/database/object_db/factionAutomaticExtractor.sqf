@@ -2,12 +2,10 @@
 adjustRole = {
 	params ["_cfgRole", "_cfgName"];
 
-	_cfgRole = "";
 	_backpackToTest = (configFile >> "CfgVehicles" >> _cfgName >> "backpack") call BIS_fnc_GetCfgData;
-
 	if (["_Ammo_", _backpackToTest] call BIS_fnc_inString) then 
 	{
-		_cfgRole = "empty";
+		_cfgRole = "autorifleman";//Temp
 	} else 
 	{
 		//Bind role with wrole
@@ -174,6 +172,50 @@ doFillWithRifleman = {
 	_groupToEvaluate
 };
 
+mergeFactions = {
+	params ["_factionToEnhanced", "_factionToMerge"];
+
+	_factionVariables = [
+		"bluforUnarmedVehicle",
+		"bluforArmedVehicle",
+		"bluforStaticWeapon",
+		"bluforMortar",
+		"bluforFixedWing",
+		"bluforBoat",
+		"bluforArmoredVehicle",
+		"bluforUnarmedVehicleChopper",
+		"bluforArmedChopper",
+		"bluforDrone"
+	];
+
+	//Merge all vehicles and props
+	{
+		_factionToEnhancedVariable = format ["%1%2", _x, _factionToEnhanced];
+		_factionToMergeVariable = format ["%1%2", _x, _factionToMerge];
+
+		_baseFaction = missionNameSpace getVariable [_factionToEnhancedVariable, []];
+		_mergingFaction = missionNameSpace getVariable [_factionToMergeVariable, []];
+		_mergingFactions = _baseFaction + _mergingFaction;
+		missionNameSpace setVariable [_factionToEnhancedVariable, _mergingFactions, true];
+	} foreach _factionVariables;
+	
+	//merge infantry loadout
+	_factionToEnhancedVariable = format ["loadout%1", _factionToEnhanced];
+	_factionToMergeVariable = format ["loadout%1", _factionToMerge];
+	_baseFaction = missionNameSpace getVariable [_factionToEnhancedVariable, []];
+	_mergingFaction = missionNameSpace getVariable [_factionToMergeVariable, []];
+	{
+		_mergingRole = _x;
+		_mergingRoleName = _x#0;
+		if (count (_baseFaction select {_x#0 == _mergingRoleName}) == 0) then 
+		{
+			_baseFaction pushBack _mergingRole;
+		};
+		//[TODO] Needs to manage conflicts merging
+	} foreach _mergingFaction;
+	missionNameSpace setVariable [_factionToEnhancedVariable, _baseFaction, true];
+};
+
 //Convert all faction number to faction string
 for "_i" from 0 to count factionInfos -1 do
 {
@@ -321,16 +363,17 @@ _roleFilter = ["Unarmed"];
 			};
 		};
 		if (_cfgName isKindOf 'Helicopter') then {	
-			if (count (((configFile >> "CfgVehicles" >> _cfgName >> "weapons") call BIS_fnc_GetCfgData) select {_x != "CMFlareLauncher"})== 0) then 
+			//if (count (((configFile >> "CfgVehicles" >> _cfgName >> "weapons") call BIS_fnc_GetCfgData) select {_x != "CMFlareLauncher"})== 0) then 
+			if (count (((configFile >> "CfgVehicles" >> _cfgName >> "availableForSupportTypes") call BIS_fnc_GetCfgData) select {_x == "CAS_Heli"})== 1) then 
 			{
-				_currentFactionName = format ["bluforUnarmedVehicleChopper%1", _thisFac];
+				_currentFactionName = format ["bluforArmedChopper%1", _thisFac];
 
 				_currentStuffFaction = 	missionNamespace getVariable [_currentFactionName, []];
 				_currentStuffFaction pushBack _cfgName;
 				missionNamespace setVariable [_currentFactionName, _currentStuffFaction, true]; 
 			} else 
 			{
-				_currentFactionName = format ["bluforArmedChopper%1", _thisFac];
+				_currentFactionName = format ["bluforUnarmedVehicleChopper%1", _thisFac];
 
 				_currentStuffFaction = 	missionNamespace getVariable [_currentFactionName, []];
 				_currentStuffFaction pushBack _cfgName;
@@ -434,6 +477,15 @@ _roleFilter = ["Unarmed"];
 		missionNamespace setVariable [_currentFactionName, _currentStuffFaction, true]; 
 	};
 } foreach _potentialOpfor;
+
+//Manage specific faction merging 
+if ("EnableRHSUSAMerge" call BIS_fnc_getParamValue == 1) then 
+{
+	["rhs_faction_usmc_d", "rhs_faction_usaf"] call mergeFactions;
+	["rhs_faction_usmc_d", "rhs_faction_usn"] call mergeFactions;
+	["rhs_faction_usmc_w", "rhs_faction_usaf"] call mergeFactions;
+	["rhs_faction_usmc_w", "rhs_faction_usn"] call mergeFactions;
+};
 
 
 //Define Opfor factions 

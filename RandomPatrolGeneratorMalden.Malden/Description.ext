@@ -152,6 +152,13 @@ class Params
 		texts[] = {"No","Yes","Random"};
 		default = 0;
 	};
+	class EnableRHSUSAMerge
+	{
+		title = "[RHS] Merge USAF/US Navy to Army/USMC [AUTO] factions";
+		values[] = {0,1};
+		texts[] = {"No","Yes"};
+		default = 1;
+	};
 };
 
 class CfgDebriefing
