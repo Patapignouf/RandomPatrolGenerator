@@ -334,7 +334,7 @@ getVirtualMagazine = {
 							{
 								if (!([_x] call isBannedItem)) then 
 								{
-									virtualMagazineList pushBack _x;
+									virtualMagazineList pushBackUnique _x;
 								};
 							};
 						} foreach _currentWeaponMagazineList;
@@ -355,7 +355,7 @@ getVirtualMagazine = {
 							{
 								if (!([_x, _listOfLargeMagazineText] call isElementOfArrayInString) && !([_x] call isBannedItem)) then 
 								{
-									virtualMagazineList pushBack _x;
+									virtualMagazineList pushBackUnique _x;
 								};
 							};
 						} foreach _currentWeaponMagazineList;
@@ -400,7 +400,7 @@ setupArsenalToItem = {
 	//Add magazine to arsenal
 	_currentMagazineItems = [_currentPlayer,_currentFaction, _currentWeaponItems] call getVirtualMagazine;
 	[_itemToAttachArsenal, _currentMagazineItems, false, false] call BIS_fnc_addVirtualMagazineCargo;
-	
+
 
 	//Add items, uniforms and optics to arsenal
 	_currentItems = ([_currentPlayer, _currentFaction] call getVirtualAttachement ) + ([_currentPlayer,_currentFaction] call getVirtualItemList ) + ([_currentPlayer,_currentFaction] call getVirtualUniform );
@@ -429,18 +429,21 @@ setupArsenalToItem = {
 
 	//Merge every whitelist
 	_whitelistOfArsenalItems = _currentWeaponItems+_currentBackpackItems+_currentMagazineItems+_currentItems + _whiteListDefaultStuff + ["ACE_key_west","ACE_key_east","ACE_key_civ","ACE_key_indp"];
-	_currentPlayer setVariable ["avalaibleItemsInArsenal", _whitelistOfArsenalItems, true];
 	diag_log format ["List of whitelist items by listCurrentItemsLoadout %1", _whitelistOfArsenalItems];
 
 	//Fix vanilla arsenal not showing all weapon 
+	_currentMagazineItems = [_currentPlayer,_currentFaction, _whitelistOfArsenalItems] call getVirtualMagazine;
+	_currentPlayer setVariable ["avalaibleItemsInArsenal", _whitelistOfArsenalItems+_currentMagazineItems, true];
+
 	[_itemToAttachArsenal, _whitelistOfArsenalItems, false, false] call BIS_fnc_addVirtualWeaponCargo;
 	[_itemToAttachArsenal, _whitelistOfArsenalItems, false, false] call BIS_fnc_addVirtualBackpackCargo;
-	[_itemToAttachArsenal, _whitelistOfArsenalItems, false, false] call BIS_fnc_addVirtualMagazineCargo;
+	[_itemToAttachArsenal, _currentMagazineItems, false, false] call BIS_fnc_addVirtualMagazineCargo;
 	[_itemToAttachArsenal, _whitelistOfArsenalItems,false, false] call BIS_fnc_addVirtualItemCargo;
 
 	//Remove arsenal action
 	player call RemoveArsenalActionFromGivenObject;
 	["AmmoboxExit", _itemToAttachArsenal] call BIS_fnc_arsenal;
+	[_itemToAttachArsenal, _currentMagazineItems, false, false] call BIS_fnc_addVirtualMagazineCargo;
 
 	_itemToAttachArsenal;
 };
