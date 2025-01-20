@@ -281,6 +281,11 @@
 				<English>%1 has been killed by his teammate %2, watch your fire</English>
 				<French>%1 a été tué par son coéquipier %2, attention à vos tirs</French>
 			</Key>
+			<Key ID="STR_RPG_HC_CIVKILL">
+				<Original>A civilian and has been killed by %1, watch your fire</Original>
+				<English>A civilian and has been killed by %1, watch your fire</English>
+				<French>Un civil a été tué par %1, surveillez vos tirs</French>
+			</Key>
 			<Key ID="STR_RPG_HC_SURRENDER_KILL">
 				<Original>%1 has surrender and has been killed by %2, watch your fire</Original>
 				<English>%1 has surrender and has been killed by %2, watch your fire</English>
@@ -761,9 +766,9 @@
 			<French></French>
 		</Key>
 		<Key ID="STR_RPG_LOADOUT_ROLE_AT">
-			<Original>AT</Original>
-			<English>AT</English>
-			<French>AT</French>
+			<Original>Anti Tank</Original>
+			<English>Anti Tank</English>
+			<French>Anti Tank</French>
 		</Key>
 		<Key ID="STR_RPG_LOADOUT_ROLE_AT_DESC">
 			<Original>The AT have access to Anti-Tank and Anti-Aircraft launchers</Original>
