@@ -653,7 +653,7 @@
 		<Key ID="STR_RPG_LOADOUT_ROLE_LEADER_DESC">
 			<Original>The leader have access to multiple options such as complete vehicle shop and support shop</Original>
 			<English>The leader have access to multiple options such as complete vehicle shop and support shop</English>
-			<French></French>
+			<French>Le chef a accès à de multiples options comme un magasin de véhicules ou de support</French>
 		</Key>
 		<Key ID="STR_RPG_LOADOUT_ROLE_RIFLEMAN">
 			<Original>Rifleman</Original>
@@ -663,7 +663,7 @@
 		<Key ID="STR_RPG_LOADOUT_ROLE_RIFLEMAN_DESC">
 			<Original>The rifleman has a basic class without any speciality</Original>
 			<English>The rifleman has a basic class without any speciality</English>
-			<French></French>
+			<French>Le fusiller est la classe de base sans spécialité</French>
 		</Key>
 		<Key ID="STR_RPG_LOADOUT_ROLE_AUTORIFLEMAN">
 			<Original>Autorifleman</Original>
@@ -673,7 +673,7 @@
 		<Key ID="STR_RPG_LOADOUT_ROLE_AUTORIFLEMAN_DESC">
 			<Original>The autorifleman has access to machinegun, he can provide suppressive fire to his teammates</Original>
 			<English>The autorifleman has access to machinegun, he can provide suppressive fire to his teammates</English>
-			<French></French>
+			<French>Le mitrailleur a accès à un équipement spécifique. Il peut fournir des tirs de suppression</French>
 		</Key>
 		<Key ID="STR_RPG_LOADOUT_ROLE_MEDIC">
 			<Original>Medic</Original>
@@ -693,7 +693,7 @@
 		<Key ID="STR_RPG_LOADOUT_ROLE_ENGINEER_DESC">
 			<Original>The engineer has access to the toolbox, he can defuse IED and build fortifications</Original>
 			<English>The engineer has access to the toolbox, he can defuse IED and build fortifications</English>
-			<French></French>
+			<French>L'ingénieur a accès à une boite à outil, il peut désamorcer les IED et construire des fortifications</French>
 		</Key>
 		<Key ID="STR_RPG_LOADOUT_ROLE_PILOT">
 			<Original>Pilot</Original>
@@ -703,7 +703,7 @@
 		<Key ID="STR_RPG_LOADOUT_ROLE_PILOT_DESC">
 			<Original>The pilot has access to air vehicle shop</Original>
 			<English>The pilot has access to air vehicle shop</English>
-			<French></French>
+			<French>Le pilote a accès au magasin de véhicules aériens</French>
 		</Key>
 		<Key ID="STR_RPG_LOADOUT_ROLE_GRENADIER">
 			<Original>Grenadier</Original>
@@ -713,7 +713,7 @@
 		<Key ID="STR_RPG_LOADOUT_ROLE_GRENADIER_DESC">
 			<Original>The grenadier has access to grenade launcher</Original>
 			<English>The grenadier has access to grenade launcher</English>
-			<French></French>
+			<French>Le grenadier a accès aux lances grenades</French>
 		</Key>
 		<Key ID="STR_RPG_LOADOUT_ROLE_DIVER">
 			<Original>Diver</Original>
@@ -733,7 +733,7 @@
 		<Key ID="STR_RPG_LOADOUT_ROLE_MARKSMAN_DESC">
 			<Original>The marksman has access to marksman rifle and accurate scopes</Original>
 			<English>The marksman has access to marksman rifle and accurate scopes</English>
-			<French></French>
+			<French>Le tireur de précision a accès aux fusils dédiés et à des lunettes de précision</French>
 		</Key>
 		<Key ID="STR_RPG_LOADOUT_ROLE_SNIPER">
 			<Original>Sniper</Original>
@@ -743,7 +743,7 @@
 		<Key ID="STR_RPG_LOADOUT_ROLE_SNIPER_DESC">
 			<Original>The sniper has access to marksman rifle and accurate scopes and specific camoflage</Original>
 			<English>The sniper has access to marksman rifle and accurate scopes and specific camoflage</English>
-			<French></French>
+			<French>Le tireur d'élite a accès aux fusils dédiés et à des lunettes de précision ainsi qu'un camouflage spécifique</French>
 		</Key>
 		<Key ID="STR_RPG_LOADOUT_ROLE_UAV">
 			<Original>UAV operator</Original>
@@ -773,7 +773,7 @@
 		<Key ID="STR_RPG_LOADOUT_ROLE_AT_DESC">
 			<Original>The AT have access to Anti-Tank and Anti-Aircraft launchers</Original>
 			<English>The AT have access to Anti-Tank and Anti-Aircraft launchers</English>
-			<French></French>
+			<French>L'AT a accès aux lanceurs anti tank et anti aérien</French>
 		</Key>
 	<Container name="RPG_GUI_GENERAL">
 		<Key ID="RPG_GUI_GENERAL_CLOSE">
