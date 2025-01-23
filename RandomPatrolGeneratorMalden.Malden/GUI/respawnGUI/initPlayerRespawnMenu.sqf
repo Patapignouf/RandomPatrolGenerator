@@ -125,15 +125,20 @@ if (!ironMan) then
 			//Setup arsenal loadout
 			_listOfAvalaibleRole = [player call getPlayerFaction] call setupRoleSwitchToList;
 			_role = (_listOfAvalaibleRole select parseNumber ((_control lbData (lbCurSel _control))));
-			[player, player, player call getPlayerFaction , _role, false, false] call switchToRole;
-			[player, player, player call getPlayerFaction] call setupArsenalToItem;
 
-			//Load personnal loadout
-			_loadableLoadout = profileNamespace getVariable [format [loadoutSaveName, name player, player call getPlayerFaction, player getVariable "role"], player getVariable "spawnLoadout"];
-			player setUnitLoadout _loadableLoadout;
+			//Check if the new role is different from the current one
+			if (_role != player getVariable ["role", ""]) then 
+			{
+				[player, player, player call getPlayerFaction , _role, false, false] call switchToRole;
+				[player, player, player call getPlayerFaction] call setupArsenalToItem;
 
-			//Hint switch role
-			[[format ["%1 has switched to role %2", name player, player getVariable "role"], "arsenal"], 'engine\hintManagement\addCustomHint.sqf'] remoteExec ['BIS_fnc_execVM', -clientOwner]; 
+				//Load personnal loadout
+				_loadableLoadout = profileNamespace getVariable [format [loadoutSaveName, name player, player call getPlayerFaction, player getVariable "role"], player getVariable "spawnLoadout"];
+				player setUnitLoadout _loadableLoadout;
+
+				//Hint switch role
+				[[format ["%1 has switched to role %2", name player, player getVariable "role"], "arsenal"], 'engine\hintManagement\addCustomHint.sqf'] remoteExec ['BIS_fnc_execVM', -clientOwner];
+			}; 
 		};
 
 		//Show black screen
