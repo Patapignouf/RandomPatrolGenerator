@@ -683,7 +683,7 @@
 		<Key ID="STR_RPG_LOADOUT_ROLE_MEDIC_DESC">
 			<Original>The medic has access to Medikit, he's able to heal his teammates</Original>
 			<English>The medic has access to Medikit, he's able to heal his teammates</English>
-			<French></French>
+			<French>Le médecin a accès aux kits de soins, il est capable de soigner ses coéquipiers</French>
 		</Key>
 		<Key ID="STR_RPG_LOADOUT_ROLE_ENGINEER">
 			<Original>Engineer</Original>
