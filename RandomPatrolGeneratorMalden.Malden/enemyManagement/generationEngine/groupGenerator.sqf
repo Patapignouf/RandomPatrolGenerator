@@ -143,6 +143,9 @@ doGenerateEnemyGroup =
 	if (_thisFaction == civilian) then 
 	{
 		{		
+			//Remove basic civilian weapons 
+			removeAllWeapons _x;
+
 			//Add eventhandler civKilled
 			_x addEventHandler ["Killed", {
 				params ["_unit", "_killer", "_instigator", "_useEffects"];
@@ -222,6 +225,9 @@ doGenerateHostileCivilianGroup =
 
 	//Manage civilian specific feature
 	{		
+		//Remove basic civilian weapons 
+		removeAllWeapons _x;
+
 		//Manage hostile civilian
 		if (random 100 < _hostileProba) then 
 		{
