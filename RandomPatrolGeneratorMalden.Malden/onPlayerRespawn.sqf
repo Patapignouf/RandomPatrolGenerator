@@ -151,6 +151,7 @@ if (missionNameSpace getVariable ["enableAdvancedRespawn", 1] == 1) then
 		//Create tent
 		_createTent = createVehicle ["Land_TentDome_F", [getPos _caller, 1, 5, 3, 0, 20, 0, [], [getPos _caller, getPos _caller]] call BIS_fnc_findSafePos, [], 0, "NONE"];
 		_createTent setVariable [str (group _caller), true, true];
+		_createTent allowDamage false;
 
 		[{["STR_RPG_HC_NAME", "STR_RPG_HC_RESPAWN_TENT"] call doDialog}] remoteExec ["call", units (group _caller)];
 
