@@ -128,7 +128,7 @@ if (hasInterface) then
 			if ((missionNameSpace getVariable "enableLoadoutRestriction") == 1) then 
 			{
 				//open restricted arsenal
-				[] execVM 'database\openArsenal.sqf';
+				[false] execVM 'database\openArsenal.sqf';
 			} else 
 			{
 				//open full arsenal

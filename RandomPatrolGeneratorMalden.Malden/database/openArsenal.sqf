@@ -1,3 +1,5 @@
+params ["_isNew"];
+
 //Setup variable
 bluFaction = missionNamespace getVariable "bluforFaction";
 indFaction = missionNamespace getVariable "independentFaction";
@@ -56,5 +58,11 @@ if (!ironMan) then
 };
 
 //Open setup loadout GUI
-[] execVM 'GUI\loadoutGUI\initPlayerLoadoutSetup.sqf'; 
+if (_isNew) then 
+{
+	[] execVM "GUI\LoadoutGUI\initPlayerLoadoutSetupRemake.sqf"
+} else 
+{
+	[] execVM 'GUI\loadoutGUI\initPlayerLoadoutSetup.sqf'; 
+};
 

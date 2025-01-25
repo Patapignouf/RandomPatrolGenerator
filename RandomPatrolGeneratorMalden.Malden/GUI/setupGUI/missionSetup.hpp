@@ -31,9 +31,21 @@ class DialogSetupParams
 		{
 			idc = 6200;
 			text = "Next";
-			onButtonClick = "normalClose = true; [_this] execVM 'GUI\setupGUI\startGUIMenu.sqf';";
+			onButtonClick = "normalClose = true; [true] execVM 'GUI\setupGUI\startGUIMenu.sqf';";
 			x = GUI_GRID_CENTER_X + 10 * GUI_GRID_CENTER_W;
 			y = GUI_GRID_CENTER_Y + 22 * GUI_GRID_CENTER_H;
+			w = 20 * GUI_GRID_CENTER_W;
+			h = 1 * GUI_GRID_CENTER_H;
+		};
+
+		//Advanced button
+		class AdvancedButton: RscButton
+		{
+			idc = 6201;
+			text = "Advanced Setup";
+			onButtonClick = "normalClose = true; [false] execVM 'GUI\setupGUI\startGUIMenu.sqf';";
+			x = GUI_GRID_CENTER_X + 10 * GUI_GRID_CENTER_W;
+			y = GUI_GRID_CENTER_Y + 20 * GUI_GRID_CENTER_H;
 			w = 20 * GUI_GRID_CENTER_W;
 			h = 1 * GUI_GRID_CENTER_H;
 		};

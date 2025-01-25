@@ -97,9 +97,9 @@ class Params
 	class UnconsciousStateMode {
 		title = $STR_A3_IncapacitationMode;
 		isGlobal = 1;
-		values[] = {-100,0,1,2};
+		values[] = {0,1,2};
 		texts[] = {$STR_A3_MissionDefault,$STR_A3_Basic,$STR_A3_Advanced,$STR_A3_Realistic};
-		default = -100;
+		default = 0;
 		function = "bis_fnc_paramReviveUnconsciousStateMode";
 	};
 	class Space1 {
@@ -151,6 +151,13 @@ class Params
 		values[] = {0,1,2};
 		texts[] = {"No","Yes","Random"};
 		default = 0;
+	};
+	class EnableRHSMerge
+	{
+		title = "[RHS] Merge Air Force To Ground Army [AUTO] factions";
+		values[] = {0,1};
+		texts[] = {"No","Yes"};
+		default = 1;
 	};
 };
 

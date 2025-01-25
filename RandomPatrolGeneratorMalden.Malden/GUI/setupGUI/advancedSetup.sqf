@@ -103,9 +103,10 @@ _ButtonRight ctrlAddEventHandler ["ButtonClick",{
 		_display closeDisplay 1;
 		if (count paramsToManageLater == 0) then 
 		{
-			[[], 'GUI\setupGUI\startGUIMenuLocation.sqf'] remoteExec ['BIS_fnc_execVM', player];
+			[[], 'GUI\setupGUI\initMissionMenu.sqf'] remoteExec ['BIS_fnc_execVM', player];
 		} else 
 		{
+			//Save params and call next params
 			[[paramsToManageLater], 'GUI\setupGUI\advancedSetup.sqf'] remoteExec ['BIS_fnc_execVM', player];
 		};
 	}];	

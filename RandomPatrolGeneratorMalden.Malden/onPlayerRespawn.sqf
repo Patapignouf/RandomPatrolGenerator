@@ -66,25 +66,28 @@ if !(isClass (configFile >> "CfgPatches" >> "ace_medical")) then
 
 
 //Hide HUD group to debug the UI after death
-showHUD [
-  true, // scriptedHUD
-  true, // info
-  true, // radar
-  true, // compass
-  true, // direction
-  true, // menu
-  false, // group
-  true, // cursors
-  true, // panels
-  false, // kills
-  false  // showIcon3D
-];
+if (isClass (configFile >> "CfgPatches" >> "ace_medical")) then 
+{
+	showHUD [
+	true, // scriptedHUD
+	true, // info
+	true, // radar
+	true, // compass
+	true, // direction
+	true, // menu
+	false, // group
+	true, // cursors
+	true, // panels
+	false, // kills
+	false  // showIcon3D
+	];
+};
 //#####
 
 //Add admin menu action
 [] spawn {
 	//Add admin settings GUI action
-	if (player getVariable ["isAdmin", false]) then 
+	if (player getVariable ["isAdmin", false] || (hasInterface && isServer)) then 
 	{	
 		//Add 3 spaces empty actions
 		for [{_i = 0}, {_i < 3}, {_i = _i + 1}] do
@@ -101,7 +104,7 @@ showHUD [
 			//Define parameters
 			params ["_object","_caller","_ID","_avalaibleVehicle"];
 			[[], 'GUI\adminGUI\adminGUIInit.sqf'] remoteExec ['BIS_fnc_execVM', _caller];
-		},_x,0,true,false,"","(_target distance _this <3) && (_target getVariable ['isAdmin', false])", 50, true];
+		},_x,0,true,false,"","(_target distance _this <3) && (_target getVariable ['isAdmin', false] || (hasInterface && isServer))", 50, true];
 	};
 };
 
@@ -138,7 +141,7 @@ if (player getVariable "sideBeforeDeath" == "independent") then
 if (missionNameSpace getVariable ["enableAdvancedRespawn", 1] == 1) then 
 {
 	//Add vehicle shop
-	player addAction [format ["<img size='2' image='\a3\ui_f_oldman\data\IGUI\Cfg\holdactions\holdAction_sleep_ca.paa'/><t size='1'>Place respawn tent</t>"],{
+	player addAction [format ["<img size='2' image='\a3\ui_f_oldman\data\IGUI\Cfg\holdactions\holdAction_sleep_ca.paa'/><t size='1'>Place reinforcement tent</t>"],{
 		//Define parameters
 		params ["_object","_caller","_ID","_avalaibleVehicle"];
 
@@ -148,6 +151,7 @@ if (missionNameSpace getVariable ["enableAdvancedRespawn", 1] == 1) then
 		//Create tent
 		_createTent = createVehicle ["Land_TentDome_F", [getPos _caller, 1, 5, 3, 0, 20, 0, [], [getPos _caller, getPos _caller]] call BIS_fnc_findSafePos, [], 0, "NONE"];
 		_createTent setVariable [str (group _caller), true, true];
+		_createTent allowDamage false;
 
 		[{["STR_RPG_HC_NAME", "STR_RPG_HC_RESPAWN_TENT"] call doDialog}] remoteExec ["call", units (group _caller)];
 

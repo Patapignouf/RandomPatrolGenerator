@@ -281,6 +281,11 @@
 				<English>%1 has been killed by his teammate %2, watch your fire</English>
 				<French>%1 a été tué par son coéquipier %2, attention à vos tirs</French>
 			</Key>
+			<Key ID="STR_RPG_HC_CIVKILL">
+				<Original>A civilian and has been killed by %1, watch your fire</Original>
+				<English>A civilian and has been killed by %1, watch your fire</English>
+				<French>Un civil a été tué par %1, surveillez vos tirs</French>
+			</Key>
 			<Key ID="STR_RPG_HC_SURRENDER_KILL">
 				<Original>%1 has surrender and has been killed by %2, watch your fire</Original>
 				<English>%1 has surrender and has been killed by %2, watch your fire</English>
@@ -623,5 +628,177 @@
 			<Original>If you die you will respawn according to the mission settings (timer, objective complete, manual)</Original>
 			<English>If you die you will respawn according to the mission settings (timer, objective complete, manual)</English>
 			<French>Si vous mourrez, vous pourrez réapparaitre suivant les paramètres de mission (temps, objectifs, demande)</French>
+		</Key>
+	<Container name="RPG_LOADOUT">
+		<Key ID="STR_RPG_LOADOUT_TITLE">
+			<Original>Loadout</Original>
+			<English>Loadout</English>
+			<French>Equipement</French>
+		</Key>
+		<Key ID="STR_RPG_LOADOUT_ROLE">
+			<Original>Role</Original>
+			<English>Role</English>
+			<French>Rôle</French>
+		</Key>
+		<Key ID="STR_RPG_LOADOUT_SHOWRANK">
+			<Original>Show rank</Original>
+			<English>Show rank</English>
+			<French>Afficher le rang</French>
+		</Key>
+		<Key ID="STR_RPG_LOADOUT_ROLE_LEADER">
+			<Original>Leader</Original>
+			<English>Leader</English>
+			<French>Chef</French>
+		</Key>
+		<Key ID="STR_RPG_LOADOUT_ROLE_LEADER_DESC">
+			<Original>The leader have access to multiple options such as complete vehicle shop and support shop</Original>
+			<English>The leader have access to multiple options such as complete vehicle shop and support shop</English>
+			<French>Le chef a accès à de multiples options comme un magasin de véhicules ou de support</French>
+		</Key>
+		<Key ID="STR_RPG_LOADOUT_ROLE_RIFLEMAN">
+			<Original>Rifleman</Original>
+			<English>Rifleman</English>
+			<French>Fusiller</French>
+		</Key>
+		<Key ID="STR_RPG_LOADOUT_ROLE_RIFLEMAN_DESC">
+			<Original>The rifleman has a basic class without any speciality</Original>
+			<English>The rifleman has a basic class without any speciality</English>
+			<French>Le fusiller est la classe de base sans spécialité</French>
+		</Key>
+		<Key ID="STR_RPG_LOADOUT_ROLE_AUTORIFLEMAN">
+			<Original>Autorifleman</Original>
+			<English>Autorifleman</English>
+			<French>Mitrailleur</French>
+		</Key>
+		<Key ID="STR_RPG_LOADOUT_ROLE_AUTORIFLEMAN_DESC">
+			<Original>The autorifleman has access to machinegun, he can provide suppressive fire to his teammates</Original>
+			<English>The autorifleman has access to machinegun, he can provide suppressive fire to his teammates</English>
+			<French>Le mitrailleur a accès à un équipement spécifique. Il peut fournir des tirs de suppression</French>
+		</Key>
+		<Key ID="STR_RPG_LOADOUT_ROLE_MEDIC">
+			<Original>Medic</Original>
+			<English>Medic</English>
+			<French>Médecin</French>
+		</Key>
+		<Key ID="STR_RPG_LOADOUT_ROLE_MEDIC_DESC">
+			<Original>The medic has access to Medikit, he's able to heal his teammates</Original>
+			<English>The medic has access to Medikit, he's able to heal his teammates</English>
+			<French>Le médecin a accès aux kits de soins, il est capable de soigner ses coéquipiers</French>
+		</Key>
+		<Key ID="STR_RPG_LOADOUT_ROLE_ENGINEER">
+			<Original>Engineer</Original>
+			<English>Engineer</English>
+			<French>Ingénieur</French>
+		</Key>
+		<Key ID="STR_RPG_LOADOUT_ROLE_ENGINEER_DESC">
+			<Original>The engineer has access to the toolbox, he can defuse IED and build fortifications</Original>
+			<English>The engineer has access to the toolbox, he can defuse IED and build fortifications</English>
+			<French>L'ingénieur a accès à une boite à outil, il peut désamorcer les IED et construire des fortifications</French>
+		</Key>
+		<Key ID="STR_RPG_LOADOUT_ROLE_PILOT">
+			<Original>Pilot</Original>
+			<English>Pilot</English>
+			<French>Pilote</French>
+		</Key>
+		<Key ID="STR_RPG_LOADOUT_ROLE_PILOT_DESC">
+			<Original>The pilot has access to air vehicle shop</Original>
+			<English>The pilot has access to air vehicle shop</English>
+			<French>Le pilote a accès au magasin de véhicules aériens</French>
+		</Key>
+		<Key ID="STR_RPG_LOADOUT_ROLE_GRENADIER">
+			<Original>Grenadier</Original>
+			<English>Grenadier</English>
+			<French>Grenadier</French>
+		</Key>
+		<Key ID="STR_RPG_LOADOUT_ROLE_GRENADIER_DESC">
+			<Original>The grenadier has access to grenade launcher</Original>
+			<English>The grenadier has access to grenade launcher</English>
+			<French>Le grenadier a accès aux lances grenades</French>
+		</Key>
+		<Key ID="STR_RPG_LOADOUT_ROLE_DIVER">
+			<Original>Diver</Original>
+			<English>Diver</English>
+			<French>Plongeur</French>
+		</Key>
+		<Key ID="STR_RPG_LOADOUT_ROLE_DIVER_DESC">
+			<Original></Original>
+			<English></English>
+			<French></French>
+		</Key>
+		<Key ID="STR_RPG_LOADOUT_ROLE_MARKSMAN">
+			<Original>Marksman</Original>
+			<English>Marksman</English>
+			<French>Tireur de précision</French>
+		</Key>
+		<Key ID="STR_RPG_LOADOUT_ROLE_MARKSMAN_DESC">
+			<Original>The marksman has access to marksman rifle and accurate scopes</Original>
+			<English>The marksman has access to marksman rifle and accurate scopes</English>
+			<French>Le tireur de précision a accès aux fusils dédiés et à des lunettes de précision</French>
+		</Key>
+		<Key ID="STR_RPG_LOADOUT_ROLE_SNIPER">
+			<Original>Sniper</Original>
+			<English>Sniper</English>
+			<French>Tireur d'élite</French>
+		</Key>
+		<Key ID="STR_RPG_LOADOUT_ROLE_SNIPER_DESC">
+			<Original>The sniper has access to marksman rifle and accurate scopes and specific camoflage</Original>
+			<English>The sniper has access to marksman rifle and accurate scopes and specific camoflage</English>
+			<French>Le tireur d'élite a accès aux fusils dédiés et à des lunettes de précision ainsi qu'un camouflage spécifique</French>
+		</Key>
+		<Key ID="STR_RPG_LOADOUT_ROLE_UAV">
+			<Original>UAV operator</Original>
+			<English>UAV operatr</English>
+			<French>Opérateur drone</French>
+		</Key>
+		<Key ID="STR_RPG_LOADOUT_ROLE_UAV_DESC">
+			<Original></Original>
+			<English></English>
+			<French></French>
+		</Key>
+		<Key ID="STR_RPG_LOADOUT_ROLE_RADIOMAN">
+			<Original>Radioman</Original>
+			<English>Radioman</English>
+			<French>Responsable radio</French>
+		</Key>
+		<Key ID="STR_RPG_LOADOUT_ROLE_RADIOMAN_DESC">
+			<Original></Original>
+			<English></English>
+			<French></French>
+		</Key>
+		<Key ID="STR_RPG_LOADOUT_ROLE_AT">
+			<Original>Anti Tank</Original>
+			<English>Anti Tank</English>
+			<French>Anti Tank</French>
+		</Key>
+		<Key ID="STR_RPG_LOADOUT_ROLE_AT_DESC">
+			<Original>The AT have access to Anti-Tank and Anti-Aircraft launchers</Original>
+			<English>The AT have access to Anti-Tank and Anti-Aircraft launchers</English>
+			<French>L'AT a accès aux lanceurs anti tank et anti aérien</French>
+		</Key>
+		<Key ID="STR_RPG_LOADOUT_ROLE_NB_INSQUAD">
+			<Original>in group</Original>
+			<English>in group</English>
+			<French>dans le groupe</French>
+		</Key>
+	<Container name="RPG_GUI_GENERAL">
+		<Key ID="RPG_GUI_GENERAL_CLOSE">
+			<Original>Close</Original>
+			<English>Close</English>
+			<French>Fermer</French>
+		</Key>
+		<Key ID="RPG_GUI_GENERAL_SAVE">
+			<Original>Save</Original>
+			<English>Save</English>
+			<French>Sauvegarder</French>
+		</Key>
+		<Key ID="RPG_GUI_GENERAL_LOAD">
+			<Original>Load</Original>
+			<English>Load</English>
+			<French>Charger</French>
+		</Key>
+		<Key ID="RPG_GUI_GENERAL_RESET">
+			<Original>Reset</Original>
+			<English>Reset</English>
+			<French>Restaurer</French>
 		</Key>
 </Project>

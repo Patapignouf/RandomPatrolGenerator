@@ -211,6 +211,30 @@ params ["_caller", "_supportType"];
 			_mainDisplay = (findDisplay 60000);
 			_mainDisplay closeDisplay 1;
 		};
+		case "Tent":
+		{
+			[_caller] spawn {
+				params ["_caller"];
+				//Click on map to do a tactical insert
+				//Last test to check if the tent is still avalaible
+				_tentFOBLocation = missionNamespace getVariable [format ['bluforPositionAdvancedRespawn%1', str (group _caller)], [0,0,0]];
+				if (playerSide == blufor && !([_tentFOBLocation, [0,0,0]] call BIS_fnc_areEqual)) then 
+				{
+					_advFOBLocation = missionNamespace getVariable [format ['bluforPositionAdvancedRespawn%1', str (group _caller)], [0,0,0]];
+					_caller setPos _advFOBLocation;
+
+					["Respawn on group tent position", format ["Year %1", date select 0], mapGridPosition _caller] spawn BIS_fnc_infoText;
+				} else 
+				{
+					cutText ["There is no tent setup for your group", "PLAIN", 0.3];
+				};
+			};
+
+			//Close support menu
+			_mainDisplay = (findDisplay 60000);
+			_mainDisplay closeDisplay 1;
+			
+		};
 		case "attackSquad":
 		{
 			[_caller] spawn {
@@ -316,7 +340,7 @@ addSupportForIntel = {
 
 addSupportForReinforcement = {
 	params ["_ctrl"];
-	//Add support for INTEL
+	//Add support for respawn
 	_price = 0;
 	_supportName = format ["Ask for reinforcement now (avalaible every %1 seconds)", missionNamespace getVariable "missionRespawnParam"];
 	_supportNameCode = "Reinforcement";
@@ -328,7 +352,7 @@ addSupportForReinforcement = {
 
 addCallForReinforcement = {
 	params ["_ctrl"];
-	//Add support for INTEL
+	//Add support for respawn with radio
 	_price = 600;
 	_supportName = "Call reinforcement (radio)";
 	_supportNameCode = "CallReinforcement";
@@ -340,7 +364,7 @@ addCallForReinforcement = {
 
 addSupportForForceReinforcement = {
 	params ["_ctrl"];
-	//Add support for INTEL
+	//Add support for instant respawn
 	_price = 500;
 	_supportName = "Force reinforcement now";
 	_supportNameCode = "ForceReinforcement";
@@ -352,7 +376,7 @@ addSupportForForceReinforcement = {
 
 addSupportForArtillery = {
 	params ["_ctrl"];
-	//Add support for INTEL
+	//Add support for friendly artillery
 	_price = 200;
 	_supportName = "Artillery (radio)";
 	_supportNameCode = "Artillery";
@@ -364,7 +388,7 @@ addSupportForArtillery = {
 
 addSupportForHALO = {
 	params ["_ctrl"];
-	//Add support for INTEL
+	//Add support for Halo jump
 	_price = 0;
 	_supportName = "Halo Jump";
 	_supportNameCode = "HALOJump";
@@ -374,9 +398,21 @@ addSupportForHALO = {
 	[_ctrl, _supportName, _supportNameCode, _supportIcon, _price, _supportType] call addSupportOption;
 };
 
+addSupportForTent = {
+	params ["_ctrl"];
+	//Add support for reinforcement tent
+	_price = 0;
+	_supportName = "Move to your squad tent";
+	_supportNameCode = "Tent";
+	_supportIcon = "\a3\Ui_f\data\GUI\Cfg\CommunicationMenu\transport_ca.paa";
+	_supportType = "Movement";
+
+	[_ctrl, _supportName, _supportNameCode, _supportIcon, _price, _supportType] call addSupportOption;
+};
+
 addSupportForTacInsert = {
 	params ["_ctrl"];
-	//Add support for INTEL
+	//Add support for tactical insertion (group teleportation)
 	_price = 500;
 	_supportName = "Tactical Insertion";
 	_supportNameCode = "TacInsert";
@@ -388,7 +424,7 @@ addSupportForTacInsert = {
 
 addAttackSquad = {
 	params ["_ctrl"];
-	//Add support for INTEL
+	//Add support for friendly squad
 	_price = 500;
 	_supportName = "Recruit a squad to attack position";
 	_supportNameCode = "attackSquad";
@@ -400,7 +436,7 @@ addAttackSquad = {
 
 addSupportForExtract = {
 	params ["_ctrl"];
-	//Add support for INTEL
+	//Add support for extract chopper
 	_price = 200;
 	_supportName = "Extract helicopter (radio)";
 	_supportNameCode = "Extract";

@@ -161,7 +161,7 @@ _buttonOK ctrlAddEventHandler[ "ButtonClick",
 		_vehicleClassToSpawn = (_lnbEntries lnbData [lnbCurSelRow _lnbEntries, 0]);
 		_vehicleNameToSpawn = (_lnbEntries lnbData [lnbCurSelRow _lnbEntries, 1]);
 		_vehiclePriceToSpawn = parseNumber (_lnbEntries lnbData [lnbCurSelRow _lnbEntries, 2]);
-		_vehicleIsUAV = getText (configFile >> "CfgVehicles" >> _vehicleClassToSpawn >> "textSingular") == "UAV";
+		_vehicleIsUAV = getText (configFile >> "CfgVehicles" >> _vehicleClassToSpawn >> "vehicleClass") == "Autonomous";
 
 		_VehicleAvalaibleSpawnName = _display getVariable "VehicleAvalaibleSpawn";
 		_bluforVehicleAvalaibleSpawnCounter = missionNamespace getVariable _VehicleAvalaibleSpawnName;

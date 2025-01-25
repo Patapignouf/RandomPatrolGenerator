@@ -98,10 +98,19 @@ doGenerateEnemyGroup =
 						//Make unit surrender if the morale goes too low
 						if (morale _x < 0 && vehicle _x == _x && side _x == opfor) then 
 						{
+							_currentUnit = _x;
 							//Add 60% chance not  to surrender
 							if (random 100 > 60) then 
 							{
-								[_x] call doSurrender;
+								//Trigger only if there is a player at less than 50m
+								if (count (allPlayers select {_x distance _currentUnit < 50})!=0) then 
+								{							
+									//Make unit surrender async
+									[_currentUnit] spawn {
+										params ["_currentUnit"];
+										[_currentUnit] call doSurrender;
+									};
+								};
 							};
 						};
 					} foreach (units _group)
@@ -134,6 +143,9 @@ doGenerateEnemyGroup =
 	if (_thisFaction == civilian) then 
 	{
 		{		
+			//Remove basic civilian weapons 
+			removeAllWeapons _x;
+
 			//Add eventhandler civKilled
 			_x addEventHandler ["Killed", {
 				params ["_unit", "_killer", "_instigator", "_useEffects"];
@@ -153,9 +165,8 @@ doGenerateEnemyGroup =
 						[['CIV_DEAD'], 'engine\objectiveManagement\endMission.sqf'] remoteExec ['BIS_fnc_execVM', 2];
 					};
 
-					diag_log format ["Civilian has been killed by : %1 on side %2", name _instigator, side _instigator];
-					[[format ["Civilian has been killed by : %1", name _instigator], "civiliankilled"], 'engine\hintManagement\addCustomHint.sqf'] remoteExec ['BIS_fnc_execVM', side _instigator]; 
-					
+					[[_instigator], {params ["_instigator"]; ["STR_RPG_HC_NAME", "STR_RPG_HC_CIVKILL", name _instigator] call doDialog}] remoteExec ["spawn", side _instigator]; 
+
 					[{[-50,5] call doUpdateRankWithPenalty}] remoteExec ["call", _instigator];
 				}; 
 			}];
@@ -214,6 +225,9 @@ doGenerateHostileCivilianGroup =
 
 	//Manage civilian specific feature
 	{		
+		//Remove basic civilian weapons 
+		removeAllWeapons _x;
+
 		//Manage hostile civilian
 		if (random 100 < _hostileProba) then 
 		{
@@ -239,10 +253,9 @@ doGenerateHostileCivilianGroup =
 					diag_log "END MISSION";
 					[['CIV_DEAD'], 'engine\objectiveManagement\endMission.sqf'] remoteExec ['BIS_fnc_execVM', 2];
 				};
-
-				diag_log format ["Civilian has been killed by : %1 on side %2", name _instigator, side _instigator];
-				[[format ["Civilian has been killed by : %1", name _instigator], "civiliankilled"], 'engine\hintManagement\addCustomHint.sqf'] remoteExec ['BIS_fnc_execVM', side _instigator]; 
 				
+				[[_instigator], {params ["_instigator"]; ["STR_RPG_HC_NAME", "STR_RPG_HC_CIVKILL", name _instigator] call doDialog}] remoteExec ["spawn", side _instigator]; 
+
 				[{[-50,5] call doUpdateRankWithPenalty}] remoteExec ["call", _instigator];
 			}; 
 		}];

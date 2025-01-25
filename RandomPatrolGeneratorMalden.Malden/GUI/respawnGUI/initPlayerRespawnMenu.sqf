@@ -108,7 +108,7 @@ if (!ironMan) then
 	//Load every class for current player's faction
 	//Define list of role in the combo box
 	{
-		_dropdown lbAdd format ["%1", _x];
+		_dropdown lbAdd format ["%1", format ["%1 (%2 %3)", [_x] call getClassInformation, [player, _x] call getNumberOfClassInSquad, localize "STR_RPG_LOADOUT_ROLE_NB_INSQUAD"]];
 		_dropdown lbSetData [(lbSize _dropdown)-1, format ["%1",(lbSize _dropdown)-1]];
 		_dropdown lbSetTooltip [(lbSize _dropdown)-1, [_x] call getClassInformation];
 	} foreach _listOfAvalaibleRole;
@@ -125,15 +125,20 @@ if (!ironMan) then
 			//Setup arsenal loadout
 			_listOfAvalaibleRole = [player call getPlayerFaction] call setupRoleSwitchToList;
 			_role = (_listOfAvalaibleRole select parseNumber ((_control lbData (lbCurSel _control))));
-			[player, player, player call getPlayerFaction , _role, false, false] call switchToRole;
-			[player, player, player call getPlayerFaction] call setupArsenalToItem;
 
-			//Load personnal loadout
-			_loadableLoadout = profileNamespace getVariable [format [loadoutSaveName, name player, player call getPlayerFaction, player getVariable "role"], player getVariable "spawnLoadout"];
-			player setUnitLoadout _loadableLoadout;
+			//Check if the new role is different from the current one
+			if (_role != player getVariable ["role", ""]) then 
+			{
+				[player, player, player call getPlayerFaction , _role, false, false] call switchToRole;
+				[player, player, player call getPlayerFaction] call setupArsenalToItem;
 
-			//Hint switch role
-			[[format ["%1 has switched to role %2", name player, player getVariable "role"], "arsenal"], 'engine\hintManagement\addCustomHint.sqf'] remoteExec ['BIS_fnc_execVM', -clientOwner]; 
+				//Load personnal loadout
+				_loadableLoadout = profileNamespace getVariable [format [loadoutSaveName, name player, player call getPlayerFaction, player getVariable "role"], player getVariable "spawnLoadout"];
+				player setUnitLoadout _loadableLoadout;
+
+				//Hint switch role
+				[[format ["%1 has switched to role %2", name player, player getVariable "role"], "arsenal"], 'engine\hintManagement\addCustomHint.sqf'] remoteExec ['BIS_fnc_execVM', -clientOwner];
+			}; 
 		};
 
 		//Show black screen

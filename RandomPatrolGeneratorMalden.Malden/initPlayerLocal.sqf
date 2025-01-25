@@ -1,3 +1,7 @@
+//init tp to be able to spawn on the ground on each map
+player setPos [worldSize,worldSize,0];
+player allowdamage false;
+
 //#include "database\factionParameters.sqf"
 #include "engine\modManager.sqf"
 #include "database\missionParameters.sqf"
@@ -5,7 +9,6 @@
 #include "engine\searchLocation.sqf"
 #include "engine\hintManagement\customDialog.sqf"
 #include "GUI\scoreBoardGUI\scoreFunctions.sqf"
-
 
 forceBluforSetup = "ForceBluforSetup" call BIS_fnc_getParamValue;
 
@@ -17,9 +20,6 @@ waitUntil {!isNil "factionInfos"};
 
 diag_log format ["Setup Player %1 at position 0", name player];
 
-//init tp to be able to spawn on the ground on each map
-player setPos [worldSize,worldSize];
-player allowdamage false;
 
 //prevent player from drowning in loading
 [] spawn {
@@ -475,7 +475,13 @@ if (side player == blufor) then
 
 	//Manage arsenal
 	waitUntil{!isNil "bluforFOBBuild"};
-	[VA2] call setupPlayerLoadout;	
+	if (ironMan) then 
+	{
+		[VA2] call setupPlayerLoadout;	
+	} else 
+	{
+		[VA2] call setupPlayerLoadoutRemake;	
+	};
 
 	[] spawn {
 		waitUntil {!isNil "bluformobilehq"};
@@ -672,7 +678,7 @@ if (didJIP) then
 	if (count (_deadPlayerList select { _x == (name player) }) == 0) then 
 	{
 		//Disable specific respawn menu
-		player setPos [worldSize,worldSize];
+		player setPos [worldSize,worldSize,0];
 		player allowdamage false;
 		[[], 'GUI\respawnGUI\initPlayerRespawnMenu.sqf'] remoteExec ['BIS_fnc_execVM', player];
 	} else 
@@ -722,6 +728,7 @@ if (missionNameSpace getVariable ["enableAdvancedRespawn", 1] == 1) then
 		//Create tent
 		_createTent = createVehicle ["Land_TentDome_F", [getPos _caller, 1, 5, 3, 0, 20, 0, [], [getPos _caller, getPos _caller]] call BIS_fnc_findSafePos, [], 0, "NONE"];
 		_createTent setVariable [str (group _caller), true, true];
+		_createTent allowDamage false;
 
 		[{["STR_RPG_HC_NAME", "STR_RPG_HC_RESPAWN_TENT"] call doDialog}] remoteExec ["call", units (group _caller)];
 

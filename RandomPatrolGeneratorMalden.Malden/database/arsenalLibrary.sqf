@@ -334,7 +334,7 @@ getVirtualMagazine = {
 							{
 								if (!([_x] call isBannedItem)) then 
 								{
-									virtualMagazineList pushBack _x;
+									virtualMagazineList pushBackUnique _x;
 								};
 							};
 						} foreach _currentWeaponMagazineList;
@@ -355,7 +355,7 @@ getVirtualMagazine = {
 							{
 								if (!([_x, _listOfLargeMagazineText] call isElementOfArrayInString) && !([_x] call isBannedItem)) then 
 								{
-									virtualMagazineList pushBack _x;
+									virtualMagazineList pushBackUnique _x;
 								};
 							};
 						} foreach _currentWeaponMagazineList;
@@ -400,7 +400,7 @@ setupArsenalToItem = {
 	//Add magazine to arsenal
 	_currentMagazineItems = [_currentPlayer,_currentFaction, _currentWeaponItems] call getVirtualMagazine;
 	[_itemToAttachArsenal, _currentMagazineItems, false, false] call BIS_fnc_addVirtualMagazineCargo;
-	
+
 
 	//Add items, uniforms and optics to arsenal
 	_currentItems = ([_currentPlayer, _currentFaction] call getVirtualAttachement ) + ([_currentPlayer,_currentFaction] call getVirtualItemList ) + ([_currentPlayer,_currentFaction] call getVirtualUniform );
@@ -429,18 +429,21 @@ setupArsenalToItem = {
 
 	//Merge every whitelist
 	_whitelistOfArsenalItems = _currentWeaponItems+_currentBackpackItems+_currentMagazineItems+_currentItems + _whiteListDefaultStuff + ["ACE_key_west","ACE_key_east","ACE_key_civ","ACE_key_indp"];
-	_currentPlayer setVariable ["avalaibleItemsInArsenal", _whitelistOfArsenalItems, true];
 	diag_log format ["List of whitelist items by listCurrentItemsLoadout %1", _whitelistOfArsenalItems];
 
 	//Fix vanilla arsenal not showing all weapon 
+	_currentMagazineItems = [_currentPlayer,_currentFaction, _whitelistOfArsenalItems] call getVirtualMagazine;
+	_currentPlayer setVariable ["avalaibleItemsInArsenal", _whitelistOfArsenalItems+_currentMagazineItems, true];
+
 	[_itemToAttachArsenal, _whitelistOfArsenalItems, false, false] call BIS_fnc_addVirtualWeaponCargo;
 	[_itemToAttachArsenal, _whitelistOfArsenalItems, false, false] call BIS_fnc_addVirtualBackpackCargo;
-	[_itemToAttachArsenal, _whitelistOfArsenalItems, false, false] call BIS_fnc_addVirtualMagazineCargo;
+	[_itemToAttachArsenal, _currentMagazineItems, false, false] call BIS_fnc_addVirtualMagazineCargo;
 	[_itemToAttachArsenal, _whitelistOfArsenalItems,false, false] call BIS_fnc_addVirtualItemCargo;
 
 	//Remove arsenal action
 	player call RemoveArsenalActionFromGivenObject;
 	["AmmoboxExit", _itemToAttachArsenal] call BIS_fnc_arsenal;
+	[_itemToAttachArsenal, _currentMagazineItems, false, false] call BIS_fnc_addVirtualMagazineCargo;
 
 	_itemToAttachArsenal;
 };
@@ -619,6 +622,10 @@ switchToRole = {
 		_caller setUnitTrait ["ExplosiveSpecialist", true];
 		_caller setVariable ["ace_isEngineer", 2, true]; //add special ACE medic trait advanced engineer
 	};
+	if (_role == c_leader) then 
+	{
+		group _caller selectLeader _caller;
+	};
 
 	//Manage player's role
 	_caller setVariable ["role", _role, true];
@@ -647,6 +654,26 @@ switchToRole = {
 setupRoleSwitchToList = {
 	//InitParam
 	params ["_currentFaction"];
+
+	//Check if current faction has specific role definition
+	listOfRoles = ((loadout_db select {_x # 1 == _currentFaction}) # 0 # 0) apply {_x # 0};
+
+ 	listOfRoles;
+};
+
+setupSimpleRoleSwitchWithToList = {
+	//InitParam
+	params ["_player"];
+
+	_bluFaction = missionNamespace getVariable "bluforFaction";
+	_indFaction = missionNamespace getVariable "independentFaction";
+
+	_currentFaction = _bluFaction;
+
+	if (PlayerSide == independent) then 
+	{
+		_currentFaction = _indFaction;
+	};
 
 	//Check if current faction has specific role definition
 	listOfRoles = ((loadout_db select {_x # 1 == _currentFaction}) # 0 # 0) apply {_x # 0};
@@ -694,6 +721,27 @@ setupPlayerLoadout = {
 		params ["_object","_caller","_ID","_parameters"];
 
 		[[], 'GUI\loadoutGUI\initPlayerLoadoutSetup.sqf'] remoteExec ['BIS_fnc_execVM', _caller];
+
+	},[],1000,true, false,"",[player] call isAreaEligibleForArsenal];
+
+	//Setup initArsenal whitelist items
+	[player, player, player call getPlayerFaction] call setupArsenalToItem;
+
+	_whitelistOfArsenalItems = player getVariable ["avalaibleItemsInArsenal", []];
+	_whitelistOfArsenalItems append ([getUnitLoadout player] call getAllStringInArray);
+	player setVariable ["avalaibleItemsInArsenal", _whitelistOfArsenalItems, true];
+};
+
+setupPlayerLoadoutRemake = {
+
+	//InitParam
+	params ["_itemToAttachArsenal"];
+
+	_actionLoadoutSetup = _itemToAttachArsenal addAction ["<img size='3' image='\a3\missions_f_oldman\data\img\holdactions\holdAction_box_ca.paa'/><t size='1.2'>Setup loadout</t>",{
+		//Define parameters
+		params ["_object","_caller","_ID","_parameters"];
+
+		[] execVM "GUI\LoadoutGUI\initPlayerLoadoutSetupRemake.sqf"
 
 	},[],1000,true, false,"",[player] call isAreaEligibleForArsenal];
 
@@ -1154,6 +1202,12 @@ isElementOfArrayInString =
 	_result
 };
 
+getNumberOfClassInSquad = {
+	params ["_caller", "_role"];
+	_numberOfClass = count ((units group _caller) select {(_x getVariable ["role", ""]) == _role});
+	_numberOfClass
+};
+
 getClassInformation = {
 	params ["_class"];
 
@@ -1163,43 +1217,99 @@ getClassInformation = {
 		{
 			case c_leader:
 				{
-					_classDescription = "The leader have access to multiple options such as complete vehicle shop and support shop";
+					_classDescription = localize "STR_RPG_LOADOUT_ROLE_LEADER";
 				};
 			case c_at:
 				{
-					_classDescription = "The AT have access to Anti-Tank and Anti-Aircraft launchers";
+					_classDescription = localize "STR_RPG_LOADOUT_ROLE_AT";
 				};
 			case c_rifleman:
 				{
-					_classDescription = "The rifleman has a basic class without any speciality";
+					_classDescription = localize "STR_RPG_LOADOUT_ROLE_RIFLEMAN";
 				};
 			case c_engineer:
 				{
-					_classDescription = "The engineer has access to the toolbox, he can defuse IED and build fortifications";
+					_classDescription = localize "STR_RPG_LOADOUT_ROLE_ENGINEER";
 				};
 			case c_autorifleman:
 				{
-					_classDescription = "The autorifleman has access to machinegun, he can provide suppressive fire to his teammates";
+					_classDescription = localize "STR_RPG_LOADOUT_ROLE_AUTORIFLEMAN";
 				};
 			case c_marksman:
 				{
-					_classDescription = "The marksman has access to marksman rifle and accurate scopes";
+					_classDescription = localize "STR_RPG_LOADOUT_ROLE_MARKSMAN";
 				};
 			case c_sniper: 
 				{
-					_classDescription = "The sniper has access to marksman rifle and accurate scopes and specific camoflage";
+					_classDescription = localize "STR_RPG_LOADOUT_ROLE_SNIPER";
 				};
 			case c_medic:
 				{
-					_classDescription = "The medic has access to Medikit, he's able to heal his teammates";
+					_classDescription = localize "STR_RPG_LOADOUT_ROLE_MEDIC";
 				};	
 			case c_grenadier:
 				{
-					_classDescription = "The grenadier has access to grenade launcher";
+					_classDescription = localize "STR_RPG_LOADOUT_ROLE_GRENADIER";
 				};
 			case c_pilot:
 				{
-					_classDescription = "The pilot has access to air vehicle shop";
+					_classDescription = localize "STR_RPG_LOADOUT_ROLE_PILOT";
+				};						
+			default
+				{
+					//Non implemented role
+					//_classDescription = "Custom class";
+				};
+		};
+	_classDescription;
+};
+
+getDescClassInformation = {
+	params ["_class"];
+
+	_classDescription = "";
+
+	switch (_class) do
+		{
+			case c_leader:
+				{
+					_classDescription = localize "STR_RPG_LOADOUT_ROLE_LEADER_DESC";
+				};
+			case c_at:
+				{
+					_classDescription = localize "STR_RPG_LOADOUT_ROLE_AT_DESC";
+				};
+			case c_rifleman:
+				{
+					_classDescription = localize "STR_RPG_LOADOUT_ROLE_RIFLEMAN_DESC";
+				};
+			case c_engineer:
+				{
+					_classDescription = localize "STR_RPG_LOADOUT_ROLE_ENGINEER_DESC";
+				};
+			case c_autorifleman:
+				{
+					_classDescription = localize "STR_RPG_LOADOUT_ROLE_AUTORIFLEMAN_DESC";
+				};
+			case c_marksman:
+				{
+					_classDescription = localize "STR_RPG_LOADOUT_ROLE_MARKSMAN_DESC";
+				};
+			case c_sniper: 
+				{
+					_classDescription = localize "STR_RPG_LOADOUT_ROLE_SNIPER_DESC";
+				};
+			case c_medic:
+				{
+					_classDescription = localize "STR_RPG_LOADOUT_ROLE_MEDIC_DESC";
+				};	
+			case c_grenadier:
+				{
+					_classDescription = localize "STR_RPG_LOADOUT_ROLE_GRENADIER_DESC";
+				};
+			case c_pilot:
+				{
+					_classDescription = localize "STR_RPG_LOADOUT_ROLE_PILOT_DESC";
 				};						
 			default
 				{
