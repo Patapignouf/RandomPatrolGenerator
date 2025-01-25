@@ -69,7 +69,7 @@ adjustRole = {
 		{
 			_cfgRole = "sniper";
 		};
-		if (["grenadier", _cfgName] call BIS_fnc_inString || ["_GL_", _cfgName] call BIS_fnc_inString) then 
+		if (["grenadier", _cfgName] call BIS_fnc_inString || ["_GL", _cfgName] call BIS_fnc_inString) then 
 		{
 			_cfgRole = "grenadier";
 		};
@@ -237,9 +237,9 @@ _potentialCivFactions = [];
 			if ((configName _x) isKindOf "Man") then {
 				_index = ([_factionsWithUnitsFiltered, _factionClass] call BIS_fnc_findInPairs);
 				if (_index == -1) then {
-					_factionsWithUnitsFiltered pushBack [_factionClass, 1];
+					_factionsWithUnitsFiltered pushBack [_factionClass, 1, ((configFile >> "CfgVehicles" >> configName _x >> "side") call BIS_fnc_GetCfgData)];
 				} else {
-					_factionsWithUnitsFiltered set [_index, [((_factionsWithUnitsFiltered select _index) select 0), ((_factionsWithUnitsFiltered select _index) select 1)+1]];
+					_factionsWithUnitsFiltered set [_index, [((_factionsWithUnitsFiltered select _index) select 0), ((_factionsWithUnitsFiltered select _index) select 1)+1,((configFile >> "CfgVehicles" >> configName _x >> "side") call BIS_fnc_GetCfgData)]];
 				}; 
 			};		
 		};
@@ -281,7 +281,23 @@ _potentialOpfor = [];
 	_factionTechName = _x#0;
 	if (factionInfos findIf {_x#0 == _factionTechName}==-1) then 
 	{
-		factionInfos pushBack [_factionTechName, _factionTechName, format ["%1 [AUTO]", ((configFile >> "CfgFactionClasses" >> _factionTechName >> "displayName") call BIS_fnc_GetCfgData)], true, true, false];
+		_sideName = "";
+		switch (_x#2) do {
+			case 0:
+			{
+				_sideName = "OPFOR";
+			};
+			case 1:
+			{
+				_sideName = "BLUFOR";
+			};
+			case 2:
+			{
+				_sideName = "INDEPENDENT";
+			};
+		};
+
+		factionInfos pushBack [_factionTechName, _factionTechName, format ["%1 [AUTO %2]", ((configFile >> "CfgFactionClasses" >> _factionTechName >> "displayName") call BIS_fnc_GetCfgData), _sideName], true, true, false];
 		_potentialOpfor pushBack _factionTechName;
 	};
 } foreach _potentialFactions;
