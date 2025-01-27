@@ -25,7 +25,7 @@ if (_artlillerySupportCounter > 0) then
 	};
 
 	//Simulate waiting for shots
-	sleep (60 + random 60);
+	sleep (15 + random 25);
 
 	//Call 3 shots
 	for [{_i = 0}, {_i <= 4}, {_i = _i + 1}] do //Peut être optimisé
