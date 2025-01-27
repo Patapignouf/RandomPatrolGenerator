@@ -396,8 +396,15 @@ _roleFilter = ["Unarmed"];
 			if (_cfgName isKindOf 'Car' && !(_cfgName isKindOf 'Tank' || _cfgName isKindOf 'Wheeled_APC_F' || _cfgName isKindOf 'APC_Tracked_02_base_F' || ((configFile >> "CfgVehicles" >> _cfgName >> "artilleryScanner") call BIS_fnc_GetCfgData) == 1 )) then {	
 				if (count (_cfgName call BIS_fnc_allTurrets) == 0) then 
 				{
+					//Add unarmed vehicle to base vehicles
 					_currentFactionName = format ["bluforUnarmedVehicle%1", _thisFac];
 
+					_currentStuffFaction = 	missionNamespace getVariable [_currentFactionName, []];
+					_currentStuffFaction pushBack _cfgName;
+					missionNamespace setVariable [_currentFactionName, _currentStuffFaction, true]; 
+
+					//Add unarmed vehicles to HQ vehicles
+					_currentFactionName = format ["bluforHQVehicle%1", _thisFac];
 					_currentStuffFaction = 	missionNamespace getVariable [_currentFactionName, []];
 					_currentStuffFaction pushBack _cfgName;
 					missionNamespace setVariable [_currentFactionName, _currentStuffFaction, true]; 
@@ -567,6 +574,8 @@ if ("EnableRHSMerge" call BIS_fnc_getParamValue == 1) then
 	["rhs_faction_usmc_d", "rhs_faction_usn"] call mergeFactions;
 	["rhs_faction_usmc_w", "rhs_faction_usaf"] call mergeFactions;
 	["rhs_faction_usmc_w", "rhs_faction_usn"] call mergeFactions;
+	["rhs_faction_usarmy_d", "rhs_faction_usaf"] call mergeFactions;
+	["rhs_faction_usarmy_w", "rhs_faction_usaf"] call mergeFactions;
 	["rhsgref_faction_cdf_ground", "rhsgref_faction_cdf_air"] call mergeFactions;
 	["rhs_faction_msv", "rhs_faction_vvs_c"] call mergeFactions;
 	["rhsgref_faction_cdf_ground_b", "rhsgref_faction_cdf_air_b"] call mergeFactions;
