@@ -135,6 +135,7 @@ if (!ironMan) then
 				//Load personnal loadout
 				_loadableLoadout = profileNamespace getVariable [format [loadoutSaveName, name player, player call getPlayerFaction, player getVariable "role"], player getVariable "spawnLoadout"];
 				player setUnitLoadout _loadableLoadout;
+				player setVariable ["spawnLoadout", getUnitLoadout player]; //Save custom loadout for future spawn loadout
 
 				//Hint switch role
 				[[format ["%1 has switched to role %2", name player, player getVariable "role"], "arsenal"], 'engine\hintManagement\addCustomHint.sqf'] remoteExec ['BIS_fnc_execVM', -clientOwner];
