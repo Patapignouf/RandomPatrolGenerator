@@ -47,11 +47,22 @@ getSpeakerColorAndPosition = {
 	switch (_speaker) do 
 	{
 		case "STR_RPG_OBJ_HOSTAGE";
-		case "STR_RPG_CHOPPER_NAME";
+		case "STR_RPG_CHOPPER_NAME":
+		{
+			_color = "#0046ff"; //Blue
+			_position = "PLAIN DOWN";
+		};
 		case "STR_RPG_HC_NAME":
 		{
-			_color = "#0046ff";
+			_color = "#0046ff"; //Blue
 			_position = "PLAIN DOWN";
+
+			//Play random radio sound
+			[] spawn {
+				playMusic [selectRandom ["RadioAmbient1","RadioAmbient2","RadioAmbient3","RadioAmbient4","RadioAmbient5","RadioAmbient6","RadioAmbient7","RadioAmbient8","RadioAmbient9","RadioAmbient10","RadioAmbient11","RadioAmbient12","RadioAmbient13","RadioAmbient14","RadioAmbient15","RadioAmbient16","RadioAmbient17","RadioAmbient18"], 1];
+				sleep 4;
+				playMusic "";
+			};
 		};
 		case "STR_RPG_CIVILIAN_NAME":
 		{
