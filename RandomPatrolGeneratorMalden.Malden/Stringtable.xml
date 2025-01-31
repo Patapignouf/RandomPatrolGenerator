@@ -1745,4 +1745,32 @@
         <Japanese>リセット</Japanese>
     </Key>
 </Container>
+ <Container name="ACTIONS">
+            <Key ID="STR_ACTIONS_PLACE_TENT">
+                <Original>Place reinforcement tent</Original>
+                <English>Place reinforcement tent</English>
+                <French>Placer la tente de renforts</French>
+            </Key>
+            <Key ID="STR_ACTIONS_OPEN_SUPPORT_SHOP">
+                <Original>Open support shop</Original>
+                <English>Open support shop</English>
+                <French>Ouvrir le magasin de support</French>
+            </Key>
+            <Key ID="STR_ACTIONS_OPEN_VEHICLE_SHOP">
+                <Original>Open vehicle shop</Original>
+                <English>Open vehicle shop</English>
+                <French>Ouvrir le magasin de vehicule</French>
+            </Key>
+            <Key ID="STR_ACTIONS_SETUP_LOADOUT">
+                <Original>Setup loadout</Original>
+                <English>Setup loadout</English>
+                <French>Configurer l'équipement</French>
+            </Key>
+            <Key ID="STR_ACTIONS_SLEEP">
+                <Original>Sleep until next morning</Original>
+                <English>Sleep until next morning</English>
+                <French>Dormir jusqu'au lendemain</French>
+            </Key>
+    </Container>
 </Project>
+
