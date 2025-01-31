@@ -17,15 +17,8 @@ if (_airDropSupportCounter > 0) then
 	//Hint to airDrop call
 	[[_position], {params ["_position"]; ["STR_RPG_HC_NAME", "STR_RPG_HC_AIR_SUPPORT", mapGridPosition _position] call doDialog}] remoteExec ["spawn", blufor]; 
 
-	//Play random radio sound
-	[] spawn {
-		playMusic ["RadioAmbient5", 1];
-		sleep 4;
-		playMusic "";
-	};
-
 	//Wait for the drop
-	sleep 30+(random 30);
+	sleep 15+(random 30);
 
 	//Call air drop 
 	_positionLZ = _position findEmptyPosition [0, 200,"Land_HelipadCircle_F"];
@@ -56,7 +49,7 @@ if (_airDropSupportCounter > 0) then
 			_crate addItemCargoGlobal ["ACE_bloodIV_500", 10];
 			_crate addItemCargoGlobal ["ACE_bloodIV", 5];
 			_crate addItemCargoGlobal ["ACE_tourniquet", 5];
-			_crate addItemCargoGlobal ["ACE_Suture", 20];
+			_crate addItemCargoGlobal ["ACE_Suture", 40];
 
 		} else 
 		{
@@ -72,35 +65,31 @@ if (_airDropSupportCounter > 0) then
 		} foreach _itemsList;
 	};
 
-	//Add magazines
-	_tempMagazine = bluforMagazineList;
-	_faction = missionNamespace getVariable ["bluforFaction", 0]; //Default blufor
-	//Add magazine foreach class 
-	_virtualWeaponList = [];
-	_virtualWeaponList = _virtualWeaponList + (rifleList_db select {_x select 1  == (_faction)} select 0 select 0);
-	_virtualWeaponList = _virtualWeaponList + (smgList_db select {_x select 1  == (_faction)} select 0 select 0);
-	_virtualWeaponList = _virtualWeaponList + (launcherList_db select {_x select 1  == (_faction)} select 0 select 0);
-	_virtualWeaponList = _virtualWeaponList + (autorifleList_db select {_x select 1  == (_faction)} select 0 select 0);
-	_virtualWeaponList = _virtualWeaponList + (marksmanrifleList_db select {_x select 1  == (_faction)} select 0 select 0);
+	//init 
+	_tempMagazine = []; 
+	_weaponsToCheck = [];
 
-	diag_log format ["Generate air supply drop weaponList : %1", _virtualWeaponList];
+	//Detect every player on the same side and check their weapons
+	{
+		_weaponsToCheck append (weapons _x);
+	} foreach allPlayers select {side _x == side _caller};
 
-	_listOfLargeMagazineText = []; //
+	//Keep unique weapons
+	_weaponsToCheck = _weaponsToCheck arrayIntersect _weaponsToCheck;
+
+	//Detect magazines
 	{
 		_currentWeaponMagazineList = getArray (configfile >> "CfgWeapons" >> _x >> "magazines");
 		if (count _currentWeaponMagazineList != 0) then 
 		{
-			if ((_tempMagazine) findIf {_x == (_currentWeaponMagazineList#0)} == -1) then 
+			//Add every magazines
 			{
-				//Add only if this is not a large magazine
-				// if (!([_currentWeaponMagazineList#0, _listOfLargeMagazineText] call isElementOfArrayInString)) then 
-				// {
-					_tempMagazine pushBack _currentWeaponMagazineList#0;
-				// };
-			};
+				_tempMagazine pushBackUnique _x;
+			} foreach _currentWeaponMagazineList;
 		};
-	} foreach _virtualWeaponList;
+	} foreach _weaponsToCheck;
 
+	//Add magazines into crate
 	for [{_i = 0}, {_i < 10}, {_i = _i + 1}] do
 	{
 		{
@@ -110,7 +99,6 @@ if (_airDropSupportCounter > 0) then
 			};
 		}	foreach _tempMagazine;
 	};
-
 
 	_crate attachTo [_parachute, [0, 0, -1.3]];
 	_crate allowdamage false;
