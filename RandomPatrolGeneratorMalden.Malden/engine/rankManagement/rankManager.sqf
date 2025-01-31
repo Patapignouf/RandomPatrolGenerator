@@ -14,12 +14,29 @@ if (_isFirstStart) then
 	_unit setVariable ["RPG_prestige", _currentPrestige, true];
 
 	//Detect if there is a new player and show discord
-	if (_unitRanking == 0) then 
+	if ((missionNameSpace getVariable "officialPataCompanyServer") == 1) then 
 	{
-		_ctrl = findDisplay 46 createDisplay "RscDisplayEmpty" ctrlCreate ["RscStructuredText", -1];
-		_ctrl ctrlSetPosition [0,0,1,1];
-		_ctrl ctrlCommit 0;
-		_ctrl ctrlSetStructuredText parseText "<a color='#ff0000' size='4' href='https://discord.gg/S6Y6YTjT'><t color='#ff0000'>Join the PataCompany !</t><br/><t color='#ff0000'>Join the Discord</t></a>";
+		if (_unitRanking == 0) then 
+		{
+			_tempDisplay = findDisplay 46 createDisplay "RscDisplayEmpty";
+
+			_backGround = _tempDisplay ctrlCreate[ "ctrlStaticPicture", -1 ];
+			_backGround ctrlSetPosition[ -0.1, -0.1, 1.2, 1.2 ];
+			_backGround ctrlSetText "#(argb,8,8,3)color(0.35,0.35,0.35,1)";
+			_backGround ctrlCommit 0;
+
+			//Discord link
+			_ctrl = _tempDisplay ctrlCreate ["RscStructuredText", -1];
+			_ctrl ctrlSetPosition [0,0,1,1];
+			_ctrl ctrlCommit 0;
+			_ctrl ctrlSetStructuredText parseText "<a color='#ff0000' size='4' href='https://discord.gg/S6Y6YTjT'><t color='#ff0000'>Join the PataCompany !</t><br/><t color='#ff0000'>Join the Discord</t></a>";
+
+			//TS3 link
+			_ctrl2 = _tempDisplay ctrlCreate ["RscStructuredText", -1];
+			_ctrl2 ctrlSetPosition [0,0.5,1,1];
+			_ctrl2 ctrlCommit 0;
+			_ctrl2 ctrlSetStructuredText parseText "<a color='#ff0000' size='4' href='https://tinyurl.com/47r9ur8z'><t color='#ff0000'>Join the TeamSpeak !</t></a>";
+		};
 	};
 
 	//Init all XP categories
