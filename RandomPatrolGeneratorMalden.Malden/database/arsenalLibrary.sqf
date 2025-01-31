@@ -716,7 +716,7 @@ setupPlayerLoadout = {
 	//InitParam
 	params ["_itemToAttachArsenal"];
 
-	_actionLoadoutSetup = _itemToAttachArsenal addAction ["<img size='3' image='\a3\missions_f_oldman\data\img\holdactions\holdAction_box_ca.paa'/><t size='1.2'>Setup loadout</t>",{
+	_actionLoadoutSetup = _itemToAttachArsenal addAction [format ["<img size='3' image='\a3\missions_f_oldman\data\img\holdactions\holdAction_box_ca.paa'/><t size='1.2'>%1</t>", localize "STR_ACTIONS_SETUP_LOADOUT"],{
 		//Define parameters
 		params ["_object","_caller","_ID","_parameters"];
 
@@ -737,7 +737,7 @@ setupPlayerLoadoutRemake = {
 	//InitParam
 	params ["_itemToAttachArsenal"];
 
-	_actionLoadoutSetup = _itemToAttachArsenal addAction ["<img size='3' image='\a3\missions_f_oldman\data\img\holdactions\holdAction_box_ca.paa'/><t size='1.2'>Setup loadout</t>",{
+	_actionLoadoutSetup = _itemToAttachArsenal addAction [format ["<img size='3' image='\a3\missions_f_oldman\data\img\holdactions\holdAction_box_ca.paa'/><t size='1.2'>%1</t>", localize "STR_ACTIONS_SETUP_LOADOUT"],{
 		//Define parameters
 		params ["_object","_caller","_ID","_parameters"];
 

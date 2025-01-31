@@ -199,8 +199,11 @@ if (enableThermal==0) then
 	[] spawn _disableThermal;
 };
 
-//Validate mods 
-[] call doCheckRunningModsOnClient;
+//Validate mods
+if ((missionNameSpace getVariable "enableModChecker") == 1) then 
+{
+	[] call doCheckRunningModsOnClient;
+};
 
 //Hide HUD group to debug the UI 
 showHUD [
@@ -354,7 +357,7 @@ if (side player == independent) then
 	[VA1] call setupPlayerLoadout;
 
 	//Add vehicle shop
-	VA1 addAction [format ["<img size='2' image='\a3\ui_f_oldman\data\IGUI\Cfg\holdactions\holdAction_market_ca.paa'/><t size='1'>Open vehicle shop</t>"],{
+	VA1 addAction [format ["<img size='2' image='\a3\ui_f_oldman\data\IGUI\Cfg\holdactions\holdAction_market_ca.paa'/><t size='1'>%1</t>", localize "STR_ACTIONS_OPEN_VEHICLE_SHOP"],{
 			//Define parameters
 			params ["_object","_caller","_ID","_avalaibleVehicle"];
 
@@ -578,7 +581,8 @@ if (side player == blufor) then
 	waitUntil{!isNil "TPFlag1"};
 	if (isNil "USS_FREEDOM_CARRIER") then 
 	{
-		TPFlag1 addAction [format ["<img size='2' image='\a3\ui_f_oldman\data\IGUI\Cfg\holdactions\holdAction_market_ca.paa'/><t size='1'>Open vehicle shop</t>"],{
+		TPFlag1 addAction [format ["<img size='2' image='\a3\ui_f_oldman\data\IGUI\Cfg\holdactions\holdAction_market_ca.paa'/><t size='1'>%1</t>", localize "STR_ACTIONS_OPEN_VEHICLE_SHOP"],{
+
 					//Define parameters
 					params ["_object","_caller","_ID","_avalaibleVehicle"];
 
@@ -586,7 +590,7 @@ if (side player == blufor) then
 			},_x,3,true,false,"","(_target distance _this <5) && (_this getVariable 'role' == 'leader' || _this getVariable 'role' == 'pilot')"];
 	};
 
-	TPFlag1 addAction ["<img size='2' image='\a3\ui_f_oldman\data\IGUI\Cfg\holdactions\holdAction_market_ca.paa'/><t size='1'>Open support shop</t>",{
+	TPFlag1 addAction [format ["<img size='2' image='\a3\ui_f_oldman\data\IGUI\Cfg\holdactions\holdAction_market_ca.paa'/><t size='1'>%1</t>", localize "STR_ACTIONS_OPEN_SUPPORT_SHOP"],{
 			//Define parameters
 			params ["_object","_caller","_ID","_avalaibleVehicle"];
 
@@ -718,7 +722,7 @@ if (isClass (configFile >> "CfgPatches" >> "ace_medical")) then
 if (missionNameSpace getVariable ["enableAdvancedRespawn", 1] == 1) then 
 {
 	//Add vehicle shop
-	player addAction [format ["<img size='2' image='\a3\ui_f_oldman\data\IGUI\Cfg\holdactions\holdAction_sleep_ca.paa'/><t size='1'>Place reinforcement tent</t>"],{
+    player addAction [format ["<img size='2' image='\a3\ui_f_oldman\data\IGUI\Cfg\holdactions\holdAction_market_ca.paa'/><t size='1'>%1</t>", localize "STR_ACTIONS_PLACE_TENT"],{
 		//Define parameters
 		params ["_object","_caller","_ID","_avalaibleVehicle"];
 
@@ -735,11 +739,28 @@ if (missionNameSpace getVariable ["enableAdvancedRespawn", 1] == 1) then
 		[[str (group _caller), _createTent,"\a3\ui_f\data\IGUI\Cfg\holdactions\holdAction_requestleadership_ca.paa" , [0,0,1,1]], 'GUI\3DNames\3DObjectNames.sqf'] remoteExec ['BIS_fnc_execVM', blufor, true];
 
 		//Add support action on tent
-		_createTent addAction ["<img size='2' image='\a3\ui_f_oldman\data\IGUI\Cfg\holdactions\holdAction_market_ca.paa'/><t size='1'>Open support shop</t>",{
+		_createTent addAction [format ["<img size='2' image='\a3\ui_f_oldman\data\IGUI\Cfg\holdactions\holdAction_market_ca.paa'/><t size='1'>%1</t>", localize "STR_ACTIONS_OPEN_SUPPORT_SHOP"],{
 			//Define parameters
 			params ["_object","_caller","_ID","_avalaibleVehicle"];
 
 			[[false], 'GUI\supportGUI\supportGUI.sqf'] remoteExec ['BIS_fnc_execVM', _caller];
+		},_x,3,true,false,"","(_target distance _this <5) && (_target getVariable [str (group _this), false])"];
+
+		_createTent addAction [format ["<img size='2' image='\a3\ui_f_oldman\data\IGUI\Cfg\holdactions\holdAction_sleep2_ca.paa'/>%1</t>", localize "STR_ACTIONS_SLEEP"],{
+			//Define parameters
+			params ["_object","_caller","_ID","_avalaibleVehicle"];
+
+			if (!(missionNamespace getVariable ["usedFewTimeAgo",false])) then 
+				{
+					//set morning
+					skipTime ((08 - dayTime + 24) % 24);
+					[format ["%1 needs to rest", name _caller]] remoteExec ["hint",0,true];
+					missionNamespace setVariable ["usedFewTimeAgo",true,true];
+					sleep 300;
+					missionNamespace setVariable ["usedFewTimeAgo",false,true];
+				} else {
+					hint "No need to rest";
+				};
 		},_x,3,true,false,"","(_target distance _this <5) && (_target getVariable [str (group _this), false])"];
 
 		//Create action to authorize tent disassembly
@@ -782,7 +803,7 @@ if (missionNameSpace getVariable ["enableAdvancedRespawn", 1] == 1) then
 			false
 		] remoteExec ["BIS_fnc_holdActionAdd", 0, true];
 
-	},_x,3,true,false,"","(_this getVariable 'role' == 'leader') && (missionNameSpace getVariable [ format ['bluforAdvancedRespawn%1', str (group _this)], true]) && (vehicle _this == _this)"];
+	},_x,3,true,false,"","(_this getVariable 'role' == 'leader') && (missionNameSpace getVariable [ format ['bluforAdvancedRespawn%1', str (group _this)], true]) && (vehicle _this == _this) && isTouchingGround _this"];
 };
 
 //Display welcome message
