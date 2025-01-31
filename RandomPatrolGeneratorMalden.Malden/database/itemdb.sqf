@@ -39,8 +39,16 @@ if (isClass (configFile >> "CfgPatches" >> "ace_medical")) then
 	"ACE_Flashlight_MX991",
 	"ACE_Kestrel4500",
 	"ACE_Flashlight_KSF1",
-	"ACE_Flashlight_XL50"];
+	"ACE_Flashlight_XL50",
+	"ace_flags_blue",
+	"ace_marker_flags_red",
+	"ace_flags_red",
+	"ace_marker_flags_blue",
+	"ACE_EHP"
+];
 };
+
+
 
 //basic medic items that will be included with all factions
 //Include ACE items
