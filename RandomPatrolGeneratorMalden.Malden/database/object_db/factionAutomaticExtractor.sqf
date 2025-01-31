@@ -73,6 +73,10 @@ adjustRole = {
 		{
 			_cfgRole = "grenadier";
 		};
+		if (["_arifleman", _cfgName] call BIS_fnc_inString) then 
+		{
+			_cfgRole = "autorifleman";
+		};
 		if (["diver", _cfgName] call BIS_fnc_inString) then 
 		{
 			_cfgRole = "diver";
@@ -80,6 +84,10 @@ adjustRole = {
 		if (["_UGV_", _cfgName] call BIS_fnc_inString || ["_UAV_", _cfgName] call BIS_fnc_inString) then 
 		{
 			_cfgRole = "UAV operator";
+		};
+		if (["_aa", _cfgName] call BIS_fnc_inString) then 
+		{
+			_cfgRole = "at";
 		};
 		if (["JTAC", _cfgName] call BIS_fnc_inString || ["radioman", _cfgName] call BIS_fnc_inString) then 
 		{
