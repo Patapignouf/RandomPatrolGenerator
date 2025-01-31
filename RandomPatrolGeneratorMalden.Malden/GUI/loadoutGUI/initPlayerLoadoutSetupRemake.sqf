@@ -310,6 +310,9 @@ _ButtonLoad ctrlAddEventHandler ["ButtonClick",{
 				player setVariable ["avalaibleItemsInArsenal", _newAvalaibleItems];
 			};
 
+			//Save loadout on respawn
+			player setVariable ["spawnLoadout", getUnitLoadout player];
+
 			[ctrlParent _ctrl] call refreshCustomLoadoutDisplay;
 			cutText ["Loadout loaded", "PLAIN", 0.3];
 	}];
