@@ -59,7 +59,7 @@ params ["_thisGroup", "_position", "_distance","_allowCamp"];
 				_x disableAI "PATH";
 				_tempPosition = selectRandom _allPositions;
 				_allPositions = _allPositions - [_tempPosition];
-				_x setUnitPos selectRandom ["UP","UP","MIDDLE"];
+				[_x, "STAND1", "ASIS"] call BIS_fnc_ambientAnim;
 				_x setPos (_tempPosition);
 
 				//80% to leave the position if fired
