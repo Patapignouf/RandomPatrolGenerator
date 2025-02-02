@@ -18,6 +18,7 @@ clearMagazineCargoGlobal VA2;
 clearItemCargoGlobal VA2;
 clearBackpackCargoGlobal VA2;
 VA2 allowDamage false; 
+VA2 enableSimulationGlobal false;
 publicvariable "VA2";
 
 [["STR_RPG_3D_LOADOUT", (getPos VA2) vectorAdd [0,0,2],"\a3\ui_f\data\igui\cfg\simpletasks\types\rifle_ca.paa" , [1,1,0,1]], 'GUI\3DNames\3DNames.sqf'] remoteExec ['BIS_fnc_execVM', blufor, true];
@@ -171,7 +172,7 @@ if (isClass (configFile >> "CfgPatches" >> "ace_medical")) then
 	_tempBox addItemCargoGlobal ["ACE_bloodIV_500", 10];
 	_tempBox addItemCargoGlobal ["ACE_bloodIV", 5];
 	_tempBox addItemCargoGlobal ["ACE_tourniquet", 5];
-	_tempBox addItemCargoGlobal ["ACE_Suture", 20];
+	_tempBox addItemCargoGlobal ["ACE_Suture", 100];
 
 	//Setup fortification ACE mod
 	[blufor, 100, [["Land_BagFence_Long_F", 10], ["Land_BagFence_Round_F", 10], ["Land_SandbagBarricade_01_hole_F", 15], ["Land_BagBunker_Small_F", 20]]] call ace_fortify_fnc_registerObjects;
@@ -205,6 +206,7 @@ SettingsComputer =  createVehicle ["Land_MultiScreenComputer_01_olive_F", [_init
 
 _mapTexture = ((configFile >> "CfgWorlds" >> worldName >> "pictureMap") call BIS_fnc_GetCfgData);
 TPFlag1 = createVehicle ["Land_MapBoard_Enoch_F", [_initBlueforLocation, 1, 10, 3, 0, 20, 0] call BIS_fnc_findSafePos, [], 0, "NONE"];
+TPFlag1 enableSimulationGlobal false;
 [TPFlag1, false] remoteExec ["enableSimulationGlobal", 2];
 TPFlag1 setVectorUp surfaceNormal position TPFlag1;
 TPFlag1 setObjectTexture [0, _mapTexture];
