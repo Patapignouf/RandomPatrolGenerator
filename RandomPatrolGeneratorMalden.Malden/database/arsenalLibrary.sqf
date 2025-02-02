@@ -347,19 +347,19 @@ getVirtualMagazine = {
 				//Add default weapon magazine except large magazine
 				_listOfLargeMagazineText = ["40Rnd","50Rnd", "60Rnd", "75rnd", "100Rnd", "150Rnd", "200Rnd"]; //
 				_currentWeaponMagazineList = getArray (configfile >> "CfgWeapons" >> _x >> "magazines");
-					if (count _currentWeaponMagazineList != 0) then 
+				if (count _currentWeaponMagazineList != 0) then 
+				{
+					_currentWeapon = _x;
 					{
-						_currentWeapon = _x;
+						if ((virtualMagazineList) findIf {_currentWeapon == (_x)} == -1) then 
 						{
-							if ((virtualMagazineList) findIf {_currentWeapon == (_x)} == -1) then 
+							if (!([_x, _listOfLargeMagazineText] call isElementOfArrayInString) && !([_x] call isBannedItem)) then 
 							{
-								if (!([_x, _listOfLargeMagazineText] call isElementOfArrayInString) && !([_x] call isBannedItem)) then 
-								{
-									virtualMagazineList pushBackUnique _x;
-								};
+								virtualMagazineList pushBackUnique _x;
 							};
-						} foreach _currentWeaponMagazineList;
-					};
+						};
+					} foreach _currentWeaponMagazineList;
+				};
 				} foreach currentWeaponList;
 			};
 	};
@@ -1062,9 +1062,9 @@ validateSpecificItem =
 									// _technicalParents = [configFile >> "CfgWeapons" >> _x, true] call BIS_fnc_returnParents;
 									// diag_log format ["technical parents"];
 									// if (getParentsFromItems)
+
+									//"arifle_mx_gl_black_hamr_pointer_f" call BIS_fnc_weaponComponents;
 									_currentPlayer removeprimaryWeaponItem _itemToVerify;
-
-
 								};
 
 								//Remove this specific item
@@ -1147,8 +1147,8 @@ adjustCookOf = {
 		* 1: slowdownFactor <NUMBER>
 		* 2: jamChance <NUMBER>
 		*/
-		_weaponData set [0, (_weaponData # 0) + 0.25];
-		_weaponData set [2, (_weaponData # 2) + (0.08 / 100)];
+		_weaponData set [0, (_weaponData # 0) + 0.10];
+		_weaponData set [2, (_weaponData # 2) + (0.02 / 100)];
 		ace_overheating_cacheWeaponData set [_weaponUsed, _weaponData];
 	};
 

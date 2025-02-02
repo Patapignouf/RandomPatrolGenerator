@@ -138,7 +138,7 @@ _missionSettings = "";
 	_paramValue = ((_currentParam#0) select {(missionNameSpace getVariable [_currentParam#3,0]) == _x#0})#0#1;
 	_missionSettings = format ["%1%2 : %3<br />", _missionSettings, _paramName, _paramValue];
 } foreach baseParamsToManage;
-[format ["<t color='#ffffff' align='left' size='.6'>Mission settings :<br /><br />%1</t>", _missionSettings],1,-0.1,10,1,0,789] spawn BIS_fnc_dynamicText;
+[format ["<t color='#ffffff' align='left' size='.6'>Mission settings :<br />%1</t>", _missionSettings],1,-0.1,10,1,0,789] spawn BIS_fnc_dynamicText;
 
 
 if (player getVariable ["isSetupMission", false]) then 

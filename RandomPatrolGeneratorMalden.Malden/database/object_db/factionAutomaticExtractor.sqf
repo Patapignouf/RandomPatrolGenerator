@@ -180,6 +180,35 @@ doFillWithRifleman = {
 	_groupToEvaluate
 };
 
+getAllStringInArray = {
+	params ["_array"];
+
+	{
+		if (typeName _x == "ARRAY") then 
+		{
+			_array = _array - [_x];
+			_array = _array + ([_x] call getAllStringInArray);
+		};
+	} foreach _array;
+
+	_array = _array - [""];
+
+	_array
+};
+
+filterString = {
+	params ["_array"];
+
+	{
+		if (typeName _x != "STRING") then 
+		{
+			_array = _array - [_x];
+		};
+	} foreach _array;
+	_array
+};
+
+
 mergeFactions = {
 	params ["_factionToEnhanced", "_factionToMerge"];
 
@@ -371,6 +400,20 @@ _roleFilter = ["Unarmed"];
 							};
 							_currentStuffFaction set [_indexFound, _currentStuffFactionCurrentRole];
 							missionNamespace setVariable [_currentFactionName, _currentStuffFaction, true]; 
+						};
+
+						//Specifies accessories for the faction
+						if (_thisRole == "leader") then 
+						{
+							//Allow all accessories from the leader to other people
+
+							_currentFactionName = format ["attachmentShortList%1", _thisFac];
+
+							_currentUnitStuff = getUnitLoadout _cfgName;
+							_currentUnitStuff = [([_currentUnitStuff] call getAllStringInArray)] call filterString;
+							_accessoriesShort = missionNamespace getVariable [_currentFactionName, []];
+							_accessoriesShort = _accessoriesShort + _currentUnitStuff;
+							missionNamespace setVariable [_currentFactionName, _accessoriesShort, true]; 
 						};
 					};
 				};
