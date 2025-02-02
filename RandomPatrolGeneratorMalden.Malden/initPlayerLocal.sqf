@@ -597,13 +597,6 @@ if (side player == blufor) then
 			[[true], 'GUI\supportGUI\supportGUI.sqf'] remoteExec ['BIS_fnc_execVM', _caller];
 	},_x,3,true,false,"","_target distance _this <5"];
 
-	TPFlag1 addAction ["<img size='2' image='\a3\ui_f_oldman\data\IGUI\Cfg\holdactions\holdAction_market_ca.paa'/><t size='1'>Open team member shop</t>",{
-			//Define parameters
-			params ["_object","_caller","_ID","_avalaibleVehicle"];
-
-			[[], 'GUI\botteamGUI\botteamGUI.sqf'] remoteExec ['BIS_fnc_execVM', _caller];
-	},_x,3,true,false,"","(_target distance _this <5) && (_this getVariable 'role' == 'leader')"];
-
 		//Add abort action to TPFlag1
 	_actionIdAbortMission = TPFlag1 addAction 
 	[

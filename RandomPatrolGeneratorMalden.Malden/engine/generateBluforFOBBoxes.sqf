@@ -213,6 +213,37 @@ publicvariable "TPFlag1";
 [["STR_RPG_3D_SHOP", (getPos TPFlag1) vectorAdd [0,0,2.5],"\a3\ui_f\data\igui\cfg\simpletasks\types\Radio_ca.paa" , [1,0,0,1]], 'GUI\3DNames\3DNames.sqf'] remoteExec ['BIS_fnc_execVM', blufor, true];
 
 
+//generate patrol and commandant
+_botHQ = [blufor, bluFaction, "leader"] call doAddBotSimple;
+_safeCommanderPos = [_initBlueforLocation, 1, 10, 1, 0, 20, 0] call BIS_fnc_findSafePos;
+_botHQ setPos _safeCommanderPos;
+_botHQ disableAI "ALL";
+_botHQ enableAI "ANIM";
+_botHQ allowDamage false;
+[_botHQ, "BRIEFING", "NONE"] call BIS_fnc_ambientAnim;
+[["STR_RPG_HC_NAME", (getPos _botHQ) vectorAdd [0,0,2.5],"\a3\UI_F_Orange\Data\CfgMarkers\b_Ordnance_ca.paa" , [0,0,1,1]], 'GUI\3DNames\3DNames.sqf'] remoteExec ['BIS_fnc_execVM', blufor, true];
+
+//Add teammember units
+[_botHQ, [format ["<img size='2' image='\a3\ui_f_oldman\data\IGUI\Cfg\holdactions\holdAction_market_ca.paa'/><t size='1'>%1</t>", localize "STR_ACTIONS_RECRUIT_UNITS"],{
+//Define parameters
+	params ["_object","_caller","_ID","_avalaibleVehicle"];
+
+	[[], 'GUI\botteamGUI\botteamGUI.sqf'] remoteExec ['BIS_fnc_execVM', _caller];
+},[],3,true,false,"","(_target distance _this <7) && (_this getVariable 'role' == 'leader')"]] remoteExec [ "addAction", 0, true ];
+
+//Add group manager
+[_botHQ, [format ["<img size='2' image='\a3\ui_f_oldman\data\IGUI\Cfg\holdactions\holdAction_market_ca.paa'/><t size='1'>%1</t>", localize "STR_ACTIONS_TEAM_SETTINGS"],{
+//Define parameters
+	params ["_object","_caller","_ID","_avalaibleVehicle"];
+
+	[[_caller], "GUI\teamManagementGUI\teamManagementGUI.sqf"] remoteExec ['BIS_fnc_execVM', _caller];
+
+},[],3,true,false,"","(_target distance _this <7)"]] remoteExec [ "addAction", 0, true ];
+
+HQCommander = _botHQ;
+publicVariable "HQCommander";
+
+
 //Manage carrier 
 if (!isNil "USS_FREEDOM_CARRIER") then 
 {
@@ -220,12 +251,14 @@ if (!isNil "USS_FREEDOM_CARRIER") then
 	waitUntil{!isNil "VA2"};
 	waitUntil{!isNil "TPFlag1"};
 	waitUntil{!isNil "deployableFOBItem"};
+	waitUntil{!isNil "HQCommander"};
 
 	_warEra = missionNamespace getVariable "warEra";
 
 	VA2 setPosASL [initBlueforLocation#0-105, initBlueforLocation#1-18, initBlueforLocation#2];
 	TPFlag1 setPosASL [initBlueforLocation#0-115, initBlueforLocation#1-18, initBlueforLocation#2-0.5];
 	deployableFOBItem setPosASL [initBlueforLocation#0-50, initBlueforLocation#1-15, initBlueforLocation#2];
+	HQCommander setPosASL [initBlueforLocation#0-117, initBlueforLocation#1-18, initBlueforLocation#2-0.5];
 
 	//Move basic ammo box
 	waitUntil{!isNil "BluforAmmoBox"};
@@ -427,7 +460,21 @@ if (!isNil "USS_FREEDOM_CARRIER") then
 			};
 		};
 	} foreach bluforFixedWing;
+} else 
+{
+	//Create patrol
+	_patrolGroup = createGroup blufor;
+	_startPatrolPos = [_initBlueforLocation, 30, 60, 1, 0, 20, 0] call BIS_fnc_findSafePos;
+	for [{_i = 0}, {_i < 6}, {_i = _i + 1}] do
+	{
+		_botPatrol = [blufor, bluFaction, "random"] call doAddBotSimple;
+		_botPatrol setPos _startPatrolPos;
+		[_botPatrol] joinSilent _patrolGroup;
+	};
+	_patrolGroup setBehaviour "SAFE";
+	[_patrolGroup, _initBlueforLocation, 100] call doPatrol; 
 };
+
 
 
 _trgBluforGrassCutterFOB = createTrigger ["EmptyDetector", initBlueforLocation];

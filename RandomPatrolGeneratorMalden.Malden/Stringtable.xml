@@ -1766,6 +1766,16 @@
                 <English>Setup loadout</English>
                 <French>Configurer l'équipement</French>
             </Key>
+            <Key ID="STR_ACTIONS_RECRUIT_UNITS">
+                <Original>Recruit unit</Original>
+                <English>Recruit unit</English>
+                <French>Recruter des unités</French>
+            </Key>
+            <Key ID="STR_ACTIONS_TEAM_SETTINGS">
+                <Original>Create or join group</Original>
+                <English>Create or join group</English>
+                <French>Créer ou rejoindre un groupe</French>
+            </Key>
             <Key ID="STR_ACTIONS_SLEEP">
                 <Original>Sleep until next morning</Original>
                 <English>Sleep until next morning</English>
