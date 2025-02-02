@@ -240,6 +240,19 @@ _botHQ allowDamage false;
 
 },[],3,true,false,"","(_target distance _this <7)"]] remoteExec [ "addAction", 0, true ];
 
+if ((missionNameSpace getVariable "officialPataCompanyServer") == 1) then 
+{
+	[_botHQ, [format ["<img size='2' image='\a3\ui_f_oldman\data\IGUI\Cfg\holdactions\holdAction_market_ca.paa'/><t size='1'>%1</t>", localize "STR_ACTIONS_JOINPATACOMPANY"],{
+	//Define parameters
+	params ["_object","_caller","_ID","_avalaibleVehicle"];
+
+	[] call displayPataCompanyAd;
+
+	},[],3,true,false,"","(_target distance _this <7)"]] remoteExec [ "addAction", 0, true ];
+};
+
+
+
 HQCommander = _botHQ;
 publicVariable "HQCommander";
 

@@ -8,6 +8,40 @@ rankList = [
 	["COLONEL",8000]
 ];
 
+displayPataCompanyAd = {
+	_tempDisplay = findDisplay 46 createDisplay "RscDisplayEmpty";
+
+	_backGround = _tempDisplay ctrlCreate[ "ctrlStaticPicture", -1 ];
+	_backGround ctrlSetPosition[ -0.1, -0.1, 1.2, 1.2 ];
+	_backGround ctrlSetText "#(argb,8,8,3)color(0.35,0.35,0.35,1)";
+	_backGround ctrlCommit 0;
+
+	//Discord link
+	_ctrl = _tempDisplay ctrlCreate ["RscStructuredText", -1];
+	_ctrl ctrlSetPosition [0,0,1,1];
+	_ctrl ctrlCommit 0;
+	_ctrl ctrlSetStructuredText parseText "<a color='#ff0000' size='4' href='https://discord.gg/S6Y6YTjT'><t color='#ff0000'>Join the PataCompany !</t><br/><t color='#ff0000'>Join the Discord</t></a>";
+
+	//TS3 link
+	_ctrl2 = _tempDisplay ctrlCreate ["RscStructuredText", -1];
+	_ctrl2 ctrlSetPosition [0,0.5,1,1];
+	_ctrl2 ctrlCommit 0;
+	_ctrl2 ctrlSetStructuredText parseText "<a color='#ff0000' size='4' href='https://tinyurl.com/47r9ur8z'><t color='#ff0000'>Join the TeamSpeak !</t></a>";
+
+	_ButtonRight = _tempDisplay ctrlCreate ["RscButton", -1];
+	_ButtonRight ctrlSetPosition [(0.45 * safezoneW + safezoneX),(0.75 * safezoneH + safezoneY),(0.09 * safezoneW),(0.025* safezoneH)];
+	_ButtonRight ctrlSetBackgroundColor [0,0,0,0.7];
+	_ButtonRight ctrlCommit 0;
+	ctrlSetFocus _ButtonRight;
+	_ButtonRight ctrlEnable true;
+	_ButtonRight ctrlSetText localize "RPG_GUI_GENERAL_CLOSE";
+	_ButtonRight ctrlAddEventHandler ["ButtonClick",{
+			params ["_ctrl"];
+			_display = ctrlParent _ctrl;
+			_display closeDisplay 1;
+	}];	
+};
+
 saveRank = {
 	params ["_experience"];
 

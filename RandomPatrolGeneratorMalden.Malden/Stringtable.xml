@@ -1781,6 +1781,11 @@
                 <English>Sleep until next morning</English>
                 <French>Dormir jusqu'au lendemain</French>
             </Key>
+            <Key ID="STR_ACTIONS_JOINPATACOMPANY">
+                <Original>Join the PataCompany</Original>
+                <English>Join the PataCompany</English>
+                <French>Rejoindre la PataCompany</French>
+            </Key>
     </Container>
 </Project>
 
