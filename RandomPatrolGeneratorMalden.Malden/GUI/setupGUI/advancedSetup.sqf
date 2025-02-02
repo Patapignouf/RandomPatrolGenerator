@@ -30,7 +30,7 @@ _backGround ctrlCommit 0;
 _RcsTitleDialog = _display ctrlCreate ["RscStructuredText", -1];
 _RcsTitleDialog ctrlSetStructuredText parseText "<t size='0.5'>&#160;</t><br/><t size='1' align='center'>Advanced Settings&#160;&#160;</t>";
 _RcsTitleDialog ctrlSetPosition [ -0.1, -0.1, 1.2, 0.07 ];
-_RcsTitleDialog ctrlSetBackgroundColor [0,0,0,0.8];
+_RcsTitleDialog ctrlSetBackgroundColor [0.8,0.5,0,1];
 _RcsTitleDialog ctrlSetTextColor [1, 1, 1, 1];
 _RcsTitleDialog ctrlCommit 0;
 
