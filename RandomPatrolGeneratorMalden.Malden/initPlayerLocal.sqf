@@ -746,7 +746,7 @@ if (missionNameSpace getVariable ["enableAdvancedRespawn", 1] == 1) then
 			if (!(missionNamespace getVariable ["usedFewTimeAgo",false])) then 
 				{
 					//set morning
-					skipTime ((08 - dayTime + 24) % 24);
+					((08 - dayTime + 24) % 24) remoteExec ["skipTime", 2, false]; 
 					[format ["%1 needs to rest", name _caller]] remoteExec ["hint",0,true];
 					missionNamespace setVariable ["usedFewTimeAgo",true,true];
 					sleep 300;
