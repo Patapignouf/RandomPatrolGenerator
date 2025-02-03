@@ -97,8 +97,12 @@ _buttonJoin ctrlAddEventHandler[ "ButtonClick",
 		[player] joinSilent ([_groupName, player] call getGroupByName);
 
 		//Refresh display
-		[_display] call populateTable;
-		[_display] call refreshTitle;
+		[_display] spawn {
+			params ["_display"];
+			sleep 0.5;
+			[_display] call populateTable;
+			[_display] call refreshTitle;
+		};
 	}
 ];
 
