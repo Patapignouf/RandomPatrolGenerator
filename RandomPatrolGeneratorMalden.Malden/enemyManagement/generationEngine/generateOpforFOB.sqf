@@ -44,7 +44,7 @@ if (!([_OpforFobLocation] call isLocationOnMap)) then
 			_x setPosASL (getPosASL _randomAvalaiblePos);
 			_x disableAI "PATH";
 			_x setDir (getDir _randomAvalaiblePos);
-			[_x, "STAND1", "ASIS"] call BIS_fnc_ambientAnim; //make unit anim
+			[_x, "STAND1", "ASIS"] remoteExecCall ["BIS_fnc_ambientAnim"]; //make unit anim
 			deleteVehicle _randomAvalaiblePos;
 			_OpforFobStandardOpforLocation = _OpforFobStandardOpforLocation - [_randomAvalaiblePos];
 		} foreach units _opforFOBGarrison;

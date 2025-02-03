@@ -222,7 +222,7 @@ _botHQ setPos _safeCommanderPos;
 _botHQ disableAI "ALL";
 _botHQ enableAI "ANIM";
 _botHQ allowDamage false;
-[_botHQ, "BRIEFING", "NONE"] call BIS_fnc_ambientAnim;
+[_botHQ, "BRIEFING", "NONE"] remoteExecCall ["BIS_fnc_ambientAnim"];
 [["STR_RPG_HC_NAME", (getPos _botHQ) vectorAdd [0,0,2.5],"\a3\UI_F_Orange\Data\CfgMarkers\b_Ordnance_ca.paa" , [0,0,1,1]], 'GUI\3DNames\3DNames.sqf'] remoteExec ['BIS_fnc_execVM', blufor, true];
 
 //Add teammember units
