@@ -152,6 +152,16 @@ _roleFilter = ["Unarmed"];
 							missionNamespace setVariable [_currentFactionName, _currentStuffFaction, true]; 
 						};
 
+						//Add backpack
+						_currentFactionName = format ["backPackList%1", _thisFac];
+						_currentUnitStuff = getUnitLoadout _cfgName;
+						_loadoutToCheck = [([_currentUnitStuff] call getAllStringInArray)] call filterString;
+						_currentUnitStuff = [_loadoutToCheck] call getListOfBagsFromStuff;
+						_backPackList = missionNamespace getVariable [_currentFactionName, []];
+						_backPackList = _backPackList + _currentUnitStuff;
+						missionNamespace setVariable [_currentFactionName, _backPackList, true]; 
+
+						
 						//Specifies accessories for the faction
 						if (_thisRole == "leader" || _thisRole == "rifleman") then 
 						{
