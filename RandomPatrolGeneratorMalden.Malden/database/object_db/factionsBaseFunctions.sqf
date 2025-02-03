@@ -21,39 +21,6 @@ adjustRole = {
 			case "SpecialOperative": {_cfgRole = "rifleman"};
 		};
 
-
-		_iconToTest = (configFile >> "CfgVehicles" >> _cfgName >> "icon") call BIS_fnc_GetCfgData;
-
-		//Bind role with icon
-		switch (_iconToTest) do {
-			case "iconManLeader";
-			case "iconManOfficer":
-			{
-				_cfgRole = "leader";
-			};
-			case "iconManAT":
-			{
-				_cfgRole = "at";
-			};
-			case "iconManMedic":
-			{
-				_cfgRole = "medic";
-			};
-			case "iconManExplosive";
-			case "iconManEngineer":
-			{
-				_cfgRole = "engineer";
-			};		
-			case "iconManMG":
-			{
-				_cfgRole = "autorifleman";
-			};
-			default
-			{
-				//Just _cfgRole
-			};
-		};
-
 		//Check if name contains specifics strings
 		if (["pilot", _cfgName] call BIS_fnc_inString || ["Pilot", _cfgName] call BIS_fnc_inString) then 
 		{
@@ -93,6 +60,40 @@ adjustRole = {
 			_cfgRole = "radioman";
 		};
 	};
+
+	_iconToTest = (configFile >> "CfgVehicles" >> _cfgName >> "icon") call BIS_fnc_GetCfgData;
+
+	//Bind role with icon
+	switch (_iconToTest) do {
+		case "iconManLeader";
+		case "iconManOfficer":
+		{
+			_cfgRole = "leader";
+		};
+		case "iconManAT":
+		{
+			_cfgRole = "at";
+		};
+		case "iconManMedic":
+		{
+			_cfgRole = "medic";
+		};
+		case "iconManExplosive";
+		case "iconManEngineer":
+		{
+			_cfgRole = "engineer";
+		};		
+		case "iconManMG":
+		{
+			_cfgRole = "autorifleman";
+		};
+		default
+		{
+			//Just _cfgRole
+		};
+	};
+
+
 	_cfgRole
 };
 
@@ -106,6 +107,23 @@ isAccessory = {
 isWeapon = {
 	params ["_itemClassName"];
 	_result = (count (getArray (configfile >> "CfgWeapons" >> _itemClassName >> "magazines")) != 0);
+	_result;
+};
+
+isBag = {
+	params ["_itemClassName"];
+	_result = (([configFile >> "CfgVehicles" >> _itemClassName, true] call BIS_fnc_returnParents) findIf {"Bag_Base" == (_x)} != -1);
+	_result;
+};
+
+getParentBag = {
+	params ["_itemClassName"];
+	_resultList = (([configFile >> "CfgVehicles" >> _itemClassName, true] call BIS_fnc_returnParents));
+	_result = _itemClassName;
+	if (count _resultList > 1) then 
+	{	
+		_result = _resultList#1;
+	};
 	_result;
 };
 
@@ -297,6 +315,25 @@ getListOfWeaponsFromStuff =
 
 	_resultList;
 };
+
+getListOfBagsFromStuff = 
+{
+	params ["_loadout"];
+	_resultList = [];
+
+	{
+		_bagToCheck  = _x;
+		if ([_bagToCheck] call isBag) then 
+		{
+			_resultList pushBack _bagToCheck;
+			_resultList pushBack ([_bagToCheck] call getParentBag);
+		};
+	} foreach _loadout;
+
+	_resultList;
+};
+
+
 
 addRadioToFaction = {
 	params ["_side", "_faction"];
