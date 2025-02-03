@@ -1,257 +1,4 @@
-
-adjustRole = {
-	params ["_cfgRole", "_cfgName"];
-
-	_backpackToTest = (configFile >> "CfgVehicles" >> _cfgName >> "backpack") call BIS_fnc_GetCfgData;
-	if (["_Ammo_", _backpackToTest] call BIS_fnc_inString) then 
-	{
-		_cfgRole = "autorifleman";//Temp
-	} else 
-	{
-		//Bind role with wrole
-		switch (_cfgRole) do {
-			case "CombatLifeSaver": {_cfgRole = "medic"};
-			case "Grenadier": {_cfgRole = "grenadier"};
-			case "MachineGunner": {_cfgRole = "autorifleman"};
-			case "Marksman": {_cfgRole = "marksman"};
-			case "MissileSpecialist": {_cfgRole = "at"};
-			case "Assistant": {_cfgRole = "rifleman"}; //Assistant must go with basic rifleman
-			case "Rifleman": {_cfgRole = "rifleman"};
-			case "Sapper": {_cfgRole = "engineer"};		
-			case "Crewman": {_cfgRole = "pilot"}; //Assistant must go with basic rifleman
-			case "SpecialOperative": {_cfgRole = "rifleman"};
-		};
-
-
-		_iconToTest = (configFile >> "CfgVehicles" >> _cfgName >> "icon") call BIS_fnc_GetCfgData;
-
-		//Bind role with icon
-		switch (_iconToTest) do {
-			case "iconManLeader";
-			case "iconManOfficer":
-			{
-				_cfgRole = "leader";
-			};
-			case "iconManAT":
-			{
-				_cfgRole = "at";
-			};
-			case "iconManMedic":
-			{
-				_cfgRole = "medic";
-			};
-			case "iconManExplosive";
-			case "iconManEngineer":
-			{
-				_cfgRole = "engineer";
-			};		
-			case "iconManMG":
-			{
-				_cfgRole = "autorifleman";
-			};
-			default
-			{
-				//Just _cfgRole
-			};
-		};
-
-		//Check if name contains specifics strings
-		if (["pilot", _cfgName] call BIS_fnc_inString || ["Pilot", _cfgName] call BIS_fnc_inString) then 
-		{
-			_cfgRole = "pilot";
-		};
-
-		if (["marksman", _cfgName] call BIS_fnc_inString) then 
-		{
-			_cfgRole = "marksman";
-		};
-		if (["sniper", _cfgName] call BIS_fnc_inString || ["ghillie", _cfgName] call BIS_fnc_inString) then 
-		{
-			_cfgRole = "sniper";
-		};
-		if (["grenadier", _cfgName] call BIS_fnc_inString || ["_GL", _cfgName] call BIS_fnc_inString) then 
-		{
-			_cfgRole = "grenadier";
-		};
-		if (["_arifleman", _cfgName] call BIS_fnc_inString) then 
-		{
-			_cfgRole = "autorifleman";
-		};
-		if (["diver", _cfgName] call BIS_fnc_inString) then 
-		{
-			_cfgRole = "diver";
-		};
-		if (["_UGV_", _cfgName] call BIS_fnc_inString || ["_UAV_", _cfgName] call BIS_fnc_inString) then 
-		{
-			_cfgRole = "UAV operator";
-		};
-		if (["_aa", _cfgName] call BIS_fnc_inString) then 
-		{
-			_cfgRole = "at";
-		};
-		if (["JTAC", _cfgName] call BIS_fnc_inString || ["radioman", _cfgName] call BIS_fnc_inString) then 
-		{
-			_cfgRole = "radioman";
-		};
-	};
-	_cfgRole
-};
-
-doSetOpfor = {
-	params ["_currentFactionName","_opforNameClass", "_existingValues"];
-	//diag_log format ["%1%2 : %3",_opforNameClass,_currentFactionName, _existingValues];
-	missionNamespace setVariable [format ["%1%2",_opforNameClass,_currentFactionName], _existingValues, true]; 
-};
-
-doDefineOpforFactionInfantry = {
-	params ["_opforFaction", "_currentStuffFaction"];
-
-	_coreEnemyGroup = [];
-
-	//Setup core group
-	_coreEnemyGroup pushBack ([_currentStuffFaction, "leader"] call getUnitByRole);
-	for [{_i = 0}, {_i < 3}, {_i = _i + 1}] do
-	{ 
-		_coreEnemyGroup pushBack ([_currentStuffFaction, "rifleman"] call getUnitByRole);
-	};
-
-	//setup core on every group
-	_baseEnemyGroup = +_coreEnemyGroup;
-	_baseEnemyATGroup = +_coreEnemyGroup;
-	_baseEnemyDemoGroup = +_coreEnemyGroup;
-
-	//Setup specific group design 
-	//Base grouo
-	_baseEnemyGroup pushBack ([_currentStuffFaction, "medic"] call getUnitByRole);
-	_baseEnemyGroup pushBack ([_currentStuffFaction, "rifleman"] call getUnitByRole);
-	for [{_i = 0}, {_i < 2}, {_i = _i + 1}] do
-	{ 
-		_baseEnemyGroup pushBack ([_currentStuffFaction, "autorifleman"] call getUnitByRole);
-	};
-	//diag_log format ["_baseEnemyGroup %1 ",_baseEnemyGroup];
-
-	//AT group
-	_baseEnemyATGroup pushBack ([_currentStuffFaction, "at"] call getUnitByRole);
-	_baseEnemyATGroup pushBack ([_currentStuffFaction, "grenadier"] call getUnitByRole);
-	//diag_log format ["_baseEnemyATGroup %1 ",_baseEnemyATGroup];
-
-	//Demo group
-	_baseEnemyDemoGroup pushBack ([_currentStuffFaction, "engineer"] call getUnitByRole);
-	_baseEnemyDemoGroup pushBack ([_currentStuffFaction, "medic"] call getUnitByRole);
-	//diag_log format ["_baseEnemyDemoGroup %1 ",_baseEnemyDemoGroup];
-
-	//Fill with rifleman
-	_baseEnemyGroup = [_baseEnemyGroup, _currentStuffFaction, 8] call doFillWithRifleman;
-	_baseEnemyATGroup = [_baseEnemyATGroup, _currentStuffFaction, 6] call doFillWithRifleman;
-	_baseEnemyDemoGroup = [_baseEnemyDemoGroup, _currentStuffFaction, 6] call doFillWithRifleman;
-
-	[_opforFaction, "baseEnemyGroup", _baseEnemyGroup] call doSetOpfor;
-	[_opforFaction, "baseEnemyATGroup", _baseEnemyATGroup] call doSetOpfor;
-	[_opforFaction, "baseEnemyDemoGroup", _baseEnemyDemoGroup] call doSetOpfor;
-};
-
-getUnitByRole = {
-	params ["_loadout", "_role"];
-
-	_unit = "";
-	_unitIndex = _loadout findIf {_x#0 == _role};
-
-	if (_unitIndex != -1) then 
-	{
-		_unit = (_loadout#_unitIndex)#1;
-	};
-	_unit
-};
-
-doFillWithRifleman = {
-	params ["_groupToEvaluate", "_currentStuffFaction", "_desiredNumber"];
-
-	//diag_log format ["_groupToEvaluate %1 %3 desiredNumber %2",_groupToEvaluate, _desiredNumber, count _groupToEvaluate];
-
-	if ((count _groupToEvaluate) < _desiredNumber) then 
-	{
-		_neededUnits = _desiredNumber-(count _groupToEvaluate);
-		for [{_i = 0}, {_i < (_neededUnits)}, {_i = _i + 1}] do
-		{ 
-			_groupToEvaluate pushBack ([_currentStuffFaction, "rifleman"] call getUnitByRole);
-		};
-	};
-	//diag_log format ["_groupToEvaluate after %1 %3 desiredNumber %2",_groupToEvaluate, _desiredNumber, count _groupToEvaluate];
-	_groupToEvaluate
-};
-
-getAllStringInArray = {
-	params ["_array"];
-
-	{
-		if (typeName _x == "ARRAY") then 
-		{
-			_array = _array - [_x];
-			_array = _array + ([_x] call getAllStringInArray);
-		};
-	} foreach _array;
-
-	_array = _array - [""];
-
-	_array
-};
-
-filterString = {
-	params ["_array"];
-
-	{
-		if (typeName _x != "STRING") then 
-		{
-			_array = _array - [_x];
-		};
-	} foreach _array;
-	_array
-};
-
-
-mergeFactions = {
-	params ["_factionToEnhanced", "_factionToMerge"];
-
-	_factionVariables = [
-		"bluforUnarmedVehicle",
-		"bluforArmedVehicle",
-		"bluforStaticWeapon",
-		"bluforMortar",
-		"bluforFixedWing",
-		"bluforBoat",
-		"bluforArmoredVehicle",
-		"bluforUnarmedVehicleChopper",
-		"bluforArmedChopper",
-		"bluforDrone"
-	];
-
-	//Merge all vehicles and props
-	{
-		_factionToEnhancedVariable = format ["%1%2", _x, _factionToEnhanced];
-		_factionToMergeVariable = format ["%1%2", _x, _factionToMerge];
-
-		_baseFaction = missionNameSpace getVariable [_factionToEnhancedVariable, []];
-		_mergingFaction = missionNameSpace getVariable [_factionToMergeVariable, []];
-		_mergingFactions = _baseFaction + _mergingFaction;
-		missionNameSpace setVariable [_factionToEnhancedVariable, _mergingFactions, true];
-	} foreach _factionVariables;
-	
-	//merge infantry loadout
-	_factionToEnhancedVariable = format ["loadout%1", _factionToEnhanced];
-	_factionToMergeVariable = format ["loadout%1", _factionToMerge];
-	_baseFaction = missionNameSpace getVariable [_factionToEnhancedVariable, []];
-	_mergingFaction = missionNameSpace getVariable [_factionToMergeVariable, []];
-	{
-		_mergingRole = _x;
-		_mergingRoleName = _x#0;
-		if (count (_baseFaction select {_x#0 == _mergingRoleName}) == 0) then 
-		{
-			_baseFaction pushBack _mergingRole;
-		};
-		//[TODO] Needs to manage conflicts merging
-	} foreach _mergingFaction;
-	missionNameSpace setVariable [_factionToEnhancedVariable, _baseFaction, true];
-};
+#include "factionsBaseFunctions.sqf";
 
 //Convert all faction number to faction string
 for "_i" from 0 to count factionInfos -1 do
@@ -323,14 +70,17 @@ _potentialOpfor = [];
 			case 0:
 			{
 				_sideName = "OPFOR";
+				[opfor, _factionTechName] call addRadioToFaction;
 			};
 			case 1:
 			{
 				_sideName = "BLUFOR";
+				[blufor, _factionTechName] call addRadioToFaction;
 			};
 			case 2:
 			{
 				_sideName = "INDEPENDENT";
+				[independent, _factionTechName] call addRadioToFaction;
 			};
 		};
 
@@ -403,16 +153,41 @@ _roleFilter = ["Unarmed"];
 						};
 
 						//Specifies accessories for the faction
-						if (_thisRole == "leader") then 
+						if (_thisRole == "leader" || _thisRole == "rifleman") then 
 						{
 							//Allow all accessories from the leader to other people
 
 							_currentFactionName = format ["attachmentShortList%1", _thisFac];
 
 							_currentUnitStuff = getUnitLoadout _cfgName;
-							_currentUnitStuff = [([_currentUnitStuff] call getAllStringInArray)] call filterString;
+							_loadoutToCheck = [([_currentUnitStuff] call getAllStringInArray)] call filterString;
+							_currentUnitStuff = [_loadoutToCheck] call getListOfAccessoriesFromStuff;
 							_accessoriesShort = missionNamespace getVariable [_currentFactionName, []];
 							_accessoriesShort = _accessoriesShort + _currentUnitStuff;
+							missionNamespace setVariable [_currentFactionName, _accessoriesShort, true]; 
+						};
+
+						//Specifies accessories for the faction
+						if (_thisRole == "rifleman") then 
+						{
+							//Allow all weapons from the rifleman to other people
+							_currentUnitStuff = getUnitLoadout _cfgName;
+							_loadoutToCheck = [([_currentUnitStuff] call getAllStringInArray)] call filterString;
+							_currentUnitStuff = [_loadoutToCheck] call getListOfWeaponsFromStuff;
+							
+							//Get weapons and accessories already attached
+							_listOfWeaponsAndAccessoriesFromStuff = [_currentUnitStuff] call getAllAccessoriesAndWeaponsFromWeapons;
+
+							//Whitelist complete weapons and weapons
+							_currentFactionName = format ["rifleList%1", _thisFac];
+							_rifleList = missionNamespace getVariable [_currentFactionName, []];
+							_rifleList = _rifleList + _currentUnitStuff + _listOfWeaponsAndAccessoriesFromStuff#0;
+							missionNamespace setVariable [_currentFactionName, _rifleList, true]; 
+
+							//Whitelist accessories already attached
+							_currentFactionName = format ["attachmentShortList%1", _thisFac];
+							_accessoriesShort = missionNamespace getVariable [_currentFactionName, []];
+							_accessoriesShort = _accessoriesShort + _listOfWeaponsAndAccessoriesFromStuff#1;
 							missionNamespace setVariable [_currentFactionName, _accessoriesShort, true]; 
 						};
 					};
@@ -533,58 +308,6 @@ _roleFilter = ["Unarmed"];
 
 } foreach ("(getNumber (_x >> 'scope') == 2)" configClasses (configFile / "CfgVehicles"));
 
-//Adjust basic role 
-{
-	_thisFac = _x;
-
-	_currentFactionName = format ["loadout%1", _thisFac];
-	_currentStuffFaction = 	missionNamespace getVariable [_currentFactionName, []];
-
-	_riflemanRoleIndex = (_currentStuffFaction findIf {"rifleman" == _x#0});
-
-	//If there is a rifleman role
-	if (_riflemanRoleIndex != -1) then {
-		_riflemanRoleConfig = _currentStuffFaction#_riflemanRoleIndex;
-		_riflemanRoles = [];
-
-		//Populate faction loadout with basic rifleman everywhere
-		if (count _riflemanRoleConfig == 2) then 
-		{
-			_riflemanRoles pushBack _riflemanRoleConfig#1;
-		} else 
-		{
-			
-			//Add all rifleman roles
-			{
-				_riflemanRoles pushBack _x;
-			} foreach _riflemanRoleConfig#2;
-		};
-
-		//Add rifleman role to every other role 
-		//The goal is to authorize rifleman stuff for every role
-		{
-			_currentRole = _x#0;
-			_currentStuffFactionCurrentRole = _x;
-
-			if (_currentRole != "rifleman") then 
-			{
-				_indexFound = _currentStuffFaction findIf {_currentRole == (_x#0)};
-				if (count _currentStuffFactionCurrentRole == 2) then 
-				{
-					_currentStuffFactionCurrentRole pushBack _riflemanRoles;
-					_currentStuffFactionCurrentRole pushBack false;
-				} else 
-				{
-					_currentStuffFactionCurrentRole#2 append _riflemanRoles;
-				};
-				_currentStuffFaction set [_indexFound, _currentStuffFactionCurrentRole];
-			};
-		}	foreach _currentStuffFaction;
-
-		//write new loadout
-		missionNamespace setVariable [_currentFactionName, _currentStuffFaction, true]; 
-	};
-} foreach _potentialOpfor;
 
 //Manage civilians men groups
 {
