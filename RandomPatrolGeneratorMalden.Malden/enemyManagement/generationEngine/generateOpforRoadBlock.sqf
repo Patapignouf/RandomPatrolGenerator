@@ -43,7 +43,7 @@ if (!([_possibleRoadPosition] call isLocationOnMap)) then
 			_OpforFobStandardOpforLocation = _OpforFobStandardOpforLocation - [_randomAvalaiblePos];
 
 			//Make unit anim
-			[_x, "STAND1", "ASIS"] remoteExecCall ["BIS_fnc_ambientAnim"];
+			//[_x, "STAND1", "ASIS"] remoteExecCall ["BIS_fnc_ambientAnim"];
 
 			//Disable IA prone
 			_x addEventHandler ["AnimStateChanged",
