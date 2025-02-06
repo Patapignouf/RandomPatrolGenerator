@@ -20,7 +20,7 @@ displayPataCompanyAd = {
 	_ctrl = _tempDisplay ctrlCreate ["RscStructuredText", -1];
 	_ctrl ctrlSetPosition [0,0,1,0.5];
 	_ctrl ctrlCommit 0;
-	_ctrl ctrlSetStructuredText parseText "<t size='4' color='#ff0000'>Join the PataCompany !</t><a color='#ff0000' size='3' href='https://discord.gg/S6Y6YTjT'><br/><t color='#ff0000'>Join the Discord</t></a>";
+	_ctrl ctrlSetStructuredText parseText "<t size='4' color='#f0ffff'>Join the </t><t size='4' color='#0048BA'>Pata</t><t size='4' color='#f0ffff'>Comp</t><t size='4' color='#E32636'>any</t><t size='4' color='#f0ffff'> !</t><br/><a color='#ff0000' size='3' href='https://discord.gg/S6Y6YTjT'><br/><t color='#ff0000'>Join the Discord</t></a>";
 
 	//TS3 link
 	_ctrl2 = _tempDisplay ctrlCreate ["RscStructuredText", -1];
