@@ -945,7 +945,7 @@ if (enableCampaignMode) then
 
 	//Add this action on campaign mode blufor side
 	waitUntil{!isNil "TPFlag1"};
-	[TPFlag1, ["<t color='#0a5e00'>Complete mission</t>",{
+	[TPFlag1, ["<t color='#0a5e00'>Complete campaign</t>",{
 			//Param initialization
 			params ["_object","_caller","_ID","_missionLength"];
 			_completedObjectives = missionNamespace getVariable ["completedObjectives",[]];
@@ -961,7 +961,7 @@ if (enableCampaignMode) then
 		},missionLength,1.5,true,true,"","_target distance _this <5 && side _this == blufor && _this getVariable 'role' == 'leader'"]] remoteExec ["addAction", 0, true];
 
 	//Add this action on campaign mode independent side
-	[VA1, ["<t color='#0a5e00'>Complete mission</t>",{
+	[VA1, ["<t color='#0a5e00'>Complete campaign</t>",{
 			//Param initialization
 			params ["_object","_caller","_ID","_missionLength"];
 			_completedObjectives = missionNamespace getVariable ["completedObjectives",[]];
