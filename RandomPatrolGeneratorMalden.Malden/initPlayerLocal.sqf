@@ -1,5 +1,6 @@
 //init tp to be able to spawn on the ground on each map
-player setPos [worldSize,worldSize,0];
+player setPos [worldSize,worldSize, 1000];
+player enableSimulationGlobal false;
 player allowdamage false;
 
 //#include "database\factionParameters.sqf"
@@ -30,7 +31,7 @@ diag_log format ["Setup Player %1 at position 0", name player];
 
 enableSentences false;
 
-//player enableSimulationGlobal false;
+
 player setVariable ["role", player getVariable ["initRole","rifleman"], true];
 
 [selectRandom ["LeadTrack01_F","LeadTrack01a_F","LeadTrack01b_F","LeadTrack03_F","LeadTrack01_F_Heli","LeadTrack04_F_EXP","LeadTrack01_F_Mark"], 10, 0.2] call BIS_fnc_playMusic;
@@ -680,7 +681,7 @@ if (didJIP) then
 		[[], 'GUI\respawnGUI\initPlayerRespawnMenu.sqf'] remoteExec ['BIS_fnc_execVM', player];
 	} else 
 	{
-		player setPos [0,0];
+		player setPos [-500,-500];
 		player setDamage 1;
 	};
 } else {
