@@ -339,8 +339,10 @@ enableOpforVehicleParam =
 [
 	[	
 		[0, "None"],
-		[1, "Medium"],
-		[2, "Too many"]
+		[1, "Few"],
+		[2, "Medium"],
+		[3, "Crazy"],
+		[4, "Insane"]
 	],
 	"Number Opfor vehicle",
 	1,
