@@ -18,15 +18,15 @@ displayPataCompanyAd = {
 
 	//Discord link
 	_ctrl = _tempDisplay ctrlCreate ["RscStructuredText", -1];
-	_ctrl ctrlSetPosition [0,0,1,1];
+	_ctrl ctrlSetPosition [0,0,1,0.5];
 	_ctrl ctrlCommit 0;
-	_ctrl ctrlSetStructuredText parseText "<a color='#ff0000' size='4' href='https://discord.gg/S6Y6YTjT'><t color='#ff0000'>Join the PataCompany !</t><br/><t color='#ff0000'>Join the Discord</t></a>";
+	_ctrl ctrlSetStructuredText parseText "<t size='4' color='#ff0000'>Join the PataCompany !</t><a color='#ff0000' size='3' href='https://discord.gg/S6Y6YTjT'><br/><t color='#ff0000'>Join the Discord</t></a>";
 
 	//TS3 link
 	_ctrl2 = _tempDisplay ctrlCreate ["RscStructuredText", -1];
-	_ctrl2 ctrlSetPosition [0,0.5,1,1];
+	_ctrl2 ctrlSetPosition [0,0.5,1,0.3];
 	_ctrl2 ctrlCommit 0;
-	_ctrl2 ctrlSetStructuredText parseText "<a color='#ff0000' size='4' href='https://tinyurl.com/47r9ur8z'><t color='#ff0000'>Join the TeamSpeak !</t></a>";
+	_ctrl2 ctrlSetStructuredText parseText "<a color='#ff0000' size='3' href='https://tinyurl.com/47r9ur8z'><t color='#ff0000'>Join the TeamSpeak !</t></a>";
 
 	_ButtonRight = _tempDisplay ctrlCreate ["RscButton", -1];
 	_ButtonRight ctrlSetPosition [(0.45 * safezoneW + safezoneX),(0.75 * safezoneH + safezoneY),(0.09 * safezoneW),(0.025* safezoneH)];
