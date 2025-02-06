@@ -155,6 +155,24 @@ if (missionNameSpace getVariable ["enableAdvancedRespawn", 1] == 1) then
 		_createTent setVariable [str (group _caller), true, true];
 		_createTent allowDamage false;
 
+		_createTent addAction [format ["<img size='2' image='\a3\ui_f_oldman\data\IGUI\Cfg\holdactions\holdAction_sleep2_ca.paa'/>%1</t>", localize "STR_ACTIONS_SLEEP"],{
+			//Define parameters
+			params ["_object","_caller","_ID","_avalaibleVehicle"];
+
+			if (!(missionNamespace getVariable ["usedFewTimeAgo",false])) then 
+				{
+					//set morning
+					((08 - dayTime + 24) % 24) remoteExec ["skipTime", 2, false]; 
+					[format ["%1 needs to rest", name _caller]] remoteExec ["hint",0,true];
+					missionNamespace setVariable ["usedFewTimeAgo",true,true];
+					sleep 300;
+					missionNamespace setVariable ["usedFewTimeAgo",false,true];
+				} else {
+					hint "No need to rest";
+				};
+		},_x,3,true,false,"","(_target distance _this <5) && (_target getVariable [str (group _this), false])"];
+
+
 		[{["STR_RPG_HC_NAME", "STR_RPG_HC_RESPAWN_TENT"] call doDialog}] remoteExec ["call", units (group _caller)];
 
 		[[str (group _caller), _createTent,"\a3\ui_f\data\IGUI\Cfg\holdactions\holdAction_requestleadership_ca.paa" , [0,0,1,1]], 'GUI\3DNames\3DObjectNames.sqf'] remoteExec ['BIS_fnc_execVM', blufor, true];
