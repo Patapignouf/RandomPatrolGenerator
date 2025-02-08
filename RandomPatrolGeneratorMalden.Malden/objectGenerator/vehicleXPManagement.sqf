@@ -11,7 +11,7 @@ addVehicleXPSetup = {
 
 		if (isPlayer _instigator) then 
 		{
-			_unit setVariable ["vehicleLastHit", _instigator];
+			_unit setVariable ["vehicleLastHit", _instigator, true];
 		};
 	}];
 
@@ -34,7 +34,7 @@ addVehicleXPSetup = {
 			// Action successfull code
 			params ["_object","_caller","_ID","_objectParams","_progress","_maxProgress"];
 			
-			_object setVariable ["vehicleLastHit", _caller];
+			_object setVariable ["vehicleLastHit", _caller, true];
 			
 			//destroy vehicle
 			[_object] spawn {
