@@ -6,6 +6,25 @@ params ["_transportVehicle", "_destinationPos"];
 _tempPos = [selectRandom [_destinationPos#0-2000 ,_destinationPos#0+2000],selectRandom [_destinationPos#1-2000 ,_destinationPos#1+2000]];
 
 _vehicleTransportGroup = [[_transportVehicle], _tempPos, blufor, ""] call doGenerateEnemyGroup;
+
+//Add TK penalty
+{
+	_botUnit = _x;
+	_botUnit addEventHandler ["Killed", {
+		params ["_unit", "_killer", "_instigator", "_useEffects"];
+		diag_log format ["%1 has been killed by : %2", name _unit, name _instigator];
+		if (isPlayer _instigator) then 
+		{
+			[[_unit, _instigator], {params ["_unit", "_instigator"]; ["STR_RPG_HC_NAME", "STR_RPG_HC_TEAMKILL", name _unit, name _instigator] call doDialog}] remoteExec ["spawn", side _instigator]; 
+
+			if (_instigator != _unit) then 
+			{
+				[{[-50,5] call doUpdateRankWithPenalty}] remoteExec ["call", _instigator];
+			};
+		};
+	}];
+} foreach units _vehicleTransportGroup;
+
 _heli = vehicle (leader _vehicleTransportGroup);
 
 //enable groups
