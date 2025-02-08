@@ -72,7 +72,7 @@ refreshCustomLoadoutDisplay = {
 		lbClear _dropdown; 
 		_listOfAvalaibleRole = [player] call setupSimpleRoleSwitchWithToList;
 		{
-			_dropdown lbAdd format ["%1", format ["%1 (%2 %3)", [_x] call getClassInformation, [player, _x] call getNumberOfClassInSquad, localize "STR_RPG_LOADOUT_ROLE_NB_INSQUAD"]];
+			_dropdown lbAdd format ["%1", format ["%1 (%2/%4 %3)", [_x] call getClassInformation, [player, _x] call getNumberOfClassInSquad, localize "STR_RPG_LOADOUT_ROLE_NB_INSQUAD", [_x] call checkRoleMaxNumber]];
 			_dropdown lbSetData [(lbSize _dropdown)-1, format ["%1",(lbSize _dropdown)-1]];
 			_dropdown lbSetTooltip [(lbSize _dropdown)-1, [_x] call getDescClassInformation];
 		} foreach _listOfAvalaibleRole;
@@ -141,7 +141,7 @@ _loadableLoadout = profileNamespace getVariable [format [loadoutSaveName, name p
 //Load every class for current player's faction
 //Define list of role in the combo box
 {
-	_dropdown lbAdd format ["%1", format ["%1 (%2 %3)", [_x] call getClassInformation, [player, _x] call getNumberOfClassInSquad, localize "STR_RPG_LOADOUT_ROLE_NB_INSQUAD"]];
+	_dropdown lbAdd format ["%1", format ["%1 (%2/%4 %3)", [_x] call getClassInformation, [player, _x] call getNumberOfClassInSquad, localize "STR_RPG_LOADOUT_ROLE_NB_INSQUAD", [_x] call checkRoleMaxNumber]];
 	_dropdown lbSetData [(lbSize _dropdown)-1, format ["%1",(lbSize _dropdown)-1]];
 	_dropdown lbSetTooltip [(lbSize _dropdown)-1, [_x] call getDescClassInformation];
 } foreach _listOfAvalaibleRole;

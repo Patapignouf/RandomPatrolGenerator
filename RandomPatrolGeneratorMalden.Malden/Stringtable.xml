@@ -1699,6 +1699,11 @@
         <Chinese>在组中</Chinese>
         <Japanese>グループ内</Japanese>
     </Key>
+        <Key ID="STR_RPG_LOADOUT_ROLE_NB_INFINITE">
+        <Original>infinite</Original>
+        <English>infinite</English>
+        <French>infini</French>
+    </Key>
 <Container name="RPG_GUI_GENERAL">
     <Key ID="RPG_GUI_GENERAL_CLOSE">
         <Original>Close</Original>

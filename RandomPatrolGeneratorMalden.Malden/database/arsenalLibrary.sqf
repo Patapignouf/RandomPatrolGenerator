@@ -148,7 +148,7 @@ getVirtualWeaponList = {
 
 
 getItembyWarEra = {
-	params ["_warEra","_currentPlayer"];
+	params ["_warEra","_currentPlayer", "_currentFaction"];
 	_itemList = [];
 
 	switch (_warEra) do
@@ -162,8 +162,16 @@ getItembyWarEra = {
 		case 1:
 		{
 			_itemList = ["ACE_Sandbag_empty","ACE_EntrenchingTool","ACE_WaterBottle","ACE_CableTie","ACE_MapTools","ItemCompass","ItemMap","ItemWatch","ACE_RangeTable_82mm","Binocular","ACE_SpraypaintRed","ACE_EarPlugs"];
+			
 			if (isClass (configFile >> "CfgPatches" >> "task_force_radio")) then {
-				_itemList pushBack "TFAR_anprc152";
+				_defaultRadios = ((factionDefaultRadios_db select {_x#1  == _currentFaction})#0)#0;
+
+				if (count _defaultRadios == 0) then 
+				{
+					_defaultRadios = ["TFAR_anprc152"];
+				};
+
+				_itemList append _defaultRadios;
 			} ;
 		};
 		//Modern Warfare
@@ -171,7 +179,14 @@ getItembyWarEra = {
 		{
 			_itemList = ["ACE_Sandbag_empty","ItemGPS","ACE_DAGR","ACE_EntrenchingTool","ACE_WaterBottle","ACE_CableTie","ACE_MapTools","ItemCompass","ItemMap","ItemWatch","ACE_RangeTable_82mm","Binocular","ACE_SpraypaintRed","ACE_EarPlugs"];
 			if (isClass (configFile >> "CfgPatches" >> "task_force_radio")) then {
-				_itemList pushBack "TFAR_anprc152";
+				_defaultRadios = ((factionDefaultRadios_db select {_x#1  == _currentFaction})#0)#0;
+
+				if (count _defaultRadios == 0) then 
+				{
+					_defaultRadios = ["TFAR_anprc152"];
+				};
+
+				_itemList append _defaultRadios;
 			} ;
 		};
 		//Actual Warfare
@@ -179,7 +194,14 @@ getItembyWarEra = {
 		{
 			_itemList = ["ACE_Sandbag_empty","ItemGPS", "ACE_DAGR", "ACE_microDAGR","B_UavTerminal","ACE_EntrenchingTool","ACE_WaterBottle","ACE_CableTie","ACE_MapTools","ItemCompass","ItemMap","ItemWatch","ACE_RangeTable_82mm","Binocular","ACE_SpraypaintRed","ACE_EarPlugs"];
 			if (isClass (configFile >> "CfgPatches" >> "task_force_radio")) then {
-				_itemList pushBack "TFAR_anprc152";
+				_defaultRadios = ((factionDefaultRadios_db select {_x#1  == _currentFaction})#0)#0;
+
+				if (count _defaultRadios == 0) then 
+				{
+					_defaultRadios = ["TFAR_anprc152"];
+				};
+
+				_itemList append _defaultRadios;
 			} ;
 		};
 		//Future Warfare
@@ -187,7 +209,14 @@ getItembyWarEra = {
 		{
 			_itemList = ["ACE_Sandbag_empty","ItemGPS","ACE_DAGR", "ACE_microDAGR","B_UavTerminal","ACE_EntrenchingTool","ACE_WaterBottle","ACE_CableTie","ACE_MapTools","ItemCompass","ItemMap","ItemWatch","ACE_RangeTable_82mm","Binocular","ACE_SpraypaintRed","ACE_EarPlugs"];
 			if (isClass (configFile >> "CfgPatches" >> "task_force_radio")) then {
-				_itemList pushBack "TFAR_anprc152";
+				_defaultRadios = ((factionDefaultRadios_db select {_x#1  == _currentFaction})#0)#0;
+
+				if (count _defaultRadios == 0) then 
+				{
+					_defaultRadios = ["TFAR_anprc152"];
+				};
+
+				_itemList append _defaultRadios;
 			} ;
 		};
 		default
@@ -196,14 +225,13 @@ getItembyWarEra = {
 		};
 	};
 
-	//diag_log format ["itemList : %1", _itemList];
 	_itemList
 };
 
 getVirtualItemList = {
 	params ["_currentPlayer","_currentFaction"];
 	currentPlayerClass = _currentPlayer getVariable "role";
-	virtualItemList = [warEra, _currentPlayer] call getItembyWarEra;
+	virtualItemList = [warEra, _currentPlayer, _currentFaction] call getItembyWarEra;
 	//diag_log format ["virtualItemList : %1", virtualItemList];
 	switch (currentPlayerClass) do
 	{
@@ -240,7 +268,7 @@ getVirtualUniform = {
 	currentPlayer = _this select 0;
 	currentFaction = _this select 1;
 	currentPlayerClass = currentPlayer getVariable "role";
-	virtualUniformList = [warEra, currentPlayer] call getItembyWarEra;
+	virtualUniformList = [];
 	//diag_log format ["virtualUniformList : %1", virtualUniformList];
 	switch (currentPlayerClass) do
 	{
@@ -422,7 +450,7 @@ setupArsenalToItem = {
 	_currentDefaultLoadout = _currentDefaultLoadout + ([_currentPlayer, _currentFaction] call getAllPossibleLoadout);
 
 	//Add inherited items
-	_currentDefaultLoadout = [_currentDefaultLoadout] call getParentsFromItems;
+	//_currentDefaultLoadout = [_currentDefaultLoadout] call getParentsFromItems;
 
 	_whiteListDefaultStuff = [_currentPlayer, _currentDefaultLoadout, []] call listCurrentItemsLoadout;
 	diag_log format ["List of whitelist default items by listCurrentItemsLoadout %1", _whiteListDefaultStuff];
@@ -597,6 +625,26 @@ switchToRole = {
 
 	//Switch to role
 	diag_log format ["Player %1 has switched to role %2 in faction %3", name _caller, _role, _faction];
+
+	//Manage player's role
+	if ([_caller, _role] call checkRoleAvalaibility) then
+	{
+		//Player is allowed to change role
+		_caller setVariable ["role", _role, true];
+	} else 
+	{
+		//reset player role
+		if (_role == _caller getVariable "role") then 
+		{
+			//player get rifleman role because there are no place in his role
+			_role = c_rifleman;
+		} else 
+		{
+			//reset previous player role
+			_role = _caller getVariable "role";
+		};
+	};
+
 	if (!_skipAnimation) then 
 	{
 		titleCut [format ["Switching to role %1", _role], "BLACK FADED", 5];
@@ -627,9 +675,6 @@ switchToRole = {
 		group _caller selectLeader _caller;
 	};
 
-	//Manage player's role
-	_caller setVariable ["role", _role, true];
-
 	//Manage default stuff
 	_personalLoadout = profileNamespace getVariable [format [loadoutSaveName, name _caller, _faction , _role], []];
 	if (count _personalLoadout != 0 && _allowCustomLoad) then 
@@ -648,6 +693,79 @@ switchToRole = {
 	{
 		titleCut ["", "BLACK IN", 5];
 	};
+};
+
+checkRoleAvalaibility = {
+	params ["_caller", "_roleToCheck"];
+
+	_isOkToSwitch = false;
+	if (isPlayer _caller) then 
+	{
+		//Adapt loadout to a specific Era
+		switch (_roleToCheck) do
+		{
+			case c_leader:
+			{
+				//Max 1 
+				if ([_caller, _roleToCheck] call numberOfUnitWithRoleInGroup == 0) then 
+				{
+					_isOkToSwitch = true;
+				};
+			};
+			case c_rifleman:
+			{
+				//No Max
+				_isOkToSwitch = true;
+			};
+			default
+			{
+				//Max 2
+				if ([_caller, _roleToCheck] call numberOfUnitWithRoleInGroup <= 1) then 
+				{
+					_isOkToSwitch = true;
+				};
+			};
+		};
+	} else 
+	{
+		_isOkToSwitch = true;
+	};
+	_isOkToSwitch;
+};
+
+checkRoleMaxNumber = {
+	params ["_roleToCheck"];
+
+	_maxNumberInRole = "0";
+
+	//Adapt loadout to a specific Era
+	switch (_roleToCheck) do
+	{
+		case c_leader:
+		{
+			//Max 1 
+			_maxNumberInRole = "1";
+		};
+		case c_rifleman:
+		{
+			//No Max
+			_maxNumberInRole = localize "STR_RPG_LOADOUT_ROLE_NB_INFINITE";
+		};
+		default
+		{
+			//Max 2
+			_maxNumberInRole = "2";
+		};
+	};
+	
+	_maxNumberInRole;
+};
+
+numberOfUnitWithRoleInGroup = {
+	params ["_caller", "_roleToCount"];
+	_unitsWithSameRole = count ((units (group _caller)) select {_x getVariable ["role", ""] == _roleToCount && isPlayer _x});
+
+	_unitsWithSameRole;
 };
 
 
@@ -1254,7 +1372,15 @@ getClassInformation = {
 			case c_pilot:
 				{
 					_classDescription = localize "STR_RPG_LOADOUT_ROLE_PILOT";
-				};						
+				};
+			case "diver":
+				{
+					_classDescription = localize "STR_RPG_LOADOUT_ROLE_DIVER";
+				};		
+			case "UAV operator":
+				{
+					_classDescription = localize "STR_RPG_LOADOUT_ROLE_UAV";
+				};	
 			default
 				{
 					//Non implemented role
@@ -1310,6 +1436,14 @@ getDescClassInformation = {
 			case c_pilot:
 				{
 					_classDescription = localize "STR_RPG_LOADOUT_ROLE_PILOT_DESC";
+				};	
+			case "diver":
+				{
+					_classDescription = localize "STR_RPG_LOADOUT_ROLE_DIVER_DESC";
+				};		
+			case "UAV operator":
+				{
+					_classDescription = localize "STR_RPG_LOADOUT_ROLE_UAV_DESC";
 				};						
 			default
 				{
