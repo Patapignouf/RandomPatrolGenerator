@@ -116,7 +116,7 @@ _roleFilter = ["Unarmed"];
 			_currentFactionName = format ["potentialCivMan%1", _thisFac];
 			_currentCivMans = 	missionNamespace getVariable [_currentFactionName, []];
 			_currentCivMans pushBack _cfgName;
-			missionNamespace setVariable [_currentFactionName, _currentCivMans, true]; 
+			missionNamespace setVariable [_currentFactionName, _currentCivMans]; 
 		} else 
 		{
 			if !(["story", _cfgName, false] call BIS_fnc_inString || ["story", ((_cfgVehName >> "editorSubcategory") call BIS_fnc_GetCfgData), false] call BIS_fnc_inString) then 
@@ -131,11 +131,10 @@ _roleFilter = ["Unarmed"];
 					if (_thisRole != "empty" && _thisRole != "") then 
 					{
 						_indexFound = _currentStuffFaction findIf {_thisRole == (_x#0)};
-
 						if (_indexFound == -1) then 
 						{
 							_currentStuffFaction pushBack [_thisRole, _cfgName];
-							missionNamespace setVariable [_currentFactionName, _currentStuffFaction, true]; 
+							missionNamespace setVariable [_currentFactionName, _currentStuffFaction]; 
 						} else 
 						{
 							_currentStuffFactionCurrentRole = _currentStuffFaction#_indexFound;
@@ -149,7 +148,7 @@ _roleFilter = ["Unarmed"];
 								_currentStuffFactionCurrentRole#2 pushBack _cfgName;
 							};
 							_currentStuffFaction set [_indexFound, _currentStuffFactionCurrentRole];
-							missionNamespace setVariable [_currentFactionName, _currentStuffFaction, true]; 
+							missionNamespace setVariable [_currentFactionName, _currentStuffFaction]; 
 						};
 
 						//Add backpack
@@ -159,7 +158,7 @@ _roleFilter = ["Unarmed"];
 						_currentUnitStuff = [_loadoutToCheck] call getListOfBagsFromStuff;
 						_backPackList = missionNamespace getVariable [_currentFactionName, []];
 						_backPackList = _backPackList + _currentUnitStuff;
-						missionNamespace setVariable [_currentFactionName, _backPackList, true]; 
+						missionNamespace setVariable [_currentFactionName, _backPackList]; 
 
 						
 						//Specifies accessories for the faction
@@ -174,7 +173,7 @@ _roleFilter = ["Unarmed"];
 							_currentUnitStuff = [_loadoutToCheck] call getListOfAccessoriesFromStuff;
 							_accessoriesShort = missionNamespace getVariable [_currentFactionName, []];
 							_accessoriesShort = _accessoriesShort + _currentUnitStuff;
-							missionNamespace setVariable [_currentFactionName, _accessoriesShort, true]; 
+							missionNamespace setVariable [_currentFactionName, _accessoriesShort]; 
 						};
 
 						//Specifies accessories for the faction
@@ -192,13 +191,13 @@ _roleFilter = ["Unarmed"];
 							_currentFactionName = format ["rifleList%1", _thisFac];
 							_rifleList = missionNamespace getVariable [_currentFactionName, []];
 							_rifleList = _rifleList + _currentUnitStuff + _listOfWeaponsAndAccessoriesFromStuff#0;
-							missionNamespace setVariable [_currentFactionName, _rifleList, true]; 
+							missionNamespace setVariable [_currentFactionName, _rifleList]; 
 
 							//Whitelist accessories already attached
 							_currentFactionName = format ["attachmentShortList%1", _thisFac];
 							_accessoriesShort = missionNamespace getVariable [_currentFactionName, []];
 							_accessoriesShort = _accessoriesShort + _listOfWeaponsAndAccessoriesFromStuff#1;
-							missionNamespace setVariable [_currentFactionName, _accessoriesShort, true]; 
+							missionNamespace setVariable [_currentFactionName, _accessoriesShort]; 
 						};
 					};
 				};
@@ -214,7 +213,7 @@ _roleFilter = ["Unarmed"];
 			_currentFactionName = format ["civilianTruck%1", _thisFac];
 			_currentCivMans = 	missionNamespace getVariable [_currentFactionName, []];
 			_currentCivMans pushBack _cfgName;
-			missionNamespace setVariable [_currentFactionName, _currentCivMans, true]; 
+			missionNamespace setVariable [_currentFactionName, _currentCivMans]; 
 		};
 	} else 
 	{
@@ -226,7 +225,7 @@ _roleFilter = ["Unarmed"];
 
 			_currentStuffFaction = 	missionNamespace getVariable [_currentFactionName, []];
 			_currentStuffFaction pushBack _cfgName;
-			missionNamespace setVariable [_currentFactionName, _currentStuffFaction, true]; 
+			missionNamespace setVariable [_currentFactionName, _currentStuffFaction]; 
 		} else 
 		{
 			if (_cfgName isKindOf 'Car' && !(_cfgName isKindOf 'Tank' || _cfgName isKindOf 'Wheeled_APC_F' || _cfgName isKindOf 'APC_Tracked_02_base_F' || ((configFile >> "CfgVehicles" >> _cfgName >> "artilleryScanner") call BIS_fnc_GetCfgData) == 1 )) then {	
@@ -237,13 +236,13 @@ _roleFilter = ["Unarmed"];
 
 					_currentStuffFaction = 	missionNamespace getVariable [_currentFactionName, []];
 					_currentStuffFaction pushBack _cfgName;
-					missionNamespace setVariable [_currentFactionName, _currentStuffFaction, true]; 
+					missionNamespace setVariable [_currentFactionName, _currentStuffFaction]; 
 
 					//Add unarmed vehicles to HQ vehicles
 					_currentFactionName = format ["bluforHQVehicle%1", _thisFac];
 					_currentStuffFaction = 	missionNamespace getVariable [_currentFactionName, []];
 					_currentStuffFaction pushBack _cfgName;
-					missionNamespace setVariable [_currentFactionName, _currentStuffFaction, true]; 
+					missionNamespace setVariable [_currentFactionName, _currentStuffFaction]; 
 				} else 
 				{
 					_currentFactionName = format ["bluforArmedVehicle%1", _thisFac];
@@ -251,7 +250,7 @@ _roleFilter = ["Unarmed"];
 					_currentStuffFaction = 	missionNamespace getVariable [_currentFactionName, []];
 					_currentStuffFaction pushBack _cfgName;
 
-					missionNamespace setVariable [_currentFactionName, _currentStuffFaction, true]; 
+					missionNamespace setVariable [_currentFactionName, _currentStuffFaction]; 
 				};
 			};
 			if (_cfgName isKindOf 'Helicopter') then {	
@@ -262,14 +261,14 @@ _roleFilter = ["Unarmed"];
 
 					_currentStuffFaction = 	missionNamespace getVariable [_currentFactionName, []];
 					_currentStuffFaction pushBack _cfgName;
-					missionNamespace setVariable [_currentFactionName, _currentStuffFaction, true]; 
+					missionNamespace setVariable [_currentFactionName, _currentStuffFaction]; 
 				} else 
 				{
 					_currentFactionName = format ["bluforUnarmedVehicleChopper%1", _thisFac];
 
 					_currentStuffFaction = 	missionNamespace getVariable [_currentFactionName, []];
 					_currentStuffFaction pushBack _cfgName;
-					missionNamespace setVariable [_currentFactionName, _currentStuffFaction, true]; 
+					missionNamespace setVariable [_currentFactionName, _currentStuffFaction]; 
 				};
 			};
 			if ((_cfgName isKindOf 'Tank' || _cfgName isKindOf 'Wheeled_APC_F' || _cfgName isKindOf 'APC_Tracked_02_base_F') && ((configFile >> "CfgVehicles" >> _cfgName >> "artilleryScanner") call BIS_fnc_GetCfgData) == 0) then {	
@@ -278,7 +277,7 @@ _roleFilter = ["Unarmed"];
 
 					_currentStuffFaction = 	missionNamespace getVariable [_currentFactionName, []];
 					_currentStuffFaction pushBack _cfgName;
-					missionNamespace setVariable [_currentFactionName, _currentStuffFaction, true]; 
+					missionNamespace setVariable [_currentFactionName, _currentStuffFaction]; 
 			};
 			if (_cfgName isKindOf 'Ship') then {	
 
@@ -286,7 +285,7 @@ _roleFilter = ["Unarmed"];
 
 					_currentStuffFaction = 	missionNamespace getVariable [_currentFactionName, []];
 					_currentStuffFaction pushBack _cfgName;
-					missionNamespace setVariable [_currentFactionName, _currentStuffFaction, true]; 
+					missionNamespace setVariable [_currentFactionName, _currentStuffFaction]; 
 			};
 			if (_cfgName isKindOf 'Plane') then {	
 
@@ -294,7 +293,7 @@ _roleFilter = ["Unarmed"];
 
 					_currentStuffFaction = 	missionNamespace getVariable [_currentFactionName, []];
 					_currentStuffFaction pushBack _cfgName;
-					missionNamespace setVariable [_currentFactionName, _currentStuffFaction, true]; 
+					missionNamespace setVariable [_currentFactionName, _currentStuffFaction]; 
 			};
 			if (_cfgName isKindOf 'StaticWeapon') then {	
 
@@ -304,13 +303,13 @@ _roleFilter = ["Unarmed"];
 
 					_currentStuffFaction = 	missionNamespace getVariable [_currentFactionName, []];
 					_currentStuffFaction pushBack _cfgName;
-					missionNamespace setVariable [_currentFactionName, _currentStuffFaction, true]; 
+					missionNamespace setVariable [_currentFactionName, _currentStuffFaction]; 
 				} else {
 					_currentFactionName = format ["bluforStaticWeapon%1", _thisFac];
 
 					_currentStuffFaction = 	missionNamespace getVariable [_currentFactionName, []];
 					_currentStuffFaction pushBack _cfgName;
-					missionNamespace setVariable [_currentFactionName, _currentStuffFaction, true]; 
+					missionNamespace setVariable [_currentFactionName, _currentStuffFaction]; 
 				}
 			};	
 		};
@@ -337,7 +336,7 @@ _roleFilter = ["Unarmed"];
 		{
 			_currentGroup pushBack (selectRandom _currentCivMans);
 		};
-		missionNamespace setVariable [_currentFactionName, _currentGroup, true]; 
+		missionNamespace setVariable [_currentFactionName, _currentGroup]; 
 
 		//Build 8 men group
 		_currentGroup = [];
@@ -347,7 +346,7 @@ _roleFilter = ["Unarmed"];
 		{
 			_currentGroup pushBack (selectRandom _currentCivMans);
 		};
-		missionNamespace setVariable [_currentFactionName, _currentGroup, true]; 
+		missionNamespace setVariable [_currentFactionName, _currentGroup]; 
 	};
 } foreach _potentialCivFactions;
 

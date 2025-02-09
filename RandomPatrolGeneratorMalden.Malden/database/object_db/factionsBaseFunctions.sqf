@@ -130,7 +130,7 @@ getParentBag = {
 doSetOpfor = {
 	params ["_currentFactionName","_opforNameClass", "_existingValues"];
 	//diag_log format ["%1%2 : %3",_opforNameClass,_currentFactionName, _existingValues];
-	missionNamespace setVariable [format ["%1%2",_opforNameClass,_currentFactionName], _existingValues, true]; 
+	missionNamespace setVariable [format ["%1%2",_opforNameClass,_currentFactionName], _existingValues]; 
 };
 
 doDefineOpforFactionInfantry = {
@@ -263,7 +263,7 @@ mergeFactions = {
 		_baseFaction = missionNameSpace getVariable [_factionToEnhancedVariable, []];
 		_mergingFaction = missionNameSpace getVariable [_factionToMergeVariable, []];
 		_mergingFactions = _baseFaction + _mergingFaction;
-		missionNameSpace setVariable [_factionToEnhancedVariable, _mergingFactions, true];
+		missionNameSpace setVariable [_factionToEnhancedVariable, _mergingFactions];
 	} foreach _factionVariables;
 	
 	//merge infantry loadout
@@ -280,7 +280,7 @@ mergeFactions = {
 		};
 		//[TODO] Needs to manage conflicts merging
 	} foreach _mergingFaction;
-	missionNameSpace setVariable [_factionToEnhancedVariable, _baseFaction, true];
+	missionNameSpace setVariable [_factionToEnhancedVariable, _baseFaction];
 };
 
 
@@ -355,7 +355,7 @@ addRadioToFaction = {
 		};
 	};
 
-	missionNamespace setVariable [_currentFactionName, _defaultRadio, true]; 
+	missionNamespace setVariable [_currentFactionName, _defaultRadio]; 
 };
 
 getAllAccessoriesAndWeaponsFromWeapons = {
