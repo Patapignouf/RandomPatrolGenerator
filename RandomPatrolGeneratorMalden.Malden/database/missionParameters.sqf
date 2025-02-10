@@ -174,6 +174,17 @@ respawnOnOtherPlayersParam =
 	"respawnOnOtherPlayers"
 ];
 
+respawnCheatParam = 
+[
+	[	
+		[0, "Disable"],
+		[1, "Enable"]
+	],
+	"Enable death cheat protection (prevent player from respawn deco/reco)",
+	0,
+	"respawnCheat"
+];
+
 enableObjectiveExactLocationParam = 
 [
 	[	
@@ -406,4 +417,4 @@ opforReinforcementParam =
 ];
 
 
-baseParamsToManage = [enableExperienceSaveParam, enableRTBMissionParam, missionAreaSizeParam, civiliansOnObjectivesParam, sideRelationParam, enableAmbiantWarParam, enableObjectiveExactLocationParam, enablePersistentParam, enableRegularIncomeParam, disableZoomParam, enableAutoDifficultyBalanceParam, civJoinableFactionParam, enableLoadoutRestrictionParam, enableOpforVehicleParam, enableSurrenderUnitParam, enableHaloParam, timeOfDayParam, civSuicideBomberParam, civSuicideBomberProbabilityParam, endlessMissionParam, enableOpforMortarParam, enableReAirDropAdvFOBParam, randomizeObjectiveOrderParam, xpDisplayParam, opforReinforcementParam, enableOverHeatParam, enableAdvancedRespawnParam, respawnOnOtherPlayersParam, enableModCheckerParam, officialPataCompanyServerParam];
+baseParamsToManage = [enableExperienceSaveParam, enableRTBMissionParam, missionAreaSizeParam, civiliansOnObjectivesParam, sideRelationParam, enableAmbiantWarParam, enableObjectiveExactLocationParam, enablePersistentParam, enableRegularIncomeParam, disableZoomParam, enableAutoDifficultyBalanceParam, civJoinableFactionParam, enableLoadoutRestrictionParam, enableOpforVehicleParam, enableSurrenderUnitParam, enableHaloParam, timeOfDayParam, civSuicideBomberParam, civSuicideBomberProbabilityParam, endlessMissionParam, enableOpforMortarParam, enableReAirDropAdvFOBParam, randomizeObjectiveOrderParam, xpDisplayParam, opforReinforcementParam, enableOverHeatParam, enableAdvancedRespawnParam, respawnOnOtherPlayersParam, enableModCheckerParam, officialPataCompanyServerParam, respawnCheatParam];

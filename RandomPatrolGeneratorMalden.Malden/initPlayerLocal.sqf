@@ -3,7 +3,6 @@ player setPos [worldSize,worldSize, 1000];
 player enableSimulationGlobal false;
 player allowdamage false;
 
-//#include "database\factionParameters.sqf"
 #include "engine\modManager.sqf"
 #include "database\missionParameters.sqf"
 #include "enemyManagement\behaviorEngine\unitsBehaviorFunctions.sqf"
@@ -36,7 +35,7 @@ player setVariable ["role", player getVariable ["initRole","rifleman"], true];
 
 [selectRandom ["LeadTrack01_F","LeadTrack01a_F","LeadTrack01b_F","LeadTrack03_F","LeadTrack01_F_Heli","LeadTrack04_F_EXP","LeadTrack01_F_Mark"], 10, 0.2] call BIS_fnc_playMusic;
 
-cutText ["", "BLACK FADED", 100];
+cutText ["PREPARING MISSION SETUP", "BLACK FADED", 100];
 
 //Wait for UI totaly loaded
 uiSleep 3;
@@ -51,7 +50,7 @@ if (!didJIP) then
 	{
 		if (call BIS_fnc_admin != 0) then 
 		{
-			cutText ["", "BLACK FADED", 100];
+			cutText ["PREPARING SETUP", "BLACK FADED", 100];
 			player setVariable ["isSetupMission", true];
 			player setVariable ["isAdmin", true, true];
 
@@ -66,7 +65,7 @@ if (!didJIP) then
 			if (side player == independent && player == (leader (group player))) then 
 			{
 				//Display setup menu
-				cutText ["", "BLACK FADED", 100];
+				cutText ["PREPARING SETUP", "BLACK FADED", 100];
 				player setVariable ["isSetupMission", true];
 				waitUntil { !isNull findDisplay 46 };
 
@@ -588,7 +587,7 @@ if (side player == blufor) then
 					params ["_object","_caller","_ID","_avalaibleVehicle"];
 
 					[["bluforVehicleAvalaibleSpawn", bluforUnarmedVehicle, bluforArmedVehicle, bluforArmoredVehicle, bluforUnarmedVehicleChopper, bluforArmedChopper, bluforDrone, bluforFixedWing, bluforBoat], 'GUI\vehicleSpawnerGUI\vehicleSpawner.sqf'] remoteExec ['BIS_fnc_execVM', _caller];
-			},_x,3,true,false,"","(_target distance _this <5) && (_this getVariable 'role' == 'leader' || _this getVariable 'role' == 'pilot')"];
+			},_x,3,true,false,"","(_target distance _this <5) && (_this getVariable 'role' == 'leader' || _this getVariable 'role' == 'pilot')"];	
 	};
 
 	TPFlag1 addAction [format ["<img size='2' image='\a3\ui_f_oldman\data\IGUI\Cfg\holdactions\holdAction_market_ca.paa'/><t size='1'>%1</t>", localize "STR_ACTIONS_OPEN_SUPPORT_SHOP"],{
@@ -671,7 +670,11 @@ if (didJIP) then
 {
 	diag_log format ["Player %1 has arrived on JIP", name player];
 	//Check if player is trying to respawn by deco/reco method
-	_deadPlayerList = missionNamespace getVariable "deadPlayer";
+	_deadPlayerList = [];
+	if (missionNameSpace getVariable ["respawnCheat", 0] == 1) then
+	{
+		_deadPlayerList = missionNamespace getVariable "deadPlayer";
+	};
 
 	if (count (_deadPlayerList select { _x == (name player) }) == 0) then 
 	{
