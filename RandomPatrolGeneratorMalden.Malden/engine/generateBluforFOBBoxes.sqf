@@ -217,62 +217,69 @@ publicvariable "TPFlag1";
 
 
 //generate patrol and commandant
-_botHQ = [blufor, bluFaction, "leader"] call doAddBotSimple;
-_safeCommanderPos = [_initBlueforLocation, 1, 10, 1, 0, 20, 0] call BIS_fnc_findSafePos;
-_botHQ setPos _safeCommanderPos;
-_botHQ disableAI "ALL";
-_botHQ enableAI "ANIM";
-_botHQ allowDamage false;
-[_botHQ, "BRIEFING", "NONE"] remoteExecCall ["BIS_fnc_ambientAnim"];
-[["STR_RPG_HC_NAME", (getPos _botHQ) vectorAdd [0,0,2.5],"\a3\UI_F_Orange\Data\CfgMarkers\b_Ordnance_ca.paa" , [0,0,1,1]], 'GUI\3DNames\3DNames.sqf'] remoteExec ['BIS_fnc_execVM', blufor, true];
-
-//Add teammember units
-[[_botHQ], 
+[_initBlueforLocation] spawn 
 {
-	params ["_botHQ"]; 
-	_botHQ addAction [format ["<img size='2' image='\a3\ui_f_oldman\data\IGUI\Cfg\holdactions\holdAction_market_ca.paa'/><t size='1'>%1</t>", localize "STR_ACTIONS_RECRUIT_UNITS"],{
-		//Define parameters
-			params ["_object","_caller","_ID","_avalaibleVehicle"];
+	params ["_initBlueforLocation"];
 
-			[[], 'GUI\botteamGUI\botteamGUI.sqf'] remoteExec ['BIS_fnc_execVM', _caller];
-		},[],3,true,false,"","(_target distance _this <7) && (_this getVariable 'role' == 'leader')"];
-	}
-] remoteExec ["spawn", blufor, true]; 
+	_botHQ = [blufor, bluFaction, "leader"] call doAddBotSimple;
+	_safeCommanderPos = [_initBlueforLocation, 1, 10, 1, 0, 20, 0] call BIS_fnc_findSafePos;
+	_botHQ setPos _safeCommanderPos;
+	_botHQ disableAI "ALL";
+	_botHQ enableAI "ANIM";
+	_botHQ allowDamage false;
+	[_botHQ, "BRIEFING", "NONE"] remoteExecCall ["BIS_fnc_ambientAnim"];
+	[["STR_RPG_HC_NAME", (getPos _botHQ) vectorAdd [0,0,2.5],"\a3\UI_F_Orange\Data\CfgMarkers\b_Ordnance_ca.paa" , [0,0,1,1]], 'GUI\3DNames\3DNames.sqf'] remoteExec ['BIS_fnc_execVM', blufor, true];
 
-//Add group manager
-[[_botHQ], 
-{
-	params ["_botHQ"]; 
-	_botHQ addAction [format ["<img size='2' image='\a3\ui_f_oldman\data\IGUI\Cfg\holdactions\holdAction_market_ca.paa'/><t size='1'>%1</t>", localize "STR_ACTIONS_TEAM_SETTINGS"],{
-		//Define parameters
-		params ["_object","_caller","_ID","_avalaibleVehicle"];
-
-		[[_caller], "GUI\teamManagementGUI\teamManagementGUI.sqf"] remoteExec ['BIS_fnc_execVM', _caller];
-	},[],3,true,false,"","(_target distance _this <7)"];
-	}
-] remoteExec ["spawn", blufor, true]; 
-
-
-if ((missionNameSpace getVariable "officialPataCompanyServer") == 1) then 
-{
+	//Add teammember units
 	[[_botHQ], 
 	{
 		params ["_botHQ"]; 
-		_botHQ addAction [format ["<img size='2' image='\a3\ui_f_oldman\data\IGUI\Cfg\holdactions\holdAction_market_ca.paa'/><t size='1'>%1</t>", localize "STR_ACTIONS_JOINPATACOMPANY"],{
+
+
+		_botHQ addAction [format ["<img size='2' image='\a3\ui_f_oldman\data\IGUI\Cfg\holdactions\holdAction_market_ca.paa'/><t size='1'>%1</t>", localize "STR_ACTIONS_RECRUIT_UNITS"],{
 			//Define parameters
-			params ["_object","_caller","_ID","_avalaibleVehicle"];
+				params ["_object","_caller","_ID","_avalaibleVehicle"];
 
-			[] call displayPataCompanyAd;
+				[[], 'GUI\botteamGUI\botteamGUI.sqf'] remoteExec ['BIS_fnc_execVM', _caller];
+				},[],3,true,false,"","(_target distance _this <7) && (_this getVariable 'role' == 'leader')"];
+			}
+		] remoteExec ["spawn", blufor, true]; 
 
+		//Add group manager
+		[[_botHQ], 
+		{
+			params ["_botHQ"]; 
+			_botHQ addAction [format ["<img size='2' image='\a3\ui_f_oldman\data\IGUI\Cfg\holdactions\holdAction_market_ca.paa'/><t size='1'>%1</t>", localize "STR_ACTIONS_TEAM_SETTINGS"],{
+				//Define parameters
+				params ["_object","_caller","_ID","_avalaibleVehicle"];
+
+				[[_caller], "GUI\teamManagementGUI\teamManagementGUI.sqf"] remoteExec ['BIS_fnc_execVM', _caller];
 			},[],3,true,false,"","(_target distance _this <7)"];
-		}
-	] remoteExec ["spawn", 0, true]; 
+			}
+		] remoteExec ["spawn", blufor, true]; 
+
+
+		if ((missionNameSpace getVariable "officialPataCompanyServer") == 1) then 
+		{
+			[[_botHQ], 
+			{
+				params ["_botHQ"]; 
+				_botHQ addAction [format ["<img size='2' image='\a3\ui_f_oldman\data\IGUI\Cfg\holdactions\holdAction_market_ca.paa'/><t size='1'>%1</t>", localize "STR_ACTIONS_JOINPATACOMPANY"],{
+					//Define parameters
+					params ["_object","_caller","_ID","_avalaibleVehicle"];
+
+					[] call displayPataCompanyAd;
+
+					},[],3,true,false,"","(_target distance _this <7)"];
+				}
+			] remoteExec ["spawn", 0, true]; 
+		};
+
+	HQCommander = _botHQ;
+	publicVariable "HQCommander";
+
 };
 
-
-
-HQCommander = _botHQ;
-publicVariable "HQCommander";
 
 
 //Manage carrier 
@@ -282,14 +289,17 @@ if (!isNil "USS_FREEDOM_CARRIER") then
 	waitUntil{!isNil "VA2"};
 	waitUntil{!isNil "TPFlag1"};
 	waitUntil{!isNil "deployableFOBItem"};
-	waitUntil{!isNil "HQCommander"};
 
 	_warEra = missionNamespace getVariable "warEra";
 
 	VA2 setPosASL [initBlueforLocation#0-105, initBlueforLocation#1-18, initBlueforLocation#2];
 	TPFlag1 setPosASL [initBlueforLocation#0-115, initBlueforLocation#1-18, initBlueforLocation#2-0.5];
 	deployableFOBItem setPosASL [initBlueforLocation#0-50, initBlueforLocation#1-15, initBlueforLocation#2];
-	HQCommander setPosASL [initBlueforLocation#0-117, initBlueforLocation#1-18, initBlueforLocation#2-0.5];
+	[] spawn 
+	{
+		waitUntil{!isNil "HQCommander"};
+		HQCommander setPosASL [initBlueforLocation#0-117, initBlueforLocation#1-18, initBlueforLocation#2-0.5];
+	};
 
 	//Move basic ammo box
 	waitUntil{!isNil "BluforAmmoBox"};
