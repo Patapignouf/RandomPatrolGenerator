@@ -317,6 +317,24 @@ _ButtonLoad ctrlAddEventHandler ["ButtonClick",{
 			cutText ["Loadout loaded", "PLAIN", 0.3];
 	}];
 
+
+//clear item 
+_buttonClearItems = _display ctrlCreate ["RscButton", 12006];
+_buttonClearItems ctrlSetPosition [(0.55 * safezoneW + safezoneX),(0.70 * safezoneH + safezoneY),(0.09 * safezoneW),(0.025* safezoneH)];
+_buttonClearItems ctrlSetBackgroundColor [0,0,0,0.7];
+_buttonClearItems ctrlCommit 0;
+_buttonClearItems ctrlEnable true;
+_buttonClearItems ctrlSetText localize "RPG_GUI_GENERAL_CLEAR";
+_buttonClearItems ctrlAddEventHandler[ "ButtonClick", 
+	{ 
+		params ["_ctrl"];
+
+		hint "Stuff cleared";
+		removeAllItemsWithMagazines player;
+		
+		[ctrlParent _ctrl] call refreshCustomLoadoutDisplay;
+	}];
+
 //Button to go on the next setup
 _ButtonSave = _display ctrlCreate ["RscButton", -1];
 _ButtonSave ctrlSetPosition [(0.35 * safezoneW + safezoneX),(0.65 * safezoneH + safezoneY),(0.09 * safezoneW),(0.025* safezoneH)];

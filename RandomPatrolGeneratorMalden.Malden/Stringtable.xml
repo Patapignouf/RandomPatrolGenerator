@@ -1749,6 +1749,12 @@
         <Chinese>重置</Chinese>
         <Japanese>リセット</Japanese>
     </Key>
+    </Key>
+        <Key ID="RPG_GUI_GENERAL_CLEAR">
+        <Original>Clear items</Original>
+        <English>Clear items</English>
+        <French>Supprimer les objets</French>
+    </Key>
 </Container>
  <Container name="ACTIONS">
             <Key ID="STR_ACTIONS_PLACE_TENT">
