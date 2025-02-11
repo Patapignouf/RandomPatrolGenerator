@@ -677,6 +677,16 @@
                 <Chinese>敌方攻击已在%1开始，做好准备</Chinese>
                 <Japanese>オプフォーの攻撃が%1で始まりました。準備してください</Japanese>
             </Key>
+            <Key ID="STR_RPG_HC_IED_ACE">
+                <Original>You need to be engineer and have a defusal kit to defuse the IED</Original>
+                <English>You need to be engineer and have a defusal kit to defuse the IED</English>
+                <French>Vous devez être ingénieur et avoir un kit de désamorçage pour traiter l'IED</French>
+            </Key>
+            <Key ID="STR_RPG_HC_IED_NOACE">
+                <Original>You need to be engineer to defuse the IED</Original>
+                <English>You need to be engineer to defuse the IED</English>
+                <French>Vous devez être ingénieur pour traiter l'IED</French>
+            </Key>
             <Key ID="STR_RPG_HC_FRIENDLY_SQUAD">
                 <Original>A friendly squad will attack %1, could you support them ?</Original>
                 <English>A friendly squad will attack %1, could you support them ?</English>

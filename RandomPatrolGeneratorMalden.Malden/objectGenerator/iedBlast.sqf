@@ -50,13 +50,16 @@ _fakeIed hideObjectGlobal true;
 			"Land_ShellCrater_01_F" createVehicle (getPos _object);
 			"M_Titan_AT" createVehicle (getPos _object);
 
+			//Kill the unlucky guy
+			_caller setDamage 1;
+
 			//Explain to the player why he failed to defuse
 			if (_isACE) then 
 			{
-				[[format ["You need to be engineer and have a defusal kit to defuse the IED"], "intel"], 'engine\hintManagement\addCustomHint.sqf'] remoteExec ['BIS_fnc_execVM', _caller]; 
+				[[], {["STR_RPG_HC_NAME", "STR_RPG_HC_IED_ACE"] call doDialog}] remoteExec ["spawn", _caller]; 
 			} else 
 			{
-				[[format ["You need to be engineer to defuse the IED"], "intel"], 'engine\hintManagement\addCustomHint.sqf'] remoteExec ['BIS_fnc_execVM', _caller]; 
+				[[], {["STR_RPG_HC_NAME", "STR_RPG_HC_IED_NOACE"] call doDialog}] remoteExec ["spawn", _caller]; 
 			};
 		};
 
