@@ -1,3 +1,4 @@
+params ["_oldUnit", "_killer", "_respawn", "_respawnDelay"];
 
 //Log player's death
 diag_log format ["Player %1 is dead", name player];
@@ -38,9 +39,14 @@ if (isMultiplayer) then
 };
 
 //Wait before display respawn advices
-uiSleep 10;
+[_respawnTimer] spawn 
+{
+	params ["_respawnTimer"];
 
-//Show information about respawn settings
-_title = "You will respawn on one of these conditions : ";
-_textToSpeech = format ["<br /> - Wait %1 seconds <br /> - Wait for a call reinforcement from your allies<br /> - Wait for an objective accomplishment",  _respawnTimer];
-titleText [format ["<t align = 'center' shadow = '2' color='#0046ff' size='1.5' font='PuristaMedium' >System</t><br /><t color='#ffffff' size='1.5' font='PuristaMedium' shadow = '2' >%1<t align = 'center'>%2</t></t>", _title, _textToSpeech], "PLAIN DOWN", -1, true, true];
+	uiSleep 20;
+
+	//Show information about respawn settings
+	_title = "You will respawn on one of these conditions : ";
+	_textToSpeech = format ["<br /> - Wait %1 seconds <br /> - Wait for a call reinforcement from your allies<br /> - Wait for an objective accomplishment",  _respawnTimer];
+	titleText [format ["<t align = 'center' shadow = '2' color='#0046ff' size='1.5' font='PuristaMedium' >System</t><br /><t color='#ffffff' size='1.5' font='PuristaMedium' shadow = '2' >%1<t align = 'center'>%2</t></t>", _title, _textToSpeech], "PLAIN DOWN", -1, true, true];
+};
