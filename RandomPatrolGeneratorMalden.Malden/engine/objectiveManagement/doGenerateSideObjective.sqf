@@ -88,18 +88,33 @@ if ((_objectiveID call BIS_fnc_taskState ) != "SUCCEEDED" && !(missionNameSpace 
 				_objectiveObject setVariable ["sideObjectiveID", format ["RPG_%1", _objectiveID], true];
 				_objectiveObject addEventHandler ["HandleDamage", {
 					params ["_unit", "_selection", "_damage", "_source", "_projectile", "_hitIndex", "_instigator", "_hitPoint", "_directHit", "_context"];
-					if ((_unit getHit "motor") > 0.7 && !(_unit getVariable ["isAlmostDeadSideQuest", false])) then 
+					if ((_unit getHit "motor") > 0.7) then 
 					{
-						_unit setVariable ["isAlmostDeadSideQuest", true, true];
 						_unit setDamage 1;
-						
+
 						_sideTaskID = _unit getVariable "sideTaskAssociated";
+
+						if ([_sideTaskID] call BIS_fnc_taskState != "SUCCEEDED") then 
+						{
+							[_sideTaskID, "SUCCEEDED"] call BIS_fnc_taskSetState;
+							missionNameSpace setVariable [format ["RPG_%1", _unit getVariable "sideObjectiveID"], true, true];
+							[{[25, "RPG_ranking_objective_complete"] call doUpdateRank}] remoteExec ["call", 0];
+						};
+
+					};
+				}];
+				//Check killed EH
+				_objectiveObject addEventHandler ["Killed", {
+					params ["_unit", "_killer", "_instigator", "_useEffects"];
+
+					_sideTaskID = _unit getVariable "sideTaskAssociated";
+					if ([_sideTaskID] call BIS_fnc_taskState != "SUCCEEDED") then 
+					{
 						[_sideTaskID, "SUCCEEDED"] call BIS_fnc_taskSetState;
 						missionNameSpace setVariable [format ["RPG_%1", _unit getVariable "sideObjectiveID"], true, true];
 						[{[25, "RPG_ranking_objective_complete"] call doUpdateRank}] remoteExec ["call", 0];
 					};
 				}];
-
 
 			} else 
 			{

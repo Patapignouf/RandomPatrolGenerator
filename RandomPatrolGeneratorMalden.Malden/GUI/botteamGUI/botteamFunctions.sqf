@@ -8,6 +8,8 @@ params ["_caller", "_currentFaction", "_botteamClass", "_botteamType"];
 	{
 		case "Infantry":
 		{
+			private _botUnit = [side _caller, _currentFaction, _botteamClass] call doAddBotSimple;
+
 			//Spawn random unit
 			_customPos = [];
 			
@@ -30,54 +32,8 @@ params ["_caller", "_currentFaction", "_botteamClass", "_botteamType"];
 				_customPos = (position _caller) findEmptyPosition [2, 100];
 			};
 
-			private _botUnit = (createGroup (side _caller)) createUnit ["B_Soldier_F", _customPos, [], 0, "NONE"];
+			_botUnit setPos _customPos;
 			
-			//Add teamkilled XP penalty event
-			_botUnit addEventHandler ["Killed", {
-				params ["_unit", "_killer", "_instigator", "_useEffects"];
-				diag_log format ["%1 has been killed by : %2", name _unit, name _instigator];
-				if (isPlayer _instigator) then 
-				{
-					[[_unit, _instigator], {params ["_unit", "_instigator"]; ["STR_RPG_HC_NAME", "STR_RPG_HC_TEAMKILL", name _unit, name _instigator] call doDialog}] remoteExec ["spawn", side _instigator]; 
-
-					if (_instigator != _unit) then 
-					{
-						[{[-50,5] call doUpdateRankWithPenalty}] remoteExec ["call", _instigator];
-					};
-				};
-
-				//Garbage collect unit  
-				[_unit] spawn 
-				{
-					params ["_unit"];
-					//Fix ACE locking place in vehicle when an IA dies
-					sleep 20;
-					moveOut _unit;
-
-					//Free some memory usage by cleaning the corpse
-					sleep 300;
-					deleteVehicle _unit;
-				};
-			}];
-
-			//Get custom stuff 
-			_listOfAvalaibleRole =[];
-			_listOfAvalaibleRole = [_currentFaction] call setupRoleSwitchToList;
-			
-			//hint format ["_currentFaction %1\n _botteamClass %2",_currentFaction, _botteamClass];
-
-			if (_botteamClass == "random") then 
-			{
-				_botteamClass = (selectRandom (((loadout_db select {_x #1 == _currentFaction}) #0 #0) select {_x#0 != "pilot" })) #0;
-			};
-
-			_stuffToApply = ((loadout_db select {_x select 1 == _currentFaction}) select 0 select 0) select {_x select 0 == _botteamClass} select 0 select 1;
-			[_botUnit, _botUnit, _currentFaction , _botteamClass, false, true] call switchToRole;
-			//[TODO] Add ACE adjust stuff
-
-			//apply custom stuff 
-			_botUnit setUnitLoadout _stuffToApply;
-
 			botResult = _botUnit;			
 		};
 		default
@@ -86,6 +42,58 @@ params ["_caller", "_currentFaction", "_botteamClass", "_botteamType"];
 		};
 	};
 	botResult;
+};
+
+doAddBotSimple = {
+	params ["_side", "_currentFaction", "_botteamClass"];
+	private _botUnit = (createGroup (_side)) createUnit ["B_Soldier_F", [worldSize+500, worldSize+500] , [], 0, "NONE"];
+			
+	//Add teamkilled XP penalty event
+	_botUnit addEventHandler ["Killed", {
+		params ["_unit", "_killer", "_instigator", "_useEffects"];
+		diag_log format ["%1 has been killed by : %2", name _unit, name _instigator];
+		if (isPlayer _instigator) then 
+		{
+			[[_unit, _instigator], {params ["_unit", "_instigator"]; ["STR_RPG_HC_NAME", "STR_RPG_HC_TEAMKILL", name _unit, name _instigator] call doDialog}] remoteExec ["spawn", side _instigator]; 
+
+			if (_instigator != _unit) then 
+			{
+				[{[-50,5] call doUpdateRankWithPenalty}] remoteExec ["call", _instigator];
+			};
+		};
+
+		//Garbage collect unit  
+		[_unit] spawn 
+		{
+			params ["_unit"];
+			//Fix ACE locking place in vehicle when an IA dies
+			sleep 20;
+			moveOut _unit;
+
+			//Free some memory usage by cleaning the corpse
+			sleep 300;
+			deleteVehicle _unit;
+		};
+	}];
+
+	//Get custom stuff 
+	_listOfAvalaibleRole =[];
+	_listOfAvalaibleRole = [_currentFaction] call setupRoleSwitchToList;
+	
+	//hint format ["_currentFaction %1\n _botteamClass %2",_currentFaction, _botteamClass];
+
+	if (_botteamClass == "random") then 
+	{
+		_botteamClass = (selectRandom (((loadout_db select {_x #1 == _currentFaction}) #0 #0) select {_x#0 != "pilot" })) #0;
+	};
+
+	_stuffToApply = ((loadout_db select {_x select 1 == _currentFaction}) select 0 select 0) select {_x select 0 == _botteamClass} select 0 select 1;
+	[_botUnit, _botUnit, _currentFaction , _botteamClass, false, true] call switchToRole;
+
+	//apply custom stuff 
+	_botUnit setUnitLoadout _stuffToApply;
+
+	_botUnit;			
 };
 
 doSpawnAttackSquad = {

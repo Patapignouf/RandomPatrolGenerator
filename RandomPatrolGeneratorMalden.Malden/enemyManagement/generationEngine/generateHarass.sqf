@@ -57,7 +57,7 @@ if (isServer) then
 				//Define harass group 
 				_tempVehicleGroup = [];
 
-				if ((missionNameSpace getVariable ["enableOpforVehicle", 0]) != 2) then 
+				if ((missionNameSpace getVariable ["enableOpforVehicle", 0]) < 3) then 
 				{
 					//Generate light vehicle 33% chance to spawn
 					if (count _thisAvailableOpforCars != 0 && random 100 < 33) then 

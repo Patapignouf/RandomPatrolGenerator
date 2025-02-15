@@ -52,13 +52,13 @@ params ["_deployableFOBItem", "_deployableFOBMounted"];
 			},objNull,1.5,true,false,"","_target distance _this <7"]] remoteExec [ "addAction", 0, true ];
 
 			//Add action to rest until morning
-			[TPFlag2, ["<img size='2' image='\a3\ui_f_oldman\data\IGUI\Cfg\holdactions\holdAction_sleep2_ca.paa'/>Sleep until next morning</t>",{
+			[TPFlag2, [format ["<img size='2' image='\a3\ui_f_oldman\data\IGUI\Cfg\holdactions\holdAction_sleep2_ca.paa'/>%1</t>", localize "STR_ACTIONS_SLEEP"],{
 				params ["_object","_caller","_ID","_param"];
 				
 				if (!(missionNamespace getVariable ["usedFewTimeAgo",false])) then 
 				{
 					//set morning
-					skipTime ((06 - dayTime + 24) % 24);
+					((08 - dayTime + 24) % 24) remoteExec ["skipTime", 2, false]; 
 					[format ["%1 needs to rest", name _caller]] remoteExec ["hint",0,true];
 					missionNamespace setVariable ["usedFewTimeAgo",true,true];
 					sleep 300;
@@ -69,7 +69,8 @@ params ["_deployableFOBItem", "_deployableFOBMounted"];
 			},objNull,1.5,true,false,"","_target distance _this <7"]] remoteExec [ "addAction", 0, true ];
 
 			//Add support shop
-			[TPFlag2, [format ["<img size='2' image='\a3\ui_f_oldman\data\IGUI\Cfg\holdactions\holdAction_market_ca.paa'/><t size='1'>Open support shop</t>"],{
+			[TPFlag2, [format ["<img size='2' image='\a3\ui_f_oldman\data\IGUI\Cfg\holdactions\holdAction_market_ca.paa'/><t size='1'>%1</t>", localize "STR_ACTIONS_OPEN_SUPPORT_SHOP"],{
+
 				//Define parameters
 				params ["_object","_caller","_ID","_avalaibleVehicle"];
 					[[false], 'GUI\supportGUI\supportGUI.sqf'] remoteExec ['BIS_fnc_execVM', _caller];
@@ -78,21 +79,21 @@ params ["_deployableFOBItem", "_deployableFOBMounted"];
 
 
 			//Add action vehicle shop
-			[TPFlag2, [format ["<img size='2' image='\a3\ui_f_oldman\data\IGUI\Cfg\holdactions\holdAction_market_ca.paa'/><t size='1'>Open vehicle shop</t>"],{
+			[TPFlag2, [format ["<img size='2' image='\a3\ui_f_oldman\data\IGUI\Cfg\holdactions\holdAction_market_ca.paa'/><t size='1'>%1</t>", localize "STR_ACTIONS_OPEN_VEHICLE_SHOP"],{
 					//Define parameters
 					params ["_object","_caller","_ID","_avalaibleVehicle"];
 
 					[["bluforVehicleAvalaibleSpawn", bluforUnarmedVehicle, bluforArmedVehicle, bluforArmoredVehicle, bluforUnarmedVehicleChopper, bluforArmedChopper, bluforDrone, bluforFixedWing, bluforBoat], 'GUI\vehicleSpawnerGUI\vehicleSpawner.sqf'] remoteExec ['BIS_fnc_execVM', _caller];
-			},_x,3,true,false,"","(_target distance _this <7) && (_this getVariable 'role' == 'leader' || _this getVariable 'role' == 'pilot')"]] remoteExec [ "addAction", 0, true ];
+			},[],3,true,false,"","(_target distance _this <7) && (_this getVariable 'role' == 'leader' || _this getVariable 'role' == 'pilot')"]] remoteExec [ "addAction", 0, true];
 
 
 			//Add action open team member shop
 			[TPFlag2, ["<img size='2' image='\a3\ui_f_oldman\data\IGUI\Cfg\holdactions\holdAction_market_ca.paa'/><t size='1'>Open team member shop</t>",{
 			//Define parameters
-			params ["_object","_caller","_ID","_avalaibleVehicle"];
+				params ["_object","_caller","_ID","_avalaibleVehicle"];
 
-			[[], 'GUI\botteamGUI\botteamGUI.sqf'] remoteExec ['BIS_fnc_execVM', _caller];
-			},_x,3,true,false,"","(_target distance _this <7) && (_this getVariable 'role' == 'leader')"]] remoteExec [ "addAction", 0, true ];
+				[[], 'GUI\botteamGUI\botteamGUI.sqf'] remoteExec ['BIS_fnc_execVM', _caller];
+			},[],3,true,false,"","(_target distance _this <7) && (_this getVariable 'role' == 'leader')"]] remoteExec [ "addAction", 0, true ];
 
 
 

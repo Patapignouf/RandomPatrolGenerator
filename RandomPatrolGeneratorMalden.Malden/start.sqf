@@ -639,7 +639,7 @@ diag_log format ["Generating blufor vehicle : %1",selectedBluforVehicle];
 			publicVariable "bluforMobileHQ";
 
 			//Add support action 
-			[bluforMobileHQ, ["<img size='2' image='\a3\ui_f_oldman\data\IGUI\Cfg\holdactions\holdAction_market_ca.paa'/>Open support shop</t>",{
+			[bluforMobileHQ, [format ["<img size='2' image='\a3\ui_f_oldman\data\IGUI\Cfg\holdactions\holdAction_market_ca.paa'/><t size='1'>%1</t>", localize "STR_ACTIONS_OPEN_SUPPORT_SHOP"],{
 				params ["_object","_caller","_ID","_param"];
 				[[false], 'GUI\supportGUI\supportGUI.sqf'] remoteExec ['BIS_fnc_execVM', _caller];
 			},[],1.5,true,false,"","_target distance _this <10 && side _this == blufor"]] remoteExec [ "addAction", blufor, true ];
@@ -945,7 +945,7 @@ if (enableCampaignMode) then
 
 	//Add this action on campaign mode blufor side
 	waitUntil{!isNil "TPFlag1"};
-	[TPFlag1, ["<t color='#0a5e00'>Complete mission</t>",{
+	[TPFlag1, ["<t color='#0a5e00'>Complete campaign</t>",{
 			//Param initialization
 			params ["_object","_caller","_ID","_missionLength"];
 			_completedObjectives = missionNamespace getVariable ["completedObjectives",[]];
@@ -958,10 +958,10 @@ if (enableCampaignMode) then
 			{
 				hint "Not enough mission completed";
 			};
-		},missionLength,1.5,true,true,"","_target distance _this <5 && side _this == blufor"]] remoteExec ["addAction", 0, true];
+		},missionLength,1.5,true,true,"","_target distance _this <5 && side _this == blufor && _this getVariable 'role' == 'leader'"]] remoteExec ["addAction", 0, true];
 
 	//Add this action on campaign mode independent side
-	[VA1, ["<t color='#0a5e00'>Complete mission</t>",{
+	[VA1, ["<t color='#0a5e00'>Complete campaign</t>",{
 			//Param initialization
 			params ["_object","_caller","_ID","_missionLength"];
 			_completedObjectives = missionNamespace getVariable ["completedObjectives",[]];
@@ -974,7 +974,7 @@ if (enableCampaignMode) then
 			{
 				hint "Not enough mission completed";
 			};
-		},missionLength,1.5,true,true,"","_target distance _this <5 && side _this == independent"]] remoteExec ["addAction", 0, true];
+		},missionLength,1.5,true,true,"","_target distance _this <5 && side _this == independent && _this getVariable 'role' == 'leader'"]] remoteExec ["addAction", 0, true];
 
 
 	//Loop until maximum number of possible objective are generated

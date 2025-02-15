@@ -1,4 +1,27 @@
+//Set default respawn loadout
 player setUnitLoadout (player getVariable "spawnLoadout");
+
+//Respawn on start position by default
+//Protect player for 30 sec on spawn
+player allowDamage false;
+if (player getVariable "sideBeforeDeath" == "independent") then 
+{
+  //Independent
+  player setPos ([initCityLocation, 1, 30, 1, 0, 20, 0, [], [initCityLocation, initCityLocation]] call BIS_fnc_findSafePos);
+} else 
+{
+  //Blufor
+  if (isNil "USS_FREEDOM_CARRIER") then 
+  {
+    _spawnPos = [initBlueforLocation, 1, 30, 1, 0, 20, 0, [], [initBlueforLocation, initBlueforLocation]] call BIS_fnc_findSafePos;
+    player setPos (_spawnPos);
+  } else 
+  {
+    _spawnPos = initBlueforLocation;
+    [USS_FREEDOM_CARRIER] call BIS_fnc_Carrier01Init;
+    player setPosASL [(_spawnPos#0)+random 30, (_spawnPos#1)+random 30,_spawnPos#2+0.5];
+  };
+};
 
 //reset respawn timer
 setPlayerRespawnTime (missionNamespace getVariable "missionRespawnParam");
@@ -114,34 +137,13 @@ _deadPlayerList = missionNamespace getVariable "deadPlayer";
 _deadPlayerList = _deadPlayerList - [name player];
 missionNamespace setVariable ["deadPlayer", _deadPlayerList, true];
 
-//Respawn on start position by default
-//Protect player for 30 sec on spawn
-player allowDamage false;
-if (player getVariable "sideBeforeDeath" == "independent") then 
-{
-  //Independent
-  player setPos ([initCityLocation, 1, 30, 1, 0, 20, 0, [], [initCityLocation, initCityLocation]] call BIS_fnc_findSafePos);
-} else 
-{
-  //Blufor
-  if (isNil "USS_FREEDOM_CARRIER") then 
-  {
-    _spawnPos = [initBlueforLocation, 1, 30, 1, 0, 20, 0, [], [initBlueforLocation, initBlueforLocation]] call BIS_fnc_findSafePos;
-    player setPos (_spawnPos);
-  } else 
-  {
-    _spawnPos = initBlueforLocation;
-    [USS_FREEDOM_CARRIER] call BIS_fnc_Carrier01Init;
-    player setPosASL [(_spawnPos#0)+random 30, (_spawnPos#1)+random 30,_spawnPos#2+0.5];
-  };
-};
 ["Respawn on start position", format ["Year %1", date select 0], mapGridPosition player] spawn BIS_fnc_infoText;
 
 
 if (missionNameSpace getVariable ["enableAdvancedRespawn", 1] == 1) then 
 {
 	//Add vehicle shop
-	player addAction [format ["<img size='2' image='\a3\ui_f_oldman\data\IGUI\Cfg\holdactions\holdAction_sleep_ca.paa'/><t size='1'>Place reinforcement tent</t>"],{
+    player addAction [format ["<img size='2' image='\a3\ui_f_oldman\data\IGUI\Cfg\holdactions\holdAction_market_ca.paa'/><t size='1'>%1</t>", localize "STR_ACTIONS_PLACE_TENT"],{
 		//Define parameters
 		params ["_object","_caller","_ID","_avalaibleVehicle"];
 
@@ -153,12 +155,30 @@ if (missionNameSpace getVariable ["enableAdvancedRespawn", 1] == 1) then
 		_createTent setVariable [str (group _caller), true, true];
 		_createTent allowDamage false;
 
+		_createTent addAction [format ["<img size='2' image='\a3\ui_f_oldman\data\IGUI\Cfg\holdactions\holdAction_sleep2_ca.paa'/>%1</t>", localize "STR_ACTIONS_SLEEP"],{
+			//Define parameters
+			params ["_object","_caller","_ID","_avalaibleVehicle"];
+
+			if (!(missionNamespace getVariable ["usedFewTimeAgo",false])) then 
+				{
+					//set morning
+					((08 - dayTime + 24) % 24) remoteExec ["skipTime", 2, false]; 
+					[format ["%1 needs to rest", name _caller]] remoteExec ["hint",0,true];
+					missionNamespace setVariable ["usedFewTimeAgo",true,true];
+					sleep 300;
+					missionNamespace setVariable ["usedFewTimeAgo",false,true];
+				} else {
+					hint "No need to rest";
+				};
+		},_x,3,true,false,"","(_target distance _this <5) && (_target getVariable [str (group _this), false])"];
+
+
 		[{["STR_RPG_HC_NAME", "STR_RPG_HC_RESPAWN_TENT"] call doDialog}] remoteExec ["call", units (group _caller)];
 
 		[[str (group _caller), _createTent,"\a3\ui_f\data\IGUI\Cfg\holdactions\holdAction_requestleadership_ca.paa" , [0,0,1,1]], 'GUI\3DNames\3DObjectNames.sqf'] remoteExec ['BIS_fnc_execVM', blufor, true];
 
 		//Add support action on tent
-		_createTent addAction ["<img size='2' image='\a3\ui_f_oldman\data\IGUI\Cfg\holdactions\holdAction_market_ca.paa'/><t size='1'>Open support shop</t>",{
+		_createTent addAction [format ["<img size='2' image='\a3\ui_f_oldman\data\IGUI\Cfg\holdactions\holdAction_market_ca.paa'/><t size='1'>%1</t>", localize "STR_ACTIONS_OPEN_SUPPORT_SHOP"],{
 			//Define parameters
 			params ["_object","_caller","_ID","_avalaibleVehicle"];
 
@@ -205,7 +225,7 @@ if (missionNameSpace getVariable ["enableAdvancedRespawn", 1] == 1) then
 			false
 		] remoteExec ["BIS_fnc_holdActionAdd", 0, true];
 
-	},_x,3,true,false,"","(_this getVariable 'role' == 'leader') && (missionNameSpace getVariable [ format ['bluforAdvancedRespawn%1', str (group _this)], true]) && (vehicle _this == _this)"];
+	},_x,3,true,false,"","(_this getVariable 'role' == 'leader') && (missionNameSpace getVariable [ format ['bluforAdvancedRespawn%1', str (group _this)], true]) && (vehicle _this == _this) && isTouchingGround _this"];
 };
 
 _KilledEH = player addEventHandler ["Killed", {

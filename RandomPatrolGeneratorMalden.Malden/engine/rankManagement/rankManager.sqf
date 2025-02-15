@@ -14,12 +14,12 @@ if (_isFirstStart) then
 	_unit setVariable ["RPG_prestige", _currentPrestige, true];
 
 	//Detect if there is a new player and show discord
-	if (_unitRanking == 0) then 
+	if ((missionNameSpace getVariable "officialPataCompanyServer") == 1) then 
 	{
-		_ctrl = findDisplay 46 createDisplay "RscDisplayEmpty" ctrlCreate ["RscStructuredText", -1];
-		_ctrl ctrlSetPosition [0,0,1,1];
-		_ctrl ctrlCommit 0;
-		_ctrl ctrlSetStructuredText parseText "<a color='#ff0000' size='4' href='https://discord.gg/S6Y6YTjT'><t color='#ff0000'>Join the PataCompany !</t><br/><t color='#ff0000'>Join the Discord</t></a>";
+		if (_unitRanking == 0) then 
+		{
+			[] call displayPataCompanyAd;
+		};
 	};
 
 	//Init all XP categories

@@ -89,13 +89,32 @@ if ((missionNameSpace getVariable ["enableOpforVehicle", 0]) != 0) then
 	_numberOfVehicle = _thisDifficulty;
 
 	//Increase the number of vehicule on specific settings
-	if ((missionNameSpace getVariable ["enableOpforVehicle", 0]) == 2) then 
+	switch ((missionNameSpace getVariable ["enableOpforVehicle", 0])) do
 	{
-		_numberOfVehicle = _numberOfVehicle+1;
+		//few
+		case 1:
+		{
+			_numberOfVehicle = round (_numberOfVehicle/2);
+		};
+		//Normal
+		case 2:
+		{
+			_numberOfVehicle = _numberOfVehicle;
+		};
+		//Crazy
+		case 3:
+		{
+			_numberOfVehicle = floor (_numberOfVehicle*2);
+		};
+		//Insane
+		case 4:
+		{
+			_numberOfVehicle = round (_numberOfVehicle*3);;
+		};
 	};
 
 	//75% chance enemy have vehicle
-	if (random 100 < 75 || (missionNameSpace getVariable ["enableOpforVehicle", 0]) == 2) then 
+	if (random 100 < 75 || (missionNameSpace getVariable ["enableOpforVehicle", 0]) > 2) then 
 	{
 		for [{_i = 0}, {_i < _numberOfVehicle}, {_i = _i + 1}] do 
 		{	

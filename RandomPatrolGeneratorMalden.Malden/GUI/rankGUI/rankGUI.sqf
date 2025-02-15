@@ -12,7 +12,7 @@ _backGround ctrlCommit 0;
 _RcsTitleDialog = _display ctrlCreate ["RscText", -1];
 _RcsTitleDialog ctrlSetText (format ["Rank manager for %1", name player]);
 _RcsTitleDialog ctrlSetPosition[ 0, 0, 0.75, 0.04 ];
-_RcsTitleDialog ctrlSetBackgroundColor [0,0,0,1];
+_RcsTitleDialog ctrlSetBackgroundColor [0.8,0.5,0,1];
 _RcsTitleDialog ctrlSetTextColor [1, 1, 1, 1];
 _RcsTitleDialog ctrlCommit 0;
 

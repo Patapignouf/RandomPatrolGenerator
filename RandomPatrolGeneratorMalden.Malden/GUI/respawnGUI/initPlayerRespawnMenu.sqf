@@ -108,7 +108,7 @@ if (!ironMan) then
 	//Load every class for current player's faction
 	//Define list of role in the combo box
 	{
-		_dropdown lbAdd format ["%1", format ["%1 (%2 %3)", [_x] call getClassInformation, [player, _x] call getNumberOfClassInSquad, localize "STR_RPG_LOADOUT_ROLE_NB_INSQUAD"]];
+		_dropdown lbAdd format ["%1", format ["%1 (%2/%4 %3)", [_x] call getClassInformation, [player, _x] call getNumberOfClassInSquad, localize "STR_RPG_LOADOUT_ROLE_NB_INSQUAD", [_x] call checkRoleMaxNumber]];
 		_dropdown lbSetData [(lbSize _dropdown)-1, format ["%1",(lbSize _dropdown)-1]];
 		_dropdown lbSetTooltip [(lbSize _dropdown)-1, [_x] call getClassInformation];
 	} foreach _listOfAvalaibleRole;
@@ -135,6 +135,7 @@ if (!ironMan) then
 				//Load personnal loadout
 				_loadableLoadout = profileNamespace getVariable [format [loadoutSaveName, name player, player call getPlayerFaction, player getVariable "role"], player getVariable "spawnLoadout"];
 				player setUnitLoadout _loadableLoadout;
+				player setVariable ["spawnLoadout", getUnitLoadout player]; //Save custom loadout for future spawn loadout
 
 				//Hint switch role
 				[[format ["%1 has switched to role %2", name player, player getVariable "role"], "arsenal"], 'engine\hintManagement\addCustomHint.sqf'] remoteExec ['BIS_fnc_execVM', -clientOwner];

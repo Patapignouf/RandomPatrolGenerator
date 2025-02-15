@@ -1,8 +1,8 @@
 //init tp to be able to spawn on the ground on each map
-player setPos [worldSize,worldSize,0];
+player setPos [worldSize,worldSize, 1000];
+player enableSimulationGlobal false;
 player allowdamage false;
 
-//#include "database\factionParameters.sqf"
 #include "engine\modManager.sqf"
 #include "database\missionParameters.sqf"
 #include "enemyManagement\behaviorEngine\unitsBehaviorFunctions.sqf"
@@ -30,12 +30,12 @@ diag_log format ["Setup Player %1 at position 0", name player];
 
 enableSentences false;
 
-//player enableSimulationGlobal false;
+
 player setVariable ["role", player getVariable ["initRole","rifleman"], true];
 
 [selectRandom ["LeadTrack01_F","LeadTrack01a_F","LeadTrack01b_F","LeadTrack03_F","LeadTrack01_F_Heli","LeadTrack04_F_EXP","LeadTrack01_F_Mark"], 10, 0.2] call BIS_fnc_playMusic;
 
-cutText ["", "BLACK FADED", 100];
+cutText ["PREPARING MISSION SETUP", "BLACK FADED", 100];
 
 //Wait for UI totaly loaded
 uiSleep 3;
@@ -50,7 +50,7 @@ if (!didJIP) then
 	{
 		if (call BIS_fnc_admin != 0) then 
 		{
-			cutText ["", "BLACK FADED", 100];
+			cutText ["PREPARING SETUP", "BLACK FADED", 100];
 			player setVariable ["isSetupMission", true];
 			player setVariable ["isAdmin", true, true];
 
@@ -65,7 +65,7 @@ if (!didJIP) then
 			if (side player == independent && player == (leader (group player))) then 
 			{
 				//Display setup menu
-				cutText ["", "BLACK FADED", 100];
+				cutText ["PREPARING SETUP", "BLACK FADED", 100];
 				player setVariable ["isSetupMission", true];
 				waitUntil { !isNull findDisplay 46 };
 
@@ -138,7 +138,7 @@ _missionSettings = "";
 	_paramValue = ((_currentParam#0) select {(missionNameSpace getVariable [_currentParam#3,0]) == _x#0})#0#1;
 	_missionSettings = format ["%1%2 : %3<br />", _missionSettings, _paramName, _paramValue];
 } foreach baseParamsToManage;
-[format ["<t color='#ffffff' align='left' size='.6'>Mission settings :<br /><br />%1</t>", _missionSettings],1,-0.1,10,1,0,789] spawn BIS_fnc_dynamicText;
+[format ["<t color='#ffffff' align='left' size='.6'>Mission settings :<br />%1</t>", _missionSettings],1,-0.1,10,1,0,789] spawn BIS_fnc_dynamicText;
 
 
 if (player getVariable ["isSetupMission", false]) then 
@@ -199,8 +199,11 @@ if (enableThermal==0) then
 	[] spawn _disableThermal;
 };
 
-//Validate mods 
-[] call doCheckRunningModsOnClient;
+//Validate mods
+if ((missionNameSpace getVariable "enableModChecker") == 1) then 
+{
+	[] call doCheckRunningModsOnClient;
+};
 
 //Hide HUD group to debug the UI 
 showHUD [
@@ -354,7 +357,7 @@ if (side player == independent) then
 	[VA1] call setupPlayerLoadout;
 
 	//Add vehicle shop
-	VA1 addAction [format ["<img size='2' image='\a3\ui_f_oldman\data\IGUI\Cfg\holdactions\holdAction_market_ca.paa'/><t size='1'>Open vehicle shop</t>"],{
+	VA1 addAction [format ["<img size='2' image='\a3\ui_f_oldman\data\IGUI\Cfg\holdactions\holdAction_market_ca.paa'/><t size='1'>%1</t>", localize "STR_ACTIONS_OPEN_VEHICLE_SHOP"],{
 			//Define parameters
 			params ["_object","_caller","_ID","_avalaibleVehicle"];
 
@@ -487,7 +490,13 @@ if (side player == blufor) then
 		waitUntil {!isNil "bluformobilehq"};
 		
 		//TODO FIX Mobile HQ Arsenal action
-		[bluforMobileHQ] call setupPlayerLoadout;
+		if (ironMan) then 
+		{
+			[bluforMobileHQ] call setupPlayerLoadout;	
+		} else 
+		{
+			[bluforMobileHQ] call setupPlayerLoadoutRemake;	
+		};
 	};
 
 
@@ -578,27 +587,21 @@ if (side player == blufor) then
 	waitUntil{!isNil "TPFlag1"};
 	if (isNil "USS_FREEDOM_CARRIER") then 
 	{
-		TPFlag1 addAction [format ["<img size='2' image='\a3\ui_f_oldman\data\IGUI\Cfg\holdactions\holdAction_market_ca.paa'/><t size='1'>Open vehicle shop</t>"],{
+		TPFlag1 addAction [format ["<img size='2' image='\a3\ui_f_oldman\data\IGUI\Cfg\holdactions\holdAction_market_ca.paa'/><t size='1'>%1</t>", localize "STR_ACTIONS_OPEN_VEHICLE_SHOP"],{
+
 					//Define parameters
 					params ["_object","_caller","_ID","_avalaibleVehicle"];
 
 					[["bluforVehicleAvalaibleSpawn", bluforUnarmedVehicle, bluforArmedVehicle, bluforArmoredVehicle, bluforUnarmedVehicleChopper, bluforArmedChopper, bluforDrone, bluforFixedWing, bluforBoat], 'GUI\vehicleSpawnerGUI\vehicleSpawner.sqf'] remoteExec ['BIS_fnc_execVM', _caller];
-			},_x,3,true,false,"","(_target distance _this <5) && (_this getVariable 'role' == 'leader' || _this getVariable 'role' == 'pilot')"];
+			},_x,3,true,false,"","(_target distance _this <5) && (_this getVariable 'role' == 'leader' || _this getVariable 'role' == 'pilot')"];	
 	};
 
-	TPFlag1 addAction ["<img size='2' image='\a3\ui_f_oldman\data\IGUI\Cfg\holdactions\holdAction_market_ca.paa'/><t size='1'>Open support shop</t>",{
+	TPFlag1 addAction [format ["<img size='2' image='\a3\ui_f_oldman\data\IGUI\Cfg\holdactions\holdAction_market_ca.paa'/><t size='1'>%1</t>", localize "STR_ACTIONS_OPEN_SUPPORT_SHOP"],{
 			//Define parameters
 			params ["_object","_caller","_ID","_avalaibleVehicle"];
 
 			[[true], 'GUI\supportGUI\supportGUI.sqf'] remoteExec ['BIS_fnc_execVM', _caller];
 	},_x,3,true,false,"","_target distance _this <5"];
-
-	TPFlag1 addAction ["<img size='2' image='\a3\ui_f_oldman\data\IGUI\Cfg\holdactions\holdAction_market_ca.paa'/><t size='1'>Open team member shop</t>",{
-			//Define parameters
-			params ["_object","_caller","_ID","_avalaibleVehicle"];
-
-			[[], 'GUI\botteamGUI\botteamGUI.sqf'] remoteExec ['BIS_fnc_execVM', _caller];
-	},_x,3,true,false,"","(_target distance _this <5) && (_this getVariable 'role' == 'leader')"];
 
 		//Add abort action to TPFlag1
 	_actionIdAbortMission = TPFlag1 addAction 
@@ -673,7 +676,11 @@ if (didJIP) then
 {
 	diag_log format ["Player %1 has arrived on JIP", name player];
 	//Check if player is trying to respawn by deco/reco method
-	_deadPlayerList = missionNamespace getVariable "deadPlayer";
+	_deadPlayerList = [];
+	if (missionNameSpace getVariable ["respawnCheat", 0] == 1) then
+	{
+		_deadPlayerList = missionNamespace getVariable "deadPlayer";
+	};
 
 	if (count (_deadPlayerList select { _x == (name player) }) == 0) then 
 	{
@@ -683,7 +690,7 @@ if (didJIP) then
 		[[], 'GUI\respawnGUI\initPlayerRespawnMenu.sqf'] remoteExec ['BIS_fnc_execVM', player];
 	} else 
 	{
-		player setPos [0,0];
+		player setPos [-500,-500];
 		player setDamage 1;
 	};
 } else {
@@ -718,7 +725,7 @@ if (isClass (configFile >> "CfgPatches" >> "ace_medical")) then
 if (missionNameSpace getVariable ["enableAdvancedRespawn", 1] == 1) then 
 {
 	//Add vehicle shop
-	player addAction [format ["<img size='2' image='\a3\ui_f_oldman\data\IGUI\Cfg\holdactions\holdAction_sleep_ca.paa'/><t size='1'>Place reinforcement tent</t>"],{
+    player addAction [format ["<img size='2' image='\a3\ui_f_oldman\data\IGUI\Cfg\holdactions\holdAction_market_ca.paa'/><t size='1'>%1</t>", localize "STR_ACTIONS_PLACE_TENT"],{
 		//Define parameters
 		params ["_object","_caller","_ID","_avalaibleVehicle"];
 
@@ -735,11 +742,28 @@ if (missionNameSpace getVariable ["enableAdvancedRespawn", 1] == 1) then
 		[[str (group _caller), _createTent,"\a3\ui_f\data\IGUI\Cfg\holdactions\holdAction_requestleadership_ca.paa" , [0,0,1,1]], 'GUI\3DNames\3DObjectNames.sqf'] remoteExec ['BIS_fnc_execVM', blufor, true];
 
 		//Add support action on tent
-		_createTent addAction ["<img size='2' image='\a3\ui_f_oldman\data\IGUI\Cfg\holdactions\holdAction_market_ca.paa'/><t size='1'>Open support shop</t>",{
+		_createTent addAction [format ["<img size='2' image='\a3\ui_f_oldman\data\IGUI\Cfg\holdactions\holdAction_market_ca.paa'/><t size='1'>%1</t>", localize "STR_ACTIONS_OPEN_SUPPORT_SHOP"],{
 			//Define parameters
 			params ["_object","_caller","_ID","_avalaibleVehicle"];
 
 			[[false], 'GUI\supportGUI\supportGUI.sqf'] remoteExec ['BIS_fnc_execVM', _caller];
+		},_x,3,true,false,"","(_target distance _this <5) && (_target getVariable [str (group _this), false])"];
+
+		_createTent addAction [format ["<img size='2' image='\a3\ui_f_oldman\data\IGUI\Cfg\holdactions\holdAction_sleep2_ca.paa'/>%1</t>", localize "STR_ACTIONS_SLEEP"],{
+			//Define parameters
+			params ["_object","_caller","_ID","_avalaibleVehicle"];
+
+			if (!(missionNamespace getVariable ["usedFewTimeAgo",false])) then 
+				{
+					//set morning
+					((08 - dayTime + 24) % 24) remoteExec ["skipTime", 2, false]; 
+					[format ["%1 needs to rest", name _caller]] remoteExec ["hint",0,true];
+					missionNamespace setVariable ["usedFewTimeAgo",true,true];
+					sleep 300;
+					missionNamespace setVariable ["usedFewTimeAgo",false,true];
+				} else {
+					hint "No need to rest";
+				};
 		},_x,3,true,false,"","(_target distance _this <5) && (_target getVariable [str (group _this), false])"];
 
 		//Create action to authorize tent disassembly
@@ -782,7 +806,7 @@ if (missionNameSpace getVariable ["enableAdvancedRespawn", 1] == 1) then
 			false
 		] remoteExec ["BIS_fnc_holdActionAdd", 0, true];
 
-	},_x,3,true,false,"","(_this getVariable 'role' == 'leader') && (missionNameSpace getVariable [ format ['bluforAdvancedRespawn%1', str (group _this)], true]) && (vehicle _this == _this)"];
+	},_x,3,true,false,"","(_this getVariable 'role' == 'leader') && (missionNameSpace getVariable [ format ['bluforAdvancedRespawn%1', str (group _this)], true]) && (vehicle _this == _this) && isTouchingGround _this"];
 };
 
 //Display welcome message

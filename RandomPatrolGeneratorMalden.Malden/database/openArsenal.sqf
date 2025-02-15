@@ -45,7 +45,7 @@ if (!ironMan) then
 
 	//Prevent player from loosing his current configuration
 	_newAvalaibleItems = player getVariable ["avalaibleItemsInArsenal", []];
-	_potentialStuff = ((getUnitLoadout player) call getAllStringInArray);
+	_potentialStuff = ([(getUnitLoadout player)] call getAllStringInArray);
 	{
 		if (typeName _x != "STRING") then 
 		{

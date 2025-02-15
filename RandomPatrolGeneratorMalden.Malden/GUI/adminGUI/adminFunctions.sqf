@@ -106,7 +106,7 @@ addRespawn = {
 addVehicleSpawnerGUI = {
 	params ["_ctrl"];
 
-	_supportName = "Open Vehicle Shop";
+	_supportName = localize "STR_ACTIONS_OPEN_VEHICLE_SHOP";
 	_supportNameCode = "VehicleShop";
 	_supportIcon = "\a3\ui_f\data\igui\cfg\simpletasks\types\Radio_ca.paa";
 	_supportType = "Vehicle";
@@ -117,7 +117,7 @@ addVehicleSpawnerGUI = {
 addSupportGUI = {
 	params ["_ctrl"];
 
-	_supportName = "Open Support Shop";
+	_supportName = localize "STR_ACTIONS_OPEN_SUPPORT_SHOP";
 	_supportNameCode = "SupportShop";
 	_supportIcon = "\a3\ui_f\data\igui\cfg\simpletasks\types\Radio_ca.paa";
 	_supportType = "Support";

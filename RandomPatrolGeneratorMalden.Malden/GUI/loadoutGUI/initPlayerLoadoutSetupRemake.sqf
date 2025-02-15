@@ -72,7 +72,7 @@ refreshCustomLoadoutDisplay = {
 		lbClear _dropdown; 
 		_listOfAvalaibleRole = [player] call setupSimpleRoleSwitchWithToList;
 		{
-			_dropdown lbAdd format ["%1", format ["%1 (%2 %3)", [_x] call getClassInformation, [player, _x] call getNumberOfClassInSquad, localize "STR_RPG_LOADOUT_ROLE_NB_INSQUAD"]];
+			_dropdown lbAdd format ["%1", format ["%1 (%2/%4 %3)", [_x] call getClassInformation, [player, _x] call getNumberOfClassInSquad, localize "STR_RPG_LOADOUT_ROLE_NB_INSQUAD", [_x] call checkRoleMaxNumber]];
 			_dropdown lbSetData [(lbSize _dropdown)-1, format ["%1",(lbSize _dropdown)-1]];
 			_dropdown lbSetTooltip [(lbSize _dropdown)-1, [_x] call getDescClassInformation];
 		} foreach _listOfAvalaibleRole;
@@ -102,7 +102,7 @@ _backGround ctrlCommit 0;
 _RcsTitleDialog = _display ctrlCreate ["RscStructuredText", -1];
 _RcsTitleDialog ctrlSetStructuredText parseText format ["<t size='0.5'>&#160;</t><br/><t size='1' align='center'>%1 %2&#160;&#160;</t>", localize "STR_RPG_LOADOUT_TITLE", name player];
 _RcsTitleDialog ctrlSetPosition [ -0.1, -0.1, 1.2, 0.07 ];
-_RcsTitleDialog ctrlSetBackgroundColor [0,0,0,0.8];
+_RcsTitleDialog ctrlSetBackgroundColor [0.8,0.5,0,1];
 _RcsTitleDialog ctrlSetTextColor [1, 1, 1, 1];
 _RcsTitleDialog ctrlCommit 0;
 
@@ -141,7 +141,7 @@ _loadableLoadout = profileNamespace getVariable [format [loadoutSaveName, name p
 //Load every class for current player's faction
 //Define list of role in the combo box
 {
-	_dropdown lbAdd format ["%1", format ["%1 (%2 %3)", [_x] call getClassInformation, [player, _x] call getNumberOfClassInSquad, localize "STR_RPG_LOADOUT_ROLE_NB_INSQUAD"]];
+	_dropdown lbAdd format ["%1", format ["%1 (%2/%4 %3)", [_x] call getClassInformation, [player, _x] call getNumberOfClassInSquad, localize "STR_RPG_LOADOUT_ROLE_NB_INSQUAD", [_x] call checkRoleMaxNumber]];
 	_dropdown lbSetData [(lbSize _dropdown)-1, format ["%1",(lbSize _dropdown)-1]];
 	_dropdown lbSetTooltip [(lbSize _dropdown)-1, [_x] call getDescClassInformation];
 } foreach _listOfAvalaibleRole;
@@ -310,8 +310,29 @@ _ButtonLoad ctrlAddEventHandler ["ButtonClick",{
 				player setVariable ["avalaibleItemsInArsenal", _newAvalaibleItems];
 			};
 
+			//Save loadout on respawn
+			player setVariable ["spawnLoadout", getUnitLoadout player];
+
 			[ctrlParent _ctrl] call refreshCustomLoadoutDisplay;
 			cutText ["Loadout loaded", "PLAIN", 0.3];
+	}];
+
+
+//clear item 
+_buttonClearItems = _display ctrlCreate ["RscButton", 12006];
+_buttonClearItems ctrlSetPosition [(0.55 * safezoneW + safezoneX),(0.70 * safezoneH + safezoneY),(0.09 * safezoneW),(0.025* safezoneH)];
+_buttonClearItems ctrlSetBackgroundColor [0,0,0,0.7];
+_buttonClearItems ctrlCommit 0;
+_buttonClearItems ctrlEnable true;
+_buttonClearItems ctrlSetText localize "RPG_GUI_GENERAL_CLEAR";
+_buttonClearItems ctrlAddEventHandler[ "ButtonClick", 
+	{ 
+		params ["_ctrl"];
+
+		hint "Stuff cleared";
+		removeAllItemsWithMagazines player;
+		
+		[ctrlParent _ctrl] call refreshCustomLoadoutDisplay;
 	}];
 
 //Button to go on the next setup

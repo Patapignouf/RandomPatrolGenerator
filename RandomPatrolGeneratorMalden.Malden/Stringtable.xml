@@ -1,804 +1,1812 @@
 <?xml version="1.0" encoding="utf-8" ?>
 <Project name="RPG">
-	<Package name="TOBEOPTIMIZE">
-		<Container name="SETUP">
-			<Key ID="STR_RPG_LOADING_WAIT">
-				<Original>Please wait while mission is generating</Original>
-				<English>Please wait while mission is generating</English>
-				<French>Génération de la mission en cours merci de patienter</French>
-			</Key>
+    <Package name="TOBEOPTIMIZE">
+        <Container name="SETUP">
+            <Key ID="STR_RPG_LOADING_WAIT">
+                <Original>Please wait while mission is generating</Original>
+                <English>Please wait while mission is generating</English>
+                <French>Génération de la mission en cours merci de patienter</French>
+                <Spanish>Por favor, espere mientras se genera la misión</Spanish>
+                <German>Bitte warten Sie, während die Mission generiert wird</German>
+                <Italian>Attendere mentre la missione viene generata</Italian>
+                <Russian>Пожалуйста, подождите, пока миссия генерируется</Russian>
+                <Chinese>请等待任务生成</Chinese>
+                <Japanese>ミッションが生成されるまでお待ちください</Japanese>
+            </Key>
             <Key ID="STR_RPG_SETUP_FACTIONS">
-				<Original>Setup factions database</Original>
-				<English>Setup factions database</English>
-				<French>Mise en place des factions</French>
-			</Key>
+                <Original>Setup factions database</Original>
+                <English>Setup factions database</English>
+                <French>Mise en place des factions</French>
+                <Spanish>Configurar base de datos de facciones</Spanish>
+                <German>Fraktionsdatenbank einrichten</German>
+                <Italian>Configurare il database delle fazioni</Italian>
+                <Russian>Настройка базы данных фракций</Russian>
+                <Chinese>设置派系数据库</Chinese>
+                <Japanese>派閥データベースを設定</Japanese>
+            </Key>
             <Key ID="STR_RPG_SETUP_AREA">
-				<Original>Finding the best operation area</Original>
-				<English>Finding the best operation area</English>
-				<French>Recherche des meilleurs emplacements de missions</French>
-			</Key>
+                <Original>Finding the best operation area</Original>
+                <English>Finding the best operation area</English>
+                <French>Recherche des meilleurs emplacements de missions</French>
+                <Spanish>Encontrando la mejor área de operación</Spanish>
+                <German>Suche nach dem besten Einsatzgebiet</German>
+                <Italian>Trovare la migliore area operativa</Italian>
+                <Russian>Поиск лучшей оперативной зоны</Russian>
+                <Chinese>寻找最佳作战区域</Chinese>
+                <Japanese>最適な作戦エリアを見つけています</Japanese>
+            </Key>
             <Key ID="STR_RPG_SETUP_OBJ">
-				<Original>Generating objectives</Original>
-				<English>Generating objectives</English>
-				<French>Génération des objectifs</French>
-			</Key>
+                <Original>Generating objectives</Original>
+                <English>Generating objectives</English>
+                <French>Génération des objectifs</French>
+                <Spanish>Generando objetivos</Spanish>
+                <German>Ziele generieren</German>
+                <Italian>Generazione degli obiettivi</Italian>
+                <Russian>Генерация целей</Russian>
+                <Chinese>生成目标</Chinese>
+                <Japanese>目標を生成中</Japanese>
+            </Key>
             <Key ID="STR_RPG_SETUP_CIV">
-				<Original>Generating civilians city</Original>
-				<English>Generating civilians city</English>
-				<French>Génération des civils</French>
-			</Key>
+                <Original>Generating civilians city</Original>
+                <English>Generating civilians city</English>
+                <French>Génération des civils</French>
+                <Spanish>Generando ciudad civil</Spanish>
+                <German>Zivilistenstadt generieren</German>
+                <Italian>Generazione della città civile</Italian>
+                <Russian>Генерация города гражданских лиц</Russian>
+                <Chinese>生成平民城市</Chinese>
+                <Japanese>市民の街を生成中</Japanese>
+            </Key>
             <Key ID="STR_RPG_SETUP_IND">
-				<Original>Generating independent base</Original>
-				<English>Generating independent base</English>
-				<French>Génération des civils</French>
-			</Key>
+                <Original>Generating independent base</Original>
+                <English>Generating independent base</English>
+                <French>Génération des civils</French>
+                <Spanish>Generando base independiente</Spanish>
+                <German>Unabhängige Basis generieren</German>
+                <Italian>Generazione della base indipendente</Italian>
+                <Russian>Генерация независимой базы</Russian>
+                <Chinese>生成独立基地</Chinese>
+                <Japanese>独立基地を生成中</Japanese>
+            </Key>
             <Key ID="STR_RPG_SETUP_BLU">
-				<Original>Generating blufor base</Original>
-				<English>Generating blufor base</English>
-				<French>Génération de BLUFOR</French>
-			</Key>
+                <Original>Generating blufor base</Original>
+                <English>Generating blufor base</English>
+                <French>Génération de BLUFOR</French>
+                <Spanish>Generando base blufor</Spanish>
+                <German>Blufor-Basis generieren</German>
+                <Italian>Generazione della base blufor</Italian>
+                <Russian>Генерация базы блюфор</Russian>
+                <Chinese>生成蓝方基地</Chinese>
+                <Japanese>ブルーフォー基地を生成中</Japanese>
+            </Key>
             <Key ID="STR_RPG_SETUP_OPF">
-				<Original>Generating opfor patrols, mortars and FOB</Original>
-				<English>Generating opfor patrols, mortars and FOB</English>
-				<French>Génération d'OPFOR</French>
-			</Key>
+                <Original>Generating opfor patrols, mortars and FOB</Original>
+                <English>Generating opfor patrols, mortars and FOB</English>
+                <French>Génération d'OPFOR</French>
+                <Spanish>Generando patrullas opfor, morteros y FOB</Spanish>
+                <German>Opfor-Patrouillen, Mörser und FOB generieren</German>
+                <Italian>Generazione di pattuglie opfor, mortai e FOB</Italian>
+                <Russian>Генерация патрулей опфор, минометов и FOB</Russian>
+                <Chinese>生成敌方巡逻、迫击炮和前进作战基地</Chinese>
+                <Japanese>オプフォーの巡回、迫撃砲、FOBを生成中</Japanese>
+            </Key>
             <Key ID="STR_RPG_SETUP_LAST">
-				<Original>One last thing...</Original>
-				<English>One last thing...</English>
-				<French>Une dernière chose...</French>
-			</Key>
-		</Container>
+                <Original>One last thing...</Original>
+                <English>One last thing...</English>
+                <French>Une dernière chose...</French>
+                <Spanish>Una última cosa...</Spanish>
+                <German>Eine letzte Sache...</German>
+                <Italian>Un'ultima cosa...</Italian>
+                <Russian>Одна последняя вещь...</Russian>
+                <Chinese>最后一件事...</Chinese>
+                <Japanese>最後に一つ...</Japanese>
+            </Key>
+        </Container>
         <Container name="OBJECTIVES">
             <Key ID="STR_RPG_OBJ_SURVIVE">
-				<Original>Survive</Original>
-				<English>Survive</English>
-				<French>Survivre</French>
-			</Key>
+                <Original>Survive</Original>
+                <English>Survive</English>
+                <French>Survivre</French>
+                <Spanish>Sobrevivir</Spanish>
+                <German>Überleben</German>
+                <Italian>Sopravvivere</Italian>
+                <Russian>Выжить</Russian>
+                <Chinese>生存</Chinese>
+                <Japanese>生き残る</Japanese>
+            </Key>
             <Key ID="STR_RPG_OBJ_SURVIVE_TEXT">
-				<Original>Finish the mission without dying</Original>
-				<English>Finish the mission without dying</English>
-				<French>Terminer la mission sans mourir</French>
-			</Key>
+                <Original>Finish the mission without dying</Original>
+                <English>Finish the mission without dying</English>
+                <French>Terminer la mission sans mourir</French>
+                <Spanish>Termina la misión sin morir</Spanish>
+                <German>Beende die Mission, ohne zu sterben</German>
+                <Italian>Completa la missione senza morire</Italian>
+                <Russian>Завершите миссию, не умирая</Russian>
+                <Chinese>完成任务而不死亡</Chinese>
+                <Japanese>死なずにミッションを完了する</Japanese>
+            </Key>
             <Key ID="STR_RPG_OBJ_CONTACT_CIV">
-				<Original>Contact civilians</Original>
-				<English>Contact civilians</English>
-				<French>Contacter les civils</French>
-			</Key>
+                <Original>Contact civilians</Original>
+                <English>Contact civilians</English>
+                <French>Contacter les civils</French>
+                <Spanish>Contactar civiles</Spanish>
+                <German>Zivilisten kontaktieren</German>
+                <Italian>Contattare i civili</Italian>
+                <Russian>Связаться с гражданскими лицами</Russian>
+                <Chinese>联系平民</Chinese>
+                <Japanese>市民と連絡を取る</Japanese>
+            </Key>
             <Key ID="STR_RPG_OBJ_CONTACT_CIV_TEXT">
-				<Original>Contact civilians at %1 to get tasks</Original>
-				<English>Prendre contact avec les civils près de %1. Ils sauront vous donner les localisations des objectifs clefs de la région.</English>
-				<French></French>
-			</Key>
+                <Original>Contact civilians at %1 to get tasks</Original>
+                <English>Contact civilians at %1 to get tasks</English>
+                <French>Prendre contact avec les civils près de %1. Ils sauront vous donner les localisations des objectifs clefs de la région.</French>
+                <Spanish>Contacta a los civiles en %1 para obtener tareas</Spanish>
+                <German>Kontaktieren Sie Zivilisten bei %1, um Aufgaben zu erhalten</German>
+                <Italian>Contatta i civili a %1 per ottenere compiti</Italian>
+                <Russian>Свяжитесь с гражданскими лицами в %1, чтобы получить задачи</Russian>
+                <Chinese>在%1联系平民以获取任务</Chinese>
+                <Japanese>%1で市民と連絡を取り、タスクを得る</Japanese>
+            </Key>
             <Key ID="STR_RPG_OBJ_EXTRACT">
-				<Original>RTB or Extract</Original>
-				<English>RTB or Extract</English>
-				<French>Retour base ou extraction</French>
-			</Key>
+                <Original>RTB or Extract</Original>
+                <English>RTB or Extract</English>
+                <French>Retour base ou extraction</French>
+                <Spanish>RTB o Extraer</Spanish>
+                <German>RTB oder Extrahieren</German>
+                <Italian>RTB o Estrazione</Italian>
+                <Russian>RTB или Извлечение</Russian>
+                <Chinese>返回基地或撤离</Chinese>
+                <Japanese>RTBまたは抽出</Japanese>
+            </Key>
             <Key ID="STR_RPG_OBJ_EXTRACT_TEXT">
-				<Original>Return to your initial base or extract area of operation</Original>
-				<English>Return to your initial base or extract area of operation</English>
-				<French>Retournez à votre base ou quittez la zone de mission</French>
-			</Key>
+                <Original>Return to your initial base or extract area of operation</Original>
+                <English>Return to your initial base or extract area of operation</English>
+                <French>Retournez à votre base ou quittez la zone de mission</French>
+                <Spanish>Regresa a tu base inicial o extrae el área de operación</Spanish>
+                <German>Kehren Sie zu Ihrer ursprünglichen Basis oder dem Einsatzgebiet zurück</German>
+                <Italian>Torna alla tua base iniziale o estrai l'area operativa</Italian>
+                <Russian>Вернитесь к своей начальной базе или извлеките зону действия</Russian>
+                <Chinese>返回您的初始基地或撤离作战区域</Chinese>
+                <Japanese>初期基地に戻るか、作戦エリアを抽出する</Japanese>
+            </Key>
             <Key ID="STR_RPG_OBJ_SUPPLY">
-				<Original>Supply case</Original>
-				<English>Supply case</English>
-				<French>Caisse de ravitaillement</French>
-			</Key>
+                <Original>Supply case</Original>
+                <English>Supply case</English>
+                <French>Caisse de ravitaillement</French>
+                <Spanish>Caja de suministros</Spanish>
+                <German>Versorgungskiste</German>
+                <Italian>Cassa di rifornimento</Italian>
+                <Russian>Снабжение</Russian>
+                <Chinese>补给箱</Chinese>
+                <Japanese>サプライケース</Japanese>
+            </Key>
             <Key ID="STR_RPG_OBJ_SUPPLY_TEXT">
-				<Original>There's %1 near %2. Can you bring it to %3...</Original>
-				<English>There's %1 near %2. Can you bring it to %3...</English>
-				<French>%1 a été repéré près de %2. Pouvez-vous l'apporter à %3</French>
-			</Key>
+                <Original>There's %1 near %2. Can you bring it to %3...</Original>
+                <English>There's %1 near %2. Can you bring it to %3...</English>
+                <French>%1 a été repéré près de %2. Pouvez-vous l'apporter à %3</French>
+                <Spanish>Hay %1 cerca de %2. ¿Puedes llevarlo a %3...</Spanish>
+                <German>Es gibt %1 in der Nähe von %2. Kannst du es zu %3 bringen...</German>
+                <Italian>C'è %1 vicino a %2. Puoi portarlo a %3...</Italian>
+                <Russian>Есть %1 рядом с %2. Можете ли вы принести это в %3...</Russian>
+                <Chinese>在%2附近有%1。你能把它带到%3吗...</Chinese>
+                <Japanese>%2の近くに%1があります。%3に持って行けますか...</Japanese>
+            </Key>
             <Key ID="STR_RPG_OBJ_AMMO">
-				<Original>Ammo cache</Original>
-				<English>Ammo cache</English>
-				<French>Cache de munitions</French>
-			</Key>
+                <Original>Ammo cache</Original>
+                <English>Ammo cache</English>
+                <French>Cache de munitions</French>
+                <Spanish>Caché de municiones</Spanish>
+                <German>Munitionslager</German>
+                <Italian>Deposito di munizioni</Italian>
+                <Russian>Тайник с боеприпасами</Russian>
+                <Chinese>弹药藏匿处</Chinese>
+                <Japanese>弾薬キャッシュ</Japanese>
+            </Key>
             <Key ID="STR_RPG_OBJ_AMMO_TEXT">
-				<Original>There's %1 near %2. Can you bring it to %3 or destroy it...</Original>
-				<English>There's %1 near %2. Can you bring it to %3 or destroy it...</English>
-				<French>Il y a une %1 près de %2. Pouvez vous l'apporter à %3 ou bien la détruire</French>
-			</Key>
+                <Original>There's %1 near %2. Can you bring it to %3 or destroy it...</Original>
+                <English>There's %1 near %2. Can you bring it to %3 or destroy it...</English>
+                <French>Il y a une %1 près de %2. Pouvez vous l'apporter à %3 ou bien la détruire</French>
+                <Spanish>Hay %1 cerca de %2. ¿Puedes llevarlo a %3 o destruirlo...</Spanish>
+                <German>Es gibt %1 in der Nähe von %2. Kannst du es zu %3 bringen oder zerstören...</German>
+                <Italian>C'è %1 vicino a %2. Puoi portarlo a %3 o distruggerlo...</Italian>
+                <Russian>Есть %1 рядом с %2. Можете ли вы принести это в %3 или уничтожить...</Russian>
+                <Chinese>在%2附近有%1。你能把它带到%3或者摧毁它吗...</Chinese>
+                <Japanese>%2の近くに%1があります。%3に持って行けますか、または破壊できますか...</Japanese>
+            </Key>
             <Key ID="STR_RPG_OBJ_HVT">
-				<Original>HVT</Original>
-				<English>HVT</English>
-				<French>Cible</French>
-			</Key>
+                <Original>HVT</Original>
+                <English>HVT</English>
+                <French>Cible</French>
+                <Spanish>HVT</Spanish>
+                <German>HVT</German>
+                <Italian>HVT</Italian>
+                <Russian>HVT</Russian>
+                <Chinese>高价值目标</Chinese>
+                <Japanese>HVT</Japanese>
+            </Key>
             <Key ID="STR_RPG_OBJ_HVT_TEXT">
-				<Original>There's an enemy %1 near %2. You have to kill him...</Original>
-				<English>There's an enemy %1 near %2. You have to kill him...</English>
-				<French>Il y a une cible importante %1 à %2. Vous devez l'éliminer... </French>
-			</Key>
+                <Original>There's an enemy %1 near %2. You have to kill him...</Original>
+                <English>There's an enemy %1 near %2. You have to kill him...</English>
+                <French>Il y a une cible importante %1 à %2. Vous devez l'éliminer...</French>
+                <Spanish>Hay un enemigo %1 cerca de %2. Debes matarlo...</Spanish>
+                <German>Es gibt einen feindlichen %1 in der Nähe von %2. Du musst ihn töten...</German>
+                <Italian>C'è un nemico %1 vicino a %2. Devi ucciderlo...</Italian>
+                <Russian>Есть вражеский %1 рядом с %2. Ты должен убить его...</Russian>
+                <Chinese>在%2附近有一个敌人%1。你必须杀了他...</Chinese>
+                <Japanese>%2の近くに敵の%1がいます。殺さなければなりません...</Japanese>
+            </Key>
             <Key ID="STR_RPG_OBJ_VIP">
-				<Original>VIP</Original>
-				<English>VIP</English>
-				<French>VIP</French>
-			</Key>
+                <Original>VIP</Original>
+                <English>VIP</English>
+                <French>VIP</French>
+                <Spanish>VIP</Spanish>
+                <German>VIP</German>
+                <Italian>VIP</Italian>
+                <Russian>VIP</Russian>
+                <Chinese>贵宾</Chinese>
+                <Japanese>VIP</Japanese>
+            </Key>
             <Key ID="STR_RPG_OBJ_VIP_TEXT">
-				<Original>I have a friend who's captured near %2. He looks like %1. Can you bring it to %3...</Original>
-				<English>I have a friend who's captured near %2. He looks like %1. Can you bring it to %3...</English>
-				<French>J'ai un ami qui s'est fait capturé près de %2. Il ressemble à %1. Pouvez-vous l'apporter à %3</French>
-			</Key>
+                <Original>I have a friend who's captured near %2. He looks like %1. Can you bring it to %3...</Original>
+                <English>I have a friend who's captured near %2. He looks like %1. Can you bring it to %3...</English>
+                <French>J'ai un ami qui s'est fait capturé près de %2. Il ressemble à %1. Pouvez-vous l'apporter à %3</French>
+                <Spanish>Tengo un amigo que fue capturado cerca de %2. Se parece a %1. ¿Puedes llevarlo a %3...</Spanish>
+                <German>Ich habe einen Freund, der in der Nähe von %2 gefangen genommen wurde. Er sieht aus wie %1. Kannst du ihn zu %3 bringen...</German>
+                <Italian>Ho un amico che è stato catturato vicino a %2. Assomiglia a %1. Puoi portarlo a %3...</Italian>
+                <Russian>У меня есть друг, который был захвачен рядом с %2. Он выглядит как %1. Можете ли вы принести его в %3...</Russian>
+                <Chinese>我有一个朋友被俘虏在%2附近。他看起来像%1。你能把他带到%3吗...</Chinese>
+                <Japanese>%2の近くで友人が捕らえられました。彼は%1のように見えます。%3に連れて行けますか...</Japanese>
+            </Key>
             <Key ID="STR_RPG_OBJ_HOSTAGE">
-				<Original>Hostage</Original>
-				<English>Hostage</English>
-				<French>Otage</French>
-			</Key>
+                <Original>Hostage</Original>
+                <English>Hostage</English>
+                <French>Otage</French>
+                <Spanish>Rehén</Spanish>
+                <German>Geisel</German>
+                <Italian>Ostaggio</Italian>
+                <Russian>Заложник</Russian>
+                <Chinese>人质</Chinese>
+                <Japanese>人質</Japanese>
+            </Key>
             <Key ID="STR_RPG_OBJ_HOSTAGE_THANK">
-				<Original>Thank you, i can continue by myself</Original>
-				<English>Thank you, i can continue by myself</English>
-				<French>Merci, à présent je peux continuer par moi même</French>
-			</Key>  
+                <Original>Thank you, i can continue by myself</Original>
+                <English>Thank you, i can continue by myself</English>
+                <French>Merci, à présent je peux continuer par moi même</French>
+                <Spanish>Gracias, puedo continuar por mi cuenta</Spanish>
+                <German>Danke, ich kann alleine weitermachen</German>
+                <Italian>Grazie, posso continuare da solo</Italian>
+                <Russian>Спасибо, я могу продолжить сам</Russian>
+                <Chinese>谢谢，我可以自己继续</Chinese>
+                <Japanese>ありがとう、自分で続けられます</Japanese>
+            </Key>
             <Key ID="STR_RPG_OBJ_HOSTAGE_TEXT">
-				<Original>I have a spotted the hostage captured near %2. He looks like %1.</Original>
-				<English>I have a spotted the hostage captured near %2. He looks like %1.</English>
-				<French>J'ai repéré un otage près de %2. Il ressemble à %1. Vous devez le libérer.</French>
-			</Key>
+                <Original>I have a spotted the hostage captured near %2. He looks like %1.</Original>
+                <English>I have a spotted the hostage captured near %2. He looks like %1.</English>
+                <French>J'ai repéré un otage près de %2. Il ressemble à %1. Vous devez le libérer.</French>
+                <Spanish>He visto al rehén capturado cerca de %2. Se parece a %1.</Spanish>
+                <German>Ich habe die Geisel in der Nähe von %2 gesehen. Er sieht aus wie %1.</German>
+                <Italian>Ho visto l'ostaggio catturato vicino a %2. Assomiglia a %1.</Italian>
+                <Russian>Я заметил заложника, захваченного рядом с %2. Он выглядит как %1.</Russian>
+                <Chinese>我在%2附近看到了人质。他看起来像%1。</Chinese>
+                <Japanese>%2の近くで人質を見ました。彼は%1のように見えます。</Japanese>
+            </Key>
             <Key ID="STR_RPG_OBJ_STEAL">
-				<Original>Steal vehicle</Original>
-				<English>Steal vehicle</English>
-				<French>Récupérer un véhicule</French>
-			</Key>
+                <Original>Steal vehicle</Original>
+                <English>Steal vehicle</English>
+                <French>Récupérer un véhicule</French>
+                <Spanish>Robar vehículo</Spanish>
+                <German>Fahrzeug stehlen</German>
+                <Italian>Rubare veicolo</Italian>
+                <Russian>Украсть транспортное средство</Russian>
+                <Chinese>偷车</Chinese>
+                <Japanese>車両を盗む</Japanese>
+            </Key>
             <Key ID="STR_RPG_OBJ_STEAL_TEXT">
-				<Original>Some people stole our vehicle %1. I think it's located in %2. Can you bring it to %3...</Original>
-				<English>Some people stole our vehicle %1. I think it's located in %2. Can you bring it to %3...</English>
-				<French>Un véhicule %1 a été volé. Il a été aperçu vers %2. Vous devez le ramener à %3</French>
-			</Key>
+                <Original>Some people stole our vehicle %1. I think it's located in %2. Can you bring it to %3...</Original>
+                <English>Some people stole our vehicle %1. I think it's located in %2. Can you bring it to %3...</English>
+                <French>Un véhicule %1 a été volé. Il a été aperçu vers %2. Vous devez le ramener à %3</French>
+                <Spanish>Algunas personas robaron nuestro vehículo %1. Creo que está ubicado en %2. ¿Puedes llevarlo a %3...</Spanish>
+                <German>Jemand hat unser Fahrzeug %1 gestohlen. Ich denke, es befindet sich in %2. Kannst du es zu %3 bringen...</German>
+                <Italian>Qualcuno ha rubato il nostro veicolo %1. Penso che si trovi a %2. Puoi portarlo a %3...</Italian>
+                <Russian>Кто-то украл наше транспортное средство %1. Я думаю, оно находится в %2. Можете ли вы принести его в %3...</Russian>
+                <Chinese>有人偷了我们的车辆%1。我想它在%2。你能把它带到%3吗...</Chinese>
+                <Japanese>誰かが車両%1を盗みました。%2にあると思います。%3に持って行けますか...</Japanese>
+            </Key>
             <Key ID="STR_RPG_OBJ_INFORMANT">
-				<Original>Talk to the informant</Original>
-				<English>Talk to the informant</English>
-				<French>Parler à l'informateur</French>
-			</Key>
+                <Original>Talk to the informant</Original>
+                <English>Talk to the informant</English>
+                <French>Parler à l'informateur</French>
+                <Spanish>Hablar con el informante</Spanish>
+                <German>Sprechen Sie mit dem Informanten</German>
+                <Italian>Parla con l'informatore</Italian>
+                <Russian>Поговорите с информатором</Russian>
+                <Chinese>与线人交谈</Chinese>
+                <Japanese>情報提供者と話す</Japanese>
+            </Key>
             <Key ID="STR_RPG_OBJ_INFORMANT_TEXT">
-				<Original>I have a friend who lives near %2. He looks like %1. Can you talk to him...</Original>
-				<English>I have a friend who lives near %2. He looks like %1. Can you talk to him...</English>
-				<French>Je connais un informateur près de %2. Il ressemble à %1. Il faut aller lui parler.</French>
-			</Key>
+                <Original>I have a friend who lives near %2. He looks like %1. Can you talk to him...</Original>
+                <English>I have a friend who lives near %2. He looks like %1. Can you talk to him...</English>
+                <French>Je connais un informateur près de %2. Il ressemble à %1. Il faut aller lui parler.</French>
+                <Spanish>Tengo un amigo que vive cerca de %2. Se parece a %1. ¿Puedes hablar con él...</Spanish>
+                <German>Ich habe einen Freund, der in der Nähe von %2 lebt. Er sieht aus wie %1. Kannst du mit ihm sprechen...</German>
+                <Italian>Ho un amico che vive vicino a %2. Assomiglia a %1. Puoi parlare con lui...</Italian>
+                <Russian>У меня есть друг, который живет рядом с %2. Он выглядит как %1. Можете ли вы поговорить с ним...</Russian>
+                <Chinese>我有一个朋友住在%2附近。他看起来像%1。你能和他谈谈吗...</Chinese>
+                <Japanese>%2の近くに住んでいる友人がいます。彼は%1のように見えます。彼と話せますか...</Japanese>
+            </Key>
             <Key ID="STR_RPG_OBJ_CLEAR">
-				<Original>Clear area</Original>
-				<English>Clear area</English>
-				<French>Pacifier la zone</French>
-			</Key>
+                <Original>Clear area</Original>
+                <English>Clear area</English>
+                <French>Pacifier la zone</French>
+                <Spanish>Despejar área</Spanish>
+                <German>Bereich räumen</German>
+                <Italian>Sgomberare l'area</Italian>
+                <Russian>Очистить зону</Russian>
+                <Chinese>清理区域</Chinese>
+                <Japanese>エリアをクリア</Japanese>
+            </Key>
             <Key ID="STR_RPG_OBJ_CLEAR_TEXT">
-				<Original>There is a lot of enemies in %1, you have to clear the location...</Original>
-				<English>There is a lot of enemies in %1, you have to clear the location...</English>
-				<French>Vous devez prendre le contrôle de la zone près de %1.</French>
-			</Key>
+                <Original>There is a lot of enemies in %1, you have to clear the location...</Original>
+                <English>There is a lot of enemies in %1, you have to clear the location...</English>
+                <French>Vous devez prendre le contrôle de la zone près de %1.</French>
+                <Spanish>Hay muchos enemigos en %1, debes despejar el lugar...</Spanish>
+                <German>Es gibt viele Feinde in %1, du musst den Ort räumen...</German>
+                <Italian>Ci sono molti nemici in %1, devi sgomberare il luogo...</Italian>
+                <Russian>В %1 много врагов, вам нужно очистить место...</Russian>
+                <Chinese>在%1有很多敌人，你必须清理该地点...</Chinese>
+                <Japanese>%1には多くの敵がいます。場所をクリアしなければなりません...</Japanese>
+            </Key>
             <Key ID="STR_RPG_OBJ_DEFEND">
-				<Original>Defend area</Original>
-				<English>Defend area</English>
-				<French>Défendre</French>
-			</Key>
+                <Original>Defend area</Original>
+                <English>Defend area</English>
+                <French>Défendre</French>
+                <Spanish>Defender área</Spanish>
+                <German>Bereich verteidigen</German>
+                <Italian>Difendere l'area</Italian>
+                <Russian>Защитить зону</Russian>
+                <Chinese>防守区域</Chinese>
+                <Japanese>エリアを防衛</Japanese>
+            </Key>
             <Key ID="STR_RPG_OBJ_DEFEND_TEXT">
-				<Original>You have to defend ammobox at %1, go to the location, find it and defend it against enemy reinforcement</Original>
-				<English>You have to defend ammobox at %1, go to the location, find it and defend it against enemy reinforcement</English>
-				<French>Vous devez protéger la position %1. Il y a une caisse convoitée par l'ennemi. Ils viendront essayer de la récupérer par tous les moyens</French>
-			</Key>
+                <Original>You have to defend ammobox at %1, go to the location, find it and defend it against enemy reinforcement</Original>
+                <English>You have to defend ammobox at %1, go to the location, find it and defend it against enemy reinforcement</English>
+                <French>Vous devez protéger la position %1. Il y a une caisse convoitée par l'ennemi. Ils viendront essayer de la récupérer par tous les moyens</French>
+                <Spanish>Debes defender la caja de municiones en %1, ve al lugar, encuéntrala y defiéndela contra el refuerzo enemigo</Spanish>
+                <German>Du musst die Munitionskiste in %1 verteidigen, geh zum Ort, finde sie und verteidige sie gegen feindliche Verstärkung</German>
+                <Italian>Devi difendere la cassa di munizioni a %1, vai sul posto, trovala e difendila contro il rinforzo nemico</Italian>
+                <Russian>Вам нужно защитить ящик с боеприпасами в %1, идите на место, найдите его и защитите от вражеского подкрепления</Russian>
+                <Chinese>你必须在%1保卫弹药箱，前往该地点，找到它并防御敌人的增援</Chinese>
+                <Japanese>%1で弾薬箱を防衛しなければなりません。場所に行き、それを見つけて、敵の増援から防衛します</Japanese>
+            </Key>
             <Key ID="STR_RPG_OBJ_TAKE">
-				<Original>Take And Hold</Original>
-				<English>Take And Hold</English>
-				<French>Prendre et tenir</French>
-			</Key>
+                <Original>Take And Hold</Original>
+                <English>Take And Hold</English>
+                <French>Prendre et tenir</French>
+                <Spanish>Tomar y mantener</Spanish>
+                <German>Einnehmen und halten</German>
+                <Italian>Prendere e mantenere</Italian>
+                <Russian>Захватить и удержать</Russian>
+                <Chinese>夺取并守住</Chinese>
+                <Japanese>奪取して保持</Japanese>
+            </Key>
             <Key ID="STR_RPG_OBJ_TAKE_TEXT">
-				<Original>There is some enemies in %1, you have to take the location and defend it against enemy reinforcement</Original>
-				<English>There is some enemies in %1, you have to take the location and defend it against enemy reinforcement</English>
-				<French>Vous devez prendre le contrôle de %1 puis tenir la position. L'ennemi viendra essayer de vous déloger.</French>
-			</Key>
+                <Original>There is some enemies in %1, you have to take the location and defend it against enemy reinforcement</Original>
+                <English>There is some enemies in %1, you have to take the location and defend it against enemy reinforcement</English>
+                <French>Vous devez prendre le contrôle de %1 puis tenir la position. L'ennemi viendra essayer de vous déloger.</French>
+                <Spanish>Hay algunos enemigos en %1, debes tomar el lugar y defenderlo contra el refuerzo enemigo</Spanish>
+                <German>Es gibt einige Feinde in %1, du musst den Ort einnehmen und ihn gegen feindliche Verstärkung verteidigen</German>
+                <Italian>Ci sono alcuni nemici in %1, devi prendere il posto e difenderlo contro il rinforzo nemico</Italian>
+                <Russian>В %1 есть враги, вы должны захватить место и защитить его от вражеского подкрепления</Russian>
+                <Chinese>在%1有一些敌人，你必须夺取该地点并防御敌人的增援</Chinese>
+                <Japanese>%1には敵がいます。場所を奪取し、敵の増援から防衛しなければなりません</Japanese>
+            </Key>
             <Key ID="STR_RPG_OBJ_INTEL">
-				<Original>Collect intel</Original>
-				<English>Collect intel</English>
-				<French>Collecte d'informations</French>
-			</Key>
+                <Original>Collect intel</Original>
+                <English>Collect intel</English>
+                <French>Collecte d'informations</French>
+                <Spanish>Recolectar información</Spanish>
+                <German>Informationen sammeln</German>
+                <Italian>Raccogliere informazioni</Italian>
+                <Russian>Собирать информацию</Russian>
+                <Chinese>收集情报</Chinese>
+                <Japanese>情報を収集</Japanese>
+            </Key>
             <Key ID="STR_RPG_OBJ_INTEL_TEXT">
-				<Original>I drop my %1 with a lot of intel about enemy's location in %2. Can you pick it up ?</Original>
-				<English>I drop my %1 with a lot of intel about enemy's location in %2. Can you pick it up ?</English>
-				<French>J'ai perdu un %1 avec des informations importantes près de %2. Vous devez le récupérer</French>
-			</Key>
+                <Original>I drop my %1 with a lot of intel about enemy's location in %2. Can you pick it up ?</Original>
+                <English>I drop my %1 with a lot of intel about enemy's location in %2. Can you pick it up ?</English>
+                <French>J'ai perdu un %1 avec des informations importantes près de %2. Vous devez le récupérer</French>
+                <Spanish>Dejé mi %1 con mucha información sobre la ubicación del enemigo en %2. ¿Puedes recogerlo?</Spanish>
+                <German>Ich habe mein %1 mit vielen Informationen über den Standort des Feindes in %2 fallen gelassen. Kannst du es aufheben?</German>
+                <Italian>Ho lasciato il mio %1 con molte informazioni sulla posizione del nemico a %2. Puoi raccoglierlo?</Italian>
+                <Russian>Я оставил свой %1 с множеством информации о местоположении врага в %2. Можете ли вы подобрать его?</Russian>
+                <Chinese>我在%2丢了我的%1，里面有很多关于敌人位置的情报。你能捡起来吗？</Chinese>
+                <Japanese>%2に敵の位置に関する多くの情報を含む%1を落としました。拾えますか？</Japanese>
+            </Key>
             <Key ID="STR_RPG_OBJ_CAPTURE">
-				<Original>Capture the location</Original>
-				<English>Capture the location</English>
-				<French>Capturer la position</French>
-			</Key>
+                <Original>Capture the location</Original>
+                <English>Capture the location</English>
+                <French>Capturer la position</French>
+                <Spanish>Capturar la ubicación</Spanish>
+                <German>Ort einnehmen</German>
+                <Italian>Catturare la posizione</Italian>
+                <Russian>Захватить место</Russian>
+                <Chinese>占领该地点</Chinese>
+                <Japanese>場所を占領</Japanese>
+            </Key>
             <Key ID="STR_RPG_OBJ_CAPTURE_TEXT">
-				<Original>You have to capture the flag of the location %2, this place has to be conquered !</Original>
-				<English>You have to capture the flag of the location %2, this place has to be conquered !</English>
-				<French>Vous devez capturer le drapeau situé à %2.</French>
-			</Key>
+                <Original>You have to capture the flag of the location %2, this place has to be conquered !</Original>
+                <English>You have to capture the flag of the location %2, this place has to be conquered !</English>
+                <French>Vous devez capturer le drapeau situé à %2.</French>
+                <Spanish>Debes capturar la bandera de la ubicación %2, ¡este lugar debe ser conquistado!</Spanish>
+                <German>Du musst die Flagge des Ortes %2 einnehmen, dieser Ort muss erobert werden!</German>
+                <Italian>Devi catturare la bandiera della posizione %2, questo posto deve essere conquistato!</Italian>
+                <Russian>Вам нужно захватить флаг места %2, это место должно быть завоевано!</Russian>
+                <Chinese>你必须占领%2的旗帜，这个地方必须被征服！</Chinese>
+                <Japanese>%2の場所の旗を占領しなければなりません。この場所は征服されなければなりません！</Japanese>
+            </Key>
             <Key ID="STR_RPG_OBJ_SIDE_MASTER">
-				<Original>Side objectives</Original>
-				<English>Side objectives</English>
-				<French>Objectifs secondaires</French>
-			</Key>
+                <Original>Side objectives</Original>
+                <English>Side objectives</English>
+                <French>Objectifs secondaires</French>
+                <Spanish>Objetivos secundarios</Spanish>
+                <German>Nebenziele</German>
+                <Italian>Obiettivi secondari</Italian>
+                <Russian>Побочные цели</Russian>
+                <Chinese>副任务</Chinese>
+                <Japanese>サイドオブジェクティブ</Japanese>
+            </Key>
             <Key ID="STR_RPG_OBJ_SIDE_MASTER_TEXT">
-				<Original>Contains all side objectives</Original>
-				<English>Contains all side objectives</English>
-				<French>Contient tous les objectifs secondaires</French>
-			</Key>
+                <Original>Contains all side objectives</Original>
+                <English>Contains all side objectives</English>
+                <French>Contient tous les objectifs secondaires</French>
+                <Spanish>Contiene todos los objetivos secundarios</Spanish>
+                <German>Enthält alle Nebenziele</German>
+                <Italian>Contiene tutti gli obiettivi secondari</Italian>
+                <Russian>Содержит все побочные цели</Russian>
+                <Chinese>包含所有副任务</Chinese>
+                <Japanese>すべてのサイドオブジェクティブを含む</Japanese>
+            </Key>
             <Key ID="STR_RPG_OBJ_ATK_FOB">
-				<Original>Attack Opfor FOB</Original>
-				<English>Attack Opfor FOB</English>
-				<French>Attaquer la FOB ennemie</French>
-			</Key>
+                <Original>Attack Opfor FOB</Original>
+                <English>Attack Opfor FOB</English>
+                <French>Attaquer la FOB ennemie</French>
+                <Spanish>Atacar la FOB de Opfor</Spanish>
+                <German>Opfor FOB angreifen</German>
+                <Italian>Attaccare la FOB di Opfor</Italian>
+                <Russian>Атаковать FOB Опфор</Russian>
+                <Chinese>攻击敌方前进作战基地</Chinese>
+                <Japanese>オプフォーFOBを攻撃</Japanese>
+            </Key>
             <Key ID="STR_RPG_OBJ_ATK_FOB_TEXT">
-				<Original>You have to control the opfor FOB on position %1.</Original>
-				<English>You have to control the opfor FOB on position %1.</English>
-				<French>Vous devez prendre le contrôle de la FOB ennemie près de %1</French>
-			</Key>
+                <Original>You have to control the opfor FOB on position %1.</Original>
+                <English>You have to control the opfor FOB on position %1.</English>
+                <French>Vous devez prendre le contrôle de la FOB ennemie près de %1</French>
+                <Spanish>Debes controlar la FOB de Opfor en la posición %1.</Spanish>
+                <German>Du musst die Opfor FOB an Position %1 kontrollieren.</German>
+                <Italian>Devi controllare la FOB di Opfor in posizione %1.</Italian>
+                <Russian>Вы должны контролировать FOB Опфор на позиции %1.</Russian>
+                <Chinese>你必须控制位于%1的敌方前进作战基地。</Chinese>
+                <Japanese>位置%1のオプフォーFOBを制御しなければなりません。</Japanese>
+            </Key>
             <Key ID="STR_RPG_OBJ_AIR_VCL">
-				<Original>Destroy OPFOR air vehicle</Original>
-				<English>Destroy OPFOR air vehicle</English>
-				<French>Détruire le véhicule aérien</French>
-			</Key>
+                <Original>Destroy OPFOR air vehicle</Original>
+                <English>Destroy OPFOR air vehicle</English>
+                <French>Détruire le véhicule aérien</French>
+                <Spanish>Destruir vehículo aéreo de Opfor</Spanish>
+                <German>Opfor-Luftfahrzeug zerstören</German>
+                <Italian>Distruggere il veicolo aereo di Opfor</Italian>
+                <Russian>Уничтожить воздушное транспортное средство Опфор</Russian>
+                <Chinese>摧毁敌方空中车辆</Chinese>
+                <Japanese>オプフォーの航空機を破壊</Japanese>
+            </Key>
             <Key ID="STR_RPG_OBJ_AIR_VCL_TEXT">
-				<Original>You have to destroy the enemy air vehicle flying around the AO.</Original>
-				<English>You have to destroy the enemy air vehicle flying around the AO.</English>
-				<French>Vous devez détruire le véhicule aérien ennemi au dessus de la zone d'opération.</French>
-			</Key>
+                <Original>You have to destroy the enemy air vehicle flying around the AO.</Original>
+                <English>You have to destroy the enemy air vehicle flying around the AO.</English>
+                <French>Vous devez détruire le véhicule aérien ennemi au dessus de la zone d'opération.</French>
+                <Spanish>Debes destruir el vehículo aéreo enemigo que vuela sobre el AO.</Spanish>
+                <German>Du musst das feindliche Luftfahrzeug zerstören, das über dem AO fliegt.</German>
+                <Italian>Devi distruggere il veicolo aereo nemico che vola sopra l'AO.</Italian>
+                <Russian>Вы должны уничтожить вражеское воздушное транспортное средство, летающее над AO.</Russian>
+                <Chinese>你必须摧毁在作战区域上空飞行的敌方空中车辆。</Chinese>
+                <Japanese>AO上空を飛行する敵の航空機を破壊しなければなりません。</Japanese>
+            </Key>
             <Key ID="STR_RPG_OBJ_ARM_VCL">
-				<Original>Destroy armored vehicle</Original>
-				<English>Destroy armored vehicle</English>
-				<French>Détruire le véhicule blindé</French>
-			</Key>
+                <Original>Destroy armored vehicle</Original>
+                <English>Destroy armored vehicle</English>
+                <French>Détruire le véhicule blindé</French>
+                <Spanish>Destruir vehículo blindado</Spanish>
+                <German>Gepanzertes Fahrzeug zerstören</German>
+                <Italian>Distruggere il veicolo corazzato</Italian>
+                <Russian>Уничтожить бронированное транспортное средство</Russian>
+                <Chinese>摧毁装甲车辆</Chinese>
+                <Japanese>装甲車両を破壊</Japanese>
+            </Key>
             <Key ID="STR_RPG_OBJ_ARM_VCL_TEXT">
-				<Original>You have to destroy the armored vehicle spotted earlier on position %1.</Original>
-				<English>You have to destroy the armored vehicle spotted earlier on position %1.</English>
-				<French>Vous devez détruire le véhicule blindé ennemi repéré à cette position %1.</French>
-			</Key>
+                <Original>You have to destroy the armored vehicle spotted earlier on position %1.</Original>
+                <English>You have to destroy the armored vehicle spotted earlier on position %1.</English>
+                <French>Vous devez détruire le véhicule blindé ennemi repéré à cette position %1</French>
+                <Spanish>Debes destruir el vehículo blindado avistado anteriormente en la posición %1.</Spanish>
+                <German>Du musst das gepanzerte Fahrzeug zerstören, das zuvor an Position %1 gesichtet wurde.</German>
+                <Italian>Devi distruggere il veicolo corazzato avvistato precedentemente in posizione %1.</Italian>
+                <Russian>Вы должны уничтожить бронированное транспортное средство, замеченное ранее на позиции %1.</Russian>
+                <Chinese>你必须摧毁之前在%1位置发现的装甲车辆。</Chinese>
+                <Japanese>以前に位置%1で発見された装甲車両を破壊しなければなりません。</Japanese>
+            </Key>
             <Key ID="STR_RPG_OBJ_MORTAR">
-				<Original>Destroy enemy mortar</Original>
-				<English>Destroy enemy mortar</English>
-				<French>Détruire le mortier ennemi</French>
-			</Key>
+                <Original>Destroy enemy mortar</Original>
+                <English>Destroy enemy mortar</English>
+                <French>Détruire le mortier ennemi</French>
+                <Spanish>Destruir mortero enemigo</Spanish>
+                <German>Feindlichen Mörser zerstören</German>
+                <Italian>Distruggere il mortaio nemico</Italian>
+                <Russian>Уничтожить вражеский миномет</Russian>
+                <Chinese>摧毁敌方迫击炮</Chinese>
+                <Japanese>敵の迫撃砲を破壊</Japanese>
+            </Key>
             <Key ID="STR_RPG_OBJ_MORTAR_TEXT">
-				<Original>You have to destroy the enemy mortar spotted earlier on position %1.</Original>
-				<English>You have to destroy the enemy mortar spotted earlier on position %1.</English>
-				<French>Vous devez détruire le mortier ennemi repéré à cette position %1</French>
-			</Key>
-		</Container>
+                <Original>You have to destroy the enemy mortar spotted earlier on position %1.</Original>
+                <English>You have to destroy the enemy mortar spotted earlier on position %1.</English>
+                <French>Vous devez détruire le mortier ennemi repéré à cette position %1</French>
+                <Spanish>Debes destruir el mortero enemigo avistado anteriormente en la posición %1.</Spanish>
+                <German>Du musst den feindlichen Mörser zerstören, der zuvor an Position %1 gesichtet wurde.</German>
+                <Italian>Devi distruggere il mortaio nemico avvistato precedentemente in posizione %1.</Italian>
+                <Russian>Вы должны уничтожить вражеский миномет, замеченный ранее на позиции %1.</Russian>
+                <Chinese>你必须摧毁之前在%1位置发现的敌方迫击炮。</Chinese>
+                <Japanese>以前に位置%1で発見された敵の迫撃砲を破壊しなければなりません。</Japanese>
+            </Key>
+        </Container>
         <Container name="DIALOG">
-			<Key ID="STR_RPG_HC_NAME">
-				<Original>High Command</Original>
-				<English>High Command</English>
-				<French>Haut commandement</French>
-			</Key>
+            <Key ID="STR_RPG_HC_NAME">
+                <Original>High Command</Original>
+                <English>High Command</English>
+                <French>Haut commandement</French>
+                <Spanish>Alto Mando</Spanish>
+                <German>Oberkommando</German>
+                <Italian>Alto Comando</Italian>
+                <Russian>Высшее командование</Russian>
+                <Chinese>高级指挥部</Chinese>
+                <Japanese>最高司令部</Japanese>
+            </Key>
             <Key ID="STR_RPG_CHOPPER_NAME">
-				<Original>Helicopter crew</Original>
-				<English>Helicopter crew</English>
-				<French>Equipage de l'hélicoptère</French>
-			</Key>
+                <Original>Helicopter crew</Original>
+                <English>Helicopter crew</English>
+                <French>Équipage de l'hélicoptère</French>
+                <Spanish>Tripulación del helicóptero</Spanish>
+                <German>Hubschrauberbesatzung</German>
+                <Italian>Equipaggio dell'elicottero</Italian>
+                <Russian>Экипаж вертолета</Russian>
+                <Chinese>直升机机组</Chinese>
+                <Japanese>ヘリコプターのクルー</Japanese>
+            </Key>
             <Key ID="STR_RPG_CIVILIAN_NAME">
-				<Original>Civilian</Original>
-				<English>Civilian</English>
-				<French>Civil</French>
-			</Key>
+                <Original>Civilian</Original>
+                <English>Civilian</English>
+                <French>Civil</French>
+                <Spanish>Civil</Spanish>
+                <German>Zivilist</German>
+                <Italian>Civile</Italian>
+                <Russian>Гражданский</Russian>
+                <Chinese>平民</Chinese>
+                <Japanese>市民</Japanese>
+            </Key>
             <Key ID="STR_RPG_CORPSE_NAME">
-				<Original>Intel found</Original>
-				<English>Intel found</English>
-				<French>Information trouvée sur le corps</French>
-			</Key>
-			<Key ID="STR_RPG_HC_TEAMKILL">
-				<Original>%1 has been killed by his teammate %2, watch your fire</Original>
-				<English>%1 has been killed by his teammate %2, watch your fire</English>
-				<French>%1 a été tué par son coéquipier %2, attention à vos tirs</French>
-			</Key>
-			<Key ID="STR_RPG_HC_CIVKILL">
-				<Original>A civilian and has been killed by %1, watch your fire</Original>
-				<English>A civilian and has been killed by %1, watch your fire</English>
-				<French>Un civil a été tué par %1, surveillez vos tirs</French>
-			</Key>
-			<Key ID="STR_RPG_HC_SURRENDER_KILL">
-				<Original>%1 has surrender and has been killed by %2, watch your fire</Original>
-				<English>%1 has surrender and has been killed by %2, watch your fire</English>
-				<French>%1 s'est rendu et a été tué par %2, attention à vos tirs</French>
-			</Key>
+                <Original>Intel found</Original>
+                <English>Intel found</English>
+                <French>Information trouvée sur le corps</French>
+                <Spanish>Información encontrada</Spanish>
+                <German>Informationen gefunden</German>
+                <Italian>Informazioni trovate</Italian>
+                <Russian>Информация найдена</Russian>
+                <Chinese>找到情报</Chinese>
+                <Japanese>情報が見つかりました</Japanese>
+            </Key>
+            <Key ID="STR_RPG_HC_TEAMKILL">
+                <Original>%1 has been killed by his teammate %2, watch your fire</Original>
+                <English>%1 has been killed by his teammate %2, watch your fire</English>
+                <French>%1 a été tué par son coéquipier %2, attention à vos tirs</French>
+                <Spanish>%1 ha sido asesinado por su compañero de equipo %2, cuida tu fuego</Spanish>
+                <German>%1 wurde von seinem Teamkollegen %2 getötet, achte auf dein Feuer</German>
+                <Italian>%1 è stato ucciso dal suo compagno di squadra %2, attenzione al fuoco</Italian>
+                <Russian>%1 был убит своим товарищем по команде %2, следите за своим огнем</Russian>
+                <Chinese>%1被他的队友%2杀死，注意你的火力</Chinese>
+                <Japanese>%1はチームメイトの%2に殺されました。火に注意してください</Japanese>
+            </Key>
+            <Key ID="STR_RPG_HC_CIVKILL">
+                <Original>A civilian and has been killed by %1, watch your fire</Original>
+                <English>A civilian and has been killed by %1, watch your fire</English>
+                <French>Un civil a été tué par %1, surveillez vos tirs</French>
+                <Spanish>Un civil ha sido asesinado por %1, cuida tu fuego</Spanish>
+                <German>Ein Zivilist wurde von %1 getötet, achte auf dein Feuer</German>
+                <Italian>Un civile è stato ucciso da %1, attenzione al fuoco</Italian>
+                <Russian>Гражданский был убит %1, следите за своим огнем</Russian>
+                <Chinese>一名平民被%1杀死，注意你的火力</Chinese>
+                <Japanese>市民が%1に殺されました。火に注意してください</Japanese>
+            </Key>
+            <Key ID="STR_RPG_HC_SURRENDER_KILL">
+                <Original>%1 has surrender and has been killed by %2, watch your fire</Original>
+                <English>%1 has surrender and has been killed by %2, watch your fire</English>
+                <French>%1 s'est rendu et a été tué par %2, attention à vos tirs</French>
+                <Spanish>%1 se ha rendido y ha sido asesinado por %2, cuida tu fuego</Spanish>
+                <German>%1 hat sich ergeben und wurde von %2 getötet, achte auf dein Feuer</German>
+                <Italian>%1 si è arreso ed è stato ucciso da %2, attenzione al fuoco</Italian>
+                <Russian>%1 сдался и был убит %2, следите за своим огнем</Russian>
+                <Chinese>%1投降并被%2杀死，注意你的火力</Chinese>
+                <Japanese>%1は降伏し、%2に殺されました。火に注意してください</Japanese>
+            </Key>
             <Key ID="STR_RPG_HC_ENEMY_TAKE_FOB">
-				<Original>Enemy has taken the blufor FOB %1, be ready to defend it</Original>
-				<English>Enemy has taken the blufor FOB %1, be ready to defend it</English>
-				<French>L'ennmi a pris le contrôle de la base BLUFOR %1, vous devez la défendre</French>
-			</Key>
+                <Original>Enemy has taken the blufor FOB %1, be ready to defend it</Original>
+                <English>Enemy has taken the blufor FOB %1, be ready to defend it</English>
+                <French>L'ennmi a pris le contrôle de la base BLUFOR %1, vous devez la défendre</French>
+                <Spanish>El enemigo ha tomado la FOB de blufor %1, prepárate para defenderla</Spanish>
+                <German>Der Feind hat die blufor FOB %1 eingenommen, sei bereit, sie zu verteidigen</German>
+                <Italian>Il nemico ha preso la FOB blufor %1, preparati a difenderla</Italian>
+                <Russian>Враг захватил FOB блюфор %1, будьте готовы защитить его</Russian>
+                <Chinese>敌人已占领蓝方前进作战基地%1，准备好防御</Chinese>
+                <Japanese>敵がブルーフォーFOB%1を占領しました。防衛の準備をしてください</Japanese>
+            </Key>
             <Key ID="STR_RPG_HC_ENEMY_REINFORCEMENT">
-				<Original>An opfor reinforcement is coming to %1, be ready</Original>
-				<English>An opfor reinforcement is coming to %1, be ready</English>
-				<French>Une vague de renforts ennemis arrive en %1, soyez prêts</French>
-			</Key>
+                <Original>An opfor reinforcement is coming to %1, be ready</Original>
+                <English>An opfor reinforcement is coming to %1, be ready</English>
+                <French>Une vague de renforts ennemis arrive en %1, soyez prêts</French>
+                <Spanish>Un refuerzo de Opfor viene a %1, prepárate</Spanish>
+                <German>Eine Opfor-Verstärkung kommt nach %1, sei bereit</German>
+                <Italian>Un rinforzo di Opfor sta arrivando a %1, preparati</Italian>
+                <Russian>Подкрепление Опфор идет в %1, будьте готовы</Russian>
+                <Chinese>敌方增援正前往%1，做好准备</Chinese>
+                <Japanese>オプフォーの増援が%1に向かっています。準備してください</Japanese>
+            </Key>
             <Key ID="STR_RPG_HC_ENEMY_REINFORCEMENT_FOB">
-				<Original>An opfor reinforcement is coming to %1, be ready to defend the FOB</Original>
-				<English>An opfor reinforcement is coming to %1, be ready to defend the FOB</English>
-				<French>Les renforts ennemis arrivent en %1, soyez prêts à défendre la FOB</French>
-			</Key>
+                <Original>An opfor reinforcement is coming to %1, be ready to defend the FOB</Original>
+                <English>An opfor reinforcement is coming to %1, be ready to defend the FOB</English>
+                <French>Les renforts ennemis arrivent en %1, soyez prêts à défendre la FOB</French>
+                <Spanish>Un refuerzo de Opfor viene a %1, prepárate para defender la FOB</Spanish>
+                <German>Eine Opfor-Verstärkung kommt nach %1, sei bereit, die FOB zu verteidigen</German>
+                <Italian>Un rinforzo di Opfor sta arrivando a %1, preparati a difendere la FOB</Italian>
+                <Russian>Подкрепление Опфор идет в %1, будьте готовы защитить FOB</Russian>
+                <Chinese>敌方增援正前往%1，准备好防御前进作战基地</Chinese>
+                <Japanese>オプフォーの増援が%1に向かっています。FOBを防衛する準備をしてください</Japanese>
+            </Key>
             <Key ID="STR_RPG_HC_ENEMY_ATK">
-				<Original>Opfor attack has begun on %1, be ready</Original>
-				<English>Opfor attack has begun on %1, be ready</English>
-				<French>L'ennemi a lancé une attaque contre la position %1, soyez prêts</French>
-			</Key>
+                <Original>Opfor attack has begun on %1, be ready</Original>
+                <English>Opfor attack has begun on %1, be ready</English>
+                <French>L'ennemi a lancé une attaque contre la position %1, soyez prêts</French>
+                <Spanish>El ataque de Opfor ha comenzado en %1, prepárate</Spanish>
+                <German>Der Opfor-Angriff hat auf %1 begonnen, sei bereit</German>
+                <Italian>L'attacco di Opfor è iniziato su %1, preparati</Italian>
+                <Russian>Атака Опфор началась на %1, будьте готовы</Russian>
+                <Chinese>敌方攻击已在%1开始，做好准备</Chinese>
+                <Japanese>オプフォーの攻撃が%1で始まりました。準備してください</Japanese>
+            </Key>
+            <Key ID="STR_RPG_HC_IED_ACE">
+                <Original>You need to be engineer and have a defusal kit to defuse the IED</Original>
+                <English>You need to be engineer and have a defusal kit to defuse the IED</English>
+                <French>Vous devez être ingénieur et avoir un kit de désamorçage pour traiter l'IED</French>
+            </Key>
+            <Key ID="STR_RPG_HC_IED_NOACE">
+                <Original>You need to be engineer to defuse the IED</Original>
+                <English>You need to be engineer to defuse the IED</English>
+                <French>Vous devez être ingénieur pour traiter l'IED</French>
+            </Key>
             <Key ID="STR_RPG_HC_FRIENDLY_SQUAD">
-				<Original>A friendly squad will attack %1, could you support them ?</Original>
-				<English>A friendly squad will attack %1, could you support them ?</English>
-				<French>Une vague de renforts alliés arrive en %1, vous devez les aider</French>
-			</Key>
+                <Original>A friendly squad will attack %1, could you support them ?</Original>
+                <English>A friendly squad will attack %1, could you support them ?</English>
+                <French>Une vague de renforts alliés arrive en %1, vous devez les aider</French>
+                <Spanish>Un escuadrón amigo atacará %1, ¿podrías apoyarlos?</Spanish>
+                <German>Ein freundliches Team wird %1 angreifen, könntest du sie unterstützen?</German>
+                <Italian>Una squadra amica attaccherà %1, potresti supportarli?</Italian>
+                <Russian>Дружественный отряд атакует %1, можете ли вы поддержать их?</Russian>
+                <Chinese>友军小队将攻击%1，你能支援他们吗？</Chinese>
+                <Japanese>友好のスクワッドが%1を攻撃します。サポートできますか？</Japanese>
+            </Key>
             <Key ID="STR_RPG_HC_FOB_CLEARED">
-				<Original>The FOB at position %1 has been cleared</Original>
-				<English>The FOB at position %1 has been cleared</English>
-				<French>La FOB en position %1 a été pacifiée</French>
-			</Key>
+                <Original>The FOB at position %1 has been cleared</Original>
+                <English>The FOB at position %1 has been cleared</English>
+                <French>La FOB en position %1 a été pacifiée</French>
+                <Spanish>La FOB en la posición %1 ha sido despejada</Spanish>
+                <German>Die FOB an Position %1 wurde geräumt</German>
+                <Italian>La FOB in posizione %1 è stata sgomberata</Italian>
+                <Russian>FOB на позиции %1 была очищена</Russian>
+                <Chinese>位于%1的前进作战基地已被清理</Chinese>
+                <Japanese>位置%1のFOBがクリアされました</Japanese>
+            </Key>
             <Key ID="STR_RPG_HC_OPFOR_AROUND">
-				<Original>We have spotted enemies around your position, be ready</Original>
-				<English>We have spotted enemies around your position, be ready</English>
-				<French>Nous avons repéré des ennemis aux alentours de votre position, soyez prêts</French>
-			</Key>
+                <Original>We have spotted enemies around your position, be ready</Original>
+                <English>We have spotted enemies around your position, be ready</English>
+                <French>Nous avons repéré des ennemis aux alentours de votre position, soyez prêts</French>
+                <Spanish>Hemos visto enemigos alrededor de tu posición, prepárate</Spanish>
+                <German>Wir haben Feinde in deiner Nähe entdeckt, sei bereit</German>
+                <Italian>Abbiamo avvistato nemici vicino alla tua posizione, preparati</Italian>
+                <Russian>Мы заметили врагов вокруг вашей позиции, будьте готовы</Russian>
+                <Chinese>我们在你的位置周围发现了敌人，做好准备</Chinese>
+                <Japanese>あなたの位置の周辺に敵を発見しました。準備してください</Japanese>
+            </Key>
             <Key ID="STR_RPG_HC_NOT_ENOUGH_CREDIT">
-				<Original>You don't have enough credit left.</Original>
-				<English>You don't have enough credit left.</English>
-				<French>Vous n'avez pas assez de crédit.</French>
-			</Key>
+                <Original>You don't have enough credit left.</Original>
+                <English>You don't have enough credit left.</English>
+                <French>Vous n'avez pas assez de crédit.</French>
+                <Spanish>No tienes suficiente crédito.</Spanish>
+                <German>Du hast nicht genug Guthaben.</German>
+                <Italian>Non hai abbastanza credito.</Italian>
+                <Russian>У вас недостаточно кредита.</Russian>
+                <Chinese>你没有足够的信用。</Chinese>
+                <Japanese>十分なクレジットがありません。</Japanese>
+            </Key>
             <Key ID="STR_RPG_HC_ARTILLERY">
-				<Original>Artillery support called on position %1</Original>
-				<English>Artillery support called on position %1</English>
-				<French>De multiples tirs d'artilleries ont été appelés sur la position %1</French>
-			</Key>
+                <Original>Artillery support called on position %1</Original>
+                <English>Artillery support called on position %1</English>
+                <French>De multiples tirs d'artilleries ont été appelés sur la position %1</French>
+                <Spanish>Apoyo de artillería llamado en la posición %1</Spanish>
+                <German>Artillerieunterstützung an Position %1 angefordert</German>
+                <Italian>Supporto di artiglieria chiamato in posizione %1</Italian>
+                <Russian>Артиллерийская поддержка вызвана на позицию %1</Russian>
+                <Chinese>炮兵支援已呼叫至位置%1</Chinese>
+                <Japanese>位置%1に砲兵支援を要請</Japanese>
+            </Key>
             <Key ID="STR_RPG_HC_ARTILLERY_READY">
-				<Original>Artillery unit 1789, ready to fire</Original>
-				<English>Artillery unit 1789, ready to fire</English>
-				<French>Unité d'artillerie 1789, à vos ordres</French>
-			</Key>
+                <Original>Artillery unit 1789, ready to fire</Original>
+                <English>Artillery unit 1789, ready to fire</English>
+                <French>Unité d'artillerie 1789, à vos ordres</French>
+                <Spanish>Unidad de artillería 1789, lista para disparar</Spanish>
+                <German>Artillerieeinheit 1789, bereit zum Feuern</German>
+                <Italian>Unità di artiglieria 1789, pronta a sparare</Italian>
+                <Russian>Артиллерийская единица 1789, готова к стрельбе</Russian>
+                <Chinese>炮兵单位1789，准备开火</Chinese>
+                <Japanese>砲兵ユニット1789、発砲準備完了</Japanese>
+            </Key>
             <Key ID="STR_RPG_HC_EXTRACT_CALL">
-				<Original>Extract called on position %1</Original>
-				<English>Extract called on position %1</English>
-				<French>Une extraction a été appelée en %1</French>
-			</Key>
+                <Original>Extract called on position %1</Original>
+                <English>Extract called on position %1</English>
+                <French>Une extraction a été appelée en %1</French>
+                <Spanish>Extracción llamada en la posición %1</Spanish>
+                <German>Extraktion an Position %1 angefordert</German>
+                <Italian>Estratto chiamato in posizione %1</Italian>
+                <Russian>Извлечение вызвано на позицию %1</Russian>
+                <Chinese>撤离已呼叫至位置%1</Chinese>
+                <Japanese>位置%1に抽出を要請</Japanese>
+            </Key>
             <Key ID="STR_RPG_HC_REINFORCEMENT_CALL">
-				<Original>Copy %1, we will send you reinforcement in 60 seconds</Original>
-				<English>Copy %1, we will send you reinforcement in 60 seconds</English>
-				<French>Bien reçu %1, nous vous envoyons des renforts. Arrivée estimée dans 60 secondes.</French>
-			</Key>
+                <Original>Copy %1, we will send you reinforcement in 60 seconds</Original>
+                <English>Copy %1, we will send you reinforcement in 60 seconds</English>
+                <French>Bien reçu %1, nous vous envoyons des renforts. Arrivée estimée dans 60 secondes.</French>
+                <Spanish>Copia %1, te enviaremos refuerzos en 60 segundos</Spanish>
+                <German>Kopie %1, wir senden dir in 60 Sekunden Verstärkung</German>
+                <Italian>Copia %1, ti invieremo rinforzi in 60 secondi</Italian>
+                <Russian>Копия %1, мы отправим вам подкрепление через 60 секунд</Russian>
+                <Chinese>复制%1，我们将在60秒内发送增援</Chinese>
+                <Japanese>コピー%1、60秒以内に増援を送ります</Japanese>
+            </Key>
             <Key ID="STR_RPG_HC_REINFORCEMENT_CALL_2">
-				<Original>Copy %1, we send you some reinforcement</Original>
-				<English>Copy %1, we send you some reinforcement</English>
-				<French>Bien reçu %1, nous vous envoyons des renforts</French>
-			</Key>
+                <Original>Copy %1, we send you some reinforcement</Original>
+                <English>Copy %1, we send you some reinforcement</English>
+                <French>Bien reçu %1, nous vous envoyons des renforts</French>
+                <Spanish>Copia %1, te enviamos algunos refuerzos</Spanish>
+                <German>Kopie %1, wir senden dir Verstärkung</German>
+                <Italian>Copia %1, ti inviamo alcuni rinforzi</Italian>
+                <Russian>Копия %1, мы отправляем вам подкрепление</Russian>
+                <Chinese>复制%1，我们发送一些增援</Chinese>
+                <Japanese>コピー%1、増援を送ります</Japanese>
+            </Key>
             <Key ID="STR_RPG_HC_REINFORCEMENT_CALL_3">
-				<Original>Copy %1, we send you some help quickly</Original>
-				<English>Copy %1, we send you some help quickly</English>
-				<French>Bien reçu %1, nous vous envoyons des renforts maintenant</French>
-			</Key>
+                <Original>Copy %1, we send you some help quickly</Original>
+                <English>Copy %1, we send you some help quickly</English>
+                <French>Bien reçu %1, nous vous envoyons des renforts maintenant</French>
+                <Spanish>Copia %1, te enviamos ayuda rápidamente</Spanish>
+                <German>Kopie %1, wir senden dir schnell Hilfe</German>
+                <Italian>Copia %1, ti inviamo aiuto rapidamente</Italian>
+                <Russian>Копия %1, мы быстро отправляем вам помощь</Russian>
+                <Chinese>复制%1，我们迅速发送一些帮助</Chinese>
+                <Japanese>コピー%1、すぐに助けを送ります</Japanese>
+            </Key>
             <Key ID="STR_RPG_HC_REINFORCEMENT_CALL_WAIT">
-				<Original>You must wait before call reinforcements</Original>
-				<English>You must wait before call reinforcements</English>
-				<French>Vous devez attendre avant de pouvoir appeler des renforts</French>
-			</Key>
+                <Original>You must wait before call reinforcements</Original>
+                <English>You must wait before call reinforcements</English>
+                <French>Vous devez attendre avant de pouvoir appeler des renforts</French>
+                <Spanish>Debes esperar antes de llamar a los refuerzos</Spanish>
+                <German>Du musst warten, bevor du Verstärkung rufen kannst</German>
+                <Italian>Devi aspettare prima di chiamare i rinforzi</Italian>
+                <Russian>Вы должны подождать, прежде чем вызвать подкрепление</Russian>
+                <Chinese>你必须等待才能呼叫增援</Chinese>
+                <Japanese>増援を呼ぶ前に待たなければなりません</Japanese>
+            </Key>
             <Key ID="STR_RPG_HC_REINFORCEMENT_CALL_NO_NEED">
-				<Original>There is no need for reinforcements</Original>
-				<English>There is no need for reinforcements</English>
-				<French>Vous n'avez pas besoin de renfort</French>
-			</Key>
+                <Original>There is no need for reinforcements</Original>
+                <English>There is no need for reinforcements</English>
+                <French>Vous n'avez pas besoin de renfort</French>
+                <Spanish>No hay necesidad de refuerzos</Spanish>
+                <German>Es gibt keinen Bedarf an Verstärkung</German>
+                <Italian>Non c'è bisogno di rinforzi</Italian>
+                <Russian>Нет необходимости в подкреплении</Russian>
+                <Chinese>不需要增援</Chinese>
+                <Japanese>増援の必要はありません</Japanese>
+            </Key>
             <Key ID="STR_RPG_HC_AIR_SUPPORT">
-				<Original>Air drop support called on position %1</Original>
-				<English>Air drop support called on position %1</English>
-				<French>Soutiens logistiques envoyés sur la position %1 par voie aérienne</French>
-			</Key>
+                <Original>Air drop support called on position %1</Original>
+                <English>Air drop support called on position %1</English>
+                <French>Soutiens logistiques envoyés sur la position %1 par voie aérienne</French>
+                <Spanish>Apoyo de lanzamiento aéreo llamado en la posición %1</Spanish>
+                <German>Luftabwurfunterstützung an Position %1 angefordert</German>
+                <Italian>Supporto di lancio aereo chiamato in posizione %1</Italian>
+                <Russian>Поддержка с воздушной доставкой вызвана на позицию %1</Russian>
+                <Chinese>空投支援已呼叫至位置%1</Chinese>
+                <Japanese>位置%1に空中投下支援を要請</Japanese>
+            </Key>
             <Key ID="STR_RPG_HC_TRANSPORT">
-				<Original>Transport called on position %1</Original>
-				<English>Transport called on position %1</English>
-				<French>Transport allié en approche sur la position %1</French>
-			</Key>
+                <Original>Transport called on position %1</Original>
+                <English>Transport called on position %1</English>
+                <French>Transport allié en approche sur la position %1</French>
+                <Spanish>Transporte llamado en la posición %1</Spanish>
+                <German>Transport an Position %1 angefordert</German>
+                <Italian>Trasporto chiamato in posizione %1</Italian>
+                <Russian>Транспорт вызван на позицию %1</Russian>
+                <Chinese>运输已呼叫至位置%1</Chinese>
+                <Japanese>位置%1に輸送を要請</Japanese>
+            </Key>
             <Key ID="STR_RPG_HC_SUPPORT_UNIT">
-				<Original>Support unit 800, ready</Original>
-				<English>Support unit 800, ready</English>
-				<French>Unité de soutien 800, à vos ordres</French>
-			</Key>
+                <Original>Support unit 800, ready</Original>
+                <English>Support unit 800, ready</English>
+                <French>Unité de soutien 800, à vos ordres</French>
+                <Spanish>Unidad de apoyo 800, lista</Spanish>
+                <German>Unterstützungseinheit 800, bereit</German>
+                <Italian>Unità di supporto 800, pronta</Italian>
+                <Russian>Единица поддержки 800, готова</Russian>
+                <Chinese>支援单位800，准备就绪</Chinese>
+                <Japanese>支援ユニット800、準備完了</Japanese>
+            </Key>
             <Key ID="STR_RPG_HC_EXTRACT_UNIT">
-				<Original>Helicopter unit 1515, ready for extract</Original>
-				<English>Helicopter unit 1515, ready for extract</English>
-				<French>Unité hélicoptère 1515, à vos ordres</French>
-			</Key>
+                <Original>Helicopter unit 1515, ready for extract</Original>
+                <English>Helicopter unit 1515, ready for extract</English>
+                <French>Unité hélicoptère 1515, à vos ordres</French>
+                <Spanish>Unidad de helicóptero 1515, lista para la extracción</Spanish>
+                <German>Hubschraubereinheit 1515, bereit zur Extraktion</German>
+                <Italian>Unità elicottero 1515, pronta per l'estrazione</Italian>
+                <Russian>Вертолетная единица 1515, готова к извлечению</Russian>
+                <Chinese>直升机单位1515，准备好撤离</Chinese>
+                <Japanese>ヘリコプターユニット1515、抽出準備完了</Japanese>
+            </Key>
             <Key ID="STR_RPG_HC_TRANSPORT_UNIT">
-				<Original>Helicopter unit 1889, ready for transport</Original>
-				<English>Helicopter unit 1889, ready for transport</English>
-				<French>Unité de transport 1889, à vos ordres</French>
-			</Key>
+                <Original>Helicopter unit 1889, ready for transport</Original>
+                <English>Helicopter unit 1889, ready for transport</English>
+                <French>Unité de transport 1889, à vos ordres</French>
+                <Spanish>Unidad de helicóptero 1889, lista para el transporte</Spanish>
+                <German>Hubschraubereinheit 1889, bereit für den Transport</German>
+                <Italian>Unità elicottero 1889, pronta per il trasporto</Italian>
+                <Russian>Вертолетная единица 1889, готова к транспортировке</Russian>
+                <Chinese>直升机单位1889，准备好运输</Chinese>
+                <Japanese>ヘリコプターユニット1889、輸送準備完了</Japanese>
+            </Key>
             <Key ID="STR_RPG_HC_LOGISTIC">
-				<Original>Logistic unit 1804, ready for air supply</Original>
-				<English>Logistic unit 1804, ready for air supply</English>
-				<French>Unité de logistique 1804, à vos ordres</French>
-			</Key>
+                <Original>Logistic unit 1804, ready for air supply</Original>
+                <English>Logistic unit 1804, ready for air supply</English>
+                <French>Unité de logistique 1804, à vos ordres</French>
+                <Spanish>Unidad logística 1804, lista para el suministro aéreo</Spanish>
+                <German>Logistikeinheit 1804, bereit für die Luftversorgung</German>
+                <Italian>Unità logistica 1804, pronta per il rifornimento aereo</Italian>
+                <Russian>Логистическая единица 1804, готова к воздушному снабжению</Russian>
+                <Chinese>后勤单位1804，准备好空中补给</Chinese>
+                <Japanese>ロジスティクスユニット1804、空中補給準備完了</Japanese>
+            </Key>
             <Key ID="STR_RPG_HC_CREW_READY_TO_TAKE_OFF">
-				<Original>We are ready to take off, let's go !</Original>
-				<English>We are ready to take off, let's go !</English>
-				<French>Nous sommes prêts à partir sur votre ordre.</French>
-			</Key>
-            <Key ID="STR_RPG_HC_SURRENDER_SPEAK">
-				<Original>Don't shoot i surrender, please spare me</Original>
-				<English>Don't shoot i surrender, please spare me</English>
-				<French>Ne tirez pas, je me rends épargnez moi !</French>
-			</Key>
-			<Key ID="STR_RPG_HC_RESPAWN_TENT">
-				<Original>Your leader has setup a reinforcement tent</Original>
-				<English>Your leader has setup a reinforcement tent</English>
-				<French>Votre chef a monté une tente de réapparition</French>
-			</Key>
-			<Key ID="STR_RPG_HC_SURRENDER_INTEL">
-				<Original>Copy %1, let's continue the mission</Original>
-				<English>Copy %1, let's continue the mission</English>
-				<French>Reçu %1, poursuivez la mission</French>
-			</Key>
-        </Container>
-        <Container name="INTEL_DIALOG">
-			<Key ID="STR_RPG_INTEL_MORTAR_CIV">
-				<Original>This morning i saw a mortar position near %1. I don't know if they are there for you, be careful.</Original>
-				<English>This morning i saw a mortar position near %1. I don't know if they are there for you, be careful.</English>
-				<French>J'ai vu une position de mortier ce matin vers %1. Je ne sais pas si ils sont là pour vous mais soyez prudents</French>
-			</Key>
-            <Key ID="STR_RPG_INTEL_MORTAR_DOC">
-				<Original>There is a mortar position on %1</Original>
-				<English>There is a mortar position on %1</English>
-				<French>Il y a une position de mortier près de %1</French>
-			</Key>
-            <Key ID="STR_RPG_INTEL_TURRET_CIV">
-				<Original>This morning i saw a turret position near %1. Be careful.</Original>
-				<English>This morning i saw a turret position near %1. Be careful.</English>
-				<French>Ce matin j'ai vue une tourelle près de la position %1. Soyez prudents</French>
-			</Key>
-            <Key ID="STR_RPG_INTEL_TURRET_DOC">
-				<Original>There is a turret position on %1.</Original>
-				<English>There is a turret position on %1.</English>
-				<French>Il y a une tourrelle à la position %1.</French>
-			</Key>
-            <Key ID="STR_RPG_INTEL_PATROL_CIV">
-				<Original>I've heard there's soldiers patrolling around %1. About %2 men.</Original>
-				<English>I've heard there's soldiers patrolling around %1. About %2 men.</English>
-				<French>J'ai entendu dire qu'une patrouille était autour de %1. Environ %2 hommes.</French>
-			</Key>
-            <Key ID="STR_RPG_INTEL_PATROL_DOC">
-				<Original>There are %2 men patrolling on position %1.</Original>
-				<English>There are %2 men patrolling on position %1.</English>
-				<French>Il y a %2 hommes patrouillant à la position %1.</French>
-			</Key>
-            <Key ID="STR_RPG_INTEL_CAR_CIV">
-				<Original>I saw a %2 around %1 this morning, be careful...</Original>
-				<English>I saw a %2 around %1 this morning, be careful...</English>
-				<French>J'ai vu un %2 autour de %1 ce matin. Soyez prudents...</French>
-			</Key>
-            <Key ID="STR_RPG_INTEL_CAR_DOC">
-				<Original>There is an enemy vehicle %2 on position %1.</Original>
-				<English>There is an enemy vehicle %2 on position %1.</English>
-				<French>Il y a un véhicule ennemi de type %2 à la position %1.</French>
-			</Key>
-            <Key ID="STR_RPG_INTEL_ARMORED_CIV">
-				<Original>I saw a armored vehicle around %1, be careful it's dangerous...</Original>
-				<English>I saw a armored vehicle around %1, be careful it's dangerous...</English>
-				<French>J'ai vu un véhicule blindé autoour de %1, attention il est dangereux...</French>
-			</Key>
-            <Key ID="STR_RPG_INTEL_ARMORED_DOC">
-				<Original>There is a armored vehicle %2 on position %1.</Original>
-				<English>There is a armored vehicle %2 on position %1.</English>
-				<French>Il y a un véhicule blindé de type %2 en position %1.</French>
-			</Key>
-            <Key ID="STR_RPG_INTEL_FOB_INF_CIV">
-				<Original>I know there is an enemy base around %1, this location seems dangerous</Original>
-				<English>I know there is an enemy base around %1, this location seems dangerous</English>
-				<French>Il y a une base ennemie aux environs de %1. Cet endroit semble très dangereux.</French>
-			</Key>
-            <Key ID="STR_RPG_INTEL_FOB_INF_DOC">
-				<Original>There is an enemy FOB on position %1.</Original>
-				<English>There is an enemy FOB on position %1.</English>
-				<French>Il y a une FOB ennemie en position %1</French>
-			</Key>
-            <Key ID="STR_RPG_INTEL_DEFENSE_INF_CIV">
-				<Original>I know there is a group of %2 soldiers defending %1, this location seems dangerous</Original>
-				<English>I know there is a group of %2 soldiers defending %1, this location seems dangerous</English>
-				<French>Je sais qu'il y a un groupe de %2 soldats qui défendent %1. Cet endroit est dangereux.</French>
-			</Key>
-            <Key ID="STR_RPG_INTEL_DEFENSE_INF_DOC">
-				<Original>There are %2 soldiers defending position %1</Original>
-				<English>There are %2 soldiers defending position %1</English>
-				<French>Il y a %2 soldats défendant la position %1</French>
-			</Key>
-            <Key ID="STR_RPG_INTEL_CIV_PRESENCE_CIV">
-				<Original>Be careful, there are civilian in %1. Watch your fire...</Original>
-				<English>Be careful, there are civilian in %1. Watch your fire...</English>
-				<French>Soyez prudent, il y a des civils à %1. Faites attention à vos tirs.</French>
-			</Key>
-            <Key ID="STR_RPG_INTEL_CIV_PRESENCE_DOC">
-				<Original>Be careful, there are civilian on position %1. Watch your fire...</Original>
-				<English>Be careful, there are civilian on position %1. Watch your fire...</English>
-				<French>Attention, il y a des civils détectés sur la position %1. Surveillez vos tirs.</French>
-			</Key>
-            <Key ID="STR_RPG_INTEL_NOTHING_FOUND">
-				<Original>No intel found</Original>
-				<English>No intel found</English>
-				<French>Aucune information trouvée</French>
-			</Key>
-            <Key ID="STR_RPG_INTEL_CIV_REFUSE_0">
-				<Original>No idea what you're talking about !</Original>
-				<English>No idea what you're talking about !</English>
-				<French>Je n'ai aucune idée de ce dont vous me parlez.</French>
-			</Key>  
-            <Key ID="STR_RPG_INTEL_CIV_REFUSE_1">
-				<Original>Go bother someone else ?</Original>
-				<English>Go bother someone else ?</English>
-				<French>Allez embêter quelqu'un d'autre !</French>
-			</Key>  
-              <Key ID="STR_RPG_INTEL_CIV_REFUSE_2">
-				<Original>Oh please leave me alone !</Original>
-				<English>Oh please leave me alone !</English>
-				<French>Laissez moi tranquille</French>
-			</Key>  
-            <Key ID="STR_RPG_INTEL_CIV_REFUSE_3">
-				<Original>Get out of this area !</Original>
-				<English>Get out of this area !</English>
-				<French>Quittez la région s'il vous plait</French>
-			</Key>          
-        </Container>
-		<Container name="SCORE_TXT">
-			<Key ID="STR_RPG_SCORE_INFANTRY_KILL">
-				<Original>Infantry kill</Original>
-				<English>Infantry kill</English>
-				<French>Infanterie éliminée</French>
-			</Key>
-			<Key ID="STR_RPG_SCORE_VEHICLE_KILL">
-				<Original>Vehicle kill</Original>
-				<English>Vehicle kill</English>
-				<French>Véhicule détruit</French>
-			</Key>
-			<Key ID="STR_RPG_SCORE_SUPPRESS">
-				<Original>Enemy suppress</Original>
-				<English>Enemy suppress</English>
-				<French>Suppression</French>
-			</Key>
-			<Key ID="STR_RPG_SCORE_HEAL">
-				<Original>Heal</Original>
-				<English>Heal</English>
-				<French>Soin</French>
-			</Key>
-			<Key ID="STR_RPG_SCORE_REPAIR">
-				<Original>Repair</Original>
-				<English>Repair</English>
-				<French>Réparation</French>
-			</Key>
-			<Key ID="STR_RPG_SCORE_IED_DEFUSE">
-				<Original>IED Defuse</Original>
-				<English>IED Defuse</English>
-				<French>Désamorçage</French>
-			</Key>
-			<Key ID="STR_RPG_SCORE_INTEL">
-				<Original>Intel Collect</Original>
-				<English>Intel Collect</English>
-				<French>Information collectée</French>
-			</Key>
-			<Key ID="STR_RPG_SCORE_OBJECTIVE">
-				<Original>Objective</Original>
-				<English>Objective</English>
-				<French>Objectif</French>
-			</Key>
-			<Key ID="STR_RPG_SCORE_PENALTY">
-				<Original>Penalty</Original>
-				<English>Penalty</English>
-				<French>Pénalité</French>
-			</Key>
-			<Key ID="STR_RPG_SCORE_DEATH">
-				<Original>Death</Original>
-				<English>Death</English>
-				<French>Mort</French>
-			</Key>
-        </Container>
-		<Container name="3DNames">
-			<Key ID="STR_RPG_3D_SHOP">
-				<Original>Shop</Original>
-				<English>Shop</English>
-				<French>Magasin</French>
-			</Key>
-			<Key ID="STR_RPG_3D_HQ">
-				<Original>HQ Vehicle</Original>
-				<English>HQ Vehicle</English>
-				<French>Véhicule de commandement</French>
-			</Key>
-			<Key ID="STR_RPG_3D_LOADOUT">
-				<Original>Loadout</Original>
-				<English>Loadout</English>
-				<French>Equipement</French>
-			</Key>
-			<Key ID="STR_RPG_3D_ADV_FOB">
-				<Original>Advanced FOB</Original>
-				<English>Advanced FOB</English>
-				<French>Base avancée</French>
-			</Key>
-	</Package>
-	<Container name="RPG_TUTO">
-		<Key ID="STR_RPG_TUTO_WELCOME">
-			<Original>Welcome to Random Patrol Generator</Original>
-			<English>Welcome to Random Patrol Generator</English>
-			<French>Bienvenue sur Random Patrol Generator</French>
-		</Key>
-		<Key ID="STR_RPG_TUTO_OBJ">
-			<Original>The goal is to complete all the tasks</Original>
-			<English>The goal is to complete all the tasks</English>
-			<French>Le but est de compléter tous les objectifs</French>
-		</Key>
-		<Key ID="STR_RPG_TUTO_LOADOUT">
-			<Original>You can customize your loadout on the ammo box</Original>
-			<English>You can customize your loadout on the ammo box</English>
-			<French>Vous pouvez personnaliser votre équipement à la caisse de munitions</French>
-		</Key>
-		<Key ID="STR_RPG_TUTO_VEHICLE">
-			<Original>You can take every vehicle or buy them</Original>
-			<English>You can take every vehicle or buy them</English>
-			<French>Vous pouvez prendre tous les véhicules autour ou en acheter de nouveaux</French>
-		</Key>
-		<Key ID="STR_RPG_TUTO_RESPAWN">
-			<Original>If you die you will respawn according to the mission settings (timer, objective complete, manual)</Original>
-			<English>If you die you will respawn according to the mission settings (timer, objective complete, manual)</English>
-			<French>Si vous mourrez, vous pourrez réapparaitre suivant les paramètres de mission (temps, objectifs, demande)</French>
-		</Key>
-	<Container name="RPG_LOADOUT">
-		<Key ID="STR_RPG_LOADOUT_TITLE">
-			<Original>Loadout</Original>
-			<English>Loadout</English>
-			<French>Equipement</French>
-		</Key>
-		<Key ID="STR_RPG_LOADOUT_ROLE">
-			<Original>Role</Original>
-			<English>Role</English>
-			<French>Rôle</French>
-		</Key>
-		<Key ID="STR_RPG_LOADOUT_SHOWRANK">
-			<Original>Show rank</Original>
-			<English>Show rank</English>
-			<French>Afficher le rang</French>
-		</Key>
-		<Key ID="STR_RPG_LOADOUT_ROLE_LEADER">
-			<Original>Leader</Original>
-			<English>Leader</English>
-			<French>Chef</French>
-		</Key>
-		<Key ID="STR_RPG_LOADOUT_ROLE_LEADER_DESC">
-			<Original>The leader have access to multiple options such as complete vehicle shop and support shop</Original>
-			<English>The leader have access to multiple options such as complete vehicle shop and support shop</English>
-			<French>Le chef a accès à de multiples options comme un magasin de véhicules ou de support</French>
-		</Key>
-		<Key ID="STR_RPG_LOADOUT_ROLE_RIFLEMAN">
-			<Original>Rifleman</Original>
-			<English>Rifleman</English>
-			<French>Fusiller</French>
-		</Key>
-		<Key ID="STR_RPG_LOADOUT_ROLE_RIFLEMAN_DESC">
-			<Original>The rifleman has a basic class without any speciality</Original>
-			<English>The rifleman has a basic class without any speciality</English>
-			<French>Le fusiller est la classe de base sans spécialité</French>
-		</Key>
-		<Key ID="STR_RPG_LOADOUT_ROLE_AUTORIFLEMAN">
-			<Original>Autorifleman</Original>
-			<English>Autorifleman</English>
-			<French>Mitrailleur</French>
-		</Key>
-		<Key ID="STR_RPG_LOADOUT_ROLE_AUTORIFLEMAN_DESC">
-			<Original>The autorifleman has access to machinegun, he can provide suppressive fire to his teammates</Original>
-			<English>The autorifleman has access to machinegun, he can provide suppressive fire to his teammates</English>
-			<French>Le mitrailleur a accès à un équipement spécifique. Il peut fournir des tirs de suppression</French>
-		</Key>
-		<Key ID="STR_RPG_LOADOUT_ROLE_MEDIC">
-			<Original>Medic</Original>
-			<English>Medic</English>
-			<French>Médecin</French>
-		</Key>
-		<Key ID="STR_RPG_LOADOUT_ROLE_MEDIC_DESC">
-			<Original>The medic has access to Medikit, he's able to heal his teammates</Original>
-			<English>The medic has access to Medikit, he's able to heal his teammates</English>
-			<French>Le médecin a accès aux kits de soins, il est capable de soigner ses coéquipiers</French>
-		</Key>
-		<Key ID="STR_RPG_LOADOUT_ROLE_ENGINEER">
-			<Original>Engineer</Original>
-			<English>Engineer</English>
-			<French>Ingénieur</French>
-		</Key>
-		<Key ID="STR_RPG_LOADOUT_ROLE_ENGINEER_DESC">
-			<Original>The engineer has access to the toolbox, he can defuse IED and build fortifications</Original>
-			<English>The engineer has access to the toolbox, he can defuse IED and build fortifications</English>
-			<French>L'ingénieur a accès à une boite à outil, il peut désamorcer les IED et construire des fortifications</French>
-		</Key>
-		<Key ID="STR_RPG_LOADOUT_ROLE_PILOT">
-			<Original>Pilot</Original>
-			<English>Pilot</English>
-			<French>Pilote</French>
-		</Key>
-		<Key ID="STR_RPG_LOADOUT_ROLE_PILOT_DESC">
-			<Original>The pilot has access to air vehicle shop</Original>
-			<English>The pilot has access to air vehicle shop</English>
-			<French>Le pilote a accès au magasin de véhicules aériens</French>
-		</Key>
-		<Key ID="STR_RPG_LOADOUT_ROLE_GRENADIER">
-			<Original>Grenadier</Original>
-			<English>Grenadier</English>
-			<French>Grenadier</French>
-		</Key>
-		<Key ID="STR_RPG_LOADOUT_ROLE_GRENADIER_DESC">
-			<Original>The grenadier has access to grenade launcher</Original>
-			<English>The grenadier has access to grenade launcher</English>
-			<French>Le grenadier a accès aux lances grenades</French>
-		</Key>
-		<Key ID="STR_RPG_LOADOUT_ROLE_DIVER">
-			<Original>Diver</Original>
-			<English>Diver</English>
-			<French>Plongeur</French>
-		</Key>
-		<Key ID="STR_RPG_LOADOUT_ROLE_DIVER_DESC">
-			<Original></Original>
-			<English></English>
-			<French></French>
-		</Key>
-		<Key ID="STR_RPG_LOADOUT_ROLE_MARKSMAN">
-			<Original>Marksman</Original>
-			<English>Marksman</English>
-			<French>Tireur de précision</French>
-		</Key>
-		<Key ID="STR_RPG_LOADOUT_ROLE_MARKSMAN_DESC">
-			<Original>The marksman has access to marksman rifle and accurate scopes</Original>
-			<English>The marksman has access to marksman rifle and accurate scopes</English>
-			<French>Le tireur de précision a accès aux fusils dédiés et à des lunettes de précision</French>
-		</Key>
-		<Key ID="STR_RPG_LOADOUT_ROLE_SNIPER">
-			<Original>Sniper</Original>
-			<English>Sniper</English>
-			<French>Tireur d'élite</French>
-		</Key>
-		<Key ID="STR_RPG_LOADOUT_ROLE_SNIPER_DESC">
-			<Original>The sniper has access to marksman rifle and accurate scopes and specific camoflage</Original>
-			<English>The sniper has access to marksman rifle and accurate scopes and specific camoflage</English>
-			<French>Le tireur d'élite a accès aux fusils dédiés et à des lunettes de précision ainsi qu'un camouflage spécifique</French>
-		</Key>
-		<Key ID="STR_RPG_LOADOUT_ROLE_UAV">
-			<Original>UAV operator</Original>
-			<English>UAV operatr</English>
-			<French>Opérateur drone</French>
-		</Key>
-		<Key ID="STR_RPG_LOADOUT_ROLE_UAV_DESC">
-			<Original></Original>
-			<English></English>
-			<French></French>
-		</Key>
-		<Key ID="STR_RPG_LOADOUT_ROLE_RADIOMAN">
-			<Original>Radioman</Original>
-			<English>Radioman</English>
-			<French>Responsable radio</French>
-		</Key>
-		<Key ID="STR_RPG_LOADOUT_ROLE_RADIOMAN_DESC">
-			<Original></Original>
-			<English></English>
-			<French></French>
-		</Key>
-		<Key ID="STR_RPG_LOADOUT_ROLE_AT">
-			<Original>Anti Tank</Original>
-			<English>Anti Tank</English>
-			<French>Anti Tank</French>
-		</Key>
-		<Key ID="STR_RPG_LOADOUT_ROLE_AT_DESC">
-			<Original>The AT have access to Anti-Tank and Anti-Aircraft launchers</Original>
-			<English>The AT have access to Anti-Tank and Anti-Aircraft launchers</English>
-			<French>L'AT a accès aux lanceurs anti tank et anti aérien</French>
-		</Key>
-		<Key ID="STR_RPG_LOADOUT_ROLE_NB_INSQUAD">
-			<Original>in group</Original>
-			<English>in group</English>
-			<French>dans le groupe</French>
-		</Key>
-	<Container name="RPG_GUI_GENERAL">
-		<Key ID="RPG_GUI_GENERAL_CLOSE">
-			<Original>Close</Original>
-			<English>Close</English>
-			<French>Fermer</French>
-		</Key>
-		<Key ID="RPG_GUI_GENERAL_SAVE">
-			<Original>Save</Original>
-			<English>Save</English>
-			<French>Sauvegarder</French>
-		</Key>
-		<Key ID="RPG_GUI_GENERAL_LOAD">
-			<Original>Load</Original>
-			<English>Load</English>
-			<French>Charger</French>
-		</Key>
-		<Key ID="RPG_GUI_GENERAL_RESET">
-			<Original>Reset</Original>
-			<English>Reset</English>
-			<French>Restaurer</French>
-		</Key>
+                <Original>We are ready to take off, let's go !</Original>
+                <English>We are ready to take off, let's go !</English>
+                <French>Nous sommes prêts à partir sur votre ordre.</French>
+                <Spanish>¡Estamos listos para despegar, vamos!</Spanish>
+                <German>Wir sind bereit zum Abheben, los geht's!</German>
+                <Italian>Siamo pronti a decollare, andiamo!</Italian>
+                <Russian>Мы готовы к взлету, поехали!</Russian>
+                <Chinese>我们准备好起飞，走吧！</Chinese>
+                <Japanese>離陸準備完了、行きましょう！</Japanese>
+            </Key>
+			<Key ID="STR_RPG_HC_SURRENDER_SPEAK">
+    <Original>Don't shoot i surrender, please spare me</Original>
+    <English>Don't shoot i surrender, please spare me</English>
+    <French>Ne tirez pas, je me rends épargnez moi !</French>
+    <Spanish>¡No dispares, me rindo, por favor perdóname!</Spanish>
+    <German>Nicht schießen, ich ergebe mich, bitte verschone mich</German>
+    <Italian>Non sparare, mi arrendo, ti prego risparmiami</Italian>
+    <Russian>Не стреляйте, я сдаюсь, пожалуйста, пощадите меня</Russian>
+    <Chinese>不要开枪，我投降，请饶了我</Chinese>
+    <Japanese>撃たないでください、降伏します、どうか助けてください</Japanese>
+    
+</Key>
+<Key ID="STR_RPG_HC_RESPAWN_TENT">
+    <Original>Your leader has setup a reinforcement tent</Original>
+    <English>Your leader has setup a reinforcement tent</English>
+    <French>Votre chef a monté une tente de réapparition</French>
+    <Spanish>Tu líder ha configurado una tienda de refuerzo</Spanish>
+    <German>Dein Anführer hat ein Verstärkungszelt aufgestellt</German>
+    <Italian>Il tuo leader ha configurato una tenda di rinforzo</Italian>
+    <Russian>Ваш лидер установил палатку для подкрепления</Russian>
+    <Chinese>你的领导者已设置增援帐篷</Chinese>
+    <Japanese>あなたのリーダーは増援テントを設置しました</Japanese>
+    
+</Key>
+<Key ID="STR_RPG_HC_SURRENDER_INTEL">
+    <Original>Copy %1, let's continue the mission</Original>
+    <English>Copy %1, let's continue the mission</English>
+    <French>Reçu %1, poursuivez la mission</French>
+    <Spanish>Copia %1, continuemos con la misión</Spanish>
+    <German>Kopie %1, lass uns die Mission fortsetzen</German>
+    <Italian>Copia %1, continuiamo la missione</Italian>
+    <Russian>Копия %1, продолжим миссию</Russian>
+    <Chinese>复制%1，我们继续任务</Chinese>
+    <Japanese>コピー%1、ミッションを続けましょう</Japanese>
+    
+</Key>
+<Container name="INTEL_DIALOG">
+    <Key ID="STR_RPG_INTEL_MORTAR_CIV">
+        <Original>This morning i saw a mortar position near %1. I don't know if they are there for you, be careful.</Original>
+        <English>This morning i saw a mortar position near %1. I don't know if they are there for you, be careful.</English>
+        <French>J'ai vu une position de mortier ce matin vers %1. Je ne sais pas si ils sont là pour vous mais soyez prudents</French>
+        <Spanish>Esta mañana vi una posición de mortero cerca de %1. No sé si están ahí por ti, ten cuidado.</Spanish>
+        <German>Heute Morgen habe ich eine Mörserstellung in der Nähe von %1 gesehen. Ich weiß nicht, ob sie für dich da sind, sei vorsichtig.</German>
+        <Italian>Questa mattina ho visto una posizione di mortaio vicino a %1. Non so se sono lì per te, stai attento.</Italian>
+        <Russian>Этим утром я видел минометную позицию рядом с %1. Не знаю, там ли они для тебя, будь осторожен.</Russian>
+        <Chinese>今天早上我在%1附近看到一个迫击炮阵地。我不知道他们是不是为了你，小心点。</Chinese>
+        <Japanese>今朝、%1の近くに迫撃砲陣地を見ました。あなたのためにそこにいるかどうかは分かりませんが、注意してください。</Japanese>
+    </Key>
+    <Key ID="STR_RPG_INTEL_MORTAR_DOC">
+        <Original>There is a mortar position on %1</Original>
+        <English>There is a mortar position on %1</English>
+        <French>Il y a une position de mortier près de %1</French>
+        <Spanish>Hay una posición de mortero en %1</Spanish>
+        <German>Es gibt eine Mörserstellung auf %1</German>
+        <Italian>C'è una posizione di mortaio su %1</Italian>
+        <Russian>Есть минометная позиция на %1</Russian>
+        <Chinese>在%1有一个迫击炮阵地</Chinese>
+        <Japanese>%1に迫撃砲陣地があります</Japanese>
+    </Key>
+    <Key ID="STR_RPG_INTEL_TURRET_CIV">
+        <Original>This morning i saw a turret position near %1. Be careful.</Original>
+        <English>This morning i saw a turret position near %1. Be careful.</English>
+        <French>Ce matin j'ai vue une tourelle près de la position %1. Soyez prudents</French>
+        <Spanish>Esta mañana vi una posición de torreta cerca de %1. Ten cuidado.</Spanish>
+        <German>Heute Morgen habe ich eine Geschützturmstellung in der Nähe von %1 gesehen. Sei vorsichtig.</German>
+        <Italian>Questa mattina ho visto una posizione di torretta vicino a %1. Stai attento.</Italian>
+        <Russian>Этим утром я видел позицию турели рядом с %1. Будь осторожен.</Russian>
+        <Chinese>今天早上我在%1附近看到一个炮塔阵地。小心点。</Chinese>
+        <Japanese>今朝、%1の近くに砲塔陣地を見ました。注意してください。</Japanese>
+    </Key>
+    <Key ID="STR_RPG_INTEL_TURRET_DOC">
+        <Original>There is a turret position on %1.</Original>
+        <English>There is a turret position on %1.</English>
+        <French>Il y a une tourelle à la position %1.</French>
+        <Spanish>Hay una posición de torreta en %1.</Spanish>
+        <German>Es gibt eine Geschützturmstellung auf %1.</German>
+        <Italian>C'è una posizione di torretta su %1.</Italian>
+        <Russian>Есть позиция турели на %1.</Russian>
+        <Chinese>在%1有一个炮塔阵地。</Chinese>
+        <Japanese>%1に砲塔陣地があります。</Japanese>
+    </Key>
+    <Key ID="STR_RPG_INTEL_PATROL_CIV">
+        <Original>I've heard there's soldiers patrolling around %1. About %2 men.</Original>
+        <English>I've heard there's soldiers patrolling around %1. About %2 men.</English>
+        <French>J'ai entendu dire qu'une patrouille était autour de %1. Environ %2 hommes.</French>
+        <Spanish>He escuchado que hay soldados patrullando alrededor de %1. Alrededor de %2 hombres.</Spanish>
+        <German>Ich habe gehört, dass Soldaten um %1 patrouillieren. Ungefähr %2 Männer.</German>
+        <Italian>Ho sentito che ci sono soldati che pattugliano intorno a %1. Circa %2 uomini.</Italian>
+        <Russian>Я слышал, что солдаты патрулируют вокруг %1. Около %2 человек.</Russian>
+        <Chinese>我听说有士兵在%1周围巡逻。大约%2人。</Chinese>
+        <Japanese>%1の周辺に兵士が巡回していると聞きました。約%2人です。</Japanese>
+    </Key>
+    <Key ID="STR_RPG_INTEL_PATROL_DOC">
+        <Original>There are %2 men patrolling on position %1.</Original>
+        <English>There are %2 men patrolling on position %1.</English>
+        <French>Il y a %2 hommes patrouillant à la position %1.</French>
+        <Spanish>Hay %2 hombres patrullando en la posición %1.</Spanish>
+        <German>Es gibt %2 Männer, die auf Position %1 patrouillieren.</German>
+        <Italian>Ci sono %2 uomini che pattugliano in posizione %1.</Italian>
+        <Russian>Есть %2 человека, патрулирующих на позиции %1.</Russian>
+        <Chinese>在%1位置有%2人在巡逻。</Chinese>
+        <Japanese>位置%1に%2人が巡回しています。</Japanese>
+    </Key>
+    <Key ID="STR_RPG_INTEL_CAR_CIV">
+        <Original>I saw a %2 around %1 this morning, be careful...</Original>
+        <English>I saw a %2 around %1 this morning, be careful...</English>
+        <French>J'ai vu un %2 autour de %1 ce matin. Soyez prudents...</French>
+        <Spanish>Vi un %2 alrededor de %1 esta mañana, ten cuidado...</Spanish>
+        <German>Ich habe heute Morgen ein %2 in der Nähe von %1 gesehen, sei vorsichtig...</German>
+        <Italian>Ho visto un %2 vicino a %1 questa mattina, stai attento...</Italian>
+        <Russian>Этим утром я видел %2 рядом с %1, будь осторожен...</Russian>
+        <Chinese>今天早上我在%1附近看到一个%2，小心点...</Chinese>
+        <Japanese>今朝、%1の近くに%2を見ました。注意してください...</Japanese>
+    </Key>
+    <Key ID="STR_RPG_INTEL_CAR_DOC">
+        <Original>There is an enemy vehicle %2 on position %1.</Original>
+        <English>There is an enemy vehicle %2 on position %1.</English>
+        <French>Il y a un véhicule ennemi de type %2 à la position %1.</French>
+        <Spanish>Hay un vehículo enemigo %2 en la posición %1.</Spanish>
+        <German>Es gibt ein feindliches Fahrzeug %2 auf Position %1.</German>
+        <Italian>C'è un veicolo nemico %2 in posizione %1.</Italian>
+        <Russian>Есть вражеское транспортное средство %2 на позиции %1.</Russian>
+        <Chinese>在%1位置有一个敌方车辆%2。</Chinese>
+        <Japanese>位置%1に敵の車両%2があります。</Japanese>
+    </Key>
+    <Key ID="STR_RPG_INTEL_ARMORED_CIV">
+        <Original>I saw a armored vehicle around %1, be careful it's dangerous...</Original>
+        <English>I saw a armored vehicle around %1, be careful it's dangerous...</English>
+        <French>J'ai vu un véhicule blindé autour de %1, attention il est dangereux...</French>
+        <Spanish>Vi un vehículo blindado alrededor de %1, ten cuidado, es peligroso...</Spanish>
+        <German>Ich habe ein gepanzertes Fahrzeug in der Nähe von %1 gesehen, sei vorsichtig, es ist gefährlich...</German>
+        <Italian>Ho visto un veicolo corazzato vicino a %1, stai attento, è pericoloso...</Italian>
+        <Russian>Я видел бронированное транспортное средство рядом с %1, будь осторожен, это опасно...</Russian>
+        <Chinese>我在%1附近看到一辆装甲车，小心，它很危险...</Chinese>
+        <Japanese>%1の近くに装甲車を見ました。注意してください、危険です...</Japanese>
+    </Key>
+    <Key ID="STR_RPG_INTEL_ARMORED_DOC">
+        <Original>There is a armored vehicle %2 on position %1.</Original>
+        <English>There is a armored vehicle %2 on position %1.</English>
+        <French>Il y a un véhicule blindé de type %2 en position %1.</French>
+        <Spanish>Hay un vehículo blindado %2 en la posición %1.</Spanish>
+        <German>Es gibt ein gepanzertes Fahrzeug %2 auf Position %1.</German>
+        <Italian>C'è un veicolo corazzato %2 in posizione %1.</Italian>
+        <Russian>Есть бронированное транспортное средство %2 на позиции %1.</Russian>
+        <Chinese>在%1位置有一辆装甲车%2。</Chinese>
+        <Japanese>位置%1に装甲車%2があります。</Japanese>
+    </Key>
+    <Key ID="STR_RPG_INTEL_FOB_INF_CIV">
+        <Original>I know there is an enemy base around %1, this location seems dangerous</Original>
+        <English>I know there is an enemy base around %1, this location seems dangerous</English>
+        <French>Il y a une base ennemie aux environs de %1. Cet endroit semble très dangereux.</French>
+        <Spanish>Sé que hay una base enemiga alrededor de %1, este lugar parece peligroso</Spanish>
+        <German>Ich weiß, dass es eine feindliche Basis in der Nähe von %1 gibt, dieser Ort scheint gefährlich zu sein</German>
+        <Italian>So che c'è una base nemica intorno a %1, questo posto sembra pericoloso</Italian>
+        <Russian>Я знаю, что есть вражеская база рядом с %1, это место кажется опасным</Russian>
+        <Chinese>我知道在%1附近有一个敌方基地，这个地方看起来很危险</Chinese>
+        <Japanese>%1の近くに敵の基地があることを知っています。この場所は危険に見えます</Japanese>
+    </Key>
+    <Key ID="STR_RPG_INTEL_FOB_INF_DOC">
+        <Original>There is an enemy FOB on position %1.</Original>
+        <English>There is an enemy FOB on position %1.</English>
+        <French>Il y a une FOB ennemie en position %1</French>
+        <Spanish>Hay una FOB enemiga en la posición %1.</Spanish>
+        <German>Es gibt eine feindliche FOB auf Position %1.</German>
+        <Italian>C'è una FOB nemica in posizione %1.</Italian>
+        <Russian>Есть вражеская FOB на позиции %1.</Russian>
+        <Chinese>在%1位置有一个敌方前进作战基地。</Chinese>
+        <Japanese>位置%1に敵のFOBがあります。</Japanese>
+    </Key>
+    <Key ID="STR_RPG_INTEL_DEFENSE_INF_CIV">
+        <Original>I know there is a group of %2 soldiers defending %1, this location seems dangerous</Original>
+        <English>I know there is a group of %2 soldiers defending %1, this location seems dangerous</English>
+        <French>Je sais qu'il y a un groupe de %2 soldats qui défendent %1. Cet endroit est dangereux.</French>
+        <Spanish>Sé que hay un grupo de %2 soldados defendiendo %1, este lugar parece peligroso</Spanish>
+        <German>Ich weiß, dass es eine Gruppe von %2 Soldaten gibt, die %1 verteidigen, dieser Ort scheint gefährlich zu sein</German>
+        <Italian>So che c'è un gruppo di %2 soldati che difendono %1, questo posto sembra pericoloso</Italian>
+        <Russian>Я знаю, что есть группа %2 солдат, защищающих %1, это место кажется опасным</Russian>
+        <Chinese>我知道有一群%2的士兵在守卫%1，这个地方看起来很危险</Chinese>
+        <Japanese>%1を守る%2人の兵士のグループがいることを知っています。この場所は危険に見えます</Japanese>
+    </Key>
+    <Key ID="STR_RPG_INTEL_DEFENSE_INF_DOC">
+        <Original>There are %2 soldiers defending position %1</Original>
+        <English>There are %2 soldiers defending position %1</English>
+        <French>Il y a %2 soldats défendant la position %1</French>
+        <Spanish>Hay %2 soldados defendiendo la posición %1</Spanish>
+        <German>Es gibt %2 Soldaten, die die Position %1 verteidigen</German>
+        <Italian>Ci sono %2 soldati che difendono la posizione %1</Italian>
+        <Russian>Есть %2 солдат, защищающих позицию %1</Russian>
+        <Chinese>有%2名士兵在守卫%1位置</Chinese>
+        <Japanese>位置%1を守る%2人の兵士がいます</Japanese>
+    </Key>
+    <Key ID="STR_RPG_INTEL_CIV_PRESENCE_CIV">
+        <Original>Be careful, there are civilian in %1. Watch your fire...</Original>
+        <English>Be careful, there are civilian in %1. Watch your fire...</English>
+        <French>Soyez prudent, il y a des civils à %1. Faites attention à vos tirs.</French>
+        <Spanish>Ten cuidado, hay civiles en %1. Cuida tu fuego...</Spanish>
+        <German>Sei vorsichtig, es gibt Zivilisten in %1. Achte auf dein Feuer...</German>
+        <Italian>Stai attento, ci sono civili in %1. Attenzione al fuoco...</Italian>
+        <Russian>Будь осторожен, там есть гражданские лица в %1. Следи за своим огнем...</Russian>
+        <Chinese>小心，%1有平民。注意你的火力...</Chinese>
+        <Japanese>%1には市民がいます。火に注意してください...</Japanese>
+    </Key>
+    <Key ID="STR_RPG_INTEL_CIV_PRESENCE_DOC">
+        <Original>Be careful, there are civilian on position %1. Watch your fire...</Original>
+        <English>Be careful, there are civilian on position %1. Watch your fire...</English>
+        <French>Attention, il y a des civils détectés sur la position %1. Surveillez vos tirs.</French>
+        <Spanish>Ten cuidado, hay civiles en la posición %1. Cuida tu fuego...</Spanish>
+        <German>Sei vorsichtig, es gibt Zivilisten auf Position %1. Achte auf dein Feuer...</German>
+        <Italian>Stai attento, ci sono civili in posizione %1. Attenzione al fuoco...</Italian>
+        <Russian>Будь осторожен, там есть гражданские лица на позиции %1. Следи за своим огнем...</Russian>
+        <Chinese>小心，%1位置有平民。注意你的火力...</Chinese>
+        <Japanese>位置%1には市民がいます。火に注意してください...</Japanese>
+    </Key>
+    <Key ID="STR_RPG_INTEL_NOTHING_FOUND">
+        <Original>No intel found</Original>
+        <English>No intel found</English>
+        <French>Aucune information trouvée</French>
+        <Spanish>No se encontró información</Spanish>
+        <German>Keine Informationen gefunden</German>
+        <Italian>Nessuna informazione trovata</Italian>
+        <Russian>Информация не найдена</Russian>
+        <Chinese>未找到情报</Chinese>
+        <Japanese>情報が見つかりません</Japanese>
+    </Key>
+    <Key ID="STR_RPG_INTEL_CIV_REFUSE_0">
+        <Original>No idea what you're talking about !</Original>
+        <English>No idea what you're talking about !</English>
+        <French>Je n'ai aucune idée de ce dont vous me parlez.</French>
+        <Spanish>¡No tengo idea de qué estás hablando!</Spanish>
+        <German>Keine Ahnung, wovon du redest!</German>
+        <Italian>Non ho idea di cosa stai parlando!</Italian>
+        <Russian>Не имею представления, о чем вы говорите!</Russian>
+        <Chinese>我不知道你在说什么！</Chinese>
+        <Japanese>何を言っているのか分かりません！</Japanese>
+    </Key>
+    <Key ID="STR_RPG_INTEL_CIV_REFUSE_1">
+        <Original>Go bother someone else ?</Original>
+        <English>Go bother someone else ?</English>
+        <French>Allez embêter quelqu'un d'autre !</French>
+        <Spanish>¿Ve a molestar a otro?</Spanish>
+        <German>Geh jemand anderen nerven?</German>
+        <Italian>Vai a disturbare qualcun altro?</Italian>
+        <Russian>Иди доставай кого-нибудь другого?</Russian>
+        <Chinese>去烦别人吧？</Chinese>
+        <Japanese>他の人を煩わせてください？</Japanese>
+    </Key>
+    <Key ID="STR_RPG_INTEL_CIV_REFUSE_2">
+        <Original>Oh please leave me alone !</Original>
+        <English>Oh please leave me alone !</English>
+        <French>Laissez moi tranquille</French>
+        <Spanish>¡Oh, por favor, déjame en paz!</Spanish>
+        <German>Oh bitte lass mich in Ruhe!</German>
+        <Italian>Oh, per favore, lasciami in pace!</Italian>
+        <Russian>О, пожалуйста, оставьте меня в покое!</Russian>
+        <Chinese>请离开我！</Chinese>
+        <Japanese>お願いだから放っておいてください！</Japanese>
+    </Key>
+    <Key ID="STR_RPG_INTEL_CIV_REFUSE_3">
+        <Original>Get out of this area !</Original>
+        <English>Get out of this area !</English>
+        <French>Quittez la région s'il vous plait</French>
+        <Spanish>¡Sal de esta área!</Spanish>
+        <German>Verlasse dieses Gebiet!</German>
+        <Italian>Esci da questa zona!</Italian>
+        <Russian>Уходите из этой зоны!</Russian>
+        <Chinese>离开这个区域！</Chinese>
+        <Japanese>このエリアから出て行け！</Japanese>
+    </Key>
+<Container name="SCORE_TXT">
+    <Key ID="STR_RPG_SCORE_INFANTRY_KILL">
+        <Original>Infantry kill</Original>
+        <English>Infantry kill</English>
+        <French>Infanterie éliminée</French>
+        <Spanish>Eliminación de infantería</Spanish>
+        <German>Infanterie töten</German>
+        <Italian>Uccisione di fanteria</Italian>
+        <Russian>Уничтожение пехоты</Russian>
+        <Chinese>步兵击杀</Chinese>
+        <Japanese>歩兵の殺害</Japanese>
+    </Key>
+    <Key ID="STR_RPG_SCORE_VEHICLE_KILL">
+        <Original>Vehicle kill</Original>
+        <English>Vehicle kill</English>
+        <French>Véhicule détruit</French>
+        <Spanish>Eliminación de vehículo</Spanish>
+        <German>Fahrzeug töten</German>
+        <Italian>Uccisione di veicolo</Italian>
+        <Russian>Уничтожение транспортного средства</Russian>
+        <Chinese>车辆击杀</Chinese>
+        <Japanese>車両の殺害</Japanese>
+    </Key>
+    <Key ID="STR_RPG_SCORE_SUPPRESS">
+        <Original>Enemy suppress</Original>
+        <English>Enemy suppress</English>
+        <French>Suppression</French>
+        <Spanish>Supresión de enemigo</Spanish>
+        <German>Feind unterdrücken</German>
+        <Italian>Soppressione del nemico</Italian>
+        <Russian>Подавление врага</Russian>
+        <Chinese>敌方压制</Chinese>
+        <Japanese>敵の抑制</Japanese>
+    </Key>
+    <Key ID="STR_RPG_SCORE_HEAL">
+        <Original>Heal</Original>
+        <English>Heal</English>
+        <French>Soin</French>
+        <Spanish>Curar</Spanish>
+        <German>Heilen</German>
+        <Italian>Guarire</Italian>
+        <Russian>Лечить</Russian>
+        <Chinese>治疗</Chinese>
+        <Japanese>治療</Japanese>
+    </Key>
+    <Key ID="STR_RPG_SCORE_REPAIR">
+        <Original>Repair</Original>
+        <English>Repair</English>
+        <French>Réparation</French>
+        <Spanish>Reparar</Spanish>
+        <German>Reparieren</German>
+        <Italian>Riparare</Italian>
+        <Russian>Ремонт</Russian>
+        <Chinese>修理</Chinese>
+        <Japanese>修理</Japanese>
+    </Key>
+    <Key ID="STR_RPG_SCORE_IED_DEFUSE">
+        <Original>IED Defuse</Original>
+        <English>IED Defuse</English>
+        <French>Désamorçage</French>
+        <Spanish>Desactivación de IED</Spanish>
+        <German>IED entschärfen</German>
+        <Italian>Disinnesco IED</Italian>
+        <Russian>Обезвреживание СВУ</Russian>
+        <Chinese>简易爆炸装置拆除</Chinese>
+        <Japanese>IEDの解除</Japanese>
+    </Key>
+    <Key ID="STR_RPG_SCORE_INTEL">
+        <Original>Intel Collect</Original>
+        <English>Intel Collect</English>
+        <French>Information collectée</French>
+        <Spanish>Recolección de información</Spanish>
+        <German>Informationen sammeln</German>
+        <Italian>Raccolta informazioni</Italian>
+        <Russian>Сбор информации</Russian>
+        <Chinese>收集情报</Chinese>
+        <Japanese>情報収集</Japanese>
+    </Key>
+    <Key ID="STR_RPG_SCORE_OBJECTIVE">
+        <Original>Objective</Original>
+        <English>Objective</English>
+        <French>Objectif</French>
+        <Spanish>Objetivo</Spanish>
+        <German>Ziel</German>
+        <Italian>Obiettivo</Italian>
+        <Russian>Цель</Russian>
+        <Chinese>目标</Chinese>
+        <Japanese>目標</Japanese>
+    </Key>
+    <Key ID="STR_RPG_SCORE_PENALTY">
+        <Original>Penalty</Original>
+        <English>Penalty</English>
+        <French>Pénalité</French>
+        <Spanish>Penalización</Spanish>
+        <German>Strafe</German>
+        <Italian>Penalità</Italian>
+        <Russian>Штраф</Russian>
+        <Chinese>处罚</Chinese>
+        <Japanese>ペナルティ</Japanese>
+    </Key>
+    <Key ID="STR_RPG_SCORE_DEATH">
+        <Original>Death</Original>
+        <English>Death</English>
+        <French>Mort</French>
+        <Spanish>Muerte</Spanish>
+        <German>Tod</German>
+        <Italian>Morte</Italian>
+        <Russian>Смерть</Russian>
+        <Chinese>死亡</Chinese>
+        <Japanese>死亡</Japanese>
+    </Key>
+</Container>
+<Container name="3DNames">
+    <Key ID="STR_RPG_3D_SHOP">
+        <Original>Shop</Original>
+        <English>Shop</English>
+        <French>Magasin</French>
+        <Spanish>Tienda</Spanish>
+        <German>Geschäft</German>
+        <Italian>Negozio</Italian>
+        <Russian>Магазин</Russian>
+        <Chinese>商店</Chinese>
+        <Japanese>ショップ</Japanese>
+    </Key>
+    <Key ID="STR_RPG_3D_HQ">
+        <Original>HQ Vehicle</Original>
+        <English>HQ Vehicle</English>
+        <French>Véhicule de commandement</French>
+        <Spanish>Vehículo de cuartel general</Spanish>
+        <German>HQ-Fahrzeug</German>
+        <Italian>Veicolo QG</Italian>
+        <Russian>Штабной автомобиль</Russian>
+        <Chinese>司令部车辆</Chinese>
+        <Japanese>本部車両</Japanese>
+    </Key>
+    <Key ID="STR_RPG_3D_LOADOUT">
+        <Original>Loadout</Original>
+        <English>Loadout</English>
+        <French>Équipement</French>
+        <Spanish>Equipamiento</Spanish>
+        <German>Ausrüstung</German>
+        <Italian>Equipaggiamento</Italian>
+        <Russian>Снаряжение</Russian>
+        <Chinese>装备</Chinese>
+        <Japanese>装備</Japanese>
+    </Key>
+    <Key ID="STR_RPG_3D_ADV_FOB">
+        <Original>Advanced FOB</Original>
+        <English>Advanced FOB</English>
+        <French>Base avancée</French>
+        <Spanish>FOB avanzada</Spanish>
+        <German>Fortgeschrittene FOB</German>
+        <Italian>FOB avanzata</Italian>
+        <Russian>Передовая FOB</Russian>
+        <Chinese>高级前进作战基地</Chinese>
+        <Japanese>高度なFOB</Japanese>
+    </Key>
+</Container>
+<Container name="RPG_TUTO">
+    <Key ID="STR_RPG_TUTO_WELCOME">
+        <Original>Welcome to Random Patrol Generator</Original>
+        <English>Welcome to Random Patrol Generator</English>
+        <French>Bienvenue sur Random Patrol Generator</French>
+        <Spanish>Bienvenido al Generador de Patrullas Aleatorias</Spanish>
+        <German>Willkommen beim Zufallspatrouillengenerator</German>
+        <Italian>Benvenuto nel Generatore di Pattuglie Casuali</Italian>
+        <Russian>Добро пожаловать в генератор случайных патрулей</Russian>
+        <Chinese>欢迎使用随机巡逻生成器</Chinese>
+        <Japanese>ランダムパトロールジェネレーターへようこそ</Japanese>
+    </Key>
+    <Key ID="STR_RPG_TUTO_OBJ">
+        <Original>The goal is to complete all the tasks</Original>
+        <English>The goal is to complete all the tasks</English>
+        <French>Le but est de compléter tous les objectifs</French>
+        <Spanish>El objetivo es completar todas las tareas</Spanish>
+        <German>Das Ziel ist es, alle Aufgaben zu erledigen</German>
+        <Italian>L'obiettivo è completare tutti i compiti</Italian>
+        <Russian>Цель - выполнить все задачи</Russian>
+        <Chinese>目标是完成所有任务</Chinese>
+        <Japanese>目標はすべてのタスクを完了することです</Japanese>
+    </Key>
+    <Key ID="STR_RPG_TUTO_LOADOUT">
+        <Original>You can customize your loadout on the ammo box</Original>
+        <English>You can customize your loadout on the ammo box</English>
+        <French>Vous pouvez personnaliser votre équipement à la caisse de munitions</French>
+        <Spanish>Puedes personalizar tu equipamiento en la caja de municiones</Spanish>
+        <German>Du kannst deine Ausrüstung an der Munitionskiste anpassen</German>
+        <Italian>Puoi personalizzare il tuo equipaggiamento nella cassa delle munizioni</Italian>
+        <Russian>Вы можете настроить свою экипировку в ящике с боеприпасами</Russian>
+        <Chinese>你可以在弹药箱上定制你的装备</Chinese>
+        <Japanese>弾薬箱で装備をカスタマイズできます</Japanese>
+    </Key>
+    <Key ID="STR_RPG_TUTO_VEHICLE">
+        <Original>You can take every vehicle or buy them</Original>
+        <English>You can take every vehicle or buy them</English>
+        <French>Vous pouvez prendre tous les véhicules autour ou en acheter de nouveaux</French>
+        <Spanish>Puedes tomar cualquier vehículo o comprarlos</Spanish>
+        <German>Du kannst jedes Fahrzeug nehmen oder sie kaufen</German>
+        <Italian>Puoi prendere ogni veicolo o comprarli</Italian>
+        <Russian>Вы можете взять любое транспортное средство или купить их</Russian>
+        <Chinese>你可以拿走每辆车或购买它们</Chinese>
+        <Japanese>すべての車両を取ることができます、または購入することができます</Japanese>
+    </Key>
+    <Key ID="STR_RPG_TUTO_RESPAWN">
+        <Original>If you die you will respawn according to the mission settings (timer, objective complete, manual)</Original>
+        <English>If you die you will respawn according to the mission settings (timer, objective complete, manual)</English>
+        <French>Si vous mourrez, vous pourrez réapparaitre suivant les paramètres de mission (temps, objectifs, demande)</French>
+        <Spanish>Si mueres, reaparecerás según la configuración de la misión (temporizador, objetivo completo, manual)</Spanish>
+        <German>Wenn du stirbst, wirst du je nach Missionseinstellungen wiederbelebt (Timer, Ziel abgeschlossen, manuell)</German>
+        <Italian>Se muori, riapparirai secondo le impostazioni della missione (timer, obiettivo completato, manuale)</Italian>
+        <Russian>Если вы умрете, вы возродитесь в соответствии с настройками миссии (таймер, задача выполнена, вручную)</Russian>
+        <Chinese>如果你死了，你将根据任务设置重生（计时器、任务完成、手动）</Chinese>
+        <Japanese>死んだ場合、ミッション設定に従ってリスポーンします（タイマー、目標完了、手動）</Japanese>
+    </Key>
+<Container name="RPG_LOADOUT">
+    <Key ID="STR_RPG_LOADOUT_TITLE">
+        <Original>Loadout</Original>
+        <English>Loadout</English>
+        <French>Équipement</French>
+        <Spanish>Equipamiento</Spanish>
+        <German>Ausrüstung</German>
+        <Italian>Equipaggiamento</Italian>
+        <Russian>Снаряжение</Russian>
+        <Chinese>装备</Chinese>
+        <Japanese>装備</Japanese>
+    </Key>
+    <Key ID="STR_RPG_LOADOUT_ROLE">
+        <Original>Role</Original>
+        <English>Role</English>
+        <French>Rôle</French>
+        <Spanish>Rol</Spanish>
+        <German>Rolle</German>
+        <Italian>Ruolo</Italian>
+        <Russian>Роль</Russian>
+        <Chinese>角色</Chinese>
+        <Japanese>役割</Japanese>
+    </Key>
+    <Key ID="STR_RPG_LOADOUT_SHOWRANK">
+        <Original>Show rank</Original>
+        <English>Show rank</English>
+        <French>Afficher le rang</French>
+        <Spanish>Mostrar rango</Spanish>
+        <German>Rang anzeigen</German>
+        <Italian>Mostra grado</Italian>
+        <Russian>Показать ранг</Russian>
+        <Chinese>显示等级</Chinese>
+        <Japanese>ランクを表示</Japanese>
+    </Key>
+    <Key ID="STR_RPG_LOADOUT_ROLE_LEADER">
+        <Original>Leader</Original>
+        <English>Leader</English>
+        <French>Chef</French>
+        <Spanish>Líder</Spanish>
+        <German>Anführer</German>
+        <Italian>Leader</Italian>
+        <Russian>Лидер</Russian>
+        <Chinese>领导者</Chinese>
+        <Japanese>リーダー</Japanese>
+    </Key>
+    <Key ID="STR_RPG_LOADOUT_ROLE_LEADER_DESC">
+        <Original>The leader have access to multiple options such as complete vehicle shop and support shop</Original>
+        <English>The leader have access to multiple options such as complete vehicle shop and support shop</English>
+        <French>Le chef a accès à de multiples options comme un magasin de véhicules ou de support</French>
+        <Spanish>El líder tiene acceso a múltiples opciones como una tienda de vehículos completa y una tienda de apoyo</Spanish>
+        <German>Der Anführer hat Zugang zu mehreren Optionen wie einem kompletten Fahrzeugladen und einem Unterstützungsladen</German>
+        <Italian>Il leader ha accesso a più opzioni come un negozio di veicoli completo e un negozio di supporto</Italian>
+        <Russian>Лидер имеет доступ к нескольким опциям, таким как полный магазин транспортных средств и магазин поддержки</Russian>
+        <Chinese>领导者可以访问多个选项，如完整的车辆商店和支援商店</Chinese>
+        <Japanese>リーダーは、完全な車両ショップやサポートショップなど、複数のオプションにアクセスできます</Japanese>
+    </Key>
+    <Key ID="STR_RPG_LOADOUT_ROLE_RIFLEMAN">
+        <Original>Rifleman</Original>
+        <English>Rifleman</English>
+        <French>Fusiller</French>
+        <Spanish>Fusilero</Spanish>
+        <German>Schütze</German>
+        <Italian>Fuciliere</Italian>
+        <Russian>Стрелок</Russian>
+        <Chinese>步枪手</Chinese>
+        <Japanese>ライフルマン</Japanese>
+    </Key>
+    <Key ID="STR_RPG_LOADOUT_ROLE_RIFLEMAN_DESC">
+        <Original>The rifleman has a basic class without any speciality</Original>
+        <English>The rifleman has a basic class without any speciality</English>
+        <French>Le fusiller est la classe de base sans spécialité</French>
+        <Spanish>El fusilero tiene una clase básica sin ninguna especialidad</Spanish>
+        <German>Der Schütze hat eine grundlegende Klasse ohne Spezialisierung</German>
+        <Italian>Il fuciliere ha una classe di base senza alcuna specialità</Italian>
+        <Russian>Стрелок имеет базовый класс без каких-либо специальностей</Russian>
+        <Chinese>步枪手是没有任何特长的基本职业</Chinese>
+        <Japanese>ライフルマンは、特性のない基本クラスです</Japanese>
+    </Key>
+    <Key ID="STR_RPG_LOADOUT_ROLE_AUTORIFLEMAN">
+        <Original>Autorifleman</Original>
+        <English>Autorifleman</English>
+        <French>Mitrailleur</French>
+        <Spanish>Ametrallador</Spanish>
+        <German>MG-Schütze</German>
+        <Italian>Mitragliere</Italian>
+        <Russian>Пулеметчик</Russian>
+        <Chinese>机枪手</Chinese>
+        <Japanese>機関銃手</Japanese>
+    </Key>
+    <Key ID="STR_RPG_LOADOUT_ROLE_AUTORIFLEMAN_DESC">
+        <Original>The autorifleman has access to machinegun, he can provide suppressive fire to his teammates</Original>
+        <English>The autorifleman has access to machinegun, he can provide suppressive fire to his teammates</English>
+        <French>Le mitrailleur a accès à un équipement spécifique. Il peut fournir des tirs de suppression</French>
+        <Spanish>El ametrallador tiene acceso a una ametralladora, puede proporcionar fuego de supresión a sus compañeros</Spanish>
+        <German>Der MG-Schütze hat Zugang zu einem Maschinengewehr, er kann seinen Teamkollegen Feuerunterstützung bieten</German>
+        <Italian>Il mitragliere ha accesso al mitragliatore, può fornire fuoco di soppressione ai suoi compagni di squadra</Italian>
+        <Russian>Пулеметчик имеет доступ к пулемету, он может обеспечивать прикрывающий огонь своим товарищам по команде</Russian>
+        <Chinese>机枪手可以使用机枪，他可以为队友提供压制火力</Chinese>
+        <Japanese>機関銃手は機関銃にアクセスでき、チームメイトに対して抑制射撃を提供できます</Japanese>
+    </Key>
+    <Key ID="STR_RPG_LOADOUT_ROLE_MEDIC">
+        <Original>Medic</Original>
+        <English>Medic</English>
+        <French>Médecin</French>
+        <Spanish>Médico</Spanish>
+        <German>Sanitäter</German>
+        <Italian>Medico</Italian>
+        <Russian>Медик</Russian>
+        <Chinese>医生</Chinese>
+        <Japanese>医療兵</Japanese>
+    </Key>
+    <Key ID="STR_RPG_LOADOUT_ROLE_MEDIC_DESC">
+        <Original>The medic has access to Medikit, he's able to heal his teammates</Original>
+        <English>The medic has access to Medikit, he's able to heal his teammates</English>
+        <French>Le médecin a accès aux kits de soins, il est capable de soigner ses coéquipiers</French>
+        <Spanish>El médico tiene acceso al botiquín médico, puede curar a sus compañeros</Spanish>
+        <German>Der Sanitäter hat Zugang zum Medikit, er kann seine Teamkollegen heilen</German>
+        <Italian>Il medico ha accesso al Medikit, è in grado di curare i suoi compagni di squadra</Italian>
+        <Russian>Медик имеет доступ к аптечке, он может лечить своих товарищей по команде</Russian>
+        <Chinese>医生可以使用急救包，他可以治疗队友</Chinese>
+        <Japanese>医療兵はメディキットにアクセスでき、チームメイトを治療できます</Japanese>
+    </Key>
+    <Key ID="STR_RPG_LOADOUT_ROLE_ENGINEER">
+        <Original>Engineer</Original>
+        <English>Engineer</English>
+        <French>Ingénieur</French>
+        <Spanish>Ingeniero</Spanish>
+        <German>Ingenieur</German>
+        <Italian>Ingegnere</Italian>
+        <Russian>Инженер</Russian>
+        <Chinese>工程师</Chinese>
+        <Japanese>エンジニア</Japanese>
+    </Key>
+    <Key ID="STR_RPG_LOADOUT_ROLE_ENGINEER_DESC">
+        <Original>The engineer has access to the toolbox, he can defuse IED and build fortifications</Original>
+        <English>The engineer has access to the toolbox, he can defuse IED and build fortifications</English>
+        <French>L'ingénieur a accès à une boite à outil, il peut désamorcer les IED et construire des fortifications</French>
+        <Spanish>El ingeniero tiene acceso a la caja de herramientas, puede desactivar IED y construir fortificaciones</Spanish>
+        <German>Der Ingenieur hat Zugang zum Werkzeugkasten, er kann IED entschärfen und Befestigungen bauen</German>
+        <Italian>L'ingegnere ha accesso alla cassetta degli attrezzi, può disinnescare gli IED e costruire fortificazioni</Italian>
+        <Russian>Инженер имеет доступ к инструментальному ящику, он может обезвреживать СВУ и строить укрепления</Russian>
+        <Chinese>工程师可以使用工具箱，他可以拆除简易爆炸装置并建造防御工事</Chinese>
+        <Japanese>エンジニアはツールボックスにアクセスでき、IEDを解除し、要塞を建設できます</Japanese>
+    </Key>
+    <Key ID="STR_RPG_LOADOUT_ROLE_PILOT">
+        <Original>Pilot</Original>
+        <English>Pilot</English>
+        <French>Pilote</French>
+        <Spanish>Piloto</Spanish>
+        <German>Pilot</German>
+        <Italian>Pilota</Italian>
+        <Russian>Пилот</Russian>
+        <Chinese>飞行员</Chinese>
+        <Japanese>パイロット</Japanese>
+    </Key>
+    <Key ID="STR_RPG_LOADOUT_ROLE_PILOT_DESC">
+        <Original>The pilot has access to air vehicle shop</Original>
+        <English>The pilot has access to air vehicle shop</English>
+        <French>Le pilote a accès au magasin de véhicules aériens</French>
+        <Spanish>El piloto tiene acceso a la tienda de vehículos aéreos</Spanish>
+        <German>Der Pilot hat Zugang zum Luftfahrzeugladen</German>
+        <Italian>Il pilota ha accesso al negozio di veicoli aerei</Italian>
+        <Russian>Пилот имеет доступ к магазину воздушных транспортных средств</Russian>
+        <Chinese>飞行员可以访问空中车辆商店</Chinese>
+        <Japanese>パイロットは航空機ショップにアクセスできます</Japanese>
+    </Key>
+    <Key ID="STR_RPG_LOADOUT_ROLE_GRENADIER">
+        <Original>Grenadier</Original>
+        <English>Grenadier</English>
+        <French>Grenadier</French>
+        <Spanish>Granadero</Spanish>
+        <German>Granatwerfer</German>
+        <Italian>Granatiere</Italian>
+        <Russian>Гренадер</Russian>
+        <Chinese>榴弹兵</Chinese>
+        <Japanese>擲弾兵</Japanese>
+    </Key>
+    <Key ID="STR_RPG_LOADOUT_ROLE_GRENADIER_DESC">
+        <Original>The grenadier has access to grenade launcher</Original>
+        <English>The grenadier has access to grenade launcher</English>
+        <French>Le grenadier a accès aux lance-grenades</French>
+        <Spanish>El granadero tiene acceso al lanzagranadas</Spanish>
+        <German>Der Granatwerfer hat Zugang zum Granatwerfer</German>
+        <Italian>Il granatiere ha accesso al lanciagranate</Italian>
+        <Russian>Гренадер имеет доступ к гранатомету</Russian>
+        <Chinese>榴弹兵可以使用榴弹发射器</Chinese>
+        <Japanese>擲弾兵は擲弾発射機にアクセスできます</Japanese>
+    </Key>
+    <Key ID="STR_RPG_LOADOUT_ROLE_DIVER">
+        <Original>Diver</Original>
+        <English>Diver</English>
+        <French>Plongeur</French>
+        <Spanish>Buzo</Spanish>
+        <German>Taucher</German>
+        <Italian>Subacqueo</Italian>
+        <Russian>Водолаз</Russian>
+        <Chinese>潜水员</Chinese>
+        <Japanese>ダイバー</Japanese>
+    </Key>
+    <Key ID="STR_RPG_LOADOUT_ROLE_DIVER_DESC">
+        <Original></Original>
+        <English></English>
+        <French></French>
+        <Spanish></Spanish>
+        <German></German>
+        <Italian></Italian>
+        <Russian></Russian>
+        <Chinese></Chinese>
+        <Japanese></Japanese>
+    </Key>
+    <Key ID="STR_RPG_LOADOUT_ROLE_MARKSMAN">
+        <Original>Marksman</Original>
+        <English>Marksman</English>
+        <French>Tireur de précision</French>
+        <Spanish>Tirador</Spanish>
+        <German>Schütze</German>
+        <Italian>Tiratore scelto</Italian>
+        <Russian>Снайпер</Russian>
+        <Chinese>神枪手</Chinese>
+        <Japanese>マークスマン</Japanese>
+    </Key>
+    <Key ID="STR_RPG_LOADOUT_ROLE_MARKSMAN_DESC">
+        <Original>The marksman has access to marksman rifle and accurate scopes</Original>
+        <English>The marksman has access to marksman rifle and accurate scopes</English>
+        <French>Le tireur de précision a accès aux fusils dédiés et à des lunettes de précision</French>
+        <Spanish>El tirador tiene acceso al rifle de tirador y a miras precisas</Spanish>
+        <German>Der Schütze hat Zugang zu einem Scharfschützengewehr und präzisen Zielfernrohren</German>
+        <Italian>Il tiratore scelto ha accesso al fucile da tiratore scelto e a mirini precisi</Italian>
+        <Russian>Снайпер имеет доступ к снайперской винтовке и точным прицелам</Russian>
+        <Chinese>神枪手可以使用狙击步枪和精确的瞄准镜</Chinese>
+        <Japanese>マークスマンはマークスマンライフルと正確なスコープにアクセスできます</Japanese>
+    </Key>
+    <Key ID="STR_RPG_LOADOUT_ROLE_SNIPER">
+        <Original>Sniper</Original>
+        <English>Sniper</English>
+        <French>Tireur d'élite</French>
+        <Spanish>Francotirador</Spanish>
+        <German>Scharfschütze</German>
+        <Italian>Cecchino</Italian>
+        <Russian>Снайпер</Russian>
+        <Chinese>狙击手</Chinese>
+        <Japanese>スナイパー</Japanese>
+    </Key>
+    <Key ID="STR_RPG_LOADOUT_ROLE_SNIPER_DESC">
+        <Original>The sniper has access to marksman rifle and accurate scopes and specific camouflage</Original>
+        <English>The sniper has access to marksman rifle and accurate scopes and specific camouflage</English>
+        <French>Le tireur d'élite a accès aux fusils dédiés et à des lunettes de précision ainsi qu'un camouflage spécifique</French>
+        <Spanish>El francotirador tiene acceso al rifle de tirador y a miras precisas y camuflaje específico</Spanish>
+        <German>Der Scharfschütze hat Zugang zu einem Scharfschützengewehr und präzisen Zielfernrohren sowie speziellem Tarnmaterial</German>
+        <Italian>Il cecchino ha accesso al fucile da tiratore scelto e a mirini precisi e a una mimetizzazione specifica</Italian>
+        <Russian>Снайпер имеет доступ к снайперской винтовке и точным прицелам, а также к специальному камуфляжу</Russian>
+        <Chinese>狙击手可以使用狙击步枪、精确的瞄准镜和特定的伪装</Chinese>
+        <Japanese>スナイパーはマークスマンライフルと正確なスコープ、特定の迷彩にアクセスできます</Japanese>
+    </Key>
+    <Key ID="STR_RPG_LOADOUT_ROLE_UAV">
+        <Original>UAV operator</Original>
+        <English>UAV operator</English>
+        <French>Opérateur drone</French>
+        <Spanish>Operador de UAV</Spanish>
+        <German>UAV-Operator</German>
+        <Italian>Operatore UAV</Italian>
+        <Russian>Оператор БПЛА</Russian>
+        <Chinese>无人机操作员</Chinese>
+        <Japanese>UAVオペレーター</Japanese>
+    </Key>
+    <Key ID="STR_RPG_LOADOUT_ROLE_UAV_DESC">
+        <Original></Original>
+        <English></English>
+        <French></French>
+        <Spanish></Spanish>
+        <German></German>
+        <Italian></Italian>
+        <Russian></Russian>
+        <Chinese></Chinese>
+        <Japanese></Japanese>
+    </Key>
+    <Key ID="STR_RPG_LOADOUT_ROLE_RADIOMAN">
+        <Original>Radioman</Original>
+        <English>Radioman</English>
+        <French>Opérateur radio</French>
+        <Spanish>Radioperador</Spanish>
+        <German>Funker</German>
+        <Italian>Operatore radio</Italian>
+        <Russian>Радист</Russian>
+        <Chinese>无线电操作员</Chinese>
+        <Japanese>無線通信士</Japanese>
+    </Key>
+    <Key ID="STR_RPG_LOADOUT_ROLE_RADIOMAN_DESC">
+        <Original></Original>
+        <English></English>
+        <French></French>
+        <Spanish></Spanish>
+        <German></German>
+        <Italian></Italian>
+        <Russian></Russian>
+        <Chinese></Chinese>
+        <Japanese></Japanese>
+    </Key>
+    <Key ID="STR_RPG_LOADOUT_ROLE_AT">
+        <Original>Anti Tank</Original>
+        <English>Anti Tank</English>
+        <French>Anti Tank</French>
+        <Spanish>Antitanque</Spanish>
+        <German>Panzerabwehr</German>
+        <Italian>Anticarro</Italian>
+        <Russian>Противотанковый</Russian>
+        <Chinese>反坦克</Chinese>
+        <Japanese>対戦車</Japanese>
+    </Key>
+    <Key ID="STR_RPG_LOADOUT_ROLE_AT_DESC">
+        <Original>The AT have access to Anti-Tank and Anti-Aircraft launchers</Original>
+        <English>The AT have access to Anti-Tank and Anti-Aircraft launchers</English>
+        <French>L'AT a accès aux lanceurs anti tank et anti aérien</French>
+        <Spanish>El AT tiene acceso a lanzadores antitanque y antiaéreos</Spanish>
+        <German>Der AT hat Zugang zu Panzerabwehr- und Flugabwehrwerfern</German>
+        <Italian>L'AT ha accesso a lanciatori anticarro e antiaerei</Italian>
+        <Russian>AT имеет доступ к противотанковым и зенитным установкам</Russian>
+        <Chinese>反坦克有权访问反坦克和防空发射器</Chinese>
+        <Japanese>ATは対戦車および対空ミサイルランチャーにアクセスできます</Japanese>
+    </Key>
+    <Key ID="STR_RPG_LOADOUT_ROLE_NB_INSQUAD">
+        <Original>in group</Original>
+        <English>in group</English>
+        <French>dans le groupe</French>
+        <Spanish>en grupo</Spanish>
+        <German>in der Gruppe</German>
+        <Italian>nel gruppo</Italian>
+        <Russian>в группе</Russian>
+        <Chinese>在组中</Chinese>
+        <Japanese>グループ内</Japanese>
+    </Key>
+        <Key ID="STR_RPG_LOADOUT_ROLE_NB_INFINITE">
+        <Original>infinite</Original>
+        <English>infinite</English>
+        <French>infini</French>
+    </Key>
+<Container name="RPG_GUI_GENERAL">
+    <Key ID="RPG_GUI_GENERAL_CLOSE">
+        <Original>Close</Original>
+        <English>Close</English>
+        <French>Fermer</French>
+        <Spanish>Cerrar</Spanish>
+        <German>Schließen</German>
+        <Italian>Chiudi</Italian>
+        <Russian>Закрыть</Russian>
+        <Chinese>关闭</Chinese>
+        <Japanese>閉じる</Japanese>
+    </Key>
+    <Key ID="RPG_GUI_GENERAL_SAVE">
+        <Original>Save</Original>
+        <English>Save</English>
+        <French>Sauvegarder</French>
+        <Spanish>Guardar</Spanish>
+        <German>Speichern</German>
+        <Italian>Salva</Italian>
+        <Russian>Сохранить</Russian>
+        <Chinese>保存</Chinese>
+        <Japanese>保存</Japanese>
+    </Key>
+    <Key ID="RPG_GUI_GENERAL_LOAD">
+        <Original>Load</Original>
+        <English>Load</English>
+        <French>Charger</French>
+        <Spanish>Cargar</Spanish>
+        <German>Laden</German>
+        <Italian>Carica</Italian>
+        <Russian>Загрузить</Russian>
+        <Chinese>加载</Chinese>
+        <Japanese>読み込む</Japanese>
+    </Key>
+    <Key ID="RPG_GUI_GENERAL_RESET">
+        <Original>Reset</Original>
+        <English>Reset</English>
+        <French>Réinitialiser</French>
+        <Spanish>Reiniciar</Spanish>
+        <German>Zurücksetzen</German>
+        <Italian>Reimposta</Italian>
+        <Russian>Сброс</Russian>
+        <Chinese>重置</Chinese>
+        <Japanese>リセット</Japanese>
+    </Key>
+    </Key>
+        <Key ID="RPG_GUI_GENERAL_CLEAR">
+        <Original>Clear items</Original>
+        <English>Clear items</English>
+        <French>Supprimer les objets</French>
+    </Key>
+</Container>
+ <Container name="ACTIONS">
+            <Key ID="STR_ACTIONS_PLACE_TENT">
+                <Original>Place reinforcement tent</Original>
+                <English>Place reinforcement tent</English>
+                <French>Placer la tente de renforts</French>
+            </Key>
+            <Key ID="STR_ACTIONS_OPEN_SUPPORT_SHOP">
+                <Original>Open support shop</Original>
+                <English>Open support shop</English>
+                <French>Ouvrir le magasin de support</French>
+            </Key>
+            <Key ID="STR_ACTIONS_OPEN_VEHICLE_SHOP">
+                <Original>Open vehicle shop</Original>
+                <English>Open vehicle shop</English>
+                <French>Ouvrir le magasin de vehicule</French>
+            </Key>
+            <Key ID="STR_ACTIONS_SETUP_LOADOUT">
+                <Original>Setup loadout</Original>
+                <English>Setup loadout</English>
+                <French>Configurer l'équipement</French>
+            </Key>
+            <Key ID="STR_ACTIONS_RECRUIT_UNITS">
+                <Original>Recruit unit</Original>
+                <English>Recruit unit</English>
+                <French>Recruter des unités</French>
+            </Key>
+            <Key ID="STR_ACTIONS_TEAM_SETTINGS">
+                <Original>Create or join group</Original>
+                <English>Create or join group</English>
+                <French>Créer ou rejoindre un groupe</French>
+            </Key>
+            <Key ID="STR_ACTIONS_SLEEP">
+                <Original>Sleep until next morning</Original>
+                <English>Sleep until next morning</English>
+                <French>Dormir jusqu'au lendemain</French>
+            </Key>
+            <Key ID="STR_ACTIONS_JOINPATACOMPANY">
+                <Original>Join the PataCompany</Original>
+                <English>Join the PataCompany</English>
+                <French>Rejoindre la PataCompany</French>
+            </Key>
+    </Container>
 </Project>
+

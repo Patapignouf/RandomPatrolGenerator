@@ -20,7 +20,7 @@ class playerRespawnMenu
 			y = 0.117436 * safezoneH + safezoneY;
 			w = 45 * GUI_GRID_CENTER_W;
 			h = 1.5 * GUI_GRID_CENTER_H;
-			colorBackground[] = {0.5,0.5,0.5,1};
+			colorBackground[] = {0.8,0.5,0,1};
 		};
 	};
 	class Controls
