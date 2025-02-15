@@ -1373,6 +1373,10 @@ getClassInformation = {
 				{
 					_classDescription = localize "STR_RPG_LOADOUT_ROLE_PILOT";
 				};
+			case c_radioman:
+				{
+					_classDescription = localize "STR_RPG_LOADOUT_ROLE_RADIOMAN";
+				};
 			case "diver":
 				{
 					_classDescription = localize "STR_RPG_LOADOUT_ROLE_DIVER";
@@ -1436,6 +1440,10 @@ getDescClassInformation = {
 			case c_pilot:
 				{
 					_classDescription = localize "STR_RPG_LOADOUT_ROLE_PILOT_DESC";
+				};	
+			case c_radioman:
+				{
+					_classDescription = localize "STR_RPG_LOADOUT_ROLE_RADIOMAN_DESC";
 				};	
 			case "diver":
 				{
