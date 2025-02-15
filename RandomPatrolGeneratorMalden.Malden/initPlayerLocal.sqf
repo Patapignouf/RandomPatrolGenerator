@@ -443,6 +443,7 @@ if (side player == blufor) then
 					};
 
 					//Tp player on carrier
+					player setVelocity [0, 0, 0];
 					player setPosASL [_spawnPos#0-105 + random 15,_spawnPos#1-18+random 15,_spawnPos#2+0.5];
 					titleCut ["WELCOME ON BOARD", "BLACK IN", 5];
 				};
@@ -685,6 +686,7 @@ if (didJIP) then
 	if (count (_deadPlayerList select { _x == (name player) }) == 0) then 
 	{
 		//Disable specific respawn menu
+		player setVelocity [0, 0, 0];
 		player setPos [worldSize,worldSize,0];
 		player allowdamage false;
 		[[], 'GUI\respawnGUI\initPlayerRespawnMenu.sqf'] remoteExec ['BIS_fnc_execVM', player];
@@ -695,6 +697,7 @@ if (didJIP) then
 	};
 } else {
 	//Let's get it started !
+	player setVelocity [0, 0, 0]; //reset speed
 	player allowdamage true;
 	player enableSimulationGlobal true;
 };

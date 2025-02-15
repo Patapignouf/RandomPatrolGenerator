@@ -8,8 +8,18 @@ params ["_mode", "_this", "_authorizeHalo"];
 private _mainDisplay = (findDisplay 60000);
 private _buttonOK = _mainDisplay displayCtrl 60001;
 private _vehicleShopTitle = _mainDisplay displayCtrl 59999;
+private _icon = _mainDisplay displayCtrl 602399;
+private _name = _mainDisplay displayCtrl 602400;
+private _type = _mainDisplay displayCtrl 602401;
+private _credit = _mainDisplay displayCtrl 602402;
+private _buy = _mainDisplay displayCtrl 60001;
 
-_vehicleShopTitle ctrlSetText (format ["Support shop | Credits %1", missionNamespace getVariable "bluforVehicleAvalaibleSpawn"]);
+_vehicleShopTitle ctrlSetText (format ["%2 | %3 %1", missionNamespace getVariable "bluforVehicleAvalaibleSpawn", localize "STR_GUI_BASE_TITLE", localize "STR_GUI_BASE_CREDIT"] );
+_icon ctrlSetText (localize "STR_GUI_BASE_ICON");
+_name ctrlSetText (localize "STR_GUI_BASE_NAME");
+_type ctrlSetText (localize "STR_GUI_BASE_TYPE");
+_credit ctrlSetText (localize "STR_GUI_BASE_CREDIT");
+_buy ctrlSetText (localize "STR_GUI_BASE_BUY");
 
 diag_log format ["Init loadSupport GUI"];
 
@@ -28,10 +38,16 @@ switch (_mode) do
 		{
 			[_lnbEntries] call addSupportForHALO;
 		};
-		
+
 		//Add support for leader
 		if (player getVariable "role" == "leader") then 
 		{
+
+			if (missionNameSpace getVariable ["enableMassiveHalo",1] == 1 && _authorizeHalo) then 
+			{
+				[_lnbEntries] call addSupportForMassiveHALO;
+			};
+
 			[_lnbEntries] call addCallForReinforcement;
 			[_lnbEntries] call addSupportForArtillery;
 			[_lnbEntries] call addAttackSquad;

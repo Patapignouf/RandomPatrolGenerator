@@ -14,7 +14,7 @@ class supportGUI
 		class title: RscStructuredText
 		{
 			idc = 59999;
-			text = "Support shop"; //--- ToDo: Localize;
+			text = "STR_GUI_BASE_TITLE"; //--- ToDo: Localize;
 			colorBackground[]={0.8,0.5,0,1};
 			x = -16.5 * GUI_GRID_W + 0.5;
 			y = -7.6 * GUI_GRID_H + 0.5;
@@ -46,7 +46,7 @@ class supportGUI
 				class btnSortCol0: RscButtonTextOnly
 				{
 					idc = 602399;
-					text = "Icon";
+					text = "STR_GUI_BASE_ICON";
 					style=ST_LEFT;
 					colorFocused[]={1,1,1,0.5};
 					colorFocused2[]={1,1,1,0.1};
@@ -59,7 +59,7 @@ class supportGUI
 				class btnSortCol1: RscButtonTextOnly
 				{
 					idc = 602400;
-					text = "Support name";
+					text = "STR_GUI_BASE_NAME";
 					style=ST_LEFT;
 					colorFocused[]={1,1,1,0.5};
 					colorFocused2[]={1,1,1,0.1};
@@ -72,13 +72,13 @@ class supportGUI
 				class btnSortCol2: btnSortCol1
 				{
 					idc = 602401;
-					text = "Support type";
+					text = "STR_GUI_BASE_TYPE";
 					x = 3.5/6 * W_LNB;
 				};
 				class btnSortCol3: btnSortCol1
 				{
 					idc = 602402;
-					text = "Credit";
+					text = "STR_GUI_BASE_CREDIT";
 					x = 5/6 * W_LNB;
 					w = 1/6 * W_LNB;
 				};
@@ -94,7 +94,7 @@ class supportGUI
 		class btnOK: RscButtonMenuOK
 		{
 			idc = 60001;
-			text = "BUY";
+			text = "STR_GUI_BASE_BUY";
 			x = -16 * GUI_GRID_W + 0.5;
 			y = 7.5 * GUI_GRID_H + 0.5;
 			w = 8 * GUI_GRID_W;
