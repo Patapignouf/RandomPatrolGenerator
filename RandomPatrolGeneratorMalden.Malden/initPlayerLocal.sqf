@@ -490,7 +490,13 @@ if (side player == blufor) then
 		waitUntil {!isNil "bluformobilehq"};
 		
 		//TODO FIX Mobile HQ Arsenal action
-		[bluforMobileHQ] call setupPlayerLoadout;
+		if (ironMan) then 
+		{
+			[bluforMobileHQ] call setupPlayerLoadout;	
+		} else 
+		{
+			[bluforMobileHQ] call setupPlayerLoadoutRemake;	
+		};
 	};
 
 
