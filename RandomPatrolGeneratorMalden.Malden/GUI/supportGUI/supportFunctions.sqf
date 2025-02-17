@@ -200,12 +200,13 @@ params ["_caller", "_supportType"];
 
 					{
 						_currentPlayer = _x;
-						_currentPlayer setPos ([[[selectedHaloLoc, 15]], []] call BIS_fnc_randomPos);
-
+						_randomPos = ([[[selectedHaloLoc, 15]], []] call BIS_fnc_randomPos);
+						[[_randomPos], {params ["_randomPos"]; player setpos (_randomPos vectorAdd [0,0,1000]);}] remoteExec ["spawn", _currentPlayer]; 
 						//Halo jump script of pierremgi
-						_currentPlayer setpos (getpos _currentPlayer vectorAdd [0,0,1000]);
-						0 = _currentPlayer spawn {
-							private _plyr = _this;
+						
+						0 = [_currentPlayer] spawn {
+							params ["_currentDroppedPlayer"];
+							private _plyr = _currentDroppedPlayer;
 							private "_whs";
 							_plyr setVariable ["bpk",unitBackpack _plyr];
 							_bpktype = backpack _plyr;
