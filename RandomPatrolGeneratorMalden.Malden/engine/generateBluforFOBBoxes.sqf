@@ -227,7 +227,6 @@ publicvariable "TPFlag1";
 	_botHQ disableAI "ALL";
 	_botHQ enableAI "ANIM";
 	_botHQ allowDamage false;
-	[_botHQ, "BRIEFING", "NONE"] remoteExecCall ["BIS_fnc_ambientAnim"];
 	[["STR_RPG_HC_NAME", (getPos _botHQ) vectorAdd [0,0,2.5],"\a3\UI_F_Orange\Data\CfgMarkers\b_Ordnance_ca.paa" , [0,0,1,1]], 'GUI\3DNames\3DNames.sqf'] remoteExec ['BIS_fnc_execVM', blufor, true];
 
 	//Add teammember units
@@ -278,6 +277,12 @@ publicvariable "TPFlag1";
 	HQCommander = _botHQ;
 	publicVariable "HQCommander";
 
+	//Wait before trigger animation to be sure that setPos has been executed
+	sleep 20;
+
+	//Setup animation
+	[_botHQ, "BRIEFING", "NONE"] remoteExecCall ["BIS_fnc_ambientAnim"];
+
 };
 
 
@@ -289,18 +294,15 @@ if (!isNil "USS_FREEDOM_CARRIER") then
 	waitUntil{!isNil "VA2"};
 	waitUntil{!isNil "TPFlag1"};
 	waitUntil{!isNil "deployableFOBItem"};
+	waitUntil{!isNil "HQCommander"};
 
 	_warEra = missionNamespace getVariable "warEra";
 
 	VA2 setPosASL [initBlueforLocation#0-105, initBlueforLocation#1-18, initBlueforLocation#2];
 	TPFlag1 setPosASL [initBlueforLocation#0-115, initBlueforLocation#1-18, initBlueforLocation#2-0.5];
 	deployableFOBItem setPosASL [initBlueforLocation#0-50, initBlueforLocation#1-15, initBlueforLocation#2];
-	[] spawn 
-	{
-		waitUntil{!isNil "HQCommander"};
-		HQCommander setPosASL [initBlueforLocation#0-117, initBlueforLocation#1-18, initBlueforLocation#2-0.5];
-	};
-
+	HQCommander setPosASL [initBlueforLocation#0-117, initBlueforLocation#1-18, initBlueforLocation#2-0.5];
+	
 	//Move basic ammo box
 	waitUntil{!isNil "BluforAmmoBox"};
 	_baseAmmoBoxSpawn = [initBlueforLocation#0-113, initBlueforLocation#1-25, initBlueforLocation#2];
