@@ -929,6 +929,13 @@ if (disableZoom == 1) then
 //Init checkdeath
 [] execVM 'engine\checkdeath.sqf';
 
+//init global respawn manager 
+if (missionNameSpace getVariable ["enableSelfRespawnTimer", 0] == 0) then 
+{
+	[] execVM 'engine\respawnManagement\respawnGlobalTimerManager.sqf'; 
+};
+
+
 missionGenerated = true;
 publicvariable "missionGenerated";
 

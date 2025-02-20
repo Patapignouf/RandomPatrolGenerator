@@ -24,7 +24,15 @@ if (player getVariable "sideBeforeDeath" == "independent") then
 };
 
 //reset respawn timer
-setPlayerRespawnTime (missionNamespace getVariable "missionRespawnParam");
+if (missionNameSpace getVariable ["enableSelfRespawnTimer", 0] == 0) then 
+{
+	//No self respawn timer (directed by the server)
+	setPlayerRespawnTime 99999999;
+} else 
+{
+	//set personnal respawn timer
+	setPlayerRespawnTime (missionNamespace getVariable "missionRespawnParam");
+};
 
 //Setup respawn GUI
 cutText ["", "BLACK FADED", 4];

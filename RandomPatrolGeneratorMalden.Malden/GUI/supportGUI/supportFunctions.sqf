@@ -201,12 +201,11 @@ params ["_caller", "_supportType"];
 					{
 						_currentPlayer = _x;
 						_randomPos = ([[[selectedHaloLoc, 15]], []] call BIS_fnc_randomPos);
-						[[_randomPos], {params ["_randomPos"]; player setpos (_randomPos vectorAdd [0,0,1000]);}] remoteExec ["spawn", _currentPlayer]; 
-						//Halo jump script of pierremgi
-						
-						0 = [_currentPlayer] spawn {
-							params ["_currentDroppedPlayer"];
-							private _plyr = _currentDroppedPlayer;
+						[[_randomPos], {
+							params ["_randomPos"];
+							player setpos (_randomPos vectorAdd [0,0,1000]);
+
+							private _plyr = player;
 							private "_whs";
 							_plyr setVariable ["bpk",unitBackpack _plyr];
 							_bpktype = backpack _plyr;
@@ -229,8 +228,9 @@ params ["_caller", "_supportType"];
 							{
 								_plyr addBackpackGlobal "B_parachute";
 							};
-						};
 
+							}] remoteExec ["spawn", _currentPlayer]; 
+						
 						[format ["In the %1 airspace", worldName], format ["Year %1", date select 0], mapGridPosition _currentPlayer] spawn BIS_fnc_infoText;
 					} foreach _playerNearby;
 				};
