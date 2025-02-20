@@ -792,6 +792,10 @@ if (missionNameSpace getVariable ["enableAdvancedRespawn", 1] == 1) then
 				{
 					//delete the tent and allow leader to place another one
 					deleteVehicle _object;
+
+					//Allow players to spawn on tent 10 until 10 secs after disassembly
+					sleep 10;
+
 					missionNameSpace setVariable [format ['bluforAdvancedRespawn%1', str (group _caller)], true, true];
 					missionNameSpace setVariable [format ['bluforPositionAdvancedRespawn%1', str (group _caller)], [0,0,0], true];
 				} else 
