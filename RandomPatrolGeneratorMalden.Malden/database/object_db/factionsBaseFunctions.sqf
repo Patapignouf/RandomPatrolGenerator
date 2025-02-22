@@ -18,6 +18,7 @@ adjustRole = {
 			case "Rifleman": {_cfgRole = "rifleman"};
 			case "Sapper": {_cfgRole = "engineer"};		
 			case "Crewman": {_cfgRole = "pilot"}; //Assistant must go with basic rifleman
+			case "RadioOperator": {_cfgRole = "radioman"};
 			case "SpecialOperative": {_cfgRole = "rifleman"};
 		};
 
