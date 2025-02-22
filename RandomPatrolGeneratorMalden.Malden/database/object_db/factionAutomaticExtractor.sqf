@@ -71,16 +71,19 @@ _potentialOpfor = [];
 			{
 				_sideName = "OPFOR";
 				[opfor, _factionTechName] call addRadioToFaction;
+				[opfor, _factionTechName] call addBackPackDroneToFaction;
 			};
 			case 1:
 			{
 				_sideName = "BLUFOR";
 				[blufor, _factionTechName] call addRadioToFaction;
+				[blufor, _factionTechName] call addBackPackDroneToFaction;
 			};
 			case 2:
 			{
 				_sideName = "INDEPENDENT";
 				[independent, _factionTechName] call addRadioToFaction;
+				[independent, _factionTechName] call addBackPackDroneToFaction;
 			};
 		};
 

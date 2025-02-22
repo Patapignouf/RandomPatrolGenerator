@@ -314,6 +314,10 @@ backPackList_French = [
 	"AMF_FELIN_BACKPACK_MEDIC_TAN"
 	];
 
+droneBackPack_French = [
+	"B_Crocus_AP_Bag",
+	"B_Crocus_AT_Bag"
+];
 
 //Uniform, vest, headgear, avalaible for all unit
 uniformList_French = [
