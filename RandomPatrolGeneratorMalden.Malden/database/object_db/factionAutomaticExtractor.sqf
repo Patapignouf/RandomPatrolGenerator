@@ -155,14 +155,23 @@ _roleFilter = ["Unarmed"];
 						};
 
 						//Add backpack
-						_currentFactionName = format ["backPackList%1", _thisFac];
 						_currentUnitStuff = getUnitLoadout _cfgName;
 						_loadoutToCheck = [([_currentUnitStuff] call getAllStringInArray)] call filterString;
 						_currentUnitStuff = [_loadoutToCheck] call getListOfBagsFromStuff;
+						_currentUnitStuffDrone = _currentUnitStuff select {["drone", _x] call BIS_fnc_inString || ["UAV", _x] call BIS_fnc_inString || ["UGV", _x] call BIS_fnc_inString};
+						_currentUnitStuffStandard = _currentUnitStuff - _currentUnitStuffDrone;
+						 
+						 //Add to basic backpacklist
+						_currentFactionName = format ["backPackList%1", _thisFac];
 						_backPackList = missionNamespace getVariable [_currentFactionName, []];
-						_backPackList = _backPackList + _currentUnitStuff;
+						_backPackList = _backPackList + _currentUnitStuffStandard;
 						missionNamespace setVariable [_currentFactionName, _backPackList]; 
 
+						//Add to drone backpack
+						_currentFactionName = format ["droneBackPack%1", _thisFac];
+						_backPackList = missionNamespace getVariable [_currentFactionName, []];
+						_backPackList = _backPackList + _currentUnitStuffDrone;
+						missionNamespace setVariable [_currentFactionName, _backPackList]; 
 						
 						//Specifies accessories for the faction
 						if (_thisRole == "leader" || _thisRole == "rifleman") then 
