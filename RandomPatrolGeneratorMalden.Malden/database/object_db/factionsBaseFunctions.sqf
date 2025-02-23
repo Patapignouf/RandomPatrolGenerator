@@ -333,7 +333,28 @@ getListOfBagsFromStuff =
 	_resultList;
 };
 
+addBackPackDroneToFaction = {
+	params ["_side", "_faction"];
+	_currentFactionName = format ["droneBackPack%1", _faction];
+	_defaultDrone = [];
 
+	switch (_side) do {
+		case blufor:
+		{
+			_defaultDrone append ["B_Crocus_AP_Bag", "B_Crocus_AT_Bag"];
+		};
+		case independent:
+		{
+			_defaultDrone append ["I_Crocus_AP_Bag", "I_Crocus_AT_Bag"];
+		};
+		case opfor:
+		{
+			_defaultDrone append ["I_Crocus_AP_Bag", "I_Crocus_AT_Bag"];
+		};
+	};
+
+	missionNamespace setVariable [_currentFactionName, _defaultDrone]; 
+};
 
 addRadioToFaction = {
 	params ["_side", "_faction"];

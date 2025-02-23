@@ -321,20 +321,25 @@ getVirtualAttachement = {
 
 getVirtualBackPack = {
 	currentPlayer = _this select 0;
-	currentFaction = _this select 1;
-	currentPlayerClass = currentPlayer getVariable "role";
-	virtualBackpackList = [];
+	_currentFaction = _this select 1;
+	_currentPlayerClass = currentPlayer getVariable "role";
+	_virtualBackpackList = [];
 
-	switch (currentPlayerClass) do
+	switch (_currentPlayerClass) do
 	{
-		default 
-			{ 
-				//Default backpack list
-				virtualBackpackList = virtualBackpackList + (backPackList_db select {_x select 1  == currentFaction} select 0 select 0);
+		case c_drone:
+			{
+				_virtualBackpackList = _virtualBackpackList + (backPackList_db select {_x select 1  == _currentFaction} select 0 select 0);
+				_virtualBackpackList = _virtualBackpackList + (droneBackPack_db select {_x select 1  == _currentFaction} select 0 select 0);
+			};		
+		default
+			{
+				//Non implemented role : Default rifle
+			 	_virtualBackpackList = _virtualBackpackList + (backPackList_db select {_x select 1  == _currentFaction} select 0 select 0); 
 			};
 	};
 	//diag_log format ["Player %1 with role %2 has access to items %3", name currentPlayer, currentPlayerClass, virtualBackpackList ];
-	virtualBackpackList
+	_virtualBackpackList
 };
 
 getVirtualMagazine = {
