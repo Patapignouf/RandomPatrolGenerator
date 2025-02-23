@@ -1797,6 +1797,11 @@
         <English>Create or join group</English>
         <French>Créer ou rejoindre un groupe</French>
     </Key>
+    <Key ID="STR_ACTIONS_DELETE_TENT">
+        <Original>Get back reinforcement tent</Original>
+        <English>Get back reinforcement tent</English>
+        <French>Récupérer la tente de renfort</French>
+    </Key>
     <Key ID="STR_ACTIONS_SLEEP">
         <Original>Sleep until next morning</Original>
         <English>Sleep until next morning</English>

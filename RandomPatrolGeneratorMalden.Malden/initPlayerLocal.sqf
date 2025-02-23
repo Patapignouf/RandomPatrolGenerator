@@ -769,6 +769,16 @@ if (missionNameSpace getVariable ["enableAdvancedRespawn", 1] == 1) then
 				};
 		},_x,3,true,false,"","(_target distance _this <5) && (_target getVariable [str (group _this), false])"];
 
+		//Delete tent if respawn coordinates changed
+		[_createTent, str (group _caller)] spawn 
+		{
+			params ["_createTent", "_groupCaller"];
+
+			_variableToCheck = format ['bluforPositionAdvancedRespawn%1', _groupCaller];
+			waitUntil {[missionNameSpace getVariable _variableToCheck , [0,0,0]] call BIS_fnc_areEqual};
+			deleteVehicle _createTent;
+		};
+
 		//Create action to authorize tent disassembly
 		[
 			_createTent, 

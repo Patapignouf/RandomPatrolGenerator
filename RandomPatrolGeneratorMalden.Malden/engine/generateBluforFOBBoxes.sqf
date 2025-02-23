@@ -257,6 +257,25 @@ publicvariable "TPFlag1";
 			}
 		] remoteExec ["spawn", blufor, true]; 
 
+		//Add delete tent action
+		[[_botHQ], 
+		{
+			params ["_botHQ"]; 
+			_botHQ addAction [format ["<img size='2' image='\a3\ui_f_oldman\data\IGUI\Cfg\holdactions\holdAction_market_ca.paa'/><t size='1'>%1</t>", localize "STR_ACTIONS_DELETE_TENT"],{
+				//Define parameters
+				params ["_object","_caller","_ID","_avalaibleVehicle"];
+
+				//Set respawn pos to 0,0,0 to trigger tent auto clean
+				_group = str (group _caller);
+				_variable= format ['bluforPositionAdvancedRespawn%1', _group];
+				missionNameSpace setVariable [_variable, [0,0,0], true];
+
+				_variableRespawn= format ['bluforAdvancedRespawn%1', _group];
+				missionNameSpace setVariable [_variableRespawn, true, true];
+			},[],3,true,false,"","(_target distance _this <7)"];
+			}
+		] remoteExec ["spawn", blufor, true]; 
+
 
 		if ((missionNameSpace getVariable "officialPataCompanyServer") == 1) then 
 		{

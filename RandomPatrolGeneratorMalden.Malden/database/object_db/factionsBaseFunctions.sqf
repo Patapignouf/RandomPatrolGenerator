@@ -48,7 +48,7 @@ adjustRole = {
 		{
 			_cfgRole = "diver";
 		};
-		if (["_UGV_", _cfgName] call BIS_fnc_inString || ["_UAV_", _cfgName] call BIS_fnc_inString) then 
+		if (["_UGV_", _cfgName] call BIS_fnc_inString || ["_UAV", _cfgName] call BIS_fnc_inString) then 
 		{
 			_cfgRole = "UAV operator";
 		};

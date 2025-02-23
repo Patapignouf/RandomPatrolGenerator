@@ -237,6 +237,16 @@ if (missionNameSpace getVariable ["enableAdvancedRespawn", 1] == 1) then
 			false
 		] remoteExec ["BIS_fnc_holdActionAdd", 0, true];
 
+		//Delete tent if respawn coordinates changed
+		[_createTent, str (group _caller)] spawn 
+		{
+			params ["_createTent", "_groupCaller"];
+
+			_variableToCheck = format ['bluforPositionAdvancedRespawn%1', _groupCaller];
+			waitUntil {[missionNameSpace getVariable _variableToCheck , [0,0,0]] call BIS_fnc_areEqual};
+			deleteVehicle _createTent;
+		};
+
 	},_x,3,true,false,"","(_this getVariable 'role' == 'leader') && (missionNameSpace getVariable [ format ['bluforAdvancedRespawn%1', str (group _this)], true]) && (vehicle _this == _this) && isTouchingGround _this"];
 };
 
