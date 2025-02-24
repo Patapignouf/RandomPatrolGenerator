@@ -337,6 +337,11 @@ backPackList_2035_NATO_FS = [
 	"B_UAV_06_backpack_F"
 ];
 
+droneBackPack_2035_NATO_FS = [
+	"B_Crocus_AP_Bag",
+	"B_Crocus_AT_Bag"
+];
+
 
 //Uniform, vest, headgear, avalaible for all unit
 uniformList_2035_NATO_FS = [

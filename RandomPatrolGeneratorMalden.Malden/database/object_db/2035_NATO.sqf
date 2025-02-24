@@ -344,6 +344,11 @@ backPackList_2035_NATO = [
 	"TFAR_rt1523g_big_rhs"
 ];
 
+droneBackPack_2035_NATO = [
+	"B_Crocus_AP_Bag",
+	"B_Crocus_AT_Bag"
+];
+
 
 //Uniform, vest, headgear, avalaible for all unit
 uniformList_2035_NATO = [
