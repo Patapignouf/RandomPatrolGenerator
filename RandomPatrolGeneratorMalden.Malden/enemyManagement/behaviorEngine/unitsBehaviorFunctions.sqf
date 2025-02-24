@@ -208,3 +208,25 @@ doSurrender = {
 		};
 	};
 };
+
+drawIAPositionOnMap = {
+	params ["_unit"];
+
+	//Draw marker for this specific unit
+	_markerName = format ["opforMarker%1", name _unit];
+	if !(_markerName in allMapMarkers) then 
+	{
+		_marker = createMarker [_markerName, getPos _unit]; // Not visible yet.
+		_marker setMarkerType "hd_dot"; // Visible.
+		_marker setMarkerSize [0.5, 0.5];
+		_marker setMarkerColor "ColorRed";
+
+		//Clean marker after unit dies
+		[_unit, _markerName] spawn 
+		{
+			params ["_unit", "_markerName"];
+			waitUntil {!alive _unit};
+			deleteMarker _markerName;
+		};
+	};
+};
