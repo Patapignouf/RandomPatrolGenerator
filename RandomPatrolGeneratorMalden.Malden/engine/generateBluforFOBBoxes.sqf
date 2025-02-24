@@ -272,7 +272,7 @@ publicvariable "TPFlag1";
 
 				_variableRespawn= format ['bluforAdvancedRespawn%1', _group];
 				missionNameSpace setVariable [_variableRespawn, true, true];
-			},[],3,true,false,"","(_target distance _this <7)"];
+			},[],3,true,false,"","(_target distance _this <7) && (_this getVariable 'role' == 'leader')"];
 			}
 		] remoteExec ["spawn", blufor, true]; 
 
