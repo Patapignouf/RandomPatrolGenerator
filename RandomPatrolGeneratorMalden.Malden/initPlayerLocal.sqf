@@ -147,6 +147,11 @@ if (player getVariable ["isSetupMission", false]) then
 	[[], 'engine\showWaitingSetupScreen.sqf'] remoteExec ['BIS_fnc_execVM', player];
 };
 
+//Wait auto faction builder
+waitUntil {!isNil "missionFactionSetup"};
+waitUntil {!isNil "missionInitFactionSetup"};
+
+
 //Load every mission settings dependencies
 #include "database\arsenalLibrary.sqf"
 #include "objectGenerator\vehicleManagement.sqf"
