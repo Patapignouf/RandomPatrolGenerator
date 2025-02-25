@@ -330,7 +330,7 @@ getVirtualBackPack = {
 		case c_drone:
 			{
 				_virtualBackpackList = _virtualBackpackList + (backPackList_db select {_x select 1  == _currentFaction} select 0 select 0);
-				_virtualBackpackList = _virtualBackpackList + (droneBackPack_db select {_x select 1  == _currentFaction} select 0 select 0);
+				_virtualBackpackList = _virtualBackpackList + ([_currentFaction] call getDroneBackPack);
 			};		
 		default
 			{
@@ -340,6 +340,17 @@ getVirtualBackPack = {
 	};
 	//diag_log format ["Player %1 with role %2 has access to items %3", name currentPlayer, currentPlayerClass, virtualBackpackList ];
 	_virtualBackpackList
+};
+
+getDroneBackPack = {
+	_currentFaction = _this select 0;
+	_virtualDroneBackpackList = [];
+
+
+	_virtualDroneBackpackList = _virtualDroneBackpackList + (droneBackPack_db select {_x select 1  == _currentFaction} select 0 select 0);
+
+	//diag_log format ["Player %1 with role %2 has access to items %3", name currentPlayer, currentPlayerClass, virtualBackpackList ];
+	_virtualDroneBackpackList
 };
 
 getVirtualMagazine = {

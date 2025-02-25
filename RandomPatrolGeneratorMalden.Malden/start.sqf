@@ -643,7 +643,14 @@ diag_log format ["Generating blufor vehicle : %1",selectedBluforVehicle];
 				params ["_object","_caller","_ID","_param"];
 				[[false], 'GUI\supportGUI\supportGUI.sqf'] remoteExec ['BIS_fnc_execVM', _caller];
 			},[],1.5,true,false,"","_target distance _this <10 && side _this == blufor"]] remoteExec [ "addAction", blufor, true ];
-
+			
+			//add drones backpack to the HQ Vehicles
+			_virtualDroneBackpackList = [];
+			_virtualDroneBackpackList = (droneBackPack_db select {_x select 1  == bluFaction} select 0 select 0);
+			{
+				bluforMobileHQ addBackpackCargoGlobal  [_x, 2];
+			} foreach _virtualDroneBackpackList;
+			
 			//3D Display
 			[["STR_RPG_3D_HQ", (getPos bluforMobileHQ) vectorAdd [0,0,6],"\a3\ui_f\data\igui\cfg\simpletasks\types\truck_ca.paa" , [0,0,1,1]], 'GUI\3DNames\3DNames.sqf'] remoteExec ['BIS_fnc_execVM', blufor, true];
 		};
