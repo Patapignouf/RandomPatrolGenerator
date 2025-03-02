@@ -1767,46 +1767,182 @@
     </Key>
 </Container>
  <Container name="ACTIONS">
-            <Key ID="STR_ACTIONS_PLACE_TENT">
-                <Original>Place reinforcement tent</Original>
-                <English>Place reinforcement tent</English>
-                <French>Placer la tente de renforts</French>
-            </Key>
-            <Key ID="STR_ACTIONS_OPEN_SUPPORT_SHOP">
-                <Original>Open support shop</Original>
-                <English>Open support shop</English>
-                <French>Ouvrir le magasin de support</French>
-            </Key>
-            <Key ID="STR_ACTIONS_OPEN_VEHICLE_SHOP">
-                <Original>Open vehicle shop</Original>
-                <English>Open vehicle shop</English>
-                <French>Ouvrir le magasin de vehicule</French>
-            </Key>
-            <Key ID="STR_ACTIONS_SETUP_LOADOUT">
-                <Original>Setup loadout</Original>
-                <English>Setup loadout</English>
-                <French>Configurer l'équipement</French>
-            </Key>
-            <Key ID="STR_ACTIONS_RECRUIT_UNITS">
-                <Original>Recruit unit</Original>
-                <English>Recruit unit</English>
-                <French>Recruter des unités</French>
-            </Key>
-            <Key ID="STR_ACTIONS_TEAM_SETTINGS">
-                <Original>Create or join group</Original>
-                <English>Create or join group</English>
-                <French>Créer ou rejoindre un groupe</French>
-            </Key>
-            <Key ID="STR_ACTIONS_SLEEP">
-                <Original>Sleep until next morning</Original>
-                <English>Sleep until next morning</English>
-                <French>Dormir jusqu'au lendemain</French>
-            </Key>
-            <Key ID="STR_ACTIONS_JOINPATACOMPANY">
-                <Original>Join the PataCompany</Original>
-                <English>Join the PataCompany</English>
-                <French>Rejoindre la PataCompany</French>
-            </Key>
+    <Key ID="STR_ACTIONS_PLACE_TENT">
+        <Original>Place reinforcement tent</Original>
+        <English>Place reinforcement tent</English>
+        <French>Placer la tente de renforts</French>
+    </Key>
+    <Key ID="STR_ACTIONS_OPEN_SUPPORT_SHOP">
+        <Original>Open support shop</Original>
+        <English>Open support shop</English>
+        <French>Ouvrir le magasin de support</French>
+    </Key>
+    <Key ID="STR_ACTIONS_OPEN_VEHICLE_SHOP">
+        <Original>Open vehicle shop</Original>
+        <English>Open vehicle shop</English>
+        <French>Ouvrir le magasin de vehicule</French>
+    </Key>
+    <Key ID="STR_ACTIONS_SETUP_LOADOUT">
+        <Original>Setup loadout</Original>
+        <English>Setup loadout</English>
+        <French>Configurer l'équipement</French>
+    </Key>
+    <Key ID="STR_ACTIONS_RECRUIT_UNITS">
+        <Original>Recruit unit</Original>
+        <English>Recruit unit</English>
+        <French>Recruter des unités</French>
+    </Key>
+    <Key ID="STR_ACTIONS_TEAM_SETTINGS">
+        <Original>Create or join group</Original>
+        <English>Create or join group</English>
+        <French>Créer ou rejoindre un groupe</French>
+    </Key>
+    <Key ID="STR_ACTIONS_DELETE_TENT">
+        <Original>Get back reinforcement tent</Original>
+        <English>Get back reinforcement tent</English>
+        <French>Récupérer la tente de renfort</French>
+    </Key>
+    <Key ID="STR_ACTIONS_SLEEP">
+        <Original>Sleep until next morning</Original>
+        <English>Sleep until next morning</English>
+        <French>Dormir jusqu'au lendemain</French>
+    </Key>
+    <Key ID="STR_ACTIONS_JOINPATACOMPANY">
+        <Original>Join the PataCompany</Original>
+        <English>Join the PataCompany</English>
+        <French>Rejoindre la PataCompany</French>
+    </Key>
+    </Container>
+     <Container name="RPG_SUPPORT_MENU">
+        <Key ID="STR_GUI_SUPPORT_CAT_RECON">
+            <Original>Recon</Original>
+            <English>Recon</English>
+            <French>Reconnaissance</French>
+        </Key>
+        <Key ID="STR_GUI_SUPPORT_CAT_REINFORCEMENT">
+            <Original>Reinforcement</Original>
+            <English>Renfort</English>
+            <French>Renfort</French>
+        </Key>
+        <Key ID="STR_GUI_SUPPORT_CAT_ARTILLERY">
+            <Original>Artillery</Original>
+            <English>Artillery</English>
+            <French>Artillerie</French>
+        </Key>
+        <Key ID="STR_GUI_SUPPORT_CAT_MOVE">
+            <Original>Movement</Original>
+            <English>Movement</English>
+            <French>Déplacement</French>
+        </Key>
+        <Key ID="STR_GUI_SUPPORT_CAT_ATTACK">
+            <Original>Attack</Original>
+            <English>Attack</English>
+            <French>Attaque</French>
+        </Key>
+        <Key ID="STR_GUI_SUPPORT_CAT_LOGISTIC">
+            <Original>Logistic</Original>
+            <English>Logistic</English>
+            <French>Logistique</French>
+        </Key>
+        <Key ID="STR_GUI_SUPPORT_RECON">
+            <Original>Recon for intel</Original>
+            <English>Recon for intel</English>
+            <French>Recherche d'informations</French>
+        </Key>
+        <Key ID="STR_GUI_SUPPORT_REINFORCEMENT_NOW">
+            <Original>Ask for reinforcement now</Original>
+            <English>Ask for reinforcement now</English>
+            <French>Demander des renforts</French>
+        </Key>
+        <Key ID="STR_GUI_SUPPORT_REINFORCEMENT_RADIO">
+            <Original>Call reinforcement (radio)</Original>
+            <English>Call reinforcement (radio)</English>
+            <French>Appeler des renforts (radio)</French>
+        </Key>
+        <Key ID="STR_GUI_SUPPORT_FORCE_REINFORCEMENT_NOW">
+            <Original>Force reinforcement now</Original>
+            <English>Force reinforcement now</English>
+            <French>Exiger des renforts maintenant</French>
+        </Key>
+        <Key ID="STR_GUI_SUPPORT_ARTILLERY">
+            <Original>Artillery (radio)</Original>
+            <English>Artillery (radio)</English>
+            <French>Artillerie (radio)</French>
+        </Key>
+        <Key ID="STR_GUI_SUPPORT_HALO">
+            <Original>Halo Jump</Original>
+            <English>Halo Jump</English>
+            <French>Déploiement en parachute</French>
+        </Key>
+        <Key ID="STR_GUI_SUPPORT_MASSIVE_HALO">
+            <Original>Halo jump with everyone around</Original>
+            <English>Halo jump with everyone around</English>
+            <French>Déployer tout le monde en parachute</French>
+        </Key>
+        <Key ID="STR_GUI_SUPPORT_TENT">
+            <Original>Move to your group tent</Original>
+            <English>Move to your group tent</English>
+            <French>Déplacement vers la tente du groupe</French>
+        </Key>
+        <Key ID="STR_GUI_SUPPORT_TAC_INS">
+            <Original>Tactical Insertion</Original>
+            <English>Tactical Insertion</English>
+            <French>Insertion tactique</French>
+        </Key>
+        <Key ID="STR_GUI_SUPPORT_ATTACK_SQUAD">
+            <Original>Recruit a squad to attack position</Original>
+            <English>Recruit a squad to attack position</English>
+            <French>Recruter une escouade pour attaquer la position</French>
+        </Key>
+        <Key ID="STR_GUI_SUPPORT_EXTRACT_CHOPPER">
+            <Original>Extract helicopter (radio)</Original>
+            <English>Extract helicopter (radio)</English>
+            <French>Hélicoptère d'extraction (radio)</French>
+        </Key>
+        <Key ID="STR_GUI_SUPPORT_TRANSPORT_CHOPPER">
+            <Original>Transport helicopter (radio)</Original>
+            <English>Transport helicopter (radio)</English>
+            <French>Hélicoptère de transport (radio)</French>
+        </Key>
+        <Key ID="STR_GUI_SUPPORT_SUPPLY_DROP">
+            <Original>Logistic supply drop (radio)</Original>
+            <English>Logistic supply drop (radio)</English>
+            <French>Soutien logistique (radio)</French>
+        </Key>
+        <Key ID="STR_GUI_SUPPORT_RECON_DRONE">
+            <Original>Send drone for recon</Original>
+            <English>Send drone for recon</English>
+            <French>Envoyer un drone de reconnaissance</French>
+        </Key>
+        <Key ID="STR_GUI_BASE_NAME">
+            <Original>Support name</Original>
+            <English>Support name</English>
+            <French>Nom du support</French>
+        </Key>
+        <Key ID="STR_GUI_BASE_TYPE">
+            <Original>Support type</Original>
+            <English>Support type</English>
+            <French>Type du support</French>
+        </Key>
+        <Key ID="STR_GUI_BASE_CREDIT">
+            <Original>Credit</Original>
+            <English>Credit</English>
+            <French>Crédit</French>
+        </Key>
+        <Key ID="STR_GUI_BASE_ICON">
+            <Original>Icon</Original>
+            <English>Icon</English>
+            <French>Icône</French>
+        </Key>
+        <Key ID="STR_GUI_BASE_TITLE">
+            <Original>Support shop</Original>
+            <English>Support shop</English>
+            <French>Magasin de support</French>
+        </Key>
+        <Key ID="STR_GUI_BASE_BUY">
+            <Original>Buy</Original>
+            <English>Buy</English>
+            <French>Acheter</French>
+        </Key>
     </Container>
 </Project>
-

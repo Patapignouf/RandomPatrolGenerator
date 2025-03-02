@@ -402,6 +402,10 @@ backPackList_2035_CSAT = [
 	"tfar_mr3000"
 ];
 
+droneBackPack_2035_CSAT = [
+	"O_Crocus_AP_Bag",
+	"O_Crocus_AT_Bag"
+];
 
 //Uniform, vest, headgear, avalaible for all unit
 uniformList_2035_CSAT = [

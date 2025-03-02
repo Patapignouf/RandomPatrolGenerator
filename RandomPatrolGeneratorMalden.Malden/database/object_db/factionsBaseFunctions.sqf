@@ -18,6 +18,7 @@ adjustRole = {
 			case "Rifleman": {_cfgRole = "rifleman"};
 			case "Sapper": {_cfgRole = "engineer"};		
 			case "Crewman": {_cfgRole = "pilot"}; //Assistant must go with basic rifleman
+			case "RadioOperator": {_cfgRole = "radioman"};
 			case "SpecialOperative": {_cfgRole = "rifleman"};
 		};
 
@@ -47,7 +48,7 @@ adjustRole = {
 		{
 			_cfgRole = "diver";
 		};
-		if (["_UGV_", _cfgName] call BIS_fnc_inString || ["_UAV_", _cfgName] call BIS_fnc_inString) then 
+		if (["_UGV_", _cfgName] call BIS_fnc_inString || ["_UAV", _cfgName] call BIS_fnc_inString) then 
 		{
 			_cfgRole = "UAV operator";
 		};
@@ -333,7 +334,28 @@ getListOfBagsFromStuff =
 	_resultList;
 };
 
+addBackPackDroneToFaction = {
+	params ["_side", "_faction"];
+	_currentFactionName = format ["droneBackPack%1", _faction];
+	_defaultDrone = [];
 
+	switch (_side) do {
+		case blufor:
+		{
+			_defaultDrone append ["B_Crocus_AP_Bag", "B_Crocus_AT_Bag"];
+		};
+		case independent:
+		{
+			_defaultDrone append ["I_Crocus_AP_Bag", "I_Crocus_AT_Bag"];
+		};
+		case opfor:
+		{
+			_defaultDrone append ["I_Crocus_AP_Bag", "I_Crocus_AT_Bag"];
+		};
+	};
+
+	missionNamespace setVariable [_currentFactionName, _defaultDrone]; 
+};
 
 addRadioToFaction = {
 	params ["_side", "_faction"];

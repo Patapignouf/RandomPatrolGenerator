@@ -227,7 +227,6 @@ publicvariable "TPFlag1";
 	_botHQ disableAI "ALL";
 	_botHQ enableAI "ANIM";
 	_botHQ allowDamage false;
-	[_botHQ, "BRIEFING", "NONE"] remoteExecCall ["BIS_fnc_ambientAnim"];
 	[["STR_RPG_HC_NAME", (getPos _botHQ) vectorAdd [0,0,2.5],"\a3\UI_F_Orange\Data\CfgMarkers\b_Ordnance_ca.paa" , [0,0,1,1]], 'GUI\3DNames\3DNames.sqf'] remoteExec ['BIS_fnc_execVM', blufor, true];
 
 	//Add teammember units
@@ -258,6 +257,25 @@ publicvariable "TPFlag1";
 			}
 		] remoteExec ["spawn", blufor, true]; 
 
+		//Add delete tent action
+		[[_botHQ], 
+		{
+			params ["_botHQ"]; 
+			_botHQ addAction [format ["<img size='2' image='\a3\ui_f_oldman\data\IGUI\Cfg\holdactions\holdAction_market_ca.paa'/><t size='1'>%1</t>", localize "STR_ACTIONS_DELETE_TENT"],{
+				//Define parameters
+				params ["_object","_caller","_ID","_avalaibleVehicle"];
+
+				//Set respawn pos to 0,0,0 to trigger tent auto clean
+				_group = str (group _caller);
+				_variable= format ['bluforPositionAdvancedRespawn%1', _group];
+				missionNameSpace setVariable [_variable, [0,0,0], true];
+
+				_variableRespawn= format ['bluforAdvancedRespawn%1', _group];
+				missionNameSpace setVariable [_variableRespawn, true, true];
+			},[],3,true,false,"","(_target distance _this <7) && (_this getVariable 'role' == 'leader')"];
+			}
+		] remoteExec ["spawn", blufor, true]; 
+
 
 		if ((missionNameSpace getVariable "officialPataCompanyServer") == 1) then 
 		{
@@ -278,6 +296,12 @@ publicvariable "TPFlag1";
 	HQCommander = _botHQ;
 	publicVariable "HQCommander";
 
+	//Wait before trigger animation to be sure that setPos has been executed
+	sleep 20;
+
+	//Setup animation
+	[_botHQ, "BRIEFING", "NONE"] remoteExecCall ["BIS_fnc_ambientAnim"];
+
 };
 
 
@@ -289,18 +313,15 @@ if (!isNil "USS_FREEDOM_CARRIER") then
 	waitUntil{!isNil "VA2"};
 	waitUntil{!isNil "TPFlag1"};
 	waitUntil{!isNil "deployableFOBItem"};
+	waitUntil{!isNil "HQCommander"};
 
 	_warEra = missionNamespace getVariable "warEra";
 
 	VA2 setPosASL [initBlueforLocation#0-105, initBlueforLocation#1-18, initBlueforLocation#2];
 	TPFlag1 setPosASL [initBlueforLocation#0-115, initBlueforLocation#1-18, initBlueforLocation#2-0.5];
 	deployableFOBItem setPosASL [initBlueforLocation#0-50, initBlueforLocation#1-15, initBlueforLocation#2];
-	[] spawn 
-	{
-		waitUntil{!isNil "HQCommander"};
-		HQCommander setPosASL [initBlueforLocation#0-117, initBlueforLocation#1-18, initBlueforLocation#2-0.5];
-	};
-
+	HQCommander setPosASL [initBlueforLocation#0-117, initBlueforLocation#1-18, initBlueforLocation#2-0.5];
+	
 	//Move basic ammo box
 	waitUntil{!isNil "BluforAmmoBox"};
 	_baseAmmoBoxSpawn = [initBlueforLocation#0-113, initBlueforLocation#1-25, initBlueforLocation#2];

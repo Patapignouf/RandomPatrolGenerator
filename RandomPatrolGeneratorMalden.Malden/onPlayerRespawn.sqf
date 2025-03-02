@@ -24,7 +24,15 @@ if (player getVariable "sideBeforeDeath" == "independent") then
 };
 
 //reset respawn timer
-setPlayerRespawnTime (missionNamespace getVariable "missionRespawnParam");
+if (missionNameSpace getVariable ["enableSelfRespawnTimer", 0] == 0) then 
+{
+	//No self respawn timer (directed by the server)
+	setPlayerRespawnTime 99999999;
+} else 
+{
+	//set personnal respawn timer
+	setPlayerRespawnTime (missionNamespace getVariable "missionRespawnParam");
+};
 
 //Setup respawn GUI
 cutText ["", "BLACK FADED", 4];
@@ -208,6 +216,10 @@ if (missionNameSpace getVariable ["enableAdvancedRespawn", 1] == 1) then
 				{
 					//delete the tent and allow leader to place another one
 					deleteVehicle _object;
+
+					//Allow players to spawn on tent 10 until 10 secs after disassembly
+					sleep 10;
+
 					missionNameSpace setVariable [format ['bluforAdvancedRespawn%1', str (group _caller)], true, true];
 					missionNameSpace setVariable [format ['bluforPositionAdvancedRespawn%1', str (group _caller)], [0,0,0], true];
 				} else 
@@ -224,6 +236,16 @@ if (missionNameSpace getVariable ["enableAdvancedRespawn", 1] == 1) then
 			false,
 			false
 		] remoteExec ["BIS_fnc_holdActionAdd", 0, true];
+
+		//Delete tent if respawn coordinates changed
+		[_createTent, str (group _caller)] spawn 
+		{
+			params ["_createTent", "_groupCaller"];
+
+			_variableToCheck = format ['bluforPositionAdvancedRespawn%1', _groupCaller];
+			waitUntil {[missionNameSpace getVariable _variableToCheck , [0,0,0]] call BIS_fnc_areEqual};
+			deleteVehicle _createTent;
+		};
 
 	},_x,3,true,false,"","(_this getVariable 'role' == 'leader') && (missionNameSpace getVariable [ format ['bluforAdvancedRespawn%1', str (group _this)], true]) && (vehicle _this == _this) && isTouchingGround _this"];
 };

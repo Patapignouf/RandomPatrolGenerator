@@ -281,6 +281,10 @@ backPackList_2035_NATO_Recon = [
 	"TFAR_rt1523g_sage"
 	];
 
+droneBackPack_2035_NATO_Recon = [
+	"B_Crocus_AP_Bag",
+	"B_Crocus_AT_Bag"
+];
 
 //Uniform, vest, headgear, avalaible for all unit
 uniformList_2035_NATO_Recon = [

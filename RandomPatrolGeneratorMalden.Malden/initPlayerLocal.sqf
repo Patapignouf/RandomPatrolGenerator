@@ -147,6 +147,11 @@ if (player getVariable ["isSetupMission", false]) then
 	[[], 'engine\showWaitingSetupScreen.sqf'] remoteExec ['BIS_fnc_execVM', player];
 };
 
+//Wait auto faction builder
+waitUntil {!isNil "missionFactionSetup"};
+waitUntil {!isNil "missionInitFactionSetup"};
+
+
 //Load every mission settings dependencies
 #include "database\arsenalLibrary.sqf"
 #include "objectGenerator\vehicleManagement.sqf"
@@ -443,6 +448,7 @@ if (side player == blufor) then
 					};
 
 					//Tp player on carrier
+					player setVelocity [0, 0, 0];
 					player setPosASL [_spawnPos#0-105 + random 15,_spawnPos#1-18+random 15,_spawnPos#2+0.5];
 					titleCut ["WELCOME ON BOARD", "BLACK IN", 5];
 				};
@@ -685,6 +691,7 @@ if (didJIP) then
 	if (count (_deadPlayerList select { _x == (name player) }) == 0) then 
 	{
 		//Disable specific respawn menu
+		player setVelocity [0, 0, 0];
 		player setPos [worldSize,worldSize,0];
 		player allowdamage false;
 		[[], 'GUI\respawnGUI\initPlayerRespawnMenu.sqf'] remoteExec ['BIS_fnc_execVM', player];
@@ -695,6 +702,7 @@ if (didJIP) then
 	};
 } else {
 	//Let's get it started !
+	player setVelocity [0, 0, 0]; //reset speed
 	player allowdamage true;
 	player enableSimulationGlobal true;
 };
@@ -766,6 +774,16 @@ if (missionNameSpace getVariable ["enableAdvancedRespawn", 1] == 1) then
 				};
 		},_x,3,true,false,"","(_target distance _this <5) && (_target getVariable [str (group _this), false])"];
 
+		//Delete tent if respawn coordinates changed
+		[_createTent, str (group _caller)] spawn 
+		{
+			params ["_createTent", "_groupCaller"];
+
+			_variableToCheck = format ['bluforPositionAdvancedRespawn%1', _groupCaller];
+			waitUntil {[missionNameSpace getVariable _variableToCheck , [0,0,0]] call BIS_fnc_areEqual};
+			deleteVehicle _createTent;
+		};
+
 		//Create action to authorize tent disassembly
 		[
 			_createTent, 
@@ -789,6 +807,10 @@ if (missionNameSpace getVariable ["enableAdvancedRespawn", 1] == 1) then
 				{
 					//delete the tent and allow leader to place another one
 					deleteVehicle _object;
+
+					//Allow players to spawn on tent 10 until 10 secs after disassembly
+					sleep 10;
+
 					missionNameSpace setVariable [format ['bluforAdvancedRespawn%1', str (group _caller)], true, true];
 					missionNameSpace setVariable [format ['bluforPositionAdvancedRespawn%1', str (group _caller)], [0,0,0], true];
 				} else 

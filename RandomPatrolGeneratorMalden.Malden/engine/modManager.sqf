@@ -10,7 +10,8 @@ modToCheck = [
 	["RT", "MOD_RT", "Realistic Driving Terrains","CfgPatches"],
 	["DSF_core", "MOD_DSF", "[DSF] Drongos Simple Factions","CfgPatches"],
 	["fow_main", "MOD_FOW", "[FOW] Faces Of War","CfgPatches"],
-	["JMSLLTE_empire_mod", "MOD_JMLLTE", "[JM] JM's Long Live the Empire", "CfgPatches"]
+	["JMSLLTE_empire_mod", "MOD_JMLLTE", "[JM] JM's Long Live the Empire", "CfgPatches"],
+	["ArmaFPV_Data", "MOD_FPV", "Crocus FPV Drones"]
 ];
 
 doCheckRunningModsOnServer = {

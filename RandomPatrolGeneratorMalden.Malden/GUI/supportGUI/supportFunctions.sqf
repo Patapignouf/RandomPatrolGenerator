@@ -183,6 +183,63 @@ params ["_caller", "_supportType"];
 			_mainDisplay = (findDisplay 60000);
 			_mainDisplay closeDisplay 1;
 		};
+		case "MassiveHALOJump":
+		{
+			[_caller] spawn {
+				params ["_caller"];
+				//Click on map to Halo spawn
+				selectedHaloLoc = [0,0,0];
+				openMap true;
+				uiSleep 1;
+				["<t color='#ffffff' size='.8'>Click on map to spawn Halo jump<br />Your backpack will be saved</t>",0,0,4,1,0,789] spawn BIS_fnc_dynamicText;
+				onMapSingleClick "selectedHaloLoc = _pos; onMapSingleClick ''; openMap false; true;";
+				waitUntil{!(visibleMap)};  
+				if (!([selectedHaloLoc, [0,0,0]] call BIS_fnc_areEqual)) then 
+				{
+					_playerNearby = allPlayers select {(_x distance _caller)<30};
+
+					{
+						_currentPlayer = _x;
+						_randomPos = ([[[selectedHaloLoc, 15]], []] call BIS_fnc_randomPos);
+						[[_randomPos], {
+							params ["_randomPos"];
+							player setpos (_randomPos vectorAdd [0,0,1000]);
+
+							private _plyr = player;
+							private "_whs";
+							_plyr setVariable ["bpk",unitBackpack _plyr];
+							_bpktype = backpack _plyr;
+							if (_bpktype != "") then {
+								_whs = createVehicle ["WeaponHolderSimulated_Scripted",[0,0,0],[],0,"can_collide"];
+								_plyr action ["DropBag", _whs, _bpktype];
+								_plyr addBackpackGlobal "B_parachute";
+
+								waitUntil {0.5; !isNull objectParent _plyr or (position _plyr)#2<0.6}; 
+								waitUntil {0.5; isNull objectParent _plyr or (position _plyr)#2<0.6};
+
+								uiSleep 0.5;
+								if (!isNull _whs) then {
+									_plyr action ["AddBag",objectParent (_plyr getVariable "bpk"), _bpktype];
+									_plyr setVariable ["bpk",nil];
+									uiSleep 3;
+									deleteVehicle _whs;
+								};
+							} else 
+							{
+								_plyr addBackpackGlobal "B_parachute";
+							};
+
+							}] remoteExec ["spawn", _currentPlayer]; 
+						
+						[format ["In the %1 airspace", worldName], format ["Year %1", date select 0], mapGridPosition _currentPlayer] spawn BIS_fnc_infoText;
+					} foreach _playerNearby;
+				};
+			};
+
+			//Close support menu
+			_mainDisplay = (findDisplay 60000);
+			_mainDisplay closeDisplay 1;
+		};
 		case "TacInsert":
 		{
 			[_caller] spawn {
@@ -330,10 +387,10 @@ addSupportForIntel = {
 	params ["_ctrl"];
 	//Add support for INTEL
 	_price = 25;
-	_supportName = "Recon for intel";
+	_supportName = localize "STR_GUI_SUPPORT_RECON";
 	_supportNameCode = "ReconIntel";
 	_supportIcon = "\a3\ui_f\data\igui\cfg\simpletasks\types\Radio_ca.paa";
-	_supportType = "Recon";
+	_supportType = localize "STR_GUI_SUPPORT_CAT_RECON";
 
 	[_ctrl, _supportName, _supportNameCode, _supportIcon, _price, _supportType] call addSupportOption;
 };
@@ -342,10 +399,10 @@ addSupportForReinforcement = {
 	params ["_ctrl"];
 	//Add support for respawn
 	_price = 0;
-	_supportName = format ["Ask for reinforcement now (avalaible every %1 seconds)", missionNamespace getVariable "missionRespawnParam"];
+	_supportName = format ["%2 (avalaible every %1 seconds)", missionNamespace getVariable "missionRespawnParam", localize "STR_GUI_SUPPORT_REINFORCEMENT_NOW"];
 	_supportNameCode = "Reinforcement";
 	_supportIcon = "\a3\ui_f\data\igui\cfg\simpletasks\types\Radio_ca.paa";
-	_supportType = "Reinforcement";
+	_supportType = localize "STR_GUI_SUPPORT_CAT_REINFORCEMENT";
 
 	[_ctrl, _supportName, _supportNameCode, _supportIcon, _price, _supportType] call addSupportOption;
 };
@@ -354,10 +411,10 @@ addCallForReinforcement = {
 	params ["_ctrl"];
 	//Add support for respawn with radio
 	_price = 600;
-	_supportName = "Call reinforcement (radio)";
+	_supportName = localize "STR_GUI_SUPPORT_REINFORCEMENT_RADIO";
 	_supportNameCode = "CallReinforcement";
 	_supportIcon = "\a3\ui_f\data\igui\cfg\simpletasks\types\Radio_ca.paa";
-	_supportType = "Reinforcement";
+	_supportType = localize "STR_GUI_SUPPORT_CAT_REINFORCEMENT";
 
 	[_ctrl, _supportName, _supportNameCode, _supportIcon, _price, _supportType] call addSupportOption;
 };
@@ -366,10 +423,10 @@ addSupportForForceReinforcement = {
 	params ["_ctrl"];
 	//Add support for instant respawn
 	_price = 500;
-	_supportName = "Force reinforcement now";
+	_supportName = localize "STR_GUI_SUPPORT_FORCE_REINFORCEMENT_NOW";
 	_supportNameCode = "ForceReinforcement";
 	_supportIcon = "\a3\ui_f\data\igui\cfg\simpletasks\types\Radio_ca.paa";
-	_supportType = "Reinforcement";
+	_supportType = localize "STR_GUI_SUPPORT_CAT_REINFORCEMENT";
 
 	[_ctrl, _supportName, _supportNameCode, _supportIcon, _price, _supportType] call addSupportOption;
 };
@@ -378,10 +435,10 @@ addSupportForArtillery = {
 	params ["_ctrl"];
 	//Add support for friendly artillery
 	_price = 200;
-	_supportName = "Artillery (radio)";
+	_supportName = localize "STR_GUI_SUPPORT_ARTILLERY";
 	_supportNameCode = "Artillery";
 	_supportIcon = "\a3\Ui_f\data\GUI\Cfg\CommunicationMenu\artillery_ca.paa";
-	_supportType = "Artillery";
+	_supportType = localize "STR_GUI_SUPPORT_CAT_ARTILLERY";
 
 	[_ctrl, _supportName, _supportNameCode, _supportIcon, _price, _supportType] call addSupportOption;
 };
@@ -390,8 +447,21 @@ addSupportForHALO = {
 	params ["_ctrl"];
 	//Add support for Halo jump
 	_price = 0;
-	_supportName = "Halo Jump";
+	_supportName = localize "STR_GUI_SUPPORT_HALO";
 	_supportNameCode = "HALOJump";
+	_supportIcon = "\a3\Ui_f\data\GUI\Cfg\CommunicationMenu\supplydrop_ca.paa";
+	_supportType = localize "STR_GUI_SUPPORT_CAT_MOVE";
+
+	[_ctrl, _supportName, _supportNameCode, _supportIcon, _price, _supportType] call addSupportOption;
+};
+
+
+addSupportForMassiveHALO = {
+	params ["_ctrl"];
+	//Add support for Halo jump
+	_price = 300;
+	_supportName = localize "STR_GUI_SUPPORT_MASSIVE_HALO";
+	_supportNameCode = "MassiveHALOJump";
 	_supportIcon = "\a3\Ui_f\data\GUI\Cfg\CommunicationMenu\supplydrop_ca.paa";
 	_supportType = "Movement";
 
@@ -402,10 +472,10 @@ addSupportForTent = {
 	params ["_ctrl"];
 	//Add support for reinforcement tent
 	_price = 0;
-	_supportName = "Move to your squad tent";
+	_supportName = localize "STR_GUI_SUPPORT_TENT";
 	_supportNameCode = "Tent";
 	_supportIcon = "\a3\Ui_f\data\GUI\Cfg\CommunicationMenu\transport_ca.paa";
-	_supportType = "Movement";
+	_supportType = localize "STR_GUI_SUPPORT_CAT_MOVE";
 
 	[_ctrl, _supportName, _supportNameCode, _supportIcon, _price, _supportType] call addSupportOption;
 };
@@ -414,10 +484,10 @@ addSupportForTacInsert = {
 	params ["_ctrl"];
 	//Add support for tactical insertion (group teleportation)
 	_price = 500;
-	_supportName = "Tactical Insertion";
+	_supportName = localize "STR_GUI_SUPPORT_TAC_INS";
 	_supportNameCode = "TacInsert";
 	_supportIcon = "\a3\Ui_f\data\GUI\Cfg\CommunicationMenu\transport_ca.paa";
-	_supportType = "Movement";
+	_supportType = localize "STR_GUI_SUPPORT_CAT_MOVE";
 
 	[_ctrl, _supportName, _supportNameCode, _supportIcon, _price, _supportType] call addSupportOption;
 };
@@ -426,10 +496,10 @@ addAttackSquad = {
 	params ["_ctrl"];
 	//Add support for friendly squad
 	_price = 500;
-	_supportName = "Recruit a squad to attack position";
+	_supportName = localize "STR_GUI_SUPPORT_ATTACK_SQUAD";
 	_supportNameCode = "attackSquad";
 	_supportIcon = "\a3\Ui_f\data\GUI\Cfg\CommunicationMenu\attack_ca.paa";
-	_supportType = "Attack";
+	_supportType = localize "STR_GUI_SUPPORT_CAT_ATTACK";
 
 	[_ctrl, _supportName, _supportNameCode, _supportIcon, _price, _supportType] call addSupportOption;
 };
@@ -438,10 +508,10 @@ addSupportForExtract = {
 	params ["_ctrl"];
 	//Add support for extract chopper
 	_price = 200;
-	_supportName = "Extract helicopter (radio)";
+	_supportName = localize "STR_GUI_SUPPORT_EXTRACT_CHOPPER";
 	_supportNameCode = "Extract";
 	_supportIcon = "\a3\Ui_f\data\GUI\Cfg\CommunicationMenu\transport_ca.paa";
-	_supportType = "Movement";
+	_supportType = localize "STR_GUI_SUPPORT_CAT_MOVE";
 
 	[_ctrl, _supportName, _supportNameCode, _supportIcon, _price, _supportType] call addSupportOption;
 };
@@ -450,10 +520,10 @@ addSupportForTransport = {
 	params ["_ctrl"];
 	//Add support for Transport
 	_price = 300;
-	_supportName = "Transport helicopter (radio)";
+	_supportName = localize "STR_GUI_SUPPORT_TRANSPORT_CHOPPER";
 	_supportNameCode = "Transport";
 	_supportIcon = "\a3\Ui_f\data\GUI\Cfg\CommunicationMenu\transport_ca.paa";
-	_supportType = "Movement";
+	_supportType = localize "STR_GUI_SUPPORT_CAT_MOVE";
 
 	[_ctrl, _supportName, _supportNameCode, _supportIcon, _price, _supportType] call addSupportOption;
 };
@@ -462,10 +532,10 @@ addSupportForAirDrop = {
 	params ["_ctrl"];
 	//Add support for Air drop
 	_price = 200;
-	_supportName = "Logistic supply drop (radio)";
+	_supportName = localize "STR_GUI_SUPPORT_SUPPLY_DROP";
 	_supportNameCode = "AirDrop";
 	_supportIcon = "\a3\Ui_f\data\GUI\Cfg\CommunicationMenu\supplydrop_ca.paa";
-	_supportType = "Logistic";
+	_supportType = localize "STR_GUI_SUPPORT_CAT_LOGISTIC";
 
 	[_ctrl, _supportName, _supportNameCode, _supportIcon, _price, _supportType] call addSupportOption;
 };
@@ -475,10 +545,10 @@ addSupportForDroneRecon = {
 	params ["_ctrl"];
 	//Add support for Air drop
 	_price = 100;
-	_supportName = "Send drone for recon";
+	_supportName = localize "STR_GUI_SUPPORT_RECON_DRONE";
 	_supportNameCode = "DroneRecon";
 	_supportIcon = "\a3\ui_f\data\igui\cfg\simpletasks\types\Radio_ca.paa";
-	_supportType = "Recon";
+	_supportType = localize "STR_GUI_SUPPORT_CAT_RECON";
 
 	[_ctrl, _supportName, _supportNameCode, _supportIcon, _price, _supportType] call addSupportOption;
 };

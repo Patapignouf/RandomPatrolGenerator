@@ -106,6 +106,16 @@ doSurrender = {
 		// Get the parameters
 		_unit = _this select 0; // The unit to surrender
 
+		//Make unit speak 
+		_dubbing = [
+			"a3\dubbing_f_epa\a_m02\120_bombs\a_m02_120_bombs_ker_0.ogg",
+			"a3\dubbing_f_epb\b_out2\65_stop_attack\b_out2_65_stop_attack_lar_0.ogg",
+			"a3\dubbing_f_epb\b_out2\65_stop_attack\b_out2_65_stop_attack_lar_2.ogg"
+
+
+			];
+		playSound3D [selectRandom _dubbing, _unit, true, getPosASL _unit, 5, 1, 20, 0, false];
+
 		//Call every players under 80 meters
 		[[_unit], {params ["_unit"]; [name _unit, "STR_RPG_HC_SURRENDER_SPEAK"] call doDialog}] remoteExec ["spawn", allPlayers select {_x distance _unit < 80}]; 
 
@@ -195,6 +205,28 @@ doSurrender = {
 			params ["_unit"];
 			sleep 900;
 			deleteVehicle _unit;
+		};
+	};
+};
+
+drawIAPositionOnMap = {
+	params ["_unit"];
+
+	//Draw marker for this specific unit
+	_markerName = format ["opforMarker%1", name _unit];
+	if !(_markerName in allMapMarkers) then 
+	{
+		_marker = createMarker [_markerName, getPos _unit]; // Not visible yet.
+		_marker setMarkerType "hd_dot"; // Visible.
+		_marker setMarkerSize [0.5, 0.5];
+		_marker setMarkerColor "ColorRed";
+
+		//Clean marker after unit dies
+		[_unit, _markerName] spawn 
+		{
+			params ["_unit", "_markerName"];
+			waitUntil {!alive _unit};
+			deleteMarker _markerName;
 		};
 	};
 };
