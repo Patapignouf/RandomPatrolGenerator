@@ -15,7 +15,13 @@ if (missionNameSpace getVariable ["enableSelfRespawnTimer", 0] == 0) then
 			{
 				_currentRespawnTimer = missionNamespace getVariable "missionRespawnParam";
 				_currentCounter = _currentRespawnTimer - (round (serverTime) % _currentRespawnTimer);
-				hintSilent format["Respawn : %1", [(_currentCounter/60)+.01,"HH:MM"] call BIS_fnc_timetostring]
+				hintSilent format ["Respawn : %1", [(_currentCounter/60)+.01,"HH:MM"] call BIS_fnc_timetostring];
+
+				//Respawn players if timer is going near 0 secs remaining
+				if (_currentCounter == 0 || _currentCounter < 2) then 
+				{
+					setPlayerRespawnTime 0;
+				};
 			};
 		}
 	];
