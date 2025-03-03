@@ -90,6 +90,26 @@ refreshCustomLoadoutDisplay = {
 
 };
 
+//Prevent restriction system from killing default loadout
+whiteListCurrentLoadout = 
+{
+	//Prevent player from loosing his current configuration
+	[] spawn {
+		uiSleep 0.5;
+		_newAvalaibleItems = player getVariable ["avalaibleItemsInArsenal", []];
+		_potentialStuff = ((getUnitLoadout player) call getAllStringInArray);
+		{
+			if (typeName _x != "STRING") then 
+			{
+				_potentialStuff = _potentialStuff - [_x];
+			};
+		} foreach _potentialStuff;
+
+		_newAvalaibleItems = _newAvalaibleItems + _potentialStuff;
+		player setVariable ["avalaibleItemsInArsenal", _newAvalaibleItems];
+	};
+};
+
 
 //Create display too choose reporter player
 _display = (findDisplay 46) createDisplay "RscDisplayEmpty";
@@ -167,6 +187,9 @@ _dropdown ctrlAddEventHandler[ "LBSelChanged",
 
 			//Refresh load button
 			[ctrlParent _ctrl] call refreshCustomLoadoutDisplay;
+
+			//Whitelist current loadout
+			[] call whiteListCurrentLoadout;
 		};
 
 		//Hint switch role
@@ -295,21 +318,8 @@ _ButtonLoad ctrlAddEventHandler ["ButtonClick",{
 			
 
 			//Prevent player from loosing his current configuration
-			[] spawn {
-				uiSleep 0.5;
-				_newAvalaibleItems = player getVariable ["avalaibleItemsInArsenal", []];
-				_potentialStuff = ((getUnitLoadout player) call getAllStringInArray);
-				{
-					if (typeName _x != "STRING") then 
-					{
-						_potentialStuff = _potentialStuff - [_x];
-					};
-				} foreach _potentialStuff;
-
-				_newAvalaibleItems = _newAvalaibleItems + _potentialStuff;
-				player setVariable ["avalaibleItemsInArsenal", _newAvalaibleItems];
-			};
-
+			[] call whiteListCurrentLoadout;
+			
 			//Save loadout on respawn
 			player setVariable ["spawnLoadout", getUnitLoadout player];
 
