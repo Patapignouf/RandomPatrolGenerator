@@ -1006,25 +1006,41 @@ removeTFARID = {
 adjustLoadout = {
 	params ["_currentPlayer"];
 
-	if (_currentPlayer getUnitTrait "Medic" == false) then 
+	//Adjust ACE medic items 
+	if (isClass (configFile >> "CfgPatches" >> "ace_medical")) then 
 	{
-		for "_i" from 0 to 7 do { _currentPlayer addItem "ACE_elasticBandage" };	
-		for "_i" from 0 to 1 do { _currentPlayer addItem "ACE_tourniquet" };
-		for "_i" from 0 to 1 do { _currentPlayer addItem "ACE_splint" };
-	}
-	else 
-	{
-		_currentPlayer addItem "ACE_surgicalKit";
-		for "_i" from 0 to 7 do { _currentPlayer addItem "ACE_epinephrine" };
-		for "_i" from 0 to 7 do { _currentPlayer addItem "ACE_splint" };
-		for "_i" from 0 to 29 do { _currentPlayer addItem "ACE_elasticBandage" };
-		for "_i" from 0 to 29 do { _currentPlayer addItem "ACE_quikclot" };
-		for "_i" from 0 to 11 do { _currentPlayer addItem "ACE_suture" };
-		//for "_i" from 0 to 9 do { _currentPlayer addItem "ACE_morphine" }; //Basic ACE conversion will give enough morphine
-		for "_i" from 0 to 5 do { _currentPlayer addItem "ACE_bloodIV_500" };
-		for "_i" from 0 to 2 do { _currentPlayer addItem "ACE_bloodIV" };
-		//for "_i" from 0 to 5 do { _currentPlayer addItem "ACE_tourniquet" };	//Basic ACE conversion will give enough tourniquet
+		if (_currentPlayer getUnitTrait "Medic" == false) then 
+		{
+			for "_i" from 0 to 7 do { _currentPlayer addItem "ACE_elasticBandage" };	
+			for "_i" from 0 to 1 do { _currentPlayer addItem "ACE_tourniquet" };
+			for "_i" from 0 to 1 do { _currentPlayer addItem "ACE_splint" };
+		}
+		else 
+		{
+			_currentPlayer removeItems "Medikit";
+			_currentPlayer removeItems "ACE_tourniquet";
+			_currentPlayer removeItems "ACE_elasticBandage";
+			_currentPlayer removeItems "ACE_fieldDressing";
+			_currentPlayer removeItems "ACE_packingBandage";
+			_currentPlayer removeItems "ACE_tourniquet";
+			_currentPlayer removeItems "ACE_morphine";
+			_currentPlayer removeItems "ACE_quikclot";
+			_currentPlayer removeItems "ACE_epinephrine";
+
+
+			_currentPlayer addItem "ACE_surgicalKit";
+			for "_i" from 0 to 11 do { _currentPlayer addItem "ACE_epinephrine" };
+			for "_i" from 0 to 11 do { _currentPlayer addItem "ACE_splint" };
+			for "_i" from 0 to 59 do { _currentPlayer addItem "ACE_elasticBandage" };
+			// for "_i" from 0 to 29 do { _currentPlayer addItem "ACE_quikclot" };
+			for "_i" from 0 to 59 do { _currentPlayer addItem "ACE_suture" };
+			for "_i" from 0 to 9 do { _currentPlayer addItem "ACE_morphine" }; //Basic ACE conversion will give enough morphine
+			for "_i" from 0 to 11 do { _currentPlayer addItem "ACE_bloodIV_500" };
+			for "_i" from 0 to 7 do { _currentPlayer addItem "ACE_bloodIV" };
+			for "_i" from 0 to 11 do { _currentPlayer addItem "ACE_tourniquet" };	//Basic ACE conversion will give enough tourniquet
+		};
 	};
+
 	for "_i" from 0 to 1 do { _currentPlayer addItem "ACE_CableTie" };
 	_currentPlayer addItem "ACE_MapTools";	
 	_currentPlayer addItem "ACE_morphine";	
