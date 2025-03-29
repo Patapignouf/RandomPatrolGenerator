@@ -357,6 +357,29 @@ addBackPackDroneToFaction = {
 	missionNamespace setVariable [_currentFactionName, _defaultDrone]; 
 };
 
+addModernItemsToFaction = {
+	params ["_side", "_faction"];
+	_currentFactionName = format ["modernItems%1", _faction];
+	_defaultModernItems = [];
+
+	switch (_side) do {
+		case blufor:
+		{
+			_defaultModernItems append ["B_UavTerminal"];
+		};
+		case independent:
+		{
+			_defaultModernItems append ["I_E_UavTerminal"];
+		};
+		case opfor:
+		{
+			_defaultModernItems append ["O_UavTerminal"];
+		};
+	};
+
+	missionNamespace setVariable [_currentFactionName, _defaultModernItems]; 
+};
+
 addRadioToFaction = {
 	params ["_side", "_faction"];
 	_currentFactionName = format ["factionDefaultRadios%1", _faction];

@@ -188,6 +188,11 @@ getItembyWarEra = {
 
 				_itemList append _defaultRadios;
 			} ;
+
+			//Add modern items
+			_defaultModernItems = ((modernItems_db select {_x#1  == _currentFaction})#0)#0;
+			_itemList append _defaultModernItems;
+
 		};
 		//Actual Warfare
 		case 3:
@@ -203,6 +208,10 @@ getItembyWarEra = {
 
 				_itemList append _defaultRadios;
 			} ;
+
+			//Add modern items
+			_defaultModernItems = ((modernItems_db select {_x#1  == _currentFaction})#0)#0;
+			_itemList append _defaultModernItems;
 		};
 		//Future Warfare
 		case 4:
@@ -218,6 +227,10 @@ getItembyWarEra = {
 
 				_itemList append _defaultRadios;
 			} ;
+
+			//Add modern items
+			_defaultModernItems = ((modernItems_db select {_x#1  == _currentFaction})#0)#0;
+			_itemList append _defaultModernItems;
 		};
 		default
 		{
