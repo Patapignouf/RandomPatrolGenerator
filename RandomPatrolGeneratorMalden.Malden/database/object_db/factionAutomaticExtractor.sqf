@@ -13,30 +13,44 @@ _factionsWithUnitsFiltered = [];
 _potentialFactions = [];
 _potentialCivFactions = [];
 
+diag_log format ["Automatic faction parsing begin"];
+
+
+_smartFilter = "EnableSmartFilter" call BIS_fnc_getParamValue == 1;
+
 {
 	if (isNumber (configFile >> "CfgVehicles" >> (configName _x) >> "scope")) then {
 		if (((configFile >> "CfgVehicles" >> (configName _x) >> "scope") call BIS_fnc_GetCfgData) == 2) then {
 			_factionClass = ((configFile >> "CfgVehicles" >> (configName _x) >> "faction") call BIS_fnc_GetCfgData);
-			//_factionsWithUnits pushBackUnique _factionClass;		
-			if ((configName _x) isKindOf "Man") then {
-				_index = ([_factionsWithUnitsFiltered, _factionClass] call BIS_fnc_findInPairs);
-				if (_index == -1) then {
-					_factionsWithUnitsFiltered pushBack [_factionClass, 1, ((configFile >> "CfgVehicles" >> configName _x >> "side") call BIS_fnc_GetCfgData)];
-				} else {
-					_factionsWithUnitsFiltered set [_index, [((_factionsWithUnitsFiltered select _index) select 0), ((_factionsWithUnitsFiltered select _index) select 1)+1,((configFile >> "CfgVehicles" >> configName _x >> "side") call BIS_fnc_GetCfgData)]];
-				}; 
-			};		
+			//Two ways of faction filtering 
+			//Note that the smart filter consume an higher amount of resource 
+			if (_smartFilter) then 
+			{
+				if ((configName _x) isKindOf "Man") then {
+					_index = ([_factionsWithUnitsFiltered, _factionClass] call BIS_fnc_findInPairs);
+					if (_index == -1) then {
+						_factionsWithUnitsFiltered pushBack [_factionClass, 1, ((configFile >> "CfgVehicles" >> configName _x >> "side") call BIS_fnc_GetCfgData)];
+					} else {
+						_factionsWithUnitsFiltered set [_index, [((_factionsWithUnitsFiltered select _index) select 0), ((_factionsWithUnitsFiltered select _index) select 1)+1,((configFile >> "CfgVehicles" >> configName _x >> "side") call BIS_fnc_GetCfgData)]];
+					}; 
+				};	
+			} else 
+			{
+				_factionsWithUnitsFiltered pushBackUnique [_factionClass, 1, ((configFile >> "CfgVehicles" >> configName _x >> "side") call BIS_fnc_GetCfgData)];		
+			};
 		};
 	};
 } forEach ("(configName _x) isKindOf 'AllVehicles'" configClasses (configFile / "CfgVehicles"));
 
+
 //filter factions to select only blufor/east/independent
 {
+	// diag_log format ["faction : %1", _x ];
 	//Filter strange factions
-	if (count _x >1) then 
+	if (count _x >=1) then 
 	{
 		_thisSideNum = ((configFile >> "CfgFactionClasses" >> _x#0 >> "side") call BIS_fnc_GetCfgData);
-		//systemChat ((configFile >> "CfgFactionClasses" >>_x#0 >> "displayName") call BIS_fnc_GetCfgData);
+		diag_log format ["faction side : %1", ((configFile >> "CfgFactionClasses" >>_x#0 >> "displayName") call BIS_fnc_GetCfgData)];
 
 		//Check if sidenum is under 3
 		if (!isNil "_thisSideNum") then 
@@ -102,6 +116,8 @@ _potentialOpfor = [];
 		factionInfos pushBack [_factionTechName, _factionTechName, format ["%1 [AUTO]", ((configFile >> "CfgFactionClasses" >> _factionTechName >> "displayName") call BIS_fnc_GetCfgData)], false, false, true];
 	};
 } foreach _potentialCivFactions;
+
+diag_log format ["Automatic faction parsing end"];
 
 publicVariable "factionInfos";
 
