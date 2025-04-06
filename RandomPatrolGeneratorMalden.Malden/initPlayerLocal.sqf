@@ -713,7 +713,13 @@ if (didJIP) then
 	player call RemoveArsenalActionFromGivenObject;
 };
 
-player setVariable ["canRTB", true, true];
+//Make the player doesn't count on RTB for 90 secs 
+[] spawn 
+{
+	uiSleep 90;
+	player setVariable ["canRTB", true, true];
+};
+
 
 //Setup default TFAR radio frequency
 if (isClass (configFile >> "CfgPatches" >> "task_force_radio")) then {

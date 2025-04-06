@@ -1,6 +1,15 @@
 //Set default respawn loadout
 player setUnitLoadout (player getVariable "spawnLoadout");
 
+//Make the player doesn't count on RTB for 90 secs 
+player setVariable ["canRTB", false, true];
+[] spawn 
+{
+	uiSleep 90;
+	player setVariable ["canRTB", true, true];
+};
+
+
 //Respawn on start position by default
 //Protect player for 30 sec on spawn
 player allowDamage false;
@@ -39,13 +48,6 @@ cutText ["", "BLACK FADED", 4];
 uiSleep 3;
 [[], 'GUI\respawnGUI\initPlayerRespawnMenu.sqf'] remoteExec ['BIS_fnc_execVM', player];
 
-//Make the player doesn't count on RTB for 60 secs 
-player setVariable ["canRTB", false, true];
-[] spawn 
-{
-	uiSleep 60;
-	player setVariable ["canRTB", true, true];
-};
 
 // Fix player damaged on respawn 
 if (isClass (configFile >> "CfgPatches" >> "ace_medical")) then 
