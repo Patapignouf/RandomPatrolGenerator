@@ -30,6 +30,12 @@ normalClose = false;
 //Setup Blufor and independent Factions
 {
 	_currentComboBox = _x;
+
+	//Add random faction
+	_currentComboBox lbAdd format ["%1", "RANDOM"];
+	_currentComboBox lbSetData [(lbSize _currentComboBox)-1, format ["%1", "RANDOM"]];
+
+	//Add rest of the factions
 	{
 		if (_x#3) then 
 		{
@@ -41,7 +47,12 @@ normalClose = false;
 
 //Setup Opfor Factions
 _currentComboBox = _comboBoxOpfor;
+
+//Add random faction
+_currentComboBox lbAdd format ["%1", "RANDOM"];
+_currentComboBox lbSetData [(lbSize _currentComboBox)-1, format ["%1", "RANDOM"]];
 {
+	//add opfor factions
 	if (_x#4) then 
 	{
 		_currentComboBox lbAdd format ["%1", _x select 2];
