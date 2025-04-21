@@ -15,7 +15,6 @@
 enableInitAttack = "EnableInitAttack" call BIS_fnc_getParamValue;
 enableInitBluAttack = "EnableInitBluAttack" call BIS_fnc_getParamValue;
 
-
 //Init all environement database variable
 _handleEnvironmentInitialization = [] execVM 'initEnvironment.sqf'; 
 private _generateHarass = compile preprocessFileLineNumbers "enemyManagement\generationEngine\generateHarass.sqf";
@@ -139,9 +138,9 @@ civilian_big_group = civilian_big_group_db select {_x select 1  == civFaction} s
 civilianTruck = civilianTruck_db select {_x select 1  == civFaction} select 0 select 0;
 
 //EnemyGroupDefinition
-baseEnemyGroup = baseEnemyGroup_db select {_x select 1  == opFaction} select 0 select 0;
-baseEnemyATGroup = baseEnemyATGroup_db select {_x select 1  == opFaction} select 0 select 0;
-baseEnemyDemoGroup = baseEnemyDemoGroup_db select {_x select 1  == opFaction} select 0 select 0;
+baseEnemyGroup = [opFaction, "BASIC"] call getBasicUnitsGroup;
+baseEnemyATGroup = [opFaction, "AT"] call getBasicUnitsGroup;
+baseEnemyDemoGroup = [opFaction, "DEMO"] call getBasicUnitsGroup;
 baseEnemyMortarGroup = baseEnemyMortarGroup_db select {_x select 1  == opFaction} select 0 select 0;
 baseEnemyVehicleGroup = baseEnemyVehicleGroup_db select {_x select 1  == opFaction} select 0 select 0;
 baseEnemyTurretGroup = ((baseEnemyTurretGroup_db select {_x#1  == opFaction})#0)#0;
@@ -152,13 +151,12 @@ baseEnemyArmedChopperGroup = baseEnemyArmedChopperGroup_db select {_x select 1  
 baseFixedWingGroup = baseFixedWingGroup_db select {_x select 1  == opFaction} select 0 select 0;
 
 
+
 //Enemy Wave Composition, needs to be completely rework
-EnemyWaveLevel_1 = [baseEnemyGroup,baseEnemyATGroup];
+EnemyWaveLevel_1 = [baseEnemyGroup, baseEnemyATGroup];
 EnemyWaveLevel_6 = [baseEnemyGroup,baseEnemyATGroup,baseEnemyDemoGroup];
 EnemyWaveLevel_8 = [baseEnemyGroup,baseEnemyATGroup,baseEnemyDemoGroup,baseEnemyMortarGroup];
 
-EnemyWaveGroups = [EnemyWaveLevel_1,EnemyWaveLevel_6,EnemyWaveLevel_8];
-publicvariable "EnemyWaveGroups";
 
 ///////////////////////////
 ///Define player settings//
@@ -333,7 +331,7 @@ for [{_i = 0}, {_i <= 2}, {_i = _i + 1}] do //Peut être optimisé
 if (random 100 < 20 && (count (allPlayers select {side _x == independent})== 0)) then 
 {
 	//Generate enemy forces on main civilian city environement
-	_handlePOIGeneration = [EnemyWaveLevel_1, baseEnemyVehicleGroup, [], [], [], [], initCityLocation, objNull] execVM 'enemyManagement\generationEngine\generatePOI.sqf'; 
+	_handlePOIGeneration = [baseEnemyVehicleGroup, [], [], [], [], initCityLocation, objNull] execVM 'enemyManagement\generationEngine\generatePOI.sqf'; 
 	waitUntil {isNull _handlePOIGeneration};
 };
 

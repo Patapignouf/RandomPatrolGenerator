@@ -12,7 +12,8 @@ _nbOpfor = count ((allUnits select {alive _x && side _x == opfor} ) inAreaArray 
 _baseRadius = 100;
 for [{_i = 0}, {_i < missionDifficultyParam+1}, {_i = _i + 1}] do 
 {
-	currentRandomGroup = selectRandom EnemyWaveLevel_1;
+	_basicEnemyGroups = [[opFaction, "BASIC"] call getBasicUnitsGroup, [opFaction, "AT"] call getBasicUnitsGroup];
+	currentRandomGroup = selectRandom _basicEnemyGroups;
 	currentGroup = [currentRandomGroup, getPos _thisTrigger, east, "DefenseInfantry"] call doGenerateEnemyGroup;
 	
 	//Spawn group

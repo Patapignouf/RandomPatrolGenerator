@@ -35,10 +35,12 @@ if (!([_OpforFobLocation] call isLocationOnMap)) then
 	diag_log format ["Display _OpforFobStandardOpforLocation : %1 ",_OpforFobStandardOpforLocation];
 	diag_log format ["Display _OpforFobTurretOpforLocation : %1 ",_OpforFobTurretOpforLocation];
 
+	_basicEnemyGroups = [[opFaction, "BASIC"] call getBasicUnitsGroup, [opFaction, "AT"] call getBasicUnitsGroup];
+
 	//Spawn Garrison units
 	for [{_i = 0}, {_i <= 2}, {_i = _i + 1}] do
 	{
-		_opforFOBGarrison = [selectRandom EnemyWaveLevel_1, _OpforFobLocation , east, "DefenseFOBInfantry"] call doGenerateEnemyGroup;
+		_opforFOBGarrison = [selectRandom _basicEnemyGroups, _OpforFobLocation , east, "DefenseFOBInfantry"] call doGenerateEnemyGroup;
 		{
 			_randomAvalaiblePos = selectRandom _OpforFobStandardOpforLocation;
 			_x setPosASL (getPosASL _randomAvalaiblePos);
@@ -52,7 +54,7 @@ if (!([_OpforFobLocation] call isLocationOnMap)) then
 
 
 	//Spawn turret Units
-	_opforFOBGarrisonTurret = [selectRandom EnemyWaveLevel_1, _OpforFobLocation , east, ""] call doGenerateEnemyGroup;
+	_opforFOBGarrisonTurret = [selectRandom _basicEnemyGroups, _OpforFobLocation , east, ""] call doGenerateEnemyGroup;
 	{
 		_randomAvalaiblePos = selectRandom _OpforFobTurretOpforLocation;
 		if (!isNil "_randomAvalaiblePos") then 

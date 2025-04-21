@@ -10,6 +10,7 @@ generateObjective =
 	_missionObjectives = missionNamespace getVariable ["MissionObjectives",[]];
 	_missionUncompletedObjectives = missionNamespace getVariable ["missionUncompletedObjectives",_missionObjectives];
 	_warEra = missionNamespace getVariable "warEra";
+	_basicEnemyGroups = [[opFaction, "BASIC"] call getBasicUnitsGroup, [opFaction, "AT"] call getBasicUnitsGroup];
 
 	//Generate a new objective
 	SupplyObjects =  [];
@@ -45,7 +46,7 @@ generateObjective =
 		case "hostage":
 		{
 			//Populate biggest buildings with opfor
-			_tempSelectedObjectivePosition = [_selectedObjectivePosition, 200, EnemyWaveLevel_1] call generateOpforInBiggestBuildings;
+			_tempSelectedObjectivePosition = [_selectedObjectivePosition, 200, _basicEnemyGroups] call generateOpforInBiggestBuildings;
 			_selectedObjectivePosition = _tempSelectedObjectivePosition;
 
 			//Generate mission objectives
@@ -62,7 +63,7 @@ generateObjective =
 			{
 				//20% objective with hostile almost only civilian
 				//Not avalaible on WWII era
-				_handlePOIGeneration = [EnemyWaveLevel_1, baseEnemyVehicleGroup, baseEnemyLightArmoredVehicleGroup, baseEnemyHeavyArmoredVehicleGroup, civilian_group, _selectedObjectivePosition, _objectiveCreated] execVM 'enemyManagement\generationEngine\generateHostileCivPOI.sqf'; 
+				_handlePOIGeneration = [_basicEnemyGroups, baseEnemyVehicleGroup, baseEnemyLightArmoredVehicleGroup, baseEnemyHeavyArmoredVehicleGroup, civilian_group, _selectedObjectivePosition, _objectiveCreated] execVM 'enemyManagement\generationEngine\generateHostileCivPOI.sqf'; 
 				waitUntil {isNull _handlePOIGeneration};
 			} else 
 			{
@@ -70,10 +71,10 @@ generateObjective =
 				_handlePOIGeneration = objNull;
 				if ((missionNamespace getVariable "enableCiviliansOnObjectives") == 1) then 
 				{
-					_handlePOIGeneration = [EnemyWaveLevel_1, baseEnemyVehicleGroup, baseEnemyLightArmoredVehicleGroup, baseEnemyHeavyArmoredVehicleGroup, baseEnemyTurretGroup, civilian_group, _selectedObjectivePosition, _objectiveCreated] execVM 'enemyManagement\generationEngine\generatePOI.sqf'; 
+					_handlePOIGeneration = [baseEnemyVehicleGroup, baseEnemyLightArmoredVehicleGroup, baseEnemyHeavyArmoredVehicleGroup, baseEnemyTurretGroup, civilian_group, _selectedObjectivePosition, _objectiveCreated] execVM 'enemyManagement\generationEngine\generatePOI.sqf'; 
 				} else 
 				{
-					_handlePOIGeneration = [EnemyWaveLevel_1, baseEnemyVehicleGroup, baseEnemyLightArmoredVehicleGroup, baseEnemyHeavyArmoredVehicleGroup, baseEnemyTurretGroup, [], _selectedObjectivePosition, _objectiveCreated] execVM 'enemyManagement\generationEngine\generatePOI.sqf'; 
+					_handlePOIGeneration = [baseEnemyVehicleGroup, baseEnemyLightArmoredVehicleGroup, baseEnemyHeavyArmoredVehicleGroup, baseEnemyTurretGroup, [], _selectedObjectivePosition, _objectiveCreated] execVM 'enemyManagement\generationEngine\generatePOI.sqf'; 
 				};
 				waitUntil {isNull _handlePOIGeneration};
 			};

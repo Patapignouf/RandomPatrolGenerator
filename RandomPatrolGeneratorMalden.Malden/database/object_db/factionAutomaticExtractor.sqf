@@ -439,7 +439,7 @@ publicVariable "factionInfos";
 			//Define infantry
 			_currentFactionName = format ["loadout%1", _thisFac];
 			_currentStuffFaction = 	missionNamespace getVariable [_currentFactionName, []];
-			[_thisFac, _currentStuffFaction] call doDefineOpforFactionInfantry;
+			//[_thisFac, _currentStuffFaction] call doDefineOpforFactionInfantry;
 
 			//Define mortar 
 			_currentFactionName = format ["bluforMortar%1", _thisFac];

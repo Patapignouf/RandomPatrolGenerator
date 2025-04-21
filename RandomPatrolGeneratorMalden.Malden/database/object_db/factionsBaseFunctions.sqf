@@ -134,6 +134,71 @@ doSetOpfor = {
 	missionNamespace setVariable [format ["%1%2",_opforNameClass,_currentFactionName], _existingValues]; 
 };
 
+getBasicUnitsGroup = {
+	params ["_faction", "_unitType"];
+
+	//Get faction loadout
+	_currentFactionName = format ["loadout%1", _faction];
+	_currentStuffFaction = 	missionNamespace getVariable [_currentFactionName, []];
+	
+	//Start building groups
+	_resultGroup = [];
+	_coreEnemyGroup = [];
+	_resultGroup = +_coreEnemyGroup;
+
+	//Setup core group
+	_coreEnemyGroup pushBack ([_currentStuffFaction, "leader"] call getUnitByRole);
+	for [{_i = 0}, {_i < 3}, {_i = _i + 1}] do
+	{ 
+		_coreEnemyGroup pushBack ([_currentStuffFaction, "rifleman"] call getUnitByRole);
+	};
+
+	switch (_unitType) do {
+		case "BASIC":
+		{
+			if (count (baseEnemyGroup_db select {_x select 1  == opFaction} select 0 select 0) == 0) then 
+			{
+				_resultGroup = [_resultGroup, _currentStuffFaction, 8] call doFillWithRifleman;
+
+			} else 
+			{
+				_resultGroup = baseEnemyGroup_db select {_x select 1  == opFaction} select 0 select 0;
+			};
+		};
+		case "AT":
+		{
+			if (count (baseEnemyATGroup_db select {_x select 1  == opFaction} select 0 select 0) == 0) then 
+			{
+				//AT group
+				_resultGroup pushBack ([_currentStuffFaction, "at"] call getUnitByRole);
+				_resultGroup pushBack ([_currentStuffFaction, "grenadier"] call getUnitByRole);
+
+				_resultGroup = [_resultGroup, _currentStuffFaction, 6] call doFillWithRifleman;
+				//diag_log format ["_baseEnemyATGroup %1 ",_baseEnemyATGroup];
+
+			} else 
+			{
+				_resultGroup = baseEnemyATGroup_db select {_x select 1  == opFaction} select 0 select 0;
+			};
+		};
+		case "DEMO":
+		{
+			if (count (baseEnemyDemoGroup_db select {_x select 1  == opFaction} select 0 select 0) == 0) then 
+			{
+				//Demo group
+				_resultGroup pushBack ([_currentStuffFaction, "engineer"] call getUnitByRole);
+				_resultGroup pushBack ([_currentStuffFaction, "medic"] call getUnitByRole);
+				_resultGroup = [_resultGroup, _currentStuffFaction, 6] call doFillWithRifleman;
+			} else 
+			{
+				_resultGroup = baseEnemyDemoGroup_db select {_x select 1  == opFaction} select 0 select 0;
+			};
+		};
+	};
+
+	_resultGroup
+};
+
 doDefineOpforFactionInfantry = {
 	params ["_opforFaction", "_currentStuffFaction"];
 
@@ -189,7 +254,14 @@ getUnitByRole = {
 
 	if (_unitIndex != -1) then 
 	{
-		_unit = (_loadout#_unitIndex)#1;
+		_units = (_loadout#_unitIndex);
+		if (count _units >= 3) then 
+		{
+			_unit = selectRandom ((_units#2) + [_units#1]);
+		} else 
+		{
+			_unit = _units#1;
+		};
 	};
 	_unit
 };
