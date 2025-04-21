@@ -707,6 +707,24 @@ if (didJIP) then
 	player enableSimulationGlobal true;
 };
 
+//Prepare respawn countdown GUI on map
+//Only avalaible if respawn is set to wave respawn 
+if (missionNameSpace getVariable ["enableSelfRespawnTimer", 0] == 0) then 
+{
+	//No self respawn timer (directed by the server)
+	addMissionEventHandler ["EachFrame",
+		{
+			if (visibleMap) then 
+			{
+				_currentRespawnTimer = missionNamespace getVariable "missionRespawnParam";
+				_currentCounter = _currentRespawnTimer - (round (serverTime) % _currentRespawnTimer);
+				hintSilent format ["Next respawn : %1", [(_currentCounter/60)+.01,"HH:MM"] call BIS_fnc_timetostring];
+				[] spawn {waitUntil{!visibleMap}; hintSilent "";}; //remove hint quickly
+			};
+		}
+	];
+};
+
 //Remove arsenal from player 
 [] spawn {
 	uiSleep 5;
