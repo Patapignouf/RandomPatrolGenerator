@@ -656,7 +656,8 @@ switchToRole = {
 	diag_log format ["Player %1 has switched to role %2 in faction %3", name _caller, _role, _faction];
 
 	//Manage player's role
-	if ([_caller, _role] call checkRoleAvalaibility) then
+	//Check if the role is existing and avalaible
+	if ([_caller, _role] call checkRoleAvalaibility && (count (((loadout_db select {_x # 1 == _faction}) # 0 # 0) select {_x#0 == _role}) != 0)) then
 	{
 		//Player is allowed to change role
 		_caller setVariable ["role", _role, true];
