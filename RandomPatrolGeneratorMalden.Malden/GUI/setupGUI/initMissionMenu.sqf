@@ -33,7 +33,7 @@ normalClose = false;
 
 	//Add random faction
 	_currentComboBox lbAdd format ["%1", "RANDOM"];
-	_currentComboBox lbSetData [(lbSize _currentComboBox)-1, format ["%1", "RANDOM"]];
+	_currentComboBox lbSetData [0, format ["%1", "RANDOM"]];
 
 	//Add rest of the factions
 	{
@@ -50,7 +50,7 @@ _currentComboBox = _comboBoxOpfor;
 
 //Add random faction
 _currentComboBox lbAdd format ["%1", "RANDOM"];
-_currentComboBox lbSetData [(lbSize _currentComboBox)-1, format ["%1", "RANDOM"]];
+_currentComboBox lbSetData [0, format ["%1", "RANDOM"]];
 {
 	//add opfor factions
 	if (_x#4) then 
@@ -130,10 +130,33 @@ _currentComboBox = _comboBoxRespawnParam;
 } foreach missionRespawnParamSettings;
 
 
-//Default faction 
-_comboBoxBlufor lbSetCurSel (factionInfos select {_x#3} apply {_x select 1} find (bluforFaction_loaded));
-_comboBoxOpfor lbSetCurSel (factionInfos select {_x#4} apply {_x select 1} find (opforFaction_loaded));
-_comboBoxIndependent lbSetCurSel (factionInfos select {_x#3} apply {_x select 1} find (independentFaction_loaded));
+//Default faction
+//Manage random
+if (bluforFaction_loaded == "RANDOM") then 
+{
+	_comboBoxBlufor lbSetCurSel 0;
+} else 
+{
+	_comboBoxBlufor lbSetCurSel (factionInfos select {_x#3} apply {_x select 1} find (bluforFaction_loaded))+1; //Manage first random choice
+};
+
+//Manage random
+if (opforFaction_loaded == "RANDOM") then 
+{
+	_comboBoxOpfor lbSetCurSel 0;
+} else 
+{
+	_comboBoxOpfor lbSetCurSel (factionInfos select {_x#4} apply {_x select 1} find (opforFaction_loaded))+1; //Manage first random choice
+};
+
+//Manage random
+if (independentFaction_loaded == "RANDOM") then 
+{
+	_comboBoxIndependent lbSetCurSel 0;
+} else 
+{
+	_comboBoxIndependent lbSetCurSel (factionInfos select {_x#3} apply {_x select 1} find (independentFaction_loaded))+1; //Manage first random choice
+};
 _comboBoxCivilian lbSetCurSel (factionInfos select {_x#5} apply {_x select 1} find (civilianFaction_loaded));
 _comboBoxWarEra lbSetCurSel (warEraSelection apply {_x select 0} find (warEra_loaded));
 

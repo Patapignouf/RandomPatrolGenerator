@@ -2,11 +2,39 @@
 
 //Define global faction variable 
 profileNamespace setVariable ["RPG_warEra", warEra]; // GUI generation mission boolean flag
-profileNamespace setVariable ["RPG_bluforFaction", bluforFaction]; //Default faction 14 -> OTAN 2035
-profileNamespace setVariable ["RPG_opforFaction", opforFaction]; //Default faction 3 -> Syndikat
-profileNamespace setVariable ["RPG_independentFaction", independentFaction]; //Default faction 3 -> Syndikat
-profileNamespace setVariable ["RPG_civilianFaction", civilianFaction]; //Default faction 3 -> Syndikat
 
+
+//Manage random
+if (missionNameSpace getVariable ["BluforRandom", false]) then 
+{
+	profileNamespace setVariable ["RPG_bluforFaction", "RANDOM"]; //Default faction 3 -> Syndikat
+
+} else 
+{
+	profileNamespace setVariable ["RPG_bluforFaction", bluforFaction]; //Default faction 3 -> Syndikat
+};
+
+//Manage random
+if (missionNameSpace getVariable ["OpforRandom", false]) then 
+{
+	profileNamespace setVariable ["RPG_opforFaction", "RANDOM"]; //Default faction 3 -> Syndikat
+
+} else 
+{
+	profileNamespace setVariable ["RPG_opforFaction", opforFaction]; //Default faction 3 -> Syndikat
+};
+
+//Manage random
+if (missionNameSpace getVariable ["IndependentRandom", false]) then 
+{
+	profileNamespace setVariable ["RPG_independentFaction", "RANDOM"]; //Default faction 3 -> Syndikat
+
+} else 
+{
+	profileNamespace setVariable ["RPG_independentFaction", independentFaction]; //Default faction 3 -> Syndikat
+};
+
+profileNamespace setVariable ["RPG_civilianFaction", civilianFaction]; //Default faction 3 -> Syndikat
 
 //Missions vehicle settings
 profileNamespace setVariable ["RPG_enableArmedAicraft", enableArmedAicraft]; //Default armed aircraft are disabled
