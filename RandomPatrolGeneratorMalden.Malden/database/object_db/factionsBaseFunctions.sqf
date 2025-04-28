@@ -23,7 +23,7 @@ adjustRole = {
 		};
 
 		//Check if name contains specifics strings
-		if (["pilot", _cfgName] call BIS_fnc_inString || ["Pilot", _cfgName] call BIS_fnc_inString) then 
+		if (["pilot", _cfgName] call BIS_fnc_inString || ["Pilot", _cfgName] call BIS_fnc_inString || ["crew", _cfgName] call BIS_fnc_inString) then 
 		{
 			_cfgRole = "pilot";
 		};
