@@ -359,7 +359,7 @@ _ButtonSave ctrlAddEventHandler ["ButtonClick",{
 
 		//Save current loadout
 		[player, "personal"] call saveCustomLoadout;
-		hint "Loadout loaded";
+		hint "Loadout saved";
 
 		[ctrlParent _ctrl] call refreshCustomLoadoutDisplay;
 	}];
