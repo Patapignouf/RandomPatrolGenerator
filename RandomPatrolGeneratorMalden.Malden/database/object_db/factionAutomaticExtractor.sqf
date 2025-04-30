@@ -425,6 +425,8 @@ publicVariable "factionInfos";
 		["rhsgref_faction_cdf_ground", "rhsgref_faction_cdf_air"] call mergeFactions;
 		["rhs_faction_msv", "rhs_faction_vvs_c"] call mergeFactions;
 		["rhsgref_faction_cdf_ground_b", "rhsgref_faction_cdf_air_b"] call mergeFactions;
+		["rhssaf_faction_army", "rhssaf_faction_airforce"] call mergeFactions;
+		["rhssaf_faction_army_opfor", "rhssaf_faction_airforce_opfor"] call mergeFactions;
 	};
 
 
