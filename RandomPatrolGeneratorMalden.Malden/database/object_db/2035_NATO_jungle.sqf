@@ -1,7 +1,7 @@
 #include "..\classConstant.sqf"
 
 factionID = factionID+1;
-factionInfos pushBack["_2035_NATO_jungle", factionID,"2035 NATO Jungle", true, true, false];
+factionInfos pushBack["_2035_NATO_jungle", factionID,"2035 NATO Jungle", true, false, false];
 
 
 ////////////////////////

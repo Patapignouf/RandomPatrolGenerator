@@ -32,6 +32,18 @@ _buttonLoad ctrlAddEventHandler[ "ButtonClick",
 
 		//Begin mission generation
 		missionNamespace setVariable ["generationSetup", true, true]; 
+
+		//Show factions to all players
+		[] spawn 
+		{
+			sleep 2;
+			_bluFac = missionNamespace getVariable "bluforFaction"; //Default faction 14 -> OTAN 2035
+			_opFac = missionNamespace getVariable "opforFaction"; //Default faction 3 -> Syndikat
+
+			_bluFac = (factionInfos select {(_x#1) == _bluFac})#0#2;
+			_opFac = (factionInfos select {(_x#1) == _opFac})#0#2;
+			[[_bluFac, _opFac], {params ["_bluFac", "_opFac"]; ["STR_RPG_HC_NAME", "STR_RPG_FACTION_ANNOUNCEMENT", _bluFac, _opFac] call doDialog}] remoteExec ["spawn", 0]; 
+		};
 	}];
 
 

@@ -1164,6 +1164,11 @@
         <Chinese>离开这个区域！</Chinese>
         <Japanese>このエリアから出て行け！</Japanese>
     </Key>
+    <Key ID="STR_RPG_FACTION_ANNOUNCEMENT">
+        <Original>We are the %1 against %2</Original>
+        <English>We are the %1 against %2</English>
+        <French>Nous incarnons les %1 contre %2</French>
+    </Key>
 <Container name="SCORE_TXT">
     <Key ID="STR_RPG_SCORE_INFANTRY_KILL">
         <Original>Infantry kill</Original>
