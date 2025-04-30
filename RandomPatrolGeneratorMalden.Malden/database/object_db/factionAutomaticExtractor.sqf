@@ -27,12 +27,16 @@ _smartFilter = "EnableSmartFilter" call BIS_fnc_getParamValue == 1;
 			if (_smartFilter) then 
 			{
 				if ((configName _x) isKindOf "Man") then {
-					_index = ([_factionsWithUnitsFiltered, _factionClass] call BIS_fnc_findInPairs);
-					if (_index == -1) then {
-						_factionsWithUnitsFiltered pushBack [_factionClass, 1, ((configFile >> "CfgVehicles" >> configName _x >> "side") call BIS_fnc_GetCfgData)];
-					} else {
-						_factionsWithUnitsFiltered set [_index, [((_factionsWithUnitsFiltered select _index) select 0), ((_factionsWithUnitsFiltered select _index) select 1)+1,((configFile >> "CfgVehicles" >> configName _x >> "side") call BIS_fnc_GetCfgData)]];
-					}; 
+					//PreFilter unarmed
+					if (((configFile >> "CfgVehicles" >> (configName _x) >> "role") call BIS_fnc_GetCfgData) != "Unarmed") then 
+					{
+						_index = ([_factionsWithUnitsFiltered, _factionClass] call BIS_fnc_findInPairs);
+						if (_index == -1) then {
+							_factionsWithUnitsFiltered pushBack [_factionClass, 1, ((configFile >> "CfgVehicles" >> configName _x >> "side") call BIS_fnc_GetCfgData)];
+						} else {
+							_factionsWithUnitsFiltered set [_index, [((_factionsWithUnitsFiltered select _index) select 0), ((_factionsWithUnitsFiltered select _index) select 1)+1,((configFile >> "CfgVehicles" >> configName _x >> "side") call BIS_fnc_GetCfgData)]];
+						}; 
+					};
 				};	
 			} else 
 			{
@@ -109,9 +113,12 @@ _potentialOpfor = [];
 	};
 } foreach _potentialFactions;
 
+
+brokenFactions = [];
+
 {
 	_factionTechName = _x#0;
-	if (factionInfos findIf {_x#0 == _factionTechName}==-1) then 
+	if (factionInfos findIf {_x#0 == _factionTechName}==-1 || brokenFactions findIf {_x#0 == _factionTechName} ==-1) then 
 	{
 		factionInfos pushBack [_factionTechName, _factionTechName, format ["%1 [AUTO]", ((configFile >> "CfgFactionClasses" >> _factionTechName >> "displayName") call BIS_fnc_GetCfgData)], false, false, true];
 	};
@@ -170,6 +177,13 @@ publicVariable "factionInfos";
 					if !(["story", _cfgName, false] call BIS_fnc_inString || ["story", ((_cfgVehName >> "editorSubcategory") call BIS_fnc_GetCfgData), false] call BIS_fnc_inString) then 
 					{		
 						_thisRole = ((_cfgVehName >> "role") call BIS_fnc_GetCfgData);
+
+						if (_thisFac == "LOP_AFR_OPF") then 
+						{
+							diag_log format ["faction LOP_AFR_OPF : unit %1 role %2", _cfgName, _thisRole];
+						};
+
+
 						if (_roleFilter findIf {_thisRole == _x} == -1) then {
 							_currentFactionName = format ["loadout%1", _thisFac];
 							_currentStuffFaction = 	missionNamespace getVariable [_currentFactionName, []];
