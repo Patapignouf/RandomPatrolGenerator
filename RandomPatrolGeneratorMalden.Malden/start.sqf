@@ -9,6 +9,7 @@
 #include "enemyManagement\behaviorEngine\unitsBehaviorFunctions.sqf"
 #include "engine\hintManagement\customDialog.sqf"
 #include "GUI\scoreBoardGUI\scoreFunctions.sqf"
+#include "database\factionParameters.sqf"
 
 
 //Init base mission parameters 
@@ -1002,6 +1003,21 @@ if (enableCampaignMode) then
 			if (missionNameSpace getVariable "opforFactionRandomizer" == 1) then 
 			{
 				opFaction = selectRandom (factionInfos select {_x#4 && !(["air", _x#1] call BIS_fnc_inString) && !(["usaf", _x#1] call BIS_fnc_inString) && !(["_usn", _x#1] call BIS_fnc_inString) && !(["_AA", _x#1] call BIS_fnc_inString)})#1;
+				missionNamespace setVariable ["opforFaction", opFaction, true];
+				checkFinishOpforFaction = false;
+
+				_execFaction = [] execVM 'database\object_db\factionAutomaticExtractor.sqf';
+				waitUntil {isNull _execFaction};
+				waitUntil {checkFinishFaction};
+
+				[opFaction] call parseOpforFaction;
+				waitUntil {checkFinishOpforFaction};
+
+				//Wait initEnvironnement
+				_handleEnvironmentInitialization2 = [] execVM 'initEnvironment.sqf'; 
+				waitUntil {isNull _handleEnvironmentInitialization2};
+				waitUntil {checkfinish};
+
 				baseEnemyMortarGroup = baseEnemyMortarGroup_db select {_x select 1  == opFaction} select 0 select 0;
 				baseEnemyVehicleGroup = baseEnemyVehicleGroup_db select {_x select 1  == opFaction} select 0 select 0;
 				baseEnemyTurretGroup = ((baseEnemyTurretGroup_db select {_x#1  == opFaction})#0)#0;

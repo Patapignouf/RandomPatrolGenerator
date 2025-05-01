@@ -514,3 +514,77 @@ filterWeaponsAndAccessoryByWeaponClassname =
 
 	_resultList;
 };
+
+parseOpforFaction = 
+{
+	params ["_opforFaction"];
+	//Define Opfor factions 
+	{
+		_thisFac = _x#1;
+
+		//Parse only selected factions
+		if (_thisFac == _opforFaction) then 
+		{
+			//Define infantry
+			_currentFactionName = format ["loadout%1", _thisFac];
+			_currentStuffFaction = 	missionNamespace getVariable [_currentFactionName, []];
+			//[_thisFac, _currentStuffFaction] call doDefineOpforFactionInfantry;
+
+			//Define mortar 
+			_currentFactionName = format ["bluforMortar%1", _thisFac];
+			_currentStuffFaction = 	missionNamespace getVariable [_currentFactionName, []];
+			if (count _currentStuffFaction > 0) then 
+			{
+				[_thisFac, "baseEnemyMortarGroup", [_currentStuffFaction#0]] call doSetOpfor;
+			};
+
+			//Define vehicle
+			_currentFactionName = format ["bluforUnarmedVehicle%1", _thisFac];
+			_currentStuffFaction = 	missionNamespace getVariable [_currentFactionName, []];
+			_currentFactionName = format ["bluforArmedVehicle%1", _thisFac];
+			_currentStuffFaction = _currentStuffFaction + (missionNamespace getVariable [_currentFactionName, []]);
+			[_thisFac, "baseEnemyVehicleGroup", _currentStuffFaction] call doSetOpfor;
+
+			_currentFactionName = format ["bluforArmoredVehicle%1", _thisFac];
+			_currentStuffFaction = 	missionNamespace getVariable [_currentFactionName, []];
+			_heavy = [];
+			_light = [];
+			{
+				switch true do {
+					case (_x isKindOf 'Tank'):
+					{
+						_heavy pushBack _x;
+					};
+					case (_x isKindOf 'Wheeled_APC_F');
+					case (_x isKindOf 'APC_Tracked_02_base_F'):
+					{
+						_light pushBack _x;
+					};
+				};
+			} foreach _currentStuffFaction;
+			[_thisFac, "baseEnemyLightArmoredVehicleGroup", _light] call doSetOpfor;
+			[_thisFac, "baseEnemyHeavyArmoredVehicleGroup", _heavy] call doSetOpfor;
+
+			_currentFactionName = format ["bluforUnarmedVehicleChopper%1", _thisFac];
+			_currentStuffFaction = 	missionNamespace getVariable [_currentFactionName, []];
+			[_thisFac, "baseEnemyUnarmedChopperGroup", _currentStuffFaction] call doSetOpfor;
+
+			_currentFactionName = format ["bluforFixedWing%1", _thisFac];
+			_currentStuffFaction = 	missionNamespace getVariable [_currentFactionName, []];
+			[_thisFac, "baseFixedWingGroup", _currentStuffFaction] call doSetOpfor;
+
+			//Define static
+			_currentFactionName = format ["bluforStaticWeapon%1", _thisFac];
+			_currentStuffFaction = 	missionNamespace getVariable [_currentFactionName, []];
+			_static = [];
+			{
+				_static pushBack [_x, selectRandom ["SMALLBUNKER", "NOTHING"]];
+			} foreach _currentStuffFaction;
+
+			[_thisFac, "baseEnemyTurretGroup", _static] call doSetOpfor;
+		};
+
+	} foreach factionInfos;
+
+	checkFinishOpforFaction = true;
+};

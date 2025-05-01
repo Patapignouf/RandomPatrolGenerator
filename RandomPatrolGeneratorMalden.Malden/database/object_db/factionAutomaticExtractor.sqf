@@ -4,14 +4,18 @@
 for "_i" from 0 to count factionInfos -1 do
 {
 	private _element = factionInfos select _i;
-	_element set [1, str (_element#1)];
-	factionInfos set [_i, _element];
+	if (typeName (_element#1) == "SCALAR") then 
+	{
+		_element set [1, str (_element#1)];
+		factionInfos set [_i, _element];
+	};
 };
 
 //This part was taken from DRO but highy modified 
 _factionsWithUnitsFiltered = [];
 _potentialFactions = [];
 _potentialCivFactions = [];
+checkFinishFaction = false;
 
 diag_log format ["Automatic faction parsing begin"];
 
@@ -79,9 +83,11 @@ _smartFilter = "EnableSmartFilter" call BIS_fnc_getParamValue == 1;
 
 //Search in everyFaction the basic info
 _potentialOpfor = [];
+brokenFactions = ["Default"];
+
 {
 	_factionTechName = _x#0;
-	if (factionInfos findIf {_x#0 == _factionTechName}==-1) then 
+	if (factionInfos findIf {_x#0 == _factionTechName}==-1 && brokenFactions findIf {_x == _factionTechName} ==-1) then 
 	{
 		_sideName = "";
 		switch (_x#2) do {
@@ -114,11 +120,10 @@ _potentialOpfor = [];
 } foreach _potentialFactions;
 
 
-brokenFactions = [];
-
+//Civ faction
 {
 	_factionTechName = _x#0;
-	if (factionInfos findIf {_x#0 == _factionTechName}==-1 || brokenFactions findIf {_x#0 == _factionTechName} ==-1) then 
+	if (factionInfos findIf {_x#0 == _factionTechName}==-1) then 
 	{
 		factionInfos pushBack [_factionTechName, _factionTechName, format ["%1 [AUTO]", ((configFile >> "CfgFactionClasses" >> _factionTechName >> "displayName") call BIS_fnc_GetCfgData)], false, false, true];
 	};
@@ -141,16 +146,21 @@ publicVariable "factionInfos";
 		"rhs_faction_usn",
 		"rhsgref_faction_cdf_air",
 		"rhs_faction_vvs_c",
-		"rhsgref_faction_cdf_air_b"
+		"rhsgref_faction_cdf_air_b",
+		"rhssaf_faction_airforce",
+		"rhssaf_faction_airforce_opfor"
 	];
 
 	waitUntil {missionNamespace getVariable "generationSetup" == true};
+
 
 	//Add selected factions to whitelist
 	_whiteListFactions pushBack (missionNamespace getVariable "civilianFaction");
 	_whiteListFactions pushBack (missionNamespace getVariable "independentFaction");
 	_whiteListFactions pushBack (missionNamespace getVariable "opforFaction");
 	_whiteListFactions pushBack (missionNamespace getVariable "bluforFaction");
+
+
 
 	//Role filtered to not bo added in faction
 	_roleFilter = ["Unarmed"];
@@ -443,7 +453,6 @@ publicVariable "factionInfos";
 		["rhssaf_faction_army_opfor", "rhssaf_faction_airforce_opfor"] call mergeFactions;
 	};
 
-
 	//Define Opfor factions 
 	{
 		_thisFac = _x;
@@ -451,7 +460,6 @@ publicVariable "factionInfos";
 		//Parse only selected factions
 		if (_thisFac in _whiteListFactions) then 
 		{
-
 			//Define infantry
 			_currentFactionName = format ["loadout%1", _thisFac];
 			_currentStuffFaction = 	missionNamespace getVariable [_currentFactionName, []];
@@ -515,6 +523,7 @@ publicVariable "factionInfos";
 
 	missionFactionSetup = true;
 	publicVariable "missionFactionSetup";
+	checkFinishFaction = true;
 };
 
 

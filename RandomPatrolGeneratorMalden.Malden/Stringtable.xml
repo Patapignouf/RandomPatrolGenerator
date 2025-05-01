@@ -567,6 +567,17 @@
                 <Chinese>高级指挥部</Chinese>
                 <Japanese>最高司令部</Japanese>
             </Key>
+            <Key ID="STR_RPG_HC_NAME_MUTE">
+                <Original>High Command</Original>
+                <English>High Command</English>
+                <French>Haut commandement</French>
+                <Spanish>Alto Mando</Spanish>
+                <German>Oberkommando</German>
+                <Italian>Alto Comando</Italian>
+                <Russian>Высшее командование</Russian>
+                <Chinese>高级指挥部</Chinese>
+                <Japanese>最高司令部</Japanese>
+            </Key>
             <Key ID="STR_RPG_CHOPPER_NAME">
                 <Original>Helicopter crew</Original>
                 <English>Helicopter crew</English>

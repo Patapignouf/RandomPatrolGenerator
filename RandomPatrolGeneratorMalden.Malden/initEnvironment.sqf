@@ -1,5 +1,3 @@
-#include "database\factionParameters.sqf"
-
 c_variableToInit = ["listOfRoles","loadout","rifleList","grenadeLauncherList","attachmentLongList","attachmentShortList","smgList","marksmanrifleList","autorifleList","launcherList","itemList","itemEngineerList","itemMedicList",'backPackList','uniformList',"uniformListSniper", "bluforUnarmedVehicle","bluforArmedVehicle","bluforUnarmedVehicleChopper","bluforExtractVehicleChopper","bluforArmoredVehicle","bluforDrone","bluforBoat","civilian_group","factionDefaultRadios",
 "civilian_big_group","civilianTruck","baseEnemyGroup","baseEnemyATGroup","baseEnemyDemoGroup","baseEnemyMortarGroup","baseEnemyVehicleGroup","baseEnemyTurretGroup",
 "baseEnemyLightArmoredVehicleGroup","baseEnemyHeavyArmoredVehicleGroup","baseFixedWingGroup","baseEnemyUnarmedChopperGroup","baseEnemyArmedChopperGroup","bluforFixedWing","bluforArmedChopper", "bluforHQVehicle","magazineList", "droneBackPack", "modernItems"];
@@ -10,7 +8,7 @@ c_variableToInit = ["listOfRoles","loadout","rifleList","grenadeLauncherList","a
 //////////
 
 //Wait auto faction builder
-
+checkfinish = false;
 [c_variableToInit] spawn 
 {
 	params ["_c_variableToInit"];
@@ -42,6 +40,7 @@ c_variableToInit = ["listOfRoles","loadout","rifleList","grenadeLauncherList","a
 	diag_log "End Arsenal and Faction Library initialization";
 
 	missionInitFactionSetup = true;
+	checkfinish = true;
 	publicVariable "missionInitFactionSetup";
 };
 
