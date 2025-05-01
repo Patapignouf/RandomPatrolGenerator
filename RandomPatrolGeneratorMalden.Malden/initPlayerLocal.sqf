@@ -773,6 +773,38 @@ if (missionNameSpace getVariable ["enableAdvancedRespawn", 1] == 1) then
 
 		[[str (group _caller), _createTent,"\a3\ui_f\data\IGUI\Cfg\holdactions\holdAction_requestleadership_ca.paa" , [0,0,1,1]], 'GUI\3DNames\3DObjectNames.sqf'] remoteExec ['BIS_fnc_execVM', blufor, true];
 
+		// //Add reinforcement action on tent box
+		// _createTent addAction [format ["<img size='2' image='\a3\ui_f\data\igui\cfg\simpletasks\types\Radio_ca.paa'/>%1</t>", localize "STR_GUI_SUPPORT_REINFORCEMENT_NOW"],{
+		// 	//Define parameters
+		// 	params ["_object","_caller","_ID","_avalaibleVehicle"];
+
+		// 	[_caller] spawn 
+		// 	{
+		// 		params ["_caller"];
+		// 		if (!(missionNamespace getVariable ["usedRespawnFewTimeAgo",false])) then 
+		// 		{
+		// 			if (count (allPlayers select {(alive _x) == false})!=0) then //Sorry for the test == false xD
+		// 			{
+		// 				//set morning
+		// 				skipTime 24;
+		// 				[[], "engine\respawnManagement\respawnManager.sqf"] remoteExec ['BIS_fnc_execVM', 0];
+
+		// 				//Send message to everyone
+		// 				[[_caller], {params ["_caller"]; ["STR_RPG_HC_NAME", "STR_RPG_HC_REINFORCEMENT_CALL_2", name _caller] call doDialog}] remoteExec ["spawn", side _caller]; 
+						
+		// 				missionNamespace setVariable ["usedRespawnFewTimeAgo",true,true];
+		// 				_respawnTimer = missionNamespace getVariable "missionRespawnParam";
+		// 				sleep _respawnTimer;
+		// 				missionNamespace setVariable ["usedRespawnFewTimeAgo",false,true];
+		// 			} else {
+		// 				[{["STR_RPG_HC_NAME", "STR_RPG_HC_REINFORCEMENT_CALL_NO_NEED", name _caller] call doDialog}] remoteExec ["call", _caller];
+		// 			};
+		// 		} else {
+		// 			[{["STR_RPG_HC_NAME", "STR_RPG_HC_REINFORCEMENT_CALL_WAIT"] call doDialog}] remoteExec ["call", _caller];
+		// 		};
+		// 	};
+		// },_x,3,true,false,"","(_target distance _this <5) && (_target getVariable [str (group _this), false])"];
+
 		//Add support action on tent
 		_createTent addAction [format ["<img size='2' image='\a3\ui_f_oldman\data\IGUI\Cfg\holdactions\holdAction_market_ca.paa'/><t size='1'>%1</t>", localize "STR_ACTIONS_OPEN_SUPPORT_SHOP"],{
 			//Define parameters
@@ -796,7 +828,7 @@ if (missionNameSpace getVariable ["enableAdvancedRespawn", 1] == 1) then
 				} else {
 					hint "No need to rest";
 				};
-		},_x,3,true,false,"","(_target distance _this <5) && (_target getVariable [str (group _this), false])"];
+		},_x,3,true,false,"","(_this getVariable 'role' == 'leader') && (_target distance _this <5) && (_target getVariable [str (group _this), false])"];
 
 		//Delete tent if respawn coordinates changed
 		[_createTent, str (group _caller)] spawn 
