@@ -53,6 +53,8 @@ switch (_mode) do
 			[_lnbEntries] call addAttackSquad;
 			[_lnbEntries] call addSupportForIntel;
 			[_lnbEntries] call addSupportForAirDrop;
+			[_lnbEntries] call addSupportForAdvancedAirDrop;
+			
 			if (count (bluforUnarmedVehicleChopper+bluforExtractVehicleChopper) > 0) then 
 			{
 				[_lnbEntries] call addSupportForExtract;

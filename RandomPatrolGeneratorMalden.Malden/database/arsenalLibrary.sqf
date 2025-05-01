@@ -627,6 +627,25 @@ doInitializeLoadout = {
 		};
 	};
 
+		//Add airDrop action
+	_advancedAirDropSupportID = _player getVariable ["advancedAirDropSupportID", -1];
+	if (_currentPlayerClass == "leader") then 
+	{
+		_airDropSupportCounter = missionNamespace getVariable ["airDropSupportCounter", 0];
+		if (_airDropSupportCounter > 0 && _advancedAirDropSupportID == -1) then 
+		{
+			_advancedAirDropSupportID = [_player, "myAdvancedAirDrop"] call BIS_fnc_addCommMenuItem;
+			_player setVariable ["advancedAirDropSupportID", _advancedAirDropSupportID, true];
+		};
+	} else 
+	{
+		if (_advancedAirDropSupportID != -1) then 
+		{
+			[_player, _advancedAirDropSupportID] call BIS_fnc_removeCommMenuItem;
+			_player setVariable ["advancedAirDropSupportID", -1, true]
+		};
+	};
+
 	//Add reinforcement action
 	_reinforcementSupportID = _player getVariable ["reinforcementSupportID", -1];
 	if (_currentPlayerClass == "leader") then 
@@ -900,6 +919,28 @@ setupPlayerLoadoutRemake = {
 	_whitelistOfArsenalItems append ([getUnitLoadout player] call getAllStringInArray);
 	player setVariable ["avalaibleItemsInArsenal", _whitelistOfArsenalItems, true];
 };
+
+setupPlayerLoadoutWithoutConditionRemake = {
+
+	//InitParam
+	params ["_itemToAttachArsenal"];
+
+	_actionLoadoutSetup = _itemToAttachArsenal addAction [format ["<img size='3' image='\a3\missions_f_oldman\data\img\holdactions\holdAction_box_ca.paa'/><t size='1.2'>%1</t>", localize "STR_ACTIONS_SETUP_LOADOUT"],{
+		//Define parameters
+		params ["_object","_caller","_ID","_parameters"];
+
+		[] execVM "GUI\LoadoutGUI\initPlayerLoadoutSetupRemake.sqf"
+
+	},[],1000,true, false,"","(_this distance _target < 15)"];
+
+	//Setup initArsenal whitelist items
+	[player, player, player call getPlayerFaction] call setupArsenalToItem;
+
+	_whitelistOfArsenalItems = player getVariable ["avalaibleItemsInArsenal", []];
+	_whitelistOfArsenalItems append ([getUnitLoadout player] call getAllStringInArray);
+	player setVariable ["avalaibleItemsInArsenal", _whitelistOfArsenalItems, true];
+};
+
 
 setupSaveAndLoadRole = {
 	//InitParam

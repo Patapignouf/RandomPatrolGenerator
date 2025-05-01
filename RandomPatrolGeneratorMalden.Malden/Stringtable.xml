@@ -1914,6 +1914,11 @@
             <English>Logistic supply drop (radio)</English>
             <French>Soutien logistique (radio)</French>
         </Key>
+        <Key ID="STR_GUI_SUPPORT_ADV_SUPPLY_DROP">
+            <Original>Arsenal supply drop (radio)</Original>
+            <English>Arsenal supply drop (radio)</English>
+            <French>Arsenal logistique (radio)</French>
+        </Key>
         <Key ID="STR_GUI_SUPPORT_RECON_DRONE">
             <Original>Send drone for recon</Original>
             <English>Send drone for recon</English>
