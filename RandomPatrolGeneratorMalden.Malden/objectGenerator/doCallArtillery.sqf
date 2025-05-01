@@ -27,14 +27,8 @@ if (_artlillerySupportCounter > 0) then
 	//Simulate waiting for shots
 	sleep (15 + random 25);
 
-	//Call 3 shots
-	for [{_i = 0}, {_i <= 4}, {_i = _i + 1}] do //Peut être optimisé
-	{
-		//Randomize shot location around the targeted position
-		_customRandomPos = [[[_position, 50]], []] call BIS_fnc_randomPos;
-		sleep 2;
-		"Bo_GBU12_LGB" createVehicle _customRandomPos;
-	};
+	//Call 24 shots
+	[_position, "Bo_Mk82", 15, 24, 10] spawn BIS_fnc_fireSupportVirtual;
 
 } else 
 {
