@@ -46,7 +46,7 @@ if (bluforFactionSelected == "RANDOM") then
 //Manage random blufor faction
 if (opforFactionSelected == "RANDOM") then 
 {
-	opforFactionSelected = selectRandom (factionInfos select {_x#4})#1;
+	opforFactionSelected = selectRandom (factionInfos select {_x#4 && !(["air", _x#1] call BIS_fnc_inString) && !(["usaf", _x#1] call BIS_fnc_inString) && !(["_usn", _x#1] call BIS_fnc_inString) && !(["_AA", _x#1] call BIS_fnc_inString)} )#1;
 	missionNameSpace setVariable ["OpforRandom", true, true];
 };
 
