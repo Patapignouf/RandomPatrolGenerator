@@ -42,7 +42,7 @@ _buttonLoad ctrlAddEventHandler[ "ButtonClick",
 
 			_bluFac = (factionInfos select {(_x#1) == _bluFac})#0#2;
 			_opFac = (factionInfos select {(_x#1) == _opFac})#0#2;
-			[[_bluFac, _opFac], {params ["_bluFac", "_opFac"]; ["STR_RPG_HC_NAME", "STR_RPG_FACTION_ANNOUNCEMENT", _bluFac, _opFac] call doDialog}] remoteExec ["spawn", 0]; 
+			[[_bluFac, _opFac], {params ["_bluFac", "_opFac"]; ["STR_RPG_HC_NAME_MUTE", "STR_RPG_FACTION_ANNOUNCEMENT", _bluFac, _opFac] call doDialog}] remoteExec ["spawn", 0]; 
 		};
 	}];
 
