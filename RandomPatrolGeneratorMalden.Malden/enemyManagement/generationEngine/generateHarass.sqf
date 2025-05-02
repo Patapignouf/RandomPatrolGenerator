@@ -1,4 +1,4 @@
-params ["_thisAvailableOpforGroup","_thisAvailableOpforCars","_thisAvailableOpforLightArmoredVehicle","_thisAvailableOpforHeavyArmoredVehicle", "_thisAvailableOpforUnarmedChopperVehicle","_thisAvailableOpforFixedWing", "_thisAvailableOpforArmedChopperVehicle"];
+params [];
 
 nb_ind_player_alive = 0;
 nb_blu_player_alive = 0;
@@ -20,6 +20,16 @@ if (isServer) then
 
 	while {sleep 60; (_missionNumber == (missionNamespace getVariable ["missionNumber", 0]))} do  
 	{
+		//Redefine opfor reinforcement
+		_thisAvailableOpforGroup = [baseEnemyGroup,baseEnemyATGroup,baseEnemyDemoGroup];
+		_thisAvailableOpforCars= baseEnemyVehicleGroup;
+		_thisAvailableOpforLightArmoredVehicle = baseEnemyLightArmoredVehicleGroup;
+		_thisAvailableOpforHeavyArmoredVehicle = baseEnemyHeavyArmoredVehicleGroup;
+		_thisAvailableOpforUnarmedChopperVehicle = baseEnemyUnarmedChopperGroup ;
+		_thisAvailableOpforFixedWing = baseFixedWingGroup ;
+		_thisAvailableOpforArmedChopperVehicle = baseEnemyArmedChopperGroup;
+
+
 		_thisDifficulty = missionNamespace getVariable "missionDifficultyParam"; //Default medium
 
 		//Test if there are too much IA

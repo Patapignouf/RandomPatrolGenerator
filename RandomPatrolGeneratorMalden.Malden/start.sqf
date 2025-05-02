@@ -453,7 +453,7 @@ if ( count AvalaibleInitAttackPositions != 0 && (enableInitAttack == 1 || ((enab
 },[],1.5,true,false,"","_target distance _this <5 && side _this == independent"]] remoteExec [ "addAction", 0, true ];
 
 //Init perma harass on player
-[[baseEnemyGroup,baseEnemyATGroup,baseEnemyDemoGroup],baseEnemyVehicleGroup, baseEnemyLightArmoredVehicleGroup, baseEnemyHeavyArmoredVehicleGroup, baseEnemyUnarmedChopperGroup, baseFixedWingGroup, baseEnemyArmedChopperGroup] spawn _generateHarass; 
+[] spawn _generateHarass; 
 
 //Init ambiant war 
 if (missionNameSpace getVariable ["enableAmbiantWar", 0] == 1) then 
