@@ -806,12 +806,13 @@ if (missionNameSpace getVariable ["enableAdvancedRespawn", 1] == 1) then
 		// },_x,3,true,false,"","(_target distance _this <5) && (_target getVariable [str (group _this), false])"];
 
 		//Add support action on tent
-		_createTent addAction [format ["<img size='2' image='\a3\ui_f_oldman\data\IGUI\Cfg\holdactions\holdAction_market_ca.paa'/><t size='1'>%1</t>", localize "STR_ACTIONS_OPEN_SUPPORT_SHOP"],{
-			//Define parameters
-			params ["_object","_caller","_ID","_avalaibleVehicle"];
+		 
+		[_createTent, [format ["<img size='2' image='\a3\ui_f_oldman\data\IGUI\Cfg\holdactions\holdAction_market_ca.paa'/><t size='1'>%1</t>", localize "STR_ACTIONS_OPEN_SUPPORT_SHOP"],{
+			params ["_object","_caller","_ID","_param"];
 
 			[[false], 'GUI\supportGUI\supportGUI.sqf'] remoteExec ['BIS_fnc_execVM', _caller];
-		},_x,3,true,false,"","(_target distance _this <5) && (_target getVariable [str (group _this), false])"];
+		},[],3,true,false,"","(_target distance _this <5) && (_target getVariable [str (group _this), false])"]] remoteExec [ "addAction", 0, true ];
+
 
 		_createTent addAction [format ["<img size='2' image='\a3\ui_f_oldman\data\IGUI\Cfg\holdactions\holdAction_sleep2_ca.paa'/>%1</t>", localize "STR_ACTIONS_SLEEP"],{
 			//Define parameters
