@@ -27,8 +27,12 @@ if (_artlillerySupportCounter > 0) then
 	//Simulate waiting for shots
 	sleep (15 + random 25);
 
-	//Call 24 shots
-	[_position, "Bo_Mk82", 15, 24, 10] spawn BIS_fnc_fireSupportVirtual;
+	//Call 6 shots on 3 waves
+	[_position, "Bo_Mk82", 25, 2, 10] spawn BIS_fnc_fireSupportVirtual;
+	sleep 1;
+	[_position, "Bo_Mk82", 20, 3, 10] spawn BIS_fnc_fireSupportVirtual;
+	sleep 1;
+	[_position, "Bo_Mk82", 30, 1, 10] spawn BIS_fnc_fireSupportVirtual;
 
 } else 
 {
