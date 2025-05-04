@@ -753,6 +753,29 @@ if (isClass (configFile >> "CfgPatches" >> "ace_medical")) then
   player setDamage 0;
 };
 
+//Add map players marker
+if (missionNameSpace getVariable "playerMarkerAllowed" == 1) then 
+{
+	findDisplay 12 displayCtrl 51 ctrlAddEventHandler ["Draw", {
+	{ 
+		_this select 0 drawIcon [
+			"iconMan", // custom images can also be used: getMissionPath "\myFolder\myIcon.paa"
+			[0,0,1,1],
+			getPosASLVisual _x,
+			24,
+			24,
+			getDirVisual _x,
+			name _x,
+			1,
+			0.03,
+			"TahomaB",
+			"right"
+		]
+		} foreach (allPlayers select {side _x == side player});
+	}];
+};
+
+
 //add respawn tent action
 if (missionNameSpace getVariable ["enableAdvancedRespawn", 1] == 1) then 
 {
