@@ -86,6 +86,20 @@ getParentsFromItems = {
 	_candidateItemsListResult
 };
 
+getPrestigeItems = {
+	_result = [];
+	_playerCurrentPrestige = profileNamespace getVariable ["RPG_prestige", 0];
+	for [{_i = 0}, {_i < _playerCurrentPrestige}, {_i = _i + 1}] do
+	{
+		//Only ten prestige items
+		if ( _i <10 ) then 
+		{
+			_result pushBack (prestigeItem#_i);
+		};
+	};
+	_result
+};
+
 getVirtualWeaponList = {
 	params ["_currentPlayer", "_currentFaction"];
 
@@ -196,8 +210,8 @@ getItembyWarEra = {
 		};
 		//Actual Warfare
 		case 3:
-		{
-			_itemList = ["ACE_Sandbag_empty","ItemGPS", "ACE_DAGR", "ACE_microDAGR","B_UavTerminal","ACE_EntrenchingTool","ACE_WaterBottle","ACE_CableTie","ACE_MapTools","ItemCompass","ItemMap","ItemWatch","ACE_RangeTable_82mm","Binocular","ACE_SpraypaintRed","ACE_EarPlugs"];
+		{	
+			_itemList = ["ACE_NVG_Wide_Black_WP", "ACE_NVG_Wide_WP","ACE_NVG_Wide_Green_WP", "ACE_Sandbag_empty","ItemGPS", "ACE_DAGR", "ACE_microDAGR","B_UavTerminal","ACE_EntrenchingTool","ACE_WaterBottle","ACE_CableTie","ACE_MapTools","ItemCompass","ItemMap","ItemWatch","ACE_RangeTable_82mm","Binocular","ACE_SpraypaintRed","ACE_EarPlugs"];
 			if (isClass (configFile >> "CfgPatches" >> "task_force_radio")) then {
 				_defaultRadios = ((factionDefaultRadios_db select {_x#1  == _currentFaction})#0)#0;
 
@@ -216,7 +230,7 @@ getItembyWarEra = {
 		//Future Warfare
 		case 4:
 		{
-			_itemList = ["ACE_Sandbag_empty","ItemGPS","ACE_DAGR", "ACE_microDAGR","B_UavTerminal","ACE_EntrenchingTool","ACE_WaterBottle","ACE_CableTie","ACE_MapTools","ItemCompass","ItemMap","ItemWatch","ACE_RangeTable_82mm","Binocular","ACE_SpraypaintRed","ACE_EarPlugs"];
+			_itemList = ["ACE_NVG_Wide_Black_WP", "ACE_NVG_Wide_WP","ACE_NVG_Wide_Green_WP", "ACE_Sandbag_empty","ItemGPS","ACE_DAGR", "ACE_microDAGR","B_UavTerminal","ACE_EntrenchingTool","ACE_WaterBottle","ACE_CableTie","ACE_MapTools","ItemCompass","ItemMap","ItemWatch","ACE_RangeTable_82mm","Binocular","ACE_SpraypaintRed","ACE_EarPlugs"];
 			if (isClass (configFile >> "CfgPatches" >> "task_force_radio")) then {
 				_defaultRadios = ((factionDefaultRadios_db select {_x#1  == _currentFaction})#0)#0;
 
@@ -485,7 +499,9 @@ setupArsenalToItem = {
 	diag_log format ["List of whitelist default items by listCurrentItemsLoadout %1", _whiteListDefaultStuff];
 
 	//Merge every whitelist
-	_whitelistOfArsenalItems = _currentWeaponItems+_currentBackpackItems+_currentMagazineItems+_currentItems + _whiteListDefaultStuff + ["ACE_key_west","ACE_key_east","ACE_key_civ","ACE_key_indp"];
+	//Add prestige item 
+	_prestigeItems = [] call getPrestigeItems;
+	_whitelistOfArsenalItems = _currentWeaponItems+_currentBackpackItems+_currentMagazineItems+_currentItems + _whiteListDefaultStuff+ _prestigeItems + ["ACE_key_west","ACE_key_east","ACE_key_civ","ACE_key_indp"];
 	diag_log format ["List of whitelist items by listCurrentItemsLoadout %1", _whitelistOfArsenalItems];
 
 	//Fix vanilla arsenal not showing all weapon 
@@ -977,6 +993,16 @@ setupSaveAndLoadRole = {
 adjustTFARRadio = {
 	params ["_currentPlayer"];
 	if (isClass (configFile >> "CfgPatches" >> "task_force_radio")) then {
+		
+		//Clear automatic radio conversion
+		_assignedItems = assignedItems _currentPlayer;
+		{
+			if (["TFAR_anprc152", _x] call BIS_fnc_inString) then 
+			{
+				_currentPlayer unassignItem _x;
+				_currentPlayer removeItem _x;
+			};
+		} foreach _assignedItems;
 
 		//Get default radio setup in the faction
 		_currentFaction = _currentPlayer call getPlayerFaction;

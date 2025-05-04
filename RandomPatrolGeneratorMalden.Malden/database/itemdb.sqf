@@ -130,3 +130,16 @@ basicAmmunitions = [
 	"O_IR_Grenade",
 	"Laserbatteries"
 ];
+
+prestigeItem = [
+	"H_EarProtectors_yellow_F",
+	"H_Beret_gen_F",
+	"H_Cap_Orange_IDAP_F",
+	"H_WirelessEarpiece_F",
+	"H_ParadeDressCap_01_US_F",
+	"H_HeadBandage_bloody_F",
+	"H_Cap_surfer",
+	"H_Hat_blue",
+	"H_Hat_brown",
+	"H_Hat_Tinfoil_F"
+];
