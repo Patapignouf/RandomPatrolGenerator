@@ -26,6 +26,9 @@ generateObjective =
 	_possibleObjectivePosition = _possibleObjectivePosition - [_selectedObjectivePosition];
 
 	diag_log format ["Objective generation started : %1 on position %2", currentObjType, _selectedObjectivePosition];
+
+	//GenerateAnimals 
+	[[_selectedObjectivePosition, 40, 200, 7, 0, 0, 0, [], [[0,0,0],[0,0,0]]] call BIS_fnc_findSafePos] call doGenerateAnimalGroup;
 	
 	//Generate mission environement
 	switch (currentObjType) do 

@@ -333,6 +333,15 @@ doSetGroupSkills =
 };
 
 
+doGenerateAnimalGroup = 
+{
+	params ["_position"];
+	_goatgroup = createGroup Civilian; 
+	_animal = selectRandom ["Sheep_random_F", "Goat_random_F", "Cock_random_F"];
+	for "_i" from 0 to 4 do { _bobthegoat = _goatgroup createUnit [_animal, _position,[], random 10,"NONE"]; }; //Basic ACE conversion will give enough morphine 
+};
+
+
 doAdjustACEMedic = {
 	params ["_thisGroup"];
 
