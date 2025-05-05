@@ -132,8 +132,24 @@ if (isServer) then
 
 				AvalaibleInitAttackPositions = [];
 				AvalaibleInitAttackPositions = [positionToAttack, 1200, 2000, _thisDifficulty] call getListOfPositionsAroundTarget;
-				[ AvalaibleInitAttackPositions, positionToAttack, _thisAvailableOpforGroup, _tempVehicleGroup, (floor (_thisDifficulty/4))+1] execVM 'enemyManagement\behaviorEngine\doAmbush.sqf'; 
+
+				//Chopper reinforcement 50%
 				diag_log format ["Harass start on position %1", positionToAttack];
+				if (count _thisAvailableOpforUnarmedChopperVehicle != 0 &&  random 100 < 50) then 
+				{
+					//Generate enemy wave
+					_closedAvalaibleInitAttackPositions = [positionToAttack, 300, 1000, _thisDifficulty] call getListOfPositionsAroundTarget;
+					for [{_numberOfChopper = 0}, {_numberOfChopper < _thisDifficulty}, {_numberOfChopper = _numberOfChopper + 1}] do
+					{
+						[selectRandom _thisAvailableOpforGroup, selectRandom _thisAvailableOpforUnarmedChopperVehicle, selectRandom _closedAvalaibleInitAttackPositions] execVM 'enemyManagement\behaviorEngine\doParadrop.sqf'; 
+						sleep 1; //Avoid chopper crash
+					};
+
+					[_thisAvailableOpforGroup#0, selectRandom _thisAvailableOpforUnarmedChopperVehicle, positionToAttack] execVM 'enemyManagement\behaviorEngine\doVehicleReinforcement.sqf'; 
+				} else 
+				{
+					[ AvalaibleInitAttackPositions, positionToAttack, _thisAvailableOpforGroup, _tempVehicleGroup, (floor (_thisDifficulty/4))+1] execVM 'enemyManagement\behaviorEngine\doAmbush.sqf'; 
+				};
 
 				switch (missionNamespace getVariable ["opforReinforcement", 1])  do
 				{
