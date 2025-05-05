@@ -765,7 +765,7 @@ if (missionNameSpace getVariable "playerMarkerAllowed" == 1) then
 			24,
 			24,
 			getDirVisual _x,
-			name _x,
+			format ["%1 (%2)", name _x, [(_x getVariable "role")] call getClassInformation],
 			1,
 			0.03,
 			"TahomaB",
