@@ -67,7 +67,14 @@ if (count _potentialMissionEnemyInfo >0) then
 			_intelCivilianRevelated = ["STR_RPG_INTEL_FOB_INF_CIV", mapGridPosition _infoPos];
 			_intelDocumentRevelated = ["STR_RPG_INTEL_FOB_INF_DOC", mapGridPosition _infoPos];
 			_mapMarkerName = "FOB";
-			_mapMarkerIcon = "b_hq";
+			_mapMarkerIcon = "o_hq";
+		};
+		case "RoadblockInfantry":
+		{
+			_intelCivilianRevelated = ["STR_RPG_INTEL_FOB_INF_CIV", mapGridPosition _infoPos];
+			_intelDocumentRevelated = ["STR_RPG_INTEL_FOB_INF_DOC", mapGridPosition _infoPos];
+			_mapMarkerName = "Roadblock";
+			_mapMarkerIcon = "o_inf";
 		};
 		case "DefenseInfantry":
 		{

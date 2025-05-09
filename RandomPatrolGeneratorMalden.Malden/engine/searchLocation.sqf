@@ -122,7 +122,6 @@ isLocationOnMap = {
 //Find good positions roads near positions
 findPositionsNearRoads = {
 	params ["_position", "_distance", "_numberOfPositions"];
-	{deletemarker _x} foreach allMapMarkers;
 
 	//Result positions 
 	_candidateResultPositions = [];

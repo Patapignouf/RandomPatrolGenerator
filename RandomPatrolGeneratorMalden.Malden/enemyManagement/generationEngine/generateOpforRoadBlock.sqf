@@ -33,7 +33,7 @@ if (!([_possibleRoadPosition] call isLocationOnMap)) then
 	_basicEnemyGroups = [[opFaction, "BASIC"] call getBasicUnitsGroup, [opFaction, "AT"] call getBasicUnitsGroup];
 
 	//Spawn Garrison units
-	_opforFOBGarrison = [selectRandom _basicEnemyGroups, _possibleRoadPosition , east, "DefenseFOBInfantry"] call doGenerateEnemyGroup;
+	_opforFOBGarrison = [selectRandom _basicEnemyGroups, _possibleRoadPosition , east, "RoadblockInfantry"] call doGenerateEnemyGroup;
 	{
 		if (count _OpforFobStandardOpforLocation > 0) then 
 		{
