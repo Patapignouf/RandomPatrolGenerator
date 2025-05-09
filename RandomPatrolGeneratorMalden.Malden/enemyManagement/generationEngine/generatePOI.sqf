@@ -120,8 +120,8 @@ if ((missionNameSpace getVariable ["enableOpforVehicle", 0]) != 0) then
 	{
 		for [{_i = 0}, {_i < _numberOfVehicle}, {_i = _i + 1}] do 
 		{	
-			//50% chance to spawn armored vehicle
-			if (random 100 < 50 && enableArmoredVehicle) then 
+			//80% chance to spawn armored vehicle
+			if (random 100 < 80 && enableArmoredVehicle) then 
 			{
 				//50% chance to spawn light armored vehicle
 				if (random 100 < 50) then 
