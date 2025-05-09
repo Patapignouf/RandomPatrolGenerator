@@ -753,28 +753,7 @@ if (isClass (configFile >> "CfgPatches" >> "ace_medical")) then
   player setDamage 0;
 };
 
-//Add map players marker
-if (missionNameSpace getVariable "playerMarkerAllowed" == 1) then 
-{
-	findDisplay 12 displayCtrl 51 ctrlAddEventHandler ["Draw", {
-	{ 
-		_this select 0 drawIcon [
-			"iconMan", // custom images can also be used: getMissionPath "\myFolder\myIcon.paa"
-			[0,0,1,1],
-			getPosASLVisual _x,
-			24,
-			24,
-			getDirVisual _x,
-			format ["%1 (%2)", name _x, [(_x getVariable "role")] call getClassInformation],
-			1,
-			0.03,
-			"TahomaB",
-			"right"
-		]
-		} foreach (allPlayers select {side _x == side player});
-	}];
-};
-
+#include "GUI\mapIndicatorGUI\mapRealTimeMarkers.sqf"
 
 //add respawn tent action
 if (missionNameSpace getVariable ["enableAdvancedRespawn", 1] == 1) then 
@@ -862,6 +841,19 @@ if (missionNameSpace getVariable ["enableAdvancedRespawn", 1] == 1) then
 			_variableToCheck = format ['bluforPositionAdvancedRespawn%1', _groupCaller];
 			waitUntil {[missionNameSpace getVariable _variableToCheck , [0,0,0]] call BIS_fnc_areEqual};
 			deleteVehicle _createTent;
+			_markerName = format ["tent%1", _groupCaller];
+			deleteMarker _markerName;
+		};
+
+		//Create marker
+		_markerName = format ["tent%1", str (group _caller)];
+		if !(_markerName in allMapMarkers) then 
+		{
+			_marker = createMarker [_markerName, getPos _caller]; // Not visible yet.
+			_marker setMarkerText (format ["Tent %1", str (group _caller)]);
+			_marker setMarkerType "b_hq"; // Visible.
+			_marker setMarkerSize [1, 1];
+			_marker setMarkerColor "ColorBlue";
 		};
 
 		//Create action to authorize tent disassembly

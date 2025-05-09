@@ -247,6 +247,19 @@ if (missionNameSpace getVariable ["enableAdvancedRespawn", 1] == 1) then
 			_variableToCheck = format ['bluforPositionAdvancedRespawn%1', _groupCaller];
 			waitUntil {[missionNameSpace getVariable _variableToCheck , [0,0,0]] call BIS_fnc_areEqual};
 			deleteVehicle _createTent;
+			_markerName = format ["tent%1", _groupCaller];
+			deleteMarker _markerName;
+		};
+
+		//Create marker
+		_markerName = format ["tent%1", str (group _caller)];
+		if !(_markerName in allMapMarkers) then 
+		{
+			_marker = createMarker [_markerName, getPos _caller]; // Not visible yet.
+			_marker setMarkerText (format ["Tent %1", str (group _caller)]);
+			_marker setMarkerType "b_hq"; // Visible.
+			_marker setMarkerSize [1, 1];
+			_marker setMarkerColor "ColorBlue";
 		};
 
 	},_x,3,true,false,"","(_this getVariable 'role' == 'leader') && (missionNameSpace getVariable [ format ['bluforAdvancedRespawn%1', str (group _this)], true]) && (vehicle _this == _this) && isTouchingGround _this"];
