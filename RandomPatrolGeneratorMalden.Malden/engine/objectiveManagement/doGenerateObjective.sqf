@@ -104,7 +104,12 @@ generateObjectiveObject =
 		_allBuildings = nearestTerrainObjects [_thisObjectivePosition, ["house", "FORTRESS", "BUNKER"], 100, false, true];
 		_allPositions = [];
 		_allBuildings apply {_allPositions append (_x buildingPos -1)};
-		_thistempObjectivePosition = selectRandom _allPositions;
+
+		//Check if there is an eligible building to the objective
+		if (count _allPositions != 0) then 
+		{
+			_thistempObjectivePosition = selectRandom _allPositions;
+		};
 	};
 
 	
