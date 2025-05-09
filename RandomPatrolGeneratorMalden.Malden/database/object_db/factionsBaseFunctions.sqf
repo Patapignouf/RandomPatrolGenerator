@@ -321,6 +321,7 @@ mergeFactions = {
 		"bluforStaticWeapon",
 		"bluforMortar",
 		"bluforFixedWing",
+		"bluforFixedWingTransport",
 		"bluforBoat",
 		"bluforArmoredVehicle",
 		"bluforUnarmedVehicleChopper",

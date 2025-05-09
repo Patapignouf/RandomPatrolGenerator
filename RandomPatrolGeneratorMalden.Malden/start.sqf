@@ -118,6 +118,10 @@ publicVariable "bluforExtractVehicleChopper";
 bluforFixedWing = bluforFixedWing_db select {_x select 1  == bluFaction} select 0 select 0;
 publicVariable "bluforFixedWing";
 
+bluforFixedWingTransport = bluforFixedWingTransport_db select {_x select 1  == bluFaction} select 0 select 0;
+publicVariable "bluforFixedWingTransport";
+
+
 bluforArmedChopper = bluforArmedChopper_db select {_x select 1  == bluFaction} select 0 select 0;
 publicVariable "bluforArmedChopper";
 
@@ -150,8 +154,7 @@ baseEnemyHeavyArmoredVehicleGroup = baseEnemyHeavyArmoredVehicleGroup_db select 
 baseEnemyUnarmedChopperGroup = baseEnemyUnarmedChopperGroup_db select {_x select 1  == opFaction} select 0 select 0;
 baseEnemyArmedChopperGroup = baseEnemyArmedChopperGroup_db select {_x select 1  == opFaction} select 0 select 0;
 baseFixedWingGroup = baseFixedWingGroup_db select {_x select 1  == opFaction} select 0 select 0;
-
-
+baseEnemyFixedWingTransport = enemyFixedWingTransport_db select {_x select 1  == opFaction} select 0 select 0;
 
 //Enemy Wave Composition, needs to be completely rework
 EnemyWaveLevel_1 = [baseEnemyGroup, baseEnemyATGroup];
@@ -1026,6 +1029,7 @@ if (enableCampaignMode) then
 				baseEnemyUnarmedChopperGroup = baseEnemyUnarmedChopperGroup_db select {_x select 1  == opFaction} select 0 select 0;
 				baseEnemyArmedChopperGroup = baseEnemyArmedChopperGroup_db select {_x select 1  == opFaction} select 0 select 0;
 				baseFixedWingGroup = baseFixedWingGroup_db select {_x select 1  == opFaction} select 0 select 0;
+				baseEnemyFixedWingTransport = enemyFixedWingTransport_db select {_x select 1  == opFaction} select 0 select 0;
 			};
 
 			//Randomize objective locations or not

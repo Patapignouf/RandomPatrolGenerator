@@ -370,7 +370,7 @@ if (side player == independent) then
 			_independentUnarmedVehicle = bluforUnarmedVehicle_db select {_x select 1  == indFaction} select 0 select 0;
 			_independentUnarmedChopper = bluforUnarmedVehicleChopper_db select {_x select 1  == indFaction} select 0 select 0;
 
-			[["independentVehicleAvalaibleSpawn", _independentUnarmedVehicle, [], [], _independentUnarmedChopper, [], [], [], []], 'GUI\vehicleSpawnerGUI\vehicleSpawner.sqf'] remoteExec ['BIS_fnc_execVM', _caller];
+			[["independentVehicleAvalaibleSpawn", _independentUnarmedVehicle, [], [], _independentUnarmedChopper, [], [], [], [], []], 'GUI\vehicleSpawnerGUI\vehicleSpawner.sqf'] remoteExec ['BIS_fnc_execVM', _caller];
 	},_x,3,true,false,"","(_target distance _this <5) && (_this getVariable 'role' == 'leader' || _this getVariable 'role' == 'pilot')"];
 
 	waituntil {!isNil "isBluforAttacked" && !isNil "isIndAttacked"};
@@ -598,7 +598,7 @@ if (side player == blufor) then
 					//Define parameters
 					params ["_object","_caller","_ID","_avalaibleVehicle"];
 
-					[["bluforVehicleAvalaibleSpawn", bluforUnarmedVehicle, bluforArmedVehicle, bluforArmoredVehicle, bluforUnarmedVehicleChopper, bluforArmedChopper, bluforDrone, bluforFixedWing, bluforBoat], 'GUI\vehicleSpawnerGUI\vehicleSpawner.sqf'] remoteExec ['BIS_fnc_execVM', _caller];
+					[["bluforVehicleAvalaibleSpawn", bluforUnarmedVehicle, bluforArmedVehicle, bluforArmoredVehicle, bluforUnarmedVehicleChopper, bluforArmedChopper, bluforDrone, bluforFixedWing, bluforFixedWingTransport, bluforBoat], 'GUI\vehicleSpawnerGUI\vehicleSpawner.sqf'] remoteExec ['BIS_fnc_execVM', _caller];
 			},_x,3,true,false,"","(_target distance _this <5) && (_this getVariable 'role' == 'leader' || _this getVariable 'role' == 'pilot')"];	
 	};
 

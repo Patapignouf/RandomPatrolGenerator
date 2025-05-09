@@ -367,14 +367,26 @@ publicVariable "factionInfos";
 							_currentStuffFaction = 	missionNamespace getVariable [_currentFactionName, []];
 							_currentStuffFaction pushBack _cfgName;
 							missionNamespace setVariable [_currentFactionName, _currentStuffFaction]; 
-					};
+					}; 
 					if (_cfgName isKindOf 'Plane') then {	
-
+						//Transport plane
+						if (((configFile >> "CfgVehicles" >> _cfgName >> "transportSoldier") call BIS_fnc_GetCfgData) > 5) then 
+						{
+							_currentFactionName = format ["bluforFixedWingTransport%1", _thisFac];
+							
+							_currentStuffFaction = 	missionNamespace getVariable [_currentFactionName, []];
+							_currentStuffFaction pushBack _cfgName;
+							missionNamespace setVariable [_currentFactionName, _currentStuffFaction]; 
+						} else 
+						{
+							//Fighter plane 
+							//CAS Plane
 							_currentFactionName = format ["bluforFixedWing%1", _thisFac];
 
 							_currentStuffFaction = 	missionNamespace getVariable [_currentFactionName, []];
 							_currentStuffFaction pushBack _cfgName;
 							missionNamespace setVariable [_currentFactionName, _currentStuffFaction]; 
+						};
 					};
 					if (_cfgName isKindOf 'StaticWeapon') then {	
 
@@ -504,6 +516,10 @@ publicVariable "factionInfos";
 			[_thisFac, "baseEnemyLightArmoredVehicleGroup", _light] call doSetOpfor;
 			[_thisFac, "baseEnemyHeavyArmoredVehicleGroup", _heavy] call doSetOpfor;
 
+			_currentFactionName = format ["bluforFixedWingTransport%1", _thisFac];
+			_currentStuffFaction = 	missionNamespace getVariable [_currentFactionName, []];
+			[_thisFac, "enemyFixedWingTransport", _currentStuffFaction] call doSetOpfor;
+			
 			_currentFactionName = format ["bluforUnarmedVehicleChopper%1", _thisFac];
 			_currentStuffFaction = 	missionNamespace getVariable [_currentFactionName, []];
 			[_thisFac, "baseEnemyUnarmedChopperGroup", _currentStuffFaction] call doSetOpfor;

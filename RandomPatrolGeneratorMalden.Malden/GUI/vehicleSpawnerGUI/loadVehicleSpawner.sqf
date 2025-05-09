@@ -2,7 +2,7 @@
 
 //Based on the work of 7erra
 //Github : https://github.com/7erra/LNBSort
-params ["_mode", "_this", "_VehicleAvalaibleSpawn","_UnarmedVehicle","_ArmedVehicle","_ArmoredVehicle","_UnarmedVehicleChopper","_ArmedChopper","_Drone","_FixedWing","_Boat"];
+params ["_mode", "_this", "_VehicleAvalaibleSpawn","_UnarmedVehicle","_ArmedVehicle","_ArmoredVehicle","_UnarmedVehicleChopper","_ArmedChopper","_Drone","_FixedWing", "_FixedWingTransport","_Boat"];
 private _mainDisplay = (findDisplay 50000);
 private _buttonOK = _mainDisplay displayCtrl 50001;
 private _buttonPreview = _mainDisplay displayCtrl 50003;
@@ -107,6 +107,17 @@ switch (_mode) do
 				_lnbEntries lnbSetData [[_ind, 1], _vehicleName];
 				_lnbEntries lnbSetData [[_ind, 2], str _price];
 			} foreach _FixedWing;
+
+			{
+				_price = 400;
+				_vehicleName = getText (configFile >> "cfgVehicles" >> _x >> "displayName");
+				_vehiclePicture = getText (configFile >> "cfgVehicles" >> _x >> "picture");
+				_ind = _lnbEntries lnbAddRow ["", _vehicleName, "Transport aircraft", str _price];
+				_lnbEntries lnbSetPicture [[_ind, 0], _vehiclePicture];
+				_lnbEntries lnbSetData [[_ind, 0], _x];
+				_lnbEntries lnbSetData [[_ind, 1], _vehicleName];
+				_lnbEntries lnbSetData [[_ind, 2], str _price];
+			} foreach _FixedWingTransport;
 		};
 
 		//Add ships
@@ -132,7 +143,7 @@ switch (_mode) do
 			_btn = _display displayCtrl _idc;
 			_btn setVariable ["reverseSort",false];
 			_btn ctrlAddEventHandler ["ButtonClick",{
-				["sortCol",[ctrlParent (_this#0)] +_this , _VehicleAvalaibleSpawn, _UnarmedVehicle, _ArmedVehicle, _ArmoredVehicle, _UnarmedVehicleChopper, _ArmedChopper, _Drone, _FixedWing, _Boat] execVM "GUI\vehicleSpawnerGUI\loadVehicleSpawner.sqf";
+				["sortCol",[ctrlParent (_this#0)] +_this , _VehicleAvalaibleSpawn, _UnarmedVehicle, _ArmedVehicle, _ArmoredVehicle, _UnarmedVehicleChopper, _ArmedChopper, _Drone, _FixedWing, _FixedWingTransport, _Boat] execVM "GUI\vehicleSpawnerGUI\loadVehicleSpawner.sqf";
 			}];
 		};
 	};

@@ -24,16 +24,14 @@ _currentEnemyGroup enableDynamicSimulation false;
 forEach (units _currentEnemyGroup);
 
 //Go to landing pos
-_randomPosAroundDest = [[[_destinationPos, 400]], []] call BIS_fnc_randomPos;
-_lzPos = _randomPosAroundDest findEmptyPosition [0, 150,"Land_HelipadCircle_F"];
-wp1 = _vehicleTransportGroup addWaypoint [_lzPos, 0];
+wp1 = _vehicleTransportGroup addWaypoint [_destinationPos, 20];
 wp1 setwaypointtype"MOVE"; 
 wp1 setWaypointBehaviour "CARELESS";
 wp1 setWaypointCombatMode "BLUE";
 wp1 setWaypointSpeed "FULL";
 wp1 setWaypointCompletionRadius 100;
 
-waitUntil {(getPos _heli) distance _lzPos < 250};
+waitUntil {(getPos _heli) distance _destinationPos < 250};
 
 //drop group
 {
@@ -50,7 +48,7 @@ waitUntil {(getPos _heli) distance _lzPos < 250};
 [_currentEnemyGroup, _destinationPos] call doAttack; 
 
 //Add Experience
-//Add eventhandler killed
+//Add eventhandler killedssssssss
 _vehicleFromGroup = vehicle (leader _vehicleTransportGroup);
 
 [_vehicleFromGroup] call addVehicleXPSetup;

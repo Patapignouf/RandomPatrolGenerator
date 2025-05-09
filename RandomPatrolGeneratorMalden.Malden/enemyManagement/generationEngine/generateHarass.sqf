@@ -28,6 +28,7 @@ if (isServer) then
 		_thisAvailableOpforUnarmedChopperVehicle = baseEnemyUnarmedChopperGroup ;
 		_thisAvailableOpforFixedWing = baseFixedWingGroup ;
 		_thisAvailableOpforArmedChopperVehicle = baseEnemyArmedChopperGroup;
+		_thisAvailableOpforFixedWingTransport = baseEnemyFixedWingTransport;
 
 
 		_thisDifficulty = missionNamespace getVariable "missionDifficultyParam"; //Default medium
@@ -141,7 +142,7 @@ if (isServer) then
 					_closedAvalaibleInitAttackPositions = [positionToAttack, 300, 1000, _thisDifficulty] call getListOfPositionsAroundTarget;
 					for [{_numberOfChopper = 0}, {_numberOfChopper < _thisDifficulty}, {_numberOfChopper = _numberOfChopper + 1}] do
 					{
-						[selectRandom _thisAvailableOpforGroup, selectRandom _thisAvailableOpforUnarmedChopperVehicle, selectRandom _closedAvalaibleInitAttackPositions] execVM 'enemyManagement\behaviorEngine\doParadrop.sqf'; 
+						[selectRandom _thisAvailableOpforGroup, selectRandom (_thisAvailableOpforUnarmedChopperVehicle+_thisAvailableOpforFixedWingTransport), selectRandom _closedAvalaibleInitAttackPositions] execVM 'enemyManagement\behaviorEngine\doParadrop.sqf'; 
 						sleep 1; //Avoid chopper crash
 					};
 
