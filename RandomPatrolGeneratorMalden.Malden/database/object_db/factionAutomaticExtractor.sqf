@@ -146,6 +146,7 @@ publicVariable "factionInfos";
 		"rhs_faction_usn",
 		"rhsgref_faction_cdf_air",
 		"rhs_faction_vvs_c",
+		"rhs_faction_tv",
 		"rhsgref_faction_cdf_air_b",
 		"rhssaf_faction_airforce",
 		"rhssaf_faction_airforce_opfor"
@@ -464,9 +465,12 @@ publicVariable "factionInfos";
 		["rhs_faction_usarmy_w", "rhs_faction_usn"] call mergeFactions;
 		["rhsgref_faction_cdf_ground", "rhsgref_faction_cdf_air"] call mergeFactions;
 		["rhs_faction_msv", "rhs_faction_vvs_c"] call mergeFactions;
+		["rhs_faction_msv", "rhs_faction_tv"] call mergeFactions;
+		["rhs_faction_vmf", "rhs_faction_vvs_c"] call mergeFactions;
+		["rhs_faction_vmf", "rhs_faction_tv"] call mergeFactions;
 		["rhsgref_faction_cdf_ground_b", "rhsgref_faction_cdf_air_b"] call mergeFactions;
 		["rhssaf_faction_army", "rhssaf_faction_airforce"] call mergeFactions;
-		["rhssaf_faction_army_opfor", "rhssaf_faction_airforce_opfor"] call mergeFactions;
+		["rhssaf_faction_army_opfor", "rhssaf_faction_airforce_opfor"] call mergeFactions;	
 	};
 
 	//Define Opfor factions 
