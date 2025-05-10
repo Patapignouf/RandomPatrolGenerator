@@ -123,6 +123,18 @@ if ((missionNameSpace getVariable ["enableOpforVehicle", 0]) != 0) then
 			//80% chance to spawn armored vehicle
 			if (random 100 < 80 && enableArmoredVehicle) then 
 			{
+				//Add light armored to heavy armored if needed (balance armored vehicle generation)
+
+				if (count _thisAvailableOpforLightArmoredVehicle == 0 && count _thisAvailableOpforCars != 0) then 
+				{
+					_thisAvailableOpforLightArmoredVehicle = _thisAvailableOpforCars;
+				};
+
+				if (count _thisAvailableOpforHeavyArmoredVehicle == 0 && count _thisAvailableOpforLightArmoredVehicle != 0) then 
+				{
+					_thisAvailableOpforHeavyArmoredVehicle = _thisAvailableOpforLightArmoredVehicle;
+				};
+
 				//50% chance to spawn light armored vehicle
 				if (random 100 < 50) then 
 				{

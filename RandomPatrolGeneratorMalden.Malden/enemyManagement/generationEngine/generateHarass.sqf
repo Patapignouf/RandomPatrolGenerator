@@ -77,14 +77,14 @@ if (isServer) then
 					};
 
 					//Generate Light armored vehicle spawn chance 
-					if (count _thisAvailableOpforLightArmoredVehicle != 0 && enableArmoredVehicle && random 100 < 20) then 
+					if (count _thisAvailableOpforLightArmoredVehicle != 0 && enableArmoredVehicle && random 100 < 30) then 
 					{
 						//Light armored vehicle spawn chance 20%
 						_tempVehicleGroup pushBack [selectRandom _thisAvailableOpforLightArmoredVehicle];
 					};
 
 					//Generate Light armored vehicle spawn chance
-					if (count _thisAvailableOpforHeavyArmoredVehicle != 0 && enableArmoredVehicle && random 100 < 15) then 
+					if (count _thisAvailableOpforHeavyArmoredVehicle != 0 && enableArmoredVehicle && random 100 < 25) then 
 					{
 						//Heavy armored vehicle spawn chance 15%
 						_tempVehicleGroup pushBack [selectRandom _thisAvailableOpforHeavyArmoredVehicle];
