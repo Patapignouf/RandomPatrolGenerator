@@ -109,7 +109,7 @@ if (isClass (configFile >> "CfgPatches" >> "ace_medical")) then
 
 //Radio basic items
 basicDefaultRadio = [
-	"itemRadio"
+	"ItemRadio"
 ];
 
 //Add TFAR Radio

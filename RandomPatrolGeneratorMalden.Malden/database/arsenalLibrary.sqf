@@ -994,6 +994,11 @@ adjustTFARRadio = {
 	params ["_currentPlayer"];
 	if (isClass (configFile >> "CfgPatches" >> "task_force_radio")) then {
 		
+		_unitHaveRadio = (("ItemRadio" in (assignedItems _currentPlayer)) || (call TFAR_fnc_haveDDRadio) || (call TFAR_fnc_haveLRRadio) || call TFAR_fnc_haveSWRadio);
+
+		_currentPlayer unassignItem "ItemRadio";
+		_currentPlayer removeItem "ItemRadio";
+
 		//Clear automatic radio conversion
 		_assignedItems = assignedItems _currentPlayer;
 		{
@@ -1009,22 +1014,25 @@ adjustTFARRadio = {
 		_factionDefaultRadios = ((factionDefaultRadios_db select {_x#1  == _currentFaction})#0)#0;
 
 		//If there is a radio defined, add it to the player else add basic default radio
-		if (count _factionDefaultRadios > 0 && ((call TFAR_fnc_haveDDRadio) || (call TFAR_fnc_haveLRRadio) || call TFAR_fnc_haveSWRadio)) then 
+		if (_unitHaveRadio) then 
 		{
-			_currentPlayer addItem _factionDefaultRadios#0;
-			_currentPlayer assignItem _factionDefaultRadios#0;
-		} else 
-		{
-			_currentPlayer addItem basicDefaultRadio#0;
-			_currentPlayer assignItem basicDefaultRadio#0;	
+			if (count _factionDefaultRadios > 0) then 
+			{
+				_currentPlayer addItem _factionDefaultRadios#0;
+				_currentPlayer assignItem _factionDefaultRadios#0;
+			} else 
+			{
+				_currentPlayer addItem basicDefaultRadio#0;
+				_currentPlayer assignItem basicDefaultRadio#0;	
+			};
 		};
 
 		//Seems not working
 		if (side _currentPlayer == blufor) then
 		{
 			// Comment TFAR function
-			// [(call TFAR_fnc_activeSwRadio), 1, format ["%1",bluforShortFrequencyTFAR]] call TFAR_fnc_setChannelFrequency;
-			// [(call TFAR_fnc_activeLrRadio), 1, format ["%1",bluforShortFrequencyTFAR]] call TFAR_fnc_SetChannelFrequency;
+			[(call TFAR_fnc_activeSwRadio), 1, format ["%1",bluforShortFrequencyTFAR]] call TFAR_fnc_setChannelFrequency;
+			[(call TFAR_fnc_activeLrRadio), 1, format ["%1",bluforShortFrequencyTFAR]] call TFAR_fnc_SetChannelFrequency;
 		};
 	};
 };
@@ -1114,8 +1122,6 @@ adjustLoadout = {
 	_currentPlayer addItem "ACE_morphine";	
 	_currentPlayer addItem "ACE_WaterBottle";
 	_currentPlayer addItem "ACE_EarPlugs";
-	_currentPlayer unassignItem "itemRadio";
-	_currentPlayer removeItem "itemRadio";
 	_currentPlayer setSpeaker "noVoice";
 
 	//Adapt loadout to a specific Era
