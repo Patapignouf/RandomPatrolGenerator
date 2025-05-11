@@ -149,7 +149,8 @@ publicVariable "factionInfos";
 		"rhs_faction_tv",
 		"rhsgref_faction_cdf_air_b",
 		"rhssaf_faction_airforce",
-		"rhssaf_faction_airforce_opfor"
+		"rhssaf_faction_airforce_opfor",
+		"FP_SOAR"
 	];
 
 	waitUntil {missionNamespace getVariable "generationSetup" == true};
@@ -279,7 +280,15 @@ publicVariable "factionInfos";
 									_currentFactionName = format ["attachmentShortList%1", _thisFac];
 									_accessoriesShort = missionNamespace getVariable [_currentFactionName, []];
 									_accessoriesShort = _accessoriesShort + _listOfWeaponsAndAccessoriesFromStuff#1;
-									missionNamespace setVariable [_currentFactionName, _accessoriesShort]; 
+									missionNamespace setVariable [_currentFactionName, _accessoriesShort];
+
+									_currentFactionName = format ["uniformList%1", _thisFac];
+									_uniformList = missionNamespace getVariable [_currentFactionName, []];
+
+									_uniform = ((_cfgVehName >> "uniformClass") call BIS_fnc_GetCfgData);
+									_linkedItems = ((_cfgVehName >> "linkedItems") call BIS_fnc_GetCfgData);
+									_uniformList = [_uniform] + _linkedItems;
+									missionNamespace setVariable [_currentFactionName, _uniformList];  
 								};
 							};
 						};
@@ -471,6 +480,37 @@ publicVariable "factionInfos";
 		["rhsgref_faction_cdf_ground_b", "rhsgref_faction_cdf_air_b"] call mergeFactions;
 		["rhssaf_faction_army", "rhssaf_faction_airforce"] call mergeFactions;
 		["rhssaf_faction_army_opfor", "rhssaf_faction_airforce_opfor"] call mergeFactions;	
+
+		//RHS Faction +
+		["rhs_faction_socom","FP_SOAR"] call mergeFactions;	
+		["FP_RHSUSAF_RANGER","FP_SOAR"] call mergeFactions;	
+		["FP_RHSUSAF_RANGER_2000s","FP_SOAR"] call mergeFactions;	
+		["FP_SOCOM_DEVGRU","FP_SOAR"] call mergeFactions;	
+	};
+
+	//Complete blufor faction with missing key role (leader/medic)
+	_bluforFaction = missionNamespace getVariable "bluforFaction";
+	_currentFactionName = format ["loadout%1", _bluforFaction];
+	_currentStuffFaction = 	missionNamespace getVariable [_currentFactionName, []];
+
+	//Leader
+	if (count (_currentStuffFaction select {_x#0 == "leader"}) == 0) then 
+	{
+		_defaultRifleman = (_currentStuffFaction select {_x#0 == "rifleman"})#0;
+		_defaultLeader =+ _defaultRifleman;
+		_defaultLeader set [0, "leader"];
+		_currentStuffFaction pushBack _defaultLeader;
+		missionNamespace setVariable [_currentFactionName, _currentStuffFaction]; 
+	};
+
+	//Medic
+	if (count (_currentStuffFaction select {_x#0 == "medic"}) == 0) then 
+	{
+		_defaultRifleman = (_currentStuffFaction select {_x#0 == "rifleman"})#0;
+		_defaultMedic =+ _defaultRifleman;
+		_defaultMedic set [0, "medic"];
+		_currentStuffFaction pushBack _defaultMedic;
+		missionNamespace setVariable [_currentFactionName, _currentStuffFaction]; 
 	};
 
 	//Define Opfor factions 
