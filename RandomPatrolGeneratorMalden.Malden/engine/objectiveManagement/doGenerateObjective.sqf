@@ -212,6 +212,37 @@ generateObjectiveObject =
 				//Manage objective completion
 				[_thisObjective] execVM 'engine\objectiveManagement\checkObjectInArea.sqf';
 				[_thisObjective] execVM 'engine\objectiveManagement\checkDeadVehicle.sqf';  
+
+				[
+					_objectiveObject, 
+					"Destroy ammo box", 
+					"\a3\ui_f_oldman\data\IGUI\Cfg\holdactions\destroy_ca.paa", 
+					"\a3\ui_f_oldman\data\IGUI\Cfg\holdactions\destroy_ca.paa", 
+					"_this distance _target < 3 && _this getVariable 'role' == 'engineer'",						// Condition for the action to be shown
+					"_caller distance _target < 3",						// Condition for the action to progress
+					{
+						// Action start code
+					}, 
+					{
+						// Action on going code
+					},  
+					{
+						// Action successfull code
+						params ["_object","_caller","_ID","_objectParams","_progress","_maxProgress"];
+						_thisObjective = _objectParams select 0;
+						sleep 5;
+						_object setDamage 1;
+
+					}, 
+					{
+						// Action failed code
+					}, 
+					[_thisObjective],  
+					2,
+					0, 
+					true, 
+					false
+				] remoteExec ["BIS_fnc_holdActionAdd", 0, true];
 			};
 		case "hvt":
 			{
@@ -219,7 +250,7 @@ generateObjectiveObject =
 				_objectiveObject = leader ([_currentRandomPos, east, [selectRandom avalaibleHVT],[],[],[],[],[], random 360] call BIS_fnc_spawnGroup);
 				_objectiveObject disableAI "PATH";
 				diag_log format ["HVT %2 _thisObjectivePosition : %1",_thisObjectivePosition, _objectiveObject];
-				currentObj setVariable ["isObjectiveObject", true, true];
+				_objectiveObject setVariable ["isObjectiveObject", true, true];
 				_objectiveObject setVariable ["isObjectiveObject", true, true];
 				_thisObjective = [_objectiveObject, _thisObjectiveType] call generateObjectiveTracker;
 				diag_log format ["HVT %2 _thisObjectivePosition : %1",_thisObjectivePosition, _objectiveObject];
