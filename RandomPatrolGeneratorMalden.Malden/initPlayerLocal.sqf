@@ -738,6 +738,18 @@ if (missionNameSpace getVariable ["enableSelfRespawnTimer", 0] == 0) then
 	player setVariable ["canRTB", true, true];
 };
 
+if (didJIP && count (units group player) == 1 && count (allPlayers select {side _x == side player}) != 1) then 
+{
+	private _resultAlone = ["You seem to be alone in your squad, do you want to join another ?", "Confirm", true, true] call BIS_fnc_guiMessage;
+
+	if (_resultAlone) then {
+		//systemChat "The player is sure.";
+		[player] joinSilent (group (selectRandom (allPlayers select {side _x == side player && _x != player})));
+	} else {
+		//systemChat "The player is not sure.";
+	};
+};
+
 
 //Setup default TFAR radio frequency
 if (isClass (configFile >> "CfgPatches" >> "task_force_radio")) then {
