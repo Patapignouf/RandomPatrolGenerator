@@ -310,3 +310,7 @@ if (!normalClose) then
 	[] call doInitializePlayer;
 };
 
+//DirtyFix for TFAR Radio bug 
+[player] call doAdjustAdvancedStuff;
+
+

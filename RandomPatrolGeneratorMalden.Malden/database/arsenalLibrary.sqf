@@ -999,6 +999,10 @@ adjustTFARRadio = {
 		_currentPlayer unassignItem "ItemRadio";
 		_currentPlayer removeItem "ItemRadio";
 
+		//Get default radio setup in the faction
+		_currentFaction = _currentPlayer call getPlayerFaction;
+		_factionDefaultRadios = ((factionDefaultRadios_db select {_x#1  == _currentFaction})#0)#0;
+
 		//Clear automatic radio conversion
 		_assignedItems = assignedItems _currentPlayer;
 		{
@@ -1008,10 +1012,6 @@ adjustTFARRadio = {
 				_currentPlayer removeItem _x;
 			};
 		} foreach _assignedItems;
-
-		//Get default radio setup in the faction
-		_currentFaction = _currentPlayer call getPlayerFaction;
-		_factionDefaultRadios = ((factionDefaultRadios_db select {_x#1  == _currentFaction})#0)#0;
 
 		//If there is a radio defined, add it to the player else add basic default radio
 		// if (_unitHaveRadio) then 
@@ -1125,6 +1125,15 @@ adjustLoadout = {
 	_currentPlayer setSpeaker "noVoice";
 
 	//Adapt loadout to a specific Era
+	[_currentPlayer] call doAdjustAdvancedStuff;
+
+	diag_log format ["Player %1 loadout adjust", name _currentPlayer];
+};
+
+
+doAdjustAdvancedStuff = {
+	params ["_currentPlayer"];
+	//Adapt loadout to a specific Era
 	switch (warEra) do
 	{
 		//2nd War
@@ -1160,7 +1169,6 @@ adjustLoadout = {
 			
 		};
 	};
-	diag_log format ["Player %1 loadout adjust", name _currentPlayer];
 };
 
 RemoveArsenalActionFromGivenObject = {
