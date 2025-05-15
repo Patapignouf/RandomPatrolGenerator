@@ -7,10 +7,17 @@ _currentEnemyGroup = [_enemyGroup, [0,0], east, ""] call doGenerateEnemyGroup;
 
 //spawn enemy vehicle
 //_vehicleTransportGroup = [[_transportVehicle], [selectRandom [0,worldSize],selectRandom [0,worldSize],500], east, ""] call doGenerateEnemyGroup;
-//[baseEnemyGroup, selectRandom baseEnemyUnarmedChopperGroup, getPos player] execVM 'enemyManagement\behaviorEngine\doVehicleReinforcement.sqf'; 
+//[baseEnemyGroup, selectRandom baseEnemyUnarmedChopperGroup, getPos player] execVM 'enemyManagement\behaviorEngine\doParadrop.sqf'; 
 
 _vehicleTransportGroup = [[_transportVehicle], [selectRandom [0-random 200,worldSize+ random 200],selectRandom [0- random 200,worldSize+ random 200]], east, ""] call doGenerateEnemyGroup;
 _heli = vehicle (leader _vehicleTransportGroup);
+
+//Add Experience
+//Add eventhandler killedssssssss
+_vehicleFromGroup = vehicle (leader _vehicleTransportGroup);
+
+[_vehicleFromGroup] call addVehicleXPSetup;
+
 
 //enable groups
 _vehicleTransportGroup enableDynamicSimulation false;
@@ -29,9 +36,11 @@ wp1 setwaypointtype"MOVE";
 wp1 setWaypointBehaviour "CARELESS";
 wp1 setWaypointCombatMode "BLUE";
 wp1 setWaypointSpeed "FULL";
-wp1 setWaypointCompletionRadius 100;
+wp1 setWaypointCompletionRadius 150;
 
-waitUntil {(getPos _heli) distance _destinationPos < 250};
+
+waitUntil {[(getPos _heli)#0,(getPos _heli)#1,0] distance _destinationPos < 400};
+
 
 //drop group
 {
@@ -46,12 +55,6 @@ waitUntil {(getPos _heli) distance _destinationPos < 250};
 
 //Attack specific pos
 [_currentEnemyGroup, _destinationPos] call doAttack; 
-
-//Add Experience
-//Add eventhandler killedssssssss
-_vehicleFromGroup = vehicle (leader _vehicleTransportGroup);
-
-[_vehicleFromGroup] call addVehicleXPSetup;
 
 //back to map border
 wp2 = _vehicleTransportGroup addWaypoint [[selectRandom [0,worldSize],selectRandom [0,worldSize]], 25];

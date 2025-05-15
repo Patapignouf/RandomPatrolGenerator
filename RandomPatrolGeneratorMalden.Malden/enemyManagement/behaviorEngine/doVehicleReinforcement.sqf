@@ -11,6 +11,12 @@ _currentEnemyGroup = [_enemyGroup, [0,0], east, ""] call doGenerateEnemyGroup;
 _vehicleTransportGroup = [[_transportVehicle], [selectRandom [0,worldSize],selectRandom [0,worldSize]], east, ""] call doGenerateEnemyGroup;
 _heli = vehicle (leader _vehicleTransportGroup);
 
+//Add Experience
+//Add eventhandler killed
+_vehicleFromGroup = vehicle (leader _vehicleTransportGroup);
+
+[_vehicleFromGroup] call addVehicleXPSetup;
+
 //enable groups
 _vehicleTransportGroup enableDynamicSimulation false;
 _currentEnemyGroup enableDynamicSimulation false;
@@ -38,12 +44,6 @@ waitUntil {isTouchingGround (_heli)};
 //Attack specific pos
 _currentEnemyGroup leaveVehicle _heli;
 [_currentEnemyGroup, _destinationPos] call doAttack; 
-
-//Add Experience
-//Add eventhandler killed
-_vehicleFromGroup = vehicle (leader _vehicleTransportGroup);
-
-[_vehicleFromGroup] call addVehicleXPSetup;
 
 //back to map border
 wp2 = _vehicleTransportGroup addWaypoint [[selectRandom [0,worldSize],selectRandom [0,worldSize]], 25];
