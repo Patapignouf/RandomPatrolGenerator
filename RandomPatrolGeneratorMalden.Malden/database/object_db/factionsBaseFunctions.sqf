@@ -2,7 +2,7 @@ adjustRole = {
 	params ["_cfgRole", "_cfgName"];
 
 	_backpackToTest = (configFile >> "CfgVehicles" >> _cfgName >> "backpack") call BIS_fnc_GetCfgData;
-	if (["_Ammo_", _backpackToTest] call BIS_fnc_inString) then 
+	if (false) then 
 	{
 		_cfgRole = "autorifleman";//Temp
 	} else 
@@ -40,6 +40,10 @@ adjustRole = {
 		{
 			_cfgRole = "grenadier";
 		};
+		if (["mechanic", _cfgName] call BIS_fnc_inString) then 
+		{
+			_cfgRole = "engineer";
+		};
 		if (["_arifleman", _cfgName] call BIS_fnc_inString) then 
 		{
 			_cfgRole = "autorifleman";
@@ -52,13 +56,17 @@ adjustRole = {
 		{
 			_cfgRole = "UAV operator";
 		};
-		if (["_aa", _cfgName] call BIS_fnc_inString) then 
+		if (["_aa", _cfgName] call BIS_fnc_inString || ["_LAT", _cfgName] call BIS_fnc_inString) then 
 		{
 			_cfgRole = "at";
 		};
 		if (["JTAC", _cfgName] call BIS_fnc_inString || ["radioman", _cfgName] call BIS_fnc_inString) then 
 		{
 			_cfgRole = "radioman";
+		};
+		if (["_sergeant", _cfgName] call BIS_fnc_inString ) then 
+		{
+			_cfgRole = "leader";
 		};
 	};
 
