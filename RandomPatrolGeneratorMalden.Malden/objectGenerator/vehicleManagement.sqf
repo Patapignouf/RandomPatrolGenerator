@@ -148,6 +148,37 @@ doGenerateVehicleForFOB =
 		[["Boats","ColorBlue","hd_pickup_noShadow",_shipGoodPosition, blufor], 'objectGenerator\doGenerateMarker.sqf'] remoteExec ['BIS_fnc_execVM', 0];	
 	};
 
+	//Add flip vehicle interaction
+	[
+		_vehicleSpawned#0, 
+		"Flip Vehicle", 
+		"\a3\ui_f\data\IGUI\Cfg\holdactions\holdAction_unloaddevice_ca.paa", 
+		"\a3\ui_f\data\IGUI\Cfg\holdactions\holdAction_unloaddevice_ca.paa", 
+		"(_this distance _target < 5) && (count crew _target == 0)",		// Condition for the action to be shown
+		"_caller distance _target < 5",		// Condition for the action to progress
+		{
+			// Action start code
+		}, 
+		{
+			// Action on going code
+		},  
+		{
+			// Action successfull code
+			params ["_object","_caller","_ID","_objectParams","_progress","_maxProgress"];
+			
+			["engine\doFlipVehicle.sqf"] remoteExec ['BIS_fnc_execVM', 2];
+
+		}, 
+		{
+			// Action failed code
+		}, 
+		[],  
+		8,
+		5, 
+		false, 
+		false
+	] remoteExec ["BIS_fnc_holdActionAdd", 0, true];
+
 	_vehicleSpawned;
 };
 
