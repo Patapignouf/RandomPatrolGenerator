@@ -995,7 +995,7 @@ adjustTFARRadio = {
 	if (isClass (configFile >> "CfgPatches" >> "task_force_radio")) then {
 		
 		// _unitHaveRadio = (("ItemRadio" in (assignedItems _currentPlayer)) || (call TFAR_fnc_haveDDRadio) || (call TFAR_fnc_haveLRRadio) || call TFAR_fnc_haveSWRadio);
- 		_unitHaveRadio = ("ItemRadio" in (assignedItems _currentPlayer));
+ 		// _unitHaveRadio = ("ItemRadio" in (assignedItems _currentPlayer));
 		_currentPlayer unassignItem "ItemRadio";
 		_currentPlayer removeItem "ItemRadio";
 
@@ -1016,15 +1016,15 @@ adjustTFARRadio = {
 		//If there is a radio defined, add it to the player else add basic default radio
 		// if (_unitHaveRadio) then 
 		// {
-			if (count _factionDefaultRadios > 0) then 
-			{
-				_currentPlayer addItem _factionDefaultRadios#0;
-				_currentPlayer assignItem _factionDefaultRadios#0;
-			} else 
-			{
-				_currentPlayer addItem basicDefaultRadio#0;
-				_currentPlayer assignItem basicDefaultRadio#0;	
-			};
+		if (count _factionDefaultRadios > 0) then 
+		{
+			_currentPlayer addItem _factionDefaultRadios#0;
+			_currentPlayer assignItem _factionDefaultRadios#0;
+		} else 
+		{
+			_currentPlayer addItem basicDefaultRadio#0;
+			_currentPlayer assignItem basicDefaultRadio#0;	
+		};
 		// };
 
 		//Seems not working
@@ -1166,7 +1166,8 @@ doAdjustAdvancedStuff = {
 		};
 		default
 		{
-			
+			hint "Bad war era setup";
+			diag_log "Bad war era setup";
 		};
 	};
 };

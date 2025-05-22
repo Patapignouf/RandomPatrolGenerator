@@ -311,6 +311,7 @@ if (!normalClose) then
 };
 
 //DirtyFix for TFAR Radio bug 
+sleep 5;
 [player] call doAdjustAdvancedStuff;
 
 

@@ -108,14 +108,15 @@ if (isClass (configFile >> "CfgPatches" >> "ace_medical")) then
 };
 
 //Radio basic items
-basicDefaultRadio = [
-	"ItemRadio"
-];
+basicDefaultRadio = [];
 
 //Add TFAR Radio
 if (isClass (configFile >> "CfgPatches" >> "task_force_radio")) then 
 {
 	basicDefaultRadio = ["TFAR_anprc152"];
+} else 
+{
+	basicDefaultRadio = ["ItemRadio"];
 };
 
 basicAmmunitions = [
