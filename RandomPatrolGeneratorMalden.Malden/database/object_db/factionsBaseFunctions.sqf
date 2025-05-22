@@ -28,7 +28,7 @@ adjustRole = {
 			_cfgRole = "pilot";
 		};
 
-		if (["marksman", _cfgName] call BIS_fnc_inString) then 
+		if (["marksman", _cfgName] call BIS_fnc_inString || ["spotter", _cfgName] call BIS_fnc_inString) then 
 		{
 			_cfgRole = "marksman";
 		};
