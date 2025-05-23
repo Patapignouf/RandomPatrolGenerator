@@ -266,7 +266,7 @@ publicVariable "factionInfos";
 									_currentUnitStuff = getUnitLoadout _cfgName;
 									_loadoutToCheck = [([_currentUnitStuff] call getAllStringInArray)] call filterString;
 									_currentUnitStuff = [_loadoutToCheck] call getListOfWeaponsFromStuff;
-									
+
 									//Get weapons and accessories already attached
 									_listOfWeaponsAndAccessoriesFromStuff = [_currentUnitStuff] call getAllAccessoriesAndWeaponsFromWeapons;
 
@@ -287,7 +287,13 @@ publicVariable "factionInfos";
 
 									_uniform = ((_cfgVehName >> "uniformClass") call BIS_fnc_GetCfgData);
 									_linkedItems = ((_cfgVehName >> "linkedItems") call BIS_fnc_GetCfgData);
-									_uniformList = [_uniform] + _linkedItems;
+									if (!isNil  {_linkedItems}) then 
+									{
+										_uniformList = [_uniform] + _linkedItems;
+									} else 
+									{
+										_uniformList = [_uniform];
+									};
 									missionNamespace setVariable [_currentFactionName, _uniformList];  
 								};
 							};
