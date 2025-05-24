@@ -58,7 +58,7 @@ _smartFilter = "EnableSmartFilter" call BIS_fnc_getParamValue == 1;
 	if (count _x >=1) then 
 	{
 		_thisSideNum = ((configFile >> "CfgFactionClasses" >> _x#0 >> "side") call BIS_fnc_GetCfgData);
-		diag_log format ["faction side : %1", ((configFile >> "CfgFactionClasses" >>_x#0 >> "displayName") call BIS_fnc_GetCfgData)];
+		//diag_log format ["faction side : %1", ((configFile >> "CfgFactionClasses" >>_x#0 >> "displayName") call BIS_fnc_GetCfgData)];
 
 		//Check if sidenum is under 3
 		if (!isNil "_thisSideNum") then 

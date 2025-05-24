@@ -182,7 +182,7 @@ _dropdown ctrlAddEventHandler[ "LBSelChanged",
 
 		if (_role != player getVariable ["role", ""]) then 
 		{
-			[player, player, player call getPlayerFaction , _role, false, false] call switchToRole;
+			[player, player, player call getPlayerFaction , _role, false, true] call switchToRole;
 			[player, player, player call getPlayerFaction] call setupArsenalToItem;
 
 			//Refresh load button

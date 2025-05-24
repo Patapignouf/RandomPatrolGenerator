@@ -1004,27 +1004,28 @@ adjustTFARRadio = {
 		_factionDefaultRadios = ((factionDefaultRadios_db select {_x#1  == _currentFaction})#0)#0;
 
 		//Clear automatic radio conversion
-		_assignedItems = assignedItems _currentPlayer;
-		{
-			if (["TFAR_anprc152", _x] call BIS_fnc_inString) then 
-			{
-				_currentPlayer unassignItem _x;
-				_currentPlayer removeItem _x;
-			};
-		} foreach _assignedItems;
 
-		//If there is a radio defined, add it to the player else add basic default radio
-		// if (_unitHaveRadio) then 
-		// {
+		_playerDefaultRadio = "";
 		if (count _factionDefaultRadios > 0) then 
 		{
-			_currentPlayer addItem _factionDefaultRadios#0;
-			_currentPlayer assignItem _factionDefaultRadios#0;
+			_playerDefaultRadio = _factionDefaultRadios#0;
 		} else 
 		{
-			_currentPlayer addItem basicDefaultRadio#0;
-			_currentPlayer assignItem basicDefaultRadio#0;	
+			_playerDefaultRadio = basicDefaultRadio#0;
 		};
+
+		_currentPlayerRadio = (getUnitLoadout _currentPlayer)#9#2;
+		if !([_playerDefaultRadio, _currentPlayerRadio] call BIS_fnc_inString) then 
+		{
+			//Unassigned old radio
+			_currentPlayer unassignItem _currentPlayerRadio;
+			_currentPlayer removeItem _currentPlayerRadio;
+
+			//Assigned new radio
+			_currentPlayer addItem _playerDefaultRadio;
+			_currentPlayer assignItem _playerDefaultRadio;
+		};
+
 		// };
 
 		//Seems not working
