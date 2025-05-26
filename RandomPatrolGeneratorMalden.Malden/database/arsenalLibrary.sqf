@@ -1116,6 +1116,14 @@ adjustLoadout = {
 			for "_i" from 0 to 7 do { _currentPlayer addItem "ACE_bloodIV" };
 			for "_i" from 0 to 11 do { _currentPlayer addItem "ACE_tourniquet" };	//Basic ACE conversion will give enough tourniquet
 		};
+
+		//Adjust engineer stuff
+		if (_currentPlayer getVariable "role" == c_engineer) then 
+		{
+			_currentPlayer addItem "ACE_Fortify";
+			_currentPlayer addItem "ACE_DefusalKit";
+			_currentPlayer addItem "ACE_wirecutter";
+		};
 	};
 
 	for "_i" from 0 to 1 do { _currentPlayer addItem "ACE_CableTie" };
