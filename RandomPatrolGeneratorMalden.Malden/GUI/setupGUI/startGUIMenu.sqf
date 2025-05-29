@@ -36,6 +36,27 @@ missionIASkillParam = _comboBoxIASkill lbData (lbCurSel _comboBoxIASkill);
 missionRespawnParam = _comboBoxRespawnParam lbData (lbCurSel _comboBoxRespawnParam);
 
 //Display combo box value for debug
+//Manage random blufor faction
+if (bluforFactionSelected == "RANDOM") then 
+{
+	bluforFactionSelected = selectRandom (factionInfos select {_x#3})#1;
+	missionNameSpace setVariable ["BluforRandom", true, true];
+};
+
+//Manage random blufor faction
+if (opforFactionSelected == "RANDOM") then 
+{
+	opforFactionSelected = selectRandom (factionInfos select {_x#4 && !(["air", _x#1] call BIS_fnc_inString) && !(["usaf", _x#1] call BIS_fnc_inString) && !(["_usn", _x#1] call BIS_fnc_inString) && !(["_AA", _x#1] call BIS_fnc_inString)} )#1;
+	missionNameSpace setVariable ["OpforRandom", true, true];
+};
+
+//Manage random independent faction
+if (independentFactionSelected == "RANDOM") then 
+{
+	independentFactionSelected = selectRandom (factionInfos select {_x#3})#1;
+	missionNameSpace setVariable ["IndependentRandom", true, true];
+};
+
 diag_log format ["Blufor faction choose : %1\nOpfor faction choose : %2\nIndependent faction choose : %3\nCivilian faction choose : %4\n ", bluforFactionSelected, opforFactionSelected, independentFactionSelected, civilianFactionSelected];
 
 //Define global faction variable 

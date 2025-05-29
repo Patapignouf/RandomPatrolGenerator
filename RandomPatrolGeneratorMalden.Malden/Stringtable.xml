@@ -567,6 +567,17 @@
                 <Chinese>高级指挥部</Chinese>
                 <Japanese>最高司令部</Japanese>
             </Key>
+            <Key ID="STR_RPG_HC_NAME_MUTE">
+                <Original>High Command</Original>
+                <English>High Command</English>
+                <French>Haut commandement</French>
+                <Spanish>Alto Mando</Spanish>
+                <German>Oberkommando</German>
+                <Italian>Alto Comando</Italian>
+                <Russian>Высшее командование</Russian>
+                <Chinese>高级指挥部</Chinese>
+                <Japanese>最高司令部</Japanese>
+            </Key>
             <Key ID="STR_RPG_CHOPPER_NAME">
                 <Original>Helicopter crew</Original>
                 <English>Helicopter crew</English>
@@ -1163,6 +1174,11 @@
         <Russian>Уходите из этой зоны!</Russian>
         <Chinese>离开这个区域！</Chinese>
         <Japanese>このエリアから出て行け！</Japanese>
+    </Key>
+    <Key ID="STR_RPG_FACTION_ANNOUNCEMENT">
+        <Original>We are the %1 against %2</Original>
+        <English>We are the %1 against %2</English>
+        <French>Nous incarnons les %1 contre %2</French>
     </Key>
 <Container name="SCORE_TXT">
     <Key ID="STR_RPG_SCORE_INFANTRY_KILL">
@@ -1908,6 +1924,11 @@
             <Original>Logistic supply drop (radio)</Original>
             <English>Logistic supply drop (radio)</English>
             <French>Soutien logistique (radio)</French>
+        </Key>
+        <Key ID="STR_GUI_SUPPORT_ADV_SUPPLY_DROP">
+            <Original>Arsenal supply drop (radio)</Original>
+            <English>Arsenal supply drop (radio)</English>
+            <French>Arsenal logistique (radio)</French>
         </Key>
         <Key ID="STR_GUI_SUPPORT_RECON_DRONE">
             <Original>Send drone for recon</Original>

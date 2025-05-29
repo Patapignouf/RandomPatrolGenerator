@@ -333,6 +333,15 @@ doSetGroupSkills =
 };
 
 
+doGenerateAnimalGroup = 
+{
+	params ["_position"];
+	_goatgroup = createGroup Civilian; 
+	_animal = selectRandom ["Sheep_random_F", "Goat_random_F", "Cock_random_F"];
+	for "_i" from 0 to 4 do { _bobthegoat = _goatgroup createUnit [_animal, _position,[], random 10,"NONE"]; }; //Basic ACE conversion will give enough morphine 
+};
+
+
 doAdjustACEMedic = {
 	params ["_thisGroup"];
 
@@ -346,12 +355,12 @@ doAdjustACEMedic = {
 
 			//Add Medikit ACE equivalent
 			_currentUnit addItem "ACE_surgicalKit";
-			for "_i" from 0 to 11 do { _currentUnit addItem "ACE_suture" };
-			for "_i" from 0 to 1 do { _currentUnit addItem "ACE_bloodIV_500" };
-			for "_i" from 0 to 1 do { _currentUnit addItem "ACE_bloodIV" };
+			for "_i" from 0 to 40 do { _currentUnit addItem "ACE_suture" };
+			for "_i" from 0 to 4 do { _currentUnit addItem "ACE_bloodIV_500" };
+			for "_i" from 0 to 2 do { _currentUnit addItem "ACE_bloodIV" };
 			for "_i" from 0 to 3 do { _currentUnit addItem "ACE_epinephrine" };
 			for "_i" from 0 to 1 do { _currentUnit addItem "ACE_splint" };
-			for "_i" from 0 to 11 do { _currentUnit addItem "ACE_elasticBandage" };
+			for "_i" from 0 to 20 do { _currentUnit addItem "ACE_elasticBandage" };
 			for "_i" from 0 to 11 do { _currentUnit addItem "ACE_quikclot" };
 
 			//for "_i" from 0 to 9 do { _currentUnit addItem "ACE_morphine" }; //Basic ACE conversion will give enough morphine

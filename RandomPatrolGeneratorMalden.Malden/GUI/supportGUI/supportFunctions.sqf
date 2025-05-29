@@ -132,6 +132,22 @@ params ["_caller", "_supportType"];
 				_caller setVariable ["airDropSupportID", _airDropSupportID, true];
 			};
 		};
+		case "AdvancedAirDrop":
+		{
+			[{["STR_RPG_HC_NAME", "STR_RPG_HC_LOGISTIC"] call doDialog}] remoteExec ["call", side _caller];
+
+			_supportairDropCounter = missionNamespace getVariable ["advancedAirDropSupportCounter", 0]; 
+			missionNamespace setVariable ["advancedAirDropSupportCounter", _supportairDropCounter+1, true];
+
+
+			//Manage radio support 
+			_airDropSupportID = _caller getVariable ["advancedAirDropSupportID", -1];
+			if (_airDropSupportID == -1) then 
+			{
+				_airDropSupportID = [_caller, "myAdvancedAirDrop"] call BIS_fnc_addCommMenuItem;
+				_caller setVariable ["advancedAirDropSupportID", _airDropSupportID, true];
+			};
+		};
 		case "HALOJump":
 		{
 			[_caller] spawn {
@@ -534,6 +550,18 @@ addSupportForAirDrop = {
 	_price = 200;
 	_supportName = localize "STR_GUI_SUPPORT_SUPPLY_DROP";
 	_supportNameCode = "AirDrop";
+	_supportIcon = "\a3\Ui_f\data\GUI\Cfg\CommunicationMenu\supplydrop_ca.paa";
+	_supportType = localize "STR_GUI_SUPPORT_CAT_LOGISTIC";
+
+	[_ctrl, _supportName, _supportNameCode, _supportIcon, _price, _supportType] call addSupportOption;
+};
+
+addSupportForAdvancedAirDrop = {
+	params ["_ctrl"];
+	//Add support for Air drop
+	_price = 500;
+	_supportName = localize "STR_GUI_SUPPORT_ADV_SUPPLY_DROP";
+	_supportNameCode = "AdvancedAirDrop";
 	_supportIcon = "\a3\Ui_f\data\GUI\Cfg\CommunicationMenu\supplydrop_ca.paa";
 	_supportType = localize "STR_GUI_SUPPORT_CAT_LOGISTIC";
 

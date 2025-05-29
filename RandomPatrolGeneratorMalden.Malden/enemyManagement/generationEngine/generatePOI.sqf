@@ -1,7 +1,9 @@
-params ["_thisAvailableOpforGroup","_thisAvailableOpforCars","_thisAvailableOpforLightArmoredVehicle","_thisAvailableOpforHeavyArmoredVehicle", "_thisAvailableOpforTurret","_thisAvailableCivGroup","_thisAvailablePosition", "_thisObjective"];
+params ["_thisAvailableOpforCars","_thisAvailableOpforLightArmoredVehicle","_thisAvailableOpforHeavyArmoredVehicle", "_thisAvailableOpforTurret","_thisAvailableCivGroup","_thisAvailablePosition", "_thisObjective"];
 
 currentRandomGroup = objNull;
 currentGroup = objNull;
+_basicEnemyGroups = [[opFaction, "BASIC"] call getBasicUnitsGroup, [opFaction, "AT"] call getBasicUnitsGroup];
+// systemChat str _basicEnemyGroups;
 diag_log format ["Begin generation AO %1",_thisAvailablePosition];
 _thisDifficulty = missionNamespace getVariable "missionDifficultyParam"; //Default medium
 
@@ -17,7 +19,7 @@ diag_log format ["Infantry generation start on AO %1",_thisAvailablePosition];
 _baseRadius = 60;
 for [{_i = 0}, {_i < ((_thisDifficulty)*2)}, {_i = _i + 1}] do 
 {
-	currentRandomGroup = selectRandom _thisAvailableOpforGroup;
+	currentRandomGroup = selectRandom _basicEnemyGroups;
 	currentGroup = [currentRandomGroup, _thisAvailablePosition, east, "DefenseInfantry"] call doGenerateEnemyGroup;
 
 	//Add intel to enemy
@@ -35,7 +37,7 @@ for [{_i = 0}, {_i < ((_thisDifficulty)*2)}, {_i = _i + 1}] do
 };
 
 //Add a patrol 
-currentGroup = [_thisAvailableOpforGroup#0, _thisAvailablePosition, east, "DefenseInfantry"] call doGenerateEnemyGroup;
+currentGroup = [_basicEnemyGroups#0, _thisAvailablePosition, east, "DefenseInfantry"] call doGenerateEnemyGroup;
 
 //Add intel to enemy
 if ((typeName _thisObjective) == "ARRAY") then 
@@ -118,9 +120,21 @@ if ((missionNameSpace getVariable ["enableOpforVehicle", 0]) != 0) then
 	{
 		for [{_i = 0}, {_i < _numberOfVehicle}, {_i = _i + 1}] do 
 		{	
-			//50% chance to spawn armored vehicle
-			if (random 100 < 50 && enableArmoredVehicle) then 
+			//80% chance to spawn armored vehicle
+			if (random 100 < 80 && enableArmoredVehicle) then 
 			{
+				//Add light armored to heavy armored if needed (balance armored vehicle generation)
+
+				if (count _thisAvailableOpforLightArmoredVehicle == 0 && count _thisAvailableOpforCars != 0) then 
+				{
+					_thisAvailableOpforLightArmoredVehicle = _thisAvailableOpforCars;
+				};
+
+				if (count _thisAvailableOpforHeavyArmoredVehicle == 0 && count _thisAvailableOpforLightArmoredVehicle != 0) then 
+				{
+					_thisAvailableOpforHeavyArmoredVehicle = _thisAvailableOpforLightArmoredVehicle;
+				};
+
 				//50% chance to spawn light armored vehicle
 				if (random 100 < 50) then 
 				{

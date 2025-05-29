@@ -1,6 +1,15 @@
 //Set default respawn loadout
 player setUnitLoadout (player getVariable "spawnLoadout");
 
+//Make the player doesn't count on RTB for 90 secs 
+player setVariable ["canRTB", false, true];
+[] spawn 
+{
+	uiSleep 90;
+	player setVariable ["canRTB", true, true];
+};
+
+
 //Respawn on start position by default
 //Protect player for 30 sec on spawn
 player allowDamage false;
@@ -39,13 +48,6 @@ cutText ["", "BLACK FADED", 4];
 uiSleep 3;
 [[], 'GUI\respawnGUI\initPlayerRespawnMenu.sqf'] remoteExec ['BIS_fnc_execVM', player];
 
-//Make the player doesn't count on RTB for 60 secs 
-player setVariable ["canRTB", false, true];
-[] spawn 
-{
-	uiSleep 60;
-	player setVariable ["canRTB", true, true];
-};
 
 // Fix player damaged on respawn 
 if (isClass (configFile >> "CfgPatches" >> "ace_medical")) then 
@@ -163,6 +165,7 @@ if (missionNameSpace getVariable ["enableAdvancedRespawn", 1] == 1) then
 		_createTent setVariable [str (group _caller), true, true];
 		_createTent allowDamage false;
 
+
 		_createTent addAction [format ["<img size='2' image='\a3\ui_f_oldman\data\IGUI\Cfg\holdactions\holdAction_sleep2_ca.paa'/>%1</t>", localize "STR_ACTIONS_SLEEP"],{
 			//Define parameters
 			params ["_object","_caller","_ID","_avalaibleVehicle"];
@@ -178,7 +181,7 @@ if (missionNameSpace getVariable ["enableAdvancedRespawn", 1] == 1) then
 				} else {
 					hint "No need to rest";
 				};
-		},_x,3,true,false,"","(_target distance _this <5) && (_target getVariable [str (group _this), false])"];
+		},_x,3,true,false,"","(_this getVariable 'role' == 'leader') && (_target distance _this <5) && (_target getVariable [str (group _this), false])"];
 
 
 		[{["STR_RPG_HC_NAME", "STR_RPG_HC_RESPAWN_TENT"] call doDialog}] remoteExec ["call", units (group _caller)];
@@ -186,12 +189,11 @@ if (missionNameSpace getVariable ["enableAdvancedRespawn", 1] == 1) then
 		[[str (group _caller), _createTent,"\a3\ui_f\data\IGUI\Cfg\holdactions\holdAction_requestleadership_ca.paa" , [0,0,1,1]], 'GUI\3DNames\3DObjectNames.sqf'] remoteExec ['BIS_fnc_execVM', blufor, true];
 
 		//Add support action on tent
-		_createTent addAction [format ["<img size='2' image='\a3\ui_f_oldman\data\IGUI\Cfg\holdactions\holdAction_market_ca.paa'/><t size='1'>%1</t>", localize "STR_ACTIONS_OPEN_SUPPORT_SHOP"],{
-			//Define parameters
-			params ["_object","_caller","_ID","_avalaibleVehicle"];
+		[_createTent, [format ["<img size='2' image='\a3\ui_f_oldman\data\IGUI\Cfg\holdactions\holdAction_market_ca.paa'/><t size='1'>%1</t>", localize "STR_ACTIONS_OPEN_SUPPORT_SHOP"],{
+			params ["_object","_caller","_ID","_param"];
 
 			[[false], 'GUI\supportGUI\supportGUI.sqf'] remoteExec ['BIS_fnc_execVM', _caller];
-		},_x,3,true,false,"","(_target distance _this <5) && (_target getVariable [str (group _this), false])"];
+		},[],3,true,false,"","(_target distance _this <5) && (_target getVariable [str (group _this), false])"]] remoteExec [ "addAction", 0, true ];
 
 		//Create action to authorize tent disassembly
 		[
@@ -245,6 +247,19 @@ if (missionNameSpace getVariable ["enableAdvancedRespawn", 1] == 1) then
 			_variableToCheck = format ['bluforPositionAdvancedRespawn%1', _groupCaller];
 			waitUntil {[missionNameSpace getVariable _variableToCheck , [0,0,0]] call BIS_fnc_areEqual};
 			deleteVehicle _createTent;
+			_markerName = format ["tent%1", _groupCaller];
+			deleteMarker _markerName;
+		};
+
+		//Create marker
+		_markerName = format ["tent%1", str (group _caller)];
+		if !(_markerName in allMapMarkers) then 
+		{
+			_marker = createMarker [_markerName, getPos _caller]; // Not visible yet.
+			_marker setMarkerText (format ["Tent %1", str (group _caller)]);
+			_marker setMarkerType "b_hq"; // Visible.
+			_marker setMarkerSize [1, 1];
+			_marker setMarkerColor "ColorBlue";
 		};
 
 	},_x,3,true,false,"","(_this getVariable 'role' == 'leader') && (missionNameSpace getVariable [ format ['bluforAdvancedRespawn%1', str (group _this)], true]) && (vehicle _this == _this) && isTouchingGround _this"];

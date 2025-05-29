@@ -64,6 +64,11 @@ getSpeakerColorAndPosition = {
 				playMusic "";
 			};
 		};
+		case "STR_RPG_HC_NAME_MUTE":
+		{
+			_color = "#0046ff"; //Blue
+			_position = "PLAIN DOWN";
+		};
 		case "STR_RPG_CIVILIAN_NAME":
 		{
 			_color = "#00FF00";

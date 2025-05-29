@@ -4,39 +4,61 @@
 for "_i" from 0 to count factionInfos -1 do
 {
 	private _element = factionInfos select _i;
-	_element set [1, str (_element#1)];
-	factionInfos set [_i, _element];
+	if (typeName (_element#1) == "SCALAR") then 
+	{
+		_element set [1, str (_element#1)];
+		factionInfos set [_i, _element];
+	};
 };
 
 //This part was taken from DRO but highy modified 
 _factionsWithUnitsFiltered = [];
 _potentialFactions = [];
 _potentialCivFactions = [];
+checkFinishFaction = false;
+
+diag_log format ["Automatic faction parsing begin"];
+
+
+_smartFilter = "EnableSmartFilter" call BIS_fnc_getParamValue == 1;
 
 {
 	if (isNumber (configFile >> "CfgVehicles" >> (configName _x) >> "scope")) then {
 		if (((configFile >> "CfgVehicles" >> (configName _x) >> "scope") call BIS_fnc_GetCfgData) == 2) then {
 			_factionClass = ((configFile >> "CfgVehicles" >> (configName _x) >> "faction") call BIS_fnc_GetCfgData);
-			//_factionsWithUnits pushBackUnique _factionClass;		
-			if ((configName _x) isKindOf "Man") then {
-				_index = ([_factionsWithUnitsFiltered, _factionClass] call BIS_fnc_findInPairs);
-				if (_index == -1) then {
-					_factionsWithUnitsFiltered pushBack [_factionClass, 1, ((configFile >> "CfgVehicles" >> configName _x >> "side") call BIS_fnc_GetCfgData)];
-				} else {
-					_factionsWithUnitsFiltered set [_index, [((_factionsWithUnitsFiltered select _index) select 0), ((_factionsWithUnitsFiltered select _index) select 1)+1,((configFile >> "CfgVehicles" >> configName _x >> "side") call BIS_fnc_GetCfgData)]];
-				}; 
-			};		
+			//Two ways of faction filtering 
+			//Note that the smart filter consume an higher amount of resource 
+			if (_smartFilter) then 
+			{
+				if ((configName _x) isKindOf "Man") then {
+					//PreFilter unarmed
+					if (((configFile >> "CfgVehicles" >> (configName _x) >> "role") call BIS_fnc_GetCfgData) != "Unarmed") then 
+					{
+						_index = ([_factionsWithUnitsFiltered, _factionClass] call BIS_fnc_findInPairs);
+						if (_index == -1) then {
+							_factionsWithUnitsFiltered pushBack [_factionClass, 1, ((configFile >> "CfgVehicles" >> configName _x >> "side") call BIS_fnc_GetCfgData)];
+						} else {
+							_factionsWithUnitsFiltered set [_index, [((_factionsWithUnitsFiltered select _index) select 0), ((_factionsWithUnitsFiltered select _index) select 1)+1,((configFile >> "CfgVehicles" >> configName _x >> "side") call BIS_fnc_GetCfgData)]];
+						}; 
+					};
+				};	
+			} else 
+			{
+				_factionsWithUnitsFiltered pushBackUnique [_factionClass, 1, ((configFile >> "CfgVehicles" >> configName _x >> "side") call BIS_fnc_GetCfgData)];		
+			};
 		};
 	};
 } forEach ("(configName _x) isKindOf 'AllVehicles'" configClasses (configFile / "CfgVehicles"));
 
+
 //filter factions to select only blufor/east/independent
 {
+	// diag_log format ["faction : %1", _x ];
 	//Filter strange factions
-	if (count _x >1) then 
+	if (count _x >=1) then 
 	{
 		_thisSideNum = ((configFile >> "CfgFactionClasses" >> _x#0 >> "side") call BIS_fnc_GetCfgData);
-		//systemChat ((configFile >> "CfgFactionClasses" >>_x#0 >> "displayName") call BIS_fnc_GetCfgData);
+		//diag_log format ["faction side : %1", ((configFile >> "CfgFactionClasses" >>_x#0 >> "displayName") call BIS_fnc_GetCfgData)];
 
 		//Check if sidenum is under 3
 		if (!isNil "_thisSideNum") then 
@@ -61,9 +83,11 @@ _potentialCivFactions = [];
 
 //Search in everyFaction the basic info
 _potentialOpfor = [];
+brokenFactions = ["Default"];
+
 {
 	_factionTechName = _x#0;
-	if (factionInfos findIf {_x#0 == _factionTechName}==-1) then 
+	if (factionInfos findIf {_x#0 == _factionTechName}==-1 && brokenFactions findIf {_x == _factionTechName} ==-1) then 
 	{
 		_sideName = "";
 		switch (_x#2) do {
@@ -72,18 +96,21 @@ _potentialOpfor = [];
 				_sideName = "OPFOR";
 				[opfor, _factionTechName] call addRadioToFaction;
 				[opfor, _factionTechName] call addBackPackDroneToFaction;
+				[opfor, _factionTechName] call addModernItemsToFaction;
 			};
 			case 1:
 			{
 				_sideName = "BLUFOR";
 				[blufor, _factionTechName] call addRadioToFaction;
 				[blufor, _factionTechName] call addBackPackDroneToFaction;
+				[blufor, _factionTechName] call addModernItemsToFaction;
 			};
 			case 2:
 			{
 				_sideName = "INDEPENDENT";
 				[independent, _factionTechName] call addRadioToFaction;
 				[independent, _factionTechName] call addBackPackDroneToFaction;
+				[independent, _factionTechName] call addModernItemsToFaction;
 			};
 		};
 
@@ -92,6 +119,8 @@ _potentialOpfor = [];
 	};
 } foreach _potentialFactions;
 
+
+//Civ faction
 {
 	_factionTechName = _x#0;
 	if (factionInfos findIf {_x#0 == _factionTechName}==-1) then 
@@ -99,6 +128,8 @@ _potentialOpfor = [];
 		factionInfos pushBack [_factionTechName, _factionTechName, format ["%1 [AUTO]", ((configFile >> "CfgFactionClasses" >> _factionTechName >> "displayName") call BIS_fnc_GetCfgData)], false, false, true];
 	};
 } foreach _potentialCivFactions;
+
+diag_log format ["Automatic faction parsing end"];
 
 publicVariable "factionInfos";
 
@@ -115,16 +146,23 @@ publicVariable "factionInfos";
 		"rhs_faction_usn",
 		"rhsgref_faction_cdf_air",
 		"rhs_faction_vvs_c",
-		"rhsgref_faction_cdf_air_b"
+		"rhs_faction_tv",
+		"rhsgref_faction_cdf_air_b",
+		"rhssaf_faction_airforce",
+		"rhssaf_faction_airforce_opfor",
+		"FP_SOAR"
 	];
 
 	waitUntil {missionNamespace getVariable "generationSetup" == true};
+
 
 	//Add selected factions to whitelist
 	_whiteListFactions pushBack (missionNamespace getVariable "civilianFaction");
 	_whiteListFactions pushBack (missionNamespace getVariable "independentFaction");
 	_whiteListFactions pushBack (missionNamespace getVariable "opforFaction");
 	_whiteListFactions pushBack (missionNamespace getVariable "bluforFaction");
+
+
 
 	//Role filtered to not bo added in faction
 	_roleFilter = ["Unarmed"];
@@ -151,6 +189,13 @@ publicVariable "factionInfos";
 					if !(["story", _cfgName, false] call BIS_fnc_inString || ["story", ((_cfgVehName >> "editorSubcategory") call BIS_fnc_GetCfgData), false] call BIS_fnc_inString) then 
 					{		
 						_thisRole = ((_cfgVehName >> "role") call BIS_fnc_GetCfgData);
+
+						if (_thisFac == "LOP_AFR_OPF") then 
+						{
+							diag_log format ["faction LOP_AFR_OPF : unit %1 role %2", _cfgName, _thisRole];
+						};
+
+
 						if (_roleFilter findIf {_thisRole == _x} == -1) then {
 							_currentFactionName = format ["loadout%1", _thisFac];
 							_currentStuffFaction = 	missionNamespace getVariable [_currentFactionName, []];
@@ -221,7 +266,7 @@ publicVariable "factionInfos";
 									_currentUnitStuff = getUnitLoadout _cfgName;
 									_loadoutToCheck = [([_currentUnitStuff] call getAllStringInArray)] call filterString;
 									_currentUnitStuff = [_loadoutToCheck] call getListOfWeaponsFromStuff;
-									
+
 									//Get weapons and accessories already attached
 									_listOfWeaponsAndAccessoriesFromStuff = [_currentUnitStuff] call getAllAccessoriesAndWeaponsFromWeapons;
 
@@ -235,7 +280,21 @@ publicVariable "factionInfos";
 									_currentFactionName = format ["attachmentShortList%1", _thisFac];
 									_accessoriesShort = missionNamespace getVariable [_currentFactionName, []];
 									_accessoriesShort = _accessoriesShort + _listOfWeaponsAndAccessoriesFromStuff#1;
-									missionNamespace setVariable [_currentFactionName, _accessoriesShort]; 
+									missionNamespace setVariable [_currentFactionName, _accessoriesShort];
+
+									_currentFactionName = format ["uniformList%1", _thisFac];
+									_uniformList = missionNamespace getVariable [_currentFactionName, []];
+
+									_uniform = ((_cfgVehName >> "uniformClass") call BIS_fnc_GetCfgData);
+									_linkedItems = ((_cfgVehName >> "linkedItems") call BIS_fnc_GetCfgData);
+									if (!isNil  {_linkedItems}) then 
+									{
+										_uniformList = [_uniform] + _linkedItems;
+									} else 
+									{
+										_uniformList = [_uniform];
+									};
+									missionNamespace setVariable [_currentFactionName, _uniformList];  
 								};
 							};
 						};
@@ -324,14 +383,26 @@ publicVariable "factionInfos";
 							_currentStuffFaction = 	missionNamespace getVariable [_currentFactionName, []];
 							_currentStuffFaction pushBack _cfgName;
 							missionNamespace setVariable [_currentFactionName, _currentStuffFaction]; 
-					};
+					}; 
 					if (_cfgName isKindOf 'Plane') then {	
-
+						//Transport plane
+						if (((configFile >> "CfgVehicles" >> _cfgName >> "transportSoldier") call BIS_fnc_GetCfgData) > 5) then 
+						{
+							_currentFactionName = format ["bluforFixedWingTransport%1", _thisFac];
+							
+							_currentStuffFaction = 	missionNamespace getVariable [_currentFactionName, []];
+							_currentStuffFaction pushBack _cfgName;
+							missionNamespace setVariable [_currentFactionName, _currentStuffFaction]; 
+						} else 
+						{
+							//Fighter plane 
+							//CAS Plane
 							_currentFactionName = format ["bluforFixedWing%1", _thisFac];
 
 							_currentStuffFaction = 	missionNamespace getVariable [_currentFactionName, []];
 							_currentStuffFaction pushBack _cfgName;
 							missionNamespace setVariable [_currentFactionName, _currentStuffFaction]; 
+						};
 					};
 					if (_cfgName isKindOf 'StaticWeapon') then {	
 
@@ -401,13 +472,52 @@ publicVariable "factionInfos";
 		["rhs_faction_usmc_d", "rhs_faction_usn"] call mergeFactions;
 		["rhs_faction_usmc_w", "rhs_faction_usaf"] call mergeFactions;
 		["rhs_faction_usmc_w", "rhs_faction_usn"] call mergeFactions;
+		["rhs_faction_usmc_wd", "rhs_faction_usn"] call mergeFactions;
+		["rhs_faction_usmc_wd", "rhs_faction_usaf"] call mergeFactions;
 		["rhs_faction_usarmy_d", "rhs_faction_usaf"] call mergeFactions;
 		["rhs_faction_usarmy_w", "rhs_faction_usaf"] call mergeFactions;
+		["rhs_faction_usarmy_d", "rhs_faction_usn"] call mergeFactions;
+		["rhs_faction_usarmy_w", "rhs_faction_usn"] call mergeFactions;
 		["rhsgref_faction_cdf_ground", "rhsgref_faction_cdf_air"] call mergeFactions;
 		["rhs_faction_msv", "rhs_faction_vvs_c"] call mergeFactions;
+		["rhs_faction_msv", "rhs_faction_tv"] call mergeFactions;
+		["rhs_faction_vmf", "rhs_faction_vvs_c"] call mergeFactions;
+		["rhs_faction_vmf", "rhs_faction_tv"] call mergeFactions;
 		["rhsgref_faction_cdf_ground_b", "rhsgref_faction_cdf_air_b"] call mergeFactions;
+		["rhssaf_faction_army", "rhssaf_faction_airforce"] call mergeFactions;
+		["rhssaf_faction_army_opfor", "rhssaf_faction_airforce_opfor"] call mergeFactions;	
+
+		//RHS Faction +
+		["rhs_faction_socom","FP_SOAR"] call mergeFactions;	
+		["FP_RHSUSAF_RANGER","FP_SOAR"] call mergeFactions;	
+		["FP_RHSUSAF_RANGER_2000s","FP_SOAR"] call mergeFactions;	
+		["FP_SOCOM_DEVGRU","FP_SOAR"] call mergeFactions;	
 	};
 
+	//Complete blufor faction with missing key role (leader/medic)
+	_bluforFaction = missionNamespace getVariable "bluforFaction";
+	_currentFactionName = format ["loadout%1", _bluforFaction];
+	_currentStuffFaction = 	missionNamespace getVariable [_currentFactionName, []];
+
+	//Leader
+	if (count (_currentStuffFaction select {_x#0 == "leader"}) == 0) then 
+	{
+		_defaultRifleman = (_currentStuffFaction select {_x#0 == "rifleman"})#0;
+		_defaultLeader =+ _defaultRifleman;
+		_defaultLeader set [0, "leader"];
+		_currentStuffFaction pushBack _defaultLeader;
+		missionNamespace setVariable [_currentFactionName, _currentStuffFaction]; 
+	};
+
+	//Medic
+	if (count (_currentStuffFaction select {_x#0 == "medic"}) == 0) then 
+	{
+		_defaultRifleman = (_currentStuffFaction select {_x#0 == "rifleman"})#0;
+		_defaultMedic =+ _defaultRifleman;
+		_defaultMedic set [0, "medic"];
+		_currentStuffFaction pushBack _defaultMedic;
+		missionNamespace setVariable [_currentFactionName, _currentStuffFaction]; 
+	};
 
 	//Define Opfor factions 
 	{
@@ -416,11 +526,10 @@ publicVariable "factionInfos";
 		//Parse only selected factions
 		if (_thisFac in _whiteListFactions) then 
 		{
-
 			//Define infantry
 			_currentFactionName = format ["loadout%1", _thisFac];
 			_currentStuffFaction = 	missionNamespace getVariable [_currentFactionName, []];
-			[_thisFac, _currentStuffFaction] call doDefineOpforFactionInfantry;
+			//[_thisFac, _currentStuffFaction] call doDefineOpforFactionInfantry;
 
 			//Define mortar 
 			_currentFactionName = format ["bluforMortar%1", _thisFac];
@@ -457,6 +566,10 @@ publicVariable "factionInfos";
 			[_thisFac, "baseEnemyLightArmoredVehicleGroup", _light] call doSetOpfor;
 			[_thisFac, "baseEnemyHeavyArmoredVehicleGroup", _heavy] call doSetOpfor;
 
+			_currentFactionName = format ["bluforFixedWingTransport%1", _thisFac];
+			_currentStuffFaction = 	missionNamespace getVariable [_currentFactionName, []];
+			[_thisFac, "enemyFixedWingTransport", _currentStuffFaction] call doSetOpfor;
+			
 			_currentFactionName = format ["bluforUnarmedVehicleChopper%1", _thisFac];
 			_currentStuffFaction = 	missionNamespace getVariable [_currentFactionName, []];
 			[_thisFac, "baseEnemyUnarmedChopperGroup", _currentStuffFaction] call doSetOpfor;
@@ -480,6 +593,7 @@ publicVariable "factionInfos";
 
 	missionFactionSetup = true;
 	publicVariable "missionFactionSetup";
+	checkFinishFaction = true;
 };
 
 

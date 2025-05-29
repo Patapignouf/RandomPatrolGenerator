@@ -370,7 +370,7 @@ if (side player == independent) then
 			_independentUnarmedVehicle = bluforUnarmedVehicle_db select {_x select 1  == indFaction} select 0 select 0;
 			_independentUnarmedChopper = bluforUnarmedVehicleChopper_db select {_x select 1  == indFaction} select 0 select 0;
 
-			[["independentVehicleAvalaibleSpawn", _independentUnarmedVehicle, [], [], _independentUnarmedChopper, [], [], [], []], 'GUI\vehicleSpawnerGUI\vehicleSpawner.sqf'] remoteExec ['BIS_fnc_execVM', _caller];
+			[["independentVehicleAvalaibleSpawn", _independentUnarmedVehicle, [], [], _independentUnarmedChopper, [], [], [], [], []], 'GUI\vehicleSpawnerGUI\vehicleSpawner.sqf'] remoteExec ['BIS_fnc_execVM', _caller];
 	},_x,3,true,false,"","(_target distance _this <5) && (_this getVariable 'role' == 'leader' || _this getVariable 'role' == 'pilot')"];
 
 	waituntil {!isNil "isBluforAttacked" && !isNil "isIndAttacked"};
@@ -598,7 +598,7 @@ if (side player == blufor) then
 					//Define parameters
 					params ["_object","_caller","_ID","_avalaibleVehicle"];
 
-					[["bluforVehicleAvalaibleSpawn", bluforUnarmedVehicle, bluforArmedVehicle, bluforArmoredVehicle, bluforUnarmedVehicleChopper, bluforArmedChopper, bluforDrone, bluforFixedWing, bluforBoat], 'GUI\vehicleSpawnerGUI\vehicleSpawner.sqf'] remoteExec ['BIS_fnc_execVM', _caller];
+					[["bluforVehicleAvalaibleSpawn", bluforUnarmedVehicle, bluforArmedVehicle, bluforArmoredVehicle, bluforUnarmedVehicleChopper, bluforArmedChopper, bluforDrone, bluforFixedWing, bluforFixedWingTransport, bluforBoat], 'GUI\vehicleSpawnerGUI\vehicleSpawner.sqf'] remoteExec ['BIS_fnc_execVM', _caller];
 			},_x,3,true,false,"","(_target distance _this <5) && (_this getVariable 'role' == 'leader' || _this getVariable 'role' == 'pilot')"];	
 	};
 
@@ -707,13 +707,49 @@ if (didJIP) then
 	player enableSimulationGlobal true;
 };
 
+//Prepare respawn countdown GUI on map
+//Only avalaible if respawn is set to wave respawn 
+if (missionNameSpace getVariable ["enableSelfRespawnTimer", 0] == 0) then 
+{
+	//No self respawn timer (directed by the server)
+	addMissionEventHandler ["EachFrame",
+		{
+			if (visibleMap) then 
+			{
+				_currentRespawnTimer = missionNamespace getVariable "missionRespawnParam";
+				_currentCounter = _currentRespawnTimer - (round (serverTime) % _currentRespawnTimer);
+				hintSilent format ["Next respawn : %1", [(_currentCounter/60)+.01,"HH:MM"] call BIS_fnc_timetostring];
+				[] spawn {waitUntil{!visibleMap}; hintSilent "";}; //remove hint quickly
+			};
+		}
+	];
+};
+
 //Remove arsenal from player 
 [] spawn {
 	uiSleep 5;
 	player call RemoveArsenalActionFromGivenObject;
 };
 
-player setVariable ["canRTB", true, true];
+//Make the player doesn't count on RTB for 90 secs 
+[] spawn 
+{
+	uiSleep 90;
+	player setVariable ["canRTB", true, true];
+};
+
+if (didJIP && count (units group player) == 1 && count (allPlayers select {side _x == side player}) != 1) then 
+{
+	private _resultAlone = ["You seem to be alone in your squad, do you want to join another ?", "Confirm", true, true] call BIS_fnc_guiMessage;
+
+	if (_resultAlone) then {
+		//systemChat "The player is sure.";
+		[player] joinSilent (group (selectRandom (allPlayers select {side _x == side player && _x != player})));
+	} else {
+		//systemChat "The player is not sure.";
+	};
+};
+
 
 //Setup default TFAR radio frequency
 if (isClass (configFile >> "CfgPatches" >> "task_force_radio")) then {
@@ -728,6 +764,8 @@ if (isClass (configFile >> "CfgPatches" >> "ace_medical")) then
 {
   player setDamage 0;
 };
+
+#include "GUI\mapIndicatorGUI\mapRealTimeMarkers.sqf"
 
 //add respawn tent action
 if (missionNameSpace getVariable ["enableAdvancedRespawn", 1] == 1) then 
@@ -749,13 +787,46 @@ if (missionNameSpace getVariable ["enableAdvancedRespawn", 1] == 1) then
 
 		[[str (group _caller), _createTent,"\a3\ui_f\data\IGUI\Cfg\holdactions\holdAction_requestleadership_ca.paa" , [0,0,1,1]], 'GUI\3DNames\3DObjectNames.sqf'] remoteExec ['BIS_fnc_execVM', blufor, true];
 
+		// //Add reinforcement action on tent box
+		// _createTent addAction [format ["<img size='2' image='\a3\ui_f\data\igui\cfg\simpletasks\types\Radio_ca.paa'/>%1</t>", localize "STR_GUI_SUPPORT_REINFORCEMENT_NOW"],{
+		// 	//Define parameters
+		// 	params ["_object","_caller","_ID","_avalaibleVehicle"];
+
+		// 	[_caller] spawn 
+		// 	{
+		// 		params ["_caller"];
+		// 		if (!(missionNamespace getVariable ["usedRespawnFewTimeAgo",false])) then 
+		// 		{
+		// 			if (count (allPlayers select {(alive _x) == false})!=0) then //Sorry for the test == false xD
+		// 			{
+		// 				//set morning
+		// 				skipTime 24;
+		// 				[[], "engine\respawnManagement\respawnManager.sqf"] remoteExec ['BIS_fnc_execVM', 0];
+
+		// 				//Send message to everyone
+		// 				[[_caller], {params ["_caller"]; ["STR_RPG_HC_NAME", "STR_RPG_HC_REINFORCEMENT_CALL_2", name _caller] call doDialog}] remoteExec ["spawn", side _caller]; 
+						
+		// 				missionNamespace setVariable ["usedRespawnFewTimeAgo",true,true];
+		// 				_respawnTimer = missionNamespace getVariable "missionRespawnParam";
+		// 				sleep _respawnTimer;
+		// 				missionNamespace setVariable ["usedRespawnFewTimeAgo",false,true];
+		// 			} else {
+		// 				[{["STR_RPG_HC_NAME", "STR_RPG_HC_REINFORCEMENT_CALL_NO_NEED", name _caller] call doDialog}] remoteExec ["call", _caller];
+		// 			};
+		// 		} else {
+		// 			[{["STR_RPG_HC_NAME", "STR_RPG_HC_REINFORCEMENT_CALL_WAIT"] call doDialog}] remoteExec ["call", _caller];
+		// 		};
+		// 	};
+		// },_x,3,true,false,"","(_target distance _this <5) && (_target getVariable [str (group _this), false])"];
+
 		//Add support action on tent
-		_createTent addAction [format ["<img size='2' image='\a3\ui_f_oldman\data\IGUI\Cfg\holdactions\holdAction_market_ca.paa'/><t size='1'>%1</t>", localize "STR_ACTIONS_OPEN_SUPPORT_SHOP"],{
-			//Define parameters
-			params ["_object","_caller","_ID","_avalaibleVehicle"];
+		 
+		[_createTent, [format ["<img size='2' image='\a3\ui_f_oldman\data\IGUI\Cfg\holdactions\holdAction_market_ca.paa'/><t size='1'>%1</t>", localize "STR_ACTIONS_OPEN_SUPPORT_SHOP"],{
+			params ["_object","_caller","_ID","_param"];
 
 			[[false], 'GUI\supportGUI\supportGUI.sqf'] remoteExec ['BIS_fnc_execVM', _caller];
-		},_x,3,true,false,"","(_target distance _this <5) && (_target getVariable [str (group _this), false])"];
+		},[],3,true,false,"","(_target distance _this <5) && (_target getVariable [str (group _this), false])"]] remoteExec [ "addAction", 0, true ];
+
 
 		_createTent addAction [format ["<img size='2' image='\a3\ui_f_oldman\data\IGUI\Cfg\holdactions\holdAction_sleep2_ca.paa'/>%1</t>", localize "STR_ACTIONS_SLEEP"],{
 			//Define parameters
@@ -772,7 +843,7 @@ if (missionNameSpace getVariable ["enableAdvancedRespawn", 1] == 1) then
 				} else {
 					hint "No need to rest";
 				};
-		},_x,3,true,false,"","(_target distance _this <5) && (_target getVariable [str (group _this), false])"];
+		},_x,3,true,false,"","(_this getVariable 'role' == 'leader') && (_target distance _this <5) && (_target getVariable [str (group _this), false])"];
 
 		//Delete tent if respawn coordinates changed
 		[_createTent, str (group _caller)] spawn 
@@ -782,6 +853,19 @@ if (missionNameSpace getVariable ["enableAdvancedRespawn", 1] == 1) then
 			_variableToCheck = format ['bluforPositionAdvancedRespawn%1', _groupCaller];
 			waitUntil {[missionNameSpace getVariable _variableToCheck , [0,0,0]] call BIS_fnc_areEqual};
 			deleteVehicle _createTent;
+			_markerName = format ["tent%1", _groupCaller];
+			deleteMarker _markerName;
+		};
+
+		//Create marker
+		_markerName = format ["tent%1", str (group _caller)];
+		if !(_markerName in allMapMarkers) then 
+		{
+			_marker = createMarker [_markerName, getPos _caller]; // Not visible yet.
+			_marker setMarkerText (format ["Tent %1", str (group _caller)]);
+			_marker setMarkerType "b_hq"; // Visible.
+			_marker setMarkerSize [1, 1];
+			_marker setMarkerColor "ColorBlue";
 		};
 
 		//Create action to authorize tent disassembly

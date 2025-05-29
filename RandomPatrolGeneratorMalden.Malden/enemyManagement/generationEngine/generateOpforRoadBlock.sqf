@@ -30,8 +30,10 @@ if (!([_possibleRoadPosition] call isLocationOnMap)) then
 	diag_log format ["Display _OpforFobStandardOpforLocation : %1 ",_OpforFobStandardOpforLocation];
 	diag_log format ["Display _OpforFobTurretOpforLocation : %1 ",_OpforFobTurretOpforLocation];
 
+	_basicEnemyGroups = [[opFaction, "BASIC"] call getBasicUnitsGroup, [opFaction, "AT"] call getBasicUnitsGroup];
+
 	//Spawn Garrison units
-	_opforFOBGarrison = [selectRandom EnemyWaveLevel_1, _possibleRoadPosition , east, "DefenseFOBInfantry"] call doGenerateEnemyGroup;
+	_opforFOBGarrison = [selectRandom _basicEnemyGroups, _possibleRoadPosition , east, "RoadblockInfantry"] call doGenerateEnemyGroup;
 	{
 		if (count _OpforFobStandardOpforLocation > 0) then 
 		{
@@ -60,23 +62,6 @@ if (!([_possibleRoadPosition] call isLocationOnMap)) then
 			deleteVehicle _x;
 		};
 	} foreach units _opforFOBGarrison;
-	
-	//Spawn turret Units
-	// _opforFOBGarrisonTurret = [selectRandom EnemyWaveLevel_1, _possibleRoadPosition , east, ""] call doGenerateEnemyGroup;
-	// {
-	// 	_randomAvalaiblePos = selectRandom _OpforFobTurretOpforLocation;
-	// 	if (!isNil "_randomAvalaiblePos") then 
-	// 	{
-	// 		_turret = createVehicle ["B_G_HMG_02_high_F", getPosASL _randomAvalaiblePos, [], 0, "NONE"];
-	// 		_turret setDir (getDir _randomAvalaiblePos);
-	// 		_x moveInAny _turret;
-	// 		_x disableAI "PATH";
-	// 		deleteVehicle _randomAvalaiblePos;
-	// 		_OpforFobTurretOpforLocation = _OpforFobTurretOpforLocation - [_randomAvalaiblePos];
-	// 	};
-
-	// }
-	// foreach units _opforFOBGarrisonTurret;
 
 	//Clean arrows
 	{

@@ -2,7 +2,7 @@ adjustRole = {
 	params ["_cfgRole", "_cfgName"];
 
 	_backpackToTest = (configFile >> "CfgVehicles" >> _cfgName >> "backpack") call BIS_fnc_GetCfgData;
-	if (["_Ammo_", _backpackToTest] call BIS_fnc_inString) then 
+	if (false) then 
 	{
 		_cfgRole = "autorifleman";//Temp
 	} else 
@@ -23,12 +23,12 @@ adjustRole = {
 		};
 
 		//Check if name contains specifics strings
-		if (["pilot", _cfgName] call BIS_fnc_inString || ["Pilot", _cfgName] call BIS_fnc_inString) then 
+		if (["pilot", _cfgName] call BIS_fnc_inString || ["Pilot", _cfgName] call BIS_fnc_inString || ["crew", _cfgName] call BIS_fnc_inString) then 
 		{
 			_cfgRole = "pilot";
 		};
 
-		if (["marksman", _cfgName] call BIS_fnc_inString) then 
+		if (["marksman", _cfgName] call BIS_fnc_inString || ["spotter", _cfgName] call BIS_fnc_inString) then 
 		{
 			_cfgRole = "marksman";
 		};
@@ -39,6 +39,10 @@ adjustRole = {
 		if (["grenadier", _cfgName] call BIS_fnc_inString || ["_GL", _cfgName] call BIS_fnc_inString) then 
 		{
 			_cfgRole = "grenadier";
+		};
+		if (["mechanic", _cfgName] call BIS_fnc_inString) then 
+		{
+			_cfgRole = "engineer";
 		};
 		if (["_arifleman", _cfgName] call BIS_fnc_inString) then 
 		{
@@ -52,13 +56,17 @@ adjustRole = {
 		{
 			_cfgRole = "UAV operator";
 		};
-		if (["_aa", _cfgName] call BIS_fnc_inString) then 
+		if (["_aa", _cfgName] call BIS_fnc_inString || ["_LAT", _cfgName] call BIS_fnc_inString) then 
 		{
 			_cfgRole = "at";
 		};
 		if (["JTAC", _cfgName] call BIS_fnc_inString || ["radioman", _cfgName] call BIS_fnc_inString) then 
 		{
 			_cfgRole = "radioman";
+		};
+		if (["_sergeant", _cfgName] call BIS_fnc_inString ) then 
+		{
+			_cfgRole = "leader";
 		};
 	};
 
@@ -134,6 +142,71 @@ doSetOpfor = {
 	missionNamespace setVariable [format ["%1%2",_opforNameClass,_currentFactionName], _existingValues]; 
 };
 
+getBasicUnitsGroup = {
+	params ["_faction", "_unitType"];
+
+	//Get faction loadout
+	_currentFactionName = format ["loadout%1", _faction];
+	_currentStuffFaction = 	missionNamespace getVariable [_currentFactionName, []];
+	
+	//Start building groups
+	_resultGroup = [];
+	_coreEnemyGroup = [];
+	_resultGroup = +_coreEnemyGroup;
+
+	//Setup core group
+	_coreEnemyGroup pushBack ([_currentStuffFaction, "leader"] call getUnitByRole);
+	for [{_i = 0}, {_i < 3}, {_i = _i + 1}] do
+	{ 
+		_coreEnemyGroup pushBack ([_currentStuffFaction, "rifleman"] call getUnitByRole);
+	};
+
+	switch (_unitType) do {
+		case "BASIC":
+		{
+			if (count (baseEnemyGroup_db select {_x select 1  == opFaction} select 0 select 0) == 0) then 
+			{
+				_resultGroup = [_resultGroup, _currentStuffFaction, 8] call doFillWithRifleman;
+
+			} else 
+			{
+				_resultGroup = baseEnemyGroup_db select {_x select 1  == opFaction} select 0 select 0;
+			};
+		};
+		case "AT":
+		{
+			if (count (baseEnemyATGroup_db select {_x select 1  == opFaction} select 0 select 0) == 0) then 
+			{
+				//AT group
+				_resultGroup pushBack ([_currentStuffFaction, "at"] call getUnitByRole);
+				_resultGroup pushBack ([_currentStuffFaction, "grenadier"] call getUnitByRole);
+
+				_resultGroup = [_resultGroup, _currentStuffFaction, 6] call doFillWithRifleman;
+				//diag_log format ["_baseEnemyATGroup %1 ",_baseEnemyATGroup];
+
+			} else 
+			{
+				_resultGroup = baseEnemyATGroup_db select {_x select 1  == opFaction} select 0 select 0;
+			};
+		};
+		case "DEMO":
+		{
+			if (count (baseEnemyDemoGroup_db select {_x select 1  == opFaction} select 0 select 0) == 0) then 
+			{
+				//Demo group
+				_resultGroup pushBack ([_currentStuffFaction, "engineer"] call getUnitByRole);
+				_resultGroup pushBack ([_currentStuffFaction, "medic"] call getUnitByRole);
+				_resultGroup = [_resultGroup, _currentStuffFaction, 6] call doFillWithRifleman;
+			} else 
+			{
+				_resultGroup = baseEnemyDemoGroup_db select {_x select 1  == opFaction} select 0 select 0;
+			};
+		};
+	};
+
+	_resultGroup
+};
+
 doDefineOpforFactionInfantry = {
 	params ["_opforFaction", "_currentStuffFaction"];
 
@@ -189,7 +262,14 @@ getUnitByRole = {
 
 	if (_unitIndex != -1) then 
 	{
-		_unit = (_loadout#_unitIndex)#1;
+		_units = (_loadout#_unitIndex);
+		if (count _units >= 3) then 
+		{
+			_unit = selectRandom ((_units#2) + [_units#1]);
+		} else 
+		{
+			_unit = _units#1;
+		};
 	};
 	_unit
 };
@@ -249,6 +329,7 @@ mergeFactions = {
 		"bluforStaticWeapon",
 		"bluforMortar",
 		"bluforFixedWing",
+		"bluforFixedWingTransport",
 		"bluforBoat",
 		"bluforArmoredVehicle",
 		"bluforUnarmedVehicleChopper",
@@ -357,6 +438,29 @@ addBackPackDroneToFaction = {
 	missionNamespace setVariable [_currentFactionName, _defaultDrone]; 
 };
 
+addModernItemsToFaction = {
+	params ["_side", "_faction"];
+	_currentFactionName = format ["modernItems%1", _faction];
+	_defaultModernItems = [];
+
+	switch (_side) do {
+		case blufor:
+		{
+			_defaultModernItems append ["B_UavTerminal"];
+		};
+		case independent:
+		{
+			_defaultModernItems append ["I_E_UavTerminal"];
+		};
+		case opfor:
+		{
+			_defaultModernItems append ["O_UavTerminal"];
+		};
+	};
+
+	missionNamespace setVariable [_currentFactionName, _defaultModernItems]; 
+};
+
 addRadioToFaction = {
 	params ["_side", "_faction"];
 	_currentFactionName = format ["factionDefaultRadios%1", _faction];
@@ -418,4 +522,78 @@ filterWeaponsAndAccessoryByWeaponClassname =
 	} foreach _baseWeaponArray;
 
 	_resultList;
+};
+
+parseOpforFaction = 
+{
+	params ["_opforFaction"];
+	//Define Opfor factions 
+	{
+		_thisFac = _x#1;
+
+		//Parse only selected factions
+		if (_thisFac == _opforFaction) then 
+		{
+			//Define infantry
+			_currentFactionName = format ["loadout%1", _thisFac];
+			_currentStuffFaction = 	missionNamespace getVariable [_currentFactionName, []];
+			//[_thisFac, _currentStuffFaction] call doDefineOpforFactionInfantry;
+
+			//Define mortar 
+			_currentFactionName = format ["bluforMortar%1", _thisFac];
+			_currentStuffFaction = 	missionNamespace getVariable [_currentFactionName, []];
+			if (count _currentStuffFaction > 0) then 
+			{
+				[_thisFac, "baseEnemyMortarGroup", [_currentStuffFaction#0]] call doSetOpfor;
+			};
+
+			//Define vehicle
+			_currentFactionName = format ["bluforUnarmedVehicle%1", _thisFac];
+			_currentStuffFaction = 	missionNamespace getVariable [_currentFactionName, []];
+			_currentFactionName = format ["bluforArmedVehicle%1", _thisFac];
+			_currentStuffFaction = _currentStuffFaction + (missionNamespace getVariable [_currentFactionName, []]);
+			[_thisFac, "baseEnemyVehicleGroup", _currentStuffFaction] call doSetOpfor;
+
+			_currentFactionName = format ["bluforArmoredVehicle%1", _thisFac];
+			_currentStuffFaction = 	missionNamespace getVariable [_currentFactionName, []];
+			_heavy = [];
+			_light = [];
+			{
+				switch true do {
+					case (_x isKindOf 'Tank'):
+					{
+						_heavy pushBack _x;
+					};
+					case (_x isKindOf 'Wheeled_APC_F');
+					case (_x isKindOf 'APC_Tracked_02_base_F'):
+					{
+						_light pushBack _x;
+					};
+				};
+			} foreach _currentStuffFaction;
+			[_thisFac, "baseEnemyLightArmoredVehicleGroup", _light] call doSetOpfor;
+			[_thisFac, "baseEnemyHeavyArmoredVehicleGroup", _heavy] call doSetOpfor;
+
+			_currentFactionName = format ["bluforUnarmedVehicleChopper%1", _thisFac];
+			_currentStuffFaction = 	missionNamespace getVariable [_currentFactionName, []];
+			[_thisFac, "baseEnemyUnarmedChopperGroup", _currentStuffFaction] call doSetOpfor;
+
+			_currentFactionName = format ["bluforFixedWing%1", _thisFac];
+			_currentStuffFaction = 	missionNamespace getVariable [_currentFactionName, []];
+			[_thisFac, "baseFixedWingGroup", _currentStuffFaction] call doSetOpfor;
+
+			//Define static
+			_currentFactionName = format ["bluforStaticWeapon%1", _thisFac];
+			_currentStuffFaction = 	missionNamespace getVariable [_currentFactionName, []];
+			_static = [];
+			{
+				_static pushBack [_x, selectRandom ["SMALLBUNKER", "NOTHING"]];
+			} foreach _currentStuffFaction;
+
+			[_thisFac, "baseEnemyTurretGroup", _static] call doSetOpfor;
+		};
+
+	} foreach factionInfos;
+
+	checkFinishOpforFaction = true;
 };

@@ -86,6 +86,20 @@ getParentsFromItems = {
 	_candidateItemsListResult
 };
 
+getPrestigeItems = {
+	_result = [];
+	_playerCurrentPrestige = profileNamespace getVariable ["RPG_prestige", 0];
+	for [{_i = 0}, {_i < _playerCurrentPrestige}, {_i = _i + 1}] do
+	{
+		//Only ten prestige items
+		if ( _i <10 ) then 
+		{
+			_result pushBack (prestigeItem#_i);
+		};
+	};
+	_result
+};
+
 getVirtualWeaponList = {
 	params ["_currentPlayer", "_currentFaction"];
 
@@ -188,11 +202,16 @@ getItembyWarEra = {
 
 				_itemList append _defaultRadios;
 			} ;
+
+			//Add modern items
+			_defaultModernItems = ((modernItems_db select {_x#1  == _currentFaction})#0)#0;
+			_itemList append _defaultModernItems;
+
 		};
 		//Actual Warfare
 		case 3:
-		{
-			_itemList = ["ACE_Sandbag_empty","ItemGPS", "ACE_DAGR", "ACE_microDAGR","B_UavTerminal","ACE_EntrenchingTool","ACE_WaterBottle","ACE_CableTie","ACE_MapTools","ItemCompass","ItemMap","ItemWatch","ACE_RangeTable_82mm","Binocular","ACE_SpraypaintRed","ACE_EarPlugs"];
+		{	
+			_itemList = ["ACE_NVG_Wide_Black_WP", "ACE_NVG_Wide_WP","ACE_NVG_Wide_Green_WP", "ACE_Sandbag_empty","ItemGPS", "ACE_DAGR", "ACE_microDAGR","B_UavTerminal","ACE_EntrenchingTool","ACE_WaterBottle","ACE_CableTie","ACE_MapTools","ItemCompass","ItemMap","ItemWatch","ACE_RangeTable_82mm","Binocular","ACE_SpraypaintRed","ACE_EarPlugs"];
 			if (isClass (configFile >> "CfgPatches" >> "task_force_radio")) then {
 				_defaultRadios = ((factionDefaultRadios_db select {_x#1  == _currentFaction})#0)#0;
 
@@ -203,11 +222,15 @@ getItembyWarEra = {
 
 				_itemList append _defaultRadios;
 			} ;
+
+			//Add modern items
+			_defaultModernItems = ((modernItems_db select {_x#1  == _currentFaction})#0)#0;
+			_itemList append _defaultModernItems;
 		};
 		//Future Warfare
 		case 4:
 		{
-			_itemList = ["ACE_Sandbag_empty","ItemGPS","ACE_DAGR", "ACE_microDAGR","B_UavTerminal","ACE_EntrenchingTool","ACE_WaterBottle","ACE_CableTie","ACE_MapTools","ItemCompass","ItemMap","ItemWatch","ACE_RangeTable_82mm","Binocular","ACE_SpraypaintRed","ACE_EarPlugs"];
+			_itemList = ["ACE_NVG_Wide_Black_WP", "ACE_NVG_Wide_WP","ACE_NVG_Wide_Green_WP", "ACE_Sandbag_empty","ItemGPS","ACE_DAGR", "ACE_microDAGR","B_UavTerminal","ACE_EntrenchingTool","ACE_WaterBottle","ACE_CableTie","ACE_MapTools","ItemCompass","ItemMap","ItemWatch","ACE_RangeTable_82mm","Binocular","ACE_SpraypaintRed","ACE_EarPlugs"];
 			if (isClass (configFile >> "CfgPatches" >> "task_force_radio")) then {
 				_defaultRadios = ((factionDefaultRadios_db select {_x#1  == _currentFaction})#0)#0;
 
@@ -218,6 +241,10 @@ getItembyWarEra = {
 
 				_itemList append _defaultRadios;
 			} ;
+
+			//Add modern items
+			_defaultModernItems = ((modernItems_db select {_x#1  == _currentFaction})#0)#0;
+			_itemList append _defaultModernItems;
 		};
 		default
 		{
@@ -472,7 +499,9 @@ setupArsenalToItem = {
 	diag_log format ["List of whitelist default items by listCurrentItemsLoadout %1", _whiteListDefaultStuff];
 
 	//Merge every whitelist
-	_whitelistOfArsenalItems = _currentWeaponItems+_currentBackpackItems+_currentMagazineItems+_currentItems + _whiteListDefaultStuff + ["ACE_key_west","ACE_key_east","ACE_key_civ","ACE_key_indp"];
+	//Add prestige item 
+	_prestigeItems = [] call getPrestigeItems;
+	_whitelistOfArsenalItems = _currentWeaponItems+_currentBackpackItems+_currentMagazineItems+_currentItems + _whiteListDefaultStuff+ _prestigeItems + ["ACE_key_west","ACE_key_east","ACE_key_civ","ACE_key_indp"];
 	diag_log format ["List of whitelist items by listCurrentItemsLoadout %1", _whitelistOfArsenalItems];
 
 	//Fix vanilla arsenal not showing all weapon 
@@ -614,6 +643,25 @@ doInitializeLoadout = {
 		};
 	};
 
+		//Add airDrop action
+	_advancedAirDropSupportID = _player getVariable ["advancedAirDropSupportID", -1];
+	if (_currentPlayerClass == "leader") then 
+	{
+		_airDropSupportCounter = missionNamespace getVariable ["airDropSupportCounter", 0];
+		if (_airDropSupportCounter > 0 && _advancedAirDropSupportID == -1) then 
+		{
+			_advancedAirDropSupportID = [_player, "myAdvancedAirDrop"] call BIS_fnc_addCommMenuItem;
+			_player setVariable ["advancedAirDropSupportID", _advancedAirDropSupportID, true];
+		};
+	} else 
+	{
+		if (_advancedAirDropSupportID != -1) then 
+		{
+			[_player, _advancedAirDropSupportID] call BIS_fnc_removeCommMenuItem;
+			_player setVariable ["advancedAirDropSupportID", -1, true]
+		};
+	};
+
 	//Add reinforcement action
 	_reinforcementSupportID = _player getVariable ["reinforcementSupportID", -1];
 	if (_currentPlayerClass == "leader") then 
@@ -643,7 +691,8 @@ switchToRole = {
 	diag_log format ["Player %1 has switched to role %2 in faction %3", name _caller, _role, _faction];
 
 	//Manage player's role
-	if ([_caller, _role] call checkRoleAvalaibility) then
+	//Check if the role is existing and avalaible
+	if ([_caller, _role] call checkRoleAvalaibility && (count (((loadout_db select {_x # 1 == _faction}) # 0 # 0) select {_x#0 == _role}) != 0)) then
 	{
 		//Player is allowed to change role
 		_caller setVariable ["role", _role, true];
@@ -887,6 +936,28 @@ setupPlayerLoadoutRemake = {
 	player setVariable ["avalaibleItemsInArsenal", _whitelistOfArsenalItems, true];
 };
 
+setupPlayerLoadoutWithoutConditionRemake = {
+
+	//InitParam
+	params ["_itemToAttachArsenal"];
+
+	_actionLoadoutSetup = _itemToAttachArsenal addAction [format ["<img size='3' image='\a3\missions_f_oldman\data\img\holdactions\holdAction_box_ca.paa'/><t size='1.2'>%1</t>", localize "STR_ACTIONS_SETUP_LOADOUT"],{
+		//Define parameters
+		params ["_object","_caller","_ID","_parameters"];
+
+		[] execVM "GUI\LoadoutGUI\initPlayerLoadoutSetupRemake.sqf"
+
+	},[],1000,true, false,"","(_this distance _target < 15)"];
+
+	//Setup initArsenal whitelist items
+	[player, player, player call getPlayerFaction] call setupArsenalToItem;
+
+	_whitelistOfArsenalItems = player getVariable ["avalaibleItemsInArsenal", []];
+	_whitelistOfArsenalItems append ([getUnitLoadout player] call getAllStringInArray);
+	player setVariable ["avalaibleItemsInArsenal", _whitelistOfArsenalItems, true];
+};
+
+
 setupSaveAndLoadRole = {
 	//InitParam
 	params ["_itemToAttachArsenal", "_currentPlayer" ];
@@ -922,26 +993,45 @@ setupSaveAndLoadRole = {
 adjustTFARRadio = {
 	params ["_currentPlayer"];
 	if (isClass (configFile >> "CfgPatches" >> "task_force_radio")) then {
+		
+		// _unitHaveRadio = (("ItemRadio" in (assignedItems _currentPlayer)) || (call TFAR_fnc_haveDDRadio) || (call TFAR_fnc_haveLRRadio) || call TFAR_fnc_haveSWRadio);
+ 		// _unitHaveRadio = ("ItemRadio" in (assignedItems _currentPlayer));
+		_currentPlayer unassignItem "ItemRadio";
+		_currentPlayer removeItem "ItemRadio";
 
 		//Get default radio setup in the faction
 		_currentFaction = _currentPlayer call getPlayerFaction;
 		_factionDefaultRadios = ((factionDefaultRadios_db select {_x#1  == _currentFaction})#0)#0;
 
-		//If there is a radio defined, add it to the player else add basic default radio
-		if (count _factionDefaultRadios > 0 && ((call TFAR_fnc_haveDDRadio) || (call TFAR_fnc_haveLRRadio) || call TFAR_fnc_haveSWRadio)) then 
+		//Clear automatic radio conversion
+
+		_playerDefaultRadio = "";
+		if (count _factionDefaultRadios > 0) then 
 		{
-			_currentPlayer addItem _factionDefaultRadios#0;
-			_currentPlayer assignItem _factionDefaultRadios#0;
+			_playerDefaultRadio = _factionDefaultRadios#0;
 		} else 
 		{
-			_currentPlayer addItem basicDefaultRadio#0;
-			_currentPlayer assignItem basicDefaultRadio#0;	
+			_playerDefaultRadio = basicDefaultRadio#0;
 		};
+
+		_currentPlayerRadio = (getUnitLoadout _currentPlayer)#9#2;
+		if !([_playerDefaultRadio, _currentPlayerRadio] call BIS_fnc_inString) then 
+		{
+			//Unassigned old radio
+			_currentPlayer unassignItem _currentPlayerRadio;
+			_currentPlayer removeItem _currentPlayerRadio;
+
+			//Assigned new radio
+			_currentPlayer addItem _playerDefaultRadio;
+			_currentPlayer assignItem _playerDefaultRadio;
+		};
+
+		// };
 
 		//Seems not working
 		if (side _currentPlayer == blufor) then
 		{
-			// Comment TFAR function
+			// Comment TFAR function seems broken
 			// [(call TFAR_fnc_activeSwRadio), 1, format ["%1",bluforShortFrequencyTFAR]] call TFAR_fnc_setChannelFrequency;
 			// [(call TFAR_fnc_activeLrRadio), 1, format ["%1",bluforShortFrequencyTFAR]] call TFAR_fnc_SetChannelFrequency;
 		};
@@ -993,34 +1083,65 @@ removeTFARID = {
 adjustLoadout = {
 	params ["_currentPlayer"];
 
-	if (_currentPlayer getUnitTrait "Medic" == false) then 
+	//Adjust ACE medic items 
+	if (isClass (configFile >> "CfgPatches" >> "ace_medical")) then 
 	{
-		for "_i" from 0 to 7 do { _currentPlayer addItem "ACE_elasticBandage" };	
-		for "_i" from 0 to 1 do { _currentPlayer addItem "ACE_tourniquet" };
-		for "_i" from 0 to 1 do { _currentPlayer addItem "ACE_splint" };
-	}
-	else 
-	{
-		_currentPlayer addItem "ACE_surgicalKit";
-		for "_i" from 0 to 7 do { _currentPlayer addItem "ACE_epinephrine" };
-		for "_i" from 0 to 7 do { _currentPlayer addItem "ACE_splint" };
-		for "_i" from 0 to 29 do { _currentPlayer addItem "ACE_elasticBandage" };
-		for "_i" from 0 to 29 do { _currentPlayer addItem "ACE_quikclot" };
-		for "_i" from 0 to 11 do { _currentPlayer addItem "ACE_suture" };
-		//for "_i" from 0 to 9 do { _currentPlayer addItem "ACE_morphine" }; //Basic ACE conversion will give enough morphine
-		for "_i" from 0 to 5 do { _currentPlayer addItem "ACE_bloodIV_500" };
-		for "_i" from 0 to 2 do { _currentPlayer addItem "ACE_bloodIV" };
-		//for "_i" from 0 to 5 do { _currentPlayer addItem "ACE_tourniquet" };	//Basic ACE conversion will give enough tourniquet
+		if (_currentPlayer getUnitTrait "Medic" == false) then 
+		{
+			for "_i" from 0 to 7 do { _currentPlayer addItem "ACE_elasticBandage" };	
+			for "_i" from 0 to 1 do { _currentPlayer addItem "ACE_tourniquet" };
+			for "_i" from 0 to 1 do { _currentPlayer addItem "ACE_splint" };
+		}
+		else 
+		{
+			_currentPlayer removeItems "Medikit";
+			_currentPlayer removeItems "ACE_tourniquet";
+			_currentPlayer removeItems "ACE_elasticBandage";
+			_currentPlayer removeItems "ACE_fieldDressing";
+			_currentPlayer removeItems "ACE_packingBandage";
+			_currentPlayer removeItems "ACE_tourniquet";
+			_currentPlayer removeItems "ACE_morphine";
+			_currentPlayer removeItems "ACE_quikclot";
+			_currentPlayer removeItems "ACE_epinephrine";
+
+
+			_currentPlayer addItem "ACE_surgicalKit";
+			for "_i" from 0 to 11 do { _currentPlayer addItem "ACE_epinephrine" };
+			for "_i" from 0 to 11 do { _currentPlayer addItem "ACE_splint" };
+			for "_i" from 0 to 59 do { _currentPlayer addItem "ACE_elasticBandage" };
+			// for "_i" from 0 to 29 do { _currentPlayer addItem "ACE_quikclot" };
+			for "_i" from 0 to 59 do { _currentPlayer addItem "ACE_suture" };
+			for "_i" from 0 to 9 do { _currentPlayer addItem "ACE_morphine" }; //Basic ACE conversion will give enough morphine
+			for "_i" from 0 to 11 do { _currentPlayer addItem "ACE_bloodIV_500" };
+			for "_i" from 0 to 7 do { _currentPlayer addItem "ACE_bloodIV" };
+			for "_i" from 0 to 11 do { _currentPlayer addItem "ACE_tourniquet" };	//Basic ACE conversion will give enough tourniquet
+		};
+
+		//Adjust engineer stuff
+		if (_currentPlayer getVariable "role" == c_engineer) then 
+		{
+			_currentPlayer addItem "ACE_Fortify";
+			_currentPlayer addItem "ACE_DefusalKit";
+			_currentPlayer addItem "ACE_wirecutter";
+		};
 	};
+
 	for "_i" from 0 to 1 do { _currentPlayer addItem "ACE_CableTie" };
 	_currentPlayer addItem "ACE_MapTools";	
 	_currentPlayer addItem "ACE_morphine";	
 	_currentPlayer addItem "ACE_WaterBottle";
 	_currentPlayer addItem "ACE_EarPlugs";
-	_currentPlayer unassignItem "itemRadio";
-	_currentPlayer removeItem "itemRadio";
 	_currentPlayer setSpeaker "noVoice";
 
+	//Adapt loadout to a specific Era
+	[_currentPlayer] call doAdjustAdvancedStuff;
+
+	diag_log format ["Player %1 loadout adjust", name _currentPlayer];
+};
+
+
+doAdjustAdvancedStuff = {
+	params ["_currentPlayer"];
 	//Adapt loadout to a specific Era
 	switch (warEra) do
 	{
@@ -1054,10 +1175,10 @@ adjustLoadout = {
 		};
 		default
 		{
-			
+			hint "Bad war era setup";
+			diag_log "Bad war era setup";
 		};
 	};
-	diag_log format ["Player %1 loadout adjust", name _currentPlayer];
 };
 
 RemoveArsenalActionFromGivenObject = {

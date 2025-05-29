@@ -195,7 +195,7 @@ if (hasInterface) then
 
 			//Save current loadout
 			[player, "personal"] call saveCustomLoadout;
-			hint "Loadout loaded";
+			hint "Loadout saved";
 
 			//Load default faction stuff in ironMan mode
 			if (ironMan) then 

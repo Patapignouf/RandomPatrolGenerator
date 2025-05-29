@@ -9,12 +9,12 @@
 #include "enemyManagement\behaviorEngine\unitsBehaviorFunctions.sqf"
 #include "engine\hintManagement\customDialog.sqf"
 #include "GUI\scoreBoardGUI\scoreFunctions.sqf"
+#include "database\factionParameters.sqf"
 
 
 //Init base mission parameters 
 enableInitAttack = "EnableInitAttack" call BIS_fnc_getParamValue;
 enableInitBluAttack = "EnableInitBluAttack" call BIS_fnc_getParamValue;
-
 
 //Init all environement database variable
 _handleEnvironmentInitialization = [] execVM 'initEnvironment.sqf'; 
@@ -118,6 +118,10 @@ publicVariable "bluforExtractVehicleChopper";
 bluforFixedWing = bluforFixedWing_db select {_x select 1  == bluFaction} select 0 select 0;
 publicVariable "bluforFixedWing";
 
+bluforFixedWingTransport = bluforFixedWingTransport_db select {_x select 1  == bluFaction} select 0 select 0;
+publicVariable "bluforFixedWingTransport";
+
+
 bluforArmedChopper = bluforArmedChopper_db select {_x select 1  == bluFaction} select 0 select 0;
 publicVariable "bluforArmedChopper";
 
@@ -139,9 +143,9 @@ civilian_big_group = civilian_big_group_db select {_x select 1  == civFaction} s
 civilianTruck = civilianTruck_db select {_x select 1  == civFaction} select 0 select 0;
 
 //EnemyGroupDefinition
-baseEnemyGroup = baseEnemyGroup_db select {_x select 1  == opFaction} select 0 select 0;
-baseEnemyATGroup = baseEnemyATGroup_db select {_x select 1  == opFaction} select 0 select 0;
-baseEnemyDemoGroup = baseEnemyDemoGroup_db select {_x select 1  == opFaction} select 0 select 0;
+baseEnemyGroup = [opFaction, "BASIC"] call getBasicUnitsGroup;
+baseEnemyATGroup = [opFaction, "AT"] call getBasicUnitsGroup;
+baseEnemyDemoGroup = [opFaction, "DEMO"] call getBasicUnitsGroup;
 baseEnemyMortarGroup = baseEnemyMortarGroup_db select {_x select 1  == opFaction} select 0 select 0;
 baseEnemyVehicleGroup = baseEnemyVehicleGroup_db select {_x select 1  == opFaction} select 0 select 0;
 baseEnemyTurretGroup = ((baseEnemyTurretGroup_db select {_x#1  == opFaction})#0)#0;
@@ -150,15 +154,13 @@ baseEnemyHeavyArmoredVehicleGroup = baseEnemyHeavyArmoredVehicleGroup_db select 
 baseEnemyUnarmedChopperGroup = baseEnemyUnarmedChopperGroup_db select {_x select 1  == opFaction} select 0 select 0;
 baseEnemyArmedChopperGroup = baseEnemyArmedChopperGroup_db select {_x select 1  == opFaction} select 0 select 0;
 baseFixedWingGroup = baseFixedWingGroup_db select {_x select 1  == opFaction} select 0 select 0;
-
+baseEnemyFixedWingTransport = enemyFixedWingTransport_db select {_x select 1  == opFaction} select 0 select 0;
 
 //Enemy Wave Composition, needs to be completely rework
-EnemyWaveLevel_1 = [baseEnemyGroup,baseEnemyATGroup];
+EnemyWaveLevel_1 = [baseEnemyGroup, baseEnemyATGroup];
 EnemyWaveLevel_6 = [baseEnemyGroup,baseEnemyATGroup,baseEnemyDemoGroup];
 EnemyWaveLevel_8 = [baseEnemyGroup,baseEnemyATGroup,baseEnemyDemoGroup,baseEnemyMortarGroup];
 
-EnemyWaveGroups = [EnemyWaveLevel_1,EnemyWaveLevel_6,EnemyWaveLevel_8];
-publicvariable "EnemyWaveGroups";
 
 ///////////////////////////
 ///Define player settings//
@@ -333,7 +335,7 @@ for [{_i = 0}, {_i <= 2}, {_i = _i + 1}] do //Peut être optimisé
 if (random 100 < 20 && (count (allPlayers select {side _x == independent})== 0)) then 
 {
 	//Generate enemy forces on main civilian city environement
-	_handlePOIGeneration = [EnemyWaveLevel_1, baseEnemyVehicleGroup, [], [], [], [], initCityLocation, objNull] execVM 'enemyManagement\generationEngine\generatePOI.sqf'; 
+	_handlePOIGeneration = [baseEnemyVehicleGroup, [], [], [], [], initCityLocation, objNull] execVM 'enemyManagement\generationEngine\generatePOI.sqf'; 
 	waitUntil {isNull _handlePOIGeneration};
 };
 
@@ -454,7 +456,7 @@ if ( count AvalaibleInitAttackPositions != 0 && (enableInitAttack == 1 || ((enab
 },[],1.5,true,false,"","_target distance _this <5 && side _this == independent"]] remoteExec [ "addAction", 0, true ];
 
 //Init perma harass on player
-[[baseEnemyGroup,baseEnemyATGroup,baseEnemyDemoGroup],baseEnemyVehicleGroup, baseEnemyLightArmoredVehicleGroup, baseEnemyHeavyArmoredVehicleGroup, baseEnemyUnarmedChopperGroup, baseFixedWingGroup, baseEnemyArmedChopperGroup] spawn _generateHarass; 
+[] spawn _generateHarass; 
 
 //Init ambiant war 
 if (missionNameSpace getVariable ["enableAmbiantWar", 0] == 1) then 
@@ -939,11 +941,6 @@ if (disableZoom == 1) then
 //Init checkdeath
 [] execVM 'engine\checkdeath.sqf';
 
-//init global respawn manager 
-if (missionNameSpace getVariable ["enableSelfRespawnTimer", 0] == 0) then 
-{
-	[] execVM 'engine\respawnManagement\respawnGlobalTimerManager.sqf'; 
-};
 
 
 missionGenerated = true;
@@ -1005,6 +1002,36 @@ if (enableCampaignMode) then
 
 		} else 
 		{
+			//Randomize opforFaction if needed
+			if (missionNameSpace getVariable "opforFactionRandomizer" == 1) then 
+			{
+				opFaction = selectRandom (factionInfos select {_x#4 && !(["air", _x#1] call BIS_fnc_inString) && !(["usaf", _x#1] call BIS_fnc_inString) && !(["_usn", _x#1] call BIS_fnc_inString) && !(["_AA", _x#1] call BIS_fnc_inString)})#1;
+				missionNamespace setVariable ["opforFaction", opFaction, true];
+				checkFinishOpforFaction = false;
+
+				_execFaction = [] execVM 'database\object_db\factionAutomaticExtractor.sqf';
+				waitUntil {isNull _execFaction};
+				waitUntil {checkFinishFaction};
+
+				[opFaction] call parseOpforFaction;
+				waitUntil {checkFinishOpforFaction};
+
+				//Wait initEnvironnement
+				_handleEnvironmentInitialization2 = [] execVM 'initEnvironment.sqf'; 
+				waitUntil {isNull _handleEnvironmentInitialization2};
+				waitUntil {checkfinish};
+
+				baseEnemyMortarGroup = baseEnemyMortarGroup_db select {_x select 1  == opFaction} select 0 select 0;
+				baseEnemyVehicleGroup = baseEnemyVehicleGroup_db select {_x select 1  == opFaction} select 0 select 0;
+				baseEnemyTurretGroup = ((baseEnemyTurretGroup_db select {_x#1  == opFaction})#0)#0;
+				baseEnemyLightArmoredVehicleGroup = baseEnemyLightArmoredVehicleGroup_db select {_x select 1  == opFaction} select 0 select 0;
+				baseEnemyHeavyArmoredVehicleGroup = baseEnemyHeavyArmoredVehicleGroup_db select {_x select 1  == opFaction} select 0 select 0;
+				baseEnemyUnarmedChopperGroup = baseEnemyUnarmedChopperGroup_db select {_x select 1  == opFaction} select 0 select 0;
+				baseEnemyArmedChopperGroup = baseEnemyArmedChopperGroup_db select {_x select 1  == opFaction} select 0 select 0;
+				baseFixedWingGroup = baseFixedWingGroup_db select {_x select 1  == opFaction} select 0 select 0;
+				baseEnemyFixedWingTransport = enemyFixedWingTransport_db select {_x select 1  == opFaction} select 0 select 0;
+			};
+
 			//Randomize objective locations or not
 			if (NeedToRandomizePOI == 1) then 
 			{

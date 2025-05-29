@@ -1,4 +1,4 @@
-params ["_thisAvailableOpforGroup","_thisAvailableOpforCars","_thisAvailableOpforLightArmoredVehicle","_thisAvailableOpforHeavyArmoredVehicle", "_thisAvailableOpforUnarmedChopperVehicle","_thisAvailableOpforFixedWing", "_thisAvailableOpforArmedChopperVehicle"];
+params [];
 
 nb_ind_player_alive = 0;
 nb_blu_player_alive = 0;
@@ -20,6 +20,17 @@ if (isServer) then
 
 	while {sleep 60; (_missionNumber == (missionNamespace getVariable ["missionNumber", 0]))} do  
 	{
+		//Redefine opfor reinforcement
+		_thisAvailableOpforGroup = [baseEnemyGroup,baseEnemyATGroup,baseEnemyDemoGroup];
+		_thisAvailableOpforCars= baseEnemyVehicleGroup;
+		_thisAvailableOpforLightArmoredVehicle = baseEnemyLightArmoredVehicleGroup;
+		_thisAvailableOpforHeavyArmoredVehicle = baseEnemyHeavyArmoredVehicleGroup;
+		_thisAvailableOpforUnarmedChopperVehicle = baseEnemyUnarmedChopperGroup ;
+		_thisAvailableOpforFixedWing = baseFixedWingGroup ;
+		_thisAvailableOpforArmedChopperVehicle = baseEnemyArmedChopperGroup;
+		_thisAvailableOpforFixedWingTransport = baseEnemyFixedWingTransport;
+
+
 		_thisDifficulty = missionNamespace getVariable "missionDifficultyParam"; //Default medium
 
 		//Test if there are too much IA
@@ -66,14 +77,14 @@ if (isServer) then
 					};
 
 					//Generate Light armored vehicle spawn chance 
-					if (count _thisAvailableOpforLightArmoredVehicle != 0 && enableArmoredVehicle && random 100 < 20) then 
+					if (count _thisAvailableOpforLightArmoredVehicle != 0 && enableArmoredVehicle && random 100 < 30) then 
 					{
 						//Light armored vehicle spawn chance 20%
 						_tempVehicleGroup pushBack [selectRandom _thisAvailableOpforLightArmoredVehicle];
 					};
 
 					//Generate Light armored vehicle spawn chance
-					if (count _thisAvailableOpforHeavyArmoredVehicle != 0 && enableArmoredVehicle && random 100 < 15) then 
+					if (count _thisAvailableOpforHeavyArmoredVehicle != 0 && enableArmoredVehicle && random 100 < 25) then 
 					{
 						//Heavy armored vehicle spawn chance 15%
 						_tempVehicleGroup pushBack [selectRandom _thisAvailableOpforHeavyArmoredVehicle];
@@ -122,8 +133,24 @@ if (isServer) then
 
 				AvalaibleInitAttackPositions = [];
 				AvalaibleInitAttackPositions = [positionToAttack, 1200, 2000, _thisDifficulty] call getListOfPositionsAroundTarget;
-				[ AvalaibleInitAttackPositions, positionToAttack, _thisAvailableOpforGroup, _tempVehicleGroup, (floor (_thisDifficulty/4))+1] execVM 'enemyManagement\behaviorEngine\doAmbush.sqf'; 
+
+				//Chopper reinforcement 50%
 				diag_log format ["Harass start on position %1", positionToAttack];
+				if (count _thisAvailableOpforUnarmedChopperVehicle != 0 &&  random 100 < 50) then 
+				{
+					//Generate enemy wave
+					_closedAvalaibleInitAttackPositions = [positionToAttack, 300, 1000, _thisDifficulty] call getListOfPositionsAroundTarget;
+					for [{_numberOfChopper = 0}, {_numberOfChopper < _thisDifficulty}, {_numberOfChopper = _numberOfChopper + 1}] do
+					{
+						[selectRandom _thisAvailableOpforGroup, selectRandom (_thisAvailableOpforUnarmedChopperVehicle+_thisAvailableOpforFixedWingTransport), selectRandom _closedAvalaibleInitAttackPositions] execVM 'enemyManagement\behaviorEngine\doParadrop.sqf'; 
+						sleep 1; //Avoid chopper crash
+					};
+
+					[_thisAvailableOpforGroup#0, selectRandom _thisAvailableOpforUnarmedChopperVehicle, positionToAttack] execVM 'enemyManagement\behaviorEngine\doVehicleReinforcement.sqf'; 
+				} else 
+				{
+					[ AvalaibleInitAttackPositions, positionToAttack, _thisAvailableOpforGroup, _tempVehicleGroup, (floor (_thisDifficulty/4))+1] execVM 'enemyManagement\behaviorEngine\doAmbush.sqf'; 
+				};
 
 				switch (missionNamespace getVariable ["opforReinforcement", 1])  do
 				{

@@ -11,6 +11,26 @@ private _buttonRespawnStart = _mainDisplay displayCtrl 8200;
 private _buttonRespawnAdvFOB = _mainDisplay displayCtrl 8201;
 private _buttonRespawnTent = _mainDisplay displayCtrl 8202;
 
+//Prevent restriction system from killing default loadout
+whiteListCurrentLoadout = 
+{
+	//Prevent player from loosing his current configuration
+	[] spawn {
+		uiSleep 0.5;
+		_newAvalaibleItems = player getVariable ["avalaibleItemsInArsenal", []];
+		_potentialStuff = ((getUnitLoadout player) call getAllStringInArray);
+		{
+			if (typeName _x != "STRING") then 
+			{
+				_potentialStuff = _potentialStuff - [_x];
+			};
+		} foreach _potentialStuff;
+
+		_newAvalaibleItems = _newAvalaibleItems + _potentialStuff;
+		player setVariable ["avalaibleItemsInArsenal", _newAvalaibleItems];
+	};
+};
+
 
 
 //Faction params
@@ -41,6 +61,9 @@ if (!ironMan) then
 		//Blufor
 		_listOfAvalaibleRole = [bluFaction] call setupRoleSwitchToList;
 	};
+
+	//Whitelist current loadout
+	[] call whiteListCurrentLoadout;
 
 	//Hide advanced fob respawn if independent or if there is no Adv FOB setup
 	_advFOBLocation = missionNamespace getVariable ["advancedBlueforLocation", [0,0,0]];
@@ -136,6 +159,9 @@ if (!ironMan) then
 				_loadableLoadout = profileNamespace getVariable [format [loadoutSaveName, name player, player call getPlayerFaction, player getVariable "role"], player getVariable "spawnLoadout"];
 				player setUnitLoadout _loadableLoadout;
 				player setVariable ["spawnLoadout", getUnitLoadout player]; //Save custom loadout for future spawn loadout
+
+				//Whitelist current loadout
+				[] call whiteListCurrentLoadout;
 
 				//Hint switch role
 				[[format ["%1 has switched to role %2", name player, player getVariable "role"], "arsenal"], 'engine\hintManagement\addCustomHint.sqf'] remoteExec ['BIS_fnc_execVM', -clientOwner];

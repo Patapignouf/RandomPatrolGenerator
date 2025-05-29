@@ -10,6 +10,7 @@ generateObjective =
 	_missionObjectives = missionNamespace getVariable ["MissionObjectives",[]];
 	_missionUncompletedObjectives = missionNamespace getVariable ["missionUncompletedObjectives",_missionObjectives];
 	_warEra = missionNamespace getVariable "warEra";
+	_basicEnemyGroups = [[opFaction, "BASIC"] call getBasicUnitsGroup, [opFaction, "AT"] call getBasicUnitsGroup];
 
 	//Generate a new objective
 	SupplyObjects =  [];
@@ -25,6 +26,9 @@ generateObjective =
 	_possibleObjectivePosition = _possibleObjectivePosition - [_selectedObjectivePosition];
 
 	diag_log format ["Objective generation started : %1 on position %2", currentObjType, _selectedObjectivePosition];
+
+	//GenerateAnimals 
+	[[_selectedObjectivePosition, 40, 200, 7, 0, 0, 0, [], [[0,0,0],[0,0,0]]] call BIS_fnc_findSafePos] call doGenerateAnimalGroup;
 	
 	//Generate mission environement
 	switch (currentObjType) do 
@@ -45,7 +49,7 @@ generateObjective =
 		case "hostage":
 		{
 			//Populate biggest buildings with opfor
-			_tempSelectedObjectivePosition = [_selectedObjectivePosition, 200, EnemyWaveLevel_1] call generateOpforInBiggestBuildings;
+			_tempSelectedObjectivePosition = [_selectedObjectivePosition, 200, _basicEnemyGroups] call generateOpforInBiggestBuildings;
 			_selectedObjectivePosition = _tempSelectedObjectivePosition;
 
 			//Generate mission objectives
@@ -62,7 +66,7 @@ generateObjective =
 			{
 				//20% objective with hostile almost only civilian
 				//Not avalaible on WWII era
-				_handlePOIGeneration = [EnemyWaveLevel_1, baseEnemyVehicleGroup, baseEnemyLightArmoredVehicleGroup, baseEnemyHeavyArmoredVehicleGroup, civilian_group, _selectedObjectivePosition, _objectiveCreated] execVM 'enemyManagement\generationEngine\generateHostileCivPOI.sqf'; 
+				_handlePOIGeneration = [_basicEnemyGroups, baseEnemyVehicleGroup, baseEnemyLightArmoredVehicleGroup, baseEnemyHeavyArmoredVehicleGroup, civilian_group, _selectedObjectivePosition, _objectiveCreated] execVM 'enemyManagement\generationEngine\generateHostileCivPOI.sqf'; 
 				waitUntil {isNull _handlePOIGeneration};
 			} else 
 			{
@@ -70,10 +74,10 @@ generateObjective =
 				_handlePOIGeneration = objNull;
 				if ((missionNamespace getVariable "enableCiviliansOnObjectives") == 1) then 
 				{
-					_handlePOIGeneration = [EnemyWaveLevel_1, baseEnemyVehicleGroup, baseEnemyLightArmoredVehicleGroup, baseEnemyHeavyArmoredVehicleGroup, baseEnemyTurretGroup, civilian_group, _selectedObjectivePosition, _objectiveCreated] execVM 'enemyManagement\generationEngine\generatePOI.sqf'; 
+					_handlePOIGeneration = [baseEnemyVehicleGroup, baseEnemyLightArmoredVehicleGroup, baseEnemyHeavyArmoredVehicleGroup, baseEnemyTurretGroup, civilian_group, _selectedObjectivePosition, _objectiveCreated] execVM 'enemyManagement\generationEngine\generatePOI.sqf'; 
 				} else 
 				{
-					_handlePOIGeneration = [EnemyWaveLevel_1, baseEnemyVehicleGroup, baseEnemyLightArmoredVehicleGroup, baseEnemyHeavyArmoredVehicleGroup, baseEnemyTurretGroup, [], _selectedObjectivePosition, _objectiveCreated] execVM 'enemyManagement\generationEngine\generatePOI.sqf'; 
+					_handlePOIGeneration = [baseEnemyVehicleGroup, baseEnemyLightArmoredVehicleGroup, baseEnemyHeavyArmoredVehicleGroup, baseEnemyTurretGroup, [], _selectedObjectivePosition, _objectiveCreated] execVM 'enemyManagement\generationEngine\generatePOI.sqf'; 
 				};
 				waitUntil {isNull _handlePOIGeneration};
 			};
@@ -100,7 +104,12 @@ generateObjectiveObject =
 		_allBuildings = nearestTerrainObjects [_thisObjectivePosition, ["house", "FORTRESS", "BUNKER"], 100, false, true];
 		_allPositions = [];
 		_allBuildings apply {_allPositions append (_x buildingPos -1)};
-		_thistempObjectivePosition = selectRandom _allPositions;
+
+		//Check if there is an eligible building to the objective
+		if (count _allPositions != 0) then 
+		{
+			_thistempObjectivePosition = selectRandom _allPositions;
+		};
 	};
 
 	
@@ -203,6 +212,37 @@ generateObjectiveObject =
 				//Manage objective completion
 				[_thisObjective] execVM 'engine\objectiveManagement\checkObjectInArea.sqf';
 				[_thisObjective] execVM 'engine\objectiveManagement\checkDeadVehicle.sqf';  
+
+				[
+					_objectiveObject, 
+					"Destroy ammo box", 
+					"\a3\ui_f_oldman\data\IGUI\Cfg\holdactions\destroy_ca.paa", 
+					"\a3\ui_f_oldman\data\IGUI\Cfg\holdactions\destroy_ca.paa", 
+					"_this distance _target < 3 && _this getVariable 'role' == 'engineer'",						// Condition for the action to be shown
+					"_caller distance _target < 3",						// Condition for the action to progress
+					{
+						// Action start code
+					}, 
+					{
+						// Action on going code
+					},  
+					{
+						// Action successfull code
+						params ["_object","_caller","_ID","_objectParams","_progress","_maxProgress"];
+						_thisObjective = _objectParams select 0;
+						sleep 5;
+						_object setDamage 1;
+
+					}, 
+					{
+						// Action failed code
+					}, 
+					[_thisObjective],  
+					2,
+					0, 
+					true, 
+					false
+				] remoteExec ["BIS_fnc_holdActionAdd", 0, true];
 			};
 		case "hvt":
 			{
@@ -210,7 +250,7 @@ generateObjectiveObject =
 				_objectiveObject = leader ([_currentRandomPos, east, [selectRandom avalaibleHVT],[],[],[],[],[], random 360] call BIS_fnc_spawnGroup);
 				_objectiveObject disableAI "PATH";
 				diag_log format ["HVT %2 _thisObjectivePosition : %1",_thisObjectivePosition, _objectiveObject];
-				currentObj setVariable ["isObjectiveObject", true, true];
+				_objectiveObject setVariable ["isObjectiveObject", true, true];
 				_objectiveObject setVariable ["isObjectiveObject", true, true];
 				_thisObjective = [_objectiveObject, _thisObjectiveType] call generateObjectiveTracker;
 				diag_log format ["HVT %2 _thisObjectivePosition : %1",_thisObjectivePosition, _objectiveObject];
