@@ -56,7 +56,7 @@ adjustRole = {
 		{
 			_cfgRole = "UAV operator";
 		};
-		if (["_aa", _cfgName] call BIS_fnc_inString || ["_LAT", _cfgName] call BIS_fnc_inString) then 
+		if (["_aa", _cfgName] call BIS_fnc_inString || ["_LAT", _cfgName] call BIS_fnc_inString || ["_RPG", _cfgName] call BIS_fnc_inString) then 
 		{
 			_cfgRole = "at";
 		};
