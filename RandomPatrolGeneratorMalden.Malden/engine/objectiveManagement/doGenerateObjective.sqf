@@ -191,6 +191,12 @@ generateObjectiveObject =
 					//Add penalty
 					[{[-50,5] call doUpdateRankWithPenalty}] remoteExec ["call", _instigator];
 
+					//Delete task marker
+					if (missionNameSpace getVariable ["enableObjectiveExactLocation",0] == 1) then 
+					{
+						[_thisTaskID] remoteExec ["deleteMarker", 0, true];
+					};
+
 					//Manage task system
 					if ("RealismMode" call BIS_fnc_getParamValue == 1 ) then 
 					{
@@ -344,6 +350,13 @@ generateObjectiveObject =
 					_missionFailedObjectives = missionNamespace getVariable ["missionFailedObjectives", []];
 					_missionFailedObjectives = _missionFailedObjectives + [_thisTaskID]; //needs to be improved
 					missionNamespace setVariable ["missionFailedObjectives", _missionFailedObjectives, true];
+
+					//Delete task marker
+					if (missionNameSpace getVariable ["enableObjectiveExactLocation",0] == 1) then 
+					{
+						[_thisTaskID] remoteExec ["deleteMarker", 0, true];
+					};
+
 					//Manage task system
 					if ("RealismMode" call BIS_fnc_getParamValue == 1) then 
 					{
@@ -452,6 +465,13 @@ generateObjectiveObject =
 					_missionFailedObjectives = missionNamespace getVariable ["missionFailedObjectives", []];
 					_missionFailedObjectives = _missionFailedObjectives + [_thisTaskID]; //needs to be improved
 					missionNamespace setVariable ["missionFailedObjectives", _missionFailedObjectives, true];
+
+					//Delete task marker
+					if (missionNameSpace getVariable ["enableObjectiveExactLocation",0] == 1) then 
+					{
+						[_thisTaskID] remoteExec ["deleteMarker", 0, true];
+					};
+
 					//Manage task system
 					if ("RealismMode" call BIS_fnc_getParamValue == 1) then 
 					{
@@ -485,6 +505,12 @@ generateObjectiveObject =
 
 					//Add penalty
 					[{[-50,5] call doUpdateRankWithPenalty}] remoteExec ["call", _instigator];
+
+					//Delete task marker
+					if (missionNameSpace getVariable ["enableObjectiveExactLocation",0] == 1) then 
+					{
+						[_thisTaskID] remoteExec ["deleteMarker", 0, true];
+					};					
 
 					//Manage task system
 					if ("RealismMode" call BIS_fnc_getParamValue == 1 ) then 
@@ -815,6 +841,12 @@ generateObjectiveObject =
 						//Add penalty
 						[{[-50,5] call doUpdateRankWithPenalty}] remoteExec ["call", _instigator];
 					};
+
+					//Delete task marker
+					if (missionNameSpace getVariable ["enableObjectiveExactLocation",0] == 1) then 
+					{
+						[_thisTaskID] remoteExec ["deleteMarker", 0, true];
+					};					
 
 					//Manage task system
 					if ("RealismMode" call BIS_fnc_getParamValue == 1) then 
