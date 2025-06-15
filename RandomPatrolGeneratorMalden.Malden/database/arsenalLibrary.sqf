@@ -350,7 +350,7 @@ getVirtualBackPack = {
 	currentPlayer = _this select 0;
 	_currentFaction = _this select 1;
 	_currentPlayerClass = currentPlayer getVariable "role";
-	_virtualBackpackList = [];
+	_virtualBackpackList = ["ACE_TacticalLadder_Pack"]; //Add ACE backpack by default
 
 	switch (_currentPlayerClass) do
 	{
