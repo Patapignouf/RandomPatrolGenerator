@@ -136,6 +136,19 @@ getParentBag = {
 	_result;
 };
 
+issUniformAllowed = {
+	params ["_currentUniform"];
+	_uniformBlackList = ["FP_G3_OD_BLACK"];
+	_uniformAllowed = true;
+
+	if (_currentUniform in _uniformBlackList) then 
+	{
+		_uniformAllowed = false;
+	};
+	
+	_uniformAllowed;
+};
+
 doSetOpfor = {
 	params ["_currentFactionName","_opforNameClass", "_existingValues"];
 	//diag_log format ["%1%2 : %3",_opforNameClass,_currentFactionName, _existingValues];

@@ -287,13 +287,19 @@ publicVariable "factionInfos";
 
 									_uniform = ((_cfgVehName >> "uniformClass") call BIS_fnc_GetCfgData);
 									_linkedItems = ((_cfgVehName >> "linkedItems") call BIS_fnc_GetCfgData);
-									if (!isNil  {_linkedItems}) then 
+
+									//Check if uniform is in mission blacklist
+									if ([_uniform] call issUniformAllowed) then 
 									{
-										_uniformList = [_uniform] + _linkedItems;
-									} else 
-									{
-										_uniformList = [_uniform];
+										if (!isNil  {_linkedItems}) then 
+										{
+											_uniformList = _uniformList + [_uniform] + _linkedItems;
+										} else 
+										{
+											_uniformList = _uniformList + [_uniform];
+										};
 									};
+
 									missionNamespace setVariable [_currentFactionName, _uniformList];  
 								};
 							};
