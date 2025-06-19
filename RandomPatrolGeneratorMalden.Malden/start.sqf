@@ -264,15 +264,15 @@ switch (missionNameSpace getVariable ["missionAreaSize", 0]) do
 {
 	case 0:
 	{
-		_searchRadius = 3000;
+		_searchRadius = 1500;
 	};
 	case 1:
 	{
-		_searchRadius = 6000;
+		_searchRadius = 3000;
 	};
 	case 2:
 	{
-		_searchRadius = worldSize;
+		_searchRadius = worldSize/2;
 	};
 };
 
