@@ -259,8 +259,8 @@ publicVariable "factionInfos";
 									missionNamespace setVariable [_currentFactionName, _accessoriesShort]; 
 								};
 
-								//Specifies accessories for the faction
-								if (_thisRole == "rifleman") then 
+								//Specifies accessories for the faction (taken from rifleman medic and engineer)
+								if (_thisRole == "rifleman" || _thisRole == "medic" || _thisRole == "engineer") then 
 								{
 									//Allow all weapons from the rifleman to other people
 									_currentUnitStuff = getUnitLoadout _cfgName;
@@ -282,25 +282,29 @@ publicVariable "factionInfos";
 									_accessoriesShort = _accessoriesShort + _listOfWeaponsAndAccessoriesFromStuff#1;
 									missionNamespace setVariable [_currentFactionName, _accessoriesShort];
 
-									_currentFactionName = format ["uniformList%1", _thisFac];
-									_uniformList = missionNamespace getVariable [_currentFactionName, []];
-
-									_uniform = ((_cfgVehName >> "uniformClass") call BIS_fnc_GetCfgData);
-									_linkedItems = ((_cfgVehName >> "linkedItems") call BIS_fnc_GetCfgData);
-
-									//Check if uniform is in mission blacklist
-									if ([_uniform] call issUniformAllowed) then 
+									//Rifleman can share uniform
+									if (_thisRole == "rifleman") then 
 									{
-										if (!isNil  {_linkedItems}) then 
-										{
-											_uniformList = _uniformList + [_uniform] + _linkedItems;
-										} else 
-										{
-											_uniformList = _uniformList + [_uniform];
-										};
-									};
+										_currentFactionName = format ["uniformList%1", _thisFac];
+										_uniformList = missionNamespace getVariable [_currentFactionName, []];
 
-									missionNamespace setVariable [_currentFactionName, _uniformList];  
+										_uniform = ((_cfgVehName >> "uniformClass") call BIS_fnc_GetCfgData);
+										_linkedItems = ((_cfgVehName >> "linkedItems") call BIS_fnc_GetCfgData);
+
+										//Check if uniform is in mission blacklist
+										if ([_uniform] call issUniformAllowed) then 
+										{
+											if (!isNil  {_linkedItems}) then 
+											{
+												_uniformList = _uniformList + [_uniform] + _linkedItems;
+											} else 
+											{
+												_uniformList = _uniformList + [_uniform];
+											};
+										};
+
+										missionNamespace setVariable [_currentFactionName, _uniformList];  
+									};
 								};
 							};
 						};

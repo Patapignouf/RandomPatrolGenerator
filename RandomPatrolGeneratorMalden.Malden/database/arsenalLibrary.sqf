@@ -474,8 +474,17 @@ setupArsenalToItem = {
 
 
 	//Add items, uniforms and optics to arsenal
-	_currentItems = ([_currentPlayer, _currentFaction] call getVirtualAttachement ) + ([_currentPlayer,_currentFaction] call getVirtualItemList ) + ([_currentPlayer,_currentFaction] call getVirtualUniform );
-	[_itemToAttachArsenal, _currentItems,false, false] call BIS_fnc_addVirtualItemCargo;
+	_currentItems = [];
+	if (missionNameSpace getVariable ["enableAccessoriesRestriction", 1] == 0) then 
+	{
+		{
+			_currentWeaponAccessories = compatibleItems _x;
+			_currentItems append _currentWeaponAccessories;
+		}	foreach _currentWeaponItems;
+	};
+
+	_currentItems = _currentItems + ([_currentPlayer, _currentFaction] call getVirtualAttachement ) + ([_currentPlayer,_currentFaction] call getVirtualItemList ) + ([_currentPlayer,_currentFaction] call getVirtualUniform );
+	[_itemToAttachArsenal, _currentItems, false, false] call BIS_fnc_addVirtualItemCargo;
 
 	//Remove action Arsenal
 	_itemToAttachArsenal call RemoveArsenalActionFromGivenObject;

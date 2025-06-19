@@ -507,9 +507,12 @@ getAllAccessoriesAndWeaponsFromWeapons = {
 		_resultWeaponFiltered = [_weaponToCheckTotal] call filterWeaponsAndAccessoryByWeaponClassname;
 
 		//filter weapon
-		_resultAllList#0 append _resultWeaponFiltered#0;
+		_resultAllList#0 append _resultWeaponFiltered#0; //Add weapon filtered
+		_resultAllList#0 pushBack ([_weaponToCheckTotal] call BIS_fnc_baseWeapon); //Add base weapon
+		_resultAllList#0 pushBack _weaponToCheckTotal; //Add base weapon
+
 		//filter accessory
-		_resultAllList#1 append _resultWeaponFiltered#1;
+		_resultAllList#1 append _resultWeaponFiltered#1; //Add filtered accessories
 	} foreach _weaponsList;
 
 	_resultAllList;
