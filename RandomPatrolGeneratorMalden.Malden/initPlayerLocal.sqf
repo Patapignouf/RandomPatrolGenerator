@@ -670,7 +670,24 @@ _KilledEH = player addEventHandler ["Killed", {
 
 			if (_instigator != _unit) then 
 			{
+				//Punish killer with XP loss
 				[{[-50,5] call doUpdateRankWithPenalty}] remoteExec ["call", _instigator];
+
+				//Add dialog to punish the teamkiller
+				[[_instigator], {
+					params ["_instigator"];
+					    sleep 3; 
+						private _resultAlone = [format ["Do you want to punish your killer %1 ?", name _instigator], "Yes", true, true] call BIS_fnc_guiMessage;
+
+						if (_resultAlone) then {
+							//systemChat "The player is sure.";
+							_instigator setDamage 1;
+							systemChat format ["%1 has been punished for teamkilling", name _instigator];
+						} else {
+							//systemChat "The player is not sure.";
+						};
+					}
+				] remoteExec ["spawn", _unit]; 
 			};
 		};
 	};
