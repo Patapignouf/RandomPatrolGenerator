@@ -34,7 +34,7 @@ getLocationsAroundWithBuilding =
 		if (type _x == "NameLocal") then 
 		{
 			//Check if there is building near the location
-			if (count ((locationPosition _x) nearObjects ["House", 150]) == 0) then 
+			if (count ((nearestTerrainObjects [locationPosition _x, ["house", "FORTRESS", "BUNKER"], 150, false, true])) == 0) then 
 			{
 				//Remove the location
 				_LocList = _LocList - [_x];
@@ -44,6 +44,21 @@ getLocationsAroundWithBuilding =
 	_LocList
 };
 
+
+isAroundWithBuilding = 
+{
+	params ["_thisPosition"];
+	_locationPresence = true;
+
+	//Check if there is building near the location
+	if (count ((nearestTerrainObjects [_thisPosition, ["house", "FORTRESS", "BUNKER"], 150, false, true])) == 0) then 
+	{
+		//Remove the location
+		_locationPresence = false;
+	};
+
+	_locationPresence
+};
 
 getAreaOfMission = 
 {

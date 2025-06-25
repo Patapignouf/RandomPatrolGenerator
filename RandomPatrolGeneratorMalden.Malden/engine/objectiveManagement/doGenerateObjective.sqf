@@ -62,15 +62,15 @@ generateObjective =
 			diag_log format ["_selectedObjectivePosition %1", _selectedObjectivePosition];
 			_objectiveCreated = [currentObjType, _selectedObjectivePosition] call generateObjectiveObject; 
 
-			if (random 100 < 20 && _warEra != 0) then 
+			if (random 100 < 10 && _warEra != 0) then 
 			{
-				//20% objective with hostile almost only civilian
+				//10% objective with hostile almost only civilian
 				//Not avalaible on WWII era
 				_handlePOIGeneration = [_basicEnemyGroups, baseEnemyVehicleGroup, baseEnemyLightArmoredVehicleGroup, baseEnemyHeavyArmoredVehicleGroup, civilian_group, _selectedObjectivePosition, _objectiveCreated] execVM 'enemyManagement\generationEngine\generateHostileCivPOI.sqf'; 
 				waitUntil {isNull _handlePOIGeneration};
 			} else 
 			{
-				//80% normal objective with opfor forces 
+				//90% normal objective with opfor forces 
 				_handlePOIGeneration = objNull;
 				if ((missionNamespace getVariable "enableCiviliansOnObjectives") == 1) then 
 				{
@@ -81,11 +81,80 @@ generateObjective =
 				};
 				waitUntil {isNull _handlePOIGeneration};
 			};
+
+			//If there are no building near operation area
+			if (!([_selectedObjectivePosition] call isAroundWithBuilding) && ((missionNamespace getVariable ["addFOBOnObjective",1]) == 1)) then 
+			{
+				_spawnAttempts = 0;
+				// _mapBorder = [
+				// 	[-5000, call BIS_fnc_mapSize + 5000,0], [50, -5000,0], //left rectangle
+				// 	[-5000, call BIS_fnc_mapSize + 5000,0], [call BIS_fnc_mapSize+5000, call BIS_fnc_mapSize,0], //Top rectangle
+				// 	[call BIS_fnc_mapSize, call BIS_fnc_mapSize + 5000,0], [call BIS_fnc_mapSize  +5000, -5000,0], //Right rectangle
+				// 	[-5000, 50,0], [call BIS_fnc_mapSize  +5000, -5000,0] //left rectangle
+				// ];
+
+				[_selectedObjectivePosition, allUnits select {side _x == opfor && (_selectedObjectivePosition distance _x < 180 )}] call generateObjectiveOpforBase;
+				
+				// _OpforFobLocation = [_selectedObjectivePosition, 0, (200), 20, 0, 0.20, 0, [_mapBorder], [[0,0,0],[0,0,0]]] call BIS_fnc_findSafePos;
+				// while {([_OpforFobLocation] call isLocationOnMap) && _spawnAttempts <10} do 
+				// {
+				// 	_OpforFobLocation = [initCityLocation, 400, (aoSize+1500), 30, 0, 0.20, 0, [_mapBorder], [[0,0,0],[0,0,0]]] call BIS_fnc_findSafePos;
+				// 	_spawnAttempts = _spawnAttempts +1;
+				// };
+				// hint format ["%1", _OpforFobLocation];
+				// if (!([_OpforFobLocation] call isLocationOnMap)) then 
+				// {
+				// 	[_OpforFobLocation, allUnits select {side _x == opfor && (_selectedObjectivePosition distance _x < 180 )}] call generateObjectiveOpforBase;
+				// };
+			};
 		};
 	};
 
 	//Return objective selected location
 	_possibleObjectivePosition;
+};
+
+generateObjectiveOpforBase = 
+{
+	params ["_basePosition", "_objectivesUnits"];
+	// //Check if there is building near the location
+	// if (count ((nearestTerrainObjects [locationPosition _x, ["house", "FORTRESS", "BUNKER"], 150, false, true])) == 0) then 
+	// {
+	// 	//Remove the location
+	// 	_LocList = _LocList - [_x];
+	// };
+	[_basePosition, 100] execVM 'objectGenerator\doCleanArea.sqf'; 
+	_spawnFOBObjects = [_basePosition, (random 360), selectRandom avalaibleEnemyFOB] call BIS_fnc_ObjectsMapper;
+	_OpforFobStandardOpforLocation = nearestObjects [_basePosition, ["Sign_Arrow_Large_F"], 100];
+	_OpforFobTurretOpforLocation = nearestObjects [_basePosition, ["Sign_Arrow_Large_Yellow_F"], 100];
+
+	//Clean arrows
+	_unitNumber = 0;
+	{
+		if (_unitNumber < count _objectivesUnits) then 
+		{
+			(_objectivesUnits#_unitNumber) setPosASL (getPosASL _x);
+			(_objectivesUnits#_unitNumber) disableAI "PATH";
+
+			systemChat (name (_objectivesUnits#_unitNumber));
+
+			//80% to leave the position if fired
+			if (random 100>80) then 
+			{ 
+				(_objectivesUnits#_unitNumber) addEventHandler["Fired",
+					{
+						params ["_unit"];
+						_unit enableAI "PATH";
+						_unit dofollow leader _unit;
+						_unit setUnitPos "AUTO";
+						_unit removeEventHandler ["Fired",_thisEventHandler];
+					}];
+			};
+			_unitNumber = _unitNumber+1;
+		};
+		deleteVehicle _x;
+	} foreach _OpforFobStandardOpforLocation + _OpforFobTurretOpforLocation;
+
 };
 
 

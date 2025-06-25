@@ -472,5 +472,15 @@ playerMarkerAllowedParam =
 	"playerMarkerAllowed"
 ];
 
+addFOBOnObjectiveParam = 
+[
+	[	
+		[0, "Disable"],
+		[1, "Enable"]
+	],
+	"Add enemy FOB when AO doesn't have building",
+	1,
+	"addFOBOnObjective"
+];
 
-baseParamsToManage = [enableExperienceSaveParam, enableRTBMissionParam, missionAreaSizeParam, civiliansOnObjectivesParam, sideRelationParam, enableAmbiantWarParam, enableObjectiveExactLocationParam, enablePersistentParam, enableRegularIncomeParam, disableZoomParam, enableAutoDifficultyBalanceParam, civJoinableFactionParam, enableLoadoutRestrictionParam, enableAccessoriesRestrictionParam, enableOpforVehicleParam, enableSurrenderUnitParam, enableHaloParam, enableMassiveHaloParam, timeOfDayParam, civSuicideBomberParam, civSuicideBomberProbabilityParam, endlessMissionParam, enableOpforMortarParam, enableReAirDropAdvFOBParam, randomizeObjectiveOrderParam, xpDisplayParam, opforReinforcementParam, enableOverHeatParam, enableAdvancedRespawnParam, respawnOnOtherPlayersParam, enableSelfRespawnTimerParam, enableModCheckerParam, officialPataCompanyServerParam, respawnCheatParam, opforFactionRandomizerParam, playerMarkerAllowedParam];
+baseParamsToManage = [enableExperienceSaveParam, enableRTBMissionParam, missionAreaSizeParam, civiliansOnObjectivesParam, sideRelationParam, enableAmbiantWarParam, enableObjectiveExactLocationParam, enablePersistentParam, enableRegularIncomeParam, disableZoomParam, enableAutoDifficultyBalanceParam, civJoinableFactionParam, enableLoadoutRestrictionParam, enableAccessoriesRestrictionParam, enableOpforVehicleParam, enableSurrenderUnitParam, enableHaloParam, enableMassiveHaloParam, timeOfDayParam, civSuicideBomberParam, civSuicideBomberProbabilityParam, endlessMissionParam, enableOpforMortarParam, enableReAirDropAdvFOBParam, randomizeObjectiveOrderParam, xpDisplayParam, opforReinforcementParam, enableOverHeatParam, enableAdvancedRespawnParam, respawnOnOtherPlayersParam, enableSelfRespawnTimerParam, enableModCheckerParam, officialPataCompanyServerParam, respawnCheatParam, opforFactionRandomizerParam, playerMarkerAllowedParam, addFOBOnObjectiveParam];
