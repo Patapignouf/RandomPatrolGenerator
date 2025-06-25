@@ -17,7 +17,7 @@ if (missionNameSpace getVariable ["enableAdvancedRespawn", 1] == 1) then
 		//Allow the leader to get back the tent after 5 minutes
 		[_caller] spawn {
 			params ["_caller"];
-			sleep 360; //Not fully secured code due to the possibility from the leader to get back the tent by himself
+			sleep 600; //Not fully secured code due to the possibility from the leader to get back the tent by himself
 			missionNameSpace setVariable [format ['bluforAdvancedRespawnGetBack%1', str (group _caller)], true, true];
 		};
 
