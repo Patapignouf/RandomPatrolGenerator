@@ -69,6 +69,6 @@ if (missionNameSpace getVariable "playerMarkerAllowed" == 1) then
 			"TahomaB",
 			"right"
 		]
-		} foreach (allPlayers select {(side _x == side player) && (lifeState player != "INCAPACITATED")});
+		} foreach (allPlayers select {(side _x == side player) && (lifeState _x != "INCAPACITATED")});
 	}];
 };
