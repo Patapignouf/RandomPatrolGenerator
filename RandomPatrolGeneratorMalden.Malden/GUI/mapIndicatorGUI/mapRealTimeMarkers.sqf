@@ -38,6 +38,17 @@ getIconByRole = {
 	_iconResult
 };
 
+getIconColor = {
+	params ["_currentUnit"];
+	_color = [0,0,1,1]; //Base color same group
+
+	if (group _currentUnit != group player) then 
+	{
+		_color = [0,0,1,0.5]; //Base color different group
+	};
+	_color
+};
+
 
 //Add map players marker
 if (missionNameSpace getVariable "playerMarkerAllowed" == 1) then 
@@ -47,7 +58,7 @@ if (missionNameSpace getVariable "playerMarkerAllowed" == 1) then
 		_role = (_x getVariable "role");
 		_this select 0 drawIcon [
 			[_role] call getIconByRole, // custom images can also be used: getMissionPath "\myFolder\myIcon.paa"
-			[0,0,1,1],
+			[_x] call getIconColor,
 			getPosASLVisual _x,
 			24,
 			24,
@@ -58,6 +69,6 @@ if (missionNameSpace getVariable "playerMarkerAllowed" == 1) then
 			"TahomaB",
 			"right"
 		]
-		} foreach (allPlayers select {side _x == side player});
+		} foreach (allPlayers select {(side _x == side player) && (lifeState player != "INCAPACITATED")});
 	}];
 };
