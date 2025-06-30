@@ -123,7 +123,7 @@ generateObjectiveOpforBase =
 	// 	//Remove the location
 	// 	_LocList = _LocList - [_x];
 	// };
-	[_basePosition, 100] execVM 'objectGenerator\doCleanArea.sqf'; 
+	[_basePosition, 50] execVM 'objectGenerator\doCleanArea.sqf'; 
 	_spawnFOBObjects = [_basePosition, (random 360), selectRandom avalaibleEnemyFOB] call BIS_fnc_ObjectsMapper;
 	_OpforFobStandardOpforLocation = nearestObjects [_basePosition, ["Sign_Arrow_Large_F"], 100];
 	_OpforFobTurretOpforLocation = nearestObjects [_basePosition, ["Sign_Arrow_Large_Yellow_F"], 100];
