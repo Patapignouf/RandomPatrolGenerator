@@ -320,7 +320,7 @@ if (isClass (configFile >> "CfgPatches" >> "ace_medical")) then
 			waitUntil { damage _injured != _damage };
 			if (!([_healer,_injured] call BIS_fnc_areEqual)) then 
 			{
-				if (damage _injured < _damage) then {
+				if ((damage _injured < _damage) && (alive _injured)) then {
 					[{[1, 'RPG_ranking_heal'] call doUpdateRank}] remoteExec ['call', _healer];
 				};
 			};
