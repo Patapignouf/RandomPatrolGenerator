@@ -682,7 +682,7 @@ _KilledEH = player addEventHandler ["Killed", {
 						if (_resultAlone) then {
 							//systemChat "The player is sure.";
 							_instigator setDamage 1;
-							systemChat format ["%1 has been punished for teamkilling", name _instigator];
+							[[_instigator], {params ["_instigator"]; ["STR_RPG_HC_NAME", "STR_RPG_HC_PUNISH", name _instigator] call doDialog}] remoteExec ["spawn", side _instigator]; 
 						} else {
 							//systemChat "The player is not sure.";
 						};

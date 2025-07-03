@@ -622,6 +622,11 @@
                 <Chinese>%1被他的队友%2杀死，注意你的火力</Chinese>
                 <Japanese>%1はチームメイトの%2に殺されました。火に注意してください</Japanese>
             </Key>
+            <Key ID="STR_RPG_HC_PUNISH">
+                <Original>%1 has been punished</Original>
+                <English>%1 has been punished</English>
+                <French>%1 a été puni</French>
+            </Key>
             <Key ID="STR_RPG_HC_CIVKILL">
                 <Original>A civilian and has been killed by %1, watch your fire</Original>
                 <English>A civilian and has been killed by %1, watch your fire</English>
