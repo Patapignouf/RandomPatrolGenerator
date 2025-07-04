@@ -128,6 +128,10 @@ generateObjectiveOpforBase =
 	_OpforFobStandardOpforLocation = nearestObjects [_basePosition, ["Sign_Arrow_Large_F"], 100];
 	_OpforFobTurretOpforLocation = nearestObjects [_basePosition, ["Sign_Arrow_Large_Yellow_F"], 100];
 
+	//ShuffleArrows
+	_OpforFobStandardOpforLocation = [_OpforFobStandardOpforLocation, [], { random 100 }, "ASCEND"] call BIS_fnc_sortBy;
+	_OpforFobTurretOpforLocation = [_OpforFobTurretOpforLocation, [], { random 100 }, "ASCEND"] call BIS_fnc_sortBy;
+
 	//Clean arrows
 	_unitNumber = 0;
 	{
@@ -135,8 +139,6 @@ generateObjectiveOpforBase =
 		{
 			(_objectivesUnits#_unitNumber) setPosASL (getPosASL _x);
 			(_objectivesUnits#_unitNumber) disableAI "PATH";
-
-			systemChat (name (_objectivesUnits#_unitNumber));
 
 			//80% to leave the position if fired
 			if (random 100>80) then 
