@@ -173,7 +173,7 @@ _KilledEH = player addEventHandler ["Killed", {
 			if (_instigator != _unit) then 
 			{
 				//Punish killer with XP loss
-				[{[-50,5] call doUpdateRankWithPenalty}] remoteExec ["call", _instigator];
+				[{[-50,3] call doUpdateRankWithPenalty}] remoteExec ["call", _instigator];
 
 				//Add dialog to punish the teamkiller
 				[[_instigator], {
