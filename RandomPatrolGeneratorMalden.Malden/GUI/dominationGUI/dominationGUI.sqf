@@ -48,7 +48,7 @@ with uiNamespace do {
 		_backGround ctrlCommit 1;
 
 		//Prepare title display
-		_RcsTitleDialog ctrlSetText "Sector control";
+		_RcsTitleDialog ctrlSetText localize "RPG_GUI_OVERLAY_SECTOR";
 		_RcsTitleDialog ctrlSetPosition[ 1, -0.08, 0.25, 0.1 ];
 		_RcsTitleDialog ctrlSetTextColor [1, 1, 1, 1];
 		_RcsTitleDialog ctrlCommit 1;

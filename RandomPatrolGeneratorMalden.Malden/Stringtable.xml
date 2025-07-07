@@ -1735,6 +1735,28 @@
         <English>infinite</English>
         <French>infini</French>
     </Key>
+<Container name="RPG_GUI_OVERLAY">
+    <Key ID="RPG_GUI_OVERLAY_SECTOR">
+        <Original>Sector control</Original>
+        <English>Sector control</English>
+        <French>Contrôle de secteur</French>
+    </Key>
+    <Key ID="RPG_GUI_OVERLAY_NEAR">
+        <Original>Nearest player</Original>
+        <English>Nearest player</English>
+        <French>Joueur le plus proche</French>
+    </Key>
+    <Key ID="RPG_GUI_OVERLAY_NEAR_MEDIC">
+        <Original>Nearest medic player</Original>
+        <English>Nearest medic player</English>
+        <French>Médecin le plus proche</French>
+    </Key>
+    <Key ID="RPG_GUI_OVERLAY_NO_NEAR">
+        <Original>No player nearby</Original>
+        <English>No player nearby</English>
+        <French>Aucun joueur à proximité</French>
+    </Key>
+</Container>
 <Container name="RPG_GUI_GENERAL">
     <Key ID="RPG_GUI_GENERAL_CLOSE">
         <Original>Close</Original>
