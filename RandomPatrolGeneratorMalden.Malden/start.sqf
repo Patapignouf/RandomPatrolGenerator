@@ -88,7 +88,14 @@ waitUntil {!isNil "missionInitFactionSetup"};
 /////////////////////////
 ////Setup IA Opti////////
 /////////////////////////
-enableDynamicSimulationSystem true; 
+if (missionNameSpace getVariable ["enableDynamicSimulationSetting",1] == 1) then 
+{
+	enableDynamicSimulationSystem true; 
+
+} else 
+{
+	enableDynamicSimulationSystem false; 
+};
 "Group" setDynamicSimulationDistance 1500;
 "Vehicle" setDynamicSimulationDistance 2500;
 "EmptyVehicle" setDynamicSimulationDistance 1000;
