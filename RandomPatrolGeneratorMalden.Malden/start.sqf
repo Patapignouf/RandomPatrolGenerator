@@ -1119,6 +1119,6 @@ if (enableCampaignMode) then
 
 
 		//Check if there is always avalaible position for new objective
-		_maxObjectivesGenerated = (count PossibleObjectivePosition) == 0;
+		_maxObjectivesGenerated = ((count PossibleObjectivePosition) == 0) || (maxObjectivesGeneratedSetting == count MissionObjectives);
 	};
 };

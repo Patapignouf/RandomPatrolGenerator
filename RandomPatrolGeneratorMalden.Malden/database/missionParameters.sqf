@@ -380,6 +380,19 @@ civSuicideBomberProbabilityParam =
 	"civSuicideBomberProbability"
 ];
 
+_percentages = [];
+for "_i" from 1 to 100 do {
+    _percentages pushBack [_i, format ["%1 objectives needed", _i]];
+};
+
+maxObjectivesGeneratedSettingParam = 
+[
+	_percentages,
+	"Max number of objectives generated (campaign)",
+	100,
+	"maxObjectivesGeneratedSetting"
+];
+
 enableOpforVehicleParam = 
 [
 	[	
@@ -495,4 +508,4 @@ enableDynamicSimulationParam =
 	"enableDynamicSimulationSetting"
 ];
 
-baseParamsToManage = [enableExperienceSaveParam, enableRTBMissionParam, missionAreaSizeParam, civiliansOnObjectivesParam, sideRelationParam, enableAmbiantWarParam, enableObjectiveExactLocationParam, enablePersistentParam, enableRegularIncomeParam, disableZoomParam, enableAutoDifficultyBalanceParam, civJoinableFactionParam, enableLoadoutRestrictionParam, enableAccessoriesRestrictionParam, enableOpforVehicleParam, enableSurrenderUnitParam, enableHaloParam, enableMassiveHaloParam, timeOfDayParam, civSuicideBomberParam, civSuicideBomberProbabilityParam, endlessMissionParam, enableOpforMortarParam, enableReAirDropAdvFOBParam, randomizeObjectiveOrderParam, xpDisplayParam, opforReinforcementParam, enableOverHeatParam, enableAdvancedRespawnParam, respawnOnOtherPlayersParam, enableSelfRespawnTimerParam, enableModCheckerParam, officialPataCompanyServerParam, respawnCheatParam, opforFactionRandomizerParam, playerMarkerAllowedParam, addFOBOnObjectiveParam, enableDynamicSimulationParam];
+baseParamsToManage = [enableExperienceSaveParam, enableRTBMissionParam, missionAreaSizeParam, civiliansOnObjectivesParam, sideRelationParam, enableAmbiantWarParam, enableObjectiveExactLocationParam, enablePersistentParam, enableRegularIncomeParam, disableZoomParam, enableAutoDifficultyBalanceParam, civJoinableFactionParam, enableLoadoutRestrictionParam, enableAccessoriesRestrictionParam, enableOpforVehicleParam, enableSurrenderUnitParam, enableHaloParam, enableMassiveHaloParam, timeOfDayParam, civSuicideBomberParam, civSuicideBomberProbabilityParam, endlessMissionParam, enableOpforMortarParam, enableReAirDropAdvFOBParam, randomizeObjectiveOrderParam, xpDisplayParam, opforReinforcementParam, enableOverHeatParam, enableAdvancedRespawnParam, respawnOnOtherPlayersParam, enableSelfRespawnTimerParam, enableModCheckerParam, officialPataCompanyServerParam, respawnCheatParam, opforFactionRandomizerParam, playerMarkerAllowedParam, addFOBOnObjectiveParam, enableDynamicSimulationParam, maxObjectivesGeneratedSettingParam];

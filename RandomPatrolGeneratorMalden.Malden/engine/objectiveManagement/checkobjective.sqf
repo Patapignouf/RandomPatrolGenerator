@@ -46,7 +46,7 @@ while {sleep 10; (!RTBComplete)&&(!(missionNamespace getVariable ["isEndMissionR
 	};
 
 	//Check if mission is complete
-	if (((missionComplete && !enableCampaignMode)||(count _completedObjectives >= count AllPossibleObjectivePosition))&&((count _missionObjectives)>0)) then 
+	if (((missionComplete && !enableCampaignMode)||(count _completedObjectives >= count AllPossibleObjectivePosition)|| (count _completedObjectives >= maxObjectivesGeneratedSetting))&&((count _missionObjectives)>0)) then 
 	{
 		//Check if RTB mission has to be created 
 		if (missionComplete && missionNameSpace getVariable ["enableRTBMission", 1] == 1) then 
