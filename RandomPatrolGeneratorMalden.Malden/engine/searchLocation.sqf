@@ -196,3 +196,11 @@ findRoadBlockPosition =
 
 	[_roadCenter, _roadDir]
 };
+
+
+//Find closest locationPosition 
+getClosest = {
+	params ["_position", "_allPositions"];
+	_allPositions = [_allPositions, [], {_position distance _x}, "ASCEND"] call BIS_fnc_sortBy;
+	_allPositions#0;
+};

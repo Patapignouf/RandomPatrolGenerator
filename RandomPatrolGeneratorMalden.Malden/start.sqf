@@ -234,7 +234,7 @@ if (isClass (configFile >> "CfgPatches" >> "fow_main")) then
 /////////////////////////
 /////Find locations//////
 /////////////////////////
-
+alreadyUsedLocations = [];
 missionNameSpace setVariable ["missionSetupMessage", "STR_RPG_SETUP_AREA", true];
 
 //Initilize independent starting position 
@@ -361,20 +361,46 @@ currentRandomPos = [];
 currentObj = objNull;
 currentRandObj = objNull;
 
-
 //Generate objectives according to the mission's length parameter
 _minNumberOfMission = missionLength min(count AllPossibleObjectivePosition);
 
 for [{_counterOfMission = 0}, {_counterOfMission < _minNumberOfMission}, {_counterOfMission = _counterOfMission + 1}] do //Peut être optimisé
 {
 	//Randomize objective locations or not
-	if (NeedToRandomizePOI == 1) then 
+	switch (NeedToRandomizePOI) do
 	{
-		PossibleObjectivePosition = [avalaibleTypeOfObj, PossibleObjectivePosition] call generateObjective;
-	} else 
-	{
-		[avalaibleTypeOfObj, [PossibleObjectivePosition#0]] call generateObjective;
-		PossibleObjectivePosition = PossibleObjectivePosition - [PossibleObjectivePosition#0];
+		//Classic order
+		case 0:
+		{
+			[avalaibleTypeOfObj, [PossibleObjectivePosition#0]] call generateObjective;
+			PossibleObjectivePosition = PossibleObjectivePosition - [PossibleObjectivePosition#0];
+		};
+		//Random order
+		case 1:
+		{
+			PossibleObjectivePosition = [avalaibleTypeOfObj, PossibleObjectivePosition] call generateObjective;
+		};
+		//Closest objective
+		case 2:
+		{
+			//Check if it's the first objective to be generated
+			if (count MissionObjectives == 0 ) then 
+			{	
+				//Case where this is the first objective
+				//Generate objective at first position
+				[avalaibleTypeOfObj, [PossibleObjectivePosition#0]] call generateObjective;
+				PossibleObjectivePosition = PossibleObjectivePosition - [PossibleObjectivePosition#0];
+			} else 
+			{
+				//Else generate at the closest position location
+				if (count PossibleObjectivePosition != 0) then 
+				{
+					_selectedPosition = [(MissionObjectives#-1)#3, PossibleObjectivePosition] call getClosest;
+					[avalaibleTypeOfObj, [_selectedPosition]] call generateObjective;
+					PossibleObjectivePosition = PossibleObjectivePosition - [_selectedPosition];
+				};
+			};
+		};
 	};
 };
 
@@ -1040,13 +1066,40 @@ if (enableCampaignMode) then
 			};
 
 			//Randomize objective locations or not
-			if (NeedToRandomizePOI == 1) then 
+			switch (NeedToRandomizePOI) do
 			{
-				PossibleObjectivePosition = [avalaibleTypeOfObj, PossibleObjectivePosition] call generateObjective;
-			} else 
-			{
-				[avalaibleTypeOfObj, [PossibleObjectivePosition#0]] call generateObjective;
-				PossibleObjectivePosition = PossibleObjectivePosition - [PossibleObjectivePosition#0];
+				//Classic order
+				case 0:
+				{
+					[avalaibleTypeOfObj, [PossibleObjectivePosition#0]] call generateObjective;
+					PossibleObjectivePosition = PossibleObjectivePosition - [PossibleObjectivePosition#0];
+				};
+				//Random order
+				case 1:
+				{
+					PossibleObjectivePosition = [avalaibleTypeOfObj, PossibleObjectivePosition] call generateObjective;
+				};
+				//Closest objective
+				case 2:
+				{
+					//Check if it's the first objective to be generated
+					if (count MissionObjectives == 0 ) then 
+					{	
+						//Case where this is the first objective
+						//Generate objective at first position
+						[avalaibleTypeOfObj, [PossibleObjectivePosition#0]] call generateObjective;
+						PossibleObjectivePosition = PossibleObjectivePosition - [PossibleObjectivePosition#0];
+					} else 
+					{
+						//Else generate at the closest position location
+						if (count PossibleObjectivePosition != 0) then 
+						{
+							_selectedPosition = [(MissionObjectives#-1)#3, PossibleObjectivePosition] call getClosest;
+							[avalaibleTypeOfObj, [_selectedPosition]] call generateObjective;
+							PossibleObjectivePosition = PossibleObjectivePosition - [_selectedPosition];
+						};
+					};
+				};
 			};
 
 			//Generate opfor FOB in campaign mode

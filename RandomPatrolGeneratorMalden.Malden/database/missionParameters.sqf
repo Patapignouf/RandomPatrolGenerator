@@ -419,8 +419,9 @@ enableReAirDropAdvFOBParam =
 randomizeObjectiveOrderParam = 
 [
 	[	
-		[0, "Disable"],
-		[1, "Enable"]
+		[0, "Default order"],
+		[1, "Random"],
+		[2, "Closest"]
 	],
 	"Randomize objective order",
 	1,
