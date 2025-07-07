@@ -95,6 +95,11 @@ generateObjective =
 
 				[_selectedObjectivePosition, allUnits select {side _x == opfor && (_selectedObjectivePosition distance _x < 180 )}] call generateObjectiveOpforBase;
 				
+				//Cut grass of FOB
+				_thisTriggerGrassCutter = createTrigger ["EmptyDetector", _selectedObjectivePosition];
+				_thisTriggerGrassCutter setTriggerArea [50, 50, 0, true];
+				[_thisTriggerGrassCutter, 20, 20] execvm "engine\grassCutter.sqf";
+
 				// _OpforFobLocation = [_selectedObjectivePosition, 0, (200), 20, 0, 0.20, 0, [_mapBorder], [[0,0,0],[0,0,0]]] call BIS_fnc_findSafePos;
 				// while {([_OpforFobLocation] call isLocationOnMap) && _spawnAttempts <10} do 
 				// {
@@ -930,6 +935,9 @@ generateObjectiveObject =
 			//hint "default" 
 			};
 	};
+
+	//Add objective location
+	_thisObjective pushBack _thisObjectivePosition;
 
 	//Setup all missions database
 	currentMissionObjectives = missionNamespace getVariable ["MissionObjectives",[]];
