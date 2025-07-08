@@ -68,7 +68,7 @@ with uiNamespace do {
 		_Info ctrlSetTextColor [1, 1, 1, 1];
 		if (count _sortedPlayerList != 0) then 
 		{
-			_Info ctrlSetStructuredText parseText format ["%1 is at %2m", name _nearestPlayer, (round ((_nearestPlayer distance _unit)*100))/100];
+			_Info ctrlSetStructuredText parseText format [localize "RPG_GUI_OVERLAY_NEAR_PLAYER", name _nearestPlayer, (round ((_nearestPlayer distance _unit)*100))/100];
 		} else 
 		{
 			_Info ctrlSetStructuredText parseText (localize "RPG_GUI_OVERLAY_NO_NEAR");
@@ -80,7 +80,7 @@ with uiNamespace do {
 		_Info2 ctrlSetTextColor [1, 1, 1, 1];
 		if (count _sortedPlayerMedicList != 0) then 
 		{
-			_Info2 ctrlSetStructuredText parseText format ["%1 is at %2m", name _nearestMedicPlayer, (round ((_nearestMedicPlayer distance _unit)*100))/100];
+			_Info2 ctrlSetStructuredText parseText format [localize "RPG_GUI_OVERLAY_NEAR_PLAYER", name _nearestMedicPlayer, (round ((_nearestMedicPlayer distance _unit)*100))/100];
 		} else 
 		{
 			_Info2 ctrlSetStructuredText parseText (localize "RPG_GUI_OVERLAY_NO_NEAR");

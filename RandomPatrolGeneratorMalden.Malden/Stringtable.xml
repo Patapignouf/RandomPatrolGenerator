@@ -1756,6 +1756,11 @@
         <English>No player nearby</English>
         <French>Aucun joueur à proximité</French>
     </Key>
+    <Key ID="RPG_GUI_OVERLAY_NEAR_PLAYER">
+        <Original>%1 is at %2m</Original>
+        <English>%1 is at %2m</English>
+        <French>%1 est à %2m</French>
+    </Key>
 </Container>
 <Container name="RPG_GUI_GENERAL">
     <Key ID="RPG_GUI_GENERAL_CLOSE">
