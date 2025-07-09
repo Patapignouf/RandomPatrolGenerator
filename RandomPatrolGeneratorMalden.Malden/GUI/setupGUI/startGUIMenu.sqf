@@ -1,6 +1,7 @@
 disableSerialization;
 params ["_thisButtonValidate"];
 
+
 //Get All Combo box
 private _mainDisplay = (findDisplay 6000);
 private _comboBoxBlufor = _mainDisplay displayCtrl 6100;
@@ -84,15 +85,13 @@ missionNamespace setVariable ["missionRespawnParam", parseNumber missionRespawnP
 missionNameSpace setVariable ["avalaibleTypeOfObj", profileNamespace getVariable ["RPG_avalaibleTypeOfObj", []], true];
 
 //Go to objective selection
+
+
+
 if (_thisButtonValidate) then 
 {
 	[[], 'GUI\setupGUI\startGUIMenuLocation.sqf'] remoteExec ['BIS_fnc_execVM', player];
 
-} else 
-{
-	_execSave = [] execVM 'GUI\setupGUI\saveSettings.sqf';
-	waitUntil { isNull _execSave};
-	[[], 'GUI\setupGUI\advancedSetup.sqf'] remoteExec ['BIS_fnc_execVM', player];
 };
 
 //Close setup menu
