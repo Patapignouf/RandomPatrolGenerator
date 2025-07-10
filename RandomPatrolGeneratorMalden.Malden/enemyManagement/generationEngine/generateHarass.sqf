@@ -134,9 +134,9 @@ if (isServer) then
 				AvalaibleInitAttackPositions = [];
 				AvalaibleInitAttackPositions = [positionToAttack, 1200, 2000, _thisDifficulty] call getListOfPositionsAroundTarget;
 
-				//Chopper reinforcement 50%
+				//Chopper reinforcement 33%
 				diag_log format ["Harass start on position %1", positionToAttack];
-				if (count _thisAvailableOpforUnarmedChopperVehicle != 0 &&  random 100 < 50) then 
+				if (count _thisAvailableOpforUnarmedChopperVehicle != 0 &&  random 100 < 33) then 
 				{
 					//Generate enemy wave
 					_closedAvalaibleInitAttackPositions = [positionToAttack, 300, 1000, _thisDifficulty] call getListOfPositionsAroundTarget;
