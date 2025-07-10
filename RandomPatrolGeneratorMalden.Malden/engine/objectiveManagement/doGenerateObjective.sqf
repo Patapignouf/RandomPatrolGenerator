@@ -265,7 +265,7 @@ generateObjectiveObject =
 					missionNamespace setVariable ["missionFailedObjectives", _missionFailedObjectives, true];
 
 					//Add penalty
-					[{[-50,5] call doUpdateRankWithPenalty}] remoteExec ["call", _instigator];
+					[{[-50,3] call doUpdateRankWithPenalty}] remoteExec ["call", _instigator];
 
 					//Delete task marker
 					if (missionNameSpace getVariable ["enableObjectiveExactLocation",0] == 1) then 
@@ -419,7 +419,7 @@ generateObjectiveObject =
 					if (isPlayer _instigator) then 
 					{
 						//Add penalty
-						[{[-50,5] call doUpdateRankWithPenalty}] remoteExec ["call", _instigator];
+						[{[-50,3] call doUpdateRankWithPenalty}] remoteExec ["call", _instigator];
 					};
 
 					//Manage objective
@@ -534,7 +534,7 @@ generateObjectiveObject =
 					if (isPlayer _instigator) then 
 					{
 						//Add penalty
-						[{[-50,5] call doUpdateRankWithPenalty}] remoteExec ["call", _instigator];
+						[{[-50,3] call doUpdateRankWithPenalty}] remoteExec ["call", _instigator];
 					};
 
 					//Manage objective
@@ -580,7 +580,7 @@ generateObjectiveObject =
 					missionNamespace setVariable ["missionFailedObjectives", _missionFailedObjectives, true];
 
 					//Add penalty
-					[{[-50,5] call doUpdateRankWithPenalty}] remoteExec ["call", _instigator];
+					[{[-50,3] call doUpdateRankWithPenalty}] remoteExec ["call", _instigator];
 
 					//Delete task marker
 					if (missionNameSpace getVariable ["enableObjectiveExactLocation",0] == 1) then 
@@ -915,7 +915,7 @@ generateObjectiveObject =
 					if (isPlayer _instigator) then 
 					{
 						//Add penalty
-						[{[-50,5] call doUpdateRankWithPenalty}] remoteExec ["call", _instigator];
+						[{[-50,3] call doUpdateRankWithPenalty}] remoteExec ["call", _instigator];
 					};
 
 					//Delete task marker

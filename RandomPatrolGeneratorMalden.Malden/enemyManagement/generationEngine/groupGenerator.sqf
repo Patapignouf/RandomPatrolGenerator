@@ -167,7 +167,7 @@ doGenerateEnemyGroup =
 
 					[[_instigator], {params ["_instigator"]; ["STR_RPG_HC_NAME", "STR_RPG_HC_CIVKILL", name _instigator] call doDialog}] remoteExec ["spawn", side _instigator]; 
 
-					[{[-50,5] call doUpdateRankWithPenalty}] remoteExec ["call", _instigator];
+					[{[-50,3] call doUpdateRankWithPenalty}] remoteExec ["call", _instigator];
 				}; 
 			}];
 
@@ -256,7 +256,7 @@ doGenerateHostileCivilianGroup =
 				
 				[[_instigator], {params ["_instigator"]; ["STR_RPG_HC_NAME", "STR_RPG_HC_CIVKILL", name _instigator] call doDialog}] remoteExec ["spawn", side _instigator]; 
 
-				[{[-50,5] call doUpdateRankWithPenalty}] remoteExec ["call", _instigator];
+				[{[-50,3] call doUpdateRankWithPenalty}] remoteExec ["call", _instigator];
 			}; 
 		}];
 	} foreach (units _currentGroupPatrol);
