@@ -23,14 +23,28 @@ if (isServer) then
 			
 			if (((_players apply {_x#1})#0) distance currentPosition >= 300) then 
 			{
-			_currentGroup =	[currentAttackGroup, ([currentPosition,1,60,10,0] call BIS_fnc_findSafePos), east, ""] call doGenerateEnemyGroup;
-			diag_log format ["Create group : %1 at position %2 and assault to position %3", _currentGroup, getPos (leader _currentGroup), _thisTargetPosition];
+				_currentGroup =	[currentAttackGroup, ([currentPosition,1,60,10,0] call BIS_fnc_findSafePos), east, ""] call doGenerateEnemyGroup;
+				diag_log format ["Create group : %1 at position %2 and assault to position %3", _currentGroup, getPos (leader _currentGroup), _thisTargetPosition];
 
-			//Assault for infantry
-			[_currentGroup, _thisTargetPosition] call doAttack;
-			//[currentGroup, (currentPosition distance _thisTargetPosition) + 500] spawn lambs_wp_fnc_taskHunt;
-			_currentGroup setFormation "DIAMOND";
-			diag_log format ["Group %1 ready to assault", _j ];
+				//Assault for infantry
+				[_currentGroup, _thisTargetPosition] call doAttack;
+				//[currentGroup, (currentPosition distance _thisTargetPosition) + 500] spawn lambs_wp_fnc_taskHunt;
+				_currentGroup setFormation "DIAMOND";
+				diag_log format ["Group %1 ready to assault", _j];
+
+				//Clean unit after a long
+				if (count units _currentGroup != 0) then 
+				{
+					(units _currentGroup) apply {
+						[_x] spawn 
+						{
+							params ["_thisUnit"];
+							sleep 3600;
+							deleteVehicle _thisUnit;
+						};
+					};
+				};
+
 			} else 
 			{
 				diag_log format ["doAmbush : Spawn on %2 near players %1 blocked", getPos ((_players apply {_x#1})#0), currentPosition];
