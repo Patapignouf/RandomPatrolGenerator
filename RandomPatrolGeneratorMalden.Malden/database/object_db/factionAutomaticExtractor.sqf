@@ -509,24 +509,28 @@ publicVariable "factionInfos";
 	_currentFactionName = format ["loadout%1", _bluforFaction];
 	_currentStuffFaction = 	missionNamespace getVariable [_currentFactionName, []];
 
-	//Leader
-	if (count (_currentStuffFaction select {_x#0 == "leader"}) == 0) then 
+	//if there is at least a rifleman in the faction do some stuff
+	if (count (_currentStuffFaction select {_x#0 == "rifleman"}) != 0) then 
 	{
-		_defaultRifleman = (_currentStuffFaction select {_x#0 == "rifleman"})#0;
-		_defaultLeader =+ _defaultRifleman;
-		_defaultLeader set [0, "leader"];
-		_currentStuffFaction pushBack _defaultLeader;
-		missionNamespace setVariable [_currentFactionName, _currentStuffFaction]; 
-	};
+		//Leader
+		if (count (_currentStuffFaction select {_x#0 == "leader"}) == 0) then 
+		{
+			_defaultRifleman = (_currentStuffFaction select {_x#0 == "rifleman"})#0;
+			_defaultLeader =+ _defaultRifleman;
+			_defaultLeader set [0, "leader"];
+			_currentStuffFaction pushBack _defaultLeader;
+			missionNamespace setVariable [_currentFactionName, _currentStuffFaction]; 
+		};
 
-	//Medic
-	if (count (_currentStuffFaction select {_x#0 == "medic"}) == 0) then 
-	{
-		_defaultRifleman = (_currentStuffFaction select {_x#0 == "rifleman"})#0;
-		_defaultMedic =+ _defaultRifleman;
-		_defaultMedic set [0, "medic"];
-		_currentStuffFaction pushBack _defaultMedic;
-		missionNamespace setVariable [_currentFactionName, _currentStuffFaction]; 
+		//Medic
+		if (count (_currentStuffFaction select {_x#0 == "medic"}) == 0) then 
+		{
+			_defaultRifleman = (_currentStuffFaction select {_x#0 == "rifleman"})#0;
+			_defaultMedic =+ _defaultRifleman;
+			_defaultMedic set [0, "medic"];
+			_currentStuffFaction pushBack _defaultMedic;
+			missionNamespace setVariable [_currentFactionName, _currentStuffFaction]; 
+		};
 	};
 
 	//Define Opfor factions 
