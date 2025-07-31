@@ -488,6 +488,16 @@
                 <Chinese>你必须控制位于%1的敌方前进作战基地。</Chinese>
                 <Japanese>位置%1のオプフォーFOBを制御しなければなりません。</Japanese>
             </Key>
+            <Key ID="STR_RPG_OBJ_ATK_OUTPOST">
+                <Original>Attack Opfor Outpost</Original>
+                <English>Attack Opfor Outpost</English>
+                <French>Attaquer l'avant poste ennemi</French>
+            </Key>
+            <Key ID="STR_RPG_OBJ_ATK_OUTPOST_TEXT">
+                <Original>You have to control the opfor Outpost on position %1.</Original>
+                <English>You have to control the opfor Outpost on position %1.</English>
+                <French>Vous devez prendre le contrôle de l'avant poste ennemi près de %1</French>
+            </Key>
             <Key ID="STR_RPG_OBJ_AIR_VCL">
                 <Original>Destroy OPFOR air vehicle</Original>
                 <English>Destroy OPFOR air vehicle</English>

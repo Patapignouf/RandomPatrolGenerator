@@ -27,7 +27,6 @@ doGenerateEnemyGroup =
 			_x addEventHandler ["AnimStateChanged", 
 				{ 
 					params ["_unit", "_anim"]; 
-					hint (stance _unit);
 					if ((canStand _unit)&&(stance  _unit == "PRONE")) then 
 					{ 
 						_unit setUnitPos "MIDDLE"; 

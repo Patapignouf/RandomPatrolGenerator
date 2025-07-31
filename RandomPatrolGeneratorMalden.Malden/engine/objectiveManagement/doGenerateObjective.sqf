@@ -82,6 +82,13 @@ generateObjective =
 				waitUntil {isNull _handlePOIGeneration};
 			};
 
+			//Generate outpost
+			_numberOfOutpostDesired = selectRandom [0,0,1,2,3];
+			for [{_outpostIndex = 0}, {_outpostIndex < _numberOfOutpostDesired}, {_outpostIndex = _outpostIndex + 1}] do
+			{	
+				[_selectedObjectivePosition] call generateOutpost;
+			};
+
 			//If there are no building near operation area
 			if (!([_selectedObjectivePosition] call isAroundWithBuilding) && ((missionNamespace getVariable ["addFOBOnObjective",1]) == 1)) then 
 			{
@@ -117,6 +124,68 @@ generateObjective =
 
 	//Return objective selected location
 	_possibleObjectivePosition;
+};
+
+generateOutpostProcess = {
+	params ["_basePosition"];
+	[_basePosition, 30] execVM 'objectGenerator\doCleanArea.sqf'; 
+	_spawnFOBObjects = [_basePosition, (random 360), selectRandom Outpost] call BIS_fnc_ObjectsMapper;
+	_OpforFobStandardOpforLocation = nearestObjects [_basePosition, ["Sign_Arrow_Large_F"], 50];
+
+	//ShuffleArrows
+	_OpforFobStandardOpforLocation = [_OpforFobStandardOpforLocation, [], { random 100 }, "ASCEND"] call BIS_fnc_sortBy;
+
+	//Generate units
+	_tempBaseGroup = [opFaction, "BASIC"] call getBasicUnitsGroup;
+	_outpostUnits = [_tempBaseGroup, _basePosition, east, "DefenseInfantry"] call doGenerateEnemyGroup;
+	_outpostUnits = units _outpostUnits;
+
+	//Clean arrows
+	_unitNumber = 0;
+	{
+		if (_unitNumber < count _outpostUnits) then 
+		{
+			(_outpostUnits#_unitNumber) setPosASL (getPosASL _x);
+			(_outpostUnits#_unitNumber) disableAI "PATH";
+
+			//80% to leave the position if fired
+			if (random 100>80) then 
+			{ 
+				(_outpostUnits#_unitNumber) addEventHandler["Fired",
+					{
+						params ["_unit"];
+						_unit enableAI "PATH";
+						_unit dofollow leader _unit;
+						_unit setUnitPos "AUTO";
+						_unit removeEventHandler ["Fired",_thisEventHandler];
+					}];
+			};
+			_unitNumber = _unitNumber+1;
+		};
+		deleteVehicle _x;
+	} foreach _OpforFobStandardOpforLocation;
+
+	//75% chance to have a specific side task assigned
+	if (random 100 < 75) then 
+	{
+		//Generate side objective
+		[[format ["%1%2","_sideQuestFOB", random 10000],"AttackOutpost", _basePosition, objNull], "engine\objectiveManagement\doGenerateSideObjective.sqf"] remoteExec ['BIS_fnc_execVM', 2];
+		
+		//Locate on map
+		if (missionNameSpace getVariable ["enableObjectiveExactLocation", 0] != 0) then 
+		{
+			[["Outpost", "ColorRed", "b_installation", _basePosition, blufor], 'objectGenerator\doGenerateMarker.sqf'] remoteExec ['BIS_fnc_execVM', 0, true];
+		};
+	};
+};
+
+generateOutpost = {
+	params ["_selectedObjectivePosition"];
+	_OutpostPosition = [_selectedObjectivePosition, 75, 400, 20, 0, 0.20, 0, [], [[0,0,0],[0,0,0]]] call BIS_fnc_findSafePos;
+	if (!([_OutpostPosition, [0,0,0]] call BIS_fnc_areEqual)) then 
+	{
+		[_OutpostPosition] call generateOutpostProcess;
+	};
 };
 
 generateObjectiveOpforBase = 
