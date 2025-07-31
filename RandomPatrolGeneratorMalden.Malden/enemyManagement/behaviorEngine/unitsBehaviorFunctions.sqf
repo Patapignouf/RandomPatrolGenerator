@@ -184,10 +184,9 @@ doSurrender = {
 		{_unit removeMagazines _x} forEach _grenades;
 
 		// Make the unit surrender
-		_unit action["Surrender", _unit]; // Surrender
 		_unit setCaptive true; // Set as captive
+		_unit action ["Surrender", _unit]; // Surrender
 
-		
 		sleep 3; //Add 3 sec safe for player
 
 		//Add penalty if a player kill a surrender unit
@@ -206,20 +205,21 @@ doSurrender = {
 				}; 
 			}];
 
-			//Reward HQ repport
-			_unit addAction ["<img size='2' image='\a3\ui_f\data\IGUI\Cfg\holdactions\holdAction_connect_ca.paa'/><t size='1'>Report prisoner</t>",{
-				//Define parameters
-				params ["_object","_caller","_ID","_avalaibleVehicle"];
+			//Add action report
+			[_unit, ["<img size='2' image='\a3\ui_f\data\IGUI\Cfg\holdactions\holdAction_connect_ca.paa'/><t size='1'>Report prisoner</t>",{
+					//Param initialization
+						//Define parameters
+						params ["_object","_caller","_ID","_avalaibleVehicle"];
 
-				//Remove action on other clients
-				[_object] remoteExec ["removeAllActions", 0, true];
+						//Remove action on other clients
+						[_object] remoteExec ["removeAllActions", 0, true];
 
-				//Give a feedback to the player
-				[[_caller], {params ["_caller"]; ["STR_RPG_HC_NAME", "STR_RPG_HC_SURRENDER_INTEL", name _caller] call doDialog}] remoteExec ["spawn", _caller]; 
+						//Give a feedback to the player
+						[[_caller], {params ["_caller"]; ["STR_RPG_HC_NAME", "STR_RPG_HC_SURRENDER_INTEL", name _caller] call doDialog}] remoteExec ["spawn", _caller]; 
 
-				//Reward player
-				[{[2, "RPG_ranking_intel_collect"] call doUpdateRank}] remoteExec ["call", _caller];
-			},_x,3,true,true,"","_target distance _this <5"];
+						//Reward player
+						[{[2, "RPG_ranking_intel_collect"] call doUpdateRank}] remoteExec ["call", _caller];
+				}, [],3,true,true,"","_target distance _this <5"]] remoteExec ["addAction", 0, true];
 		};
 		
 		//Clean unit after 15 minutes
