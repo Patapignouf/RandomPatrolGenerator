@@ -120,7 +120,7 @@ params ["_currentGroup", "_thisObjective"];
 								};
 
 								//Create child task associated to main task
-								[_side, [format ["%1%2",_thisObjectiveCode ,"_Intel"], _thisObjectiveCode], [_currentObjectiveDescription, "Updated intel", "cookiemarker2_intel"], objNull, 1, 3, true] call BIS_fnc_taskCreate;
+								[_side, [format ["%1%2",_thisObjectiveCode ,"_Intel"], _thisObjectiveCode], [_currentObjectiveDescription, "Updated intel", "cookiemarker2_intel"], objNull, "CREATED", 3, true] call BIS_fnc_taskCreate;
 								[format ["%1%2",_thisObjectiveCode ,"_Intel"],"documents"] call BIS_fnc_taskSetType;
 								//Reward with experience 
 								[{[3, "RPG_ranking_intel_collect"] call doUpdateRank}] remoteExec ["call", _caller];

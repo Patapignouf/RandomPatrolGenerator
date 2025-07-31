@@ -1,6 +1,6 @@
 
 //Create survivor task
-[player, format ["RPG_%1_Death", name player], [localize "STR_RPG_OBJ_SURVIVE_TEXT", localize "STR_RPG_OBJ_SURVIVE", ""], objNull, 1, 3, true] call BIS_fnc_taskCreate;
+[player, format ["RPG_%1_Death", name player], [localize "STR_RPG_OBJ_SURVIVE_TEXT", localize "STR_RPG_OBJ_SURVIVE", ""], objNull, "CREATED", 3, true] call BIS_fnc_taskCreate;
 
 //Wait mission complete
 [] spawn {
