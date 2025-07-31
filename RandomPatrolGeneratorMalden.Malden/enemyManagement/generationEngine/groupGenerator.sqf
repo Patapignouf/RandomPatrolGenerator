@@ -24,7 +24,15 @@ doGenerateEnemyGroup =
 	if (_thisGroupType == "DefenseFOBInfantry" || _thisGroupType == "DefenseInfantry") then 
 	{
 		{
-			_x addEventHandler ["AnimStateChanged", { params ["_unit", "_anim"]; if ((canStand _unit)&&(unitPos _unit == "Down")) then { _unit setUnitPos "MIDDLE"; }; }];
+			_x addEventHandler ["AnimStateChanged", 
+				{ 
+					params ["_unit", "_anim"]; 
+					hint (stance _unit);
+					if ((canStand _unit)&&(stance  _unit == "PRONE")) then 
+					{ 
+						_unit setUnitPos "MIDDLE"; 
+					}; 
+				}];
 		} foreach (units _currentGroupPatrol);
 	};
 	
