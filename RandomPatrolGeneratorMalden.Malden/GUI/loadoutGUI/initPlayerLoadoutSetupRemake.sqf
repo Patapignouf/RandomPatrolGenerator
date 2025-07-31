@@ -313,6 +313,18 @@ _ButtonLoad ctrlAddEventHandler ["ButtonClick",{
 					//Add specific radio
 					player addItem _radioToAdd;
 					player assignItem _radioToAdd;
+
+					//set previous frequency on SW Radio
+					[] spawn {
+						uisleep 2;
+						_curentSWFrequency = player getVariable ["RPG_TFAR_SW_FREQUENCY", "50"];
+
+						if (typeName (parseNumber _curentSWFrequency) == "SCALAR") then 
+						{
+							hint format ["Frequency : %1", _curentSWFrequency];
+							[(call TFAR_fnc_activeSwRadio), _curentSWFrequency] call TFAR_fnc_setSwFrequency;
+						}
+					};
 				};
 			};
 			
@@ -356,6 +368,13 @@ _ButtonSave ctrlAddEventHandler ["ButtonClick",{
 		params ["_ctrl"];
 		//Save default stuff when ironMan mode is disable
 		player setVariable ["spawnLoadout", getUnitLoadout player];
+
+		//Save previous frequency on SW Radio 
+		if (isClass (configFile >> "CfgPatches" >> "task_force_radio")) then 
+		{
+			_curentSWFrequency = (call TFAR_fnc_ActiveSwRadio) call TFAR_fnc_getSwFrequency;
+			player setVariable ["RPG_TFAR_SW_FREQUENCY", _curentSWFrequency];
+		};
 
 		//Save current loadout
 		[player, "personal"] call saveCustomLoadout;
