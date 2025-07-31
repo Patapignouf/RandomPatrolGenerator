@@ -55,9 +55,7 @@ doGenerateVehicleForFOB =
 										if (!isNull _g) then {_g setDamage 1}; 
 									}; 
 								}]; 
-							}; 
-							if (!isDedicated) then
-							{
+							
 								_currentVehicle addEventHandler ["GetIn",
 								{
 									enableSentences false; 
@@ -67,7 +65,7 @@ doGenerateVehicleForFOB =
 									_unit action ["EngineOn", _tank]; 
 									_unit action ["MoveToGunner", _tank]; 
 									_tank lock true; 
-									_tank switchCamera "EXTERNAL"; 
+									_tank switchCamera "EXTERNAL"; // May disable this line to prevent camera switch
 									_tank addAction [localize "str_action_getout",
 									{ 
 										_this select 0 removeAction (_this select 2); 

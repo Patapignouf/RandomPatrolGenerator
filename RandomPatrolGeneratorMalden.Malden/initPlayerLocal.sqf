@@ -87,29 +87,6 @@ if (!didJIP) then
 	};
 };
 
-//Add admin menu action
-[] spawn {
-	//Add admin settings GUI action
-	if (player getVariable ["isAdmin", false] || (hasInterface && isServer)) then 
-	{
-		//Add 3 spaces empty actions
-		for [{_i = 0}, {_i < 3}, {_i = _i + 1}] do
-		{
-			player addAction ["                       ",{
-				//Define parameters
-				params ["_object","_caller","_ID","_avalaibleVehicle"];
-				//Do
-			},_x,0.1,true,false,"","(_target distance _this <3) && (_target getVariable ['isAdmin', false] || (hasInterface && isServer))"];
-		};
-
-		//Add admin settings GUI action
-		player addAction ["<t color='#FF0000'>Open ADMIN MENU</t>",{
-			//Define parameters
-			params ["_object","_caller","_ID","_avalaibleVehicle"];
-			[[], 'GUI\adminGUI\adminGUIInit.sqf'] remoteExec ['BIS_fnc_execVM', _caller];
-		},_x,0,true,false,"","(_target distance _this <3) && (_target getVariable ['isAdmin', false] || (hasInterface && isServer))", 50, true];
-	};
-};
 
 //Show loading message
 [] spawn {
@@ -767,6 +744,20 @@ if (didJIP && count (units group player) == 1 && count (allPlayers select {side 
 	};
 };
 
+//Add RPG menu 
+[] spawn
+{
+	waitUntil {!isNull(findDisplay 46)};
+
+	(findDisplay 46) displayAddEventHandler ["KeyDown",
+	{
+		if(_this select 1 == 0x16)
+		then
+		{
+			[[], 'GUI\RPGMenuGUI\RPGMenu.sqf'] remoteExec ['BIS_fnc_execVM', player];
+		};
+	}];
+};
 
 //Setup default TFAR radio frequency
 if (isClass (configFile >> "CfgPatches" >> "task_force_radio")) then {
