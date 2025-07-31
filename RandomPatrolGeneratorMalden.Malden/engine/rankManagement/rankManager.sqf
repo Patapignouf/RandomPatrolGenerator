@@ -137,7 +137,7 @@ if (isClass (configFile >> "CfgPatches" >> "ace_medical")) then
 		params ["_caller", "_target", "_selectionName", "_className", "_itemUser", "_usedItem"];
 
 		//Display for debug
-		//hint format ["Use item : %1 from %2 with classname : %3", _usedItem, name _caller, _className];
+		hint format ["Use item : %1 from %2 with classname : %3", _usedItem, name _caller, _className];
 
 		//Only reward heal on others 
 		if (_caller != _target) then 
@@ -219,6 +219,14 @@ if (isClass (configFile >> "CfgPatches" >> "ace_medical")) then
 						_medicalParticipationHashMap set [_callerId, [_caller, _addedParticipationValue]];
 					};
 					_target setVariable ["medicalParticipationHashMap", _medicalParticipationHashMap, true];
+
+					//Display medic information to unconscious people
+					_itemToDisplay = getText (configFile >>  "cfgWeapons" >> _usedItem >> "Displayname");
+					if (_itemToDisplay == "") then 
+					{
+						_itemToDisplay = _className;
+					};
+					[[_caller, _itemToDisplay], {params ["_caller", "_itemToDisplay"]; ["STR_RPG_HC_NAME_MUTE", "STR_RPG_HC_MEDIC_UNCONSCIOUS", name _caller, _itemToDisplay] call doDialog}] remoteExec ["spawn", _target]; 
 				};
 			} else
 			// When target is not unconscious, rewards are straightforward "per action" rewards

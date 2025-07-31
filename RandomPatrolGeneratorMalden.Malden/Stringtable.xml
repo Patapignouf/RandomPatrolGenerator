@@ -912,30 +912,33 @@
                 <Chinese>我们准备好起飞，走吧！</Chinese>
                 <Japanese>離陸準備完了、行きましょう！</Japanese>
             </Key>
-			<Key ID="STR_RPG_HC_SURRENDER_SPEAK">
-    <Original>Don't shoot i surrender, please spare me</Original>
-    <English>Don't shoot i surrender, please spare me</English>
-    <French>Ne tirez pas, je me rends épargnez moi !</French>
-    <Spanish>¡No dispares, me rindo, por favor perdóname!</Spanish>
-    <German>Nicht schießen, ich ergebe mich, bitte verschone mich</German>
-    <Italian>Non sparare, mi arrendo, ti prego risparmiami</Italian>
-    <Russian>Не стреляйте, я сдаюсь, пожалуйста, пощадите меня</Russian>
-    <Chinese>不要开枪，我投降，请饶了我</Chinese>
-    <Japanese>撃たないでください、降伏します、どうか助けてください</Japanese>
-    
-</Key>
-<Key ID="STR_RPG_HC_RESPAWN_TENT">
-    <Original>Your leader has setup a reinforcement tent</Original>
-    <English>Your leader has setup a reinforcement tent</English>
-    <French>Votre chef a monté une tente de réapparition</French>
-    <Spanish>Tu líder ha configurado una tienda de refuerzo</Spanish>
-    <German>Dein Anführer hat ein Verstärkungszelt aufgestellt</German>
-    <Italian>Il tuo leader ha configurato una tenda di rinforzo</Italian>
-    <Russian>Ваш лидер установил палатку для подкрепления</Russian>
-    <Chinese>你的领导者已设置增援帐篷</Chinese>
-    <Japanese>あなたのリーダーは増援テントを設置しました</Japanese>
-    
-</Key>
+                <Key ID="STR_RPG_HC_SURRENDER_SPEAK">
+                <Original>Don't shoot i surrender, please spare me</Original>
+                <English>Don't shoot i surrender, please spare me</English>
+                <French>Ne tirez pas, je me rends épargnez moi !</French>
+                <Spanish>¡No dispares, me rindo, por favor perdóname!</Spanish>
+                <German>Nicht schießen, ich ergebe mich, bitte verschone mich</German>
+                <Italian>Non sparare, mi arrendo, ti prego risparmiami</Italian>
+                <Russian>Не стреляйте, я сдаюсь, пожалуйста, пощадите меня</Russian>
+                <Chinese>不要开枪，我投降，请饶了我</Chinese>
+                <Japanese>撃たないでください、降伏します、どうか助けてください</Japanese>
+        </Key>
+        <Key ID="STR_RPG_HC_RESPAWN_TENT">
+            <Original>Your leader has setup a reinforcement tent</Original>
+            <English>Your leader has setup a reinforcement tent</English>
+            <French>Votre chef a monté une tente de réapparition</French>
+            <Spanish>Tu líder ha configurado una tienda de refuerzo</Spanish>
+            <German>Dein Anführer hat ein Verstärkungszelt aufgestellt</German>
+            <Italian>Il tuo leader ha configurato una tenda di rinforzo</Italian>
+            <Russian>Ваш лидер установил палатку для подкрепления</Russian>
+            <Chinese>你的领导者已设置增援帐篷</Chinese>
+            <Japanese>あなたのリーダーは増援テントを設置しました</Japanese>
+        </Key>
+        <Key ID="STR_RPG_HC_MEDIC_UNCONSCIOUS">
+            <Original>%1 used %2 on you</Original>
+            <English>%1 used %2 on you</English>
+            <French>%1 a utilisé %2 sur vous</French>
+        </Key>
 <Key ID="STR_RPG_HC_SURRENDER_INTEL">
     <Original>Copy %1, let's continue the mission</Original>
     <English>Copy %1, let's continue the mission</English>
