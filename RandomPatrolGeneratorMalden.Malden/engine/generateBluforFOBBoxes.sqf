@@ -542,8 +542,11 @@ if (!isNil "USS_FREEDOM_CARRIER") then
 _trgBluforGrassCutterFOB = createTrigger ["EmptyDetector", initBlueforLocation];
 _trgBluforGrassCutterFOB setTriggerArea [15, 15, 0, true];
 
-//Just cutting grass with a small trigger on Blufor FOB :p  
-[_trgBluforGrassCutterFOB, 20, 20] execvm "engine\grassCutter.sqf";
+//Just cutting grass with a small trigger on Blufor FOB :p 
+if (missionNameSpace getVariable ["enableBluforFOB", 1] == 1) then 
+{
+	[_trgBluforGrassCutterFOB, 20, 20] execvm "engine\grassCutter.sqf";
+};
 
 bluforFOBBuild = true;
 publicvariable "bluforFOBBuild";

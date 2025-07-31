@@ -564,17 +564,24 @@ if !(_isOnWater) then
 			initBlueforLocation = [selectMax [selectMin [initBlueforLocation select 0, worldSize-75 ],75],selectMax [selectMin [initBlueforLocation select 1, worldSize-75],75]]; 
 		};
 
-		//Generate FOB
-		spawnFOBObjects = [initBlueforLocation, (random 360), selectRandom avalaibleFOB] call BIS_fnc_ObjectsMapper;
-			
-		//Snap FOB object to ground
+		//Generate blufor FOB
+		if (missionNameSpace getVariable ["enableBluforFOB", 1] == 1) then 
 		{
-			_x setVectorUp surfaceNormal position _x;
-		} foreach spawnFOBObjects;
+			spawnFOBObjects = [initBlueforLocation, (random 360), selectRandom avalaibleFOB] call BIS_fnc_ObjectsMapper;
+				
+			//Snap FOB object to ground
+			{
+				_x setVectorUp surfaceNormal position _x;
+			} foreach spawnFOBObjects;
 
-		initBlueforLocation = getPos (spawnFOBObjects select 0);	
-		publicvariable "initBlueforLocation";
-		waitUntil {!isNil "spawnFOBObjects"};
+			initBlueforLocation = getPos (spawnFOBObjects select 0);	
+			publicvariable "initBlueforLocation";
+			waitUntil {!isNil "spawnFOBObjects"};
+		} else 
+		{
+			//Do no spawn blufor FOB
+			publicvariable "initBlueforLocation";
+		};
 } else 
 {
 	//Spawn carrier on water 
@@ -620,8 +627,11 @@ if !(_isOnWater) then
 	};
 };
 	
-//Clean area WIP
-[initBlueforLocation, 150] execVM 'objectGenerator\doCleanArea.sqf'; 				
+//Clean area WIP only if there is a FOB spawned
+if (missionNameSpace getVariable ["enableBluforFOB", 1] == 1) then 
+{
+	[initBlueforLocation, 150] execVM 'objectGenerator\doCleanArea.sqf';
+}; 				
 
 //Generate ground vehicle
 vehicleGoodPosition = [];
