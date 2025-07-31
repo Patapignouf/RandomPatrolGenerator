@@ -19,6 +19,14 @@ doGenerateEnemyGroup =
 		_missionEnemyInfo pushBack [_thisGroupType,_thisSpawnPosition, _currentGroupPatrol];
 		missionNamespace setVariable ["MissionEnemyInfo", _missionEnemyInfo, true];
 	};
+
+	//Prevent defending IA from going prone
+	if (_thisGroupType == "DefenseFOBInfantry" || _thisGroupType == "DefenseInfantry") then 
+	{
+		{
+			_x addEventHandler ["AnimStateChanged", { params ["_unit", "_anim"]; if ((canStand _unit)&&(unitPos _unit == "Down")) then { _unit setUnitPos "MIDDLE"; }; }];
+		} foreach (units _currentGroupPatrol);
+	};
 	
 	//Set IA Skills
 	[_currentGroupPatrol, missionIASkillParam] call doSetGroupSkills;
