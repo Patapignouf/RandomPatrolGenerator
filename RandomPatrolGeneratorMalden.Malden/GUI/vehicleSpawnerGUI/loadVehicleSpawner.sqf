@@ -2,7 +2,7 @@
 
 //Based on the work of 7erra
 //Github : https://github.com/7erra/LNBSort
-params ["_mode", "_this", "_VehicleAvalaibleSpawn","_UnarmedVehicle","_ArmedVehicle","_ArmoredVehicle","_UnarmedVehicleChopper","_ArmedChopper","_Drone","_FixedWing", "_FixedWingTransport","_Boat"];
+params ["_mode", "_this", "_VehicleAvalaibleSpawn","_UnarmedVehicle","_ArmedVehicle","_ArmoredVehicle","_UnarmedVehicleChopper","_ArmedChopper","_Drone","_FixedWing", "_FixedWingTransport","_Boat", "_staticWeapons"];
 private _mainDisplay = (findDisplay 50000);
 private _buttonOK = _mainDisplay displayCtrl 50001;
 private _buttonPreview = _mainDisplay displayCtrl 50003;
@@ -132,12 +132,17 @@ switch (_mode) do
 			_lnbEntries lnbSetData [[_ind, 2], str _price];
 		} foreach _Boat;
 
-
-		// for "_i" from 0 to 30 do {
-		// 	_rInd = floor random (count _cfgs);
-		// 	_ind = _lnbEntries lnbAddRow [_vehicleName,_cfgNames#_rInd, _names#_rInd, str _rInd];
-		// 	_lnbEntries lnbSetValue [[_ind,2],_rInd];
-		// };
+		//Add static weapons
+		{
+			_price = 50;
+			_vehicleName = getText (configFile >> "cfgVehicles" >> _x >> "displayName");
+			_vehiclePicture = getText (configFile >> "cfgVehicles" >> _x >> "picture");
+			_ind = _lnbEntries lnbAddRow ["", _vehicleName, "Static", str _price];
+			_lnbEntries lnbSetPicture [[_ind, 0], _vehiclePicture];
+			_lnbEntries lnbSetData [[_ind, 0], _x];
+			_lnbEntries lnbSetData [[_ind, 1], _vehicleName];
+			_lnbEntries lnbSetData [[_ind, 2], str _price];
+		} foreach _staticWeapons;
 
 		for "_idc" from 2400 to 2402 do {
 			_btn = _display displayCtrl _idc;

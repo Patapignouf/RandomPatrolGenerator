@@ -20,8 +20,13 @@ bluforUnarmedVehicle_INDO = [
 ];
 
 bluforArmedVehicle_INDO = [
-	// "INDO_105HM2",
-	// "INDO_MORTIER_81"
+
+];
+
+bluforStaticWeapon_INDO = 
+[
+	"INDO_105HM2",
+	"INDO_MORTIER_81"
 ];
 
 //Armored vehicle avalaible for blufor : Ex light tank

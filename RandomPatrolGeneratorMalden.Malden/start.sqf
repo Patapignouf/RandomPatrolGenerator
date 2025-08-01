@@ -141,6 +141,8 @@ publicVariable "bluforHQVehicle";
 bluforBoat = bluforBoat_db select {_x select 1  == bluFaction} select 0 select 0;
 publicVariable "bluforBoat";
 
+bluforStaticWeapon = bluforStaticWeapon_db select {_x select 1  == bluFaction} select 0 select 0;
+publicVariable "bluforStaticWeapon";
 
 bluforMagazineList = magazineList_db select {_x select 1  == bluFaction} select 0 select 0;
 

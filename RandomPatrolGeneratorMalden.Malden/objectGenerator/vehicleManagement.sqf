@@ -17,7 +17,22 @@ doGenerateVehicleForFOB =
 		_currentVehicle = objNull;
 
 		switch (true) do {   
-			case (_vehicleClass isKindOf "Tank");
+			case (_vehicleClass isKindOf "StaticWeapon"):
+			{
+				_spawnAttempts = 0;
+				_vehicleGoodPosition = _thisPosition findEmptyPosition [_thisMinRadius, _thisMaxRadius,_dummyVehicle];
+				while {(isNil "_vehicleGoodPosition" || count _vehicleGoodPosition==0) && _spawnAttempts <10} do 
+				{
+					_vehicleGoodPosition = _thisPosition findEmptyPosition [_thisMinRadius, _thisMaxRadius,_dummyVehicle];
+					_spawnAttempts = _spawnAttempts +1;
+				};
+				if (!isNil "_vehicleGoodPosition" && count _vehicleGoodPosition>0) then 
+				{
+					diag_log format ["Position to spawn vehicle is not Nil %1",_vehicleGoodPosition];
+					_currentVehicle = createVehicle [_vehicleClass, _vehicleGoodPosition , [], 0, "NONE"];
+				};
+			};
+			case (_vehicleClass isKindOf "Tank"); 
 			case (_vehicleClass isKindOf "Car"): {
 						_kind = "Car";
 						_spawnAttempts = 0;
@@ -185,7 +200,7 @@ doGenerateVehicleForFOB =
 		clearBackpackCargo _currentVehicle;
 
 		//Add ACE keys
-		if (isClass (configFile >> "CfgPatches" >> "ace_medical")) then 
+		if (isClass (configFile >> "CfgPatches" >> "ace_medical") && !(_vehicleClass isKindOf "StaticWeapon")) then 
 		{
 			[_currentVehicle] call doAddKeys;
 			_currentVehicle setVehicleLock "LOCKED";
