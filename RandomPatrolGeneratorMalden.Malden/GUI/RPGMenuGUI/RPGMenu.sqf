@@ -1,12 +1,121 @@
 params ["_someParameters"];
 
+disableSerialization;
+
 //Param exemple :
 //[Type, Name, Description, {action}]
 
 paramsToManageNow = [];
 
+listOfMissionEventHandlerToDestroy = [];
+
+//Prepare respawn countdown GUI on map
+//Only avalaible if respawn is set to wave respawn 
+if (missionNameSpace getVariable ["enableSelfRespawnTimer", 0] == 0) then 
+{
+
+	paramsToManageNow pushBack ["Text", "Next respawn", "", {
+			params ["_thisCTRL"];
+
+			//systemChat format ["_thisCTRL : %1", _thisCTRL];
+
+			//No self respawn timer (directed by the server)
+			_id = addMissionEventHandler ["EachFrame",
+				{
+					_currentRespawnTimer = missionNamespace getVariable "missionRespawnParam";
+					_currentCounter = _currentRespawnTimer - (round (serverTime) % _currentRespawnTimer);
+					_thisArgs#0 ctrlSetStructuredText parseText (format ["%1", [(_currentCounter/60)+.01,"HH:MM"] call BIS_fnc_timetostring]);
+				},
+				[_thisCTRL]
+			];
+			listOfMissionEventHandlerToDestroy pushBack ["EachFrame", _id];
+
+		}];
+};
+
 //Add credit GUI
 paramsToManageNow pushBack ["Text", localize "STR_GUI_BASE_CREDIT", format ["%1", missionNamespace getVariable "bluforVehicleAvalaibleSpawn"], {	}];
+
+//Display current task
+_currentTask = player call BIS_fnc_taskCurrent;
+_currentTaskPosition = _currentTask call BIS_fnc_taskDestination;
+_currentTaskDescriptionArray = _currentTask call BIS_fnc_taskDescription;
+_currentTaskDirection = player getDirVisual _currentTaskPosition;
+_currentTaskDirectionText = "";
+switch (floor (_currentTaskDirection / 30)) do
+{
+	case 11;
+	case 0:
+	{
+		_currentTaskDirectionText = "NORTH";
+	};
+	case 1:
+	{
+		_currentTaskDirectionText = "NORTH EAST";
+	};
+	case 2;	
+	case 3:
+	{
+		_currentTaskDirectionText = "EAST";
+	};
+	case 4:
+	{
+		_currentTaskDirectionText = "SOUTH EAST";
+	};
+	case 5;
+	case 6:
+	{
+		_currentTaskDirectionText = "SOUTH";
+	};
+	case 7:
+	{
+		_currentTaskDirectionText = "SOUTH WEST";
+	};
+	case 8;
+	case 9:
+	{
+		_currentTaskDirectionText = "WEST";
+	};
+	case 10:
+	{
+		_currentTaskDirectionText = "NORTH WEST";
+	};
+	default 
+	{
+		//Impossible
+	};
+};
+_currentTaskDistanceText = "";
+switch (floor ((player distance _currentTaskPosition)/ 500)) do
+{
+	case 0:
+	{
+		_currentTaskDistanceText = "Very Close";
+	};
+	case 1:
+	{
+		_currentTaskDistanceText = "Close";
+	};
+	case 2:
+	{
+		_currentTaskDistanceText = "Moderate Distance";
+	};
+	case 3:
+	{
+		_currentTaskDistanceText = "Far";
+	};
+	case 4:
+	{
+		_currentTaskDistanceText = "Quite Far";
+	};
+	default
+	{
+		_currentTaskDistanceText = "Distant";
+	};
+};
+
+_currentTaskDirectionInstructions = format ["Location : %1 %2",_currentTaskDirectionText, _currentTaskDistanceText];
+paramsToManageNow pushBack ["Text", format ["Task : %1", localize (_currentTaskDescriptionArray#1#0)], _currentTaskDirectionInstructions, {	}];
 
 //Add unstuck action
 paramsToManageNow pushBack ["Button", "Unblock", "(10 sec)", {
@@ -128,6 +237,9 @@ _yPosition = 0.10;
 			_RcsBodyRightDialog ctrlSetTextColor [1, 1, 1, 1];
 			//_RcsBodyLeftDialog ctrlSetBackgroundColor [0,0,0,0.8];
 			_RcsBodyRightDialog ctrlCommit 0;
+
+			//Call action to refresh description
+			[_RcsBodyRightDialog] spawn _paramsAction; 
 		};
 		default
 		{
@@ -189,3 +301,13 @@ _ButtonRight ctrlAddEventHandler ["ButtonClick",{
 		_display = ctrlParent _ctrl;
 		_display closeDisplay 1;
 	}];	
+
+//Disable space button in dialog
+waituntil {(IsNull (_display))};
+
+//Clean Mission EventHandler
+{
+	//Debug display
+	//systemChat format ["listOfMissionEventHandlerToDestroy %1 %2", _x#0, _x#1];
+    removeMissionEventHandler [_x#0, _x#1];
+} foreach  listOfMissionEventHandlerToDestroy;
