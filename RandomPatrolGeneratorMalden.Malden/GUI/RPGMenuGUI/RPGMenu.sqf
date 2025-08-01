@@ -118,18 +118,25 @@ _currentTaskDirectionInstructions = format ["Location : %1 %2",_currentTaskDirec
 paramsToManageNow pushBack ["Text", format ["Task : %1", localize (_currentTaskDescriptionArray#1#0)], _currentTaskDirectionInstructions, {	}];
 
 //Add unstuck action
-paramsToManageNow pushBack ["Button", "Unblock", "(10 sec)", {
+paramsToManageNow pushBack ["Button", "Unblock", "10 sec + 10 minutes cooldown", {
 		[] spawn 
 		{
-			cutText ["MOVING PLAYER OUT OF BUG", "BLACK FADED", 10];
-			(format ["%1 is using unblock action", name player]) remoteExec ["systemChat", 0, true];
-			uiSleep 10;
-			_dir = getDir player;
-			_dx = sin(_dir)*20;
-			_dy = cos(_dir)*20;
-			_currentPlayerPos = getPos player;
-			player setPos [_currentPlayerPos#0+_dx,_currentPlayerPos#1+_dy,0];
-			titleCut ["UNBLOCKED", "BLACK IN", 5];
+			private _result = ["Are you sure ?", "Confirm", true, true] call BIS_fnc_guiMessage;
+
+			if (_result) then {
+				//systemChat "The player is sure.";
+				cutText ["MOVING PLAYER OUT OF BUG", "BLACK FADED", 10];
+				(format ["%1 is using unblock action", name player]) remoteExec ["systemChat", 0, true];
+				uiSleep 10;
+				_dir = getDir player;
+				_dx = sin(_dir)*20;
+				_dy = cos(_dir)*20;
+				_currentPlayerPos = getPos player;
+				player setPos [_currentPlayerPos#0+_dx,_currentPlayerPos#1+_dy,0];
+				titleCut ["UNBLOCKED", "BLACK IN", 5];
+			} else {
+				//systemChat "The player is not sure.";
+			};
 		};
 	}];
 
