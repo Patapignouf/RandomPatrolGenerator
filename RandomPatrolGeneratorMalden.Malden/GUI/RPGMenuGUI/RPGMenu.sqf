@@ -38,84 +38,95 @@ paramsToManageNow pushBack ["Text", localize "STR_GUI_BASE_CREDIT", format ["%1"
 
 //Display current task
 _currentTask = player call BIS_fnc_taskCurrent;
-_currentTaskPosition = _currentTask call BIS_fnc_taskDestination;
-_currentTaskDescriptionArray = _currentTask call BIS_fnc_taskDescription;
-_currentTaskDirection = player getDirVisual _currentTaskPosition;
 _currentTaskDirectionText = "";
-switch (floor (_currentTaskDirection / 30)) do
-{
-	case 11;
-	case 0:
-	{
-		_currentTaskDirectionText = "NORTH";
-	};
-	case 1:
-	{
-		_currentTaskDirectionText = "NORTH EAST";
-	};
-	case 2;	
-	case 3:
-	{
-		_currentTaskDirectionText = "EAST";
-	};
-	case 4:
-	{
-		_currentTaskDirectionText = "SOUTH EAST";
-	};
-	case 5;
-	case 6:
-	{
-		_currentTaskDirectionText = "SOUTH";
-	};
-	case 7:
-	{
-		_currentTaskDirectionText = "SOUTH WEST";
-	};
-	case 8;
-	case 9:
-	{
-		_currentTaskDirectionText = "WEST";
-	};
-	case 10:
-	{
-		_currentTaskDirectionText = "NORTH WEST";
-	};
-	default 
-	{
-		//Impossible
-	};
-};
 _currentTaskDistanceText = "";
-switch (floor ((player distance _currentTaskPosition)/ 500)) do
+_currentTaskName = "";
+if (_currentTask != "") then 
 {
-	case 0:
+	_currentTaskPosition = _currentTask call BIS_fnc_taskDestination;
+	_currentTaskDescriptionArray = _currentTask call BIS_fnc_taskDescription;
+	_currentTaskName = localize (_currentTaskDescriptionArray#1#0);
+	_currentTaskDirection = player getDirVisual _currentTaskPosition;
+	switch (floor (_currentTaskDirection / 30)) do
 	{
-		_currentTaskDistanceText = "Very Close";
+		case 11;
+		case 0:
+		{
+			_currentTaskDirectionText = "NORTH";
+		};
+		case 1:
+		{
+			_currentTaskDirectionText = "NORTH EAST";
+		};
+		case 2;	
+		case 3:
+		{
+			_currentTaskDirectionText = "EAST";
+		};
+		case 4:
+		{
+			_currentTaskDirectionText = "SOUTH EAST";
+		};
+		case 5;
+		case 6:
+		{
+			_currentTaskDirectionText = "SOUTH";
+		};
+		case 7:
+		{
+			_currentTaskDirectionText = "SOUTH WEST";
+		};
+		case 8;
+		case 9:
+		{
+			_currentTaskDirectionText = "WEST";
+		};
+		case 10:
+		{
+			_currentTaskDirectionText = "NORTH WEST";
+		};
+		default 
+		{
+			//Impossible
+		};
 	};
-	case 1:
+
+	switch (floor ((player distance _currentTaskPosition)/ 500)) do
 	{
-		_currentTaskDistanceText = "Close";
+		case 0:
+		{
+			_currentTaskDistanceText = "Very Close";
+		};
+		case 1:
+		{
+			_currentTaskDistanceText = "Close";
+		};
+		case 2:
+		{
+			_currentTaskDistanceText = "Moderate Distance";
+		};
+		case 3:
+		{
+			_currentTaskDistanceText = "Far";
+		};
+		case 4:
+		{
+			_currentTaskDistanceText = "Quite Far";
+		};
+		default
+		{
+			_currentTaskDistanceText = "Distant";
+		};
 	};
-	case 2:
-	{
-		_currentTaskDistanceText = "Moderate Distance";
-	};
-	case 3:
-	{
-		_currentTaskDistanceText = "Far";
-	};
-	case 4:
-	{
-		_currentTaskDistanceText = "Quite Far";
-	};
-	default
-	{
-		_currentTaskDistanceText = "Distant";
-	};
+} else 
+{
+ 	_currentTaskName = "Nothing assigned";
+	_currentTaskDirectionText = "Unknown";
 };
 
+
 _currentTaskDirectionInstructions = format ["Location : %1 %2",_currentTaskDirectionText, _currentTaskDistanceText];
-paramsToManageNow pushBack ["Text", format ["Task : %1", localize (_currentTaskDescriptionArray#1#0)], _currentTaskDirectionInstructions, {	}];
+paramsToManageNow pushBack ["Text", format ["Task : %1", _currentTaskName], _currentTaskDirectionInstructions, {	}];
 
 //Add unstuck action
 paramsToManageNow pushBack ["Button", "Unblock", "10 sec + 10 minutes cooldown", {
