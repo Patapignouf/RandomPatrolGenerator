@@ -874,6 +874,11 @@ if (isClass (configFile >> "CfgPatches" >> "ace_common")) then
 	{
 		missionNamespace setVariable _x;
 	} forEach _ace_settings;
+
+	//Enable ACE pointing 
+	//Test with Shift + ²
+	ace_finger_enabled = true; 
+	ace_finger_maxRange = 4; // 4 meters proximity
 };
 
 
