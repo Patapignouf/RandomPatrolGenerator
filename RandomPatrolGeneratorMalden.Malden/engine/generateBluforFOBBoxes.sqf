@@ -12,7 +12,7 @@ publicvariable "TPFlag1";
 sleep 5;
 
 //Init VA
-VA2 = createVehicle ["B_CargoNet_01_ammo_F", [_initBlueforLocation, 1, 10, 3, 0, 20, 0] call BIS_fnc_findSafePos, [], 0, "NONE"];
+VA2 = createVehicle ["B_CargoNet_01_ammo_F", [_initBlueforLocation, 1, 10, 3, 0, 20, 0, [], [_initBlueforLocation,_initBlueforLocation]] call BIS_fnc_findSafePos, [], 0, "NONE"];
 clearWeaponCargoGlobal VA2;
 clearMagazineCargoGlobal VA2;
 clearItemCargoGlobal VA2;
@@ -24,7 +24,7 @@ publicvariable "VA2";
 [["STR_RPG_3D_LOADOUT", (getPos VA2) vectorAdd [0,0,2],"\a3\ui_f\data\igui\cfg\simpletasks\types\rifle_ca.paa" , [1,1,0,1]], 'GUI\3DNames\3DNames.sqf'] remoteExec ['BIS_fnc_execVM', blufor, true];
 
 //Create portable FOB 
-deployableFOBItem = createVehicle [_deployableFOB, [_initBlueforLocation, 20, 50, 3, 0, 20, 0] call BIS_fnc_findSafePos, [], 0, "NONE"];
+deployableFOBItem = createVehicle [_deployableFOB, [_initBlueforLocation, 20, 50, 3, 0, 20, 0, [], [_initBlueforLocation,_initBlueforLocation]] call BIS_fnc_findSafePos, [], 0, "NONE"];
 clearWeaponCargoGlobal deployableFOBItem;
 clearMagazineCargoGlobal deployableFOBItem;
 clearItemCargoGlobal deployableFOBItem;
@@ -99,7 +99,7 @@ BluforAmmoBox = [];
 
 //Place empty box to blufor camp
 {
-	_tempBox = createVehicle [_x, [ _initBlueforLocation, 1, 15, 2, 0, 20, 0] call BIS_fnc_findSafePos, [], 0, "NONE"];
+	_tempBox = createVehicle [_x, [ _initBlueforLocation, 1, 15, 2, 0, 20, 0, [], [_initBlueforLocation,_initBlueforLocation]] call BIS_fnc_findSafePos, [], 0, "NONE"];
 	clearWeaponCargoGlobal _tempBox;
 	clearMagazineCargoGlobal _tempBox;
 	clearItemCargoGlobal _tempBox;
@@ -109,7 +109,7 @@ BluforAmmoBox = [];
 
 //Place a box with ammo to blufor camp
 {
-	_tempBox = createVehicle [_x, [ _initBlueforLocation, 1, 15, 2, 0, 20, 0] call BIS_fnc_findSafePos, [], 0, "NONE"];
+	_tempBox = createVehicle [_x, [ _initBlueforLocation, 1, 15, 2, 0, 20, 0, [], [_initBlueforLocation,_initBlueforLocation]] call BIS_fnc_findSafePos, [], 0, "NONE"];
 	clearWeaponCargoGlobal _tempBox;
 	clearMagazineCargoGlobal _tempBox;
 	clearItemCargoGlobal _tempBox;
@@ -129,13 +129,13 @@ BluforAmmoBox = [];
 } foreach ["Box_NATO_Uniforms_F","Box_NATO_Wps_F"];
 
 //Spawn vehicle ammobox and refuel box ACE needed for interaction
-BluforVehicleAmmoBox = createVehicle ["Box_NATO_AmmoVeh_F", [ _initBlueforLocation, 20, 50, 2, 0, 20, 0] call BIS_fnc_findSafePos, [], 0, "NONE"];
+BluforVehicleAmmoBox = createVehicle ["Box_NATO_AmmoVeh_F", [ _initBlueforLocation, 20, 50, 2, 0, 20, 0, [], [_initBlueforLocation,_initBlueforLocation]] call BIS_fnc_findSafePos, [], 0, "NONE"];
 clearWeaponCargoGlobal BluforVehicleAmmoBox;
 clearMagazineCargoGlobal BluforVehicleAmmoBox;
 clearItemCargoGlobal BluforVehicleAmmoBox;
 clearBackpackCargoGlobal BluforVehicleAmmoBox;
 
-_vehicleRefuelBox = createVehicle ["B_Slingload_01_Fuel_F", [ _initBlueforLocation, 20, 50, 2, 0, 20, 0] call BIS_fnc_findSafePos, [], 0, "NONE"];
+_vehicleRefuelBox = createVehicle ["B_Slingload_01_Fuel_F", [ _initBlueforLocation, 20, 50, 2, 0, 20, 0, [], [_initBlueforLocation,_initBlueforLocation]] call BIS_fnc_findSafePos, [], 0, "NONE"];
 clearWeaponCargoGlobal _vehicleRefuelBox;
 clearMagazineCargoGlobal _vehicleRefuelBox;
 clearItemCargoGlobal _vehicleRefuelBox;
@@ -152,7 +152,7 @@ publicVariable "BluforVehicleAmmoBox";
  
 
 //Place empty box with ACE medical stuff
-_tempBox = createVehicle ["Box_NATO_Equip_F", [ _initBlueforLocation, 1, 15, 2, 0, 20, 0] call BIS_fnc_findSafePos, [], 0, "NONE"];
+_tempBox = createVehicle ["Box_NATO_Equip_F", [ _initBlueforLocation, 1, 15, 2, 0, 20, 0, [], [_initBlueforLocation,_initBlueforLocation]] call BIS_fnc_findSafePos, [], 0, "NONE"];
 clearWeaponCargoGlobal _tempBox;
 clearMagazineCargoGlobal _tempBox;
 clearItemCargoGlobal _tempBox;
@@ -184,7 +184,7 @@ if (isClass (configFile >> "CfgPatches" >> "ace_medical")) then
 //Create a box with vehicle spare part for ACE engineer
 if (isClass (configFile >> "CfgPatches" >> "ace_medical")) then 
 {
-	_tempBoxSpare = createVehicle ["Land_CargoBox_V1_F", [ _initBlueforLocation, 30, 70, 2, 0, 20, 0] call BIS_fnc_findSafePos, [], 0, "NONE"];
+	_tempBoxSpare = createVehicle ["Land_CargoBox_V1_F", [ _initBlueforLocation, 30, 70, 2, 0, 20, 0, [], [_initBlueforLocation,_initBlueforLocation]] call BIS_fnc_findSafePos, [], 0, "NONE"];
 	clearWeaponCargoGlobal _tempBoxSpare;
 	clearMagazineCargoGlobal _tempBoxSpare;
 	clearItemCargoGlobal _tempBoxSpare;
@@ -194,7 +194,7 @@ if (isClass (configFile >> "CfgPatches" >> "ace_medical")) then
 };
 
 //Setup view distance changer
-SettingsComputer =  createVehicle ["Land_MultiScreenComputer_01_olive_F", [_initBlueforLocation, 1, 10, 3, 0, 20, 0] call BIS_fnc_findSafePos, [], 0, "NONE"];
+SettingsComputer =  createVehicle ["Land_MultiScreenComputer_01_olive_F", [_initBlueforLocation, 1, 10, 3, 0, 20, 0, [], [_initBlueforLocation,_initBlueforLocation]] call BIS_fnc_findSafePos, [], 0, "NONE"];
 {
 	[SettingsComputer, [format ["Set view distance to %1",_x],{
 				params ["_object","_caller","_ID","_viewDistance"];
@@ -206,7 +206,7 @@ SettingsComputer =  createVehicle ["Land_MultiScreenComputer_01_olive_F", [_init
 
 
 _mapTexture = ((configFile >> "CfgWorlds" >> worldName >> "pictureMap") call BIS_fnc_GetCfgData);
-TPFlag1 = createVehicle ["Land_MapBoard_Enoch_F", [_initBlueforLocation, 1, 10, 3, 0, 20, 0] call BIS_fnc_findSafePos, [], 0, "NONE"];
+TPFlag1 = createVehicle ["Land_MapBoard_Enoch_F", [_initBlueforLocation, 1, 10, 3, 0, 20, 0, [], [_initBlueforLocation,_initBlueforLocation]] call BIS_fnc_findSafePos, [], 0, "NONE"];
 //TPFlag1 enableSimulationGlobal false;
 [TPFlag1, false] remoteExec ["enableSimulationGlobal", 2];
 TPFlag1 setVectorUp surfaceNormal position TPFlag1;
@@ -222,7 +222,7 @@ publicvariable "TPFlag1";
 	params ["_initBlueforLocation"];
 
 	_botHQ = [blufor, bluFaction, "leader"] call doAddBotSimple;
-	_safeCommanderPos = [_initBlueforLocation, 1, 10, 1, 0, 20, 0] call BIS_fnc_findSafePos;
+	_safeCommanderPos = [_initBlueforLocation, 1, 10, 1, 0, 20, 0, [], [_initBlueforLocation,_initBlueforLocation]] call BIS_fnc_findSafePos;
 	_botHQ setPos _safeCommanderPos;
 	_botHQ disableAI "ALL";
 	_botHQ enableAI "ANIM";
@@ -526,7 +526,7 @@ if (!isNil "USS_FREEDOM_CARRIER") then
 {
 	//Create patrol
 	_patrolGroup = createGroup blufor;
-	_startPatrolPos = [_initBlueforLocation, 30, 60, 1, 0, 20, 0] call BIS_fnc_findSafePos;
+	_startPatrolPos = [_initBlueforLocation, 30, 60, 1, 0, 20, 0, [], [_initBlueforLocation,_initBlueforLocation]] call BIS_fnc_findSafePos;
 	for [{_i = 0}, {_i < 6}, {_i = _i + 1}] do
 	{
 		_botPatrol = [blufor, bluFaction, "random"] call doAddBotSimple;
