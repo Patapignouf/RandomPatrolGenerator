@@ -53,62 +53,72 @@ doGenerateVehicleForFOB =
 						//Allow player to control all role of the tank at the same time
 						//Script by XallZalls Ultimate Script Collection
 						//Origin https://steamcommunity.com/sharedfiles/filedetails/?id=2792607593
-						_currentVehicle call
-						{ 
-							if (isServer) then
-							{
-								_currentVehicle lockTurret [[0], true]; 
-								_currentVehicle lockTurret [[0,0], true]; 
-								_currentVehicle lockCargo true; 
-								_currentVehicle addMPEventHandler ["MPKilled",
-								{
-									if (isServer) then
-									{
-										_d = driver (_this select 0); 
-										_g = gunner (_this select 0); 
-										if (!isNull _d) then {deleteVehicle _d}; 
-										if (!isNull _g) then {_g setDamage 1}; 
-									}; 
-								}]; 
-							
-								_currentVehicle addEventHandler ["GetIn",
-								{
-									enableSentences false; 
-									_tank = _this select 0; 
-									_unit = _this select 2; 
-									_unit allowDamage false; 
-									_unit action ["EngineOn", _tank]; 
-									_unit action ["MoveToGunner", _tank]; 
-									_tank lock true; 
-									_tank switchCamera "EXTERNAL"; // May disable this line to prevent camera switch
-									_tank addAction [localize "str_action_getout",
-									{ 
-										_this select 0 removeAction (_this select 2); 
-										_this select 1 action ["GetOut", _this select 0]; 
-									}, "", 3, false, true, "GetOver"]; 
-									_tank spawn
-									{ 
-										waitUntil {!isNull gunner _this}; 
-										_ai = createAgent
-										[
-											typeOf gunner _this, [0,0,0], [], 0, "NONE" 
-										]; 
-										_ai allowDamage false; 
-										_ai moveInDriver _this; 
-									}; 
-								}]; 
-								_currentVehicle addEventHandler ["GetOut",
+						//Dirty fix for dedicated server
+						[[_currentVehicle], { 
+							params ["_currentVehicle"];  
+        
+							_currentVehicle call 
+							{  
+								if (true) then 
 								{ 
-									_tank = _this select 0; 
-									_unit = _this select 2; 
-									deleteVehicle driver _tank; 
-									_unit allowDamage true; 
-									_unit action ["EngineOff", _tank]; 
-									_tank lock false; 
-									enableSentences true; 
-								}]; 
+								_currentVehicle lockTurret [[0], true];  
+								_currentVehicle lockTurret [[0,0], true];  
+								_currentVehicle lockCargo true;  
+								_currentVehicle addMPEventHandler ["MPKilled", 
+								{ 
+								if (true) then 
+								{ 
+								_d = driver (_this select 0);  
+								_g = gunner (_this select 0);  
+								if (!isNull _d) then {deleteVehicle _d};  
+								if (!isNull _g) then {_g setDamage 1};  
+								};  
+								}];  
+								
+								_currentVehicle addEventHandler ["GetIn", 
+								{
+								enableSentences false;  
+								_tank = _this select 0;  
+								_unit = _this select 2; 
+								//		hint format ["name %1 enter %2", name _unit, _tank]; 
+						
+								_unit allowDamage false;  
+								_unit action ["EngineOn", _tank];  
+								_unit action ["MoveToGunner", _tank];  
+								_tank lock true;  
+								_tank switchCamera "EXTERNAL"; // May disable this line to prevent camera switch 
+								_tank addAction [localize "str_action_getout", 
+								{  
+								_this select 0 removeAction (_this select 2);  
+								_this select 1 action ["GetOut", _this select 0];  
+								}, "", 3, false, true, "GetOver"];  
+								_tank spawn 
+								{  
+								waitUntil {!isNull gunner _this};
+									
+								_ai = createAgent 
+								[ 
+									typeOf gunner _this, [0,0,0], [], 0, "NONE"  
+								];  
+								_ai allowDamage false;  
+								_ai moveInDriver _this;  
+								};  
+								}];
+								
+								_currentVehicle addEventHandler ["GetOut", 
+								{  
+								_tank = _this select 0;  
+								_unit = _this select 2;  
+								deleteVehicle driver _tank;  
+								_unit allowDamage true;  
+								_unit action ["EngineOff", _tank];  
+								_tank lock false;  
+								enableSentences true;  
+								}];  
+								};  
 							}; 
-						};
+							}] remoteExec ["spawn", 0];
+						
 					};
 				};   
 			case (_vehicleClass isKindOf "Ship"): {
