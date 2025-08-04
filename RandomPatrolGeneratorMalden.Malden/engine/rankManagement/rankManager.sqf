@@ -137,7 +137,7 @@ if (isClass (configFile >> "CfgPatches" >> "ace_medical")) then
 		params ["_caller", "_target", "_selectionName", "_className", "_itemUser", "_usedItem"];
 
 		//Display for debug
-		hint format ["Use item : %1 from %2 with classname : %3", _usedItem, name _caller, _className];
+		//hint format ["Use item : %1 from %2 with classname : %3", _usedItem, name _caller, _className];
 
 		//Only reward heal on others 
 		if (_caller != _target) then 
