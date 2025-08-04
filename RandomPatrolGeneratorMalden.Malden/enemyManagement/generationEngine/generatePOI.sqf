@@ -125,10 +125,10 @@ if ((missionNameSpace getVariable ["enableOpforVehicle", 0]) != 0) then
 			{
 				//Add light armored to heavy armored if needed (balance armored vehicle generation)
 
-				if (count _thisAvailableOpforLightArmoredVehicle == 0 && count _thisAvailableOpforCars != 0) then 
-				{
-					_thisAvailableOpforLightArmoredVehicle = _thisAvailableOpforCars;
-				};
+				// if (count _thisAvailableOpforLightArmoredVehicle == 0 && count _thisAvailableOpforCars != 0) then 
+				// {
+				// 	_thisAvailableOpforLightArmoredVehicle = _thisAvailableOpforCars;
+				// };
 
 				if (count _thisAvailableOpforHeavyArmoredVehicle == 0 && count _thisAvailableOpforLightArmoredVehicle != 0) then 
 				{
