@@ -1,7 +1,3 @@
-params [
-	["_center", [0,0,0], [[]]],
-	["_radius", 50, [0]]
-];
 
 _center = getPos player;
 _radius =100;
@@ -15,7 +11,7 @@ private _result = [];
 	private _obj = _x;
 
 	// Ne pas inclure le joueur, caméras, etc.
-	if (isNull _obj || {_obj isKindOf "CAManBase"}) then { continue };
+	if (isNull _obj || {_obj isKindOf "Camera"} || {_obj isKindOf "CAManBase"}) then { continue };
 	private _class = typeOf _obj;
 	
 	
