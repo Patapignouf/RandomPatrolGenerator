@@ -944,6 +944,11 @@
             <Chinese>你的领导者已设置增援帐篷</Chinese>
             <Japanese>あなたのリーダーは増援テントを設置しました</Japanese>
         </Key>
+        <Key ID="STR_RPG_HC_DESTROY_TENT">
+            <Original>Your tent has been destroyed by opfor</Original>
+            <English>Your tent has been destroyed by opfor</English>
+            <French>Votre tente a été détruite par l'ennemi</French>
+        </Key>
         <Key ID="STR_RPG_HC_MEDIC_UNCONSCIOUS">
             <Original>%1 used %2 on you</Original>
             <English>%1 used %2 on you</English>

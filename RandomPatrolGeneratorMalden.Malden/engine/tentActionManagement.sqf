@@ -14,6 +14,29 @@ if (missionNameSpace getVariable ["enableAdvancedRespawn", 1] == 1) then
 		_createTent setVariable [str (group _caller), true, true];
 		_createTent allowDamage false;
 
+		//Create opfor control trigger
+		_triggerTent = createTrigger ["EmptyDetector", getPos _createTent];
+		_triggerTent setTriggerArea [15, 15, 0, true];
+
+		//Check if there are enemy nearby to delete tent
+		[_triggerTent, _caller] spawn {
+			params ["_triggerTent", "_caller"];
+			
+			_nbOpfor = count ((allUnits select {alive _x && side _x == opfor} ) inAreaArray _triggerTent);
+
+			while {sleep 15; _nbOpfor == 0} do 
+			{
+				_nbOpfor = count ((allUnits select {alive _x && side _x == opfor} ) inAreaArray _triggerTent);
+			};
+
+			//Reset group tent
+			_variableToCheck = format ['bluforPositionAdvancedRespawn%1', str (group (_caller))];
+			missionNameSpace setVariable [_variableToCheck , [0,0,0], true];
+
+			//Tell all the group that the tent has been destroyed by opfor
+			[{["STR_RPG_HC_NAME", "STR_RPG_HC_DESTROY_TENT"] call doDialog}] remoteExec ["call", units (group _caller)];
+		};
+
 		//Allow the leader to get back the tent after 5 minutes
 		[_caller] spawn {
 			params ["_caller"];
@@ -78,15 +101,19 @@ if (missionNameSpace getVariable ["enableAdvancedRespawn", 1] == 1) then
 		};
 
 		//Delete tent if respawn coordinates changed
-		[_createTent, str (group _caller)] spawn 
+		[_createTent, str (group _caller), _triggerTent] spawn 
 		{
-			params ["_createTent", "_groupCaller"];
+			params ["_createTent", "_groupCaller","_triggerTent"];
 
 			_variableToCheck = format ['bluforPositionAdvancedRespawn%1', _groupCaller];
 			waitUntil {[missionNameSpace getVariable _variableToCheck , [0,0,0]] call BIS_fnc_areEqual};
 			deleteVehicle _createTent;
+
 			_markerName = format ["tent%1", _groupCaller];
 			deleteMarker _markerName;
+
+			//Delete associated trigger
+			deleteVehicle _triggerTent;	
 		};
 
 		//Create marker
