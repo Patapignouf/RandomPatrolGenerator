@@ -165,8 +165,8 @@ generateOutpostProcess = {
 		deleteVehicle _x;
 	} foreach _OpforFobStandardOpforLocation;
 
-	//75% chance to have a specific side task assigned
-	if (random 100 < 75) then 
+	//50% chance to have a specific side task assigned
+	if (random 100 < 50) then 
 	{
 		//Generate side objective
 		[[format ["%1%2","_sideQuestFOB", random 10000],"AttackOutpost", _basePosition, objNull], "engine\objectiveManagement\doGenerateSideObjective.sqf"] remoteExec ['BIS_fnc_execVM', 2];
