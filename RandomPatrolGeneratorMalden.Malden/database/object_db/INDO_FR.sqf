@@ -35,8 +35,7 @@ bluforArmoredVehicle_INDO_FR = [
 ];
 
 bluforUnarmedVehicleChopper_INDO_FR = [
-	"INDO_H19",
-	"INDO_H19_EVASAN"
+	"INDO_H19"
 ];
 
 bluforArmedChopper_INDO_FR = [
@@ -45,7 +44,7 @@ bluforArmedChopper_INDO_FR = [
 
 bluforDrone_INDO_FR = [
 
-];
+]; 
 
 bluforBoat_INDO_FR = [
 
