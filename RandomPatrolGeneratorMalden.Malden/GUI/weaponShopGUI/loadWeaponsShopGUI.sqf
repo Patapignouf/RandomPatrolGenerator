@@ -61,19 +61,19 @@ switch (_mode) do
 				};
 				case "grenadeLauncher":
 				{
-					_supportNameCode = "Grenade launcher";
+					_supportNameCode = localize "STR_RPG_LOADOUT_ROLE_GRENADIER";
 				};
 				case "launcher":
 				{
-					_supportNameCode = "Launcher";
+					_supportNameCode = localize "STR_RPG_LOADOUT_ROLE_AT";
 				};
 				case "sniperRifle":
 				{
-					_supportNameCode = "Marksman rifle";
+					_supportNameCode = localize "STR_RPG_LOADOUT_ROLE_MARKSMAN";
 				};
 				case "autoRifle":
 				{
-					_supportNameCode = "Auto rifle";
+					_supportNameCode = localize "STR_RPG_LOADOUT_ROLE_AUTORIFLEMAN";
 				};
 				case "shortAccessories":
 				{
@@ -81,7 +81,7 @@ switch (_mode) do
 				};
 				case "longAccessories":
 				{
-					_supportNameCode = "Marksman accessories";
+					_supportNameCode = localize "STR_RPG_LOADOUT_ROLE_MARKSMAN";
 				};
 			};
 
