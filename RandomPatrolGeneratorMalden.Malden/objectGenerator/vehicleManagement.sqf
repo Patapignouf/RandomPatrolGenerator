@@ -287,6 +287,20 @@ doIncrementVehicleSpawnCounter =
 	[[format ["Standard vehicle spawn credits : %1", independentVehicleAvalaibleSpawnCounter], "intel"], 'engine\hintManagement\addCustomHint.sqf'] remoteExec ['BIS_fnc_execVM', independent, true]; 
 };
 
+doIncrementAllCredits =
+{
+	//Vehicle credit increment
+	[] call doIncrementVehicleSpawnCounter;
+
+	//Increment
+	[[], 
+	{
+		params ["_unit", "_instigator"];
+	 	_unblockCredit = profileNameSpace getVariable ["RPG_UnlockCredit",0];
+		profileNameSpace setVariable ["RPG_UnlockCredit",_unblockCredit+1];
+	}
+	] remoteExec ["spawn", 0]; 
+};
 
 doAddKeys = {
 	params ["_vehicle"];

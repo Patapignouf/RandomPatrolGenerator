@@ -90,7 +90,7 @@ if (!([_thisObjectiveToComplete,[]] call BIS_fnc_areEqual)) then
 	_completedObjectives pushBack _thisObjectiveToComplete;
 	missionNamespace setVariable ["completedObjectives",_completedObjectives,true];	
 
-	[] call doIncrementVehicleSpawnCounter;	
+	[] call doIncrementAllCredits;	
 
 	//Call respawn
 	if (["Respawn",1] call BIS_fnc_getParamValue == 1) then 

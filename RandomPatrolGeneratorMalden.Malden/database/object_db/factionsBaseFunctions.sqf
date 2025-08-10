@@ -28,7 +28,7 @@ adjustRole = {
 			_cfgRole = "pilot";
 		};
 
-		if (["marksman", _cfgName] call BIS_fnc_inString || ["spotter", _cfgName] call BIS_fnc_inString) then 
+		if (["marksman", _cfgName] call BIS_fnc_inString || ["spotter", _cfgName] call BIS_fnc_inString || ["_MRK", _cfgName] call BIS_fnc_inString || ["_RMRK", _cfgName] call BIS_fnc_inString) then 
 		{
 			_cfgRole = "marksman";
 		};
@@ -36,15 +36,15 @@ adjustRole = {
 		{
 			_cfgRole = "sniper";
 		};
-		if (["grenadier", _cfgName] call BIS_fnc_inString || ["_GL", _cfgName] call BIS_fnc_inString) then 
+		if (["grenadier", _cfgName] call BIS_fnc_inString || ["_GL", _cfgName] call BIS_fnc_inString || ["uns_men_US_3FRC_RF4", _cfgName] call BIS_fnc_inString|| ["uns_men_US_6SFG_SP2", _cfgName] call BIS_fnc_inString || ["uns_men_US_5SFG_SP2", _cfgName] call BIS_fnc_inString) then 
 		{
 			_cfgRole = "grenadier";
 		};
-		if (["mechanic", _cfgName] call BIS_fnc_inString) then 
+		if (["mechanic", _cfgName] call BIS_fnc_inString || ["_SAP", _cfgName] call BIS_fnc_inString || ["_DEM", _cfgName] call BIS_fnc_inString) then 
 		{
 			_cfgRole = "engineer";
 		};
-		if (["_arifleman", _cfgName] call BIS_fnc_inString) then 
+		if (["_arifleman", _cfgName] call BIS_fnc_inString || ["_HMG", _cfgName] call BIS_fnc_inString || ["_LMG", _cfgName] call BIS_fnc_inString || ["_RMG", _cfgName] call BIS_fnc_inString || ["_RA", _cfgName] call BIS_fnc_inString) then 
 		{
 			_cfgRole = "autorifleman";
 		};
@@ -56,7 +56,7 @@ adjustRole = {
 		{
 			_cfgRole = "UAV operator";
 		};
-		if (["_aa", _cfgName] call BIS_fnc_inString || ["_LAT", _cfgName] call BIS_fnc_inString || ["_RPG", _cfgName] call BIS_fnc_inString) then 
+		if (["_aa", _cfgName] call BIS_fnc_inString || ["_LAT", _cfgName] call BIS_fnc_inString || ["_RPG", _cfgName] call BIS_fnc_inString || ["_AT", _cfgName] call BIS_fnc_inString) then 
 		{
 			_cfgRole = "at";
 		};
@@ -68,6 +68,10 @@ adjustRole = {
 		{
 			_cfgRole = "leader";
 		};
+		if (["_MED", _cfgName] call BIS_fnc_inString || ["_RMED", _cfgName] call BIS_fnc_inString) then 
+		{
+			_cfgRole = "medic";
+		};
 	};
 
 	_iconToTest = (configFile >> "CfgVehicles" >> _cfgName >> "icon") call BIS_fnc_GetCfgData;
@@ -75,23 +79,50 @@ adjustRole = {
 	//Bind role with icon
 	switch (_iconToTest) do {
 		case "iconManLeader";
+		case "\uns_men_c\icon\pavntroops\icon_officer_ca.paa";
+		case "\uns_men_c\icon\pavntroops\icon_leader_ca.paa";
+		case "\uns_men_c\icon\ustroops\icon_officer_ca.paa";
+		case "\uns_men_c\icon\ustroops\icon_leader_ca.paa";
 		case "iconManOfficer":
 		{
 			_cfgRole = "leader";
 		};
+		case "\uns_men_c\icon\ustroops\icon_launcher_ca.paa";
+		case "\uns_men_c\icon\pavntroops\icon_launcher_ca.paa";
 		case "iconManAT":
 		{
 			_cfgRole = "at";
 		};
+		case "\uns_men_c\icon\ustroops\icon_medic_ca.paa";
+		case "\uns_men_c\icon\pavntroops\icon_medic_ca.paa";
 		case "iconManMedic":
 		{
 			_cfgRole = "medic";
 		};
+		case "\uns_men_c\icon\pavntroops\icon_gren_ca.paa";
+		case "\uns_men_c\icon\ustroops\icon_gren_ca.paa":
+		{
+			_cfgRole = "grenadier";
+		};
 		case "iconManExplosive";
+		case "\uns_men_c\icon\ustroops\icon_eng_ca.paa";
+		case "\uns_men_c\icon\pavntroops\icon_eng_ca.paa";
 		case "iconManEngineer":
 		{
 			_cfgRole = "engineer";
 		};		
+		case "\uns_men_c\icon\ustroops\icon_sniper_ca.paa";
+		case "\uns_men_c\icon\pavntroops\icon_sniper_ca.paa":
+		{
+			_cfgRole = "marksman";
+		};
+		case "\uns_men_c\icon\ustroops\icon_rto_ca.paa";
+		case "\uns_men_c\icon\pavntroops\icon_rto_ca.paa":
+		{
+			_cfgRole = "radioman";
+		};
+		case "\uns_men_c\icon\ustroops\icon_machinegunner_ca.paa";
+		case "\uns_men_c\icon\pavntroops\icon_machinegunner_ca.paa";
 		case "iconManMG":
 		{
 			_cfgRole = "autorifleman";
@@ -122,6 +153,25 @@ isWeapon = {
 isBag = {
 	params ["_itemClassName"];
 	_result = (([configFile >> "CfgVehicles" >> _itemClassName, true] call BIS_fnc_returnParents) findIf {"Bag_Base" == (_x)} != -1);
+	_result;
+};
+
+isPistol = {
+	params ["_itemClassName"];
+	_result = (([configFile >> "CfgWeapons" >> _itemClassName, true] call BIS_fnc_returnParents) findIf {"PistolCore" == (_x)} != -1);
+	_result;
+};
+
+isGrenadeLauncher = {
+	params ["_itemClassName"];
+	_result = (([configFile >> "CfgWeapons" >> _itemClassName, true] call BIS_fnc_returnParents) findIf {"GrenadeLauncher" == (_x)} != -1);
+	_result;
+};
+
+
+isLauncher = {
+	params ["_itemClassName"];
+	_result = (([configFile >> "CfgWeapons" >> _itemClassName, true] call BIS_fnc_returnParents) findIf {"LauncherCore" == (_x)} != -1);
 	_result;
 };
 
@@ -516,6 +566,76 @@ getAllAccessoriesAndWeaponsFromWeapons = {
 	} foreach _weaponsList;
 
 	_resultAllList;
+};
+
+getAllDistinctRifleAndPistolAndLauncher = {
+	params ["_weaponsList"];
+	_resultAllListWP = [[],[],[],[],[],[]];
+
+	// [[pistol],[launcher],[rifle],[autorifle],[grenadeLauncher],[SniperRifle]]
+
+	{	
+		// _weaponToCheckTotal = _x;
+		// if ([_weaponToCheckTotal] call isPistol) then 
+		// {
+		// 	_resultAllListWP#0 pushBackUnique _weaponToCheckTotal;
+		// } else 
+		// {
+		// 	if ([_weaponToCheckTotal] call isLauncher) then 
+		// 	{
+		// 		_resultAllListWP#1 pushBackUnique _weaponToCheckTotal;
+		// 	} else 
+		// 	{
+		// 		_resultAllListWP#2 pushBackUnique _weaponToCheckTotal;
+		// 	};
+		// 	//TODO Add GL
+		// };
+
+		_firstParsingWeaponCategoryResult = [_x] call BIS_fnc_itemType;
+
+		if (_firstParsingWeaponCategoryResult#0 == "weapon") then 
+		{
+			switch (_firstParsingWeaponCategoryResult#1) do {
+				case ("Handgun");
+				case ("SubmachineGun"):
+				{
+					_resultAllListWP#0 pushBackUnique _x;
+				};
+				case ("RocketLauncher");
+				case ("MissileLauncher"):
+				{
+					_resultAllListWP#1 pushBackUnique _x;
+				};
+				case ("Shotgun");
+				case ("Rifle");
+				case ("AssaultRifle"):
+				{
+					//Filter bad category on grenadeLauncher
+					if ([_x] call isGrenadeLauncher) then 
+					{
+						_resultAllListWP#4 pushBackUnique _x;
+					} else 
+					{
+						_resultAllListWP#2 pushBackUnique _x;
+					};
+				};
+				case ("MachineGun"):
+				{
+					_resultAllListWP#3 pushBackUnique _x;
+				};
+				case ("GrenadeLauncher"):
+				{
+					_resultAllListWP#4 pushBackUnique _x;
+				};
+				case ("SniperRifle"):
+				{
+					_resultAllListWP#5 pushBackUnique _x;
+				};
+			};
+		};
+	} foreach _weaponsList;
+
+	_resultAllListWP;
 };
 
 filterWeaponsAndAccessoryByWeaponClassname = 

@@ -383,4 +383,23 @@ _ButtonSave ctrlAddEventHandler ["ButtonClick",{
 		[ctrlParent _ctrl] call refreshCustomLoadoutDisplay;
 	}];
 
+if (missionNameSpace getVariable ["enableOpforWeaponShop",1] == 1) then 
+{
+	//Button to go on the next setup
+	_ButtonShop = _display ctrlCreate ["RscButton", -1];
+	_ButtonShop ctrlSetPosition [(0.35 * safezoneW + safezoneX),(0.70 * safezoneH + safezoneY),(0.09 * safezoneW),(0.025* safezoneH)];
+	_ButtonShop ctrlSetBackgroundColor [0,0,0,0.7];
+	_ButtonShop ctrlCommit 0;
+	_ButtonShop ctrlEnable true;
+	_ButtonShop ctrlSetText localize "RPG_GUI_GENERAL_WEAPON_SHOP";
+	_ButtonShop ctrlAddEventHandler ["ButtonClick",{
+			params ["_ctrl"];
+
+			[[], "GUI\weaponShopGUI\weaponShopGUI.sqf"] remoteExec ['BIS_fnc_execVM', player];
+
+			_display = ctrlParent _ctrl;
+			_display closeDisplay 1;
+		}];
+};
+
 [_display] call refreshCustomLoadoutDisplay;

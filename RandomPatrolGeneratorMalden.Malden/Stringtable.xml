@@ -1803,6 +1803,11 @@
         <Chinese>保存</Chinese>
         <Japanese>保存</Japanese>
     </Key>
+    <Key ID="RPG_GUI_GENERAL_WEAPON_SHOP">
+        <Original>Weapon shop</Original>
+        <English>Weapon shop</English>
+        <French>Marché d'armes</French>
+    </Key>
     <Key ID="RPG_GUI_GENERAL_LOAD">
         <Original>Load</Original>
         <English>Load</English>
@@ -1995,10 +2000,25 @@
             <English>Support type</English>
             <French>Type du support</French>
         </Key>
+        <Key ID="STR_GUI_BASE_WEAPON_NAME">
+            <Original>Name</Original>
+            <English>Name</English>
+            <French>Nom</French>
+        </Key>
+        <Key ID="STR_GUI_BASE_WEAPON_TYPE">
+            <Original>Type</Original>
+            <English>Type</English>
+            <French>Type</French>
+        </Key>
         <Key ID="STR_GUI_BASE_CREDIT">
             <Original>Credit</Original>
             <English>Credit</English>
             <French>Crédit</French>
+        </Key>
+        <Key ID="STR_GUI_BASE_TOKEN">
+            <Original>Token</Original>
+            <English>Token</English>
+            <French>Jeton</French>
         </Key>
         <Key ID="STR_GUI_BASE_ICON">
             <Original>Icon</Original>
@@ -2014,6 +2034,11 @@
             <Original>Buy</Original>
             <English>Buy</English>
             <French>Acheter</French>
+        </Key>
+        <Key ID="STR_GUI_BASE_UNLOCK">
+            <Original>Unlock</Original>
+            <English>Unlock</English>
+            <French>Débloquer</French>
         </Key>
     </Container>
 </Project>

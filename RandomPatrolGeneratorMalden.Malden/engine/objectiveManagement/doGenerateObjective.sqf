@@ -424,7 +424,7 @@ generateObjectiveObject =
 					//Manage player's feedback
 					if ("RealismMode" call BIS_fnc_getParamValue == 1) then 
 					{
-						[] call doIncrementVehicleSpawnCounter;	
+						[] call doIncrementAllCredits;	
 						[_thisObjectiveToComplete] execVM 'engine\objectiveManagement\completeObjective.sqf'; 
 						[{[50, "RPG_ranking_objective_complete"] call doUpdateRank}] remoteExec ["call", 0];
 					};
@@ -568,7 +568,7 @@ generateObjectiveObject =
 						//Manage player's feedback
 						if ("RealismMode" call BIS_fnc_getParamValue == 1) then 
 						{
-							[] call doIncrementVehicleSpawnCounter;	
+							[] call doIncrementAllCredits;	
 							[_thisObjective] execVM 'engine\objectiveManagement\completeObjective.sqf'; 
 							[{[50, "RPG_ranking_objective_complete"] call doUpdateRank}] remoteExec ["call", 0];
 						};
@@ -766,7 +766,7 @@ generateObjectiveObject =
 					//Manage player's feedback
 					if ("RealismMode" call BIS_fnc_getParamValue == 1) then 
 					{
-						[] call doIncrementVehicleSpawnCounter;	
+						[] call doIncrementAllCredits;	
 						[_thisObjective] execVM 'engine\objectiveManagement\completeObjective.sqf'; 
 						[{[50, "RPG_ranking_objective_complete"] call doUpdateRank}] remoteExec ["call", 0];
 					};
@@ -856,7 +856,7 @@ generateObjectiveObject =
 						//Manage player's feedback
 						if ("RealismMode" call BIS_fnc_getParamValue == 1) then 
 						{
-							[] call doIncrementVehicleSpawnCounter;	
+							[] call doIncrementAllCredits;	
 							[_thisObjective] execVM 'engine\objectiveManagement\completeObjective.sqf'; 
 							[{[50, "RPG_ranking_objective_complete"] call doUpdateRank}] remoteExec ["call", 0];
 							
@@ -943,7 +943,7 @@ generateObjectiveObject =
 						//Manage player's feedback
 						if ("RealismMode" call BIS_fnc_getParamValue == 1) then 
 						{
-							[] call doIncrementVehicleSpawnCounter;	
+							[] call doIncrementAllCredits;	
 							[_thisObjective] execVM 'engine\objectiveManagement\completeObjective.sqf'; 
 							[{[50, "RPG_ranking_objective_complete"] call doUpdateRank}] remoteExec ["call", 0];
 						};

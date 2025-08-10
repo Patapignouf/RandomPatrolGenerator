@@ -1,5 +1,6 @@
 #include "classConstant.sqf"
 #include "itemdb.sqf"
+#include "..\GUI\weaponShopGUI\weaponShopFunctions.sqf"
 
 //Import mission params
 warEra = missionNamespace getVariable "warEra"; // Default actual warfare
@@ -105,60 +106,91 @@ getVirtualWeaponList = {
 
 	_currentPlayerClass = _currentPlayer getVariable "role";
 	_virtualWeaponList = [];
+	_unlockedStuff = [];
+
+	//Get all unlocked stuff for current faction
+	if (missionNameSpace getVariable ["enableOpforWeaponShop",1] == 1) then 
+	{
+		_unlockedStuff = [_currentFaction] call getPlayerFactionUnlockedWeapons;
+	};
 
 	switch (_currentPlayerClass) do
 	{
-		case c_leader:
-			{
-				_virtualWeaponList = _virtualWeaponList + (rifleList_db select {_x select 1  == _currentFaction} select 0 select 0);
-				_virtualWeaponList = _virtualWeaponList + (smgList_db select {_x select 1  == _currentFaction} select 0 select 0);
-			};
 		case c_at:
 			{
 				_virtualWeaponList = _virtualWeaponList + (rifleList_db select {_x select 1  == _currentFaction} select 0 select 0);
 				_virtualWeaponList = _virtualWeaponList + (smgList_db select {_x select 1  == _currentFaction} select 0 select 0);
 				_virtualWeaponList = _virtualWeaponList + (launcherList_db select {_x select 1  == _currentFaction} select 0 select 0);
-			};
-		case c_rifleman:
-			{
-				_virtualWeaponList = _virtualWeaponList + (rifleList_db select {_x select 1  == _currentFaction} select 0 select 0);
-				_virtualWeaponList = _virtualWeaponList + (smgList_db select {_x select 1  == _currentFaction} select 0 select 0);
-			};
-		case c_engineer:
-			{
-				_virtualWeaponList = _virtualWeaponList + (rifleList_db select {_x select 1  == _currentFaction} select 0 select 0);
-				_virtualWeaponList = _virtualWeaponList + (smgList_db select {_x select 1  == _currentFaction} select 0 select 0);
+
+				if (missionNameSpace getVariable ["enableOpforWeaponShop",1] == 1) then 
+				{
+					_virtualWeaponList = _virtualWeaponList +([_currentFaction, "rifle", _unlockedStuff] call getPlayerFactionUnlockedWeaponForCategoryWithUnlockedInput);
+					_virtualWeaponList = _virtualWeaponList +([_currentFaction, "smg", _unlockedStuff] call getPlayerFactionUnlockedWeaponForCategoryWithUnlockedInput);
+					_virtualWeaponList = _virtualWeaponList +([_currentFaction, "launcher", _unlockedStuff] call getPlayerFactionUnlockedWeaponForCategoryWithUnlockedInput);
+				};
 			};
 		case c_autorifleman:
 			{
 				_virtualWeaponList = _virtualWeaponList + (rifleList_db select {_x select 1  == _currentFaction} select 0 select 0);
 				_virtualWeaponList = _virtualWeaponList + (autorifleList_db select {_x select 1  == _currentFaction} select 0 select 0);
+
+				if (missionNameSpace getVariable ["enableOpforWeaponShop",1] == 1) then 
+				{
+					_virtualWeaponList = _virtualWeaponList +([_currentFaction, "rifle", _unlockedStuff] call getPlayerFactionUnlockedWeaponForCategoryWithUnlockedInput);
+					_virtualWeaponList = _virtualWeaponList +([_currentFaction, "autoRifle", _unlockedStuff] call getPlayerFactionUnlockedWeaponForCategoryWithUnlockedInput);
+				};
 			};
 		case c_marksman;
 		case c_sniper: 
 			{
 				_virtualWeaponList = _virtualWeaponList + (rifleList_db select {_x select 1  == _currentFaction} select 0 select 0);
 				_virtualWeaponList = _virtualWeaponList + (marksmanrifleList_db select {_x select 1  == _currentFaction} select 0 select 0);
+
+				if (missionNameSpace getVariable ["enableOpforWeaponShop",1] == 1) then 
+				{
+					_virtualWeaponList = _virtualWeaponList +([_currentFaction, "rifle", _unlockedStuff] call getPlayerFactionUnlockedWeaponForCategoryWithUnlockedInput);
+					_virtualWeaponList = _virtualWeaponList +([_currentFaction, "sniperRifle", _unlockedStuff] call getPlayerFactionUnlockedWeaponForCategoryWithUnlockedInput);
+				};
 			};
-		case c_medic:
-			{
-				_virtualWeaponList = _virtualWeaponList + (rifleList_db select {_x select 1  == _currentFaction} select 0 select 0);
-				_virtualWeaponList = _virtualWeaponList + (smgList_db select {_x select 1  == _currentFaction} select 0 select 0);
-			};	
 		case c_grenadier:
 			{
 				_virtualWeaponList = _virtualWeaponList + (rifleList_db select {_x select 1  == _currentFaction} select 0 select 0);
 				_virtualWeaponList = _virtualWeaponList + (grenadeLauncherList_db select {_x select 1  == _currentFaction} select 0 select 0);
+
+				if (missionNameSpace getVariable ["enableOpforWeaponShop",1] == 1) then 
+				{
+					_virtualWeaponList = _virtualWeaponList +([_currentFaction, "rifle", _unlockedStuff] call getPlayerFactionUnlockedWeaponForCategoryWithUnlockedInput);
+					_virtualWeaponList = _virtualWeaponList +([_currentFaction, "grenadeLauncher", _unlockedStuff] call getPlayerFactionUnlockedWeaponForCategoryWithUnlockedInput);
+				};
 			};				
 		default
 			{
 				//Non implemented role : Default rifle
 			 	_virtualWeaponList = _virtualWeaponList + (rifleList_db select {_x select 1  == _currentFaction} select 0 select 0); 
+				_virtualWeaponList = _virtualWeaponList + (smgList_db select {_x select 1  == _currentFaction} select 0 select 0);
+
+				if (missionNameSpace getVariable ["enableOpforWeaponShop",1] == 1) then 
+				{
+					_virtualWeaponList = _virtualWeaponList +([_currentFaction, "rifle", _unlockedStuff] call getPlayerFactionUnlockedWeaponForCategoryWithUnlockedInput);
+					_virtualWeaponList = _virtualWeaponList +([_currentFaction, "smg", _unlockedStuff] call getPlayerFactionUnlockedWeaponForCategoryWithUnlockedInput);
+				};
 			};
 	};
 	//diag_log format ["Player %1 with role %2 has access to weapons %3", name _currentPlayer, _currentPlayerClass,_virtualWeaponList ];
 	_virtualWeaponList
 };
+
+// //GetFull weapon list of a faction to build a shop
+// getVirtualWeaponFullList = 
+// {
+// 	params ["_currentPlayer", "_currentFaction"];
+
+
+
+// 	_virtualWeaponFullList
+// };
+
+
 
 
 getItembyWarEra = {
@@ -327,6 +359,14 @@ getVirtualAttachement = {
 	currentPlayerClass = currentPlayer getVariable "role";
 	virtualAttachementList = [];
 
+	_unlockedStuff = [];
+
+	//Get all unlocked stuff for current faction
+	if (missionNameSpace getVariable ["enableOpforWeaponShop",1] == 1) then 
+	{
+		_unlockedStuff = [_currentFaction] call getPlayerFactionUnlockedWeapons;
+	};
+
 	switch (currentPlayerClass) do
 	{
 		case c_marksman;
@@ -334,11 +374,22 @@ getVirtualAttachement = {
 			{
 				virtualAttachementList = virtualAttachementList + (attachmentShortList_db select {_x select 1  == currentFaction} select 0 select 0);
 				virtualAttachementList = virtualAttachementList + (attachmentLongList_db select {_x select 1  == currentFaction} select 0 select 0);
+
+				if (missionNameSpace getVariable ["enableOpforWeaponShop",1] == 1) then 
+				{
+					virtualAttachementList = virtualAttachementList +([_currentFaction, "shortAccessories", _unlockedStuff] call getPlayerFactionUnlockedWeaponForCategoryWithUnlockedInput);
+					virtualAttachementList = virtualAttachementList +([_currentFaction, "longAccessories", _unlockedStuff] call getPlayerFactionUnlockedWeaponForCategoryWithUnlockedInput);
+				};
 			};		
 		default 
 			{ 
 				//Default attachment list
 				virtualAttachementList = virtualAttachementList + (attachmentShortList_db select {_x select 1  == currentFaction} select 0 select 0); 
+
+				if (missionNameSpace getVariable ["enableOpforWeaponShop",1] == 1) then 
+				{
+					virtualAttachementList = virtualAttachementList +([_currentFaction, "shortAccessories", _unlockedStuff] call getPlayerFactionUnlockedWeaponForCategoryWithUnlockedInput);
+				};
 			};
 	};
 	//diag_log format ["Player %1 with role %2 has access to items %3", name currentPlayer, currentPlayerClass, virtualAttachementList ];
@@ -416,7 +467,7 @@ getVirtualMagazine = {
 			{ 
 				{
 				//Add default weapon magazine except large magazine
-				_listOfLargeMagazineText = ["40Rnd","50Rnd", "60Rnd", "75rnd", "100Rnd", "150Rnd", "200Rnd"]; //
+				_listOfLargeMagazineText = ["40Rnd","50Rnd", "60Rnd", "75Rnd", "75rnd", "100Rnd", "150Rnd", "200Rnd"]; //
 				_currentWeaponMagazineList = getArray (configfile >> "CfgWeapons" >> _x >> "magazines");
 				if (count _currentWeaponMagazineList != 0) then 
 				{
@@ -459,7 +510,6 @@ setupArsenalToItem = {
 		[_itemToAttachArsenal, true, false] call ace_arsenal_fnc_removeVirtualItems;
 	};
 	
-
 	//Add Weapon to arsenal
 	_currentWeaponItems = [_currentPlayer, _currentFaction] call getVirtualWeaponList;
 	[_itemToAttachArsenal, _currentWeaponItems, false, false] call BIS_fnc_addVirtualWeaponCargo;
@@ -471,7 +521,6 @@ setupArsenalToItem = {
 	//Add magazine to arsenal
 	_currentMagazineItems = [_currentPlayer,_currentFaction, _currentWeaponItems] call getVirtualMagazine;
 	[_itemToAttachArsenal, _currentMagazineItems, false, false] call BIS_fnc_addVirtualMagazineCargo;
-
 
 	//Add items, uniforms and optics to arsenal
 	_currentItems = [];
