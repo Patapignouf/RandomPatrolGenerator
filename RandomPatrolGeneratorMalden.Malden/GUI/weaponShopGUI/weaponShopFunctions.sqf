@@ -181,10 +181,11 @@ cleanWeaponsAndItems = {
 
 	_cleanList = [];
 
+	//Clean weapons and accessories
 	{
 		_itemCat = _x#0;
 		_itemName = _x#1;
-
+	
 		//Check accessories or weapons
 		if ((_itemCat == "shortAccessories")||(_itemCat == "longAccessories")) then 
 		{
@@ -204,6 +205,22 @@ cleanWeaponsAndItems = {
 		};
 
 	} foreach _listToClean;
+
+	//Clean duplicate rifle in other specialities
+	_baseRifleToClean = _listToClean select {_x#0 == "rifle"};
+	{
+		_rifleBase = _x#1;
+		_listWeaponsToClean = _cleanList select {_x#1 == _rifleBase && _x#0 != "rifle"};
+		_cleanList = _cleanList - _listWeaponsToClean;
+	} foreach _baseRifleToClean;
+
+	//Clean duplicate smg
+	_baseRifleToClean = _listToClean select {_x#0 == "smg"};
+	{
+		_rifleBase = _x#1;
+		_listWeaponsToClean = _cleanList select {_x#1 == _rifleBase && _x#0 != "smg"};
+		_cleanList = _cleanList - _listWeaponsToClean;
+	} foreach _baseRifleToClean;
 
 	_cleanList;
 };
