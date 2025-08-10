@@ -19,7 +19,7 @@ if (missionNameSpace getVariable ["enableAdvancedRespawn", 1] == 1) then
 
 			//Create opfor control trigger
 			_triggerTent = createTrigger ["EmptyDetector", getPos _createTent];
-			_triggerTent setTriggerArea [15, 15, 0, true];
+			_triggerTent setTriggerArea [7, 7, 0, true];
 
 			//Check if there are enemy nearby to delete tent
 			[_triggerTent, _caller] spawn {
