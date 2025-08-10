@@ -31,7 +31,7 @@ switch (_mode) do
 		_lnbEntries = _display displayCtrl 60002;
 
 		//Add support   
-		_opFactionWeapon = [opFaction] call getOpforWeaponCategory;
+		_opFactionWeapon = [missionNamespace getVariable "opforFaction"] call getOpforWeaponCategory;
 
 		_currentFaction = indFaction;
 		if (side player == blufor) then 
