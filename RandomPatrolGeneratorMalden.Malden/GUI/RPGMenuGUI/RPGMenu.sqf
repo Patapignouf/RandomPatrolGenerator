@@ -36,6 +36,13 @@ if (missionNameSpace getVariable ["enableSelfRespawnTimer", 0] == 0) then
 //Add credit GUI
 paramsToManageNow pushBack ["Text", localize "STR_GUI_BASE_CREDIT", format ["%1", missionNamespace getVariable "bluforVehicleAvalaibleSpawn"], {	}];
 
+//Get all unlocked stuff for current faction
+if (missionNameSpace getVariable ["enableOpforWeaponShop",1] == 1) then 
+{
+	paramsToManageNow pushBack ["Text", localize "STR_GUI_BASE_TOKEN", format ["%1", profileNameSpace getVariable ["RPG_UnlockCredit", 0]], {	}];
+};
+
+
 //Display current task
 _currentTask = player call BIS_fnc_taskCurrent;
 _currentTaskDirectionText = "";
