@@ -10,7 +10,16 @@ getRandomCenterLocations =
 {
 	_size = worldSize;
 	_worldCenter = (_size/2);
-	_LocList = nearestLocations [[_worldCenter, _worldCenter], ["NameLocal","NameVillage","NameCity","NameCityCapital","CityCenter","Area", "Airport", "Name", "SafetyZone", "StrongpointArea"], _size];
+	_LocList = nearestLocations [[_worldCenter, _worldCenter], ["NameLocal","NameVillage","NameCity","NameCityCapital","CityCenter","Area", "Airport", "Name", "SafetyZone", "StrongpointArea", "Hill", "Mount"], _size];
+
+	//Purge noname locations
+	{
+		if (text _x == "") then 
+		{
+			_LocList = _LocList-[_x];
+		};
+	} foreach _LocList;
+
 	_LocList
 };
 
@@ -18,7 +27,16 @@ getLocationsAround =
 {
 	params ["_thisLocation", "_thisRadius"];
 	
-	_LocList = nearestLocations [[(getPos _thisLocation) select 0, (getPos _thisLocation) select 1], ["NameLocal","NameVillage","NameCity","NameCityCapital","CityCenter","Area", "Airport", "Name", "SafetyZone", "StrongpointArea"], _thisRadius];
+	_LocList = nearestLocations [[(getPos _thisLocation) select 0, (getPos _thisLocation) select 1], ["NameLocal","NameVillage","NameCity","NameCityCapital","CityCenter","Area", "Airport", "Name", "SafetyZone", "StrongpointArea", "Hill", "Mount"], _thisRadius];
+	
+	//Purge noname locations
+	{
+		if (text _x == "") then 
+		{
+			_LocList = _LocList-[_x];
+		};
+	} foreach _LocList;
+	
 	_LocList
 };
 
@@ -26,8 +44,16 @@ getLocationsAroundWithBuilding =
 {
 	params ["_thisLocation", "_thisRadius"];
 	
-	_LocList = nearestLocations [[(_thisLocation) select 0, (_thisLocation) select 1], ["NameLocal","NameVillage","NameCity","NameCityCapital","CityCenter","Area", "Airport", "Name", "SafetyZone", "StrongpointArea"], _thisRadius];
+	_LocList = nearestLocations [[(_thisLocation) select 0, (_thisLocation) select 1], ["NameLocal","NameVillage","NameCity","NameCityCapital","CityCenter","Area", "Airport", "Name", "SafetyZone", "StrongpointArea", "Hill", "Mount"], _thisRadius];
 	
+	//Purge noname locations
+	{
+		if (text _x == "") then 
+		{
+			_LocList = _LocList-[_x];
+		};
+	} foreach _LocList;
+
 	//Clear location without building
 	{
 		//Select smallest location (mountain, forest, plains)
