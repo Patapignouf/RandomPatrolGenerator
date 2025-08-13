@@ -731,10 +731,10 @@ if (didJIP && count (units group player) == 1 && count (allPlayers select {side 
 [] spawn
 {
 	waitUntil {!isNull(findDisplay 46)};
-
+	
 	(findDisplay 46) displayAddEventHandler ["KeyDown",
 	{
-		if(_this select 1 == 0x16)
+		if(_this select 1 == profileNameSpace getVariable ["RPG_Menu_Key", 0x16])
 		then
 		{
 			[[], 'GUI\RPGMenuGUI\RPGMenu.sqf'] remoteExec ['BIS_fnc_execVM', player];

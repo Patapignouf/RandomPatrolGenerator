@@ -10,7 +10,7 @@ getRandomCenterLocations =
 {
 	_size = worldSize;
 	_worldCenter = (_size/2);
-	_LocList = nearestLocations [[_worldCenter, _worldCenter], ["NameLocal","NameVillage","NameCity","NameCityCapital","CityCenter","Area", "Airport", "Name", "SafetyZone", "StrongpointArea", "Hill", "Mount"], _size];
+	_LocList = nearestLocations [[_worldCenter, _worldCenter], ["NameLocal","NameVillage","NameCity","NameCityCapital","CityCenter","Area", "Airport", "Name", "SafetyZone", "StrongpointArea", "Hill"], _size];
 
 	//Purge noname locations
 	{
@@ -27,7 +27,7 @@ getLocationsAround =
 {
 	params ["_thisLocation", "_thisRadius"];
 	
-	_LocList = nearestLocations [[(getPos _thisLocation) select 0, (getPos _thisLocation) select 1], ["NameLocal","NameVillage","NameCity","NameCityCapital","CityCenter","Area", "Airport", "Name", "SafetyZone", "StrongpointArea", "Hill", "Mount"], _thisRadius];
+	_LocList = nearestLocations [[(getPos _thisLocation) select 0, (getPos _thisLocation) select 1], ["NameLocal","NameVillage","NameCity","NameCityCapital","CityCenter","Area", "Airport", "Name", "SafetyZone", "StrongpointArea", "Hill"], _thisRadius];
 	
 	//Purge noname locations
 	{
@@ -44,7 +44,7 @@ getLocationsAroundWithBuilding =
 {
 	params ["_thisLocation", "_thisRadius"];
 	
-	_LocList = nearestLocations [[(_thisLocation) select 0, (_thisLocation) select 1], ["NameLocal","NameVillage","NameCity","NameCityCapital","CityCenter","Area", "Airport", "Name", "SafetyZone", "StrongpointArea", "Hill", "Mount"], _thisRadius];
+	_LocList = nearestLocations [[(_thisLocation) select 0, (_thisLocation) select 1], ["NameLocal","NameVillage","NameCity","NameCityCapital","CityCenter","Area", "Airport", "Name", "SafetyZone", "StrongpointArea", "Hill"], _thisRadius];
 	
 	//Purge noname locations
 	{

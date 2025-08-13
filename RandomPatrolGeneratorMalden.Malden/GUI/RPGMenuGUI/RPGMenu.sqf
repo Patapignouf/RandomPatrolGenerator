@@ -131,9 +131,30 @@ if (_currentTask != "") then
 	_currentTaskDirectionText = "Unknown";
 };
 
-
+	
 _currentTaskDirectionInstructions = format ["Location : %1 %2",_currentTaskDirectionText, _currentTaskDistanceText];
 paramsToManageNow pushBack ["Text", format ["Task : %1", _currentTaskName], _currentTaskDirectionInstructions, {	}];
+
+
+paramsToManageNow pushBack ["Button", localize "STR_RPG_LOADOUT_SHOWRANK", format ["Progression : %1", (player getVariable ["currentXP",0])-(player getVariable ["startingXP",0])], {
+		if (player getVariable ["RankDisplayAvailable", true]) then 
+		{
+			[[], 'GUI\rankGUI\rankGUI.sqf'] remoteExec ['BIS_fnc_execVM', player];
+			[] spawn 
+			{
+				player setVariable ["RankDisplayAvailable", false];
+				sleep 360;
+				player setVariable ["RankDisplayAvailable", true];
+			};
+		} else 
+		{
+			hint "Not available, cooldown of 10 minutes";
+		};
+	}];
+
+//Add empty line
+paramsToManageNow pushBack ["","","",""];
+
 
 //Add unstuck action
 paramsToManageNow pushBack ["Button", "Unblock", "10 sec + 10 minutes cooldown", {
@@ -158,6 +179,20 @@ paramsToManageNow pushBack ["Button", "Unblock", "10 sec + 10 minutes cooldown",
 		};
 	}];
 
+//Add unstuck action
+paramsToManageNow pushBack ["Button", "Rebind", format ["Current RPG Menu key : %1", str (profileNameSpace getVariable ["RPG_Menu_Key", 0x16])], {
+		hint "Press new bind";
+		[] spawn 
+		{
+			(findDisplay 46) displayAddEventHandler ["KeyDown",
+			{
+				profileNameSpace setVariable ["RPG_Menu_Key", _this#1];
+				(findDisplay 46) displayRemoveEventHandler ["KeyDown", _thisEventHandler];
+			}];
+		};
+	}];
+
+
 //Add tuto action
 paramsToManageNow pushBack ["Button", "TUTO", "", {
 		[] spawn 
@@ -181,21 +216,6 @@ if (player getVariable ["isAdmin", false] || (hasInterface && isServer)) then
 		}];
 };
 
-paramsToManageNow pushBack ["Button", localize "STR_RPG_LOADOUT_SHOWRANK", format ["Progression : %1", (player getVariable ["currentXP",0])-(player getVariable ["startingXP",0])], {
-		if (player getVariable ["RankDisplayAvailable", true]) then 
-		{
-			[[], 'GUI\rankGUI\rankGUI.sqf'] remoteExec ['BIS_fnc_execVM', player];
-			[] spawn 
-			{
-				player setVariable ["RankDisplayAvailable", false];
-				sleep 360;
-				player setVariable ["RankDisplayAvailable", true];
-			};
-		} else 
-		{
-			hint "Not available, cooldown of 10 minutes";
-		};
-	}];
 
 
 //Create display too choose reporter player
