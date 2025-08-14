@@ -395,6 +395,139 @@ generateObjectiveObject =
 					false
 				] remoteExec ["BIS_fnc_holdActionAdd", 0, true];
 			};
+		case "bomb":
+			{
+				//Generate objective object
+				_objectiveObject = createVehicle [selectRandom avalaibleBomb, _currentRandomPos, [], 0, "NONE"];
+				_objectiveObject setVariable ["isObjectiveObject", true, true];
+				_thisObjective = [_objectiveObject, _thisObjectiveType] call generateObjectiveTracker;
+				_code = random [10000000000,
+								55555555555,
+								99999999999];				
+   				_code = [_code] call BIS_fnc_numberText;	
+
+				_code = _code regexReplace  [" ", ""]; 
+				_objectiveObject setVariable ["RPG_DefuseCode", _code, true];
+				//systemChat _code;
+
+				//play sound to help player
+				[_objectiveObject] spawn {
+					params ["_objectiveObject"];
+					while {sleep 3; alive _objectiveObject} do 
+					{
+						playSound3D ["a3\sounds_f\debugsound.wss", _objectiveObject, true, getPosASL _objectiveObject, 3, 1, 20, 0, false];
+					};
+				};
+
+				_objectiveObject setPos ([( _thisObjectivePosition), 1, 25, 5, 0, 20, 0] call BIS_fnc_findSafePos);
+				_objectiveObject setVariable ["thisTask", _thisObjective select 2, true];
+
+				//Add intel action to the intel case
+				_objectiveObject setPos _thisObjectivePosition;
+				[_objectiveObject, ["<img size='2' image='\a3\ui_f_oldman\data\IGUI\Cfg\holdactions\map_ca.paa'/><t size='1'>Defuse the bomb</t>",{
+					params ["_object","_caller","_ID","_thisObjective"];
+
+						[_object, _caller, _thisObjective] spawn 
+						{
+							params ["_object", "_caller", "_thisObjective"];
+							disableSerialization;
+							code = _object getVariable "RPG_DefuseCode";
+							diag_log format ["The bomb code is %1",code];
+							private _display = findDisplay 46 createDisplay "RscDisplayEmpty";
+							private _ctrlGroup = _display ctrlCreate ["RscControlsGroupNoScrollbars", -1];
+							private _ctrlBackground = _display ctrlCreate ["RscTextMulti", -1, _ctrlGroup];
+							IDD_EDIT_BOX = 123;
+							private _ctrlEdit = _display ctrlCreate ["RscEditMulti", IDD_EDIT_BOX, _ctrlGroup];
+							private _ctrlButton = _display ctrlCreate ["RscShortcutButton", -1, _ctrlGroup];
+							_ctrlGroup ctrlSetPosition [0.5, 0.5, 0, 0];
+							_ctrlGroup ctrlCommit 0;
+							_ctrlBackground ctrlSetPosition [0, 0, 0.5, 0.5];
+							_ctrlBackground ctrlSetBackgroundColor [0.5, 0.5, 0.5, 0.9];
+							_ctrlBackground ctrlSetText "ENTER THE DEFUSE CODE :";
+							_ctrlBackground ctrlEnable false;
+							_ctrlBackground ctrlCommit 0;
+							_ctrlEdit ctrlSetPosition [0.01, 0.05, 0.48, 0.34];
+							_ctrlEdit ctrlSetBackgroundColor [0, 0, 0, 0.5];
+							_ctrlEdit ctrlCommit 0;
+							_ctrlButton ctrlSetPosition [0.185, 0.42, 0.13, 0.05];
+							_ctrlButton ctrlCommit 0;
+							_ctrlButton ctrlSetText "DEFUSE";
+
+							thisObjective = _thisObjective;
+
+							_ctrlButton ctrlAddEventHandler ["ButtonClick",
+							{
+								params ["_ctrl"];
+								_display = ctrlParent _ctrl;
+								_text = ctrlText (_display displayCtrl IDD_EDIT_BOX);
+								hint _text;
+								_display closeDisplay 1;
+								diag_log format ["test %1 == %2",code,_text];
+
+								_objectiveObject = thisObjective#0;
+
+								if (code == _text) then 
+								{
+									//Manage Completed Objective	
+									_completedObjectives = missionNamespace getVariable ["completedObjectives",[]];
+									_completedObjectives pushBack thisObjective;
+									missionNamespace setVariable ["completedObjectives",_completedObjectives,true];	
+									//Manage UncompletedObjective
+									_missionUncompletedObjectives = missionNamespace getVariable ["missionUncompletedObjectives",[]];
+									_missionUncompletedObjectives = _missionUncompletedObjectives - [thisObjective];
+									missionNamespace setVariable ["missionUncompletedObjectives",_missionUncompletedObjectives,true];
+
+									//Manage player's feedback
+									if ("RealismMode" call BIS_fnc_getParamValue == 1) then 
+									{
+										[] call doIncrementAllCredits;	
+										[thisObjective] execVM 'engine\objectiveManagement\completeObjective.sqf'; 
+										[{[50, "RPG_ranking_objective_complete"] call doUpdateRank}] remoteExec ["call", 0];
+									};
+									//Manage respawn and delete object
+									deleteVehicle _objectiveObject;
+									if (["Respawn",1] call BIS_fnc_getParamValue == 1) then 
+									{
+										[[], "engine\respawnManagement\respawnManager.sqf"] remoteExec ['BIS_fnc_execVM', 0];
+									};
+								} else 
+								{
+									//Objective failed
+									_thisTaskID = _objectiveObject getVariable "thisTask";
+
+									_missionFailedObjectives = missionNamespace getVariable ["missionFailedObjectives", []];
+									_missionFailedObjectives = _missionFailedObjectives + [_thisTaskID]; //needs to be improved
+									missionNamespace setVariable ["missionFailedObjectives", _missionFailedObjectives, true];
+
+									//Delete task marker
+									if (missionNameSpace getVariable ["enableObjectiveExactLocation",0] == 1) then 
+									{
+										[_thisTaskID] remoteExec ["deleteMarker", 0, true];
+									};
+
+									//Manage task system
+									if ("RealismMode" call BIS_fnc_getParamValue == 1 ) then 
+									{
+										[_thisTaskID, "FAILED"] call BIS_fnc_taskSetState;
+									};
+
+									//Explode
+									_bombType = "Bo_GBU12_LGB" createVehicle (getPos _objectiveObject);
+									soilCrater = "Land_ShellCrater_02_large_F" createVehicle (getPos _objectiveObject);
+
+									//Clean bomb
+									deleteVehicle _objectiveObject;
+								};
+							}];
+							ctrlSetFocus _ctrlEdit;
+							_ctrlGroup ctrlSetPosition [0.25, 0.25, 0.5, 0.5];
+							_ctrlGroup ctrlCommit 0.1;
+							playSound "Hint3";
+						};
+				},_thisObjective,10,true,false,"","_target distance _this <4"]] remoteExec ["addAction", 0, true];
+
+				_objectiveObject enableSimulationGlobal false;
+			};
 		case "hvt":
 			{
 				//Generate objective object

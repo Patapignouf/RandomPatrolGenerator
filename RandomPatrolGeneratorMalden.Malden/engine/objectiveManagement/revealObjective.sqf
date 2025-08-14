@@ -70,6 +70,13 @@ if ((count _revealedObjectives != count _tempMissionObjectives)) then
 							[_side, _objectiveToReveal select 2, [_currentObjectiveDescription, ["STR_RPG_OBJ_AMMO"], "cookiemarker2"], objNull, "CREATED", 3, true] call BIS_fnc_taskCreate;
 							[_objectiveToReveal select 2,"rearm"] call BIS_fnc_taskSetType;
 						};
+					case "bomb":
+						{
+							_code = _thisObject getVariable "RPG_DefuseCode";
+							_currentObjectiveDescription = ["STR_RPG_OBJ_BOMB_TEXT", _code, _objectiveLocationName];
+							[_side, _objectiveToReveal select 2, [_currentObjectiveDescription, ["STR_RPG_OBJ_BOMB"], "cookiemarker2"], objNull, "CREATED", 3, true] call BIS_fnc_taskCreate;
+							[_objectiveToReveal select 2,"mine"] call BIS_fnc_taskSetType;
+						};
 					case "hvt":
 						{
 							_currentObjectiveDescription = ["STR_RPG_OBJ_HVT_TEXT", getText (configFile >> "cfgVehicles" >> typeOf _thisObject >> "displayName"),_objectiveLocationName];

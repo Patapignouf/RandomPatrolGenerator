@@ -29,6 +29,12 @@ if (!isDedicated) then
 					_markerstr setMarkerColorLocal "ColorGreen";
 					_markerstr setMarkerTextLocal format ["Ramenez en ville ou détruisez l'objet %1", getText (configFile >> "cfgVehicles" >> typeOf _thisObject >> "displayName")];
 					};
+
+				case "bomb":
+					{
+					_markerstr setMarkerColorLocal "ColorGreen";
+					_markerstr setMarkerTextLocal format ["Désamorcez %1", getText (configFile >> "cfgVehicles" >> typeOf _thisObject >> "displayName")];
+					};
 				case "hvt":
 					{
 					_markerstr setMarkerColorLocal "ColorRed";

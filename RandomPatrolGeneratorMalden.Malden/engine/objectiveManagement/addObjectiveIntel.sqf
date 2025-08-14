@@ -57,6 +57,11 @@ params ["_currentGroup", "_thisObjective"];
 										{
 											_currentObjectiveDescription = format ["The enemy HVT %1 is at %2", getText (configFile >> "cfgVehicles" >> typeOf _thisObject >> "displayName"), mapGridPosition (getPos _thisObject)];
 										};
+									case "bomb":
+										{
+											_code = _thisObject getVariable "RPG_DefuseCode";
+											_currentObjectiveDescription = format ["The password is %1", _code];
+										};
 									case "vip":
 										{
 											_currentObjectiveDescription = format ["The friendly VIP %1 is at %2", getText (configFile >> "cfgVehicles" >> typeOf _thisObject >> "displayName"), mapGridPosition (getPos _thisObject)];

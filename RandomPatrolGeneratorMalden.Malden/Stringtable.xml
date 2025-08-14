@@ -213,6 +213,16 @@
                 <Chinese>在%2附近有%1。你能把它带到%3或者摧毁它吗...</Chinese>
                 <Japanese>%2の近くに%1があります。%3に持って行けますか、または破壊できますか...</Japanese>
             </Key>
+            <Key ID="STR_RPG_OBJ_BOMB">
+                <Original>Defuse bomb</Original>
+                <English>Defuse bomb</English>
+                <French>Désamorcez la bombe</French>
+            </Key>
+            <Key ID="STR_RPG_OBJ_BOMB_TEXT">
+                <Original>There's bomb near %2. </Original>
+                <English>There's bomb near %2. </English>
+                <French>Il y a une bombe près de %2. </French>
+            </Key>
             <Key ID="STR_RPG_OBJ_HVT">
                 <Original>HVT</Original>
                 <English>HVT</English>

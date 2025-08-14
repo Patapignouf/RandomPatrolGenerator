@@ -14,6 +14,11 @@ if (isClass (configFile >> "CfgPatches" >> "rhs_main")) then
 	avalaibleAmmoBox pushBack "rhsusf_mags_crate";
 };
 
+avalaibleBomb = 
+[
+	"DemoCharge_F"
+];
+
 avalaibleSupplyBox = [
 	"Box_IND_Support_F"
 ];
@@ -126,6 +131,7 @@ avalaibleTypeOfObj = [];
 avalaibleTypeOfObjectives = [
 	// [Technical Objective name, Display name, type of objective, enable]
 	["ammo", "Ammo cache", "Attack", true],
+	["bomb", "Defuse bomb", "Attack", true],
 	["hvt", "HVT", "Attack", true],
 	["clearArea", "Clear Area", "Attack", true],
 	["defendArea", "Defend Area", "Attack", true],
