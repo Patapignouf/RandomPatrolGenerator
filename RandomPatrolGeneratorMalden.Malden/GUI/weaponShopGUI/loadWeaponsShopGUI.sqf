@@ -98,6 +98,8 @@ switch (_mode) do
 			_ctrl lnbSetData [[_ind, 0], _weaponClassName];
 			_ctrl lnbSetData [[_ind, 1], _supportType];
 			_ctrl lnbSetData [[_ind, 2], str _price];
+			_ctrl lnbSetData [[_ind, 3], _supportName];
+
 		} foreach (_opFactionWeapon);
 
 
@@ -134,6 +136,8 @@ _buttonOK ctrlAddEventHandler [ "ButtonClick",
 		_supportClass = (_lnbEntries lnbData [lnbCurSelRow _lnbEntries, 0]);
 		_supportType = (_lnbEntries lnbData [lnbCurSelRow _lnbEntries, 1]);
 		_supportPrice = parseNumber (_lnbEntries lnbData [lnbCurSelRow _lnbEntries, 2]);
+		_supportName = (_lnbEntries lnbData [lnbCurSelRow _lnbEntries, 3]);
+		_weaponIcon = getText (configFile >> "CfgWeapons" >> _supportClass >> "picture");
 
 		_bluforVehicleAvalaibleSpawnCounter = [] call getUnlockCredit;
 
@@ -153,14 +157,12 @@ _buttonOK ctrlAddEventHandler [ "ButtonClick",
 				[_bluforVehicleAvalaibleSpawnCounter-_supportPrice] call saveUnlockCredit;
 			
 				[player, player, player call getPlayerFaction] call setupArsenalToItem;
+				hint parseText format ["<img image='%1' size='5'/><br/><br/><t size='1.5'>You have unlocked <br/> %2 <br/>for the faction %3</t><br/><br/><t size='1.2'></t>", _weaponIcon, _supportName, _currentFaction];
 
 				//Close mission setup
 				//Refresh title
 				(_display displayCtrl 59999) ctrlSetText (format ["Weapon shop | Unlock Token %1", [] call getUnlockCredit]);
-				_display closeDisplay 1;
 
-				//Restart arsenal GUI
-				[] execVM "GUI\LoadoutGUI\initPlayerLoadoutSetupRemake.sqf"
 			} else 
 			{
 				[{["STR_RPG_HC_NAME", "STR_RPG_HC_NOT_ENOUGH_CREDIT"] call doDialog}] remoteExec ["call", player];
@@ -168,3 +170,8 @@ _buttonOK ctrlAddEventHandler [ "ButtonClick",
 		};
 	}
 ];
+
+waitUntil {isNull _mainDisplay};
+
+//Restart arsenal GUI
+[] execVM "GUI\LoadoutGUI\initPlayerLoadoutSetupRemake.sqf"
