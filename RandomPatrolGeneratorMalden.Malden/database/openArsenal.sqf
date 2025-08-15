@@ -20,7 +20,7 @@ if (isClass (configFile >> "CfgPatches" >> "ace_medical")) then
 	
 	//Setup ACE Arsenal 
 	player setVariable [ "ACE_arsenalClosed", false, true];
-	[[player, player, player call getPlayerFaction] call setupArsenalToItem, player getVariable "avalaibleItemsInArsenal"] call ace_arsenal_fnc_addVirtualItems;
+	[player, player getVariable "avalaibleItemsInArsenal"] call ace_arsenal_fnc_addVirtualItems;
 	[player, player] call ace_arsenal_fnc_openBox;
 
 	//Wait for arsenal closing

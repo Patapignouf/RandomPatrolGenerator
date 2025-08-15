@@ -130,7 +130,7 @@ if (count _potentialMissionEnemyInfo >0) then
 
 	//Create diary entry for the intel 
 	_intelDiaryAlreadyRevealed = _caller getVariable "diaryIntel";
-	_allDiaryIntel =  format ["%1 <br/> %2 <br/>", _intelDiaryAlreadyRevealed, _intelToReveal];
+	_allDiaryIntel =  format ["%1 <br/> %2 <br/>", _intelDiaryAlreadyRevealed, localize _intelToReveal];
 	_caller removeDiaryRecord  ["RPG", _intelDiaryAlreadyRevealed]; //Update diary doesn't work very well so delete/create is the only solution
 	_newIntelDiaryAlreadyRevealed = _caller createDiaryRecord ["RPG", ["RPG intel", _allDiaryIntel]];
 	_caller setVariable ["diaryIntel", _newIntelDiaryAlreadyRevealed];

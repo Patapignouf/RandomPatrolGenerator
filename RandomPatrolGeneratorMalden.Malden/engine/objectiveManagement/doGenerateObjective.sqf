@@ -62,15 +62,15 @@ generateObjective =
 			diag_log format ["_selectedObjectivePosition %1", _selectedObjectivePosition];
 			_objectiveCreated = [currentObjType, _selectedObjectivePosition] call generateObjectiveObject; 
 
-			if (random 100 < 20 && _warEra != 0) then 
+			if (random 100 < 10 && _warEra != 0) then 
 			{
-				//20% objective with hostile almost only civilian
+				//10% objective with hostile almost only civilian
 				//Not avalaible on WWII era
 				_handlePOIGeneration = [_basicEnemyGroups, baseEnemyVehicleGroup, baseEnemyLightArmoredVehicleGroup, baseEnemyHeavyArmoredVehicleGroup, civilian_group, _selectedObjectivePosition, _objectiveCreated] execVM 'enemyManagement\generationEngine\generateHostileCivPOI.sqf'; 
 				waitUntil {isNull _handlePOIGeneration};
 			} else 
 			{
-				//80% normal objective with opfor forces 
+				//90% normal objective with opfor forces 
 				_handlePOIGeneration = objNull;
 				if ((missionNamespace getVariable "enableCiviliansOnObjectives") == 1) then 
 				{
@@ -81,11 +81,156 @@ generateObjective =
 				};
 				waitUntil {isNull _handlePOIGeneration};
 			};
+
+			//Generate outpost
+			_numberOfOutpostDesired = selectRandom [0,0,1,1,2];
+			for [{_outpostIndex = 0}, {_outpostIndex < _numberOfOutpostDesired}, {_outpostIndex = _outpostIndex + 1}] do
+			{	
+				[_selectedObjectivePosition] call generateOutpost;
+			};
+
+			//If there are no building near operation area
+			if (!([_selectedObjectivePosition] call isAroundWithBuilding) && ((missionNamespace getVariable ["addFOBOnObjective",1]) == 1)) then 
+			{
+				_spawnAttempts = 0;
+				// _mapBorder = [
+				// 	[-5000, call BIS_fnc_mapSize + 5000,0], [50, -5000,0], //left rectangle
+				// 	[-5000, call BIS_fnc_mapSize + 5000,0], [call BIS_fnc_mapSize+5000, call BIS_fnc_mapSize,0], //Top rectangle
+				// 	[call BIS_fnc_mapSize, call BIS_fnc_mapSize + 5000,0], [call BIS_fnc_mapSize  +5000, -5000,0], //Right rectangle
+				// 	[-5000, 50,0], [call BIS_fnc_mapSize  +5000, -5000,0] //left rectangle
+				// ];
+
+				[_selectedObjectivePosition, allUnits select {side _x == opfor && (_selectedObjectivePosition distance _x < 180 )}] call generateObjectiveOpforBase;
+				
+				//Cut grass of FOB
+				_thisTriggerGrassCutter = createTrigger ["EmptyDetector", _selectedObjectivePosition];
+				_thisTriggerGrassCutter setTriggerArea [50, 50, 0, true];
+				[_thisTriggerGrassCutter, 20, 20] execvm "engine\grassCutter.sqf";
+
+				// _OpforFobLocation = [_selectedObjectivePosition, 0, (200), 20, 0, 0.20, 0, [_mapBorder], [[0,0,0],[0,0,0]]] call BIS_fnc_findSafePos;
+				// while {([_OpforFobLocation] call isLocationOnMap) && _spawnAttempts <10} do 
+				// {
+				// 	_OpforFobLocation = [initCityLocation, 400, (aoSize+1500), 30, 0, 0.20, 0, [_mapBorder], [[0,0,0],[0,0,0]]] call BIS_fnc_findSafePos;
+				// 	_spawnAttempts = _spawnAttempts +1;
+				// };
+				// hint format ["%1", _OpforFobLocation];
+				// if (!([_OpforFobLocation] call isLocationOnMap)) then 
+				// {
+				// 	[_OpforFobLocation, allUnits select {side _x == opfor && (_selectedObjectivePosition distance _x < 180 )}] call generateObjectiveOpforBase;
+				// };
+			};
 		};
 	};
 
 	//Return objective selected location
 	_possibleObjectivePosition;
+};
+
+generateOutpostProcess = {
+	params ["_basePosition"];
+	[_basePosition, 30] execVM 'objectGenerator\doCleanArea.sqf'; 
+	_spawnFOBObjects = [_basePosition, (random 360), selectRandom Outpost] call BIS_fnc_ObjectsMapper;
+	_OpforFobStandardOpforLocation = nearestObjects [_basePosition, ["Sign_Arrow_Large_F"], 50];
+
+	//ShuffleArrows
+	_OpforFobStandardOpforLocation = [_OpforFobStandardOpforLocation, [], { random 100 }, "ASCEND"] call BIS_fnc_sortBy;
+
+	//Generate units
+	_tempBaseGroup = [opFaction, "BASIC"] call getBasicUnitsGroup;
+	_outpostUnits = [_tempBaseGroup, _basePosition, east, "DefenseInfantry"] call doGenerateEnemyGroup;
+	_outpostUnits = units _outpostUnits;
+
+	//Clean arrows
+	_unitNumber = 0;
+	{
+		if (_unitNumber < count _outpostUnits) then 
+		{
+			(_outpostUnits#_unitNumber) setPosASL (getPosASL _x);
+			(_outpostUnits#_unitNumber) disableAI "PATH";
+
+			//80% to leave the position if fired
+			if (random 100>80) then 
+			{ 
+				(_outpostUnits#_unitNumber) addEventHandler["Fired",
+					{
+						params ["_unit"];
+						_unit enableAI "PATH";
+						_unit dofollow leader _unit;
+						_unit setUnitPos "AUTO";
+						_unit removeEventHandler ["Fired",_thisEventHandler];
+					}];
+			};
+			_unitNumber = _unitNumber+1;
+		};
+		deleteVehicle _x;
+	} foreach _OpforFobStandardOpforLocation;
+
+	//50% chance to have a specific side task assigned
+	if (random 100 < 50) then 
+	{
+		//Generate side objective
+		[[format ["%1%2","_sideQuestFOB", random 10000],"AttackOutpost", _basePosition, objNull], "engine\objectiveManagement\doGenerateSideObjective.sqf"] remoteExec ['BIS_fnc_execVM', 2];
+		
+		//Locate on map
+		if (missionNameSpace getVariable ["enableObjectiveExactLocation", 0] != 0) then 
+		{
+			[["Outpost", "ColorRed", "b_installation", _basePosition, blufor], 'objectGenerator\doGenerateMarker.sqf'] remoteExec ['BIS_fnc_execVM', 0, true];
+		};
+	};
+};
+
+generateOutpost = {
+	params ["_selectedObjectivePosition"];
+	_OutpostPosition = [_selectedObjectivePosition, 75, 400, 20, 0, 0.20, 0, [], [[0,0,0],[0,0,0]]] call BIS_fnc_findSafePos;
+	if (!([_OutpostPosition, [0,0,0]] call BIS_fnc_areEqual)) then 
+	{
+		[_OutpostPosition] call generateOutpostProcess;
+	};
+};
+
+generateObjectiveOpforBase = 
+{
+	params ["_basePosition", "_objectivesUnits"];
+	// //Check if there is building near the location
+	// if (count ((nearestTerrainObjects [locationPosition _x, ["house", "FORTRESS", "BUNKER"], 150, false, true])) == 0) then 
+	// {
+	// 	//Remove the location
+	// 	_LocList = _LocList - [_x];
+	// };
+	[_basePosition, 50] execVM 'objectGenerator\doCleanArea.sqf'; 
+	_spawnFOBObjects = [_basePosition, (random 360), selectRandom avalaibleEnemyFOB] call BIS_fnc_ObjectsMapper;
+	_OpforFobStandardOpforLocation = nearestObjects [_basePosition, ["Sign_Arrow_Large_F"], 100];
+	_OpforFobTurretOpforLocation = nearestObjects [_basePosition, ["Sign_Arrow_Large_Yellow_F"], 100];
+
+	//ShuffleArrows
+	_OpforFobStandardOpforLocation = [_OpforFobStandardOpforLocation, [], { random 100 }, "ASCEND"] call BIS_fnc_sortBy;
+	_OpforFobTurretOpforLocation = [_OpforFobTurretOpforLocation, [], { random 100 }, "ASCEND"] call BIS_fnc_sortBy;
+
+	//Clean arrows
+	_unitNumber = 0;
+	{
+		if (_unitNumber < count _objectivesUnits) then 
+		{
+			(_objectivesUnits#_unitNumber) setPosASL (getPosASL _x);
+			(_objectivesUnits#_unitNumber) disableAI "PATH";
+
+			//80% to leave the position if fired
+			if (random 100>80) then 
+			{ 
+				(_objectivesUnits#_unitNumber) addEventHandler["Fired",
+					{
+						params ["_unit"];
+						_unit enableAI "PATH";
+						_unit dofollow leader _unit;
+						_unit setUnitPos "AUTO";
+						_unit removeEventHandler ["Fired",_thisEventHandler];
+					}];
+			};
+			_unitNumber = _unitNumber+1;
+		};
+		deleteVehicle _x;
+	} foreach _OpforFobStandardOpforLocation + _OpforFobTurretOpforLocation;
+
 };
 
 
@@ -189,7 +334,13 @@ generateObjectiveObject =
 					missionNamespace setVariable ["missionFailedObjectives", _missionFailedObjectives, true];
 
 					//Add penalty
-					[{[-50,5] call doUpdateRankWithPenalty}] remoteExec ["call", _instigator];
+					[{[-50,3] call doUpdateRankWithPenalty}] remoteExec ["call", _instigator];
+
+					//Delete task marker
+					if (missionNameSpace getVariable ["enableObjectiveExactLocation",0] == 1) then 
+					{
+						[_thisTaskID] remoteExec ["deleteMarker", 0, true];
+					};
 
 					//Manage task system
 					if ("RealismMode" call BIS_fnc_getParamValue == 1 ) then 
@@ -244,6 +395,198 @@ generateObjectiveObject =
 					false
 				] remoteExec ["BIS_fnc_holdActionAdd", 0, true];
 			};
+		case "bomb":
+			{
+				//Generate objective object
+				_objectiveObject = createVehicle [selectRandom avalaibleBomb, _currentRandomPos, [], 0, "NONE"];
+				_objectiveObject setVariable ["isObjectiveObject", true, true];
+				_thisObjective = [_objectiveObject, _thisObjectiveType] call generateObjectiveTracker;
+				_code = random [10000000000,
+								55555555555,
+								99999999999];				
+   				_code = [_code] call BIS_fnc_numberText;	
+
+				_code = _code regexReplace  [" ", ""]; 
+				_objectiveObject setVariable ["RPG_DefuseCode", _code, true];
+				//systemChat _code;
+
+				//Detecting player in the area to begin the countdown 
+				[_objectiveObject] spawn 
+				{
+					params ["_objectiveObject"];
+
+					//Generate objective object
+					_bombTrigger = createTrigger ["EmptyDetector", getPos _objectiveObject]; //create a trigger area created at object with variable name my_object
+
+					//Add trigger to detect cleared area
+					_bombTrigger setTriggerArea [200, 200, 0, false]; // trigger area with a radius of 200m.
+
+					player setPos (getPos _bombTrigger);
+
+					_playersInBombTrigger = false;
+
+					while {sleep 15; !_playersInBombTrigger} do 
+					{
+						
+						if ((count ((allPlayers select {alive _x} ) inAreaArray _bombTrigger))>0) then 
+						{
+							_playersInBombTrigger = true;
+						};
+					};
+
+
+					//wait 30 minutes
+					sleep 1800;
+
+					//If objective is clear do nothing else detonate 
+					if (alive _objectiveObject) then 
+					{
+						//Objective failed
+						_thisTaskID = _objectiveObject getVariable "thisTask";
+
+						_missionFailedObjectives = missionNamespace getVariable ["missionFailedObjectives", []];
+						_missionFailedObjectives = _missionFailedObjectives + [_thisTaskID]; //needs to be improved
+						missionNamespace setVariable ["missionFailedObjectives", _missionFailedObjectives, true];
+
+						//Delete task marker
+						if (missionNameSpace getVariable ["enableObjectiveExactLocation",0] == 1) then 
+						{
+							[_thisTaskID] remoteExec ["deleteMarker", 0, true];
+						};
+
+						//Manage task system
+						if ("RealismMode" call BIS_fnc_getParamValue == 1 ) then 
+						{
+							[_thisTaskID, "FAILED"] call BIS_fnc_taskSetState;
+						};
+
+						//Explode
+						_bombType = "Bo_GBU12_LGB" createVehicle (getPos _objectiveObject);
+						soilCrater = "Land_ShellCrater_02_large_F" createVehicle (getPos _objectiveObject);
+
+						//Clean bomb
+						deleteVehicle _objectiveObject;
+					};
+				};
+
+				//play sound to help player
+				[_objectiveObject] spawn {
+					params ["_objectiveObject"];
+					while {sleep 3; alive _objectiveObject} do 
+					{
+						playSound3D ["a3\sounds_f\debugsound.wss", _objectiveObject, true, getPosASL _objectiveObject, 3, 1, 20, 0, false];
+					};
+				};
+
+				_objectiveObject setPos ([( _thisObjectivePosition), 1, 25, 5, 0, 20, 0] call BIS_fnc_findSafePos);
+				_objectiveObject setVariable ["thisTask", _thisObjective select 2, true];
+
+				//Add intel action to the intel case
+				_objectiveObject setPos _thisObjectivePosition;
+				[_objectiveObject, ["<img size='2' image='\a3\ui_f_oldman\data\IGUI\Cfg\holdactions\map_ca.paa'/><t size='1'>Defuse the bomb</t>",{
+					params ["_object","_caller","_ID","_thisObjective"];
+
+						[_object, _caller, _thisObjective] spawn 
+						{
+							params ["_object", "_caller", "_thisObjective"];
+							disableSerialization;
+							code = _object getVariable "RPG_DefuseCode";
+							diag_log format ["The bomb code is %1",code];
+							private _display = findDisplay 46 createDisplay "RscDisplayEmpty";
+							private _ctrlGroup = _display ctrlCreate ["RscControlsGroupNoScrollbars", -1];
+							private _ctrlBackground = _display ctrlCreate ["RscTextMulti", -1, _ctrlGroup];
+							IDD_EDIT_BOX = 123;
+							private _ctrlEdit = _display ctrlCreate ["RscEditMulti", IDD_EDIT_BOX, _ctrlGroup];
+							private _ctrlButton = _display ctrlCreate ["RscShortcutButton", -1, _ctrlGroup];
+							_ctrlGroup ctrlSetPosition [0.5, 0.5, 0, 0];
+							_ctrlGroup ctrlCommit 0;
+							_ctrlBackground ctrlSetPosition [0, 0, 0.5, 0.5];
+							_ctrlBackground ctrlSetBackgroundColor [0.5, 0.5, 0.5, 0.9];
+							_ctrlBackground ctrlSetText "ENTER THE DEFUSE CODE :";
+							_ctrlBackground ctrlEnable false;
+							_ctrlBackground ctrlCommit 0;
+							_ctrlEdit ctrlSetPosition [0.01, 0.05, 0.48, 0.34];
+							_ctrlEdit ctrlSetBackgroundColor [0, 0, 0, 0.5];
+							_ctrlEdit ctrlCommit 0;
+							_ctrlButton ctrlSetPosition [0.185, 0.42, 0.13, 0.05];
+							_ctrlButton ctrlCommit 0;
+							_ctrlButton ctrlSetText "DEFUSE";
+
+							thisObjective = _thisObjective;
+
+							_ctrlButton ctrlAddEventHandler ["ButtonClick",
+							{
+								params ["_ctrl"];
+								_display = ctrlParent _ctrl;
+								_text = ctrlText (_display displayCtrl IDD_EDIT_BOX);
+								hint _text;
+								_display closeDisplay 1;
+								diag_log format ["test %1 == %2",code,_text];
+
+								_objectiveObject = thisObjective#0;
+
+								if (code == _text) then 
+								{
+									//Manage Completed Objective	
+									_completedObjectives = missionNamespace getVariable ["completedObjectives",[]];
+									_completedObjectives pushBack thisObjective;
+									missionNamespace setVariable ["completedObjectives",_completedObjectives,true];	
+									//Manage UncompletedObjective
+									_missionUncompletedObjectives = missionNamespace getVariable ["missionUncompletedObjectives",[]];
+									_missionUncompletedObjectives = _missionUncompletedObjectives - [thisObjective];
+									missionNamespace setVariable ["missionUncompletedObjectives",_missionUncompletedObjectives,true];
+
+									//Manage player's feedback
+									if ("RealismMode" call BIS_fnc_getParamValue == 1) then 
+									{
+										[] call doIncrementAllCredits;	
+										[thisObjective] execVM 'engine\objectiveManagement\completeObjective.sqf'; 
+										[{[50, "RPG_ranking_objective_complete"] call doUpdateRank}] remoteExec ["call", 0];
+									};
+									//Manage respawn and delete object
+									deleteVehicle _objectiveObject;
+									if (["Respawn",1] call BIS_fnc_getParamValue == 1) then 
+									{
+										[[], "engine\respawnManagement\respawnManager.sqf"] remoteExec ['BIS_fnc_execVM', 0];
+									};
+								} else 
+								{
+									//Objective failed
+									_thisTaskID = _objectiveObject getVariable "thisTask";
+
+									_missionFailedObjectives = missionNamespace getVariable ["missionFailedObjectives", []];
+									_missionFailedObjectives = _missionFailedObjectives + [_thisTaskID]; //needs to be improved
+									missionNamespace setVariable ["missionFailedObjectives", _missionFailedObjectives, true];
+
+									//Delete task marker
+									if (missionNameSpace getVariable ["enableObjectiveExactLocation",0] == 1) then 
+									{
+										[_thisTaskID] remoteExec ["deleteMarker", 0, true];
+									};
+
+									//Manage task system
+									if ("RealismMode" call BIS_fnc_getParamValue == 1 ) then 
+									{
+										[_thisTaskID, "FAILED"] call BIS_fnc_taskSetState;
+									};
+
+									//Explode
+									_bombType = "Bo_GBU12_LGB" createVehicle (getPos _objectiveObject);
+									soilCrater = "Land_ShellCrater_02_large_F" createVehicle (getPos _objectiveObject);
+
+									//Clean bomb
+									deleteVehicle _objectiveObject;
+								};
+							}];
+							ctrlSetFocus _ctrlEdit;
+							_ctrlGroup ctrlSetPosition [0.25, 0.25, 0.5, 0.5];
+							_ctrlGroup ctrlCommit 0.1;
+							playSound "Hint3";
+						};
+				},_thisObjective,10,true,false,"","_target distance _this <4"]] remoteExec ["addAction", 0, true];
+
+				_objectiveObject enableSimulationGlobal false;
+			};
 		case "hvt":
 			{
 				//Generate objective object
@@ -273,7 +616,7 @@ generateObjectiveObject =
 					//Manage player's feedback
 					if ("RealismMode" call BIS_fnc_getParamValue == 1) then 
 					{
-						[] call doIncrementVehicleSpawnCounter;	
+						[] call doIncrementAllCredits;	
 						[_thisObjectiveToComplete] execVM 'engine\objectiveManagement\completeObjective.sqf'; 
 						[{[50, "RPG_ranking_objective_complete"] call doUpdateRank}] remoteExec ["call", 0];
 					};
@@ -337,13 +680,20 @@ generateObjectiveObject =
 					if (isPlayer _instigator) then 
 					{
 						//Add penalty
-						[{[-50,5] call doUpdateRankWithPenalty}] remoteExec ["call", _instigator];
+						[{[-50,3] call doUpdateRankWithPenalty}] remoteExec ["call", _instigator];
 					};
 
 					//Manage objective
 					_missionFailedObjectives = missionNamespace getVariable ["missionFailedObjectives", []];
 					_missionFailedObjectives = _missionFailedObjectives + [_thisTaskID]; //needs to be improved
 					missionNamespace setVariable ["missionFailedObjectives", _missionFailedObjectives, true];
+
+					//Delete task marker
+					if (missionNameSpace getVariable ["enableObjectiveExactLocation",0] == 1) then 
+					{
+						[_thisTaskID] remoteExec ["deleteMarker", 0, true];
+					};
+
 					//Manage task system
 					if ("RealismMode" call BIS_fnc_getParamValue == 1) then 
 					{
@@ -410,7 +760,7 @@ generateObjectiveObject =
 						//Manage player's feedback
 						if ("RealismMode" call BIS_fnc_getParamValue == 1) then 
 						{
-							[] call doIncrementVehicleSpawnCounter;	
+							[] call doIncrementAllCredits;	
 							[_thisObjective] execVM 'engine\objectiveManagement\completeObjective.sqf'; 
 							[{[50, "RPG_ranking_objective_complete"] call doUpdateRank}] remoteExec ["call", 0];
 						};
@@ -445,13 +795,20 @@ generateObjectiveObject =
 					if (isPlayer _instigator) then 
 					{
 						//Add penalty
-						[{[-50,5] call doUpdateRankWithPenalty}] remoteExec ["call", _instigator];
+						[{[-50,3] call doUpdateRankWithPenalty}] remoteExec ["call", _instigator];
 					};
 
 					//Manage objective
 					_missionFailedObjectives = missionNamespace getVariable ["missionFailedObjectives", []];
 					_missionFailedObjectives = _missionFailedObjectives + [_thisTaskID]; //needs to be improved
 					missionNamespace setVariable ["missionFailedObjectives", _missionFailedObjectives, true];
+
+					//Delete task marker
+					if (missionNameSpace getVariable ["enableObjectiveExactLocation",0] == 1) then 
+					{
+						[_thisTaskID] remoteExec ["deleteMarker", 0, true];
+					};
+
 					//Manage task system
 					if ("RealismMode" call BIS_fnc_getParamValue == 1) then 
 					{
@@ -484,7 +841,13 @@ generateObjectiveObject =
 					missionNamespace setVariable ["missionFailedObjectives", _missionFailedObjectives, true];
 
 					//Add penalty
-					[{[-50,5] call doUpdateRankWithPenalty}] remoteExec ["call", _instigator];
+					[{[-50,3] call doUpdateRankWithPenalty}] remoteExec ["call", _instigator];
+
+					//Delete task marker
+					if (missionNameSpace getVariable ["enableObjectiveExactLocation",0] == 1) then 
+					{
+						[_thisTaskID] remoteExec ["deleteMarker", 0, true];
+					};					
 
 					//Manage task system
 					if ("RealismMode" call BIS_fnc_getParamValue == 1 ) then 
@@ -595,7 +958,7 @@ generateObjectiveObject =
 					//Manage player's feedback
 					if ("RealismMode" call BIS_fnc_getParamValue == 1) then 
 					{
-						[] call doIncrementVehicleSpawnCounter;	
+						[] call doIncrementAllCredits;	
 						[_thisObjective] execVM 'engine\objectiveManagement\completeObjective.sqf'; 
 						[{[50, "RPG_ranking_objective_complete"] call doUpdateRank}] remoteExec ["call", 0];
 					};
@@ -685,7 +1048,7 @@ generateObjectiveObject =
 						//Manage player's feedback
 						if ("RealismMode" call BIS_fnc_getParamValue == 1) then 
 						{
-							[] call doIncrementVehicleSpawnCounter;	
+							[] call doIncrementAllCredits;	
 							[_thisObjective] execVM 'engine\objectiveManagement\completeObjective.sqf'; 
 							[{[50, "RPG_ranking_objective_complete"] call doUpdateRank}] remoteExec ["call", 0];
 							
@@ -772,7 +1135,7 @@ generateObjectiveObject =
 						//Manage player's feedback
 						if ("RealismMode" call BIS_fnc_getParamValue == 1) then 
 						{
-							[] call doIncrementVehicleSpawnCounter;	
+							[] call doIncrementAllCredits;	
 							[_thisObjective] execVM 'engine\objectiveManagement\completeObjective.sqf'; 
 							[{[50, "RPG_ranking_objective_complete"] call doUpdateRank}] remoteExec ["call", 0];
 						};
@@ -813,8 +1176,14 @@ generateObjectiveObject =
 					if (isPlayer _instigator) then 
 					{
 						//Add penalty
-						[{[-50,5] call doUpdateRankWithPenalty}] remoteExec ["call", _instigator];
+						[{[-50,3] call doUpdateRankWithPenalty}] remoteExec ["call", _instigator];
 					};
+
+					//Delete task marker
+					if (missionNameSpace getVariable ["enableObjectiveExactLocation",0] == 1) then 
+					{
+						[_thisTaskID] remoteExec ["deleteMarker", 0, true];
+					};					
 
 					//Manage task system
 					if ("RealismMode" call BIS_fnc_getParamValue == 1) then 
@@ -827,6 +1196,9 @@ generateObjectiveObject =
 			//hint "default" 
 			};
 	};
+
+	//Add objective location
+	_thisObjective pushBack _thisObjectivePosition;
 
 	//Setup all missions database
 	currentMissionObjectives = missionNamespace getVariable ["MissionObjectives",[]];

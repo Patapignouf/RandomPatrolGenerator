@@ -57,6 +57,11 @@ params ["_currentGroup", "_thisObjective"];
 										{
 											_currentObjectiveDescription = format ["The enemy HVT %1 is at %2", getText (configFile >> "cfgVehicles" >> typeOf _thisObject >> "displayName"), mapGridPosition (getPos _thisObject)];
 										};
+									case "bomb":
+										{
+											_code = _thisObject getVariable "RPG_DefuseCode";
+											_currentObjectiveDescription = format ["The password is %1", _code];
+										};
 									case "vip":
 										{
 											_currentObjectiveDescription = format ["The friendly VIP %1 is at %2", getText (configFile >> "cfgVehicles" >> typeOf _thisObject >> "displayName"), mapGridPosition (getPos _thisObject)];
@@ -120,7 +125,7 @@ params ["_currentGroup", "_thisObjective"];
 								};
 
 								//Create child task associated to main task
-								[_side, [format ["%1%2",_thisObjectiveCode ,"_Intel"], _thisObjectiveCode], [_currentObjectiveDescription, "Updated intel", "cookiemarker2_intel"], objNull, 1, 3, true] call BIS_fnc_taskCreate;
+								[_side, [format ["%1%2",_thisObjectiveCode ,"_Intel"], _thisObjectiveCode], [_currentObjectiveDescription, "Updated intel", "cookiemarker2_intel"], objNull, "CREATED", 3, true] call BIS_fnc_taskCreate;
 								[format ["%1%2",_thisObjectiveCode ,"_Intel"],"documents"] call BIS_fnc_taskSetType;
 								//Reward with experience 
 								[{[3, "RPG_ranking_intel_collect"] call doUpdateRank}] remoteExec ["call", _caller];

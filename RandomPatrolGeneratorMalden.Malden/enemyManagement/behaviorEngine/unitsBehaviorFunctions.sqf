@@ -51,6 +51,20 @@ params ["_thisGroup", "_position", "_distance","_allowCamp"];
 
 		//Place units in building (garrison)
 		_units = units _thisGroup; 
+
+		//Make a group of 3 units to patrolling
+		if (count _units >3 && round (random 3) != 0  ) then 
+		{
+			_tempGroupPatrol = createGroup (side (_units#0));
+			[_units#0] joinSilent _tempGroupPatrol;
+			[_units#1] joinSilent _tempGroupPatrol;
+			[_units#2] joinSilent _tempGroupPatrol;
+			[_tempGroupPatrol, getPos (_units#0), (50 + random 50)] call doPatrol;
+		};
+
+		//Get the group without the first three guys
+		_units = units _thisGroup; 
+
 		//if (count _units > count _allPositions) then {_units resize (count _allPositions);};
 		{
 			//Force unit to go inside a building only if there is a building :p
@@ -162,9 +176,16 @@ doSurrender = {
 			(secondaryWeapon _unit) isEqualTo ""; // Wait until secondary weapon is dropped
 		};
 
+		//Remove grenades from unit
+		_grenades = [];
+		{
+			_grenades append getArray(configFile >> "CfgWeapons" >> "Throw" >> _x >> "magazines");
+		} forEach getArray(configFile >> "CfgWeapons" >> "Throw" >> "muzzles");
+		{_unit removeMagazines _x} forEach _grenades;
+
 		// Make the unit surrender
-		_unit action["Surrender", _unit]; // Surrender
 		_unit setCaptive true; // Set as captive
+		_unit action ["Surrender", _unit]; // Surrender
 
 		sleep 3; //Add 3 sec safe for player
 
@@ -184,20 +205,21 @@ doSurrender = {
 				}; 
 			}];
 
-			//Reward HQ repport
-			_unit addAction ["<img size='2' image='\a3\ui_f\data\IGUI\Cfg\holdactions\holdAction_connect_ca.paa'/><t size='1'>Report prisoner</t>",{
-				//Define parameters
-				params ["_object","_caller","_ID","_avalaibleVehicle"];
+			//Add action report
+			[_unit, ["<img size='2' image='\a3\ui_f\data\IGUI\Cfg\holdactions\holdAction_connect_ca.paa'/><t size='1'>Report prisoner</t>",{
+					//Param initialization
+						//Define parameters
+						params ["_object","_caller","_ID","_avalaibleVehicle"];
 
-				//Remove action on other clients
-				[_object] remoteExec ["removeAllActions", 0, true];
+						//Remove action on other clients
+						[_object] remoteExec ["removeAllActions", 0, true];
 
-				//Give a feedback to the player
-				[[_caller], {params ["_caller"]; ["STR_RPG_HC_NAME", "STR_RPG_HC_SURRENDER_INTEL", name _caller] call doDialog}] remoteExec ["spawn", _caller]; 
+						//Give a feedback to the player
+						[[_caller], {params ["_caller"]; ["STR_RPG_HC_NAME", "STR_RPG_HC_SURRENDER_INTEL", name _caller] call doDialog}] remoteExec ["spawn", _caller]; 
 
-				//Reward player
-				[{[2, "RPG_ranking_intel_collect"] call doUpdateRank}] remoteExec ["call", _caller];
-			},_x,3,true,true,"","_target distance _this <5"];
+						//Reward player
+						[{[2, "RPG_ranking_intel_collect"] call doUpdateRank}] remoteExec ["call", _caller];
+				}, [],3,true,true,"","_target distance _this <5"]] remoteExec ["addAction", 0, true];
 		};
 		
 		//Clean unit after 15 minutes

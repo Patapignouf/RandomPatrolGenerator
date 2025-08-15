@@ -10,7 +10,16 @@ getRandomCenterLocations =
 {
 	_size = worldSize;
 	_worldCenter = (_size/2);
-	_LocList = nearestLocations [[_worldCenter, _worldCenter], ["NameLocal","NameVillage","NameCity","NameCityCapital","CityCenter","Area", "Airport", "Name", "SafetyZone", "StrongpointArea"], _size];
+	_LocList = nearestLocations [[_worldCenter, _worldCenter], ["NameLocal","NameVillage","NameCity","NameCityCapital","CityCenter","Area", "Airport", "Name", "SafetyZone", "StrongpointArea", "Hill"], _size];
+
+	//Purge noname locations
+	{
+		if (text _x == "") then 
+		{
+			_LocList = _LocList-[_x];
+		};
+	} foreach _LocList;
+
 	_LocList
 };
 
@@ -18,7 +27,16 @@ getLocationsAround =
 {
 	params ["_thisLocation", "_thisRadius"];
 	
-	_LocList = nearestLocations [[(getPos _thisLocation) select 0, (getPos _thisLocation) select 1], ["NameLocal","NameVillage","NameCity","NameCityCapital","CityCenter","Area", "Airport", "Name", "SafetyZone", "StrongpointArea"], _thisRadius];
+	_LocList = nearestLocations [[(getPos _thisLocation) select 0, (getPos _thisLocation) select 1], ["NameLocal","NameVillage","NameCity","NameCityCapital","CityCenter","Area", "Airport", "Name", "SafetyZone", "StrongpointArea", "Hill"], _thisRadius];
+	
+	//Purge noname locations
+	{
+		if (text _x == "") then 
+		{
+			_LocList = _LocList-[_x];
+		};
+	} foreach _LocList;
+	
 	_LocList
 };
 
@@ -26,15 +44,23 @@ getLocationsAroundWithBuilding =
 {
 	params ["_thisLocation", "_thisRadius"];
 	
-	_LocList = nearestLocations [[(_thisLocation) select 0, (_thisLocation) select 1], ["NameLocal","NameVillage","NameCity","NameCityCapital","CityCenter","Area", "Airport", "Name", "SafetyZone", "StrongpointArea"], _thisRadius];
+	_LocList = nearestLocations [[(_thisLocation) select 0, (_thisLocation) select 1], ["NameLocal","NameVillage","NameCity","NameCityCapital","CityCenter","Area", "Airport", "Name", "SafetyZone", "StrongpointArea", "Hill"], _thisRadius];
 	
+	//Purge noname locations
+	{
+		if (text _x == "") then 
+		{
+			_LocList = _LocList-[_x];
+		};
+	} foreach _LocList;
+
 	//Clear location without building
 	{
 		//Select smallest location (mountain, forest, plains)
 		if (type _x == "NameLocal") then 
 		{
 			//Check if there is building near the location
-			if (count ((locationPosition _x) nearObjects ["House", 150]) == 0) then 
+			if (count ((nearestTerrainObjects [locationPosition _x, ["house", "FORTRESS", "BUNKER"], 150, false, true])) == 0) then 
 			{
 				//Remove the location
 				_LocList = _LocList - [_x];
@@ -44,6 +70,21 @@ getLocationsAroundWithBuilding =
 	_LocList
 };
 
+
+isAroundWithBuilding = 
+{
+	params ["_thisPosition"];
+	_locationPresence = true;
+
+	//Check if there is building near the location
+	if (count ((nearestTerrainObjects [_thisPosition, ["house", "FORTRESS", "BUNKER"], 150, false, true])) == 0) then 
+	{
+		//Remove the location
+		_locationPresence = false;
+	};
+
+	_locationPresence
+};
 
 getAreaOfMission = 
 {
@@ -180,4 +221,12 @@ findRoadBlockPosition =
 	_roadDir = [_nearestRoad, _connectedRoad] call BIS_fnc_DirTo;
 
 	[_roadCenter, _roadDir]
+};
+
+
+//Find closest locationPosition 
+getClosest = {
+	params ["_position", "_allPositions"];
+	_allPositions = [_allPositions, [], {_position distance _x}, "ASCEND"] call BIS_fnc_sortBy;
+	_allPositions#0;
 };

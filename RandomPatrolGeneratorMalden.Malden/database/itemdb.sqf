@@ -44,7 +44,12 @@ if (isClass (configFile >> "CfgPatches" >> "ace_medical")) then
 	"ace_marker_flags_red",
 	"ace_flags_red",
 	"ace_marker_flags_blue",
-	"ACE_EHP"
+	"ACE_EHP",
+	"ACE_Canteen",
+	"ACE_Humanitarian_Ration",
+	"ACE_bodyBag_white",
+	"ACE_bodyBag_blue",
+	"ACE_IR_Strobe_Item"
 ];
 };
 

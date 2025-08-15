@@ -1,5 +1,7 @@
 disableSerialization;
 #include "loadSettings.sqf"
+#include "..\..\database\missionParameters.sqf"
+
 
 //Create GUI
 createDialog "DialogSetupParams";
@@ -21,6 +23,9 @@ private _comboBoxIronman = _mainDisplay displayCtrl 6110;
 private _comboBoxStartIntel = _mainDisplay displayCtrl 6112;
 private _comboBoxIASkill = _mainDisplay displayCtrl 6113;
 private _comboBoxRespawnParam = _mainDisplay displayCtrl 6114;
+private _btnGameSetup = _mainDisplay displayCtrl 6201;
+private _btnOpforSetup = _mainDisplay displayCtrl 6202;
+private _btnMissionSetup = _mainDisplay displayCtrl 6203;
 
 normalClose = false;
 
@@ -172,6 +177,54 @@ _comboBoxMissionDifficulty lbSetCurSel (missionDifficultySelection apply {_x sel
 _comboBoxStartIntel lbSetCurSel (missionStartIntelSelection apply {_x select 0} find (startIntel_loaded)); //Blufor must take intel
 _comboBoxIASkill lbSetCurSel (missionIASkill apply {_x select 0} find (missionIASkill_loaded)); //IA Skill default value : Balanced
 _comboBoxRespawnParam lbSetCurSel (missionRespawnParamSettings apply {_x select 0} find (missionRespawnParam_loaded)); //IA Skill default value : Balanced
+
+
+//Button to go on the next setup
+_btnGameSetup ctrlAddEventHandler [
+	"ButtonClick",{
+	normalClose = true; 
+
+	//Allow asynchroneous execution
+	[] spawn 
+	{
+		_execParse = [false] execVM 'GUI\setupGUI\startGUIMenu.sqf';
+		waitUntil { isNull _execParse};
+		_execSave = [] execVM 'GUI\setupGUI\saveSettings.sqf';
+		waitUntil { isNull _execSave};
+		[[baseGameParamToManage], 'GUI\setupGUI\advancedSetup.sqf'] remoteExec ['BIS_fnc_execVM', player];
+	};
+}];
+
+_btnOpforSetup ctrlAddEventHandler [
+	"ButtonClick",{
+	normalClose = true; 
+
+	//Allow asynchroneous execution
+	[] spawn 
+	{
+		_execParse = [false] execVM 'GUI\setupGUI\startGUIMenu.sqf';
+		waitUntil { isNull _execParse};
+		_execSave = [] execVM 'GUI\setupGUI\saveSettings.sqf';
+		waitUntil { isNull _execSave};
+		[[baseOpforParamToManage], 'GUI\setupGUI\advancedSetup.sqf'] remoteExec ['BIS_fnc_execVM', player];
+	};
+}];
+
+_btnMissionSetup ctrlAddEventHandler [
+	"ButtonClick",{
+	normalClose = true; 
+
+	//Allow asynchroneous execution
+	[] spawn 
+	{
+		_execParse = [false] execVM 'GUI\setupGUI\startGUIMenu.sqf';
+		waitUntil { isNull _execParse};
+		_execSave = [] execVM 'GUI\setupGUI\saveSettings.sqf';
+		waitUntil { isNull _execSave};
+		[[baseMissionParamToManage], 'GUI\setupGUI\advancedSetup.sqf'] remoteExec ['BIS_fnc_execVM', player];
+	};
+}];
+
 
 
 //Disable space button in dialog

@@ -116,7 +116,7 @@ if ((missionNameSpace getVariable ["enableOpforVehicle", 0]) != 0) then
 	};
 
 	//75% chance enemy have vehicle
-	if (random 100 < 75 || (missionNameSpace getVariable ["enableOpforVehicle", 0]) > 2) then 
+	if ((random 100 < 75 && (missionNameSpace getVariable ["enableOpforVehicle", 0] != 0)) || (missionNameSpace getVariable ["enableOpforVehicle", 0]) > 2) then 
 	{
 		for [{_i = 0}, {_i < _numberOfVehicle}, {_i = _i + 1}] do 
 		{	
@@ -125,10 +125,10 @@ if ((missionNameSpace getVariable ["enableOpforVehicle", 0]) != 0) then
 			{
 				//Add light armored to heavy armored if needed (balance armored vehicle generation)
 
-				if (count _thisAvailableOpforLightArmoredVehicle == 0 && count _thisAvailableOpforCars != 0) then 
-				{
-					_thisAvailableOpforLightArmoredVehicle = _thisAvailableOpforCars;
-				};
+				// if (count _thisAvailableOpforLightArmoredVehicle == 0 && count _thisAvailableOpforCars != 0) then 
+				// {
+				// 	_thisAvailableOpforLightArmoredVehicle = _thisAvailableOpforCars;
+				// };
 
 				if (count _thisAvailableOpforHeavyArmoredVehicle == 0 && count _thisAvailableOpforLightArmoredVehicle != 0) then 
 				{

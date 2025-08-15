@@ -43,6 +43,38 @@ if ((_objectiveID call BIS_fnc_taskState ) != "SUCCEEDED" && !(missionNameSpace 
 					_nbOpfor = count ((allUnits select {alive _x && side _x == opfor} ) inAreaArray _thisTrigger);
 				};			
 
+				deleteVehicle _thisTrigger;
+
+				[_objectiveID, "SUCCEEDED"] call BIS_fnc_taskSetState;
+				missionNameSpace setVariable [format ["RPG_%1", _objectiveID], true, true];
+				[{[25, "RPG_ranking_objective_complete"] call doUpdateRank}] remoteExec ["call", 0];
+			};
+		};
+		case "AttackOutpost":
+		{
+			_currentObjectiveTitle = "STR_RPG_OBJ_ATK_OUTPOST";
+			_currentObjectiveDescription = ["STR_RPG_OBJ_ATK_OUTPOST_TEXT", mapGridPosition _objectiveLocation];
+			[_objectiveID, _objectiveLocation] spawn {
+				params ["_objectiveID", "_objectiveLocation"];
+				
+				//Define enemy detect trigger
+				_thisTrigger = createTrigger ["EmptyDetector", _objectiveLocation];
+				_thisTrigger setTriggerArea [50, 50, 0, false]; 
+
+				_nbBluePlayer = count ((allPlayers select {alive _x && side _x == blufor} ) inAreaArray _thisTrigger);
+				_nbIndPlayer = count ((allPlayers select {alive _x && side _x == independent} ) inAreaArray _thisTrigger);
+				_nbOpfor = count ((allUnits select {alive _x && side _x == opfor} ) inAreaArray _thisTrigger);
+				
+				//Add more opfor to the area
+				while {sleep 15; _nbBluePlayer + _nbIndPlayer == 0 || _nbOpfor > 0} do 
+				{	
+					_nbBluePlayer = count ((allPlayers select {alive _x && side _x == blufor} ) inAreaArray _thisTrigger);
+					_nbIndPlayer = count ((allPlayers select {alive _x && side _x == independent} ) inAreaArray _thisTrigger);
+					_nbOpfor = count ((allUnits select {alive _x && side _x == opfor} ) inAreaArray _thisTrigger);
+				};
+
+				deleteVehicle _thisTrigger;
+
 				[_objectiveID, "SUCCEEDED"] call BIS_fnc_taskSetState;
 				missionNameSpace setVariable [format ["RPG_%1", _objectiveID], true, true];
 				[{[25, "RPG_ranking_objective_complete"] call doUpdateRank}] remoteExec ["call", 0];

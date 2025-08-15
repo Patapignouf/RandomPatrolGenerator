@@ -213,6 +213,16 @@
                 <Chinese>在%2附近有%1。你能把它带到%3或者摧毁它吗...</Chinese>
                 <Japanese>%2の近くに%1があります。%3に持って行けますか、または破壊できますか...</Japanese>
             </Key>
+            <Key ID="STR_RPG_OBJ_BOMB">
+                <Original>Defuse bomb</Original>
+                <English>Defuse bomb</English>
+                <French>Désamorcez la bombe</French>
+            </Key>
+            <Key ID="STR_RPG_OBJ_BOMB_TEXT">
+                <Original>There's bomb near %2. </Original>
+                <English>There's bomb near %2. </English>
+                <French>Il y a une bombe près de %2. </French>
+            </Key>
             <Key ID="STR_RPG_OBJ_HVT">
                 <Original>HVT</Original>
                 <English>HVT</English>
@@ -488,6 +498,16 @@
                 <Chinese>你必须控制位于%1的敌方前进作战基地。</Chinese>
                 <Japanese>位置%1のオプフォーFOBを制御しなければなりません。</Japanese>
             </Key>
+            <Key ID="STR_RPG_OBJ_ATK_OUTPOST">
+                <Original>Attack Opfor Outpost</Original>
+                <English>Attack Opfor Outpost</English>
+                <French>Attaquer l'avant poste ennemi</French>
+            </Key>
+            <Key ID="STR_RPG_OBJ_ATK_OUTPOST_TEXT">
+                <Original>You have to control the opfor Outpost on position %1.</Original>
+                <English>You have to control the opfor Outpost on position %1.</English>
+                <French>Vous devez prendre le contrôle de l'avant poste ennemi près de %1</French>
+            </Key>
             <Key ID="STR_RPG_OBJ_AIR_VCL">
                 <Original>Destroy OPFOR air vehicle</Original>
                 <English>Destroy OPFOR air vehicle</English>
@@ -621,6 +641,11 @@
                 <Russian>%1 был убит своим товарищем по команде %2, следите за своим огнем</Russian>
                 <Chinese>%1被他的队友%2杀死，注意你的火力</Chinese>
                 <Japanese>%1はチームメイトの%2に殺されました。火に注意してください</Japanese>
+            </Key>
+            <Key ID="STR_RPG_HC_PUNISH">
+                <Original>%1 has been punished</Original>
+                <English>%1 has been punished</English>
+                <French>%1 a été puni</French>
             </Key>
             <Key ID="STR_RPG_HC_CIVKILL">
                 <Original>A civilian and has been killed by %1, watch your fire</Original>
@@ -907,30 +932,38 @@
                 <Chinese>我们准备好起飞，走吧！</Chinese>
                 <Japanese>離陸準備完了、行きましょう！</Japanese>
             </Key>
-			<Key ID="STR_RPG_HC_SURRENDER_SPEAK">
-    <Original>Don't shoot i surrender, please spare me</Original>
-    <English>Don't shoot i surrender, please spare me</English>
-    <French>Ne tirez pas, je me rends épargnez moi !</French>
-    <Spanish>¡No dispares, me rindo, por favor perdóname!</Spanish>
-    <German>Nicht schießen, ich ergebe mich, bitte verschone mich</German>
-    <Italian>Non sparare, mi arrendo, ti prego risparmiami</Italian>
-    <Russian>Не стреляйте, я сдаюсь, пожалуйста, пощадите меня</Russian>
-    <Chinese>不要开枪，我投降，请饶了我</Chinese>
-    <Japanese>撃たないでください、降伏します、どうか助けてください</Japanese>
-    
-</Key>
-<Key ID="STR_RPG_HC_RESPAWN_TENT">
-    <Original>Your leader has setup a reinforcement tent</Original>
-    <English>Your leader has setup a reinforcement tent</English>
-    <French>Votre chef a monté une tente de réapparition</French>
-    <Spanish>Tu líder ha configurado una tienda de refuerzo</Spanish>
-    <German>Dein Anführer hat ein Verstärkungszelt aufgestellt</German>
-    <Italian>Il tuo leader ha configurato una tenda di rinforzo</Italian>
-    <Russian>Ваш лидер установил палатку для подкрепления</Russian>
-    <Chinese>你的领导者已设置增援帐篷</Chinese>
-    <Japanese>あなたのリーダーは増援テントを設置しました</Japanese>
-    
-</Key>
+                <Key ID="STR_RPG_HC_SURRENDER_SPEAK">
+                <Original>Don't shoot i surrender, please spare me</Original>
+                <English>Don't shoot i surrender, please spare me</English>
+                <French>Ne tirez pas, je me rends épargnez moi !</French>
+                <Spanish>¡No dispares, me rindo, por favor perdóname!</Spanish>
+                <German>Nicht schießen, ich ergebe mich, bitte verschone mich</German>
+                <Italian>Non sparare, mi arrendo, ti prego risparmiami</Italian>
+                <Russian>Не стреляйте, я сдаюсь, пожалуйста, пощадите меня</Russian>
+                <Chinese>不要开枪，我投降，请饶了我</Chinese>
+                <Japanese>撃たないでください、降伏します、どうか助けてください</Japanese>
+        </Key>
+        <Key ID="STR_RPG_HC_RESPAWN_TENT">
+            <Original>Your leader has setup a reinforcement tent</Original>
+            <English>Your leader has setup a reinforcement tent</English>
+            <French>Votre chef a monté une tente de réapparition</French>
+            <Spanish>Tu líder ha configurado una tienda de refuerzo</Spanish>
+            <German>Dein Anführer hat ein Verstärkungszelt aufgestellt</German>
+            <Italian>Il tuo leader ha configurato una tenda di rinforzo</Italian>
+            <Russian>Ваш лидер установил палатку для подкрепления</Russian>
+            <Chinese>你的领导者已设置增援帐篷</Chinese>
+            <Japanese>あなたのリーダーは増援テントを設置しました</Japanese>
+        </Key>
+        <Key ID="STR_RPG_HC_DESTROY_TENT">
+            <Original>Your tent has been destroyed by opfor</Original>
+            <English>Your tent has been destroyed by opfor</English>
+            <French>Votre tente a été détruite par l'ennemi</French>
+        </Key>
+        <Key ID="STR_RPG_HC_MEDIC_UNCONSCIOUS">
+            <Original>%1 used %2 on you</Original>
+            <English>%1 used %2 on you</English>
+            <French>%1 a utilisé %2 sur vous</French>
+        </Key>
 <Key ID="STR_RPG_HC_SURRENDER_INTEL">
     <Original>Copy %1, let's continue the mission</Original>
     <English>Copy %1, let's continue the mission</English>
@@ -1730,6 +1763,33 @@
         <English>infinite</English>
         <French>infini</French>
     </Key>
+<Container name="RPG_GUI_OVERLAY">
+    <Key ID="RPG_GUI_OVERLAY_SECTOR">
+        <Original>Sector control</Original>
+        <English>Sector control</English>
+        <French>Contrôle de secteur</French>
+    </Key>
+    <Key ID="RPG_GUI_OVERLAY_NEAR">
+        <Original>Nearest player</Original>
+        <English>Nearest player</English>
+        <French>Joueur le plus proche</French>
+    </Key>
+    <Key ID="RPG_GUI_OVERLAY_NEAR_MEDIC">
+        <Original>Nearest medic player</Original>
+        <English>Nearest medic player</English>
+        <French>Médecin le plus proche</French>
+    </Key>
+    <Key ID="RPG_GUI_OVERLAY_NO_NEAR">
+        <Original>No player nearby</Original>
+        <English>No player nearby</English>
+        <French>Aucun joueur à proximité</French>
+    </Key>
+    <Key ID="RPG_GUI_OVERLAY_NEAR_PLAYER">
+        <Original>%1 is at %2m</Original>
+        <English>%1 is at %2m</English>
+        <French>%1 est à %2m</French>
+    </Key>
+</Container>
 <Container name="RPG_GUI_GENERAL">
     <Key ID="RPG_GUI_GENERAL_CLOSE">
         <Original>Close</Original>
@@ -1752,6 +1812,11 @@
         <Russian>Сохранить</Russian>
         <Chinese>保存</Chinese>
         <Japanese>保存</Japanese>
+    </Key>
+    <Key ID="RPG_GUI_GENERAL_WEAPON_SHOP">
+        <Original>Weapon shop</Original>
+        <English>Weapon shop</English>
+        <French>Marché d'armes</French>
     </Key>
     <Key ID="RPG_GUI_GENERAL_LOAD">
         <Original>Load</Original>
@@ -1945,10 +2010,25 @@
             <English>Support type</English>
             <French>Type du support</French>
         </Key>
+        <Key ID="STR_GUI_BASE_WEAPON_NAME">
+            <Original>Name</Original>
+            <English>Name</English>
+            <French>Nom</French>
+        </Key>
+        <Key ID="STR_GUI_BASE_WEAPON_TYPE">
+            <Original>Type</Original>
+            <English>Type</English>
+            <French>Type</French>
+        </Key>
         <Key ID="STR_GUI_BASE_CREDIT">
             <Original>Credit</Original>
             <English>Credit</English>
             <French>Crédit</French>
+        </Key>
+        <Key ID="STR_GUI_BASE_TOKEN">
+            <Original>Token</Original>
+            <English>Token</English>
+            <French>Jeton</French>
         </Key>
         <Key ID="STR_GUI_BASE_ICON">
             <Original>Icon</Original>
@@ -1964,6 +2044,11 @@
             <Original>Buy</Original>
             <English>Buy</English>
             <French>Acheter</French>
+        </Key>
+        <Key ID="STR_GUI_BASE_UNLOCK">
+            <Original>Unlock</Original>
+            <English>Unlock</English>
+            <French>Débloquer</French>
         </Key>
     </Container>
 </Project>

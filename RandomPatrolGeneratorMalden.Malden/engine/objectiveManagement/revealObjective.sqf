@@ -61,73 +61,80 @@ if ((count _revealedObjectives != count _tempMissionObjectives)) then
 					case "supply":
 						{	
 							_currentObjectiveDescription = ["STR_RPG_OBJ_SUPPLY_TEXT", getText (configFile >> "cfgVehicles" >> typeOf _thisObject >> "displayName"),_objectiveLocationName, _initCityLocationName];
-							[_side, _objectiveToReveal select 2, [_currentObjectiveDescription, ["STR_RPG_OBJ_SUPPLY"], "cookiemarker2"], objNull, 1, 3, true] call BIS_fnc_taskCreate;
+							[_side, _objectiveToReveal select 2, [_currentObjectiveDescription, ["STR_RPG_OBJ_SUPPLY"], "cookiemarker2"], objNull, "CREATED", 3, true] call BIS_fnc_taskCreate;
 							[_objectiveToReveal select 2,"refuel"] call BIS_fnc_taskSetType;
 						};
 					case "ammo":
 						{
 							_currentObjectiveDescription = ["STR_RPG_OBJ_AMMO_TEXT", getText (configFile >> "cfgVehicles" >> typeOf _thisObject >> "displayName"),_objectiveLocationName, _initCityLocationName];
-							[_side, _objectiveToReveal select 2, [_currentObjectiveDescription, ["STR_RPG_OBJ_AMMO"], "cookiemarker2"], objNull, 1, 3, true] call BIS_fnc_taskCreate;
+							[_side, _objectiveToReveal select 2, [_currentObjectiveDescription, ["STR_RPG_OBJ_AMMO"], "cookiemarker2"], objNull, "CREATED", 3, true] call BIS_fnc_taskCreate;
 							[_objectiveToReveal select 2,"rearm"] call BIS_fnc_taskSetType;
+						};
+					case "bomb":
+						{
+							_code = _thisObject getVariable "RPG_DefuseCode";
+							_currentObjectiveDescription = ["STR_RPG_OBJ_BOMB_TEXT", _code, _objectiveLocationName];
+							[_side, _objectiveToReveal select 2, [_currentObjectiveDescription, ["STR_RPG_OBJ_BOMB"], "cookiemarker2"], objNull, "CREATED", 3, true] call BIS_fnc_taskCreate;
+							[_objectiveToReveal select 2,"mine"] call BIS_fnc_taskSetType;
 						};
 					case "hvt":
 						{
 							_currentObjectiveDescription = ["STR_RPG_OBJ_HVT_TEXT", getText (configFile >> "cfgVehicles" >> typeOf _thisObject >> "displayName"),_objectiveLocationName];
-							[_side, _objectiveToReveal select 2, [_currentObjectiveDescription, ["STR_RPG_OBJ_HVT"], "cookiemarker2"], objNull, 1, 3, true] call BIS_fnc_taskCreate;
+							[_side, _objectiveToReveal select 2, [_currentObjectiveDescription, ["STR_RPG_OBJ_HVT"], "cookiemarker2"], objNull, "CREATED", 3, true] call BIS_fnc_taskCreate;
 							[_objectiveToReveal select 2,"target"] call BIS_fnc_taskSetType;
 						};
 					case "vip":
 						{
 							_currentObjectiveDescription = ["STR_RPG_OBJ_VIP_TEXT", getText (configFile >> "cfgVehicles" >> typeOf _thisObject >> "displayName"),_objectiveLocationName, _initCityLocationName];
-							[_side, _objectiveToReveal select 2, [_currentObjectiveDescription, ["STR_RPG_OBJ_VIP"], "cookiemarker2"], objNull, 1, 3, true] call BIS_fnc_taskCreate;
+							[_side, _objectiveToReveal select 2, [_currentObjectiveDescription, ["STR_RPG_OBJ_VIP"], "cookiemarker2"], objNull, "CREATED", 3, true] call BIS_fnc_taskCreate;
 							[_objectiveToReveal select 2,"talk1"] call BIS_fnc_taskSetType;
 						};
 					case "hostage":
 						{
 							_currentObjectiveDescription = ["STR_RPG_OBJ_HOSTAGE_TEXT", getText (configFile >> "cfgVehicles" >> typeOf _thisObject >> "displayName"),_objectiveLocationName, _initCityLocationName];
-							[_side, _objectiveToReveal select 2, [_currentObjectiveDescription, ["STR_RPG_OBJ_HOSTAGE"], "cookiemarker2"], objNull, 1, 3, true] call BIS_fnc_taskCreate;
+							[_side, _objectiveToReveal select 2, [_currentObjectiveDescription, ["STR_RPG_OBJ_HOSTAGE"], "cookiemarker2"], objNull, "CREATED", 3, true] call BIS_fnc_taskCreate;
 							[_objectiveToReveal select 2,"talk1"] call BIS_fnc_taskSetType;
 						};
 					case "steal":
 						{
 							_currentObjectiveDescription = ["STR_RPG_OBJ_STEAL_TEXT", getText (configFile >> "cfgVehicles" >> typeOf _thisObject >> "displayName"),_objectiveLocationName, _initCityLocationName];
-							[_side, _objectiveToReveal select 2, [_currentObjectiveDescription, ["STR_RPG_OBJ_STEAL"], "cookiemarker2"], objNull, 1, 3, true] call BIS_fnc_taskCreate;
+							[_side, _objectiveToReveal select 2, [_currentObjectiveDescription, ["STR_RPG_OBJ_STEAL"], "cookiemarker2"], objNull, "CREATED", 3, true] call BIS_fnc_taskCreate;
 							[_objectiveToReveal select 2,"car"] call BIS_fnc_taskSetType;
 						};
 					case "informant":
 						{
 							_currentObjectiveDescription = ["STR_RPG_OBJ_INFORMANT_TEXT", getText (configFile >> "cfgVehicles" >> typeOf _thisObject >> "displayName"),_objectiveLocationName];
-							[_side, _objectiveToReveal select 2, [_currentObjectiveDescription, ["STR_RPG_OBJ_INFORMANT"], "cookiemarker2"], objNull, 1, 3, true] call BIS_fnc_taskCreate;
+							[_side, _objectiveToReveal select 2, [_currentObjectiveDescription, ["STR_RPG_OBJ_INFORMANT"], "cookiemarker2"], objNull, "CREATED", 3, true] call BIS_fnc_taskCreate;
 							[_objectiveToReveal select 2,"listen"] call BIS_fnc_taskSetType;
 						};
 					case "clearArea":
 						{
 							_currentObjectiveDescription = ["STR_RPG_OBJ_CLEAR_TEXT", _objectiveLocationName];
-							[_side, _objectiveToReveal select 2, [_currentObjectiveDescription, ["STR_RPG_OBJ_CLEAR"], "cookiemarker2"], objNull, 1, 3, true] call BIS_fnc_taskCreate;
+							[_side, _objectiveToReveal select 2, [_currentObjectiveDescription, ["STR_RPG_OBJ_CLEAR"], "cookiemarker2"], objNull, "CREATED", 3, true] call BIS_fnc_taskCreate;
 							[_objectiveToReveal select 2,"destroy"] call BIS_fnc_taskSetType;
 						};
 					case "defendArea":
 						{
 							_currentObjectiveDescription = ["STR_RPG_OBJ_DEFEND_TEXT", _objectiveLocationName];
-							[_side, _objectiveToReveal select 2, [_currentObjectiveDescription, ["STR_RPG_OBJ_DEFEND"], "cookiemarker2"], objNull, 1, 3, true] call BIS_fnc_taskCreate;
+							[_side, _objectiveToReveal select 2, [_currentObjectiveDescription, ["STR_RPG_OBJ_DEFEND"], "cookiemarker2"], objNull, "CREATED", 3, true] call BIS_fnc_taskCreate;
 							[_objectiveToReveal select 2,"defend"] call BIS_fnc_taskSetType;
 						};
 					case "takeAndHold":
 						{
 							_currentObjectiveDescription = ["STR_RPG_OBJ_TAKE_TEXT", _objectiveLocationName];
-							[_side, _objectiveToReveal select 2, [_currentObjectiveDescription, ["STR_RPG_OBJ_TAKE"], "cookiemarker2"], objNull, 1, 3, true] call BIS_fnc_taskCreate;
+							[_side, _objectiveToReveal select 2, [_currentObjectiveDescription, ["STR_RPG_OBJ_TAKE"], "cookiemarker2"], objNull, "CREATED", 3, true] call BIS_fnc_taskCreate;
 							[_objectiveToReveal select 2,"upload"] call BIS_fnc_taskSetType;
 						};
 					case "collectIntel":
 						{
 							_currentObjectiveDescription = ["STR_RPG_OBJ_INTEL_TEXT", getText (configFile >> "cfgVehicles" >> typeOf _thisObject >> "displayName"),_objectiveLocationName];
-							[_side, _objectiveToReveal select 2, [_currentObjectiveDescription, ["STR_RPG_OBJ_INTEL"], "cookiemarker2"], objNull, 1, 3, true] call BIS_fnc_taskCreate;
+							[_side, _objectiveToReveal select 2, [_currentObjectiveDescription, ["STR_RPG_OBJ_INTEL"], "cookiemarker2"], objNull, "CREATED", 3, true] call BIS_fnc_taskCreate;
 							[_objectiveToReveal select 2,"intel"] call BIS_fnc_taskSetType;
 						};
 					case "captureFlag":
 						{
 							_currentObjectiveDescription = ["STR_RPG_OBJ_CAPTURE_TEXT", getText (configFile >> "cfgVehicles" >> typeOf _thisObject >> "displayName"),_objectiveLocationName];
-							[_side, _objectiveToReveal select 2, [_currentObjectiveDescription, ["STR_RPG_OBJ_CAPTURE"], "cookiemarker2"], objNull, 1, 3, true] call BIS_fnc_taskCreate;
+							[_side, _objectiveToReveal select 2, [_currentObjectiveDescription, ["STR_RPG_OBJ_CAPTURE"], "cookiemarker2"], objNull, "CREATED", 3, true] call BIS_fnc_taskCreate;
 							[_objectiveToReveal select 2,"map"] call BIS_fnc_taskSetType;
 						};
 					default { 

@@ -38,15 +38,36 @@ class DialogSetupParams
 			h = 1 * GUI_GRID_CENTER_H;
 		};
 
-		//Advanced button
+		//Advanced Game button
 		class AdvancedButton: RscButton
 		{
 			idc = 6201;
-			text = "Advanced Setup";
-			onButtonClick = "normalClose = true; [false] execVM 'GUI\setupGUI\startGUIMenu.sqf';";
+			text = "Game Setup";
+			x = GUI_GRID_CENTER_X - 4 * GUI_GRID_CENTER_W;
+			y = GUI_GRID_CENTER_Y + 20 * GUI_GRID_CENTER_H;
+			w = 10 * GUI_GRID_CENTER_W;
+			h = 1 * GUI_GRID_CENTER_H;
+		};
+
+		//Advanced Opfor button
+		class AdvancedOpforButton: RscButton
+		{
+			idc = 6202;
+			text = "Opfor Setup";
 			x = GUI_GRID_CENTER_X + 10 * GUI_GRID_CENTER_W;
 			y = GUI_GRID_CENTER_Y + 20 * GUI_GRID_CENTER_H;
-			w = 20 * GUI_GRID_CENTER_W;
+			w = 10 * GUI_GRID_CENTER_W;
+			h = 1 * GUI_GRID_CENTER_H;
+		};
+
+		//Advanced Mission button
+		class AdvancedMissionButton: RscButton
+		{
+			idc = 6203;
+			text = "Mission Setup";
+			x = GUI_GRID_CENTER_X + 30 * GUI_GRID_CENTER_W;
+			y = GUI_GRID_CENTER_Y + 20 * GUI_GRID_CENTER_H;
+			w = 10 * GUI_GRID_CENTER_W;
 			h = 1 * GUI_GRID_CENTER_H;
 		};
 

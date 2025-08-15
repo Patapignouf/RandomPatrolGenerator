@@ -65,6 +65,8 @@ factionID = 41;
 #include "object_db\JM_Rebels.sqf"
 #include "object_db\CDF_2020.sqf"
 #include "object_db\CHDSK_2020.sqf"
+#include "object_db\INDO_FR.sqf"
+#include "object_db\INDO_VN.sqf"
 
 //Automatic include new faction by search in config file
 //Highly experimantal i recommend to no use these factions for serious game

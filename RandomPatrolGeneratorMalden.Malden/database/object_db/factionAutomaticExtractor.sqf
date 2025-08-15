@@ -51,6 +51,7 @@ _smartFilter = "EnableSmartFilter" call BIS_fnc_getParamValue == 1;
 } forEach ("(configName _x) isKindOf 'AllVehicles'" configClasses (configFile / "CfgVehicles"));
 
 
+
 //filter factions to select only blufor/east/independent
 {
 	// diag_log format ["faction : %1", _x ];
@@ -155,6 +156,7 @@ publicVariable "factionInfos";
 
 	waitUntil {missionNamespace getVariable "generationSetup" == true};
 
+	systemChat format ["Faction parsing : Prepare whiteliste - %1", time];
 
 	//Add selected factions to whitelist
 	_whiteListFactions pushBack (missionNamespace getVariable "civilianFaction");
@@ -162,7 +164,7 @@ publicVariable "factionInfos";
 	_whiteListFactions pushBack (missionNamespace getVariable "opforFaction");
 	_whiteListFactions pushBack (missionNamespace getVariable "bluforFaction");
 
-
+	systemChat format ["Faction parsing : preparing parsing factions - %1", time];
 
 	//Role filtered to not bo added in faction
 	_roleFilter = ["Unarmed"];
@@ -175,7 +177,7 @@ publicVariable "factionInfos";
 
 		if (_thisFac in _whiteListFactions) then 
 		{
-
+			systemChat format ["parsing %1 %2 %3", str _thisFac,_cfgName, time];
 			if (_cfgName isKindOf 'Man') then {	
 				//Check civilian mans
 				if ((_cfgVehName >> "side") call BIS_fnc_GetCfgData == 3) then 
@@ -259,21 +261,99 @@ publicVariable "factionInfos";
 									missionNamespace setVariable [_currentFactionName, _accessoriesShort]; 
 								};
 
-								//Specifies accessories for the faction
-								if (_thisRole == "rifleman") then 
+								//Allow all weapons from the rifleman to other people
+								_currentUnitStuff = getUnitLoadout _cfgName;
+								_loadoutToCheck = [([_currentUnitStuff] call getAllStringInArray)] call filterString;
+								_currentUnitStuff = [_loadoutToCheck] call getListOfWeaponsFromStuff;
+
+								//Get weapons and accessories already attached
+								_listOfWeaponsAndAccessoriesFromStuff = [_currentUnitStuff] call getAllAccessoriesAndWeaponsFromWeapons;
+								_weaponParsingList = [_listOfWeaponsAndAccessoriesFromStuff#0] call getAllDistinctRifleAndPistolAndLauncher;
+
+								//Whitelist complete weapons and weapons
+								_currentFactionName = format ["smgList%1", _thisFac];
+								_rifleList = missionNamespace getVariable [_currentFactionName, []];
+								_rifleList = _rifleList + _weaponParsingList#0;
+								missionNamespace setVariable [_currentFactionName, _rifleList]; 
+
+								//Whitelist complete weapons and weapons
+								_currentFactionName = format ["launcherList%1", _thisFac];
+								_rifleList = missionNamespace getVariable [_currentFactionName, []];
+								_rifleList = _rifleList + _weaponParsingList#1;
+								missionNamespace setVariable [_currentFactionName, _rifleList]; 
+
+								//Whitelist complete weapons and weapons
+								_currentFactionName = format ["autorifleList%1", _thisFac];
+								_rifleList = missionNamespace getVariable [_currentFactionName, []];
+								_rifleList = _rifleList  + _weaponParsingList#3;
+								missionNamespace setVariable [_currentFactionName, _rifleList]; 
+
+								_currentFactionName = format ["grenadeLauncherList%1", _thisFac];
+								_rifleList = missionNamespace getVariable [_currentFactionName, []];
+								_rifleList = _rifleList  + _weaponParsingList#4;
+								missionNamespace setVariable [_currentFactionName, _rifleList]; 
+
+								_currentFactionName = format ["marksmanrifleList%1", _thisFac];
+								_rifleList = missionNamespace getVariable [_currentFactionName, []];
+								_rifleList = _rifleList + _weaponParsingList#5;
+								missionNamespace setVariable [_currentFactionName, _rifleList]; 
+
+								//Specifies accessories for the faction (taken from rifleman medic and engineer)
+								if (_thisRole == "rifleman" || _thisRole == "medic" || _thisRole == "engineer") then 
 								{
-									//Allow all weapons from the rifleman to other people
-									_currentUnitStuff = getUnitLoadout _cfgName;
-									_loadoutToCheck = [([_currentUnitStuff] call getAllStringInArray)] call filterString;
-									_currentUnitStuff = [_loadoutToCheck] call getListOfWeaponsFromStuff;
+									//Whitelist accessories already attached
+									_currentFactionName = format ["attachmentShortList%1", _thisFac];
+									_accessoriesShort = missionNamespace getVariable [_currentFactionName, []];
+									_accessoriesShort = _accessoriesShort + _listOfWeaponsAndAccessoriesFromStuff#1;
+									missionNamespace setVariable [_currentFactionName, _accessoriesShort];
 
-									//Get weapons and accessories already attached
-									_listOfWeaponsAndAccessoriesFromStuff = [_currentUnitStuff] call getAllAccessoriesAndWeaponsFromWeapons;
+									//Rifleman can share uniform
+									if (_thisRole == "rifleman") then 
+									{
+										//Whitelist complete weapons and weapons
+										_currentFactionName = format ["rifleList%1", _thisFac];
+										_rifleList = missionNamespace getVariable [_currentFactionName, []];
+										_rifleList = _rifleList + _weaponParsingList#5 + _weaponParsingList#2;
+										missionNamespace setVariable [_currentFactionName, _rifleList]; 
 
+										_currentFactionName = format ["uniformList%1", _thisFac];
+										_uniformList = missionNamespace getVariable [_currentFactionName, []];
+
+										_uniform = ((_cfgVehName >> "uniformClass") call BIS_fnc_GetCfgData);
+										_linkedItems = ((_cfgVehName >> "linkedItems") call BIS_fnc_GetCfgData);
+
+										//Check if uniform is in mission blacklist
+										if ([_uniform] call issUniformAllowed) then 
+										{
+											if (!isNil  {_linkedItems}) then 
+											{
+												_uniformList = _uniformList + [_uniform] + _linkedItems;
+											} else 
+											{
+												_uniformList = _uniformList + [_uniform];
+											};
+										};
+
+										missionNamespace setVariable [_currentFactionName, _uniformList];  
+									};
+
+								};
+
+								if (_thisRole == "grenadier") then 
+								{
 									//Whitelist complete weapons and weapons
-									_currentFactionName = format ["rifleList%1", _thisFac];
+									_currentFactionName = format ["grenadeLauncherList%1", _thisFac];
 									_rifleList = missionNamespace getVariable [_currentFactionName, []];
-									_rifleList = _rifleList + _currentUnitStuff + _listOfWeaponsAndAccessoriesFromStuff#0;
+									_rifleList = _rifleList  + _weaponParsingList#2;
+									missionNamespace setVariable [_currentFactionName, _rifleList]; 
+								};
+
+								if (_thisRole == "autorifleman") then 
+								{
+									//Whitelist complete weapons and weapons
+									_currentFactionName = format ["autorifleList%1", _thisFac];
+									_rifleList = missionNamespace getVariable [_currentFactionName, []];
+									_rifleList = _rifleList  + _listOfWeaponsAndAccessoriesFromStuff#0;
 									missionNamespace setVariable [_currentFactionName, _rifleList]; 
 
 									//Whitelist accessories already attached
@@ -281,21 +361,23 @@ publicVariable "factionInfos";
 									_accessoriesShort = missionNamespace getVariable [_currentFactionName, []];
 									_accessoriesShort = _accessoriesShort + _listOfWeaponsAndAccessoriesFromStuff#1;
 									missionNamespace setVariable [_currentFactionName, _accessoriesShort];
-
-									_currentFactionName = format ["uniformList%1", _thisFac];
-									_uniformList = missionNamespace getVariable [_currentFactionName, []];
-
-									_uniform = ((_cfgVehName >> "uniformClass") call BIS_fnc_GetCfgData);
-									_linkedItems = ((_cfgVehName >> "linkedItems") call BIS_fnc_GetCfgData);
-									if (!isNil  {_linkedItems}) then 
-									{
-										_uniformList = [_uniform] + _linkedItems;
-									} else 
-									{
-										_uniformList = [_uniform];
-									};
-									missionNamespace setVariable [_currentFactionName, _uniformList];  
 								};
+
+								if (_thisRole == "marksman" || _thisRole == "sniper") then 
+								{
+									//Whitelist complete weapons and weapons
+									_currentFactionName = format ["marksmanrifleList%1", _thisFac];
+									_rifleList = missionNamespace getVariable [_currentFactionName, []];
+									_rifleList = _rifleList + _weaponParsingList#2;
+									missionNamespace setVariable [_currentFactionName, _rifleList]; 
+
+									//Whitelist accessories already attached
+									_currentFactionName = format ["attachmentLongList%1", _thisFac];
+									_accessoriesShort = missionNamespace getVariable [_currentFactionName, []];
+									_accessoriesShort = _accessoriesShort + _listOfWeaponsAndAccessoriesFromStuff#1;
+									missionNamespace setVariable [_currentFactionName, _accessoriesShort];
+								};
+								
 							};
 						};
 					};
@@ -427,6 +509,7 @@ publicVariable "factionInfos";
 
 	} foreach ("(getNumber (_x >> 'scope') == 2)" configClasses (configFile / "CfgVehicles"));
 
+	systemChat format ["Faction parsing : create civilian factions - %1", time];
 
 	//Manage civilians men groups
 	{
@@ -464,6 +547,7 @@ publicVariable "factionInfos";
 		};
 	} foreach _potentialCivFactions;
 	
+	systemChat format ["Faction parsing : merging factions - %1", time];
 
 	//Manage specific faction merging 
 	if ("EnableRHSMerge" call BIS_fnc_getParamValue == 1) then 
@@ -494,30 +578,38 @@ publicVariable "factionInfos";
 		["FP_SOCOM_DEVGRU","FP_SOAR"] call mergeFactions;	
 	};
 
+	systemChat format ["Faction parsing : finish merging factions - %1", time];
+
 	//Complete blufor faction with missing key role (leader/medic)
 	_bluforFaction = missionNamespace getVariable "bluforFaction";
 	_currentFactionName = format ["loadout%1", _bluforFaction];
 	_currentStuffFaction = 	missionNamespace getVariable [_currentFactionName, []];
 
-	//Leader
-	if (count (_currentStuffFaction select {_x#0 == "leader"}) == 0) then 
+	//if there is at least a rifleman in the faction do some stuff
+	if (count (_currentStuffFaction select {_x#0 == "rifleman"}) != 0) then 
 	{
-		_defaultRifleman = (_currentStuffFaction select {_x#0 == "rifleman"})#0;
-		_defaultLeader =+ _defaultRifleman;
-		_defaultLeader set [0, "leader"];
-		_currentStuffFaction pushBack _defaultLeader;
-		missionNamespace setVariable [_currentFactionName, _currentStuffFaction]; 
+		//Leader
+		if (count (_currentStuffFaction select {_x#0 == "leader"}) == 0) then 
+		{
+			_defaultRifleman = (_currentStuffFaction select {_x#0 == "rifleman"})#0;
+			_defaultLeader =+ _defaultRifleman;
+			_defaultLeader set [0, "leader"];
+			_currentStuffFaction pushBack _defaultLeader;
+			missionNamespace setVariable [_currentFactionName, _currentStuffFaction]; 
+		};
+
+		//Medic
+		if (count (_currentStuffFaction select {_x#0 == "medic"}) == 0) then 
+		{
+			_defaultRifleman = (_currentStuffFaction select {_x#0 == "rifleman"})#0;
+			_defaultMedic =+ _defaultRifleman;
+			_defaultMedic set [0, "medic"];
+			_currentStuffFaction pushBack _defaultMedic;
+			missionNamespace setVariable [_currentFactionName, _currentStuffFaction]; 
+		};
 	};
 
-	//Medic
-	if (count (_currentStuffFaction select {_x#0 == "medic"}) == 0) then 
-	{
-		_defaultRifleman = (_currentStuffFaction select {_x#0 == "rifleman"})#0;
-		_defaultMedic =+ _defaultRifleman;
-		_defaultMedic set [0, "medic"];
-		_currentStuffFaction pushBack _defaultMedic;
-		missionNamespace setVariable [_currentFactionName, _currentStuffFaction]; 
-	};
+	systemChat format ["Faction parsing : opfor factions - %1", time];
 
 	//Define Opfor factions 
 	{
@@ -590,6 +682,8 @@ publicVariable "factionInfos";
 		};
 
 	} foreach _potentialOpfor;
+
+	systemChat format ["Faction parsing : finishing opfor factions - %1", time];
 
 	missionFactionSetup = true;
 	publicVariable "missionFactionSetup";

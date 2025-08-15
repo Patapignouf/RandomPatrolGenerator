@@ -313,6 +313,18 @@ _ButtonLoad ctrlAddEventHandler ["ButtonClick",{
 					//Add specific radio
 					player addItem _radioToAdd;
 					player assignItem _radioToAdd;
+
+					//set previous frequency on SW Radio
+					[] spawn {
+						uisleep 2;
+						_curentSWFrequency = player getVariable ["RPG_TFAR_SW_FREQUENCY", "50"];
+
+						if (typeName (parseNumber _curentSWFrequency) == "SCALAR") then 
+						{
+							hint format ["Frequency : %1", _curentSWFrequency];
+							[(call TFAR_fnc_activeSwRadio), _curentSWFrequency] call TFAR_fnc_setSwFrequency;
+						}
+					};
 				};
 			};
 			
@@ -357,11 +369,37 @@ _ButtonSave ctrlAddEventHandler ["ButtonClick",{
 		//Save default stuff when ironMan mode is disable
 		player setVariable ["spawnLoadout", getUnitLoadout player];
 
+		//Save previous frequency on SW Radio 
+		if (isClass (configFile >> "CfgPatches" >> "task_force_radio")) then 
+		{
+			_curentSWFrequency = (call TFAR_fnc_ActiveSwRadio) call TFAR_fnc_getSwFrequency;
+			player setVariable ["RPG_TFAR_SW_FREQUENCY", _curentSWFrequency];
+		};
+
 		//Save current loadout
 		[player, "personal"] call saveCustomLoadout;
 		hint "Loadout saved";
 
 		[ctrlParent _ctrl] call refreshCustomLoadoutDisplay;
 	}];
+
+if (missionNameSpace getVariable ["enableOpforWeaponShop",1] == 1) then 
+{
+	//Button to go on the next setup
+	_ButtonShop = _display ctrlCreate ["RscButton", -1];
+	_ButtonShop ctrlSetPosition [(0.35 * safezoneW + safezoneX),(0.70 * safezoneH + safezoneY),(0.09 * safezoneW),(0.025* safezoneH)];
+	_ButtonShop ctrlSetBackgroundColor [0,0,0,0.7];
+	_ButtonShop ctrlCommit 0;
+	_ButtonShop ctrlEnable true;
+	_ButtonShop ctrlSetText localize "RPG_GUI_GENERAL_WEAPON_SHOP";
+	_ButtonShop ctrlAddEventHandler ["ButtonClick",{
+			params ["_ctrl"];
+
+			[[], "GUI\weaponShopGUI\weaponShopGUI.sqf"] remoteExec ['BIS_fnc_execVM', player];
+
+			_display = ctrlParent _ctrl;
+			_display closeDisplay 1;
+		}];
+};
 
 [_display] call refreshCustomLoadoutDisplay;

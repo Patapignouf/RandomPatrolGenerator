@@ -31,13 +31,13 @@ with uiNamespace do {
 	_backGround ctrlCommit 0;
 
 	//Prepare title display
-	_RcsTitleDialog ctrlSetText "Nearest player";
+	_RcsTitleDialog ctrlSetText localize "RPG_GUI_OVERLAY_NEAR";
 	_RcsTitleDialog ctrlSetPosition[ 1, _baseY-0.08, 0.25, 0.1 ];
 	_RcsTitleDialog ctrlSetTextColor [1, 1, 1, 1];
 	_RcsTitleDialog ctrlCommit 0;
 
 	//Prepare title display
-	_RcsTitleDialog2 ctrlSetText "Nearest Medic player";
+	_RcsTitleDialog2 ctrlSetText localize "RPG_GUI_OVERLAY_NEAR_MEDIC";
 	_RcsTitleDialog2 ctrlSetPosition[ 1, _baseY+0.03, 0.25, 0.1 ];
 	_RcsTitleDialog2 ctrlSetTextColor [1, 1, 1, 1];
 	_RcsTitleDialog2 ctrlCommit 0;
@@ -68,10 +68,10 @@ with uiNamespace do {
 		_Info ctrlSetTextColor [1, 1, 1, 1];
 		if (count _sortedPlayerList != 0) then 
 		{
-			_Info ctrlSetStructuredText parseText format ["%1 is at %2m", name _nearestPlayer, (round ((_nearestPlayer distance _unit)*100))/100];
+			_Info ctrlSetStructuredText parseText format [localize "RPG_GUI_OVERLAY_NEAR_PLAYER", name _nearestPlayer, (round ((_nearestPlayer distance _unit)*100))/100];
 		} else 
 		{
-			_Info ctrlSetStructuredText parseText format ["No player nearby"];
+			_Info ctrlSetStructuredText parseText (localize "RPG_GUI_OVERLAY_NO_NEAR");
 		};
 		_Info ctrlCommit 0.5;
 
@@ -80,10 +80,10 @@ with uiNamespace do {
 		_Info2 ctrlSetTextColor [1, 1, 1, 1];
 		if (count _sortedPlayerMedicList != 0) then 
 		{
-			_Info2 ctrlSetStructuredText parseText format ["%1 is at %2m", name _nearestMedicPlayer, (round ((_nearestMedicPlayer distance _unit)*100))/100];
+			_Info2 ctrlSetStructuredText parseText format [localize "RPG_GUI_OVERLAY_NEAR_PLAYER", name _nearestMedicPlayer, (round ((_nearestMedicPlayer distance _unit)*100))/100];
 		} else 
 		{
-			_Info2 ctrlSetStructuredText parseText format ["No medic nearby"];
+			_Info2 ctrlSetStructuredText parseText (localize "RPG_GUI_OVERLAY_NO_NEAR");
 		};
 		_Info2 ctrlCommit 0.5;
 	};

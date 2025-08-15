@@ -19,7 +19,7 @@ _vehicleTransportGroup = [[_transportVehicle], _tempPos, blufor, ""] call doGene
 
 			if (_instigator != _unit) then 
 			{
-				[{[-50,5] call doUpdateRankWithPenalty}] remoteExec ["call", _instigator];
+				[{[-50,3] call doUpdateRankWithPenalty}] remoteExec ["call", _instigator];
 			};
 		};
 	}];
