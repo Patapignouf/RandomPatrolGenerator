@@ -83,7 +83,7 @@ generateObjective =
 			};
 
 			//Generate outpost
-			_numberOfOutpostDesired = selectRandom [0,0,1,2,3];
+			_numberOfOutpostDesired = selectRandom [0,0,1,1,2];
 			for [{_outpostIndex = 0}, {_outpostIndex < _numberOfOutpostDesired}, {_outpostIndex = _outpostIndex + 1}] do
 			{	
 				[_selectedObjectivePosition] call generateOutpost;
@@ -409,6 +409,65 @@ generateObjectiveObject =
 				_code = _code regexReplace  [" ", ""]; 
 				_objectiveObject setVariable ["RPG_DefuseCode", _code, true];
 				//systemChat _code;
+
+				//Detecting player in the area to begin the countdown 
+				[_objectiveObject] spawn 
+				{
+					params ["_objectiveObject"];
+
+					//Generate objective object
+					_bombTrigger = createTrigger ["EmptyDetector", getPos _objectiveObject]; //create a trigger area created at object with variable name my_object
+
+					//Add trigger to detect cleared area
+					_bombTrigger setTriggerArea [200, 200, 0, false]; // trigger area with a radius of 200m.
+
+					player setPos (getPos _bombTrigger);
+
+					_playersInBombTrigger = false;
+
+					while {sleep 15; !_playersInBombTrigger} do 
+					{
+						
+						if ((count ((allPlayers select {alive _x} ) inAreaArray _bombTrigger))>0) then 
+						{
+							_playersInBombTrigger = true;
+						};
+					};
+
+
+					//wait 30 minutes
+					sleep 1800;
+
+					//If objective is clear do nothing else detonate 
+					if (alive _objectiveObject) then 
+					{
+						//Objective failed
+						_thisTaskID = _objectiveObject getVariable "thisTask";
+
+						_missionFailedObjectives = missionNamespace getVariable ["missionFailedObjectives", []];
+						_missionFailedObjectives = _missionFailedObjectives + [_thisTaskID]; //needs to be improved
+						missionNamespace setVariable ["missionFailedObjectives", _missionFailedObjectives, true];
+
+						//Delete task marker
+						if (missionNameSpace getVariable ["enableObjectiveExactLocation",0] == 1) then 
+						{
+							[_thisTaskID] remoteExec ["deleteMarker", 0, true];
+						};
+
+						//Manage task system
+						if ("RealismMode" call BIS_fnc_getParamValue == 1 ) then 
+						{
+							[_thisTaskID, "FAILED"] call BIS_fnc_taskSetState;
+						};
+
+						//Explode
+						_bombType = "Bo_GBU12_LGB" createVehicle (getPos _objectiveObject);
+						soilCrater = "Land_ShellCrater_02_large_F" createVehicle (getPos _objectiveObject);
+
+						//Clean bomb
+						deleteVehicle _objectiveObject;
+					};
+				};
 
 				//play sound to help player
 				[_objectiveObject] spawn {
