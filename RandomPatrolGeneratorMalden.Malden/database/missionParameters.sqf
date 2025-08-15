@@ -493,7 +493,7 @@ addFOBOnObjectiveParam =
 		[1, "Enable"]
 	],
 	"Add enemy FOB when AO doesn't have building",
-	1,
+	0,
 	"addFOBOnObjective"
 ];
 
