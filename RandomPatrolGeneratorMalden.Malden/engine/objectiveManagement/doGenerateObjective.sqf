@@ -474,7 +474,7 @@ generateObjectiveObject =
 					params ["_objectiveObject"];
 					while {sleep 3; alive _objectiveObject} do 
 					{
-						playSound3D ["a3\sounds_f\debugsound.wss", _objectiveObject, true, getPosASL _objectiveObject, 3, 1, 20, 0, false];
+						playSound3D ["a3\sounds_f\sfx\beep_target.wss", _objectiveObject, true, getPosASL _objectiveObject, 3, 1, 20, 0, false];
 					};
 				};
 
