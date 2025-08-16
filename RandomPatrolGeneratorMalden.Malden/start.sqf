@@ -1104,8 +1104,9 @@ if (enableCampaignMode) then
 					{	
 						//Case where this is the first objective
 						//Generate objective at first position
-						[avalaibleTypeOfObj, [PossibleObjectivePosition#0]] call generateObjective;
-						PossibleObjectivePosition = PossibleObjectivePosition - [PossibleObjectivePosition#0];
+						_randomSelectedObjective = selectRandom PossibleObjectivePosition;
+						[avalaibleTypeOfObj, [_randomSelectedObjective]] call generateObjective;
+						PossibleObjectivePosition = PossibleObjectivePosition - [_randomSelectedObjective];
 					} else 
 					{
 						//Else generate at the closest position location
