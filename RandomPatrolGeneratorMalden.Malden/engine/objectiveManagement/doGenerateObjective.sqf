@@ -262,6 +262,10 @@ generateObjectiveObject =
 	if (count _thistempObjectivePosition != 0) then 
 	{
 		_thisObjectivePosition = _thistempObjectivePosition;
+	} else 
+	{
+		_thisObjectivePosition = [( _thisObjectivePosition), 1, 25, 5, 0, 20, 0, [], [_thisObjectivePosition,_thisObjectivePosition]] call BIS_fnc_findSafePos;
+		_thisObjectivePosition pushBack 0;
 	};
 
 	//Place IED 
@@ -401,6 +405,14 @@ generateObjectiveObject =
 				_objectiveObject = createVehicle [selectRandom avalaibleBomb, _currentRandomPos, [], 0, "NONE"];
 				_objectiveObject setVariable ["isObjectiveObject", true, true];
 				_thisObjective = [_objectiveObject, _thisObjectiveType] call generateObjectiveTracker;
+
+				//_objectiveObject setPos ([( _thisObjectivePosition), 1, 25, 5, 0, 20, 0] call BIS_fnc_findSafePos);
+				_objectiveObject setVariable ["thisTask", _thisObjective select 2, true];
+
+				//Add intel action to the intel case
+				_objectiveObject setPosATL _thisObjectivePosition;
+
+
 				_code = random [10000000000,
 								55555555555,
 								99999999999];				
@@ -420,8 +432,6 @@ generateObjectiveObject =
 
 					//Add trigger to detect cleared area
 					_bombTrigger setTriggerArea [200, 200, 0, false]; // trigger area with a radius of 200m.
-
-					player setPos (getPos _bombTrigger);
 
 					_playersInBombTrigger = false;
 
@@ -461,7 +471,7 @@ generateObjectiveObject =
 						};
 
 						//Explode
-						_bombType = "Bo_GBU12_LGB" createVehicle (getPos _objectiveObject);
+						_bombType = "Bo_GBU12_LGB" createVehicle (getPosATL _objectiveObject);
 						soilCrater = "Land_ShellCrater_02_large_F" createVehicle (getPos _objectiveObject);
 
 						//Clean bomb
@@ -478,11 +488,7 @@ generateObjectiveObject =
 					};
 				};
 
-				_objectiveObject setPos ([( _thisObjectivePosition), 1, 25, 5, 0, 20, 0] call BIS_fnc_findSafePos);
-				_objectiveObject setVariable ["thisTask", _thisObjective select 2, true];
-
-				//Add intel action to the intel case
-				_objectiveObject setPos _thisObjectivePosition;
+				//systemChat str _thisObjectivePosition;
 				[_objectiveObject, ["<img size='2' image='\a3\ui_f_oldman\data\IGUI\Cfg\holdactions\map_ca.paa'/><t size='1'>Defuse the bomb</t>",{
 					params ["_object","_caller","_ID","_thisObjective"];
 
@@ -527,28 +533,11 @@ generateObjectiveObject =
 
 								if (code == _text) then 
 								{
-									//Manage Completed Objective	
-									_completedObjectives = missionNamespace getVariable ["completedObjectives",[]];
-									_completedObjectives pushBack thisObjective;
-									missionNamespace setVariable ["completedObjectives",_completedObjectives,true];	
-									//Manage UncompletedObjective
-									_missionUncompletedObjectives = missionNamespace getVariable ["missionUncompletedObjectives",[]];
-									_missionUncompletedObjectives = _missionUncompletedObjectives - [thisObjective];
-									missionNamespace setVariable ["missionUncompletedObjectives",_missionUncompletedObjectives,true];
+									//Success
+									//Call next mini game 
+									[[_objectiveObject, 45, 5], 'GUI\bombGUI\bombDefuseGUI.sqf'] remoteExec ['BIS_fnc_execVM', player];
 
-									//Manage player's feedback
-									if ("RealismMode" call BIS_fnc_getParamValue == 1) then 
-									{
-										[] call doIncrementAllCredits;	
-										[thisObjective] execVM 'engine\objectiveManagement\completeObjective.sqf'; 
-										[{[50, "RPG_ranking_objective_complete"] call doUpdateRank}] remoteExec ["call", 0];
-									};
-									//Manage respawn and delete object
-									deleteVehicle _objectiveObject;
-									if (["Respawn",1] call BIS_fnc_getParamValue == 1) then 
-									{
-										[[], "engine\respawnManagement\respawnManager.sqf"] remoteExec ['BIS_fnc_execVM', 0];
-									};
+									
 								} else 
 								{
 									//Objective failed
@@ -571,7 +560,7 @@ generateObjectiveObject =
 									};
 
 									//Explode
-									_bombType = "Bo_GBU12_LGB" createVehicle (getPos _objectiveObject);
+									_bombType = "Bo_GBU12_LGB" createVehicle (getPosATL _objectiveObject);
 									soilCrater = "Land_ShellCrater_02_large_F" createVehicle (getPos _objectiveObject);
 
 									//Clean bomb
@@ -584,8 +573,16 @@ generateObjectiveObject =
 							playSound "Hint3";
 						};
 				},_thisObjective,10,true,false,"","_target distance _this <4"]] remoteExec ["addAction", 0, true];
+				
+				_objectiveObject setVariable ["thisObjective", _thisObjective, true];
 
-				_objectiveObject enableSimulationGlobal false;
+				//Disable physics on the bomb
+				[_objectiveObject] spawn 
+				{
+					params ["_objectiveObject"];
+					sleep 3;
+					//_objectiveObject enableSimulationGlobal false;
+				};
 			};
 		case "hvt":
 			{
