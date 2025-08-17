@@ -444,6 +444,8 @@ generateObjectiveObject =
 						};
 					};
 
+					//Clean trigger
+					deleteVehicle _bombTrigger;
 
 					//wait 30 minutes
 					sleep 1800;
