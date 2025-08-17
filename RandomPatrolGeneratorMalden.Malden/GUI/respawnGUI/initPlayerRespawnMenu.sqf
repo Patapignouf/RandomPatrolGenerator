@@ -10,6 +10,8 @@ private _mainDisplay = (findDisplay 8000);
 private _buttonRespawnStart = _mainDisplay displayCtrl 8200;
 private _buttonRespawnAdvFOB = _mainDisplay displayCtrl 8201;
 private _buttonRespawnTent = _mainDisplay displayCtrl 8202;
+private _buttonRespawnMap = _mainDisplay displayCtrl 8203;
+
 
 //Prevent restriction system from killing default loadout
 whiteListCurrentLoadout = 
@@ -127,6 +129,24 @@ if (!ironMan) then
 	{
 		_buttonRespawnTent ctrlShow false;
 	};
+
+	_buttonRespawnMap ctrlAddEventHandler[ "ButtonClick",
+	{
+		//Close mission setup
+		params ["_ctrl"];
+
+		//Last test to check if the tent is still avalaible
+		normalClose = true;
+
+		//open map GUI
+		[[], 'GUI\respawnGUI\respawnMapGUI.sqf'] remoteExec ['BIS_fnc_execVM', player];
+
+		//Initialize player
+		[] call doInitializePlayer;
+
+		_display = ctrlParent _ctrl;
+		_display closeDisplay 1;
+	}];
 
 	//Load every class for current player's faction
 	//Define list of role in the combo box
