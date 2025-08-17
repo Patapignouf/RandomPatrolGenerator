@@ -937,7 +937,7 @@ generateObjectiveObject =
 				};
 
 				//Add intel action to the intel case
-				_objectiveObject setPos _thisObjectivePosition;
+				_objectiveObject setPosATL _thisObjectivePosition;
 				[_objectiveObject, ["<img size='2' image='\a3\ui_f_oldman\data\IGUI\Cfg\holdactions\map_ca.paa'/><t size='1'>Collect intel</t>",{
 					params ["_object","_caller","_ID","_thisObjective"];
 					//Manage Completed Objective
