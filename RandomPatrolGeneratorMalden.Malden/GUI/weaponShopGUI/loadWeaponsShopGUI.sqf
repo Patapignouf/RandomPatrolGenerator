@@ -145,6 +145,9 @@ _buttonOK ctrlAddEventHandler [ "ButtonClick",
 		{
 			if (_bluforVehicleAvalaibleSpawnCounter>=_supportPrice) then 
 			{
+				//Remove entry 
+				_lnbEntries lnbDeleteRow (lnbCurSelRow _lnbEntries);
+
 				//get current player faction
 				_currentFaction = indFaction;
 				if (side player == blufor) then 
