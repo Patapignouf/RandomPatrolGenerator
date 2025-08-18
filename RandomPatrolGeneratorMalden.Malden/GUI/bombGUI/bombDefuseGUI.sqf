@@ -129,14 +129,14 @@ private _rand = {
 
 // Couleurs de fils
 private _palette = [
-    ["Rouge",[0.90,0.10,0.10,1]],
-    ["Bleu",[0.10,0.35,0.95,1]],
-    ["Vert",[0.10,0.75,0.30,1]],
-    ["Jaune",[0.95,0.85,0.10,1]],
-    ["Blanc",[0.95,0.95,0.95,1]],
-    ["Noir",[0.10,0.10,0.10,1]],
-    ["Orange",[0.95,0.55,0.10,1]],
-    ["Violet",[0.55,0.25,0.75,1]]
+    [localize "RPG_GUI_BOMB_COLOR_RED",    [0.90,0.10,0.10,1]],
+    [localize "RPG_GUI_BOMB_COLOR_BLUE",   [0.10,0.35,0.95,1]],
+    [localize "RPG_GUI_BOMB_COLOR_GREEN",  [0.10,0.75,0.30,1]],
+    [localize "RPG_GUI_BOMB_COLOR_YELLOW", [0.95,0.85,0.10,1]],
+    [localize "RPG_GUI_BOMB_COLOR_WHITE",  [0.95,0.95,0.95,1]],
+    [localize "RPG_GUI_BOMB_COLOR_BLACK",  [0.10,0.10,0.10,1]],
+    [localize "RPG_GUI_BOMB_COLOR_ORANGE", [0.95,0.55,0.10,1]],
+    [localize "RPG_GUI_BOMB_COLOR_PURPLE", [0.55,0.25,0.75,1]]
 ];
 
 // Sélection unique avec count
@@ -163,8 +163,8 @@ private _trapIdxs   = [];
 
 // Indices affichés
 private _colorsNames = _pick apply {_x#0};
-private _hintA = format ["Indice #1 : Le fil %1 n’est PAS sûr.", _colorsNames#_badIdx];
-private _hintB = format ["Indice #2 : %1 ou %2 ? Un seul sauve la situation.",
+private _hintA = format [localize "RPG_GUI_BOMB_CLUE1", _colorsNames#_badIdx];
+private _hintB = format [localize "RPG_GUI_BOMB_CLUE2",
     _colorsNames#_correctIdx, _colorsNames#((_correctIdx + 1) mod _wiresCount)
 ];
 
@@ -187,7 +187,7 @@ private _bg = ["RscText",1000,_panelX,_panelY,_panelW,_panelH] call _make;
 _bg ctrlSetBackgroundColor [0,0,0,0.7];
 
 private _title = ["RscStructuredText",1001,_panelX,_panelY - _sh*0.04,_panelW,_sh*0.04] call _make;
-_title ctrlSetStructuredText parseText "<t align='center' size='1.2'>Désamorçage de Bombe</t>";
+_title ctrlSetStructuredText parseText (format ["<t align='center' size='1.2'>%1</t>", localize "RPG_GUI_BOMB_TITLE"]);
 
 private _timerCtrl = ["RscStructuredText",1002,_panelX + _panelW*0.70,_panelY + _sh*0.01,_panelW*0.28,_sh*0.05] call _make;
 _timerCtrl ctrlSetStructuredText parseText "<t align='right' size='1.2'>--:--</t>";
@@ -218,11 +218,11 @@ for "_i" from 0 to (_wiresCount - 1) do {
 	_cBody ctrlSetBackgroundColor (_pick#_i#1);
 
 	private _lab = ["RscStructuredText", 2100 + _i, _areaX + _areaW*0.02, _rowY, _areaW*0.30, _sh*0.06] call _make;
-	_lab ctrlSetStructuredText parseText format ["<t size='0.9' align='left'>Fil: %1</t>", _pick#_i#0];
+	_lab ctrlSetStructuredText parseText format ["<t size='0.9' align='left'>%2 %1</t>", _pick#_i#0, localize "RPG_GUI_BOMB_WIRE"];
 
 	private _btn = ["RscButton", 2200 + _i, _areaX + _areaW*0.75, _rowY, _areaW*0.20, _sh*0.06] call _make;
 	bombObj = _bombObj;
-	_btn ctrlSetText "Couper";
+	_btn ctrlSetText (localize "RPG_GUI_BOMB_CUT");
 	_btn ctrlAddEventHandler ["ButtonClick", {
 		params ["_ctrl"];
 		private _bombObj = bombObj;
@@ -247,7 +247,7 @@ for "_i" from 0 to (_wiresCount - 1) do {
 
 		if (_idx == _bad) exitWith {
 			playSound "AddItemFailed";
-			[_disp, false, "Le mauvais fil a été coupé !",_bombObj] call RPG_Bomb_Finish;
+			[_disp, false, localize "RPG_GUI_BOMB_WRONG_CUT",_bombObj] call RPG_Bomb_Finish;
 		};
 
 	 	//systemChat format ["bombPos = %1 on ", _bombObj getVariable "thisObjective", getPos _bombObj];
@@ -255,12 +255,12 @@ for "_i" from 0 to (_wiresCount - 1) do {
 
 		if (_idx == _correct) exitWith {
 			playSound "ClickSoft";
-			[_disp, true, "Désamorçage réussi !",_bombObj] call RPG_Bomb_Finish;
+			[_disp, true, localize "RPG_GUI_BOMB_SUCCESS",_bombObj] call RPG_Bomb_Finish;
 		};
 
 		if (_idx in _traps) then {
 			private _hint = _disp displayCtrl 1003;
-			_hint ctrlSetStructuredText parseText "<t size='0.95'>Les indices se brouillent…<br/>???</t>";
+			_hint ctrlSetStructuredText parseText (format ["<t size='0.95'>%1<br/>???</t>", localize "RPG_GUI_BOMB_JAM"]);
 		};
 
 		playSound "ClickSoft";
@@ -277,7 +277,7 @@ _disp setVariable ["BOMB_endTime", time + _duration];
     while { !(_disp getVariable ["BOMB_finished", false]) } do {
         private _remain = (_disp getVariable ["BOMB_endTime", time]) - time;
         if (_remain <= 0) exitWith {
-            [_disp, false, "Temps écoulé !",_bombObj] call RPG_Bomb_Finish;
+            [_disp, false, localize "RPG_GUI_BOMB_END_TIMER",_bombObj] call RPG_Bomb_Finish;
         };
 
         private _m = floor (_remain / 60);

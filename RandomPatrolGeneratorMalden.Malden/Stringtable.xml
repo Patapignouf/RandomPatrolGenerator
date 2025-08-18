@@ -1846,6 +1846,92 @@
         <English>Clear items</English>
         <French>Supprimer les objets</French>
     </Key>
+    </Key>
+    <Key ID="RPG_GUI_BOMB_COLOR_RED">
+        <Original>Red</Original>
+        <English>Red</English>
+        <French>Rouge</French>
+    </Key>
+    <Key ID="RPG_GUI_BOMB_COLOR_BLUE">
+        <Original>Blue</Original>
+        <English>Blue</English>
+        <French>Bleu</French>
+    </Key>
+    <Key ID="RPG_GUI_BOMB_COLOR_GREEN">
+        <Original>Green</Original>
+        <English>Green</English>
+        <French>Vert</French>
+    </Key>
+    <Key ID="RPG_GUI_BOMB_COLOR_YELLOW">
+        <Original>Yellow</Original>
+        <English>Yellow</English>
+        <French>Jaune</French>
+    </Key>
+    <Key ID="RPG_GUI_BOMB_COLOR_WHITE">
+        <Original>White</Original>
+        <English>White</English>
+        <French>Blanc</French>
+    </Key>
+    <Key ID="RPG_GUI_BOMB_COLOR_BLACK">
+        <Original>Black</Original>
+        <English>Black</English>
+        <French>Noir</French>
+    </Key>
+    <Key ID="RPG_GUI_BOMB_COLOR_ORANGE">
+        <Original>Orange</Original>
+        <English>Orange</English>
+        <French>Orange</French>
+    </Key>
+    <Key ID="RPG_GUI_BOMB_COLOR_PURPLE">
+        <Original>Purple</Original>
+        <English>Purple</English>
+        <French>Violet</French>
+    </Key>
+    <Key ID="RPG_GUI_BOMB_CLUE1">
+        <Original></Original>
+        <English></English>
+        <French>Indice #1 : Le fil %1 n’est PAS sûr.</French>
+    </Key>
+    <Key ID="RPG_GUI_BOMB_CLUE2">
+        <Original>Clue #2: %1 or %2? Only one saves the day.</Original>
+        <English>Clue #2: %1 or %2? Only one saves the day.</English>
+        <French>Indice #2 : %1 ou %2 ? Un seul sauve la situation.</French>
+    </Key>
+    <Key ID="RPG_GUI_BOMB_TITLE">
+        <Original>Bomb Defusal</Original>
+        <English>Bomb Defusal</English>
+        <French>Désamorçage de Bombe</French>
+    </Key>
+    <Key ID="RPG_GUI_BOMB_WRONG_CUT">
+        <Original>The wrong wire was cut!</Original>
+        <English>The wrong wire was cut!</English>
+        <French>Le mauvais fil a été coupé !</French>
+    </Key>
+    <Key ID="RPG_GUI_BOMB_SUCCESS">
+        <Original>Defusal successful!</Original>
+        <English>Defusal successful!</English>
+        <French>Désamorçage réussi !</French>
+    </Key>
+    <Key ID="RPG_GUI_BOMB_JAM">
+        <Original>The clues are scrambled...</Original>
+        <English>The clues are scrambled...</English>
+        <French>Les indices se brouillent…</French>
+    </Key>
+    <Key ID="RPG_GUI_BOMB_END_TIMER">
+        <Original>Time’s up!</Original>
+        <English>Time’s up!</English>
+        <French>Temps écoulé !</French>
+    </Key>
+    <Key ID="RPG_GUI_BOMB_CUT">
+        <Original>Cut</Original>
+        <English>Cut</English>
+        <French>Couper</French>
+    </Key>
+    <Key ID="RPG_GUI_BOMB_WIRE">
+        <Original>Wires:</Original>
+        <English>Wires:</English>
+        <French>Fils :</French>
+    </Key>
 </Container>
  <Container name="ACTIONS">
     <Key ID="STR_ACTIONS_PLACE_TENT">
