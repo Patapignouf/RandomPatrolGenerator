@@ -222,5 +222,13 @@ cleanWeaponsAndItems = {
 		_cleanList = _cleanList - _listWeaponsToClean;
 	} foreach _baseRifleToClean;
 
+	//Clean duplicate accessories
+	_baseAccToClean = _listToClean select {_x#0 == "shortAccessories"};
+	{
+		_rifleBase = _x#1;
+		_listWeaponsToClean = _cleanList select {_x#1 == _rifleBase && _x#0 != "shortAccessories"};
+		_cleanList = _cleanList - _listWeaponsToClean;
+	} foreach _baseAccToClean;
+
 	_cleanList;
 };
