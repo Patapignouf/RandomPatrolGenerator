@@ -161,15 +161,16 @@ applyPulseToMarker = {
 
     private _majorPulseType = "mil_dot";
     private _minorPulseType = "hd_dot";
+    private _baseSize = 3;
 
     private _mName = _markerMeta select 1;
     if ((_step < _steps/2)) then {
         //_mName setMarkerType _majorPulseType;
-        _mName setMarkerSize [2*_step/_steps, 2*_step/_steps];
+        _mName setMarkerSize [_baseSize*_step/_steps, _baseSize*_step/_steps];
 
     } else {
         //_mName setMarkerType _minorPulseType;
-         _mName setMarkerSize [2*(_steps-_step)/_steps, 2*(_steps-_step)/_steps];
+         _mName setMarkerSize [_baseSize*(_steps-_step)/_steps, _baseSize*(_steps-_step)/_steps];
     };
 };
 
@@ -178,6 +179,8 @@ applyPulseToMarker = {
    -------------------------- */
 if (!isDedicated) then {
     _markersMeta = call _createMarkers;
+
+	["<t color='#ffffff' size='.8'>Select your respawn location<br /></t>",0,0,4,1,0,789] spawn BIS_fnc_dynamicText;
 
     //Open map
     openMap true;
