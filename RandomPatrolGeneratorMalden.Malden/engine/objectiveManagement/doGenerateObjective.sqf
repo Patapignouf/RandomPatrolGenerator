@@ -537,7 +537,7 @@ generateObjectiveObject =
 								{
 									//Success
 									//Call next mini game 
-									[[_objectiveObject, 45, 5], 'GUI\bombGUI\bombDefuseGUI.sqf'] remoteExec ['BIS_fnc_execVM', player];
+									[[_objectiveObject, 30, 5], 'GUI\bombGUI\bombDefuseGUI.sqf'] remoteExec ['BIS_fnc_execVM', player];
 
 									
 								} else 
