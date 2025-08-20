@@ -283,17 +283,32 @@ if (missionNameSpace getVariable ["respawnOnOtherPlayers", 1] == 1) then
 
 
 doInitializePlayer = {
-		//Enable gameplay for player
-		player allowdamage true;
-		player enableSimulationGlobal true;
-		player hideObjectGlobal false;
-		player setVelocity [0, 0, 0];
-		cutText ["", "BLACK IN", 5];
+	//Enable gameplay for player
+	player allowdamage true;
+	player enableSimulationGlobal true;
+	player hideObjectGlobal false;
+	player setVelocity [0, 0, 0];
+	cutText ["", "BLACK IN", 5];
 
-		//Remove player name from the dead player's list
-		_deadPlayerList = missionNamespace getVariable "deadPlayer";
-		_deadPlayerList = _deadPlayerList - [name player];
-		missionNamespace setVariable ["deadPlayer", _deadPlayerList, true];
+	//Remove player name from the dead player's list
+	_deadPlayerList = missionNamespace getVariable "deadPlayer";
+	_deadPlayerList = _deadPlayerList - [name player];
+	missionNamespace setVariable ["deadPlayer", _deadPlayerList, true];
+
+	//set previous frequency on SW Radio FIX TFAR
+	if (isClass (configFile >> "CfgPatches" >> "task_force_radio")) then 
+	{
+		[] spawn {
+			uisleep 2;
+			_curentSWFrequency = player getVariable ["RPG_TFAR_SW_FREQUENCY", "50"];
+
+			if (typeName (parseNumber _curentSWFrequency) == "SCALAR") then 
+			{
+				hint format ["Frequency : %1", _curentSWFrequency];
+				[(call TFAR_fnc_activeSwRadio), _curentSWFrequency] call TFAR_fnc_setSwFrequency;
+			}
+		};
+	};
 };
 
 //Disable space button in dialog
