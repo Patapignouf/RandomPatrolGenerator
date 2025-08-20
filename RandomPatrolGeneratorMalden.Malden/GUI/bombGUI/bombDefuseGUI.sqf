@@ -1,5 +1,5 @@
 /*
-    bomb_minigame.sqf — Mini-jeu de désamorçage de bombe en GUI (version "count")
+    bombDefuseGUI.sqf — Mini-jeu de désamorçage de bombe en GUI (version "count")
     Usage : [ _bombObjOrObjNull, _durationSec, _wiresCount (4..6), _seed ] execVM "bomb_minigame.sqf";
     Exemple : [player, 45, 5] execVM "bomb_minigame.sqf";
 */

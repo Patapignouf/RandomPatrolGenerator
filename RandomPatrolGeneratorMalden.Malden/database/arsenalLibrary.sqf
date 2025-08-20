@@ -1331,40 +1331,47 @@ validateSpecificItem =
 							_currenItemPos = (_restrictedItemsList) findIf {_x == _itemToVerify };
 							if (_currenItemPos == -1) then 
 							{
+								_isItemRemoved = false;
 								//If it is a vest then remove
 								if ([vest _currentPlayer, _itemToVerify] call BIS_fnc_areEqual) then 
 								{	
 									removeVest _currentPlayer;
+									_isItemRemoved = true;
 								};
 
 								//If it is a headgear  then remove
 								if ([headgear  _currentPlayer, _itemToVerify] call BIS_fnc_areEqual) then 
 								{	
 									removeHeadgear  _currentPlayer;
+									_isItemRemoved = true;
 								};
 
 								//If it is a uniform then remove
 								if ([uniform _currentPlayer, _itemToVerify] call BIS_fnc_areEqual) then 
 								{	
 									removeUniform _currentPlayer;
+									_isItemRemoved = true;
 								};
 
 								//If it is a backpack then remove
 								if ([backpack  _currentPlayer, _itemToVerify] call BIS_fnc_areEqual) then 
 								{	
 									removeBackpack _currentPlayer;
+									_isItemRemoved = true;
 								};
 
 								//If it is a weapon then remove
 								if ((weapons _currentPlayer) findIf {_x == _itemToVerify } != -1) then 
 								{	
 									_currentPlayer removeWeaponGlobal _itemToVerify;
+									_isItemRemoved = true;
 								};
 
 								//If it is a secondaryWeaponItems then remove
 								if ((secondaryWeaponItems _currentPlayer) findIf {_x == _itemToVerify } != -1) then 
 								{	
 									_currentPlayer removesecondaryWeaponItem _itemToVerify;
+									_isItemRemoved = true;
 								};
 
 								//If it is a primaryWeaponItems then remove
@@ -1378,11 +1385,15 @@ validateSpecificItem =
 
 									//"arifle_mx_gl_black_hamr_pointer_f" call BIS_fnc_weaponComponents;
 									_currentPlayer removeprimaryWeaponItem _itemToVerify;
+									_isItemRemoved = true;
 								};
 
-								//Remove this specific item
-								_currentPlayer unassignItem _itemToVerify;
-								_currentPlayer removeItems _itemToVerify;
+								if (!_isItemRemoved) then 
+								{
+									//Remove this specific item
+									_currentPlayer unassignItem _itemToVerify;
+									_currentPlayer removeItems _itemToVerify;
+								};
 
 								//Log this restriction
 								hint format ["%1 has been removed by loadout restriction", _itemToVerify];
