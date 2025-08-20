@@ -1,4 +1,6 @@
 //init tp to be able to spawn on the ground on each map
+cutText ["FINISHING LOADING MISSION", "BLACK FADED", 100];
+
 player setPos [worldSize,worldSize, 1000];
 player enableSimulationGlobal false;
 player allowdamage false;
