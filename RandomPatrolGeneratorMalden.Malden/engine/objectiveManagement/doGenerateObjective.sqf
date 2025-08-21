@@ -539,7 +539,8 @@ generateObjectiveObject =
 									//Call next mini game 
 									[[_objectiveObject, 30, 5], 'GUI\bombGUI\bombDefuseGUI.sqf'] remoteExec ['BIS_fnc_execVM', player];
 
-									
+									//Remove all action on the bomb
+									[_objectiveObject] remoteExec ["removeAllActions", 0, true];
 								} else 
 								{
 									//Objective failed
