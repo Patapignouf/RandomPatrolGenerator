@@ -109,7 +109,7 @@ if (!ironMan) then
 				{
 					normalClose = true;
 					_advFOBLocation = missionNamespace getVariable [format ['bluforPositionAdvancedRespawn%1', str (group player)], [0,0,0]];
-					player setPos _advFOBLocation;
+					player setPos [_advFOBLocation#0, _advFOBLocation#1, 0];
 
 					["Respawn on group tent position", format ["Year %1", date select 0], mapGridPosition player] spawn BIS_fnc_infoText;
 
@@ -208,7 +208,7 @@ _buttonRespawnStart ctrlAddEventHandler[ "ButtonClick",
 			if (isNil "USS_FREEDOM_CARRIER") then 
 			{
 				_spawnPos = [initBlueforLocation, 1, 30, 1, 0, 30, 0, [], [initBlueforLocation, initBlueforLocation]] call BIS_fnc_findSafePos;
-				player setPos (_spawnPos);
+				player setPos [_spawnPos#0, _spawnPos#1, 0];
 			} else 
 			{
 				_spawnPos = initBlueforLocation;
@@ -331,7 +331,7 @@ if (!normalClose) then
 		if (isNil "USS_FREEDOM_CARRIER") then 
 		{
 			_spawnPos = [initBlueforLocation, 1, 30, 1, 0, 30, 0, [], [initBlueforLocation, initBlueforLocation]] call BIS_fnc_findSafePos;
-			player setPos (_spawnPos);
+			player setPos [_spawnPos#0, _spawnPos#1, 0];
 		} else 
 		{
 			_spawnPos = initBlueforLocation;
