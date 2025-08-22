@@ -1,4 +1,4 @@
-_target = cursorTarget;
+params ["_target"];
 
 if((!isNull _target) && {alive _target} && {count crew _target == 0} && {_target isKindOf 'Landvehicle' || _target isKindOf 'Air' || _target isKindOf 'Ship'})then {
 	_target setVectorUp [0, 0, 1];
