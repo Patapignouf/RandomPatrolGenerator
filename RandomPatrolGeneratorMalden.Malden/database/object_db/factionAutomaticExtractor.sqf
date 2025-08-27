@@ -313,7 +313,7 @@ publicVariable "factionInfos";
 										//Whitelist complete weapons and weapons
 										_currentFactionName = format ["rifleList%1", _thisFac];
 										_rifleList = missionNamespace getVariable [_currentFactionName, []];
-										_rifleList = _rifleList + _weaponParsingList#5 + _weaponParsingList#2;
+										_rifleList = _rifleList + _weaponParsingList#5 + _weaponParsingList#2; //Sometimes assault rifle are considered as sniper rifle
 										missionNamespace setVariable [_currentFactionName, _rifleList]; 
 
 										_currentFactionName = format ["uniformList%1", _thisFac];
@@ -351,10 +351,10 @@ publicVariable "factionInfos";
 								if (_thisRole == "autorifleman") then 
 								{
 									// //Whitelist complete weapons and weapons
-									// _currentFactionName = format ["autorifleList%1", _thisFac];
-									// _rifleList = missionNamespace getVariable [_currentFactionName, []];
-									// _rifleList = _rifleList  + _listOfWeaponsAndAccessoriesFromStuff#0;
-									// missionNamespace setVariable [_currentFactionName, _rifleList]; 
+									_currentFactionName = format ["autorifleList%1", _thisFac];
+									_rifleList = missionNamespace getVariable [_currentFactionName, []];
+									_rifleList = _rifleList  + _weaponParsingList#5 + _weaponParsingList#2; //Sometimes assault rifle are considered as sniper rifle
+									missionNamespace setVariable [_currentFactionName, _rifleList]; 
 
 									//Whitelist accessories already attached
 									_currentFactionName = format ["attachmentShortList%1", _thisFac];
