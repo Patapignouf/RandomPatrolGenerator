@@ -350,11 +350,11 @@ publicVariable "factionInfos";
 
 								if (_thisRole == "autorifleman") then 
 								{
-									//Whitelist complete weapons and weapons
-									_currentFactionName = format ["autorifleList%1", _thisFac];
-									_rifleList = missionNamespace getVariable [_currentFactionName, []];
-									_rifleList = _rifleList  + _listOfWeaponsAndAccessoriesFromStuff#0;
-									missionNamespace setVariable [_currentFactionName, _rifleList]; 
+									// //Whitelist complete weapons and weapons
+									// _currentFactionName = format ["autorifleList%1", _thisFac];
+									// _rifleList = missionNamespace getVariable [_currentFactionName, []];
+									// _rifleList = _rifleList  + _listOfWeaponsAndAccessoriesFromStuff#0;
+									// missionNamespace setVariable [_currentFactionName, _rifleList]; 
 
 									//Whitelist accessories already attached
 									_currentFactionName = format ["attachmentShortList%1", _thisFac];
