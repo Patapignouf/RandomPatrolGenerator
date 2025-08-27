@@ -1328,7 +1328,7 @@ validateSpecificItem =
 							_itemToVerify = (_tempArray joinString "_");
 
 							//Test if the item exist in avalaible items list
-							_currenItemPos = (_restrictedItemsList) findIf {_x == _itemToVerify };
+							_currenItemPos = (_restrictedItemsList) findIf {(format ["%1",_x]) == _itemToVerify };
 							if (_currenItemPos == -1) then 
 							{
 								_isItemRemoved = false;
