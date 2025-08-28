@@ -1818,6 +1818,11 @@
         <English>Weapon shop</English>
         <French>Marché d'armes</French>
     </Key>
+    <Key ID="RPG_GUI_GENERAL_WEAPON_SHOP_DESC">
+        <Original>Unlock weapons and accessories</Original>
+        <English>Unlock weapons and accessories</English>
+        <French>Débloquer les armes et accessoires</French>
+    </Key>
     <Key ID="RPG_GUI_GENERAL_LOAD">
         <Original>Load</Original>
         <English>Load</English>

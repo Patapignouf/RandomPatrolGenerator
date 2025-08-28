@@ -152,6 +152,13 @@ paramsToManageNow pushBack ["Button", localize "STR_RPG_LOADOUT_SHOWRANK", forma
 		};
 	}];
 
+if (missionNameSpace getVariable ["enableOpforWeaponShop",1] == 1) then 
+{
+	paramsToManageNow pushBack ["Button", localize "RPG_GUI_GENERAL_WEAPON_SHOP", localize "RPG_GUI_GENERAL_WEAPON_SHOP_DESC", {
+			[[], "GUI\weaponShopGUI\weaponShopGUI.sqf"] remoteExec ['BIS_fnc_execVM', player];
+		}];
+};
+
 //Add empty line
 paramsToManageNow pushBack ["","","",""];
 
