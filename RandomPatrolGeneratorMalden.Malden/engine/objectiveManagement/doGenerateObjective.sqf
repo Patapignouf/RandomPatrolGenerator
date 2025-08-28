@@ -259,13 +259,16 @@ generateObjectiveObject =
 
 	
 	//Test if there's an avalaible position
-	if (count _thistempObjectivePosition != 0) then 
+	if (_thisObjectiveType != "hostage") then 
 	{
-		_thisObjectivePosition = _thistempObjectivePosition;
-	} else 
-	{
-		_thisObjectivePosition = [( _thisObjectivePosition), 1, 25, 5, 0, 20, 0, [], [_thisObjectivePosition,_thisObjectivePosition]] call BIS_fnc_findSafePos;
-		_thisObjectivePosition pushBack 0;
+		if (count _thistempObjectivePosition != 0) then 
+		{
+			_thisObjectivePosition = _thistempObjectivePosition;
+		} else 
+		{
+			_thisObjectivePosition = [( _thisObjectivePosition), 1, 25, 5, 0, 20, 0, [], [_thisObjectivePosition,_thisObjectivePosition]] call BIS_fnc_findSafePos;
+			_thisObjectivePosition pushBack 0;
+		};
 	};
 
 	//Place IED 
@@ -704,11 +707,11 @@ generateObjectiveObject =
 		case "hostage":
 			{
 				//Generate objective object
-				_objectiveObject =  leader ([_currentRandomPos, civilian, [selectRandom avalaibleVIP],[],[],[],[],[], random 360] call BIS_fnc_spawnGroup);
+				_objectiveObject =  leader ([_thisObjectivePosition, civilian, [selectRandom avalaibleVIP],[],[],[],[],[], random 360] call BIS_fnc_spawnGroup);
 				_objectiveObject setVariable ["isObjectiveObject", true, true];
 				_thisObjective = [_objectiveObject, _thisObjectiveType] call generateObjectiveTracker;
 
-				diag_log format ["VIP task setup ! : %1", _objectiveObject];
+				diag_log format ["Hostage task setup ! : %1 on pos %2", _objectiveObject, _thisObjectivePosition];
 				_objectiveObject setPos _thisObjectivePosition;
 
 				//Use ACE function to set hancuffed
