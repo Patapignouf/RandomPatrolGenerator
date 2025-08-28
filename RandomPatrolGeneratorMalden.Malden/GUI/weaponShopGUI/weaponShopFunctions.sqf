@@ -242,7 +242,7 @@ cleanWeaponsAndItems = {
 			_cleanList deleteAt _weaponIndex;
 
 			_weaponBaseParents = [configFile >> "CfgWeapons" >> _rifleBase, true] call BIS_fnc_returnParents;
-			_weaponBaseParents = (_weaponBaseParents select {getNumber (configFile >> "CfgWeapons" >> _x >> "scope")  == 2}) select -1;
+			_weaponBaseParents = (_weaponBaseParents select {getNumber (configFile >> "CfgWeapons" >> _x >> "scope")  == 2}) select 0;
 			if (_weaponBaseParents != "") then 
 			{
 
