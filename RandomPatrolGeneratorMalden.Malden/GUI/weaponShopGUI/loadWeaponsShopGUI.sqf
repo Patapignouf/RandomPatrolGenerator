@@ -176,5 +176,9 @@ _buttonOK ctrlAddEventHandler [ "ButtonClick",
 
 waitUntil {isNull _mainDisplay};
 
-//Restart arsenal GUI
-[] execVM "GUI\LoadoutGUI\initPlayerLoadoutSetupRemake.sqf"
+if (_specialParam) then 
+{
+	//Restart arsenal GUI
+	[] execVM "GUI\LoadoutGUI\initPlayerLoadoutSetupRemake.sqf";
+};
+
