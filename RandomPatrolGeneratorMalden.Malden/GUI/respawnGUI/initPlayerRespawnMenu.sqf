@@ -10,6 +10,8 @@ private _mainDisplay = (findDisplay 8000);
 private _buttonRespawnStart = _mainDisplay displayCtrl 8200;
 private _buttonRespawnAdvFOB = _mainDisplay displayCtrl 8201;
 private _buttonRespawnTent = _mainDisplay displayCtrl 8202;
+private _buttonRespawnMap = _mainDisplay displayCtrl 8203;
+
 
 //Prevent restriction system from killing default loadout
 whiteListCurrentLoadout = 
@@ -107,7 +109,7 @@ if (!ironMan) then
 				{
 					normalClose = true;
 					_advFOBLocation = missionNamespace getVariable [format ['bluforPositionAdvancedRespawn%1', str (group player)], [0,0,0]];
-					player setPos _advFOBLocation;
+					player setPos [_advFOBLocation#0, _advFOBLocation#1, 0];
 
 					["Respawn on group tent position", format ["Year %1", date select 0], mapGridPosition player] spawn BIS_fnc_infoText;
 
@@ -127,6 +129,24 @@ if (!ironMan) then
 	{
 		_buttonRespawnTent ctrlShow false;
 	};
+
+	_buttonRespawnMap ctrlAddEventHandler[ "ButtonClick",
+	{
+		//Close mission setup
+		params ["_ctrl"];
+
+		//Last test to check if the tent is still avalaible
+		normalClose = true;
+
+		//open map GUI
+		[[], 'GUI\respawnGUI\respawnMapGUI.sqf'] remoteExec ['BIS_fnc_execVM', player];
+
+		//Initialize player
+		[] call doInitializePlayer;
+
+		_display = ctrlParent _ctrl;
+		_display closeDisplay 1;
+	}];
 
 	//Load every class for current player's faction
 	//Define list of role in the combo box
@@ -188,7 +208,7 @@ _buttonRespawnStart ctrlAddEventHandler[ "ButtonClick",
 			if (isNil "USS_FREEDOM_CARRIER") then 
 			{
 				_spawnPos = [initBlueforLocation, 1, 30, 1, 0, 30, 0, [], [initBlueforLocation, initBlueforLocation]] call BIS_fnc_findSafePos;
-				player setPos (_spawnPos);
+				player setPos [_spawnPos#0, _spawnPos#1, 0];
 			} else 
 			{
 				_spawnPos = initBlueforLocation;
@@ -263,17 +283,32 @@ if (missionNameSpace getVariable ["respawnOnOtherPlayers", 1] == 1) then
 
 
 doInitializePlayer = {
-		//Enable gameplay for player
-		player allowdamage true;
-		player enableSimulationGlobal true;
-		player hideObjectGlobal false;
-		player setVelocity [0, 0, 0];
-		cutText ["", "BLACK IN", 5];
+	//Enable gameplay for player
+	player allowdamage true;
+	player enableSimulationGlobal true;
+	player hideObjectGlobal false;
+	player setVelocity [0, 0, 0];
+	cutText ["", "BLACK IN", 5];
 
-		//Remove player name from the dead player's list
-		_deadPlayerList = missionNamespace getVariable "deadPlayer";
-		_deadPlayerList = _deadPlayerList - [name player];
-		missionNamespace setVariable ["deadPlayer", _deadPlayerList, true];
+	//Remove player name from the dead player's list
+	_deadPlayerList = missionNamespace getVariable "deadPlayer";
+	_deadPlayerList = _deadPlayerList - [name player];
+	missionNamespace setVariable ["deadPlayer", _deadPlayerList, true];
+
+	//set previous frequency on SW Radio FIX TFAR
+	if (isClass (configFile >> "CfgPatches" >> "task_force_radio")) then 
+	{
+		[] spawn {
+			uisleep 2;
+			_curentSWFrequency = player getVariable ["RPG_TFAR_SW_FREQUENCY", "50"];
+
+			if (typeName (parseNumber _curentSWFrequency) == "SCALAR") then 
+			{
+				hint format ["Frequency : %1", _curentSWFrequency];
+				[(call TFAR_fnc_activeSwRadio), _curentSWFrequency] call TFAR_fnc_setSwFrequency;
+			}
+		};
+	};
 };
 
 //Disable space button in dialog
@@ -296,7 +331,7 @@ if (!normalClose) then
 		if (isNil "USS_FREEDOM_CARRIER") then 
 		{
 			_spawnPos = [initBlueforLocation, 1, 30, 1, 0, 30, 0, [], [initBlueforLocation, initBlueforLocation]] call BIS_fnc_findSafePos;
-			player setPos (_spawnPos);
+			player setPos [_spawnPos#0, _spawnPos#1, 0];
 		} else 
 		{
 			_spawnPos = initBlueforLocation;

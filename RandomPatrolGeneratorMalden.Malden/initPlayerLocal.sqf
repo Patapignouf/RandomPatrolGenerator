@@ -1,4 +1,6 @@
 //init tp to be able to spawn on the ground on each map
+cutText ["FINISHING LOADING MISSION", "BLACK FADED", 100];
+
 player setPos [worldSize,worldSize, 1000];
 player enableSimulationGlobal false;
 player allowdamage false;
@@ -653,7 +655,7 @@ _KilledEH = player addEventHandler ["Killed", {
 				//Add dialog to punish the teamkiller
 				[[_instigator], {
 					params ["_instigator"];
-					    sleep 3; 
+					    sleep 10;
 						private _resultAlone = [format ["Do you want to punish your killer %1 ?", name _instigator], "Yes", true, true] call BIS_fnc_guiMessage;
 
 						if (_resultAlone) then {

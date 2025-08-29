@@ -222,5 +222,63 @@ cleanWeaponsAndItems = {
 		_cleanList = _cleanList - _listWeaponsToClean;
 	} foreach _baseRifleToClean;
 
+	//Clean duplicate accessories
+	_baseAccToClean = _listToClean select {_x#0 == "shortAccessories"};
+	{
+		_rifleBase = _x#1;
+		_listWeaponsToClean = _cleanList select {_x#1 == _rifleBase && _x#0 != "shortAccessories"};
+		_cleanList = _cleanList - _listWeaponsToClean;
+	} foreach _baseAccToClean;
+
+	//Clean non arsenal weapon
+	_baseAccToClean = _listToClean select {_x#0 != "shortAccessories" && _x#0 != "longAccessories"};
+	{
+		_typeBase = _x#0;
+		_rifleBase = _x#1;
+		_scopeValue = getNumber (configFile >> "CfgWeapons" >> _rifleBase >> "scope");
+		if (_scopeValue == 1) then 
+		{	
+			_weaponIndex = _cleanList findIf {_x#1 == _rifleBase};
+			_cleanList deleteAt _weaponIndex;
+
+			_weaponBaseParents = [configFile >> "CfgWeapons" >> _rifleBase, true] call BIS_fnc_returnParents;
+			_weaponBaseParents = (_weaponBaseParents select {getNumber (configFile >> "CfgWeapons" >> _x >> "scope")  == 2}) select 0;
+			if (_weaponBaseParents != "") then 
+			{
+
+				_cleanList pushBackUnique [_typeBase, toLower _weaponBaseParents];
+			};
+		};
+	} foreach _baseAccToClean;
+
+	//Clean duplicate rifle in other specialities
+	_baseRifleToClean = _cleanList select {_x#0 == "rifle"};
+	{
+		_rifleBase = _x#1;
+		_listWeaponsToClean = _cleanList select {_x#1 == _rifleBase && _x#0 != "rifle"};
+		_cleanList = _cleanList - _listWeaponsToClean;
+	} foreach _baseRifleToClean;
+
+	//Clean duplicate smg
+	_baseRifleToClean = _cleanList select {_x#0 == "smg"};
+	{
+		_rifleBase = _x#1;
+		_listWeaponsToClean = _cleanList select {_x#1 == _rifleBase && _x#0 != "smg"};
+		_cleanList = _cleanList - _listWeaponsToClean;
+	} foreach _baseRifleToClean;
+
+	//Clean duplicate accessories
+	_baseAccToClean = _cleanList select {_x#0 == "shortAccessories"};
+	{
+		_rifleBase = _x#1;
+		_listWeaponsToClean = _cleanList select {_x#1 == _rifleBase && _x#0 != "shortAccessories"};
+		_cleanList = _cleanList - _listWeaponsToClean;
+	} foreach _baseAccToClean;
+
+
+	_cleanList = [_cleanList, [], {_x#0}, "DESCEND"] call BIS_fnc_sortBy;
+
+	diag_log format ["_cleanList = %1", _cleanList];
+
 	_cleanList;
 };

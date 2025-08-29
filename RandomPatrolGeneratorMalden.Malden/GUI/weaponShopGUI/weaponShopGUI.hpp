@@ -9,7 +9,7 @@ class weaponShopGUI
 			x = -16.5 * GUI_GRID_W + 0.5;
 			y = -6.5 * GUI_GRID_H + 0.5;
 			w = 33 * GUI_GRID_W;
-			h = 15.5 * GUI_GRID_H;
+			h = 17.5 * GUI_GRID_H;
 		};
 		class title: RscStructuredText
 		{
@@ -32,7 +32,7 @@ class weaponShopGUI
 			x = -16 * GUI_GRID_W + 0.5;
 			y = -5 * GUI_GRID_H + 0.5;
 			w = W_LNB;
-			h = 12 * GUI_GRID_H;
+			h = 14 * GUI_GRID_H;
 			rowHeight = 0.10; 
 		};
 		class grpSortBtns: RscControlsGroup
@@ -88,7 +88,7 @@ class weaponShopGUI
 		class btnCancel: RscButtonMenuCancel
 		{
 			x = 8 * GUI_GRID_W + 0.5;
-			y = 7.5 * GUI_GRID_H + 0.5;
+			y = 9.5 * GUI_GRID_H + 0.5;
 			w = 8 * GUI_GRID_W;
 			h = 1 * GUI_GRID_H;
 		};
@@ -97,7 +97,7 @@ class weaponShopGUI
 			idc = 60001;
 			text = "STR_GUI_BASE_UNLOCK";
 			x = -16 * GUI_GRID_W + 0.5;
-			y = 7.5 * GUI_GRID_H + 0.5;
+			y = 9.5 * GUI_GRID_H + 0.5;
 			w = 8 * GUI_GRID_W;
 			h = 1 * GUI_GRID_H;
 		};

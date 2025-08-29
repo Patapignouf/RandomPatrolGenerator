@@ -30,8 +30,8 @@ params ["_currentGroup", "_thisObjective"];
 						//Remove this action
 						[_object] remoteExec ["removeAllActions", 0, true];
 
-						//25% chance to give intel to the player
-						if (random 100 < 25 && !([format ["%1%2",_objectiveParam # 0 # 2 ,"_Intel"]] call BIS_fnc_taskExists)) then 
+						//40% chance to give intel to the player
+						if (random 100 < 40 && !([format ["%1%2",_objectiveParam # 0 # 2 ,"_Intel"]] call BIS_fnc_taskExists)) then 
 						{
 							//Search the nearestLocation from the intel
 							_side = side _caller;

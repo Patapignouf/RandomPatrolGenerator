@@ -9,7 +9,7 @@ class playerRespawnMenu
 			x = 0.229686 * safezoneW + safezoneX;
 			y = 0.117436 * safezoneH + safezoneY;
 			w = 45 * GUI_GRID_CENTER_W;
-			h = 15 * GUI_GRID_CENTER_H;
+			h = 19 * GUI_GRID_CENTER_H;
 			colorBackground[] = {0.5,0.5,0.5,0.8};
 		};
 
@@ -67,6 +67,17 @@ class playerRespawnMenu
 			text = "Respawn at tent position";
 			x = GUI_GRID_CENTER_X + 5 * GUI_GRID_CENTER_W;
 			y = GUI_GRID_CENTER_Y + 9 * GUI_GRID_CENTER_H;
+			w = 10 * GUI_GRID_CENTER_W;
+			h = 1 * GUI_GRID_CENTER_H;
+		};
+
+		//Map respawn button
+		class RespawnOnMap: RscButton
+		{
+			idc = 8203;
+			text = "Open respawn map";
+			x = GUI_GRID_CENTER_X + 5 * GUI_GRID_CENTER_W;
+			y = GUI_GRID_CENTER_Y + 11 * GUI_GRID_CENTER_H;
 			w = 10 * GUI_GRID_CENTER_W;
 			h = 1 * GUI_GRID_CENTER_H;
 		};

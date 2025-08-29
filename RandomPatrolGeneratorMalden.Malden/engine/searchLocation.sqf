@@ -57,7 +57,7 @@ getLocationsAroundWithBuilding =
 	//Clear location without building
 	{
 		//Select smallest location (mountain, forest, plains)
-		if (type _x == "NameLocal") then 
+		if (type _x == "NameLocal" || type _x == "Hill" ) then 
 		{
 			//Check if there is building near the location
 			if (count ((nearestTerrainObjects [locationPosition _x, ["house", "FORTRESS", "BUNKER"], 150, false, true])) == 0) then 

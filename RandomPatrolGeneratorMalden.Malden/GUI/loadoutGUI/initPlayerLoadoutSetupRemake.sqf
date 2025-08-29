@@ -395,7 +395,7 @@ if (missionNameSpace getVariable ["enableOpforWeaponShop",1] == 1) then
 	_ButtonShop ctrlAddEventHandler ["ButtonClick",{
 			params ["_ctrl"];
 
-			[[], "GUI\weaponShopGUI\weaponShopGUI.sqf"] remoteExec ['BIS_fnc_execVM', player];
+			[[true], "GUI\weaponShopGUI\weaponShopGUI.sqf"] remoteExec ['BIS_fnc_execVM', player];
 
 			_display = ctrlParent _ctrl;
 			_display closeDisplay 1;
