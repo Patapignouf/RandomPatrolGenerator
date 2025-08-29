@@ -1,9 +1,9 @@
 //Define global faction variable 
 warEra_loaded = profileNamespace getVariable ["RPG_warEra", 3]; // GUI generation mission boolean flag
-bluforFaction_loaded = profileNamespace getVariable ["RPG_bluforFaction", 14]; //Default faction 14 -> OTAN 2035
-opforFaction_loaded = profileNamespace getVariable ["RPG_opforFaction", 21]; //Default faction 3 -> Syndikat
-independentFaction_loaded = profileNamespace getVariable ["RPG_independentFaction", 21]; //Default faction 3 -> Syndikat
-civilianFaction_loaded = profileNamespace getVariable ["RPG_civilianFaction", 21]; //Default faction 3 -> Syndikat
+bluforFaction_loaded = profileNamespace getVariable ["RPG_bluforFaction", "BLU_F"]; //Default faction 14 -> OTAN 2035
+opforFaction_loaded = profileNamespace getVariable ["RPG_opforFaction", "OPF_G_F"]; //Default faction 3 -> Syndikat
+independentFaction_loaded = profileNamespace getVariable ["RPG_independentFaction", "IND_F"]; //Default faction 3 -> Syndikat
+civilianFaction_loaded = profileNamespace getVariable ["RPG_civilianFaction", "21"]; //Default faction 3 -> Syndikat
 
 
 //Missions vehicle settings
