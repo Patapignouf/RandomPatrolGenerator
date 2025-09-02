@@ -573,6 +573,7 @@ publicVariable "factionInfos";
 
 		//RHS Faction +
 		["rhs_faction_socom","FP_SOAR"] call mergeFactions;	
+		["rhs_faction_socom", "rhs_faction_usaf"] call mergeFactions;
 		["FP_RHSUSAF_RANGER","FP_SOAR"] call mergeFactions;	
 		["FP_RHSUSAF_RANGER_2000s","FP_SOAR"] call mergeFactions;	
 		["FP_SOCOM_DEVGRU","FP_SOAR"] call mergeFactions;	
