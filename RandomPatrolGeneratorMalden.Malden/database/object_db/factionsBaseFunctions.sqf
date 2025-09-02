@@ -165,6 +165,26 @@ isPistol = {
 isGrenadeLauncher = {
 	params ["_itemClassName"];
 	_result = (([configFile >> "CfgWeapons" >> _itemClassName, true] call BIS_fnc_returnParents) findIf {"GrenadeLauncher" == (_x)} != -1);
+
+	if (!_result) then 
+	{
+		 private _cfg = configFile >> "CfgWeapons" >> _itemClassName;
+		if !(isClass _cfg) exitWith {false};
+
+		private _muzzles = getArray (_cfg >> "muzzles");
+
+		// si juste "this", alors pas de GL
+		if (_muzzles isEqualTo ["this"]) exitWith {false};
+
+		{
+			private _muzzleCfg = _cfg >> _x;
+			if (isClass _muzzleCfg) then {
+				private _base = inheritsFrom _muzzleCfg;
+				if (configName _base == "UGL_F") exitWith {_result = true};
+			};
+		} forEach _muzzles;
+	};
+
 	_result;
 };
 
@@ -651,7 +671,7 @@ filterWeaponsAndAccessoryByWeaponClassname =
 		};
 
 		//filter accessory
-		if ([_x] call isAccessory) then 
+		if ([_x] call isWeapon) then 
 		{
 			_resultList#0 pushBack _x;
 		};
