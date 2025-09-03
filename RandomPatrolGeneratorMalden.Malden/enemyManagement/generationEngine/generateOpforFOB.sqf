@@ -91,7 +91,7 @@ if (!([_OpforFobLocation] call isLocationOnMap)) then
 	} else 
 	{
 		//50%
-		[_objectiveObject] execVM 'engine\objectiveManagement\checkDefendArea.sqf';
+		[_objectiveObject, 1] execVM 'engine\objectiveManagement\checkDefendArea.sqf';
 	};
 
 	if (random 100 < 50) then 

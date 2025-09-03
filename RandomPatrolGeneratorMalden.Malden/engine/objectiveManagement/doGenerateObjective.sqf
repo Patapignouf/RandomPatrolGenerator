@@ -910,7 +910,7 @@ generateObjectiveObject =
 					[{["STR_RPG_HC_NAME", "STR_RPG_HC_OPFOR_AROUND"] call doDialog}] remoteExec ["call", side _caller];
 
 					//Start defend
-					[[_objectiveObject], 'engine\objectiveManagement\checkDefendArea.sqf'] remoteExec ['BIS_fnc_execVM', 2];
+					[[_objectiveObject, 3], 'engine\objectiveManagement\checkDefendArea.sqf'] remoteExec ['BIS_fnc_execVM', 2];
 				},_thisObjective, 10,true,true,"","_target distance _this <3"]] remoteExec ["addAction", 0, true];
 			};
 		case "takeAndHold":
@@ -924,7 +924,7 @@ generateObjectiveObject =
 				_objectiveObject setPos _thisObjectivePosition; //create a trigger area created at object with variable name my_object
 				_objectiveObject setTriggerArea [200, 200, 0, false]; // trigger area with a radius of 200m.
 				_objectiveObject setVariable ["associatedTask", _thisObjective];
-				[_objectiveObject] execVM 'engine\objectiveManagement\checkDefendArea.sqf';
+				[_objectiveObject, 1] execVM 'engine\objectiveManagement\checkDefendArea.sqf';
 			};	
 		case "collectIntel":
 			{
