@@ -30,25 +30,18 @@ _smartFilter = "EnableSmartFilter" call BIS_fnc_getParamValue == 1;
 			//Note that the smart filter consume an higher amount of resource 
 			if (_smartFilter) then 
 			{
-				if ((configName _x) isKindOf "Man") then {
-					//PreFilter unarmed
-					if (((configFile >> "CfgVehicles" >> (configName _x) >> "role") call BIS_fnc_GetCfgData) != "Unarmed") then 
-					{
-						_index = ([_factionsWithUnitsFiltered, _factionClass] call BIS_fnc_findInPairs);
-						if (_index == -1) then {
-							_factionsWithUnitsFiltered pushBack [_factionClass, 1, ((configFile >> "CfgVehicles" >> configName _x >> "side") call BIS_fnc_GetCfgData)];
-						} else {
-							_factionsWithUnitsFiltered set [_index, [((_factionsWithUnitsFiltered select _index) select 0), ((_factionsWithUnitsFiltered select _index) select 1)+1,((configFile >> "CfgVehicles" >> configName _x >> "side") call BIS_fnc_GetCfgData)]];
-						}; 
-					};
-				};	
+				//PreFilter unarmed
+				if (((configFile >> "CfgVehicles" >> (configName _x) >> "role") call BIS_fnc_GetCfgData) != "Unarmed") then 
+				{
+					_factionsWithUnitsFiltered pushBackUnique [_factionClass, 1, ((configFile >> "CfgVehicles" >> configName _x >> "side") call BIS_fnc_GetCfgData)];
+				};
 			} else 
 			{
 				_factionsWithUnitsFiltered pushBackUnique [_factionClass, 1, ((configFile >> "CfgVehicles" >> configName _x >> "side") call BIS_fnc_GetCfgData)];		
 			};
 		};
 	};
-} forEach ("(configName _x) isKindOf 'AllVehicles'" configClasses (configFile / "CfgVehicles"));
+} forEach ("(configName _x) isKindOf 'Man'" configClasses (configFile / "CfgVehicles"));
 
 
 
@@ -91,30 +84,20 @@ brokenFactions = ["Default"];
 	if (factionInfos findIf {_x#0 == _factionTechName}==-1 && brokenFactions findIf {_x == _factionTechName} ==-1) then 
 	{
 		_sideName = "";
-		switch (_x#2) do {
+				switch (_x#2) do {
 			case 0:
 			{
 				_sideName = "OPFOR";
-				[opfor, _factionTechName] call addRadioToFaction;
-				[opfor, _factionTechName] call addBackPackDroneToFaction;
-				[opfor, _factionTechName] call addModernItemsToFaction;
 			};
 			case 1:
 			{
 				_sideName = "BLUFOR";
-				[blufor, _factionTechName] call addRadioToFaction;
-				[blufor, _factionTechName] call addBackPackDroneToFaction;
-				[blufor, _factionTechName] call addModernItemsToFaction;
 			};
 			case 2:
 			{
 				_sideName = "INDEPENDENT";
-				[independent, _factionTechName] call addRadioToFaction;
-				[independent, _factionTechName] call addBackPackDroneToFaction;
-				[independent, _factionTechName] call addModernItemsToFaction;
 			};
 		};
-
 		factionInfos pushBack [_factionTechName, _factionTechName, format ["%1 [AUTO %2]", ((configFile >> "CfgFactionClasses" >> _factionTechName >> "displayName") call BIS_fnc_GetCfgData), _sideName], true, true, false];
 		_potentialOpfor pushBack _factionTechName;
 	};
@@ -135,9 +118,9 @@ diag_log format ["Automatic faction parsing end"];
 publicVariable "factionInfos";
 
 //Build factions content async
-[_potentialOpfor, _potentialCivFactions] spawn 
+[_potentialOpfor, _potentialCivFactions, _potentialFactions] spawn 
 {
-	params ["_potentialOpfor", "_potentialCivFactions"];
+	params ["_potentialOpfor", "_potentialCivFactions", "_potentialFactions"];
 
 	//Wait admin chose factions to parse only specifics factions
 
@@ -685,6 +668,39 @@ publicVariable "factionInfos";
 	} foreach _potentialOpfor;
 
 	systemChat format ["Faction parsing : finishing opfor factions - %1", time];
+
+	//adjust faction radio
+	{
+		_factionTechName = _x;
+
+		_bindingFaction = _potentialFactions select {_factionTechName == _x#0};
+
+		if (count _bindingFaction != 0) then 
+		{
+			switch ((_bindingFaction#0)#2) do {
+				case 0:
+				{
+					[opfor, _factionTechName] call addRadioToFaction;
+					[opfor, _factionTechName] call addBackPackDroneToFaction;
+					[opfor, _factionTechName] call addModernItemsToFaction;
+				};
+				case 1:
+				{
+					[blufor, _factionTechName] call addRadioToFaction;
+					[blufor, _factionTechName] call addBackPackDroneToFaction;
+					[blufor, _factionTechName] call addModernItemsToFaction;
+				};
+				case 2:
+				{
+					[independent, _factionTechName] call addRadioToFaction;
+					[independent, _factionTechName] call addBackPackDroneToFaction;
+					[independent, _factionTechName] call addModernItemsToFaction;
+				};
+			};
+		};
+	} foreach _whiteListFactions;
+
+
 
 	missionFactionSetup = true;
 	publicVariable "missionFactionSetup";
