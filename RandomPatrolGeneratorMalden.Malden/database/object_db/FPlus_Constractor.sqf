@@ -12,7 +12,10 @@ if (isClass (configFile >> "CfgWeapons" >> "FP_MPC_Car")) then
 ////////////////////////
 //USA
 bluforUnarmedVehicle_FP_Contractor = [
-	"rhsgref_cdf_b_gaz66"
+	"rhsgref_cdf_b_gaz66",
+	"UAZ_03_transport_F",
+	"UAZ_pat",
+	"B_G_Quadbike_01_F"
 ];
 
 bluforArmedVehicle_FP_Contractor = [
@@ -32,7 +35,7 @@ bluforArmoredVehicle_FP_Contractor = [
 ];
 
 bluforUnarmedVehicleChopper_FP_Contractor = [
-	"rhs_uh1h_hidf_unarmed"
+	"B_Heli_Light_01_F"
 ];
 
 bluforArmedChopper_FP_Contractor = [
@@ -40,11 +43,11 @@ bluforArmedChopper_FP_Contractor = [
 ];
 
 bluforDrone_FP_Contractor = [
-
+	"C_UAV_06_F"
 ]; 
 
 bluforBoat_FP_Contractor = [
-
+	"C_Boat_Civil_01_F"
 ];
 
 //FixedWing vehicle avalaible for blufor
@@ -157,14 +160,28 @@ backPackList_FP_Contractor = [
 	"B_AssaultPack_cbr",
 	"TFAR_rt1523g",
 	"TFAR_rt1523g_green",
-	"B_parachute"
+	"B_parachute",
+	"ace_gunbag_Tan"
 ];
 
 //Uniform, vest, headgear, avalaible for all unit
 uniformList_FP_Contractor = [
-	"AAF_PMC_SOLDIER",
+	//head
+	"H_HelmetB_light_sand",
+	"H_Cap_blk",
+	//Glasses 
+	"FaceWear_Balaclava",
+	"G_Bandanna_tan",
+	"G_Bandanna_blk",
+	"G_Shades_Blue",
+	"rhsusf_shemagh_gogg_tan",
+
+	//vest
 	"FP_TacVest_Coy",
-	"H_HelmetB_light_sand"
+	"V_PlateCarrier1_blk",
+	//uniform
+	"AAF_PMC_SOLDIER",
+	"U_I_G_resistanceLeader_F"
 ];
 
 
