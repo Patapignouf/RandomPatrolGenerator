@@ -159,6 +159,18 @@ if (missionNameSpace getVariable ["enableOpforWeaponShop",1] == 1) then
 		}];
 };
 
+//Add feature to allow opfor player to remote control enemy unit
+if (missionNameSpace getVariable ["sideRelations",0] == 2 && side player == independent) then 
+{
+	paramsToManageNow pushBack ["Button", "Remote control OPFOR", "Take control of random enemy", {
+			player remoteControl objNull; 
+			switchCamera player; // if needed
+			_unitToControl = selectRandom (allUnits select {side _x == opfor && alive _x});
+			_unitToControl switchCamera "INTERNAL"; 
+			player remoteControl _unitToControl;
+		}];
+};
+
 //Add empty line
 paramsToManageNow pushBack ["","","",""];
 

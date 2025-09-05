@@ -1,6 +1,6 @@
 #include "..\..\objectGenerator\vehicleManagement.sqf"
 
-params ["_thisTrigger"];
+params ["_thisTrigger", "_numberOfWaves"];
 
 //diag_log format ["Log : checkDefendArea , _thisTrigger = %1 , getPos _thisTrigger = %2 , associatedTask = %3", _thisTrigger, getPos _thisTrigger, _thisTrigger getVariable "associatedTask"];
 
@@ -30,11 +30,23 @@ while {sleep 15; _nbBluePlayer + _nbIndPlayer == 0 || _nbOpfor > 2} do
 	};
 };
 
-//Generate enemy attack wave
-AvalaibleInitAttackPositions = [];
-AvalaibleInitAttackPositions = [getPos _thisTrigger, 550, 800, round (missionDifficultyParam/2)] call getListOfPositionsAroundTarget;
-_handleAttackGeneration = [AvalaibleInitAttackPositions, getPos _thisTrigger, [baseEnemyGroup,baseEnemyATGroup], baseEnemyVehicleGroup, missionDifficultyParam+1] execVM 'enemyManagement\behaviorEngine\doAmbush.sqf'; 
-waitUntil {isNull _handleAttackGeneration};
+//Deploy multiples opfor reinforcement waves
+for [{_waveCount = 0}, {_waveCount < _numberOfWaves}, {_waveCount = _waveCount + 1}] do
+{
+	[getPos _thisTrigger, missionDifficultyParam, baseEnemyVehicleGroup, baseEnemyGroup, baseEnemyATGroup, _waveCount] spawn 
+	{
+		params ["_triggerPos", "_missionDifficultyParam", "_baseEnemyVehicleGroup", "_baseEnemyGroup", "_baseEnemyATGroup", "_waveCountInt"];
+
+		//Wait before incoming wave
+		sleep ((_waveCountInt)*300);
+		//systemChat format ["wave number %1, %2", _waveCountInt, (_waveCountInt)*300]; 
+
+		//Generate enemy attack wave
+		AvalaibleInitAttackPositions = [];
+		AvalaibleInitAttackPositions = [_triggerPos, 550, 800, round (_missionDifficultyParam/2)] call getListOfPositionsAroundTarget;
+		[AvalaibleInitAttackPositions, _triggerPos, [_baseEnemyGroup,_baseEnemyATGroup], _baseEnemyVehicleGroup, _missionDifficultyParam+1] execVM 'enemyManagement\behaviorEngine\doAmbush.sqf'; 
+	};
+};
 
 //diag_log format ["Log : checkDefendArea , enemy generation completed"];
 
@@ -54,7 +66,7 @@ if (_thisFOBCheck) then
 };
 
 //Wait enemy reinforcement
-sleep 500;
+sleep (((_numberOfWaves)*300)+120);
 
 _nbBluePlayer = count ((allPlayers select {alive _x && side _x == blufor} ) inAreaArray _thisTrigger);
 _nbIndPlayer = count ((allPlayers select {alive _x && side _x == independent} ) inAreaArray _thisTrigger);
