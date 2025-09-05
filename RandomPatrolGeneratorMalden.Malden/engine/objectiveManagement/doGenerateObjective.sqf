@@ -498,7 +498,7 @@ generateObjectiveObject =
 					params ["_object","_caller","_ID","_thisObjective"];
 
 						[_object, _caller, _thisObjective] spawn 
-						{
+						{_thisObjectivePosition
 							params ["_object", "_caller", "_thisObjective"];
 							disableSerialization;
 							code = _object getVariable "RPG_DefuseCode";
@@ -912,6 +912,15 @@ generateObjectiveObject =
 					//Start defend
 					[[_objectiveObject, 3], 'engine\objectiveManagement\checkDefendArea.sqf'] remoteExec ['BIS_fnc_execVM', 2];
 				},_thisObjective, 10,true,true,"","_target distance _this <3"]] remoteExec ["addAction", 0, true];
+				
+				//Set objective box invincible
+				[_objectiveObjectBox] spawn 
+				{
+					params ["_objectiveObject"];
+					sleep 3;
+					_objectiveObject enableSimulationGlobal false;
+				};
+
 			};
 		case "takeAndHold":
 			{
