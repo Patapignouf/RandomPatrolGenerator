@@ -66,7 +66,7 @@ if (_thisFOBCheck) then
 };
 
 //Wait enemy reinforcement
-sleep 600;
+sleep (((_numberOfWaves)*300)+120);
 
 _nbBluePlayer = count ((allPlayers select {alive _x && side _x == blufor} ) inAreaArray _thisTrigger);
 _nbIndPlayer = count ((allPlayers select {alive _x && side _x == independent} ) inAreaArray _thisTrigger);
