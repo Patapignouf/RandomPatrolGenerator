@@ -140,6 +140,11 @@ doSurrender = {
 			_unit setVariable ["lambs_danger_disableAI", true];
 		};
 
+		//Disable AI move 
+		_unit disableAI "PATH";
+		_unit disableAI "TARGET";
+		_unit disableAI "MOVE";
+
 		//Heal unit to prevent IA from immediate death and penalize the player 
 		if (isClass (configFile >> "CfgPatches" >> "ace_medical")) then 
 		{
