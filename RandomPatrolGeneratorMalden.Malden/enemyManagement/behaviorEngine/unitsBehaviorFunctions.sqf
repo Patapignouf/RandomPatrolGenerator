@@ -144,6 +144,7 @@ doSurrender = {
 		_unit disableAI "PATH";
 		_unit disableAI "TARGET";
 		_unit disableAI "MOVE";
+		_unit disableAI "FSM";
 
 		//Heal unit to prevent IA from immediate death and penalize the player 
 		if (isClass (configFile >> "CfgPatches" >> "ace_medical")) then 
