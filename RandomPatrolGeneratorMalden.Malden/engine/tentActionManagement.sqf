@@ -17,15 +17,15 @@ if (missionNameSpace getVariable ["enableAdvancedRespawn", 1] == 1) then
 			_createTent setVariable [str (group _caller), true, true];
 			_createTent allowDamage false;
 
-			//Check if there are enemy nearby to delete tent
-			[getPos _createTent, _caller] spawn {
-				params ["_triggerPos", "_caller"];
+			//Create opfor control trigger
+			_triggerTent = createTrigger ["EmptyDetector", getPos _createTent];
+			_triggerTent setTriggerArea [7, 7, 0, true];
 
-				//Create opfor control trigger
-				_triggerTent = createTrigger ["EmptyDetector", _triggerPos];
-				_triggerTent setTriggerArea [7, 7, 0, true];
+			//Check if there are enemy nearby to delete tent
+			[_triggerTent, _caller] spawn {
+				params ["_triggerTent", "_caller"];
+
 				_groupName = str (group (_caller));
-				
 				_nbOpfor = count ((allUnits select {alive _x && side _x == opfor} ) inAreaArray _triggerTent);
 
 				while {sleep 15; _nbOpfor == 0} do 
