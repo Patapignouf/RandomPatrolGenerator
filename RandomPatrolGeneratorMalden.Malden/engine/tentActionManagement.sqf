@@ -17,13 +17,14 @@ if (missionNameSpace getVariable ["enableAdvancedRespawn", 1] == 1) then
 			_createTent setVariable [str (group _caller), true, true];
 			_createTent allowDamage false;
 
-			//Create opfor control trigger
-			_triggerTent = createTrigger ["EmptyDetector", getPos _createTent];
-			_triggerTent setTriggerArea [7, 7, 0, true];
-
 			//Check if there are enemy nearby to delete tent
-			[_triggerTent, _caller] spawn {
-				params ["_triggerTent", "_caller"];
+			[getPos _createTent, _caller] spawn {
+				params ["_triggerPos", "_caller"];
+
+				//Create opfor control trigger
+				_triggerTent = createTrigger ["EmptyDetector", _triggerPos];
+				_triggerTent setTriggerArea [7, 7, 0, true];
+				_groupName = str (group (_caller));
 				
 				_nbOpfor = count ((allUnits select {alive _x && side _x == opfor} ) inAreaArray _triggerTent);
 
@@ -33,7 +34,7 @@ if (missionNameSpace getVariable ["enableAdvancedRespawn", 1] == 1) then
 				};
 
 				//Reset group tent
-				_variableToCheck = format ['bluforPositionAdvancedRespawn%1', str (group (_caller))];
+				_variableToCheck = format ['bluforPositionAdvancedRespawn%1', _groupName];
 				missionNameSpace setVariable [_variableToCheck , [0,0,0], true];
 
 				//Tell all the group that the tent has been destroyed by opfor
