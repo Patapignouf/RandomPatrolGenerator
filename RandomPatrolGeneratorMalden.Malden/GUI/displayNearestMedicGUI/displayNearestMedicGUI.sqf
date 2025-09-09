@@ -7,6 +7,20 @@ params ["_unit"];
 
 disableSerialization;
 
+checkUnconscious = {
+	params ["_unit"];
+	_resultUnconscious = false;
+	if (isClass (configFile >> "CfgPatches" >> "ace_medical")) then 
+	{
+		_resultUnconscious = [_unit] call ace_common_fnc_isAwake;
+	} else 
+	{
+		_resultUnconscious = (lifeState _unit == "INCAPACITATED");
+	};
+	_resultUnconscious;
+};
+
+
 // diag_log format ["Domination GUI : %1", getPos _thisAreaTrigger];
 
 with uiNamespace do {
@@ -42,7 +56,7 @@ with uiNamespace do {
 	_RcsTitleDialog2 ctrlSetTextColor [1, 1, 1, 1];
 	_RcsTitleDialog2 ctrlCommit 0;
 
-	while {sleep 1; (lifeState _unit == "INCAPACITATED")} do 
+	while {sleep 1; ([_unit] call checkUnconscious)} do 
 	{
 		//Prepare data 
 		//Will crash if the player is alone 
