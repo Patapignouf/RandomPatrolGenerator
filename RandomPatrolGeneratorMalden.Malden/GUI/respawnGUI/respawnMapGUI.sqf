@@ -145,7 +145,7 @@ private _createMarkers = {
         private _pos   = _x select 1;
         private _color = _x select 2;
 
-        createMarker [_name, _pos];
+        createMarkerLocal [_name, _pos];
         _name setMarkerType  "selector_selectedMission";
         _name setMarkerText  _label;
         _name setMarkerColor _color;
