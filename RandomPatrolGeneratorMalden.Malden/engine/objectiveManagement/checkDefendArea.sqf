@@ -54,7 +54,6 @@ for [{_waveCount = 0}, {_waveCount < _numberOfWaves}, {_waveCount = _waveCount +
 _thisObjectiveToComplete = _thisTrigger getVariable ["associatedTask", []];
 if (!([_thisObjectiveToComplete,[]] call BIS_fnc_areEqual)) then 
 {
-
 	_nearestCity = nearestLocations [getPos _thisTrigger, ["NameLocal","NameVillage","NameCity","NameCityCapital"], 1500] select 0;
 	[[_nearestCity], {params ["_nearestCity"]; ["STR_RPG_HC_NAME", "STR_RPG_HC_ENEMY_ATK", text _nearestCity] call doDialog}] remoteExec ["spawn", 0]; 
 };
@@ -73,7 +72,7 @@ _nbIndPlayer = count ((allPlayers select {alive _x && side _x == independent} ) 
 _nbOpfor = count ((allUnits select {alive _x && side _x == opfor} ) inAreaArray _thisTrigger);
 
 //Check if there's opfor on the area after the attack
-while {sleep 15; _nbBluePlayer + _nbIndPlayer == 0 || _nbOpfor > 2} do 
+while {sleep 15; (_nbBluePlayer + _nbIndPlayer != 0 && _nbOpfor > 2)} do 
 {
 	_nbBluePlayer = count ((allPlayers select {alive _x && side _x == blufor} ) inAreaArray _thisTrigger);
 	_nbIndPlayer = count ((allPlayers select {alive _x && side _x == independent} ) inAreaArray _thisTrigger);
@@ -94,22 +93,40 @@ while {sleep 15; _nbBluePlayer + _nbIndPlayer == 0 || _nbOpfor > 2} do
 //Check tasks
 if (!([_thisObjectiveToComplete,[]] call BIS_fnc_areEqual)) then 
 {
-	[_thisObjectiveToComplete] execVM 'engine\objectiveManagement\completeObjective.sqf'; 
-	[{[50, "RPG_ranking_objective_complete"] call doUpdateRank}] remoteExec ["call", 0];
-
-	//Manage Completed Objective
-	_completedObjectives = missionNamespace getVariable ["completedObjectives",[]];
-	_completedObjectives pushBack _thisObjectiveToComplete;
-	missionNamespace setVariable ["completedObjectives",_completedObjectives,true];	
-
-	[] call doIncrementAllCredits;	
-
-	//Call respawn
-	if (["Respawn",1] call BIS_fnc_getParamValue == 1) then 
+	//Check if there are players inside the area
+	//If not it means that opfor wins
+	if (_nbBluePlayer + _nbIndPlayer == 0 && _nbOpfor > 2) then 
 	{
-		[[], "engine\respawnManagement\respawnManager.sqf"] remoteExec ['BIS_fnc_execVM', 0];
-	};
+		//Objective failed
+		_missionFailedObjectives = missionNamespace getVariable ["missionFailedObjectives", []];
+		_missionFailedObjectives = _missionFailedObjectives + [_thisObjectiveToComplete]; //needs to be improved
+		missionNamespace setVariable ["missionFailedObjectives", _missionFailedObjectives, true];
+		
+		//Manage task system
+		if ("RealismMode" call BIS_fnc_getParamValue == 1) then 
+		{
+			[_thisObjectiveToComplete#2, "FAILED"] call BIS_fnc_taskSetState;
+		};
 
+	} else 
+	{
+		//Objective complete
+		[_thisObjectiveToComplete] execVM 'engine\objectiveManagement\completeObjective.sqf'; 
+		[{[50, "RPG_ranking_objective_complete"] call doUpdateRank}] remoteExec ["call", 0];
+
+		//Manage Completed Objective
+		_completedObjectives = missionNamespace getVariable ["completedObjectives",[]];
+		_completedObjectives pushBack _thisObjectiveToComplete;
+		missionNamespace setVariable ["completedObjectives",_completedObjectives,true];	
+
+		[] call doIncrementAllCredits;	
+
+		//Call respawn
+		if (["Respawn",1] call BIS_fnc_getParamValue == 1) then 
+		{
+			[[], "engine\respawnManagement\respawnManager.sqf"] remoteExec ['BIS_fnc_execVM', 0];
+		};
+	};
 };
 
 //Check FOB clear
