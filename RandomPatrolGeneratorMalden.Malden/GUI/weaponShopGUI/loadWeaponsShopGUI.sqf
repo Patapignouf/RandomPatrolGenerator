@@ -45,11 +45,11 @@ switch (_mode) do
 		_opFactionWeapon = [_opFactionWeapon, _currentFaction] call removeAlreadyUnlockedWeaponFromFlatList; //OnlyBluFaction for now 
 
 		{
-			_price = 1;
 			_weaponClassName = _x#1;
+			_categoryName = _x#0;
 			_supportName = getText (configFile >> "CfgWeapons" >> _weaponClassName >> "displayName");
 			_supportNameCode = "";
-			switch (_x#0) do 
+			switch (_categoryName) do 
 			{
 				case "rifle":
 				{
@@ -83,6 +83,12 @@ switch (_mode) do
 				{
 					_supportNameCode = localize "STR_RPG_LOADOUT_ROLE_MARKSMAN";
 				};
+			};
+
+			_price = 1; //Set default price of 1 for accessories
+			if (_categoryName != "shortAccessories" && _categoryName != "longAccessories") then 
+			{
+				_price = [_weaponClassName] call defineItemPrice;
 			};
 
 			_supportIcon = getText (configFile >> "CfgWeapons" >> _weaponClassName >> "picture");

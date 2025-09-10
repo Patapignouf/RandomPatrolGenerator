@@ -282,3 +282,94 @@ cleanWeaponsAndItems = {
 
 	_cleanList;
 };
+
+
+
+defineItemPrice = {
+	params ["_weaponClassName"];
+	_priceResult = 1;
+
+	_cfgWpn = configFile >> "CfgWeapons" >> _weaponClassName;
+
+
+	if !(isClass _cfgWpn) exitWith {
+		diag_log format ["Arme introuvable : %1", _weaponClassName];
+	};
+
+	_mags = getArray (_cfgWpn >> "magazines");
+
+	// Si vide, on check les wells
+	if (_mags isEqualTo []) then {
+		private _wells = getArray (_cfgWpn >> "magazineWell");
+		{
+			private _well = _x;
+			private _magsInWell = getArray (configFile >> "CfgMagazineWells" >> _well >> "magazines");
+			_mags append _magsInWell;
+		} forEach _wells;
+	};
+
+	// Nettoyage doublons
+	_mags = _mags arrayIntersect _mags;
+
+
+	if (_mags isEqualTo []) exitWith {
+		diag_log format ["Aucun chargeur trouvé pour %1", _weaponClassName];
+	};
+
+	//Take the default mag
+	_output = "";
+	_rangeEst = 0;
+	_hit = 0;
+	_cal = 0;
+	_spd = 0;
+	{
+		private _mag = _x;
+		private _ammo = getText (configFile >> "CfgMagazines" >> _mag >> "ammo");
+		private _cfgAmmo = configFile >> "CfgAmmo" >> _ammo;
+
+		_hit = getNumber (_cfgAmmo >> "hit");
+		_cal = getNumber (_cfgAmmo >> "caliber");
+		_spd = getNumber (_cfgAmmo >> "typicalSpeed");
+		_airF = getNumber (_cfgAmmo >> "airFriction");
+		_ttl = getNumber (_cfgAmmo >> "timeToLive");
+
+		// --- Estimation de la portée ---
+		private _dt = 0.01; // pas de simulation (s)
+		private _t = 0;
+		private _v = _spd;
+		private _dist = 0;
+
+		while {_t < _ttl && _v > 1} do {
+			_dist = _dist + (_v * _dt);
+			_v = _v + (_airF * _v * _v * _dt); // perte de vitesse
+			_t = _t + _dt;
+		};
+
+		_rangeEst = round _dist;
+
+		_output = _output + format [
+			"\n\nMagazine : %1\n  Ammo: %2\n  Dégâts (hit): %3\n  Pénétration (caliber): %4\n  Vitesse (m/s): %5\n  AirFriction: %6\n  Durée de vie (s): %7",
+			_mag, _ammo, _hit, _cal, _spd, _airF, _ttl
+		];
+	} foreach [_mags#0]; //Take only the first mag
+
+	//Adjust price with range
+	if (_rangeEst > 1500) then 
+	{
+		_priceResult = _priceResult + 1;
+	};
+
+	//Adjust price with range
+	if (_cal > 1) then 
+	{
+		_priceResult = _priceResult + 1;
+	};
+
+	//Adjust price with damage
+	if (_hit > 15) then 
+	{
+		_priceResult = _priceResult + 1;
+	};
+
+	_priceResult
+};
