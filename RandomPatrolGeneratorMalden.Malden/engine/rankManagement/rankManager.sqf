@@ -226,6 +226,8 @@ if (isClass (configFile >> "CfgPatches" >> "ace_medical")) then
 					{
 						_itemToDisplay = _className;
 					};
+
+					//Display healing action when player is unconscious
 					[[_caller, _itemToDisplay], {params ["_caller", "_itemToDisplay"]; ["STR_RPG_HC_NAME_MUTE", "STR_RPG_HC_MEDIC_UNCONSCIOUS", name _caller, _itemToDisplay] call doDialog}] remoteExec ["spawn", _target]; 
 				};
 			} else
@@ -278,7 +280,10 @@ if (isClass (configFile >> "CfgPatches" >> "ace_medical")) then
 	["ace_unconscious", {
 		params ["_unit", "_state"];
 
-		_unit setVariable ["isUnconscious", _state];
+		//State seems to be broken since the last ACE update
+		//_unit setVariable ["isUnconscious", _state];
+		_unit setVariable ["isUnconscious", !([_unit] call ace_common_fnc_isAwake)]; //Let's use isAwake function which is more reliable for the moment
+
 		// If unit is regaining consciousness, xp rewards are granted to people who participated to medical treatments during unconsciousness
 		if (!_state) then 
 		{
