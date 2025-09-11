@@ -88,7 +88,10 @@ switch (_mode) do
 			_price = 1; //Set default price of 1 for accessories
 			if (_categoryName != "shortAccessories" && _categoryName != "longAccessories") then 
 			{
-				_price = [_weaponClassName] call defineItemPrice;
+				_price = [_weaponClassName] call defineWeaponPrice;
+			} else 
+			{
+				_price = [_weaponClassName] call defineScopePrice;
 			};
 
 			_supportIcon = getText (configFile >> "CfgWeapons" >> _weaponClassName >> "picture");

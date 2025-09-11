@@ -285,7 +285,7 @@ cleanWeaponsAndItems = {
 
 
 
-defineItemPrice = {
+defineWeaponPrice = {
 	params ["_weaponClassName"];
 	_priceResult = 1;
 
@@ -367,6 +367,52 @@ defineItemPrice = {
 
 	//Adjust price with damage
 	if (_hit > 15) then 
+	{
+		_priceResult = _priceResult + 1;
+	};
+
+	_priceResult
+};
+
+defineScopePrice = {
+	params ["_optic"];
+
+	_priceResult = 1;
+
+	private _cfg = configFile >> "CfgWeapons" >> _optic >> "ItemInfo" >> "OpticsModes";
+
+	if !(isClass _cfg) exitWith { hint format["Lunette introuvable : %1", _optic]; _priceResult;};
+
+	private _out = format ["Lunette : %1", _optic];
+	private _fovNormal = 0.75; // valeur approximative du FOV normal
+	_magMax = 0;
+
+	for "_i" from 0 to (count _cfg - 1) do {
+		private _mode = _cfg select _i;
+		if (isClass _mode) then {
+			private _name = configName _mode;
+			private _zMin = getNumber (_mode >> "opticsZoomMin");
+			private _zMax = getNumber (_mode >> "opticsZoomMax");
+			private _zInit = getNumber (_mode >> "opticsZoomInit");
+
+			private _magMin = if (_zMax > 0) then { round((_fovNormal / _zMax) * 10) / 10 } else {0};
+			_magMax = if (_zMin > 0) then { round((_fovNormal / _zMin) * 10) / 10 } else {0};
+			private _magInit = if (_zInit > 0) then { round((_fovNormal / _zInit) * 10) / 10 } else {0};
+
+			_out = _out + format [
+				"\n\nMode: %1\n Zoom init: x%2\n Zoom min: x%3\n Zoom max: x%4",
+				_name, _magInit, _magMin, _magMax
+			];
+		};
+	};
+
+	//Adjust price with range
+	if (_magMax > 3) then 
+	{
+		_priceResult = _priceResult + 1;
+	};
+
+	if (_magMax > 10) then 
 	{
 		_priceResult = _priceResult + 1;
 	};
