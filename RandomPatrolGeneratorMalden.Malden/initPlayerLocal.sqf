@@ -251,7 +251,7 @@ if !(isClass (configFile >> "CfgPatches" >> "ace_medical")) then
 		if (player != _unit) exitWith {}; 
 
 		//Disable physX collision 
-		_unit setPhysicsCollisionFlag !_status;
+		//_unit setPhysicsCollisionFlag !_status;
 
 		//If unit become unconscious
 		if (_status) then 
