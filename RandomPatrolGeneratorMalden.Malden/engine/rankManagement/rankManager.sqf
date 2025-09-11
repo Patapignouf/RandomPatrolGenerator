@@ -281,8 +281,7 @@ if (isClass (configFile >> "CfgPatches" >> "ace_medical")) then
 		params ["_unit", "_state"];
 
 		//State seems to be broken since the last ACE update
-		//_unit setVariable ["isUnconscious", _state];
-		_unit setVariable ["isUnconscious", !([_unit] call ace_common_fnc_isAwake)]; //Let's use isAwake function which is more reliable for the moment
+		_unit setVariable ["isUnconscious", _state, true]; 
 
 		// If unit is regaining consciousness, xp rewards are granted to people who participated to medical treatments during unconsciousness
 		if (!_state) then 
