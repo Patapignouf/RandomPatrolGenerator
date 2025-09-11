@@ -86,9 +86,13 @@ switch (_mode) do
 			};
 
 			_price = 1; //Set default price of 1 for accessories
+			_priceAnalysisReturn = [];
+
 			if (_categoryName != "shortAccessories" && _categoryName != "longAccessories") then 
 			{
-				_price = [_weaponClassName] call defineWeaponPrice;
+				_priceAnalysisReturn = [_weaponClassName] call defineWeaponPrice;
+				_price = _priceAnalysisReturn#0;
+				//systemChat format ["Impact : %1 \nMax range : %2", _priceAnalysisReturn#1, _priceAnalysisReturn#2];
 			} else 
 			{
 				_price = [_weaponClassName] call defineScopePrice;
@@ -99,6 +103,13 @@ switch (_mode) do
 
 			//Add row for support
 			_ind = _ctrl lnbAddRow ["", _supportName, _supportNameCode, str _price];
+
+			//Set tooltip
+			if (count _priceAnalysisReturn != 0) then 
+			{
+				//_ctrl lnbSetTooltip [_ind, format ["Impact : %1 \nMax range : %2m", _priceAnalysisReturn#1, _priceAnalysisReturn#2]];
+				_ctrl lnbSetTooltip [[_ind,0], format ["Impact : %1 \nMax range : %2m\nDefault ammo : %3\nAccuracy : %4%%", _priceAnalysisReturn#1, _priceAnalysisReturn#2, _priceAnalysisReturn#3, _priceAnalysisReturn#4]];
+			};
 
 			//Set picture
 			_ctrl lnbSetPicture [[_ind, 0], _supportIcon];

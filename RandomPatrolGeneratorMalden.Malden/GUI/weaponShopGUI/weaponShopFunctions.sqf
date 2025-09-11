@@ -311,6 +311,18 @@ defineWeaponPrice = {
 	// Nettoyage doublons
 	_mags = _mags arrayIntersect _mags;
 
+	// --- 1) Premier mode de tir
+	private _modes = getArray (_cfgWpn >> "modes");
+	if (_modes isEqualTo []) exitWith { hint "Pas de modes trouvés."; };
+	private _mode = _modes select 0;
+	private _cfgMode = _cfgWpn >> _mode;
+	if !(isClass _cfgMode) then {
+		_score = 100;
+	};
+
+	private _disp = getNumber (_cfgMode >> "dispersion");
+	if (_disp <= 0) then {_disp = 0.002}; // fallback
+
 
 	if (_mags isEqualTo []) exitWith {
 		diag_log format ["Aucun chargeur trouvé pour %1", _weaponClassName];
@@ -322,6 +334,11 @@ defineWeaponPrice = {
 	_hit = 0;
 	_cal = 0;
 	_spd = 0;
+	_score = 0;
+
+	_ammoRange = [];
+	_scoreRangeArray = [];
+	
 	{
 		private _mag = _x;
 		private _ammo = getText (configFile >> "CfgMagazines" >> _mag >> "ammo");
@@ -334,24 +351,52 @@ defineWeaponPrice = {
 		_ttl = getNumber (_cfgAmmo >> "timeToLive");
 
 		// --- Estimation de la portée ---
-		private _dt = 0.01; // pas de simulation (s)
-		private _t = 0;
+		private _energy0 = _hit * _spd * _spd;
+		private _energy = _energy0;
 		private _v = _spd;
+		private _t = 0;
+		private _dt = 0.01;
 		private _dist = 0;
+		private _rangeEff = 0;
+		private _found = false;
 
+		// simulation du vol
 		while {_t < _ttl && _v > 1} do {
 			_dist = _dist + (_v * _dt);
-			_v = _v + (_airF * _v * _v * _dt); // perte de vitesse
+			_v = _v + (_airF * _v * _v * _dt);
+			_energy = _hit * _v * _v;
+			if (!_found && _energy < (_energy0 * 0.5)) then {
+				_rangeEff = _dist;
+				_found = true;
+			};
 			_t = _t + _dt;
 		};
 
-		_rangeEst = round _dist;
+		private _rangeMax = round _dist;
+		private _rangeEffFinal = if (_found) then {round _rangeEff} else {_rangeMax};
+		_ammoRange pushBackUnique _rangeEffFinal;
+
+		private _refDisp = 0.002;   // rad
+		private _refPower = 10 * 1.0; // hit*caliber
+		private _refRange = 600;    // m
+
+		private _power = _hit * _cal;
+		private _scoreDisp = (1 - (_disp / _refDisp)) max 0 min 1; 
+		private _scorePower = (_power / _refPower) min 1;
+		private _scoreRange = (_rangeEffFinal / _refRange) min 1;
+
+		// pondération
+		private _score = (_scoreDisp * 0.4 + _scorePower * 0.3 + _scoreRange * 0.3) * 100;
+		_scoreRangeArray pushBackUnique _score;
 
 		_output = _output + format [
 			"\n\nMagazine : %1\n  Ammo: %2\n  Dégâts (hit): %3\n  Pénétration (caliber): %4\n  Vitesse (m/s): %5\n  AirFriction: %6\n  Durée de vie (s): %7",
 			_mag, _ammo, _hit, _cal, _spd, _airF, _ttl
 		];
-	} foreach [_mags#0]; //Take only the first mag
+	} foreach _mags; //Take only the first mag
+
+	_rangeEst = selectMax _ammoRange;
+	_score = selectMax _scoreRangeArray;
 
 	//Adjust price with range
 	if (_rangeEst > 1500) then 
@@ -366,12 +411,14 @@ defineWeaponPrice = {
 	};
 
 	//Adjust price with damage
-	if (_hit > 15) then 
+	if (_hit > 10) then 
 	{
 		_priceResult = _priceResult + 1;
 	};
 
-	_priceResult
+	//systemChat str _score;
+
+	[_priceResult, _hit, _rangeEst, getText (configFile >> "CfgMagazines" >> _mags#0 >> "displayName"), _score];
 };
 
 defineScopePrice = {
@@ -381,7 +428,10 @@ defineScopePrice = {
 
 	private _cfg = configFile >> "CfgWeapons" >> _optic >> "ItemInfo" >> "OpticsModes";
 
-	if !(isClass _cfg) exitWith { hint format["Lunette introuvable : %1", _optic]; _priceResult;};
+	if !(isClass _cfg) exitWith { 
+		//hint format["Lunette introuvable : %1", _optic]; 
+		_priceResult;
+		};
 
 	private _out = format ["Lunette : %1", _optic];
 	private _fovNormal = 0.75; // valeur approximative du FOV normal
