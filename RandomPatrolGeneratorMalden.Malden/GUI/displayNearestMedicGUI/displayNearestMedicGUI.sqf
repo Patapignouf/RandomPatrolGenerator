@@ -12,7 +12,7 @@ checkUnconscious = {
 	_resultUnconscious = false;
 	if (isClass (configFile >> "CfgPatches" >> "ace_medical")) then 
 	{
-		_resultUnconscious = (_unit getVariable ["isUnconscious", false]);
+		_resultUnconscious = ((alive _unit) == (_unit getVariable ["isUnconscious", false]));
 	} else 
 	{
 		_resultUnconscious = (lifeState _unit == "INCAPACITATED");

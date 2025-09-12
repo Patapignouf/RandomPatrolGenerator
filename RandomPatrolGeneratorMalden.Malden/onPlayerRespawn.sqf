@@ -1,6 +1,9 @@
 //Set default respawn loadout
 player setUnitLoadout (player getVariable "spawnLoadout");
 
+//Set player normal state 
+player setVariable ["isUnconscious", false, true];
+
 //Make the player doesn't count on RTB for 90 secs 
 player setVariable ["canRTB", false, true];
 [] spawn 
