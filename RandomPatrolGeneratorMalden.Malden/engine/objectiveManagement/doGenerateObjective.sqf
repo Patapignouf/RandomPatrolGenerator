@@ -892,7 +892,7 @@ generateObjectiveObject =
 				_thisObjective = [_objectiveObjectBox, _thisObjectiveType] call generateObjectiveTracker;
 
 
-				[_objectiveObjectBox, ["Send signal to defend the location",{
+				[_objectiveObjectBox, ["<img size='2' image='\a3\ui_f_orange\Data\CfgOrange\Missions\action_aaf_ca.paa'/><t color='#af5d00ff'>Send signal to defend the location</t>",{
 					params ["_object","_caller","_ID","_thisObjective"];
 
 					//Remove object interaction
