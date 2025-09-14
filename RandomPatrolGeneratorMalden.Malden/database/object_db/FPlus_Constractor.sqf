@@ -170,6 +170,7 @@ uniformList_FP_Contractor = [
 	//head
 	"H_HelmetB_light_sand",
 	"H_Cap_blk",
+
 	//Glasses 
 	"FaceWear_Balaclava",
 	"G_Bandanna_tan",
@@ -180,15 +181,25 @@ uniformList_FP_Contractor = [
 	//vest
 	"FP_TacVest_Coy",
 	"V_PlateCarrier1_blk",
+	"V_PlateCarrier1_rgr_noflag_F",
+	"rhsusf_plateframe_light",
+	"rhsusf_plateframe_rifleman",
+
 	//uniform
 	"AAF_PMC_SOLDIER",
-	"U_I_G_resistanceLeader_F"
+	"U_I_G_resistanceLeader_F",
+	"U_B_CTRG_2"
 ];
 
+uniformListSniper_FP_Contractor = [
+	"U_B_GhillieSuit"
+];
 
 //Magazine avalaible for all unit
 magazineList_FP_Contractor = 	[
 	"HandGrenade"
 ];
+
+
 
 
