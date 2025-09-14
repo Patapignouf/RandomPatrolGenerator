@@ -109,7 +109,7 @@ brokenFactions = ["Default"];
 	_factionTechName = _x#0;
 	if (factionInfos findIf {_x#0 == _factionTechName}==-1) then 
 	{
-		factionInfos pushBack [_factionTechName, _factionTechName, format ["%1 [AUTO]", ((configFile >> "CfgFactionClasses" >> _factionTechName >> "displayName") call BIS_fnc_GetCfgData)], false, false, true];
+		factionInfos pushBack [_factionTechName, _factionTechName, format ["%1 [AUTO CIVILIAN]", ((configFile >> "CfgFactionClasses" >> _factionTechName >> "displayName") call BIS_fnc_GetCfgData)], false, false, true];
 	};
 } foreach _potentialCivFactions;
 
