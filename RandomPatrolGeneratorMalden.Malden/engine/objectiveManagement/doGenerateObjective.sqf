@@ -498,7 +498,7 @@ generateObjectiveObject =
 					params ["_object","_caller","_ID","_thisObjective"];
 
 						[_object, _caller, _thisObjective] spawn 
-						{_thisObjectivePosition
+						{
 							params ["_object", "_caller", "_thisObjective"];
 							disableSerialization;
 							code = _object getVariable "RPG_DefuseCode";
