@@ -162,7 +162,9 @@ backPackList_FP_Contractor = [
 	"TFAR_rt1523g",
 	"TFAR_rt1523g_green",
 	"B_parachute",
-	"ace_gunbag_Tan"
+	"ace_gunbag_Tan",
+	"B_Mortar_01_weapon_F",
+	"B_Mortar_01_support_F"
 ];
 
 //Uniform, vest, headgear, avalaible for all unit
