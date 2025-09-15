@@ -1813,6 +1813,11 @@
         <Chinese>保存</Chinese>
         <Japanese>保存</Japanese>
     </Key>
+    <Key ID="RPG_GUI_GENERAL_BM_SHOP">
+        <Original>Black market</Original>
+        <English>Black market</English>
+        <French>Marché noir</French>
+    </Key>
     <Key ID="RPG_GUI_GENERAL_WEAPON_SHOP">
         <Original>Weapon shop</Original>
         <English>Weapon shop</English>

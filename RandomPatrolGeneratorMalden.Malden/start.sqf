@@ -991,6 +991,12 @@ if (disableZoom == 1) then
 //Init checkdeath
 [] execVM 'engine\checkdeath.sqf';
 
+//Init black market 
+if (missionNameSpace getVariable ["enableOpforBMShop",1] == 1) then 
+{
+	[warEra] execVM 'database\blackmarket.sqf';
+};
+
 
 
 missionGenerated = true;

@@ -176,6 +176,29 @@ getOpforWeaponCategory = {
 	_resultWPOpfor
 };
 
+
+getBMWeaponCategory = {
+	//Get opfor weapon minus player faction 
+	_currentPlayerFaction = indFaction;
+	if (side player == blufor) then 
+	{
+		_currentPlayerFaction = bluFaction;
+	};
+
+	_resultWPOpfor = [
+		[ "rifle",(BMrifleList) - (rifleList_db select {_x select 1  == _currentPlayerFaction} select 0 select 0)],
+		[ "smg",(BMsmgList) - (smgList_db select {_x select 1  == _currentPlayerFaction} select 0 select 0)],
+		[ "sniperRifle",(BMsniperRifleList) - (marksmanrifleList_db select {_x select 1  == _currentPlayerFaction} select 0 select 0)],
+		[ "autoRifle",(BMautoRifleList) - (autorifleList_db select {_x select 1  == _currentPlayerFaction} select 0 select 0)],
+		[ "launcher",(BMlauncherList) - (launcherList_db select {_x select 1  == _currentPlayerFaction} select 0 select 0)],
+		[ "grenadeLauncher",(BMgrenadeLauncherList) - (grenadeLauncherList_db select {_x select 1  == _currentPlayerFaction} select 0 select 0)],
+		[ "shortAccessories",(BMshortAccessoriesList) - (attachmentShortList_db select {_x select 1  == _currentPlayerFaction} select 0 select 0)],
+		[ "longAccessories", (BMlongAccessoriesList) - (attachmentLongList_db select {_x select 1  == _currentPlayerFaction} select 0 select 0)]
+	];
+	_resultWPOpfor
+};
+
+
 cleanWeaponsAndItems = {
 	params ["_listToClean"];
 
