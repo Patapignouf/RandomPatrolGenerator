@@ -742,6 +742,34 @@ doInitializeLoadout = {
 };
 
 
+setUnitTraitAccordingToRole = {
+	params ["_caller", "_role"];
+	//Manage Unit trait
+	//Reset unit trait
+	_caller setVariable ["ace_medical_medicClass", 0, true]; //Remove special ACE medic trait
+	_caller setVariable ["ace_isEngineer", 0, true];
+	_caller setUnitTrait ["Medic", false];
+	_caller setUnitTrait ["Engineer", false];
+	_caller setUnitTrait ["ExplosiveSpecialist", false];
+
+	//Set specific trait
+	if (_role == c_medic) then 
+	{
+		_caller setUnitTrait ["Medic", true];
+		_caller setVariable ["ace_medical_medicClass", 2, true]; //add special ACE medic trait doctor
+	};
+	if (_role == c_engineer) then 
+	{
+		_caller setUnitTrait ["Engineer", true];
+		_caller setUnitTrait ["ExplosiveSpecialist", true];
+		_caller setVariable ["ace_isEngineer", 2, true]; //add special ACE medic trait advanced engineer
+	};
+	if (_role == c_leader) then 
+	{
+		group _caller selectLeader _caller;
+	};
+};
+
 switchToRole = {
 	//Init params
 	params ["_arsenalItem", "_caller", "_faction", "_role", "_allowCustomLoad", "_skipAnimation"];
@@ -774,30 +802,7 @@ switchToRole = {
 		titleCut [format ["Switching to role %1", _role], "BLACK FADED", 5];
 	};
 
-	//Manage Unit trait
-	//Reset unit trait
-	_caller setVariable ["ace_medical_medicClass", 0, true]; //Remove special ACE medic trait
-	_caller setVariable ["ace_isEngineer", 0, true];
-	_caller setUnitTrait ["Medic", false];
-	_caller setUnitTrait ["Engineer", false];
-	_caller setUnitTrait ["ExplosiveSpecialist", false];
-
-	//Set specific trait
-	if (_role == c_medic) then 
-	{
-		_caller setUnitTrait ["Medic", true];
-		_caller setVariable ["ace_medical_medicClass", 2, true]; //add special ACE medic trait doctor
-	};
-	if (_role == c_engineer) then 
-	{
-		_caller setUnitTrait ["Engineer", true];
-		_caller setUnitTrait ["ExplosiveSpecialist", true];
-		_caller setVariable ["ace_isEngineer", 2, true]; //add special ACE medic trait advanced engineer
-	};
-	if (_role == c_leader) then 
-	{
-		group _caller selectLeader _caller;
-	};
+	[_caller, _role] call setUnitTraitAccordingToRole;
 
 	//Manage default stuff
 	_personalLoadout = profileNamespace getVariable [format [loadoutSaveName, name _caller, _faction , _role], []];

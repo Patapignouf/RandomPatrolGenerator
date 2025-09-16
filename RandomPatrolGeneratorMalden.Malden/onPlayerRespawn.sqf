@@ -1,6 +1,9 @@
 //Set default respawn loadout
 player setUnitLoadout (player getVariable "spawnLoadout");
 
+//Adjust trait 
+[player, player getVariable "role"] call setUnitTraitAccordingToRole;
+
 //Set player normal state 
 player setVariable ["isUnconscious", false, true];
 
