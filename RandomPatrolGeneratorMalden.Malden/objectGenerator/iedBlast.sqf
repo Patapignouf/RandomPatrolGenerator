@@ -37,7 +37,7 @@ _fakeIed hideObjectGlobal true;
 		_isACE = (isClass (configFile >> "CfgPatches" >> "ace_medical"));
 
 		//Test if the player has engineer skill
-		if (((_caller getVariable ["role","rifleman"]) == "engineer") && ((!_isACE) || (_isACE && ("ACE_DefusalKit" in (items _caller))))) then
+		if ((_caller getUnitTrait "engineer") && ((!_isACE) || (_isACE && ("ACE_DefusalKit" in (items _caller))))) then
 		{
 			//Tell the player that the IED has been defused
 			[1,["The IED has been defused", "PLAIN", 0.5]] remoteExec ["cutText", _caller];
