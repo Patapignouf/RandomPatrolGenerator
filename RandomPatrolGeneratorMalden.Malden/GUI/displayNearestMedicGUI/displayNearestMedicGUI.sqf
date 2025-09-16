@@ -20,6 +20,23 @@ checkUnconscious = {
 	_resultUnconscious;
 };
 
+//Fix ACE last update with bad unconscious state
+if (isClass (configFile >> "CfgPatches" >> "ace_medical")) then 
+{
+	[_unit] spawn {
+		params ["_unit"];
+		
+		//Wait to see if there is a bug
+		sleep 1;
+
+		//Check if there is a bug, the player is "HEALTHY" if there is a bug
+		if (lifeState _unit != "INCAPACITATED") then 
+		{
+			[_unit, true] call ace_medical_fnc_setUnconscious;
+		};
+	};
+};
+
 
 // diag_log format ["Domination GUI : %1", getPos _thisAreaTrigger];
 
