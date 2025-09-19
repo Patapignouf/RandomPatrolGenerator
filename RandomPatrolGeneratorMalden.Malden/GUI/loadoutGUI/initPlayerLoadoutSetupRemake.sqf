@@ -243,6 +243,7 @@ _ButtonReset ctrlSetBackgroundColor [0,0,0,0.7];
 _ButtonReset ctrlCommit 0;
 _ButtonReset ctrlEnable true;
 _ButtonReset ctrlSetText localize "RPG_GUI_GENERAL_RESET";
+_ButtonReset ctrlSetTooltip "Load default loadout for your class";
 _ButtonReset ctrlAddEventHandler ["ButtonClick",{
 		params ["_ctrl"];
 		hint "Loadout reset";
@@ -347,6 +348,7 @@ _buttonClearItems ctrlSetBackgroundColor [0,0,0,0.7];
 _buttonClearItems ctrlCommit 0;
 _buttonClearItems ctrlEnable true;
 _buttonClearItems ctrlSetText localize "RPG_GUI_GENERAL_CLEAR";
+_buttonClearItems ctrlSetTooltip "Delete items in vest, uniform and bag.";
 _buttonClearItems ctrlAddEventHandler[ "ButtonClick", 
 	{ 
 		params ["_ctrl"];
@@ -364,6 +366,7 @@ _ButtonSave ctrlSetBackgroundColor [0,0,0,0.7];
 _ButtonSave ctrlCommit 0;
 _ButtonSave ctrlEnable true;
 _ButtonSave ctrlSetText localize "RPG_GUI_GENERAL_SAVE";
+_ButtonSave ctrlSetTooltip "Saved stuff will be loaded on respawn";
 _ButtonSave ctrlAddEventHandler ["ButtonClick",{
 		params ["_ctrl"];
 		//Save default stuff when ironMan mode is disable
@@ -392,6 +395,7 @@ if (missionNameSpace getVariable ["enableOpforWeaponShop",1] == 1) then
 	_ButtonShop ctrlCommit 0;
 	_ButtonShop ctrlEnable true;
 	_ButtonShop ctrlSetText localize "RPG_GUI_GENERAL_WEAPON_SHOP";
+	_ButtonShop ctrlSetTooltip "Unlock new items for your faction";
 	_ButtonShop ctrlAddEventHandler ["ButtonClick",{
 			params ["_ctrl"];
 
