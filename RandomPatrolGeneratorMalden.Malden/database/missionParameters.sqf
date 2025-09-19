@@ -1,11 +1,11 @@
  booleanSelection = [false, true];
 
 warEraSelection = [
-	[0,"2nd War"],
-	[1,"Cold War"],
-	[2,"Modern Warfare"],
-	[3,"Current Warfare"],
-	[4,"Future Warfare"]
+	[0,"2nd War (1944)"],
+	[1,"Cold War (1970's)"],
+	[2,"Modern Warfare (2000's)"],
+	[3,"Current Warfare (2020's)"],
+	[4,"Future Warfare (2035)"]
 ];
 
 missionLengthSelection = [
