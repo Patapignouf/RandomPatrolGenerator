@@ -213,7 +213,10 @@ doGenerateVehicleForFOB =
 		if (isClass (configFile >> "CfgPatches" >> "ace_medical") && !(_vehicleClass isKindOf "StaticWeapon")) then 
 		{
 			[_currentVehicle] call doAddKeys;
-			_currentVehicle setVehicleLock "LOCKED";
+			if (missionNameSpace getVariable ["vehicleLockedDefault", 1] == 1) then 
+			{
+				_currentVehicle setVehicleLock "LOCKED";
+			};
 		};
 
 		// hint format ["vehicle faction : %1",(_currentVehicle call BIS_fnc_objectSide)];
@@ -300,6 +303,13 @@ doIncrementAllCredits =
 		profileNameSpace setVariable ["RPG_UnlockCredit",_unblockCredit+1];
 	}
 	] remoteExec ["spawn", 0]; 
+
+	//Increment fortify credits 
+	if (isClass (configFile >> "CfgPatches" >> "ace_medical")) then 
+	{
+		[west, 20, false] call ace_fortify_fnc_updateBudget;
+		[independent, 20, false] call ace_fortify_fnc_updateBudget;
+	};
 };
 
 doAddKeys = {
