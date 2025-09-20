@@ -175,7 +175,7 @@ if (isClass (configFile >> "CfgPatches" >> "ace_medical")) then
 	_tempBox addItemCargoGlobal ["ACE_Suture", 100];
 
 	//Setup fortification ACE mod
-	[blufor, 100, [["Land_BagFence_Long_F", 10], ["Land_BagFence_Round_F", 10], ["Land_SandbagBarricade_01_hole_F", 15], ["Land_BagBunker_Small_F", 20]]] call ace_fortify_fnc_registerObjects;
+	[blufor, 100, [["Land_BagFence_Long_F", 10], ["Land_BagFence_Round_F", 10], ["Land_SandbagBarricade_01_hole_F", 15], ["Land_BagBunker_Small_F", 10], ["Land_BagFence_Long_F", 20]]] call ace_fortify_fnc_registerObjects;
 } else 
 {
 	_tempBox addItemCargoGlobal ["FirstAidKit", 20];
