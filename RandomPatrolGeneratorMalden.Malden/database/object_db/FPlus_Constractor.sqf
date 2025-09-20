@@ -15,13 +15,15 @@ bluforUnarmedVehicle_FP_Contractor = [
 	"rhsgref_cdf_b_gaz66",
 	"UAZ_03_transport_F",
 	"UAZ_pat",
-	"B_G_Quadbike_01_F"
+	"B_G_Quadbike_01_F",
+	"UAZ_02_transport_F",
+	"UAZ_01_transport_F",
+	"UAZ_04_transport_F"
 ];
 
 bluforArmedVehicle_FP_Contractor = [
 	"B_G_Offroad_01_armed_F"
 ];
-
 
 
 bluforStaticWeapon_FP_Contractor = 
@@ -31,11 +33,12 @@ bluforStaticWeapon_FP_Contractor =
 
 //Armored vehicle avalaible for blufor : Ex light tank
 bluforArmoredVehicle_FP_Contractor = [
-
+	"rhs_bmp3m_msv"
 ];
 
 bluforUnarmedVehicleChopper_FP_Contractor = [
-	"B_Heli_Light_01_F"
+	"B_Heli_Light_01_F",
+	"C_IDAP_Heli_Transport_02_F"
 ];
 
 bluforArmedChopper_FP_Contractor = [
@@ -172,6 +175,7 @@ uniformList_FP_Contractor = [
 	//head
 	"H_HelmetB_light_sand",
 	"H_Cap_blk",
+	"rhsusf_mich_bare_norotos_arc_alt",
 
 	//Glasses 
 	"FaceWear_Balaclava",
@@ -186,11 +190,16 @@ uniformList_FP_Contractor = [
 	"V_PlateCarrier1_rgr_noflag_F",
 	"rhsusf_plateframe_light",
 	"rhsusf_plateframe_rifleman",
+	"V_I_G_resistanceLeader_F",
+	"6sh117_mg_BLACK",
+	"6sh117_mg_COYOTE",
 
 	//uniform
 	"AAF_PMC_SOLDIER",
 	"U_I_G_resistanceLeader_F",
-	"U_B_CTRG_2"
+	"U_B_CTRG_2",
+	"rhs_uniform_g3_m81",
+	"rhs_uniform_g3_blk"
 ];
 
 uniformListSniper_FP_Contractor = [
