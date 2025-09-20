@@ -560,7 +560,7 @@ vehicleLockedDefaultParam =
 		[1, "Enable"]
 	],
 	"[ACE] Lock vehicle on spawn",
-	1,
+	0,
 	"vehicleLockedDefault"
 ];
 
