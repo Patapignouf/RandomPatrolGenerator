@@ -12,7 +12,7 @@ checkUnconscious = {
 	_resultUnconscious = false;
 	if (isClass (configFile >> "CfgPatches" >> "ace_medical")) then 
 	{
-		_resultUnconscious = ((alive _unit) == (_unit getVariable ["isUnconscious", false]));
+		_resultUnconscious = ((alive _unit) && (_unit getVariable ["isUnconscious", false]));
 	} else 
 	{
 		_resultUnconscious = (lifeState _unit == "INCAPACITATED");
@@ -27,12 +27,27 @@ if (isClass (configFile >> "CfgPatches" >> "ace_medical")) then
 		params ["_unit"];
 		
 		//Wait to see if there is a bug
-		sleep 1;
+		sleep 3;
 
 		//Check if there is a bug, the player is "HEALTHY" if there is a bug
 		if (lifeState _unit != "INCAPACITATED") then 
 		{
-			[_unit, true] call ace_medical_fnc_setUnconscious;
+			//[_unit, true] call ace_medical_fnc_setUnconscious;
+			_unit setDamage 0.2;
+			_unit setUnconscious true;
+			diag_log "Quick fix INCAPACITED 1";
+		};
+
+		//Wait to see if there is a bug
+		sleep 3;
+
+		//Check if there is a bug, the player is "HEALTHY" if there is a bug
+		if (lifeState _unit != "INCAPACITATED") then 
+		{
+			//[_unit, true] call ace_medical_fnc_setUnconscious;
+			_unit setDamage 0.2;
+			_unit setUnconscious true;
+			diag_log "Quick fix INCAPACITED 2";
 		};
 	};
 };
