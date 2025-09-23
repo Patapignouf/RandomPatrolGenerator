@@ -132,8 +132,10 @@ missionNamespace setVariable ["deadPlayer", _deadPlayerList, true];
 
 ["Respawn on start position", format ["Year %1", date select 0], mapGridPosition player] spawn BIS_fnc_infoText;
 
-
-#include "engine\tentActionManagement.sqf"
+if (missionNameSpace getVariable ["enableAdvancedRespawn", 1] == 1) then 
+{
+	#include "engine\tentActionManagement.sqf"
+};
 
 _KilledEH = player addEventHandler ["Killed", {
 	params ["_unit", "_killer", "_instigator", "_useEffects"];
