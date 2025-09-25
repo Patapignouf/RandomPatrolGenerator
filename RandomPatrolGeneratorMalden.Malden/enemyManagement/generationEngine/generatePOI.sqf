@@ -85,6 +85,26 @@ if (random 100 <50) then
 	};
 };
 
+
+//Add weapon shop
+if (missionNameSpace getVariable ["enableOpforWeaponShop",1] == 2) then 
+{
+	_boxLocation = ([_thisAvailablePosition, 1, 60, 1, 0, 20, 0, [], [_thisAvailablePosition, _thisAvailablePosition]] call BIS_fnc_findSafePos);
+
+	_boxObject = createVehicle ["Box_FIA_Wps_F", _boxLocation, [], 0, "NONE"];
+
+	clearWeaponCargoGlobal _boxObject;
+	clearMagazineCargoGlobal _boxObject;
+	clearItemCargoGlobal _boxObject;
+	clearBackpackCargoGlobal _boxObject;
+
+	[_boxObject, [format ["<img size='2' image='\a3\ui_f_oldman\data\IGUI\Cfg\holdactions\map_ca.paa'/><t size='1'>%1</t>", localize "RPG_GUI_GENERAL_WEAPON_SHOP"],{
+			params ["_object","_caller","_ID","_thisObjective"];
+			[[[false, "OPFOR"]], "GUI\weaponShopGUI\weaponShopGUI.sqf"] remoteExec ['BIS_fnc_execVM', _caller];
+		},[],10,true,false,"","_target distance _this <4"]] remoteExec ["addAction", 0, true];
+};
+
+
 //Generate vehicle
 if ((missionNameSpace getVariable ["enableOpforVehicle", 0]) != 0) then 
 {

@@ -759,10 +759,10 @@ if (isClass (configFile >> "CfgPatches" >> "task_force_radio")) then {
 //Heal player if mission's setup wasn't safe 
 if (isClass (configFile >> "CfgPatches" >> "ace_medical")) then 
 {
-  [objNull, player] call ace_medical_treatment_fnc_fullHeal;
+	[objNull, player] call ace_medical_treatment_fnc_fullHeal;
 } else 
 {
-  player setDamage 0;
+	player setDamage 0;
 };
 
 #include "GUI\mapIndicatorGUI\mapRealTimeMarkers.sqf"

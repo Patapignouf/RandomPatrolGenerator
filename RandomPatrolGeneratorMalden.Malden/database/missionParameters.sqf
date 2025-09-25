@@ -534,10 +534,11 @@ enableOpforWeaponShopParam =
 [
 	[	
 		[0, "Disable"],
-		[1, "Enable"]
+		[1, "Shop always available"],
+		[2, "Shop on POI"]
 	],
 	"Enable opfor weapon shop",
-	1,
+	2,
 	"enableOpforWeaponShop"
 ];
 
