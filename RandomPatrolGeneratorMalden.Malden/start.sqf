@@ -10,7 +10,7 @@
 #include "engine\hintManagement\customDialog.sqf"
 #include "GUI\scoreBoardGUI\scoreFunctions.sqf"
 #include "database\factionParameters.sqf"
-
+#include "GUI\mapIndicatorGUI\triggerDisplay.sqf"
 
 //Init base mission parameters 
 enableInitAttack = "EnableInitAttack" call BIS_fnc_getParamValue;
@@ -628,7 +628,9 @@ if !(_isOnWater) then
 		};
 	};
 };
-	
+
+
+
 //Clean area WIP only if there is a FOB spawned
 if (missionNameSpace getVariable ["enableBluforFOB", 1] == 1) then 
 {

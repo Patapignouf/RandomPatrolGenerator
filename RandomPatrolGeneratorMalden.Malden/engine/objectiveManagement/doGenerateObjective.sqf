@@ -29,6 +29,12 @@ generateObjective =
 
 	//GenerateAnimals 
 	[[_selectedObjectivePosition, 40, 200, 7, 0, 0, 0, [], [[0,0,0],[0,0,0]]] call BIS_fnc_findSafePos] call doGenerateAnimalGroup;
+
+	//Generate Jammed antenna 
+	if (random 100 > 50) then 
+	{
+		[_selectedObjectivePosition] call generateJammedAntenna;
+	};
 	
 	//Generate mission environement
 	switch (currentObjType) do 
@@ -124,6 +130,66 @@ generateObjective =
 
 	//Return objective selected location
 	_possibleObjectivePosition;
+};
+
+
+generateJammedAntenna = 
+{
+	params ["_antennaPos"];
+	//Jammed Area init 
+	_randomPosMapNoWater = [[[_antennaPos, 400]], ["water"]] call BIS_fnc_randomPos;
+	_missionJammer = missionNameSpace getVariable ["jammedArea", []];
+	_trgJammer = createTrigger ["EmptyDetector", _randomPosMapNoWater];
+	_trgJammer setTriggerArea [400, 400, 0, false];
+	_missionJammer pushBack [true, _trgJammer];
+	missionNameSpace setVariable ["jammedArea", _missionJammer, true];
+	[_trgJammer] call displayTriggerOnMap;
+
+	//Create antenna
+	_antenna = createVehicle ["Land_TTowerBig_2_F",[_randomPosMapNoWater#0,_randomPosMapNoWater#1,0],[],0,"NONE"];
+
+	//Delete antenna
+	[_antenna, _trgJammer] spawn 
+	{
+		params ["_antenna", "_trgJammer"];
+		waitUntil {!alive _antenna};
+		_missionJammer = missionNameSpace getVariable ["jammedArea", []];
+		missionNameSpace setVariable ["jammedArea", _missionJammer - [[true, _trgJammer]], true];
+		deleteVehicle _trgJammer;
+	};
+
+	//Add sabotage action
+	[
+		_antenna, 
+		"Sabotage the antenna", 
+		"\a3\ui_f\data\IGUI\Cfg\holdactions\holdAction_search_ca.paa", 
+		"\a3\ui_f\data\IGUI\Cfg\holdactions\holdAction_search_ca.paa", 
+		"(_this distance _target < 100) && (_this getVariable 'role' == 'engineer') ",		// Condition for the action to be shown
+		"_caller distance _target < 100",		// Condition for the action to progress
+		{
+			// Action start code
+		}, 
+		{
+			// Action on going code
+		},  
+		{
+			// Action successfull code
+			params ["_object","_caller","_ID","_objectParams","_progress","_maxProgress"];
+			
+			[format ["The antenna will be destroyed in 60 secs", name _caller]] remoteExec ["hint", _caller,true];
+			sleep 60;
+			_object setDamage 1;
+			[{[5, "RPG_ranking_repair"] call doUpdateRank}] remoteExec ["call", _caller];
+		}, 
+		{
+			// Action failed code
+		}, 
+		[],  
+		5,
+		5, 
+		true, 
+		false
+	] remoteExec ["BIS_fnc_holdActionAdd", 0, true];
 };
 
 generateOutpostProcess = {

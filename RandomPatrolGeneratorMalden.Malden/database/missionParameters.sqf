@@ -482,7 +482,7 @@ playerMarkerAllowedParam =
 		[1, "Enable"]
 	],
 	"Display player real time position on map",
-	0,
+	1,
 	"playerMarkerAllowed"
 ];
 
