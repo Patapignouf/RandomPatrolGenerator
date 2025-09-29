@@ -157,6 +157,8 @@ if (missionNameSpace getVariable ["enableOpforWeaponShop",1] == 1) then
 	paramsToManageNow pushBack ["Button", localize "RPG_GUI_GENERAL_WEAPON_SHOP", localize "RPG_GUI_GENERAL_WEAPON_SHOP_DESC", {
 			[[[false, "OPFOR"]], "GUI\weaponShopGUI\weaponShopGUI.sqf"] remoteExec ['BIS_fnc_execVM', player];
 		}];
+} else {
+	paramsToManageNow pushBack ["Text", localize "STR_GUI_BASE_TOKEN", format ["%1", [] call getUnlockCredit], {	}];
 };
 
 //Add feature to allow opfor player to remote control enemy unit
