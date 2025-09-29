@@ -145,11 +145,11 @@ getVirtualWeaponList = {
 			{
 				_virtualWeaponList = _virtualWeaponList + (rifleList_db select {_x select 1  == _currentFaction} select 0 select 0);
 				_virtualWeaponList = _virtualWeaponList + (marksmanrifleList_db select {_x select 1  == _currentFaction} select 0 select 0);
-				_virtualWeaponList = _virtualWeaponList + (smgList_db select {_x select 1  == _currentFaction} select 0 select 0);
 
 				if (missionNameSpace getVariable ["enableOpforWeaponShop",1] >= 1) then 
 				{
 					_virtualWeaponList = _virtualWeaponList +([_currentFaction, "rifle", _unlockedStuff] call getPlayerFactionUnlockedWeaponForCategoryWithUnlockedInput);
+					_virtualWeaponList = _virtualWeaponList +([_currentFaction, "smg", _unlockedStuff] call getPlayerFactionUnlockedWeaponForCategoryWithUnlockedInput);
 					_virtualWeaponList = _virtualWeaponList +([_currentFaction, "sniperRifle", _unlockedStuff] call getPlayerFactionUnlockedWeaponForCategoryWithUnlockedInput);
 				};
 			};
