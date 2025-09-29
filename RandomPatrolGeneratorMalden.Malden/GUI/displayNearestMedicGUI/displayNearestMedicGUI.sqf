@@ -28,6 +28,8 @@ if (isClass (configFile >> "CfgPatches" >> "ace_medical")) then
 		
 		//Wait to see if there is a bug
 		sleep 3;
+		_unit setDamage 0.2;
+		_unit setUnconscious true;
 
 		//Check if there is a bug, the player is "HEALTHY" if there is a bug
 		if (lifeState _unit != "INCAPACITATED") then 
