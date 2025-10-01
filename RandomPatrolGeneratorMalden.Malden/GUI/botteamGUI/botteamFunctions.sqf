@@ -93,6 +93,9 @@ doAddBotSimple = {
 	//apply custom stuff 
 	_botUnit setUnitLoadout _stuffToApply;
 
+	//Set Unit trait
+	[_botUnit, _botteamClass] call setUnitTraitAccordingToRole;
+
 	_botUnit;			
 };
 
