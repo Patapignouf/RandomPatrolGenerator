@@ -1,4 +1,5 @@
 #include "..\..\objectGenerator\vehicleXPManagement.sqf" 
+#include "..\..\enemyManagement\behaviorEngine\unitsBehaviorFunctions.sqf"
 
 doGenerateEnemyGroup = 
 {
@@ -203,6 +204,9 @@ doGenerateEnemyGroup =
 						{
 							//diag_log ["Hostile suicide bomber civilian at %1",getPos _x];
 							[_x] spawn civils_fnc_suicidebomber;
+
+							// //Quick give life to suicide bombers
+							[group _x, getPos _x, 60] call doPatrol; 
 						};
 					};
 				};
