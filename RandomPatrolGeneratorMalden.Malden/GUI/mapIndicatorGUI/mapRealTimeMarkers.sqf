@@ -49,6 +49,7 @@ getIconColor = {
 	_color
 };
 
+
 getPlayerToDisplay = {
 	params ["_unitToCheck"];
 	_listOfJammedArea = missionNameSpace getVariable ["jammedArea", []];
@@ -61,7 +62,18 @@ getPlayerToDisplay = {
 		//cutText ["<t color='#ff0000' size='2'>GPS Jammed</t><br/>***********", "PLAIN DOWN", 0.5, false, true];
 		// ["<t color='#ffffff' size='.8'>GPS Jammed</t>",0,0,4,1,0,789] spawn BIS_fnc_dynamicText;
 		// systemChat "GPS Jammed";
-		[0] call ace_microdagr_fnc_openDisplay;
+		if (isClass (configFile >> "CfgPatches" >> "ace_medical")) then 
+		{
+			//Disable microDAGR
+			player setVariable ["jammedGPS", true];
+			[] spawn {
+				sleep 1;
+				while {sleep 0.5; (player getVariable ["jammedGPS", false])} do 
+				{
+					[0] call ace_microdagr_fnc_openDisplay;
+				};
+			};
+		};
 	} else 
 	{
 		_resultUnitsToCheck = allPlayers select {(side _x == side _unitToCheck) && (lifeState _x != "INCAPACITATED")};
