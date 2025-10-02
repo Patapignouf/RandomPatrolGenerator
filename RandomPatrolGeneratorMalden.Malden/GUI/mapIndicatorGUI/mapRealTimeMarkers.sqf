@@ -76,6 +76,7 @@ getPlayerToDisplay = {
 		};
 	} else 
 	{
+		player setVariable ["jammedGPS", false];
 		_resultUnitsToCheck = allPlayers select {(side _x == side _unitToCheck) && (lifeState _x != "INCAPACITATED")};
 		_nearResult = [];
 
