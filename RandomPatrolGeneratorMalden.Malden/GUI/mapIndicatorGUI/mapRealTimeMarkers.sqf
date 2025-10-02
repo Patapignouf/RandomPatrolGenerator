@@ -61,6 +61,7 @@ getPlayerToDisplay = {
 		//cutText ["<t color='#ff0000' size='2'>GPS Jammed</t><br/>***********", "PLAIN DOWN", 0.5, false, true];
 		// ["<t color='#ffffff' size='.8'>GPS Jammed</t>",0,0,4,1,0,789] spawn BIS_fnc_dynamicText;
 		// systemChat "GPS Jammed";
+		[0] call ace_microdagr_fnc_openDisplay;
 	} else 
 	{
 		_resultUnitsToCheck = allPlayers select {(side _x == side _unitToCheck) && (lifeState _x != "INCAPACITATED")};
