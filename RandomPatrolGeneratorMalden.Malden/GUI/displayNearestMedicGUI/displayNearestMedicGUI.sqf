@@ -32,6 +32,7 @@ if (isClass (configFile >> "CfgPatches" >> "ace_medical")) then
 			//[_unit, true] call ace_medical_fnc_setUnconscious;
 			_unit setDamage 0.2;
 			_unit setUnconscious true;
+			_unit setVelocity [0, 0, 0];
 			diag_log "Quick fix INCAPACITED 0";
 		};
 		
@@ -44,6 +45,7 @@ if (isClass (configFile >> "CfgPatches" >> "ace_medical")) then
 			//[_unit, true] call ace_medical_fnc_setUnconscious;
 			_unit setDamage 0.2;
 			_unit setUnconscious true;
+			_unit setVelocity [0, 0, 0];
 			diag_log "Quick fix INCAPACITED 1";
 		};
 
@@ -56,6 +58,7 @@ if (isClass (configFile >> "CfgPatches" >> "ace_medical")) then
 			//[_unit, true] call ace_medical_fnc_setUnconscious;
 			_unit setDamage 0.2;
 			_unit setUnconscious true;
+			_unit setVelocity [0, 0, 0];
 			diag_log "Quick fix INCAPACITED 2";
 		};
 
@@ -68,6 +71,7 @@ if (isClass (configFile >> "CfgPatches" >> "ace_medical")) then
 			//[_unit, true] call ace_medical_fnc_setUnconscious;
 			_unit setDamage 0.2;
 			_unit setUnconscious true;
+			_unit setVelocity [0, 0, 0];
 			diag_log "Quick fix INCAPACITED 3";
 		};
 	};
