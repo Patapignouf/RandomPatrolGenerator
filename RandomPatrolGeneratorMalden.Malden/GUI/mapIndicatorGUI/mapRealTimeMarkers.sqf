@@ -52,9 +52,9 @@ getIconColor = {
 
 getPlayerToDisplay = {
 	params ["_unitToCheck"];
-	_listOfJammedArea = missionNameSpace getVariable ["jammedArea", []];
 
 	_resultUnits = [];
+	_listOfJammedArea = missionNameSpace getVariable ["jammedArea", []];
 
 	if ([_unitToCheck, _listOfJammedArea] call isInJammedArea) then 
 	{
@@ -62,21 +62,8 @@ getPlayerToDisplay = {
 		//cutText ["<t color='#ff0000' size='2'>GPS Jammed</t><br/>***********", "PLAIN DOWN", 0.5, false, true];
 		// ["<t color='#ffffff' size='.8'>GPS Jammed</t>",0,0,4,1,0,789] spawn BIS_fnc_dynamicText;
 		// systemChat "GPS Jammed";
-		if (isClass (configFile >> "CfgPatches" >> "ace_medical")) then 
-		{
-			//Disable microDAGR
-			player setVariable ["jammedGPS", true];
-			[] spawn {
-				sleep 1;
-				while {sleep 0.5; (player getVariable ["jammedGPS", false])} do 
-				{
-					[0] call ace_microdagr_fnc_openDisplay;
-				};
-			};
-		};
 	} else 
 	{
-		player setVariable ["jammedGPS", false];
 		_resultUnitsToCheck = allPlayers select {(side _x == side _unitToCheck) && (lifeState _x != "INCAPACITATED")};
 		_nearResult = [];
 
@@ -92,36 +79,7 @@ getPlayerToDisplay = {
 	_resultUnits
 };
 
-isInJammedArea = {
-	params ["_unitToCheckInArea", "_triggerList"];
-	
-	_isJammed = false;
-	{
-		scopeName "loop2";
-		private _trigger = _x#1;
 
-		// Vérifie si le joueur est dans le trigger
-		//if (_unitToCheckInArea inArea _trigger) then {
-		//Fix trigger cast
-		if (_unitToCheckInArea distance _trigger < 400) then {
-			// --- ACTION D’EXCLUSION ---
-			// Option 1 : Expulser (kick)
-			//["Vous êtes entré dans une zone interdite."] remoteExec ["hint", _player];
-			//_player remoteExec ["endMission", _player, true];  // Fin de mission côté joueur
-
-			// Option 2 (alternative) : Téléporter hors zone
-			//_player setPos [0,0,0];
-
-			// Option 3 (alternative) : Le tuer
-			//_player setDamage 1;
-			_isJammed = true;
-			// On arrête la boucle après la première exclusion
-			breakOut "loop2";
-		};
-	} forEach (_triggerList select {_x#0});
-
-	_isJammed
-};
 
 //Add map players marker
 if (missionNameSpace getVariable "playerMarkerAllowed" == 1) then 

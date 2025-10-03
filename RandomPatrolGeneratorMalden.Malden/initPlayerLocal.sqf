@@ -765,9 +765,9 @@ if (isClass (configFile >> "CfgPatches" >> "ace_medical")) then
 	player setDamage 0;
 };
 
+#include "GUI\mapIndicatorGUI\GPSJamManager.sqf"
 #include "GUI\mapIndicatorGUI\mapRealTimeMarkers.sqf"
 #include "engine\tentActionManagement.sqf"
-
 
 
 //Display welcome message
