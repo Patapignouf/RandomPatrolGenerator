@@ -107,21 +107,3 @@ if (!([_OpforFobLocation] call isLocationOnMap)) then
 };
 
 deletevehicle _trgAOC;
-
-//Add black market 
-if (missionNameSpace getVariable ["enableOpforBMShop",1] == 1) then 
-{
-	_boxLocation = ([_OpforFobLocation, 1, 30, 1, 0, 20, 0, [], [_OpforFobLocation, _OpforFobLocation]] call BIS_fnc_findSafePos);
-
-	_boxObject = createVehicle ["Box_FIA_Wps_F", _boxLocation, [], 0, "NONE"];
-
-	clearWeaponCargoGlobal _boxObject;
-	clearMagazineCargoGlobal _boxObject;
-	clearItemCargoGlobal _boxObject;
-	clearBackpackCargoGlobal _boxObject;
-
-	[_boxObject, ["<img size='2' image='\a3\ui_f_oldman\data\IGUI\Cfg\holdactions\map_ca.paa'/><t size='1'>Open black market</t>",{
-			params ["_object","_caller","_ID","_thisObjective"];
-			[[[false, "BM"]], "GUI\weaponShopGUI\weaponShopGUI.sqf"] remoteExec ['BIS_fnc_execVM', _caller];
-		},[],10,true,false,"","_target distance _this <4"]] remoteExec ["addAction", 0, true];
-};

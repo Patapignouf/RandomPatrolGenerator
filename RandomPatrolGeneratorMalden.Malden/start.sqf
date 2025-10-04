@@ -769,6 +769,46 @@ if (count baseEnemyMortarGroup > 0 && (missionNameSpace getVariable ["enableOpfo
 	}; 
 };
 
+//Add black market 
+if (missionNameSpace getVariable ["enableOpforBMShop",1] == 1) then 
+{
+	//_boxLocation = ([_OpforFobLocation, 1, 30, 1, 0, 20, 0, [], [_OpforFobLocation, _OpforFobLocation]] call BIS_fnc_findSafePos);
+
+	_unitBM = (createGroup (civilian)) createUnit ["C_Nikos", initCityLocation, [], 0, "NONE"];
+
+	//Garrison BM
+	[group _unitBM, initCityLocation, 200, false] call doGarrison;
+
+	_unitBM disableAI "ALL";
+	_unitBM enableAI "ANIM";
+
+	[_unitBM, ["<img size='2' image='\a3\ui_f_oldman\data\IGUI\Cfg\holdactions\map_ca.paa'/><t size='1'>Open black market</t>",{
+			params ["_object","_caller","_ID","_thisObjective"];
+			[[[false, "BM"]], "GUI\weaponShopGUI\weaponShopGUI.sqf"] remoteExec ['BIS_fnc_execVM', _caller];
+		},[],10,true,false,"","_target distance _this <4"]] remoteExec ["addAction", 0, true];
+
+	_unitBM addEventHandler ["Killed", {
+		params ["_unit", "_killer", "_instigator", "_useEffects"];
+
+		//Remove all actions
+		[_unit] remoteExec ["removeAllEventHandlers", 0, true];
+		[_unit] remoteExec ["removeAllActions", 0, true];
+
+		//Punish player
+		if (isPlayer _instigator) then 
+		{
+			//Add penalty
+			[{[-50,3] call doUpdateRankWithPenalty}] remoteExec ["call", _instigator];
+		};
+	}];	
+
+	//Add anim
+	[_unitBM, "BRIEFING", "NONE"] remoteExecCall ["BIS_fnc_ambientAnim"];
+
+	//3D Display
+	[["RPG_GUI_GENERAL_BM_SHOP", (getPos _unitBM) vectorAdd [0,0,((getPos _unitBM)#2)+3],"\a3\ui_f_oldman\data\IGUI\Cfg\holdactions\map_ca.paa" , [0,0,1,1]], 'GUI\3DNames\3DNames.sqf'] remoteExec ['BIS_fnc_execVM', 0, true];
+};
+
 
 for [{_i = 0}, {_i < missionLength}, {_i = _i + 1}] do //Peut être optimisé
 {
