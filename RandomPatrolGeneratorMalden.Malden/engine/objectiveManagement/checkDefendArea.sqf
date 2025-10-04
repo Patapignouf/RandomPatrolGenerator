@@ -144,6 +144,16 @@ if (_thisFOBCheck) then
 
 	//Respawn players 
 	[[], "engine\respawnManagement\respawnManager.sqf"] remoteExec ['BIS_fnc_execVM', 0];
+
+	//Give token to players
+	[[], 
+	{
+		params ["_unit", "_instigator"];
+	 	_unblockCredit = profileNameSpace getVariable ["RPG_UnlockCredit",0];
+		profileNameSpace setVariable ["RPG_UnlockCredit",_unblockCredit+1];
+	}
+	] remoteExec ["spawn", 0]; 
+
 };
 
 _thisTrigger enableSimulation false;
