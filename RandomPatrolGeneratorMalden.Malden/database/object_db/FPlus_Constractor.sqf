@@ -92,7 +92,8 @@ rifleList_FP_Contractor = [
 	"arifle_AUG_F",
 	"arifle_AUG_black_F",
 	"arifle_AUG_C_F",
-	"arifle_AUG_C_black_F"
+	"arifle_AUG_C_black_F",
+	"hgun_Rook40_F"
 ];	
 
 
@@ -121,7 +122,6 @@ marksmanrifleList_FP_Contractor = [
 
 
 smgList_FP_Contractor = [		
-	"hgun_Rook40_F"
 ];
 
 
@@ -210,7 +210,8 @@ uniformList_FP_Contractor = [
 
 uniformListSniper_FP_Contractor = [
 	"U_B_GhillieSuit",
-	"U_B_FullGhillie_ard"
+	"U_B_FullGhillie_ard",
+	"Laserdesignator" //Add laser designator only for sniper
 ];
 
 //Magazine avalaible for all unit
