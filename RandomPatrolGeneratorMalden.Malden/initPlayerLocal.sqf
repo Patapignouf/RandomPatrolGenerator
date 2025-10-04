@@ -252,6 +252,7 @@ if !(isClass (configFile >> "CfgPatches" >> "ace_medical")) then
 
 		//Disable physX collision 
 		//_unit setPhysicsCollisionFlag !_status;
+		_unit setVariable ["isUnconscious", _status, true]; 
 
 		//If unit become unconscious
 		if (_status) then 
@@ -271,10 +272,22 @@ if !(isClass (configFile >> "CfgPatches" >> "ace_medical")) then
 					};
 				};
 			};
-
+			
 			[[_unit] , "GUI\displayNearestMedicGUI\displayNearestMedicGUI.sqf"] remoteExec ['BIS_fnc_execVM', _unit];
 		};
 	}] call CBA_fnc_addEventHandler;
+
+	player addEventHandler ["HandleDamage", {
+		params ["_unit", "_selection", "_damage", "_source", "_projectile", "_hitIndex", "_instigator", "_hitPoint"];
+
+		if (lifeState _unit == "INCAPACITATED") then 
+		{
+			_unit setVariable ["isUnconscious", true, true]; 
+		};
+
+		// Retourner la valeur du dommage pour l’appliquer normalement
+		_damage
+	}];
 };
 
 //Init player rank

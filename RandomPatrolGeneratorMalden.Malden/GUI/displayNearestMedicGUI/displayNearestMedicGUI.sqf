@@ -20,6 +20,14 @@ checkUnconscious = {
 	_resultUnconscious;
 };
 
+goUnconscious = {
+	params ["_unit"];
+	[_unit, true] call ace_medical_fnc_setUnconscious;
+	_unit setDamage 0.2;
+	_unit setUnconscious true;
+	_unit setVelocity [0, 0, 0];
+};
+
 //Fix ACE last update with bad unconscious state
 if (isClass (configFile >> "CfgPatches" >> "ace_medical")) then 
 {
@@ -29,10 +37,7 @@ if (isClass (configFile >> "CfgPatches" >> "ace_medical")) then
 		//Check if there is a bug, the player is "HEALTHY" if there is a bug
 		if (lifeState _unit != "INCAPACITATED" && (_unit getVariable ["isUnconscious", false])) then 
 		{
-			//[_unit, true] call ace_medical_fnc_setUnconscious;
-			_unit setDamage 0.2;
-			_unit setUnconscious true;
-			_unit setVelocity [0, 0, 0];
+			[_unit] call goUnconscious;
 			diag_log "Quick fix INCAPACITED 0";
 		};
 		
@@ -42,10 +47,7 @@ if (isClass (configFile >> "CfgPatches" >> "ace_medical")) then
 		//Check if there is a bug, the player is "HEALTHY" if there is a bug
 		if (lifeState _unit != "INCAPACITATED" && (_unit getVariable ["isUnconscious", false])) then 
 		{
-			//[_unit, true] call ace_medical_fnc_setUnconscious;
-			_unit setDamage 0.2;
-			_unit setUnconscious true;
-			_unit setVelocity [0, 0, 0];
+			[_unit] call goUnconscious;
 			diag_log "Quick fix INCAPACITED 1";
 		};
 
@@ -55,10 +57,7 @@ if (isClass (configFile >> "CfgPatches" >> "ace_medical")) then
 		//Check if there is a bug, the player is "HEALTHY" if there is a bug
 		if (lifeState _unit != "INCAPACITATED" && (_unit getVariable ["isUnconscious", false])) then 
 		{
-			//[_unit, true] call ace_medical_fnc_setUnconscious;
-			_unit setDamage 0.2;
-			_unit setUnconscious true;
-			_unit setVelocity [0, 0, 0];
+			[_unit] call goUnconscious;
 			diag_log "Quick fix INCAPACITED 2";
 		};
 
@@ -68,10 +67,7 @@ if (isClass (configFile >> "CfgPatches" >> "ace_medical")) then
 		//Check if there is a bug, the player is "HEALTHY" if there is a bug
 		if (lifeState _unit != "INCAPACITATED" && (_unit getVariable ["isUnconscious", false])) then 
 		{
-			//[_unit, true] call ace_medical_fnc_setUnconscious;
-			_unit setDamage 0.2;
-			_unit setUnconscious true;
-			_unit setVelocity [0, 0, 0];
+			[_unit] call goUnconscious;
 			diag_log "Quick fix INCAPACITED 3";
 		};
 	};
