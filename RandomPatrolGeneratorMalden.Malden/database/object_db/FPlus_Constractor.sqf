@@ -80,6 +80,7 @@ loadout_FP_Contractor = [
 	[c_pilot,"B_Fighter_Pilot_F"],
 	[c_at, [["arifle_AUG_F","","JAS_ANPEQ15_Blk","",["30Rnd_556x45_AUG_Mag_F",30],[],""],["rhs_weap_M136_hedp","","","",[],[],""],["hgun_Rook40_F","","","",["16Rnd_9x21_Mag",16],[],""],["AAF_PMC_SOLDIER",[["FirstAidKit",1],["30Rnd_556x45_AUG_Mag_F",4,30]]],["FP_TacVest_Coy",[["30Rnd_556x45_AUG_Mag_F",5,30]]],["B_AssaultPack_cbr",[]],"H_HelmetB_light_sand","ESS_01_FaceWear",["Binocular","","","",[],[],""],["ItemMap","ItemGPS","ItemRadio","ItemCompass","ItemWatch",""]] ,[]],
 	[c_marksman, [["rhs_weap_m24sws_d","","","optic_LRPS",["rhsusf_5Rnd_762x51_m118_special_Mag",5],[],""],[],["hgun_Rook40_F","","","",["16Rnd_9x21_Mag",16],[],""],["AAF_PMC_SOLDIER",[["FirstAidKit",1],["rhsusf_5Rnd_762x51_m118_special_Mag",3,5],["rhsusf_5Rnd_762x51_m62_Mag",9,5]]],["FP_TacVest_Coy",[["rhsusf_5Rnd_762x51_m62_Mag",8,5]]],["B_Kitbag_cbr",[]],"H_HelmetB_light_sand","ESS_01_FaceWear",["Binocular","","","",[],[],""],["ItemMap","ItemGPS","ItemRadio","ItemCompass","ItemWatch",""]] ,[]],
+	[c_sniper, [["rhs_weap_m24sws_d","","","optic_LRPS",["rhsusf_5Rnd_762x51_m118_special_Mag",5],[],""],[],["hgun_Rook40_F","","","",["16Rnd_9x21_Mag",16],[],""],["U_B_GhillieSuit",[["FirstAidKit",1],["rhsusf_5Rnd_762x51_m118_special_Mag",3,5],["rhsusf_5Rnd_762x51_m62_Mag",9,5]]],["FP_TacVest_Coy",[["rhsusf_5Rnd_762x51_m62_Mag",8,5]]],["B_Kitbag_cbr",[]],"H_HelmetB_light_sand","ESS_01_FaceWear",["Binocular","","","",[],[],""],["ItemMap","ItemGPS","ItemRadio","ItemCompass","ItemWatch",""]] ,[]],
 	[c_grenadier, [["arifle_AUG_GL_F","","JAS_ANPEQ15_Blk","",["30Rnd_556x45_AUG_Mag_F",30],["1Rnd_HE_Grenade_shell",1],""],[],["hgun_Rook40_F","","","",["16Rnd_9x21_Mag",16],[],""],["AAF_PMC_SOLDIER",[["FirstAidKit",1],["30Rnd_556x45_AUG_Mag_F",3,30],["1Rnd_HE_Grenade_shell",2,1]]],["FP_TacVest_Coy",[["1Rnd_HE_Grenade_shell",1,1],["rhs_mag_M433_HEDP",10,1],["30Rnd_556x45_AUG_Mag_Tracer_Green_F",5,30]]],["B_AssaultPack_cbr",[]],"H_HelmetB_light_sand","ESS_01_FaceWear",["Binocular","","","",[],[],""],["ItemMap","ItemGPS","ItemRadio","ItemCompass","ItemWatch",""]] ,[]]
 ];
 
@@ -176,6 +177,8 @@ uniformList_FP_Contractor = [
 	"H_HelmetB_light_sand",
 	"H_Cap_blk",
 	"rhsusf_mich_bare_norotos_arc_alt",
+	"rhsusf_mich_bare_norotos_arc_alt_tan",
+	"FAST_BLACK_TAN",
 
 	//Glasses 
 	"FaceWear_Balaclava",
@@ -183,6 +186,8 @@ uniformList_FP_Contractor = [
 	"G_Bandanna_blk",
 	"G_Shades_Blue",
 	"rhsusf_shemagh_gogg_tan",
+	"rhsusf_shemagh2_gogg_tan",
+	"rhsusf_shemagh2_tan",
 
 	//vest
 	"FP_TacVest_Coy",
@@ -199,11 +204,13 @@ uniformList_FP_Contractor = [
 	"U_I_G_resistanceLeader_F",
 	"U_B_CTRG_2",
 	"rhs_uniform_g3_m81",
-	"rhs_uniform_g3_blk"
+	"rhs_uniform_g3_blk",
+	"rhs_uniform_FROG01_d"
 ];
 
 uniformListSniper_FP_Contractor = [
-	"U_B_GhillieSuit"
+	"U_B_GhillieSuit",
+	"U_B_FullGhillie_ard"
 ];
 
 //Magazine avalaible for all unit
