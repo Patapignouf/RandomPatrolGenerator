@@ -2035,9 +2035,9 @@
         <Japanese>紫</Japanese>
     </Key>
     <Key ID="RPG_GUI_BOMB_CLUE1">
-        <Original></Original>
-        <English></English>
-        <French>Indice #1 : Le fil %1 n’est PAS sûr.</French>
+        <Original>Clue #1: The wire %1 is the bad one</Original>
+        <English>Clue #1: The wire %1 is the bad one</English>
+        <French>Indice #1 : Couper le fil %1 déclencherait la bombe.</French>
         <Spanish>Pista #1: El cable %1 NO es seguro.</Spanish>
         <German>Hinweis #1: Das Kabel %1 ist NICHT sicher.</German>
         <Italian>Indizio #1: Il filo %1 NON è sicuro.</Italian>
