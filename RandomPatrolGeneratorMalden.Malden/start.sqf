@@ -776,11 +776,15 @@ if (missionNameSpace getVariable ["enableOpforBMShop",1] == 1) then
 
 	_unitBM = (createGroup (civilian)) createUnit ["C_Nikos", initCityLocation, [], 0, "NONE"];
 
-	//Garrison BM
-	[group _unitBM, initCityLocation, 200, false] call doGarrison;
+	//Garrison BM in a random building
+	_allBuildings = nearestTerrainObjects [initCityLocation, ["house", "FORTRESS", "BUNKER"], 200, false, true];
+	_allPositions = [];
+	_allBuildings apply {_allPositions append (_x buildingPos -1)};
 
-	_unitBM disableAI "ALL";
-	_unitBM enableAI "ANIM";
+	if (count _allPositions != 0) then 
+	{
+		_unitBM setPos (selectRandom _allPositions);
+	};
 
 	[_unitBM, ["<img size='2' image='\a3\ui_f_oldman\data\IGUI\Cfg\holdactions\map_ca.paa'/><t size='1'>Open black market</t>",{
 			params ["_object","_caller","_ID","_thisObjective"];
@@ -803,7 +807,16 @@ if (missionNameSpace getVariable ["enableOpforBMShop",1] == 1) then
 	}];	
 
 	//Add anim
-	[_unitBM, "BRIEFING", "NONE"] remoteExecCall ["BIS_fnc_ambientAnim"];
+	[_unitBM] spawn 
+	{
+		params ["_unitBM"];
+
+		//Wait for unit correctly spawn and garrison 
+		sleep 10;
+		_unitBM disableAI "ALL";
+		_unitBM enableAI "ANIM";
+		[_unitBM, "BRIEFING", "NONE"] remoteExecCall ["BIS_fnc_ambientAnim"];
+	};
 
 	//3D Display
 	[["RPG_GUI_GENERAL_BM_SHOP", (getPos _unitBM) vectorAdd [0,0,((getPos _unitBM)#2)+3],"\a3\ui_f_oldman\data\IGUI\Cfg\holdactions\map_ca.paa" , [0,0,1,1]], 'GUI\3DNames\3DNames.sqf'] remoteExec ['BIS_fnc_execVM', 0, true];
