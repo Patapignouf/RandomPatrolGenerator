@@ -778,7 +778,11 @@ if (isClass (configFile >> "CfgPatches" >> "ace_medical")) then
 	player setDamage 0;
 };
 
-#include "GUI\mapIndicatorGUI\GPSJamManager.sqf"
+if (missionNameSpace getVariable ["displayGPSJammerOnMap", 1] == 1) then 
+{
+	#include "GUI\mapIndicatorGUI\GPSJamManager.sqf"
+};
+
 #include "GUI\mapIndicatorGUI\mapRealTimeMarkers.sqf"
 #include "engine\tentActionManagement.sqf"
 
