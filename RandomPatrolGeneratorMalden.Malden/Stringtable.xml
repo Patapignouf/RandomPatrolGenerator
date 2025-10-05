@@ -1954,6 +1954,11 @@
         <English>Open support shop</English>
         <French>Ouvrir le magasin de support</French>
     </Key>
+    <Key ID="STR_ACTIONS_OPEN_FAST_TRAVEL">
+        <Original>Fast travel</Original>
+        <English>Fast travel</English>
+        <French>Voyage rapide</French>
+    </Key>
     <Key ID="STR_ACTIONS_OPEN_VEHICLE_SHOP">
         <Original>Open vehicle shop</Original>
         <English>Open vehicle shop</English>

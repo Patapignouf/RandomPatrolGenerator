@@ -604,7 +604,20 @@ if (side player == blufor) then
 			[[true], 'GUI\supportGUI\supportGUI.sqf'] remoteExec ['BIS_fnc_execVM', _caller];
 	},_x,3,true,false,"","_target distance _this <5"];
 
-		//Add abort action to TPFlag1
+
+	//Add fast travel 
+	if (missionNameSpace getVariable ["fastTravel", 0] == 1) then
+	{
+		TPFlag1 addAction [format ["<img size='2' image='\a3\ui_f_orange\Data\CfgOrange\Missions\action_fragment_back_ca.paa'/><t size='1'>%1</t>", localize "STR_ACTIONS_OPEN_FAST_TRAVEL"],{
+				//Define parameters
+				params ["_object","_caller","_ID","_avalaibleVehicle"];
+
+				
+				[[], 'GUI\respawnGUI\respawnMapGUI.sqf'] remoteExec ['BIS_fnc_execVM', _caller];
+		},_x,5,true,false,"","_target distance _this <5"];
+	};
+
+	//Add abort action to TPFlag1
 	_actionIdAbortMission = TPFlag1 addAction 
 	[
 		"<img size='2' image='\a3\ui_f\data\IGUI\Cfg\holdactions\holdAction_takeOff1_ca.paa'/><t color='#FF0000'>Abort mission</t>", 
