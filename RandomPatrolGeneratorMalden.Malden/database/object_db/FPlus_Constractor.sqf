@@ -33,6 +33,7 @@ bluforStaticWeapon_FP_Contractor =
 
 //Armored vehicle avalaible for blufor : Ex light tank
 bluforArmoredVehicle_FP_Contractor = [
+	"rhsgref_BRDM2UM_msv",
 	"rhs_bmp3m_msv"
 ];
 
@@ -61,7 +62,8 @@ bluforFixedWing_FP_Contractor = [
 
 //Vehicule able to do HQ features (Loadout management and more)
 bluforHQVehicle_FP_Contractor = [
-	"rhsgref_cdf_b_gaz66"
+	"rhsgref_cdf_b_gaz66",
+	"rhsgref_BRDM2UM_msv"
 ];	
 
 
