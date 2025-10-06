@@ -136,7 +136,7 @@ spawnSelection_selectNearest = {
 
         // Mise en évidence visuelle
         private _selMarkerName = _resMeta select 1;
-        _selMarkerName setMarkerType _majorPulseType;
+        _selMarkerName setMarkerTypeLocal _majorPulseType;
 
         _res
     } else {
@@ -159,9 +159,9 @@ private _createMarkers = {
         private _color = _x select 2;
 
         createMarkerLocal [_name, _pos];
-        _name setMarkerType  "selector_selectedMission";
-        _name setMarkerText  _label;
-        _name setMarkerColor _color;
+        _name setMarkerTypeLocal  "selector_selectedMission";
+        _name setMarkerTextLocal  _label;
+        _name setMarkerColorLocal _color;
 
         _arr pushBack [_i, _name, _label, _pos, _color];
         _i = _i + 1;
@@ -179,11 +179,11 @@ applyPulseToMarker = {
     private _mName = _markerMeta select 1;
     if ((_step < _steps/2)) then {
         //_mName setMarkerType _majorPulseType;
-        _mName setMarkerSize [_baseSize*_step/_steps, _baseSize*_step/_steps];
+        _mName setMarkerSizeLocal [_baseSize*_step/_steps, _baseSize*_step/_steps];
 
     } else {
         //_mName setMarkerType _minorPulseType;
-         _mName setMarkerSize [_baseSize*(_steps-_step)/_steps, _baseSize*(_steps-_step)/_steps];
+         _mName setMarkerSizeLocal [_baseSize*(_steps-_step)/_steps, _baseSize*(_steps-_step)/_steps];
     };
 };
 
