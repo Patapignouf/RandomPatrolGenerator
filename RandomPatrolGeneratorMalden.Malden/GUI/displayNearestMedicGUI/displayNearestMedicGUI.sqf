@@ -29,49 +29,53 @@ goUnconscious = {
 };
 
 //Fix ACE last update with bad unconscious state
-if (isClass (configFile >> "CfgPatches" >> "ace_medical")) then 
+if (missionNameSpace getVariable ["ACETryFixUnconscious", 1] == 1) then 
 {
-	[_unit] spawn {
-		params ["_unit"];
-		
-		//Check if there is a bug, the player is "HEALTHY" if there is a bug
-		if (lifeState _unit != "INCAPACITATED" && (_unit getVariable ["isUnconscious", false])) then 
-		{
-			[_unit] call goUnconscious;
-			diag_log "Quick fix INCAPACITED 0";
-		};
-		
-		//Wait to see if there is a bug
-		sleep 3;
+	if (isClass (configFile >> "CfgPatches" >> "ace_medical")) then 
+	{
+		[_unit] spawn {
+			params ["_unit"];
+			
+			//Check if there is a bug, the player is "HEALTHY" if there is a bug
+			if (lifeState _unit != "INCAPACITATED" && (_unit getVariable ["isUnconscious", false])) then 
+			{
+				[_unit] call goUnconscious;
+				diag_log "Quick fix INCAPACITED 0";
+			};
+			
+			//Wait to see if there is a bug
+			sleep 3;
 
-		//Check if there is a bug, the player is "HEALTHY" if there is a bug
-		if (lifeState _unit != "INCAPACITATED" && (_unit getVariable ["isUnconscious", false])) then 
-		{
-			[_unit] call goUnconscious;
-			diag_log "Quick fix INCAPACITED 1";
-		};
+			//Check if there is a bug, the player is "HEALTHY" if there is a bug
+			if (lifeState _unit != "INCAPACITATED" && (_unit getVariable ["isUnconscious", false])) then 
+			{
+				[_unit] call goUnconscious;
+				diag_log "Quick fix INCAPACITED 1";
+			};
 
-		//Wait to see if there is a bug
-		sleep 3;
+			//Wait to see if there is a bug
+			sleep 3;
 
-		//Check if there is a bug, the player is "HEALTHY" if there is a bug
-		if (lifeState _unit != "INCAPACITATED" && (_unit getVariable ["isUnconscious", false])) then 
-		{
-			[_unit] call goUnconscious;
-			diag_log "Quick fix INCAPACITED 2";
-		};
+			//Check if there is a bug, the player is "HEALTHY" if there is a bug
+			if (lifeState _unit != "INCAPACITATED" && (_unit getVariable ["isUnconscious", false])) then 
+			{
+				[_unit] call goUnconscious;
+				diag_log "Quick fix INCAPACITED 2";
+			};
 
-		//Wait to see if there is a bug
-		sleep 3;
+			//Wait to see if there is a bug
+			sleep 3;
 
-		//Check if there is a bug, the player is "HEALTHY" if there is a bug
-		if (lifeState _unit != "INCAPACITATED" && (_unit getVariable ["isUnconscious", false])) then 
-		{
-			[_unit] call goUnconscious;
-			diag_log "Quick fix INCAPACITED 3";
+			//Check if there is a bug, the player is "HEALTHY" if there is a bug
+			if (lifeState _unit != "INCAPACITATED" && (_unit getVariable ["isUnconscious", false])) then 
+			{
+				[_unit] call goUnconscious;
+				diag_log "Quick fix INCAPACITED 3";
+			};
 		};
 	};
 };
+
 
 
 // diag_log format ["Domination GUI : %1", getPos _thisAreaTrigger];
