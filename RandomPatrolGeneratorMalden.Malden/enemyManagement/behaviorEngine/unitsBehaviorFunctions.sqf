@@ -223,6 +223,11 @@ doSurrender = {
 						//Give a feedback to the player
 						[[_caller], {params ["_caller"]; ["STR_RPG_HC_NAME", "STR_RPG_HC_SURRENDER_INTEL", name _caller] call doDialog}] remoteExec ["spawn", _caller]; 
 
+						//Prisoner Go Down
+						[_object, ""] remoteExec ["switchMove", 0, true]; //reset 
+ 						[_object, "acts_aidlpsitmstpssurwnondnon_loop"] remoteExec ["switchMove", 0, true];// Go down
+						[_object, "acts_aidlpsitmstpssurwnondnon_loop"] remoteExec ["playMoveNow", 0, true];// Force go down
+
 						//Reward player
 						[{[2, "RPG_ranking_intel_collect"] call doUpdateRank}] remoteExec ["call", _caller];
 				}, [],3,true,true,"","_target distance _this <5"]] remoteExec ["addAction", 0, true];
