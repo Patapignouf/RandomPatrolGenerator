@@ -40,8 +40,16 @@ isInJammedArea = {
 		//Disable GPS and micro DAGR
 		if (_boolJammed) then 
 		{
+			//Disable GPS view
     		openGPS false;
-			[0] call ace_microdagr_fnc_openDisplay;
+
+			//Disable ACE microDAGR view
+			if (isClass (configFile >> "CfgPatches" >> "ace_medical")) then 
+			{
+				[0] call ace_microdagr_fnc_openDisplay; //Close display
+				[1] call ace_microdagr_fnc_saveCurrentAndSetNewMode; //Set kompass display
+			};
+
 			if (!(player getVariable ["jammedGPS", true])) then 
 			{
 				player setVariable ["jammedGPS", true];
