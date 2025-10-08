@@ -4,7 +4,6 @@ missionNamespace setVariable ["MissionObjectives", [], true];
 missionNamespace setVariable ["completedObjectives",[],true];
 missionNamespace setVariable ["missionFailedObjectives",[], true];
 missionNamespace setVariable ["currentSideObjectives", [], true];
-missionNamespace setVariable ["maxCivKilled", 10, true];
 missionNamespace setVariable ["civKilled", 0, true];
 
 //Blufor vehcile spawn counter
