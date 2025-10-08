@@ -50,10 +50,16 @@ isInJammedArea = {
 				[1] call ace_microdagr_fnc_saveCurrentAndSetNewMode; //Set kompass display
 			};
 
+			//Disable TFAR radio
+			if (isClass (configFile >> "CfgPatches" >> "task_force_radio")) then {
+				(str (floor (random 50+40))) call TFAR_fnc_setPersonalRadioFrequency;
+				(str (floor (random 50+40))) call TFAR_fnc_setLongRangeRadioFrequency;
+			};
+
 			if (!(player getVariable ["jammedGPS", true])) then 
 			{
 				player setVariable ["jammedGPS", true];
-				hint "GPS Jammed";
+				hint "GPS and radio jammed";
 			};	
 		} else 
 		{
