@@ -143,10 +143,17 @@ generateJammedAntenna =
 	_trgJammer setTriggerArea [400, 400, 0, false];
 	_missionJammer pushBack [true, _trgJammer];
 	missionNameSpace setVariable ["jammedArea", _missionJammer, true];
-	[_trgJammer] call displayTriggerOnMap;
+
+	if (missionNameSpace getVariable ["displayGPSJammerOnMap", 1] == 1) then 
+	{		
+		[_trgJammer] call displayTriggerOnMap;
+	};
 
 	//Create antenna
-	_antenna = createVehicle ["Land_TTowerBig_2_F",[_randomPosMapNoWater#0,_randomPosMapNoWater#1,0],[],0,"NONE"];
+	_antenna = createVehicle [selectRandom avalaibleJammedAntenna,[_randomPosMapNoWater#0,_randomPosMapNoWater#1,0],[],0,"NONE"];
+
+	//Decrease jammed antena health
+	_antenna setDamage 0.8;
 
 	//Delete antenna
 	[_antenna, _trgJammer] spawn 

@@ -126,6 +126,11 @@ avalaibleCollectIntel = [
 	"SatelliteAntenna_01_Olive_F"
 ];
 
+avalaibleJammedAntenna = [
+	"Land_TTowerBig_2_F",
+	"Land_MobileRadar_01_radar_F",
+	"Land_Radar_Small_F"
+];
 
 avalaibleTypeOfObj = [];
 
