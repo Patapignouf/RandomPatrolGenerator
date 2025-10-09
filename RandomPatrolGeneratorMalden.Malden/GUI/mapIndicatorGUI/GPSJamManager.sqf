@@ -52,8 +52,19 @@ isInJammedArea = {
 
 			//Disable TFAR radio
 			if (isClass (configFile >> "CfgPatches" >> "task_force_radio")) then {
-				(str (floor (random 50+40))) call TFAR_fnc_setPersonalRadioFrequency;
-				(str (floor (random 50+40))) call TFAR_fnc_setLongRangeRadioFrequency;
+				if (call TFAR_fnc_haveLRRadio) then 
+				{
+					// LR radio - channel 1
+					[(call TFAR_fnc_activeLrRadio), 1, str (floor (random 50+40))] call TFAR_fnc_SetChannelFrequency;
+					[(call TFAR_fnc_activeLrRadio), 2, str (floor (random 50+40))] call TFAR_fnc_SetChannelFrequency;
+				};
+
+				if (call TFAR_fnc_haveSWRadio) then 
+				{
+					// SW radio - channel 1
+					[(call TFAR_fnc_activeSwRadio), 1, str (floor (random 50+40))] call TFAR_fnc_SetChannelFrequency;
+					[(call TFAR_fnc_activeSwRadio), 2, str (floor (random 50+40))] call TFAR_fnc_SetChannelFrequency;
+				};
 			};
 
 			if (!(player getVariable ["jammedGPS", true])) then 
