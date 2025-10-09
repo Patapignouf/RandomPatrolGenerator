@@ -31,9 +31,12 @@ generateObjective =
 	[[_selectedObjectivePosition, 40, 200, 7, 0, 0, 0, [], [[0,0,0],[0,0,0]]] call BIS_fnc_findSafePos] call doGenerateAnimalGroup;
 
 	//Generate Jammed antenna 
-	if (random 100 > 50) then 
+	if ((missionNameSpace getVariable ["enableGPSJammerOnMap", 1]) == 1) then 
 	{
-		[_selectedObjectivePosition] call generateJammedAntenna;
+		if (random 100 > 50) then 
+		{
+			[_selectedObjectivePosition] call generateJammedAntenna;
+		};
 	};
 	
 	//Generate mission environement
