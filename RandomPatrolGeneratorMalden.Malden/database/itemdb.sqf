@@ -89,6 +89,7 @@ if (isClass (configFile >> "CfgPatches" >> "ace_medical")) then
 //basic engineer items that will be included with all factions
 //Include ACE items
 basicEngineerItems = [
+	"SatchelCharge_Remote_Mag",
 	"ToolKit",
 	"MineDetector"
 ];
