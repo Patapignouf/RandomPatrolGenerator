@@ -137,6 +137,7 @@ getVirtualWeaponList = {
 				if (missionNameSpace getVariable ["enableOpforWeaponShop",1] >= 1) then 
 				{
 					_virtualWeaponList = _virtualWeaponList +([_currentFaction, "rifle", _unlockedStuff] call getPlayerFactionUnlockedWeaponForCategoryWithUnlockedInput);
+					_virtualWeaponList = _virtualWeaponList +([_currentFaction, "smg", _unlockedStuff] call getPlayerFactionUnlockedWeaponForCategoryWithUnlockedInput);
 					_virtualWeaponList = _virtualWeaponList +([_currentFaction, "autoRifle", _unlockedStuff] call getPlayerFactionUnlockedWeaponForCategoryWithUnlockedInput);
 				};
 			};
@@ -162,6 +163,7 @@ getVirtualWeaponList = {
 				{
 					_virtualWeaponList = _virtualWeaponList +([_currentFaction, "rifle", _unlockedStuff] call getPlayerFactionUnlockedWeaponForCategoryWithUnlockedInput);
 					_virtualWeaponList = _virtualWeaponList +([_currentFaction, "grenadeLauncher", _unlockedStuff] call getPlayerFactionUnlockedWeaponForCategoryWithUnlockedInput);
+					_virtualWeaponList = _virtualWeaponList +([_currentFaction, "smg", _unlockedStuff] call getPlayerFactionUnlockedWeaponForCategoryWithUnlockedInput);
 				};
 			};				
 		default
