@@ -50,13 +50,34 @@ isInJammedArea = {
 				[1] call ace_microdagr_fnc_saveCurrentAndSetNewMode; //Set kompass display
 			};
 
+			if (!(player getVariable ["jammedGPS", true])) then 
+			{
+				player setVariable ["jammedGPS", true];
+				hint "GPS and radio jammed";
+
+				//Save TFAR radio
+				if (isClass (configFile >> "CfgPatches" >> "task_force_radio")) then {
+					if (call TFAR_fnc_haveLRRadio) then 
+					{
+						// LR radio - channel 1
+						_mainFrequency =  (call TFAR_fnc_ActiveLrRadio) call TFAR_fnc_getLrFrequency;
+						player setVariable ["RPG_TFAR_LR_FREQ", _mainFrequency];
+					};
+
+					if (call TFAR_fnc_haveSWRadio) then 
+					{
+						// SW radio - channel 1
+						_mainFrequency =  (call TFAR_fnc_ActiveSwRadio) call TFAR_fnc_getSwFrequency;
+						player setVariable ["RPG_TFAR_SW_FREQ", _mainFrequency];
+					};
+				};
+			};	
+
 			//Disable TFAR radio
 			if (isClass (configFile >> "CfgPatches" >> "task_force_radio")) then {
 				if (call TFAR_fnc_haveLRRadio) then 
 				{
 					// LR radio - channel 1
-					_mainFrequency =  (call TFAR_fnc_ActiveLrRadio) call TFAR_fnc_getLrFrequency;
-					player setVariable ["RPG_TFAR_LR_FREQ", _mainFrequency];
 					[(call TFAR_fnc_activeLrRadio), 1, str (floor (random 50+40))] call TFAR_fnc_SetChannelFrequency;
 					[(call TFAR_fnc_activeLrRadio), 2, str (floor (random 50+40))] call TFAR_fnc_SetChannelFrequency;
 
@@ -73,8 +94,6 @@ isInJammedArea = {
 				if (call TFAR_fnc_haveSWRadio) then 
 				{
 					// SW radio - channel 1
-					_mainFrequency =  (call TFAR_fnc_ActiveSwRadio) call TFAR_fnc_getSwFrequency;
-					player setVariable ["RPG_TFAR_SW_FREQ", _mainFrequency];
 					[(call TFAR_fnc_activeSwRadio), 1, str (floor (random 50+40))] call TFAR_fnc_SetChannelFrequency;
 					[(call TFAR_fnc_activeSwRadio), 2, str (floor (random 50+40))] call TFAR_fnc_SetChannelFrequency;
 					// _volume = (call TFAR_fnc_ActiveSwRadio) call TFAR_fnc_getSwVolume;
@@ -82,12 +101,6 @@ isInJammedArea = {
 					// [(call TFAR_fnc_activeSwRadio), 0] call TFAR_fnc_setSwVolume;
 				};
 			};
-
-			if (!(player getVariable ["jammedGPS", true])) then 
-			{
-				player setVariable ["jammedGPS", true];
-				hint "GPS and radio jammed";
-			};	
 		} else 
 		{
 			//Check with lower frequency
@@ -98,14 +111,14 @@ isInJammedArea = {
 
 				if (isClass (configFile >> "CfgPatches" >> "task_force_radio")) then 
 				{
-
+					//restore frequency
 					if (call TFAR_fnc_haveLRRadio) then 
 					{
 						// _volume = player getVariable ["RPG_TFAR_LR_RADIO_VOL", 10];
 						// [(call TFAR_fnc_activeLrRadio), _volume] call TFAR_fnc_setLrVolume;
 						
 						_mainFrequency = player getVariable ["RPG_TFAR_LR_FREQ", 0];
-						[(call TFAR_fnc_activeLrRadio), 1, str _mainFrequency] call TFAR_fnc_SetChannelFrequency;
+						[(call TFAR_fnc_activeLrRadio), 1, _mainFrequency] call TFAR_fnc_SetChannelFrequency;
 
 					};
 
@@ -115,7 +128,7 @@ isInJammedArea = {
 						// [(call TFAR_fnc_ActiveSWRadio), _volume] call TFAR_fnc_setSwVolume;
 
 						_mainFrequency = player getVariable ["RPG_TFAR_SW_FREQ", 0];
-						[(call TFAR_fnc_activeSwRadio), 1, str _mainFrequency] call TFAR_fnc_SetChannelFrequency;
+						[(call TFAR_fnc_activeSwRadio), 1, _mainFrequency] call TFAR_fnc_SetChannelFrequency;
 					};
 				};
 			};			
