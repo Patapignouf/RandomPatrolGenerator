@@ -843,6 +843,38 @@ checkRoleAvalaibility = {
 					_isOkToSwitch = true;
 				};
 			};
+			case c_engineer:
+			{
+				//Max 1 
+				if ([_caller, _roleToCheck] call numberOfUnitWithRoleInGroup == 0) then 
+				{
+					_isOkToSwitch = true;
+				};
+			};
+			case c_pilot:
+			{
+				//Max 1 
+				if ([_caller, _roleToCheck] call numberOfUnitWithRoleInGroup == 0) then 
+				{
+					_isOkToSwitch = true;
+				};
+			};
+			case c_grenadier:
+			{
+				//Max 1 
+				if ([_caller, _roleToCheck] call numberOfUnitWithRoleInGroup == 0) then 
+				{
+					_isOkToSwitch = true;
+				};
+			};
+			case c_marksman:
+			{
+				//Max 1 
+				if ([_caller, _roleToCheck] call numberOfUnitWithRoleInGroup == 0) then 
+				{
+					_isOkToSwitch = true;
+				};
+			};
 			case c_rifleman:
 			{
 				//No Max
@@ -873,6 +905,26 @@ checkRoleMaxNumber = {
 	switch (_roleToCheck) do
 	{
 		case c_leader:
+		{
+			//Max 1 
+			_maxNumberInRole = "1";
+		};
+		case c_engineer:
+		{
+			//Max 1 
+			_maxNumberInRole = "1";
+		};
+		case c_pilot:
+		{
+			//Max 1 
+			_maxNumberInRole = "1";
+		};
+		case c_grenadier:
+		{
+			//Max 1 
+			_maxNumberInRole = "1";
+		};
+		case c_marksman:
 		{
 			//Max 1 
 			_maxNumberInRole = "1";
