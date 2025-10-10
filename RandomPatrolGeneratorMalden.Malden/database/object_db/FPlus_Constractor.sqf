@@ -213,7 +213,8 @@ uniformList_FP_Contractor = [
 uniformListSniper_FP_Contractor = [
 	"U_B_GhillieSuit",
 	"U_B_FullGhillie_ard",
-	"Laserdesignator" //Add laser designator only for sniper
+	"Laserdesignator", //Add laser designator only for sniper
+	"ACE_Tripod"
 ];
 
 //Magazine avalaible for all unit

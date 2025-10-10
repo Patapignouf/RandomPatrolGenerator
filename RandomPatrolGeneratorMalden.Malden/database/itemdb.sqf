@@ -49,7 +49,8 @@ if (isClass (configFile >> "CfgPatches" >> "ace_medical")) then
 	"ACE_Humanitarian_Ration",
 	"ACE_bodyBag_white",
 	"ACE_bodyBag_blue",
-	"ACE_IR_Strobe_Item"
+	"ACE_IR_Strobe_Item",
+	"ACE_Chemlight_IR"
 ];
 };
 
