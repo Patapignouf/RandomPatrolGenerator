@@ -36,42 +36,15 @@ if (missionNameSpace getVariable ["ACETryFixUnconscious", 1] == 1) then
 		[_unit] spawn {
 			params ["_unit"];
 			
-			//Check if there is a bug, the player is "HEALTHY" if there is a bug
-			if (lifeState _unit != "INCAPACITATED" && (_unit getVariable ["isUnconscious", false])) then 
+			for [{_i = 0}, {_i < 12}, {_i = _i + 1}] do
 			{
-				[_unit] call goUnconscious;
-				diag_log "Quick fix INCAPACITED 0";
-			};
-			
-			//Wait to see if there is a bug
-			sleep 3;
-
-			//Check if there is a bug, the player is "HEALTHY" if there is a bug
-			if (lifeState _unit != "INCAPACITATED" && (_unit getVariable ["isUnconscious", false])) then 
-			{
-				[_unit] call goUnconscious;
-				diag_log "Quick fix INCAPACITED 1";
-			};
-
-			//Wait to see if there is a bug
-			sleep 3;
-
-			//Check if there is a bug, the player is "HEALTHY" if there is a bug
-			if (lifeState _unit != "INCAPACITATED" && (_unit getVariable ["isUnconscious", false])) then 
-			{
-				[_unit] call goUnconscious;
-				diag_log "Quick fix INCAPACITED 2";
-			};
-
-			//Wait to see if there is a bug
-			sleep 3;
-
-			//Check if there is a bug, the player is "HEALTHY" if there is a bug
-			if (lifeState _unit != "INCAPACITATED" && (_unit getVariable ["isUnconscious", false])) then 
-			{
-				[_unit] call goUnconscious;
-				diag_log "Quick fix INCAPACITED 3";
-			};
+				sleep 0.5;
+				//Check if there is a bug, the player is "HEALTHY" if there is a bug
+				if (lifeState _unit != "INCAPACITATED" && (_unit getVariable ["isUnconscious", false])) then 
+				{
+					[_unit] call goUnconscious;
+				};
+			}; 
 		};
 	};
 };

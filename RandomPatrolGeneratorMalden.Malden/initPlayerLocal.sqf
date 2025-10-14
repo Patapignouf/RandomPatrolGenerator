@@ -277,17 +277,17 @@ if !(isClass (configFile >> "CfgPatches" >> "ace_medical")) then
 		};
 	}] call CBA_fnc_addEventHandler;
 
-	player addEventHandler ["HandleDamage", {
-		params ["_unit", "_selection", "_damage", "_source", "_projectile", "_hitIndex", "_instigator", "_hitPoint"];
+	// player addEventHandler ["HandleDamage", {
+	// 	params ["_unit", "_selection", "_damage", "_source", "_projectile", "_hitIndex", "_instigator", "_hitPoint"];
 
-		if (lifeState _unit == "INCAPACITATED") then 
-		{
-			_unit setVariable ["isUnconscious", true, true]; 
-		};
+	// 	if (lifeState _unit == "INCAPACITATED") then 
+	// 	{
+	// 		_unit setVariable ["isUnconscious", true, true]; 
+	// 	};
 
-		// Retourner la valeur du dommage pour l’appliquer normalement
-		_damage
-	}];
+	// 	// Retourner la valeur du dommage pour l’appliquer normalement
+	// 	_damage
+	// }];
 };
 
 //Init player rank
