@@ -819,7 +819,7 @@ if (missionNameSpace getVariable ["enableOpforBMShop",1] == 1) then
 	};
 
 	//3D Display
-	[["RPG_GUI_GENERAL_BM_SHOP", (getPos _unitBM) vectorAdd [0,0,((getPos _unitBM)#2)+3],"\a3\ui_f_oldman\data\IGUI\Cfg\holdactions\map_ca.paa" , [0,0,1,1]], 'GUI\3DNames\3DNames.sqf'] remoteExec ['BIS_fnc_execVM', 0, true];
+	[["RPG_GUI_GENERAL_BM_SHOP", (getPosATL _unitBM) vectorAdd [0,0,((getPos _unitBM)#2)+3],"\a3\ui_f_oldman\data\IGUI\Cfg\holdactions\map_ca.paa" , [0,0,1,1]], 'GUI\3DNames\3DNames.sqf'] remoteExec ['BIS_fnc_execVM', 0, true];
 };
 
 
