@@ -589,7 +589,7 @@ doInitializeLoadout = {
 
 	//Save personnal loadout
 	_currentPlayerClass = _player getVariable "role";
-	_loadableLoadout = profileNamespace getVariable [format [loadoutSaveName, name player, _currentFaction, _currentPlayerClass], []];
+	_loadableLoadout = profileNamespace getVariable [format [loadoutSaveName, name _player, _currentFaction, _currentPlayerClass], []];
 	_isDefault = false;
 
 	//Setup default stuff
@@ -607,6 +607,10 @@ doInitializeLoadout = {
 
 	//Load player loadout
 	_player setUnitLoadout _loadableLoadout;
+
+	//Set Unit trait
+	[_player, _player getVariable "role"] call setUnitTraitAccordingToRole;
+
 
 	//If it's a default loadout then adjust
 	if (_isDefault) then 
