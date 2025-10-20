@@ -40,6 +40,18 @@ params ["_supportType"];
 
 			hint "Weather cleared";
 		};
+		case "RandomizeWeather":
+		{
+			[[], 'engine\randomizeWeather.sqf'] remoteExec ['BIS_fnc_execVM', 0];
+
+			hint "Weather randomized";
+		};
+		case "CloudyWeather":
+		{
+			[[], 'engine\cloudyWeather.sqf'] remoteExec ['BIS_fnc_execVM', 0];
+
+			hint "Weather cloudy";
+		};
 		case "AddCredit":
 		{
 			[] call doIncrementVehicleSpawnCounter; 
@@ -141,6 +153,28 @@ addClearWeather = {
 
 	_supportName = "Clear weather";
 	_supportNameCode = "ClearWeather";
+	_supportIcon = "\a3\ui_f\data\igui\cfg\simpletasks\types\Radio_ca.paa";
+	_supportType = "Weather";
+
+	[_ctrl, _supportName, _supportNameCode, _supportIcon, _supportType] call addSupportOption;
+};
+
+addCloudyWeather = {
+	params ["_ctrl"];
+
+	_supportName = "Cloudy weather (no rain)";
+	_supportNameCode = "CloudyWeather";
+	_supportIcon = "\a3\ui_f\data\igui\cfg\simpletasks\types\Radio_ca.paa";
+	_supportType = "Weather";
+
+	[_ctrl, _supportName, _supportNameCode, _supportIcon, _supportType] call addSupportOption;
+};
+
+addRandomWeather = {
+	params ["_ctrl"];
+
+	_supportName = "Randomize weather";
+	_supportNameCode = "RandomizeWeather";
 	_supportIcon = "\a3\ui_f\data\igui\cfg\simpletasks\types\Radio_ca.paa";
 	_supportType = "Weather";
 

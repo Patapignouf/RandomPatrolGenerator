@@ -1022,8 +1022,20 @@ switch (timeOfDay) do
 		};
 };
 
-//Setup weather
-86400 setOvercast (random 1);
+//Setup weather 
+0 setOvercast (random 1); 
+0 SetRain (random 1);  
+0 SetLightnings (random 1);  
+//86400 SetFog (random 1);  
+0 SetWaves (random 1); 
+skipTime 24; 
+0 setOvercast (random 1); 
+0 SetRain (random 1);  
+0 SetLightnings (random 1);  
+//86400 SetFog (random 1);  
+0 SetWaves (random 1); 
+skipTime -24;
+
 forceWeatherChange;
 
 //Setup difficulty management

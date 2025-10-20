@@ -26,6 +26,8 @@ switch (_mode) do
 		[_lnbEntries] call addSupportGUI;
 		[_lnbEntries] call addCredit;
 		[_lnbEntries] call addClearWeather;
+		[_lnbEntries] call addCloudyWeather;
+		[_lnbEntries] call addRandomWeather;
 		[_lnbEntries] call addEndMission;
 	};
 	case "sortCol":{
