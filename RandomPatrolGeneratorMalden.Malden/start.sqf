@@ -1022,21 +1022,29 @@ switch (timeOfDay) do
 		};
 };
 
-//Setup weather 
-0 setOvercast (random 1); 
-0 SetRain (random 1);  
-0 SetLightnings (random 1);  
-//86400 SetFog (random 1);  
-0 SetWaves (random 1); 
-skipTime 24; 
-0 setOvercast (random 1); 
-0 SetRain (random 1);  
-0 SetLightnings (random 1);  
-//86400 SetFog (random 1);  
-0 SetWaves (random 1); 
-skipTime -24;
+switch (missionNameSpace getVariable ["WeatherSetting", 2]) do
+{
+	case 0:
+		{
+			//Set sun
+			[[], 'engine\clearWeather.sqf'] remoteExec ['BIS_fnc_execVM', 0];
+		};
+	case 1:
+		{
+			//Set cloud
+			[[], 'engine\cloudyWeather.sqf'] remoteExec ['BIS_fnc_execVM', 0];
+		};
+	case 2:
+		{
+			//Randomize time
+			[[], 'engine\randomizeWeather.sqf'] remoteExec ['BIS_fnc_execVM', 0];
+		};
+	default
+		{
+			//Do nothing
+		};
+};
 
-forceWeatherChange;
 
 //Setup difficulty management
 if (enableAutoDifficultyBalance==1) then 
