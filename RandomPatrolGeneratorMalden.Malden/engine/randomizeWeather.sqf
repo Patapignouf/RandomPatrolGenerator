@@ -9,9 +9,9 @@
 //86400 SetFog (random 1);  
 0 SetWaves (random 1); 
 skipTime 24; 
-0 setOvercast (random 1); 
-0 SetRain (random 1);  
-0 SetLightnings (random 1);  
+999999 setOvercast (random 1); 
+999999 SetRain (random 1);  
+999999 SetLightnings (random 1);  
 //86400 SetFog (random 1);  
 0 SetWaves (random 1); 
 skipTime -24;

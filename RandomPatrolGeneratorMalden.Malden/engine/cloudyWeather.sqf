@@ -8,9 +8,9 @@ _mainDisplay closeDisplay 1;
 0 SetRain 0;  
 0 SetLightnings 1;  
 skipTime 24;
-0 setOvercast 0.6;  
-0 SetRain 0;
-0 SetLightnings 1;   
+999999 setOvercast 0.6;  
+999999 SetRain 0;
+999999 SetLightnings 1;   
 skipTime -24;
 
 forceWeatherChange;
