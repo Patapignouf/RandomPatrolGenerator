@@ -168,6 +168,19 @@ generateJammedAntenna =
 		deleteVehicle _trgJammer;
 	};
 
+	//Add eventhandler killed
+	_antenna addEventHandler ["Killed", {
+		params ["_unit", "_killer", "_instigator", "_useEffects"];
+
+		if (isPlayer _instigator) then 
+		{
+			[{[5, "RPG_ranking_repair"] call doUpdateRank}] remoteExec ["call", _instigator];
+		} else {
+			//Debug IA killed log
+			diag_log format ["The IA %1 has been killed by %2", name _unit, name _instigator];
+		}; 
+	}];
+
 	//Add sabotage action
 	[
 		_antenna, 
