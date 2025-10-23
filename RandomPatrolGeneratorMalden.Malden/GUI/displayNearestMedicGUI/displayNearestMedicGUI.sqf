@@ -36,7 +36,7 @@ if (missionNameSpace getVariable ["ACETryFixUnconscious", 1] == 1) then
 		[_unit] spawn {
 			params ["_unit"];
 			
-			for [{_i = 0}, {_i < 12}, {_i = _i + 1}] do
+			for [{_i = 0}, {_i < 240}, {_i = _i + 1}] do
 			{
 				sleep 0.5;
 				//Check if there is a bug, the player is "HEALTHY" if there is a bug
