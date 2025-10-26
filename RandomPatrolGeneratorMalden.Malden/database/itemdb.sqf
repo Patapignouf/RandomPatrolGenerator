@@ -170,7 +170,7 @@ prestigeItem = [
 BMrifleList_db = [
 	[0,["rhs_weap_MP44"]],
 	[1,["sgun_HunterShotgun_01_F","srifle_DMR_06_hunter_F","rhs_weap_m1garand_sa43","rhs_weap_ak74_3","rhs_weap_m4a1_wd_mstock","rhs_weap_m4a1_d","rhs_weap_l1a1_wood","rhs_weap_m14_wd","rhs_weap_Izh18"]],
-	[2,["sgun_Mp153_classic_F", "arifle_AUG_F","arifle_AUG_black_F","arifle_AUG_C_F","rhs_weap_SCARH_USA_STD","arifle_CTAR_hex_F","rhs_weap_vhsd2_ct15x","rhs_weap_m4a1_blockII_wd"]],
+	[2,["sgun_Mp153_classic_F", "arifle_AUG_F","arifle_AUG_black_F","arifle_AUG_C_F","rhs_weap_SCARH_USA_STD","arifle_CTAR_hex_F","rhs_weap_vhsd2_ct15x","rhs_weap_m4a1_blockII_wd","rhs_weap_hk416d145_d_2","AK74M_B30_B31C_CTR_RVG_camoB","AK105_B30_B31C_CTR_RVG_camoB"]],
 	[3,["KAR_XM7", "sgun_Mp153_classic_F","KAR_XM7_G"]],
 	[4,["arifle_MSBS65_F"]]
 ];
@@ -178,7 +178,7 @@ BMrifleList_db = [
 BMsmgList_db = [
 	[0,["rhs_weap_m3a1_specops"]],
 	[1,["sgun_HunterShotgun_01_sawedoff_F","rhs_weap_scorpion","rhs_weap_pp2000"]],
-	[2,["rhs_weap_pb_6p9","KA_PP19_MTK83","SMG_03C_black","SMG_03C_TR_black","SMG_03_TR_hex","SMG_01_F","sgun_Mp153_black_F","rhsusf_weap_MP7A2_winter","SMG_05_F","SMG_03C_khaki"]],
+	[2,["rhs_weap_pb_6p9","KA_PP19_MTK83","SMG_03C_black","SMG_03C_TR_black","SMG_03_TR_hex","SMG_01_F","sgun_Mp153_black_F","rhsusf_weap_MP7A2_winter","SMG_05_F","SMG_03C_khaki","SMG_03_camo"]],
 	[3,["KA_PP19", "hgun_Mk26_F", "hgun_Pistol_Signal_F"]],
 	[4,[]]
 ];
