@@ -43,7 +43,8 @@ bluforUnarmedVehicleChopper_FP_Contractor = [
 ];
 
 bluforArmedChopper_FP_Contractor = [
-
+	"RHS_AH1Z",
+	"B_Heli_Light_01_dynamicLoadout_F"
 ];
 
 bluforDrone_FP_Contractor = [
@@ -52,7 +53,8 @@ bluforDrone_FP_Contractor = [
 ]; 
 
 bluforBoat_FP_Contractor = [
-	"C_Boat_Civil_01_F"
+	"C_Boat_Civil_01_F",
+	"FP_PMC_OG_G_RHIB"
 ];
 
 //FixedWing vehicle avalaible for blufor
