@@ -115,8 +115,8 @@ addExperience = {
 	//Save rank
 	[_experience + _unitExperience] call saveRank;
 
-	//Display score
-	if (missionNameSpace getVariable ["xpDisplay", 0] == 1) then 
+	//Display score and display mod allow xp display
+	if (missionNameSpace getVariable ["xpDisplay", 0] == 1 && profileNameSpace getVariable ["RPG_xpDisplayMode", "R"] != "N") then 
 	{
 		[_experience, _experienceType, _experienceCustomParam] call doDisplayScore;
 	};
