@@ -233,6 +233,13 @@ if (isClass (configFile >> "CfgPatches" >> "fow_main")) then
 	};
 };
 
+if (isClass (configFile >> "CfgPatches" >> "OPTRE_Core")) then 
+{
+	avalaibleEnemyFOB = avalaibleEnemyFOB_Halo;
+};
+
+
+
 /////////////////////////
 /////Find locations//////
 /////////////////////////
@@ -564,6 +571,12 @@ if !(_isOnWater) then
 			
 			//Safe position
 			initBlueforLocation = [selectMax [selectMin [initBlueforLocation select 0, worldSize-75 ],75],selectMax [selectMin [initBlueforLocation select 1, worldSize-75],75]]; 
+		};
+
+		//Load Halo FOB is OPTRE is enabled
+		if (isClass (configFile >> "CfgPatches" >> "OPTRE_Core")) then 
+		{
+			avalaibleFOB = avalaibleFOBHalo;
 		};
 
 		//Generate blufor FOB
