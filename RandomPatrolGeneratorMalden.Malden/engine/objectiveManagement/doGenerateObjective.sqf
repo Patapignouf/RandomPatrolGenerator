@@ -218,6 +218,13 @@ generateJammedAntenna =
 generateOutpostProcess = {
 	params ["_basePosition"];
 	[_basePosition, 30] execVM 'objectGenerator\doCleanArea.sqf'; 
+
+	//Replace basic outpost with Halo outpost
+	if (isClass (configFile >> "CfgPatches" >> "OPTRE_Core")) then 
+	{
+		Outpost = OutpostHalo;
+	};
+
 	_spawnFOBObjects = [_basePosition, (random 360), selectRandom Outpost] call BIS_fnc_ObjectsMapper;
 	_OpforFobStandardOpforLocation = nearestObjects [_basePosition, ["Sign_Arrow_Large_F"], 50];
 
