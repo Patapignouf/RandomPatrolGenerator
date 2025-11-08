@@ -298,14 +298,14 @@ publicvariable "TPFlag1";
 			[[_botHQ], 
 			{
 				params ["_botHQ"]; 
-				_botHQ addAction [format ["<img size='2' image='\a3\ui_f_oldman\data\IGUI\Cfg\holdactions\holdAction_market_ca.paa'/><t size='1'>%1</t>", "Become war raporter (VIP)"],{
+				_botHQ addAction [format ["<img size='2' image='\a3\ui_f\data\IGUI\Cfg\holdactions\holdAction_requestleadership_ca.paa'/><t size='1'>%1</t>", "Become war raporter (VIP)"],{
 					//Define parameters
 					params ["_object","_caller","_ID","_avalaibleVehicle"];
 
 					[[_caller], 'engine\reporterConverter.sqf'] remoteExec ['BIS_fnc_execVM', _caller];
 
 
-					},[],3,true,false,"","(_target distance _this <7)"];
+					},[],0,true,false,"","(_target distance _this <7)"];
 				}
 			] remoteExec ["spawn", 0, true]; 
 		};
