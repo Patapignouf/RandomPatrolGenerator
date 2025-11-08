@@ -9,6 +9,7 @@ _choosenPlayer addEventHandler ["Killed", {
 	[['REP_DEAD'], 'engine\objectiveManagement\endMission.sqf'] remoteExec ['BIS_fnc_execVM', 2];
 }];
 
+
 //Add XP reward
 [_choosenPlayer] spawn {
 	params ["_choosenPlayer"];
@@ -30,7 +31,7 @@ _choosenPlayer setUnitLoadout (selectRandom ["C_journalist_F", "C_Journalist_01_
 [_choosenPlayer] spawn {
 	params ["_choosenPlayer"];
 
-	while {sleep 30; true} do 
+	while {sleep 1; true} do 
 	{
 		//Get reporter weapon
 		_primaryWeapon = primaryWeapon _choosenPlayer;

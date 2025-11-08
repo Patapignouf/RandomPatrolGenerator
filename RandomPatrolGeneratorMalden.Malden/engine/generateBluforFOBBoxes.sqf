@@ -293,6 +293,23 @@ publicvariable "TPFlag1";
 			] remoteExec ["spawn", 0, true]; 
 		};
 
+		if ((missionNameSpace getVariable "warReporterOnHQ") == 1) then 
+		{
+			[[_botHQ], 
+			{
+				params ["_botHQ"]; 
+				_botHQ addAction [format ["<img size='2' image='\a3\ui_f_oldman\data\IGUI\Cfg\holdactions\holdAction_market_ca.paa'/><t size='1'>%1</t>", "Become war raporter (VIP)"],{
+					//Define parameters
+					params ["_object","_caller","_ID","_avalaibleVehicle"];
+
+					[[_caller], 'engine\reporterConverter.sqf'] remoteExec ['BIS_fnc_execVM', _caller];
+
+
+					},[],3,true,false,"","(_target distance _this <7)"];
+				}
+			] remoteExec ["spawn", 0, true]; 
+		};
+
 	HQCommander = _botHQ;
 	publicVariable "HQCommander";
 
