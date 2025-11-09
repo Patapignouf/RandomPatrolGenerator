@@ -10,6 +10,9 @@ _choosenPlayer addEventHandler ["Killed", {
 }];
 
 
+_choosenPlayer setVariable ["isReporter", true, true];
+
+
 //Add XP reward
 [_choosenPlayer] spawn {
 	params ["_choosenPlayer"];

@@ -305,7 +305,7 @@ publicvariable "TPFlag1";
 					[[_caller], 'engine\reporterConverter.sqf'] remoteExec ['BIS_fnc_execVM', _caller];
 
 
-					},[],0,true,false,"","(_target distance _this <7)"];
+					},[],0,true,false,"","((_target distance _this <7) && (_this getVariable ['isReporter', false] == false))"];
 				}
 			] remoteExec ["spawn", 0, true]; 
 		};
