@@ -656,6 +656,29 @@ setPlayerRespawnTime (missionNamespace getVariable "missionRespawnParam");
 //Generate civilian dialogs
 [] spawn _generateCivDialogs;
 
+
+//Weapon forbidden script 
+if (missionNameSpace getVariable ["gunsOnly", 0] == 1) then 
+{
+	[player] spawn {
+		params ["_choosenPlayer"];
+
+		while {sleep 1; true} do 
+		{
+			//Get reporter weapon
+			_primaryWeapon = primaryWeapon _choosenPlayer;
+			//_secondaryWeapon = secondaryWeapon _choosenPlayer;
+
+			if (_primaryWeapon != "") then
+			{
+				[["<t color='#ff0000' size='5'>RIFLES ARE NOT ALLOWED</t><br/>", "PLAIN", -1, true, true]] remoteExec ['cutText', _choosenPlayer];
+			};
+		};
+	};
+};
+
+
+
 //Show a special message when there is a teamkill
 _KilledEH = player addEventHandler ["Killed", {
 	params ["_unit", "_killer", "_instigator", "_useEffects"];

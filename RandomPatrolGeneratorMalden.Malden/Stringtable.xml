@@ -967,52 +967,63 @@
                 <Russian>Не стреляйте, я сдаюсь, пожалуйста, пощадите меня</Russian>
                 <Chinese>不要开枪，我投降，请饶了我</Chinese>
                 <Japanese>撃たないでください、降伏します、どうか助けてください</Japanese>
-        </Key>
-        <Key ID="STR_RPG_HC_RESPAWN_TENT">
-            <Original>Your leader has setup a reinforcement tent</Original>
-            <English>Your leader has setup a reinforcement tent</English>
-            <French>Votre chef a monté une tente de réapparition</French>
-            <Spanish>Tu líder ha configurado una tienda de refuerzo</Spanish>
-            <German>Dein Anführer hat ein Verstärkungszelt aufgestellt</German>
-            <Italian>Il tuo leader ha configurato una tenda di rinforzo</Italian>
-            <Russian>Ваш лидер установил палатку для подкрепления</Russian>
-            <Chinese>你的领导者已设置增援帐篷</Chinese>
-            <Japanese>あなたのリーダーは増援テントを設置しました</Japanese>
-        </Key>
-        <Key ID="STR_RPG_HC_DESTROY_TENT">
-            <Original>Your tent has been destroyed by opfor</Original>
-            <English>Your tent has been destroyed by opfor</English>
-            <French>Votre tente a été détruite par l'ennemi</French>
-            <Spanish>Tu tienda ha sido destruida por Opfor</Spanish>
-            <German>Dein Zelt wurde von Opfor zerstört</German>
-            <Italian>La tua tenda è stata distrutta da Opfor</Italian>
-            <Russian>Ваша палатка была уничтожена противником</Russian>
-            <Chinese>你的帐篷被敌军摧毁了</Chinese>
-            <Japanese>あなたのテントは敵に破壊されました</Japanese>
-        </Key>
+            </Key>
+            <Key ID="STR_RPG_HC_CALL_REINFORCEMENT_OPFOR">
+                <Original>I found the enemy, send reinforcements</Original>
+                <English>I found the enemy, send reinforcements</English>
+                <French>J'ai trouvé l'ennemi, envoyez les renforts</French>
+                <Spanish>He encontrado al enemigo, envíen refuerzos</Spanish>
+                <German>Ich habe den Feind gefunden, schickt Verstärkung</German>
+                <Italian>Ho trovato il nemico, mandate rinforzi</Italian>
+                <Russian>Я обнаружил врага, пришлите подкрепление</Russian>
+                <Chinese>发现敌人，派增援</Chinese>
+                <Japanese>敵を発見、援軍を送ってくれ</Japanese>
+            </Key>
+            <Key ID="STR_RPG_HC_RESPAWN_TENT">
+                <Original>Your leader has setup a reinforcement tent</Original>
+                <English>Your leader has setup a reinforcement tent</English>
+                <French>Votre chef a monté une tente de réapparition</French>
+                <Spanish>Tu líder ha configurado una tienda de refuerzo</Spanish>
+                <German>Dein Anführer hat ein Verstärkungszelt aufgestellt</German>
+                <Italian>Il tuo leader ha configurato una tenda di rinforzo</Italian>
+                <Russian>Ваш лидер установил палатку для подкрепления</Russian>
+                <Chinese>你的领导者已设置增援帐篷</Chinese>
+                <Japanese>あなたのリーダーは増援テントを設置しました</Japanese>
+            </Key>
+            <Key ID="STR_RPG_HC_DESTROY_TENT">
+                <Original>Your tent has been destroyed by opfor</Original>
+                <English>Your tent has been destroyed by opfor</English>
+                <French>Votre tente a été détruite par l'ennemi</French>
+                <Spanish>Tu tienda ha sido destruida por Opfor</Spanish>
+                <German>Dein Zelt wurde von Opfor zerstört</German>
+                <Italian>La tua tenda è stata distrutta da Opfor</Italian>
+                <Russian>Ваша палатка была уничтожена противником</Russian>
+                <Chinese>你的帐篷被敌军摧毁了</Chinese>
+                <Japanese>あなたのテントは敵に破壊されました</Japanese>
+            </Key>
 
-        <Key ID="STR_RPG_HC_MEDIC_UNCONSCIOUS">
-            <Original>%1 used %2 on you</Original>
-            <English>%1 used %2 on you</English>
-            <French>%1 a utilisé %2 sur vous</French>
-            <Spanish>%1 usó %2 en ti</Spanish>
-            <German>%1 hat %2 bei dir angewendet</German>
-            <Italian>%1 ha usato %2 su di te</Italian>
-            <Russian>%1 использовал %2 на вас</Russian>
-            <Chinese>%1 在你身上使用了 %2</Chinese>
-            <Japanese>%1 があなたに %2 を使用しました</Japanese>
-        </Key>
-        <Key ID="STR_RPG_HC_SURRENDER_INTEL">
-            <Original>Copy %1, let's continue the mission</Original>
-            <English>Copy %1, let's continue the mission</English>
-            <French>Reçu %1, poursuivez la mission</French>
-            <Spanish>Copia %1, continuemos con la misión</Spanish>
-            <German>Kopie %1, lass uns die Mission fortsetzen</German>
-            <Italian>Copia %1, continuiamo la missione</Italian>
-            <Russian>Копия %1, продолжим миссию</Russian>
-            <Chinese>复制%1，我们继续任务</Chinese>
-            <Japanese>コピー%1、ミッションを続けましょう</Japanese>
-        </Key>
+            <Key ID="STR_RPG_HC_MEDIC_UNCONSCIOUS">
+                <Original>%1 used %2 on you</Original>
+                <English>%1 used %2 on you</English>
+                <French>%1 a utilisé %2 sur vous</French>
+                <Spanish>%1 usó %2 en ti</Spanish>
+                <German>%1 hat %2 bei dir angewendet</German>
+                <Italian>%1 ha usato %2 su di te</Italian>
+                <Russian>%1 использовал %2 на вас</Russian>
+                <Chinese>%1 在你身上使用了 %2</Chinese>
+                <Japanese>%1 があなたに %2 を使用しました</Japanese>
+            </Key>
+            <Key ID="STR_RPG_HC_SURRENDER_INTEL">
+                <Original>Copy %1, let's continue the mission</Original>
+                <English>Copy %1, let's continue the mission</English>
+                <French>Reçu %1, poursuivez la mission</French>
+                <Spanish>Copia %1, continuemos con la misión</Spanish>
+                <German>Kopie %1, lass uns die Mission fortsetzen</German>
+                <Italian>Copia %1, continuiamo la missione</Italian>
+                <Russian>Копия %1, продолжим миссию</Russian>
+                <Chinese>复制%1，我们继续任务</Chinese>
+                <Japanese>コピー%1、ミッションを続けましょう</Japanese>
+            </Key>
 <Container name="INTEL_DIALOG">
     <Key ID="STR_RPG_INTEL_MORTAR_CIV">
         <Original>This morning i saw a mortar position near %1. I don't know if they are there for you, be careful.</Original>

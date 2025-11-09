@@ -10,7 +10,13 @@ while {alive _thisUnit && (side _thisUnit == civilian) && !(_thisUnit getVariabl
 	_targets = [];
 	{
 		if (side _x == blufor || side _x == independent) then {
-			_targets pushBack _x;
+
+			//Check if players have weapons in hand
+			//(Show hostility)
+			if (currentWeapon _x != "") then 
+			{
+				_targets pushBack _x;
+			};
 		};
 	} forEach _entities;
 
@@ -20,6 +26,36 @@ while {alive _thisUnit && (side _thisUnit == civilian) && !(_thisUnit getVariabl
 		//parameters % chance to become hostile
 		if (random 100 < _hostileTransformProba) then 
 		{
+			//Hostile civilian can call reinforcement
+			if (missionNameSpace getVariable ["hostileCivCanCallReinforcement", 1] == 1) then 
+			{
+				_canCallReinforcement = missionNameSpace getVariable ["civilianCallOpforReinforcement", true];
+
+				if (_canCallReinforcement) then 
+				{
+					_AvalaibleInitAttackPositions = [getPos _thisUnit, 800, 1400, 1] call getListOfPositionsAroundTarget;
+
+					if ( count _AvalaibleInitAttackPositions != 0) then
+					{
+						//Alert players
+						[[_thisUnit], {params ["_unit"]; [name _unit, "STR_RPG_HC_CALL_REINFORCEMENT_OPFOR"] call doDialog}] remoteExec ["spawn", allPlayers select {_x distance _thisUnit < 80}]; 
+
+						//Generate opfor
+						_handleCivGeneration = [_AvalaibleInitAttackPositions, getPos _thisUnit, [baseEnemyGroup, baseEnemyATGroup], [], missionDifficultyParam] execVM 'enemyManagement\behaviorEngine\doAmbush.sqf'; 
+						waitUntil {isNull _handleCivGeneration};
+
+						//Disable reinforcement during 120 seconds
+						[] spawn {
+							//Disable opfor reinforcement
+							missionNameSpace setVariable ["civilianCallOpforReinforcement", false, true];
+							sleep 120;
+							//Enable opfor reinforcement
+							missionNameSpace setVariable ["civilianCallOpforReinforcement", true, true];
+						};
+					};
+				};
+			};
+
 			//Randomize time before becoming hostile	
 			sleep (10 + random (120));
 
@@ -101,8 +137,6 @@ while {alive _thisUnit && (side _thisUnit == civilian) && !(_thisUnit getVariabl
 					deleteVehicle _unit;
 				};
 			}];
-
-
 		};
 	};
 };
