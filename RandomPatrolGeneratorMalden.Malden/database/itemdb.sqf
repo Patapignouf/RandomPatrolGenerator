@@ -178,7 +178,7 @@ BMrifleList_db = [
 BMsmgList_db = [
 	[0,["rhs_weap_m3a1_specops"]],
 	[1,["sgun_HunterShotgun_01_sawedoff_F","rhs_weap_scorpion","rhs_weap_pp2000"]],
-	[2,["rhs_weap_pb_6p9","KA_PP19_MTK83","SMG_03C_black","SMG_03C_TR_black","SMG_03_TR_hex","SMG_01_F","sgun_Mp153_black_F","rhsusf_weap_MP7A2_winter","SMG_05_F","SMG_03C_khaki","SMG_03_camo","SMG_02_F"]],
+	[2,["rhs_weap_pb_6p9","KA_PP19_MTK83","SMG_03C_black","SMG_03C_TR_black","SMG_03_TR_hex","SMG_01_F","sgun_Mp153_black_F","rhsusf_weap_MP7A2_winter","SMG_05_F","SMG_03C_khaki","SMG_03_camo","SMG_02_F", "rhs_weap_cz99_etched"]],
 	[3,["KA_PP19", "hgun_Mk26_F", "hgun_Pistol_Signal_F"]],
 	[4,[]]
 ];
@@ -218,7 +218,7 @@ BMgrenadeLauncherList_db = [
 BMshortAccessoriesList_db = [
 	[0,[]],
 	[1,["acc_flashlight","rhsusf_acc_M952V"]],
-	[2,["optic_Yorris","KA_M2_Scope","rhsusf_acc_RM05","muzzle_snds_B","rhs_acc_perst1ik","ACE_muzzle_mzls_B","rhsusf_acc_anpeq15side","rhsusf_acc_anpeq15_wmx","rhsusf_acc_anpeq15_bk","rhsusf_acc_eotech_552_wd","rhsusf_acc_SFMB556","rhsusf_acc_nt4_black","rhsusf_acc_tacsac_blue","rhsusf_acc_grip2_tan","rhs_acc_tgpv","rhsusf_acc_ACOG_wd","rhsusf_acc_ACOG_d","rhsusf_acc_RX01_tan","rhsusf_acc_eotech_552_d","optic_Holosight_lush_F","rhsusf_acc_grip3_tan"]],
+	[2,["optic_Yorris","KA_M2_Scope","rhsusf_acc_RM05","muzzle_snds_B","rhs_acc_perst1ik","ACE_muzzle_mzls_B","rhsusf_acc_anpeq15side","rhsusf_acc_anpeq15_wmx","rhsusf_acc_anpeq15_bk","rhsusf_acc_eotech_552_wd","rhsusf_acc_SFMB556","rhsusf_acc_nt4_black","rhsusf_acc_tacsac_blue","rhsusf_acc_grip2_tan","rhs_acc_tgpv","rhsusf_acc_ACOG_wd","rhsusf_acc_ACOG_d","rhsusf_acc_RX01_tan","rhsusf_acc_eotech_552_d","optic_Holosight_lush_F","rhsusf_acc_grip3_tan", "optic_MRD", "optic_MRD_black"]],
 	[3,["optic_Arco_ghex_F","optic_Arco_lush_F","optic_ERCO_snd_F","rhsusf_acc_su230a_mrds","optic_Hamr_khk_F","rhsusf_acc_g33_T1","rhsusf_acc_mrds_c","rhsusf_acc_ACOG_RMR","rhsgref_acc_RX01_NoFilter_camo","optic_Arco_ghex_F"]],
 	[4,["optic_tws_mg"]]
 ];
