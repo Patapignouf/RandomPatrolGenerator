@@ -203,6 +203,18 @@ uniformList_FP_Contractor = [
 	"6sh117_mg_BLACK",
 	"6sh117_mg_COYOTE",
 
+	//Holster 
+	"rhs_vest_pistol_holster",
+	"rhs_belt_holster",
+
+	//Costume
+	"U_C_FormalSuit_01_blue_F",
+	"U_C_FormalSuit_01_khaki_F",
+	"U_C_FormalSuit_01_black_F",
+	"U_C_FormalSuit_01_gray_F",
+	"U_C_FormalSuit_01_tshirt_gray_F",
+	"U_C_FormalSuit_01_tshirt_black_F",
+
 	//uniform
 	"AAF_PMC_SOLDIER",
 	"U_I_G_resistanceLeader_F",
