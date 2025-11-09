@@ -12,6 +12,10 @@ _choosenPlayer addEventHandler ["Killed", {
 
 _choosenPlayer setVariable ["isReporter", true, true];
 
+player setVariable ["canTalkToCiv", true, true];
+
+//Reset player role
+player setVariable ["role", "rifleman", true];
 
 //Add XP reward
 [_choosenPlayer] spawn {

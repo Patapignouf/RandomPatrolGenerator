@@ -678,6 +678,15 @@ if (missionNameSpace getVariable ["gunsOnly", 0] == 1) then
 };
 
 
+//Talk to civilian 
+if (missionNameSpace getVariable ["talkToCiv", 1] == 1) then 
+{
+	player setVariable ["canTalkToCiv", true, true];
+} else 
+{
+	player setVariable ["canTalkToCiv", false, true];
+};
+
 
 //Show a special message when there is a teamkill
 _KilledEH = player addEventHandler ["Killed", {

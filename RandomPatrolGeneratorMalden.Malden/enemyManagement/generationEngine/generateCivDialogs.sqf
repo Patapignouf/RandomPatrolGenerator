@@ -7,10 +7,10 @@ _civs = allUnits select {alive _x AND side _x isEqualTo civilian};
 	//Add action to ask civilian for intel
 	_ID = 	[
 				_x, 
-				"Talk to civilian", 
+				localize "STR_RPG_MISC_TALKTOCIV", 
 				"\a3\missions_f_oldman\data\img\holdactions\holdAction_talk_ca.paa", 
 				"\a3\missions_f_oldman\data\img\holdactions\holdAction_talk_ca.paa", 
-				"_this distance _target < 3",						// Condition for the action to be shown
+				"(_this distance _target < 3) && (_this getVariable ['canTalkToCiv', true])",						// Condition for the action to be shown
 				"_caller distance _target < 3",						// Condition for the action to progress
 				{
 					// Action start code

@@ -1,6 +1,19 @@
 <?xml version="1.0" encoding="utf-8" ?>
 <Project name="RPG">
     <Package name="TOBEOPTIMIZE">
+        <Container name="MISC">
+            <Key ID="STR_RPG_MISC_TALKTOCIV">
+                <Original>Talk to civilian</Original>
+                <English>Talk to civilian</English>
+                <French>Parler au civil</French>
+                <Spanish>Hablar con el civil</Spanish>
+                <German>Mit Zivilist sprechen</German>
+                <Italian>Parla con il civile</Italian>
+                <Russian>Поговорить с гражданским</Russian>
+                <Chinese>与平民交谈</Chinese>
+                <Japanese>民間人と話す</Japanese>
+            </Key>
+        </Container>
         <Container name="SETUP">
             <Key ID="STR_RPG_LOADING_WAIT">
                 <Original>Please wait while mission is generating</Original>
