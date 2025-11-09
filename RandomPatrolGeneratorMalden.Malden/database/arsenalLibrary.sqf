@@ -51,6 +51,12 @@ getAllStringInArray = {
 		{
 			_array = _array - [_x];
 			_array = _array + ([_x] call getAllStringInArray);
+		} else 
+		{
+			if (typeName _x != "STRING") then 
+			{
+				_array = _array - [_x];
+			};
 		};
 	} foreach _array;
 	_array
