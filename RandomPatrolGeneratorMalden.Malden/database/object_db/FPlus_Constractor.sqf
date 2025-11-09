@@ -145,6 +145,7 @@ attachmentLongList_FP_Contractor	= [
 ////////////////////////
 itemList_FP_Contractor = [
 	"Binocular",
+	"JAM_NV_Gloves_Wool_blk",
 	"ACE_EntrenchingTool",
 	"ACE_RangeTable_82mm",
 	"ACE_SpraypaintBlack",
@@ -172,7 +173,12 @@ backPackList_FP_Contractor = [
 	"B_parachute",
 	"ace_gunbag_Tan",
 	"B_Mortar_01_weapon_F",
-	"B_Mortar_01_support_F"
+	"B_Mortar_01_support_F",
+
+	//Casual bags
+	"B_CivilianBackpack_01_Everyday_Black_F",
+	"B_Messenger_Black_F",
+	"B_LegStrapBag_black_F"
 ];
 
 //Uniform, vest, headgear, avalaible for all unit
