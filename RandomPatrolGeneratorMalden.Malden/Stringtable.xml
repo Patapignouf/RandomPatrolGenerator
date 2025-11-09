@@ -13,6 +13,17 @@
                 <Chinese>与平民交谈</Chinese>
                 <Japanese>民間人と話す</Japanese>
             </Key>
+            <Key ID="STR_RPG_MISC_SEARCHINTEL">
+                <Original>Search for intel</Original>
+                <English>Search for intel</English>
+                <French>Rechercher des informations</French>
+                <Spanish>Buscar información</Spanish>
+                <German>Nach Informationen suchen</German>
+                <Italian>Cerca informazioni</Italian>
+                <Russian>Искать разведданные</Russian>
+                <Chinese>搜索情报</Chinese>
+                <Japanese>情報を探す</Japanese>
+            </Key>
         </Container>
         <Container name="SETUP">
             <Key ID="STR_RPG_LOADING_WAIT">
