@@ -33,7 +33,8 @@ generateObjective =
 	//Generate Jammed antenna 
 	if ((missionNameSpace getVariable ["enableGPSJammerOnMap", 1]) == 1) then 
 	{
-		if (random 100 > 50) then 
+		//30% chance to generate antenna
+		if (random 100 < 30) then 
 		{
 			[_selectedObjectivePosition] call generateJammedAntenna;
 		};
