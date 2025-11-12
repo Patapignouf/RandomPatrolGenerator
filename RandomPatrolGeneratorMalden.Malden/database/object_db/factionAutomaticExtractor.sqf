@@ -109,7 +109,7 @@ brokenFactions = ["Default"];
 	_factionTechName = _x#0;
 	if (factionInfos findIf {_x#0 == _factionTechName}==-1) then 
 	{
-		factionInfos pushBack [_factionTechName, _factionTechName, format ["%1 [AUTO]", ((configFile >> "CfgFactionClasses" >> _factionTechName >> "displayName") call BIS_fnc_GetCfgData)], false, false, true];
+		factionInfos pushBack [_factionTechName, _factionTechName, format ["%1 [AUTO CIVILIAN]", ((configFile >> "CfgFactionClasses" >> _factionTechName >> "displayName") call BIS_fnc_GetCfgData)], false, false, true];
 	};
 } foreach _potentialCivFactions;
 
@@ -171,7 +171,7 @@ publicVariable "factionInfos";
 					missionNamespace setVariable [_currentFactionName, _currentCivMans]; 
 				} else 
 				{
-					if !(["story", _cfgName, false] call BIS_fnc_inString || ["story", ((_cfgVehName >> "editorSubcategory") call BIS_fnc_GetCfgData), false] call BIS_fnc_inString) then 
+					if !(["unarmed", _cfgName, false] call BIS_fnc_inString || ["story", _cfgName, false] call BIS_fnc_inString || ["story", ((_cfgVehName >> "editorSubcategory") call BIS_fnc_GetCfgData), false] call BIS_fnc_inString) then 
 					{		
 						_thisRole = ((_cfgVehName >> "role") call BIS_fnc_GetCfgData);
 

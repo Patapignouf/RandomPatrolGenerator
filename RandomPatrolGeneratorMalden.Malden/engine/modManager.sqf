@@ -11,7 +11,8 @@ modToCheck = [
 	["DSF_core", "MOD_DSF", "[DSF] Drongos Simple Factions","CfgPatches"],
 	["fow_main", "MOD_FOW", "[FOW] Faces Of War","CfgPatches"],
 	["JMSLLTE_empire_mod", "MOD_JMLLTE", "[JM] JM's Long Live the Empire", "CfgPatches"],
-	["ArmaFPV_Data", "MOD_FPV", "Crocus FPV Drones"]
+	["ArmaFPV_Data", "MOD_FPV", "Crocus FPV Drones"],
+	["OPTRE_Core", "MOD_Halo", "[OPTRE] Operation Trebuchet"]
 ];
 
 doCheckRunningModsOnServer = {

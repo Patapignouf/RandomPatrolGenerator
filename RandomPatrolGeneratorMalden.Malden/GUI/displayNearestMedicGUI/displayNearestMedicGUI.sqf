@@ -7,6 +7,51 @@ params ["_unit"];
 
 disableSerialization;
 
+checkUnconscious = {
+	params ["_unit"];
+	_resultUnconscious = false;
+	if (isClass (configFile >> "CfgPatches" >> "ace_medical")) then 
+	{
+		_resultUnconscious = ((alive _unit) && (_unit getVariable ["isUnconscious", false]));
+	} else 
+	{
+		_resultUnconscious = (lifeState _unit == "INCAPACITATED");
+	};
+	_resultUnconscious;
+};
+
+goUnconscious = {
+	params ["_unit"];
+	[_unit, true, 3, false] call ace_medical_fnc_setUnconscious;
+	_unit setDamage 0.2;
+	_unit setUnconscious true;
+	_unit setVelocity [0, 0, 0];
+};
+
+//Fix ACE last update with bad unconscious state
+if (missionNameSpace getVariable ["ACETryFixUnconscious", 1] == 1) then 
+{
+	if (isClass (configFile >> "CfgPatches" >> "ace_medical")) then 
+	{
+		[_unit] spawn {
+			params ["_unit"];
+			
+			for [{_i = 0}, {_i < 240}, {_i = _i + 1}] do
+			{
+				sleep 0.5;
+				//Check if there is a bug, the player is "HEALTHY" if there is a bug
+				if (lifeState _unit != "INCAPACITATED" && (_unit getVariable ["isUnconscious", false])) then 
+				{
+					[_unit] call goUnconscious;
+					diag_log "GOING UNCONSCIOUS";
+				};
+			}; 
+		};
+	};
+};
+
+
+
 // diag_log format ["Domination GUI : %1", getPos _thisAreaTrigger];
 
 with uiNamespace do {
@@ -42,7 +87,7 @@ with uiNamespace do {
 	_RcsTitleDialog2 ctrlSetTextColor [1, 1, 1, 1];
 	_RcsTitleDialog2 ctrlCommit 0;
 
-	while {sleep 1; (lifeState _unit == "INCAPACITATED")} do 
+	while {sleep 1; ([_unit] call checkUnconscious)} do 
 	{
 		//Prepare data 
 		//Will crash if the player is alone 

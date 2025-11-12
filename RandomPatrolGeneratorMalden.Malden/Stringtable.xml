@@ -1,6 +1,30 @@
 <?xml version="1.0" encoding="utf-8" ?>
 <Project name="RPG">
     <Package name="TOBEOPTIMIZE">
+        <Container name="MISC">
+            <Key ID="STR_RPG_MISC_TALKTOCIV">
+                <Original>Talk to civilian</Original>
+                <English>Talk to civilian</English>
+                <French>Parler au civil</French>
+                <Spanish>Hablar con el civil</Spanish>
+                <German>Mit Zivilist sprechen</German>
+                <Italian>Parla con il civile</Italian>
+                <Russian>Поговорить с гражданским</Russian>
+                <Chinese>与平民交谈</Chinese>
+                <Japanese>民間人と話す</Japanese>
+            </Key>
+            <Key ID="STR_RPG_MISC_SEARCHINTEL">
+                <Original>Search for intel</Original>
+                <English>Search for intel</English>
+                <French>Rechercher des informations</French>
+                <Spanish>Buscar información</Spanish>
+                <German>Nach Informationen suchen</German>
+                <Italian>Cerca informazioni</Italian>
+                <Russian>Искать разведданные</Russian>
+                <Chinese>搜索情报</Chinese>
+                <Japanese>情報を探す</Japanese>
+            </Key>
+        </Container>
         <Container name="SETUP">
             <Key ID="STR_RPG_LOADING_WAIT">
                 <Original>Please wait while mission is generating</Original>
@@ -217,11 +241,24 @@
                 <Original>Defuse bomb</Original>
                 <English>Defuse bomb</English>
                 <French>Désamorcez la bombe</French>
+                <Spanish>Desactiva la bomba</Spanish>
+                <German>Entschärfe die Bombe</German>
+                <Italian>Disinnesca la bomba</Italian>
+                <Russian>Обезвредить бомбу</Russian>
+                <Chinese>拆除炸弹</Chinese>
+                <Japanese>爆弾を解除する</Japanese>
             </Key>
+
             <Key ID="STR_RPG_OBJ_BOMB_TEXT">
                 <Original>There's bomb near %2. </Original>
                 <English>There's bomb near %2. </English>
                 <French>Il y a une bombe près de %2. </French>
+                <Spanish>Hay una bomba cerca de %2.</Spanish>
+                <German>Es gibt eine Bombe in der Nähe von %2.</German>
+                <Italian>C'è una bomba vicino a %2.</Italian>
+                <Russian>Рядом с %2 находится бомба.</Russian>
+                <Chinese>%2 附近有炸弹。</Chinese>
+                <Japanese>%2 の近くに爆弾があります。</Japanese>
             </Key>
             <Key ID="STR_RPG_OBJ_HVT">
                 <Original>HVT</Original>
@@ -502,11 +539,23 @@
                 <Original>Attack Opfor Outpost</Original>
                 <English>Attack Opfor Outpost</English>
                 <French>Attaquer l'avant poste ennemi</French>
+                <Spanish>Ataca el puesto avanzado Opfor</Spanish>
+                <German>Greife den Opfor-Außenposten an</German>
+                <Italian>Attacca l'avamposto Opfor</Italian>
+                <Russian>Атаковать аванпост противника</Russian>
+                <Chinese>攻击敌军前哨</Chinese>
+                <Japanese>敵の前哨基地を攻撃せよ</Japanese>
             </Key>
             <Key ID="STR_RPG_OBJ_ATK_OUTPOST_TEXT">
                 <Original>You have to control the opfor Outpost on position %1.</Original>
                 <English>You have to control the opfor Outpost on position %1.</English>
                 <French>Vous devez prendre le contrôle de l'avant poste ennemi près de %1</French>
+                <Spanish>Debes controlar el puesto avanzado Opfor en la posición %1.</Spanish>
+                <German>Du musst den Opfor-Außenposten bei Position %1 unter Kontrolle bringen.</German>
+                <Italian>Devi prendere il controllo dell'avamposto Opfor nella posizione %1.</Italian>
+                <Russian>Вы должны взять под контроль аванпост противника в районе %1.</Russian>
+                <Chinese>你必须控制位于 %1 的敌军前哨。</Chinese>
+                <Japanese>%1 の位置にある敵の前哨基地を制圧しなければならない。</Japanese>
             </Key>
             <Key ID="STR_RPG_OBJ_AIR_VCL">
                 <Original>Destroy OPFOR air vehicle</Original>
@@ -942,40 +991,63 @@
                 <Russian>Не стреляйте, я сдаюсь, пожалуйста, пощадите меня</Russian>
                 <Chinese>不要开枪，我投降，请饶了我</Chinese>
                 <Japanese>撃たないでください、降伏します、どうか助けてください</Japanese>
-        </Key>
-        <Key ID="STR_RPG_HC_RESPAWN_TENT">
-            <Original>Your leader has setup a reinforcement tent</Original>
-            <English>Your leader has setup a reinforcement tent</English>
-            <French>Votre chef a monté une tente de réapparition</French>
-            <Spanish>Tu líder ha configurado una tienda de refuerzo</Spanish>
-            <German>Dein Anführer hat ein Verstärkungszelt aufgestellt</German>
-            <Italian>Il tuo leader ha configurato una tenda di rinforzo</Italian>
-            <Russian>Ваш лидер установил палатку для подкрепления</Russian>
-            <Chinese>你的领导者已设置增援帐篷</Chinese>
-            <Japanese>あなたのリーダーは増援テントを設置しました</Japanese>
-        </Key>
-        <Key ID="STR_RPG_HC_DESTROY_TENT">
-            <Original>Your tent has been destroyed by opfor</Original>
-            <English>Your tent has been destroyed by opfor</English>
-            <French>Votre tente a été détruite par l'ennemi</French>
-        </Key>
-        <Key ID="STR_RPG_HC_MEDIC_UNCONSCIOUS">
-            <Original>%1 used %2 on you</Original>
-            <English>%1 used %2 on you</English>
-            <French>%1 a utilisé %2 sur vous</French>
-        </Key>
-<Key ID="STR_RPG_HC_SURRENDER_INTEL">
-    <Original>Copy %1, let's continue the mission</Original>
-    <English>Copy %1, let's continue the mission</English>
-    <French>Reçu %1, poursuivez la mission</French>
-    <Spanish>Copia %1, continuemos con la misión</Spanish>
-    <German>Kopie %1, lass uns die Mission fortsetzen</German>
-    <Italian>Copia %1, continuiamo la missione</Italian>
-    <Russian>Копия %1, продолжим миссию</Russian>
-    <Chinese>复制%1，我们继续任务</Chinese>
-    <Japanese>コピー%1、ミッションを続けましょう</Japanese>
-    
-</Key>
+            </Key>
+            <Key ID="STR_RPG_HC_CALL_REINFORCEMENT_OPFOR">
+                <Original>I found the enemy, send reinforcements</Original>
+                <English>I found the enemy, send reinforcements</English>
+                <French>J'ai trouvé l'ennemi, envoyez les renforts</French>
+                <Spanish>He encontrado al enemigo, envíen refuerzos</Spanish>
+                <German>Ich habe den Feind gefunden, schickt Verstärkung</German>
+                <Italian>Ho trovato il nemico, mandate rinforzi</Italian>
+                <Russian>Я обнаружил врага, пришлите подкрепление</Russian>
+                <Chinese>发现敌人，派增援</Chinese>
+                <Japanese>敵を発見、援軍を送ってくれ</Japanese>
+            </Key>
+            <Key ID="STR_RPG_HC_RESPAWN_TENT">
+                <Original>Your leader has setup a reinforcement tent</Original>
+                <English>Your leader has setup a reinforcement tent</English>
+                <French>Votre chef a monté une tente de réapparition</French>
+                <Spanish>Tu líder ha configurado una tienda de refuerzo</Spanish>
+                <German>Dein Anführer hat ein Verstärkungszelt aufgestellt</German>
+                <Italian>Il tuo leader ha configurato una tenda di rinforzo</Italian>
+                <Russian>Ваш лидер установил палатку для подкрепления</Russian>
+                <Chinese>你的领导者已设置增援帐篷</Chinese>
+                <Japanese>あなたのリーダーは増援テントを設置しました</Japanese>
+            </Key>
+            <Key ID="STR_RPG_HC_DESTROY_TENT">
+                <Original>Your tent has been destroyed by opfor</Original>
+                <English>Your tent has been destroyed by opfor</English>
+                <French>Votre tente a été détruite par l'ennemi</French>
+                <Spanish>Tu tienda ha sido destruida por Opfor</Spanish>
+                <German>Dein Zelt wurde von Opfor zerstört</German>
+                <Italian>La tua tenda è stata distrutta da Opfor</Italian>
+                <Russian>Ваша палатка была уничтожена противником</Russian>
+                <Chinese>你的帐篷被敌军摧毁了</Chinese>
+                <Japanese>あなたのテントは敵に破壊されました</Japanese>
+            </Key>
+
+            <Key ID="STR_RPG_HC_MEDIC_UNCONSCIOUS">
+                <Original>%1 used %2 on you</Original>
+                <English>%1 used %2 on you</English>
+                <French>%1 a utilisé %2 sur vous</French>
+                <Spanish>%1 usó %2 en ti</Spanish>
+                <German>%1 hat %2 bei dir angewendet</German>
+                <Italian>%1 ha usato %2 su di te</Italian>
+                <Russian>%1 использовал %2 на вас</Russian>
+                <Chinese>%1 在你身上使用了 %2</Chinese>
+                <Japanese>%1 があなたに %2 を使用しました</Japanese>
+            </Key>
+            <Key ID="STR_RPG_HC_SURRENDER_INTEL">
+                <Original>Copy %1, let's continue the mission</Original>
+                <English>Copy %1, let's continue the mission</English>
+                <French>Reçu %1, poursuivez la mission</French>
+                <Spanish>Copia %1, continuemos con la misión</Spanish>
+                <German>Kopie %1, lass uns die Mission fortsetzen</German>
+                <Italian>Copia %1, continuiamo la missione</Italian>
+                <Russian>Копия %1, продолжим миссию</Russian>
+                <Chinese>复制%1，我们继续任务</Chinese>
+                <Japanese>コピー%1、ミッションを続けましょう</Japanese>
+            </Key>
 <Container name="INTEL_DIALOG">
     <Key ID="STR_RPG_INTEL_MORTAR_CIV">
         <Original>This morning i saw a mortar position near %1. I don't know if they are there for you, be careful.</Original>
@@ -1768,26 +1840,56 @@
         <Original>Sector control</Original>
         <English>Sector control</English>
         <French>Contrôle de secteur</French>
+        <Spanish>Control de sector</Spanish>
+        <German>Sektorkontrolle</German>
+        <Italian>Controllo del settore</Italian>
+        <Russian>Контроль сектора</Russian>
+        <Chinese>区域控制</Chinese>
+        <Japanese>セクター制圧</Japanese>
     </Key>
     <Key ID="RPG_GUI_OVERLAY_NEAR">
         <Original>Nearest player</Original>
         <English>Nearest player</English>
         <French>Joueur le plus proche</French>
+        <Spanish>Jugador más cercano</Spanish>
+        <German>Nächstgelegener Spieler</German>
+        <Italian>Giocatore più vicino</Italian>
+        <Russian>Ближайший игрок</Russian>
+        <Chinese>最近的玩家</Chinese>
+        <Japanese>最も近いプレイヤー</Japanese>
     </Key>
     <Key ID="RPG_GUI_OVERLAY_NEAR_MEDIC">
         <Original>Nearest medic player</Original>
         <English>Nearest medic player</English>
         <French>Médecin le plus proche</French>
+        <Spanish>Médico más cercano</Spanish>
+        <German>Nächstgelegener Sanitäter</German>
+        <Italian>Medico più vicino</Italian>
+        <Russian>Ближайший медик</Russian>
+        <Chinese>最近的医疗兵</Chinese>
+        <Japanese>最も近い衛生兵</Japanese>
     </Key>
     <Key ID="RPG_GUI_OVERLAY_NO_NEAR">
         <Original>No player nearby</Original>
         <English>No player nearby</English>
         <French>Aucun joueur à proximité</French>
+        <Spanish>No hay jugadores cerca</Spanish>
+        <German>Kein Spieler in der Nähe</German>
+        <Italian>Nessun giocatore nelle vicinanze</Italian>
+        <Russian>Рядом нет игроков</Russian>
+        <Chinese>附近没有玩家</Chinese>
+        <Japanese>近くにプレイヤーはいない</Japanese>
     </Key>
     <Key ID="RPG_GUI_OVERLAY_NEAR_PLAYER">
         <Original>%1 is at %2m</Original>
         <English>%1 is at %2m</English>
         <French>%1 est à %2m</French>
+        <Spanish>%1 está a %2m</Spanish>
+        <German>%1 ist in %2m Entfernung</German>
+        <Italian>%1 è a %2m</Italian>
+        <Russian>%1 находится в %2м</Russian>
+        <Chinese>%1 在 %2 米处</Chinese>
+        <Japanese>%1 は %2m の位置にいる</Japanese>
     </Key>
 </Container>
 <Container name="RPG_GUI_GENERAL">
@@ -1813,15 +1915,38 @@
         <Chinese>保存</Chinese>
         <Japanese>保存</Japanese>
     </Key>
+    <Key ID="RPG_GUI_GENERAL_BM_SHOP">
+        <Original>Black market</Original>
+        <English>Black market</English>
+        <French>Marché noir</French>
+        <Spanish>Mercado negro</Spanish>
+        <German>Schwarzmarkt</German>
+        <Italian>Mercato nero</Italian>
+        <Russian>Черный рынок</Russian>
+        <Chinese>黑市</Chinese>
+        <Japanese>ブラックマーケット</Japanese>
+    </Key>
     <Key ID="RPG_GUI_GENERAL_WEAPON_SHOP">
         <Original>Weapon shop</Original>
         <English>Weapon shop</English>
         <French>Marché d'armes</French>
+        <Spanish>Tienda de armas</Spanish>
+        <German>Waffenladen</German>
+        <Italian>Negozio di armi</Italian>
+        <Russian>Магазин оружия</Russian>
+        <Chinese>武器商店</Chinese>
+        <Japanese>武器ショップ</Japanese>
     </Key>
     <Key ID="RPG_GUI_GENERAL_WEAPON_SHOP_DESC">
         <Original>Unlock weapons and accessories</Original>
         <English>Unlock weapons and accessories</English>
         <French>Débloquer les armes et accessoires</French>
+        <Spanish>Desbloquea armas y accesorios</Spanish>
+        <German>Waffen und Zubehör freischalten</German>
+        <Italian>Sblocca armi e accessori</Italian>
+        <Russian>Открыть оружие и снаряжение</Russian>
+        <Chinese>解锁武器和配件</Chinese>
+        <Japanese>武器とアクセサリーを解除する</Japanese>
     </Key>
     <Key ID="RPG_GUI_GENERAL_LOAD">
         <Original>Load</Original>
@@ -1845,301 +1970,658 @@
         <Chinese>重置</Chinese>
         <Japanese>リセット</Japanese>
     </Key>
-    </Key>
-        <Key ID="RPG_GUI_GENERAL_CLEAR">
+    <Key ID="RPG_GUI_GENERAL_CLEAR">
         <Original>Clear items</Original>
         <English>Clear items</English>
         <French>Supprimer les objets</French>
-    </Key>
+        <Spanish>Eliminar objetos</Spanish>
+        <German>Gegenstände löschen</German>
+        <Italian>Rimuovi oggetti</Italian>
+        <Russian>Удалить предметы</Russian>
+        <Chinese>清除物品</Chinese>
+        <Japanese>アイテムを削除</Japanese>
     </Key>
     <Key ID="RPG_GUI_BOMB_COLOR_RED">
         <Original>Red</Original>
         <English>Red</English>
         <French>Rouge</French>
+        <Spanish>Rojo</Spanish>
+        <German>Rot</German>
+        <Italian>Rosso</Italian>
+        <Russian>Красный</Russian>
+        <Chinese>红色</Chinese>
+        <Japanese>赤</Japanese>
     </Key>
     <Key ID="RPG_GUI_BOMB_COLOR_BLUE">
         <Original>Blue</Original>
         <English>Blue</English>
         <French>Bleu</French>
+        <Spanish>Azul</Spanish>
+        <German>Blau</German>
+        <Italian>Blu</Italian>
+        <Russian>Синий</Russian>
+        <Chinese>蓝色</Chinese>
+        <Japanese>青</Japanese>
     </Key>
     <Key ID="RPG_GUI_BOMB_COLOR_GREEN">
         <Original>Green</Original>
         <English>Green</English>
         <French>Vert</French>
+        <Spanish>Verde</Spanish>
+        <German>Grün</German>
+        <Italian>Verde</Italian>
+        <Russian>Зелёный</Russian>
+        <Chinese>绿色</Chinese>
+        <Japanese>緑</Japanese>
     </Key>
     <Key ID="RPG_GUI_BOMB_COLOR_YELLOW">
         <Original>Yellow</Original>
         <English>Yellow</English>
         <French>Jaune</French>
+        <Spanish>Amarillo</Spanish>
+        <German>Gelb</German>
+        <Italian>Giallo</Italian>
+        <Russian>Жёлтый</Russian>
+        <Chinese>黄色</Chinese>
+        <Japanese>黄</Japanese>
     </Key>
     <Key ID="RPG_GUI_BOMB_COLOR_WHITE">
         <Original>White</Original>
         <English>White</English>
         <French>Blanc</French>
+        <Spanish>Blanco</Spanish>
+        <German>Weiß</German>
+        <Italian>Bianco</Italian>
+        <Russian>Белый</Russian>
+        <Chinese>白色</Chinese>
+        <Japanese>白</Japanese>
     </Key>
     <Key ID="RPG_GUI_BOMB_COLOR_BLACK">
         <Original>Black</Original>
         <English>Black</English>
         <French>Noir</French>
+        <Spanish>Negro</Spanish>
+        <German>Schwarz</German>
+        <Italian>Nero</Italian>
+        <Russian>Чёрный</Russian>
+        <Chinese>黑色</Chinese>
+        <Japanese>黒</Japanese>
     </Key>
     <Key ID="RPG_GUI_BOMB_COLOR_ORANGE">
         <Original>Orange</Original>
         <English>Orange</English>
         <French>Orange</French>
+        <Spanish>Naranja</Spanish>
+        <German>Orange</German>
+        <Italian>Arancione</Italian>
+        <Russian>Оранжевый</Russian>
+        <Chinese>橙色</Chinese>
+        <Japanese>オレンジ</Japanese>
     </Key>
     <Key ID="RPG_GUI_BOMB_COLOR_PURPLE">
         <Original>Purple</Original>
         <English>Purple</English>
         <French>Violet</French>
+        <Spanish>Púrpura</Spanish>
+        <German>Lila</German>
+        <Italian>Viola</Italian>
+        <Russian>Фиолетовый</Russian>
+        <Chinese>紫色</Chinese>
+        <Japanese>紫</Japanese>
     </Key>
     <Key ID="RPG_GUI_BOMB_CLUE1">
-        <Original></Original>
-        <English></English>
-        <French>Indice #1 : Le fil %1 n’est PAS sûr.</French>
+        <Original>Clue #1: The wire %1 is the bad one</Original>
+        <English>Clue #1: The wire %1 is the bad one</English>
+        <French>Indice #1 : Couper le fil %1 déclencherait la bombe.</French>
+        <Spanish>Pista #1: El cable %1 NO es seguro.</Spanish>
+        <German>Hinweis #1: Das Kabel %1 ist NICHT sicher.</German>
+        <Italian>Indizio #1: Il filo %1 NON è sicuro.</Italian>
+        <Russian>Подсказка #1: Провод %1 НЕ безопасен.</Russian>
+        <Chinese>线索 #1：电线 %1 不安全。</Chinese>
+        <Japanese>ヒント #1: ワイヤー %1 は安全ではない。</Japanese>
     </Key>
     <Key ID="RPG_GUI_BOMB_CLUE2">
-        <Original>Clue #2: %1 or %2? Only one saves the day.</Original>
-        <English>Clue #2: %1 or %2? Only one saves the day.</English>
-        <French>Indice #2 : %1 ou %2 ? Un seul sauve la situation.</French>
+        <Original>Clue #2: %1 or %2? Only one defuse the bomb.</Original>
+        <English>Clue #2: %1 or %2? Only one defuse the bomb.</English>
+        <French>Indice #2 : %1 ou %2 ? Un seul désamorce la bombe.</French>
+        <Spanish>Pista #2: ¿%1 o %2? Solo uno desactiva la bomba.</Spanish>
+        <German>Hinweis #2: %1 oder %2? Nur einer entschärft die Bombe.</German>
+        <Italian>Indizio #2: %1 o %2? Solo uno disinnesca la bomba.</Italian>
+        <Russian>Подсказка #2: %1 или %2? Только один обезвредит бомбу.</Russian>
+        <Chinese>线索 #2：%1 还是 %2？只有一个能拆除炸弹。</Chinese>
+        <Japanese>ヒント #2: %1 か %2？ 爆弾を解除できるのは一つだけだ。</Japanese>
     </Key>
     <Key ID="RPG_GUI_BOMB_TITLE">
         <Original>Bomb Defusal</Original>
         <English>Bomb Defusal</English>
         <French>Désamorçage de Bombe</French>
+        <Spanish>Desactivación de bomba</Spanish>
+        <German>Bombenentschärfung</German>
+        <Italian>Disinnesco bomba</Italian>
+        <Russian>Обезвреживание бомбы</Russian>
+        <Chinese>拆弹</Chinese>
+        <Japanese>爆弾解除</Japanese>
     </Key>
     <Key ID="RPG_GUI_BOMB_WRONG_CUT">
         <Original>The wrong wire was cut!</Original>
         <English>The wrong wire was cut!</English>
         <French>Le mauvais fil a été coupé !</French>
+        <Spanish>¡Se cortó el cable equivocado!</Spanish>
+        <German>Das falsche Kabel wurde durchtrennt!</German>
+        <Italian>È stato tagliato il filo sbagliato!</Italian>
+        <Russian>Был перерезан неправильный провод!</Russian>
+        <Chinese>剪错了电线！</Chinese>
+        <Japanese>間違ったワイヤーが切られた！</Japanese>
     </Key>
     <Key ID="RPG_GUI_BOMB_SUCCESS">
         <Original>Defusal successful!</Original>
         <English>Defusal successful!</English>
         <French>Désamorçage réussi !</French>
+        <Spanish>¡Bomba desactivada con éxito!</Spanish>
+        <German>Erfolgreich entschärft!</German>
+        <Italian>Disinnesco riuscito!</Italian>
+        <Russian>Бомба успешно обезврежена!</Russian>
+        <Chinese>拆弹成功！</Chinese>
+        <Japanese>解除成功！</Japanese>
     </Key>
     <Key ID="RPG_GUI_BOMB_JAM">
         <Original>The clues are scrambled...</Original>
         <English>The clues are scrambled...</English>
         <French>Les indices se brouillent…</French>
+        <Spanish>Las pistas están confusas...</Spanish>
+        <German>Die Hinweise sind durcheinander...</German>
+        <Italian>Gli indizi sono confusi...</Italian>
+        <Russian>Подсказки перепутаны...</Russian>
+        <Chinese>线索被扰乱了…</Chinese>
+        <Japanese>手掛かりが混乱している…</Japanese>
     </Key>
     <Key ID="RPG_GUI_BOMB_END_TIMER">
         <Original>Time’s up!</Original>
         <English>Time’s up!</English>
         <French>Temps écoulé !</French>
+        <Spanish>¡Se acabó el tiempo!</Spanish>
+        <German>Zeit abgelaufen!</German>
+        <Italian>Tempo scaduto!</Italian>
+        <Russian>Время вышло!</Russian>
+        <Chinese>时间到！</Chinese>
+        <Japanese>時間切れ！</Japanese>
     </Key>
     <Key ID="RPG_GUI_BOMB_CUT">
         <Original>Cut</Original>
         <English>Cut</English>
         <French>Couper</French>
+        <Spanish>Cortar</Spanish>
+        <German>Durchtrennen</German>
+        <Italian>Taglia</Italian>
+        <Russian>Перерезать</Russian>
+        <Chinese>剪断</Chinese>
+        <Japanese>切断</Japanese>
     </Key>
     <Key ID="RPG_GUI_BOMB_WIRE">
         <Original>Wires:</Original>
         <English>Wires:</English>
         <French>Fils :</French>
+        <Spanish>Cables:</Spanish>
+        <German>Kabel:</German>
+        <Italian>Fili:</Italian>
+        <Russian>Провода:</Russian>
+        <Chinese>电线：</Chinese>
+        <Japanese>ワイヤー：</Japanese>
     </Key>
 </Container>
- <Container name="ACTIONS">
+<Container name="ACTIONS">
     <Key ID="STR_ACTIONS_PLACE_TENT">
         <Original>Place reinforcement tent</Original>
         <English>Place reinforcement tent</English>
         <French>Placer la tente de renforts</French>
+        <Spanish>Colocar tienda de refuerzos</Spanish>
+        <German>Verstärkungszelt aufstellen</German>
+        <Italian>Posiziona la tenda dei rinforzi</Italian>
+        <Russian>Установить палатку подкрепления</Russian>
+        <Chinese>放置增援帐篷</Chinese>
+        <Japanese>援軍テントを設置する</Japanese>
     </Key>
     <Key ID="STR_ACTIONS_OPEN_SUPPORT_SHOP">
         <Original>Open support shop</Original>
         <English>Open support shop</English>
         <French>Ouvrir le magasin de support</French>
+        <Spanish>Abrir tienda de apoyo</Spanish>
+        <German>Support-Shop öffnen</German>
+        <Italian>Apri negozio di supporto</Italian>
+        <Russian>Открыть магазин поддержки</Russian>
+        <Chinese>打开支援商店</Chinese>
+        <Japanese>支援ショップを開く</Japanese>
+    </Key>
+    <Key ID="STR_ACTIONS_OPEN_FAST_TRAVEL">
+        <Original>Fast travel</Original>
+        <English>Fast travel</English>
+        <French>Voyage rapide</French>
+        <Spanish>Viaje rápido</Spanish>
+        <German>Schnellreise</German>
+        <Italian>Viaggio rapido</Italian>
+        <Russian>Быстрое перемещение</Russian>
+        <Chinese>快速旅行</Chinese>
+        <Japanese>ファストトラベル</Japanese>
     </Key>
     <Key ID="STR_ACTIONS_OPEN_VEHICLE_SHOP">
         <Original>Open vehicle shop</Original>
         <English>Open vehicle shop</English>
         <French>Ouvrir le magasin de vehicule</French>
+        <Spanish>Abrir tienda de vehículos</Spanish>
+        <German>Fahrzeug-Shop öffnen</German>
+        <Italian>Apri negozio di veicoli</Italian>
+        <Russian>Открыть магазин техники</Russian>
+        <Chinese>打开载具商店</Chinese>
+        <Japanese>車両ショップを開く</Japanese>
     </Key>
     <Key ID="STR_ACTIONS_SETUP_LOADOUT">
         <Original>Setup loadout</Original>
         <English>Setup loadout</English>
         <French>Configurer l'équipement</French>
+        <Spanish>Configurar equipamiento</Spanish>
+        <German>Ausrüstung einrichten</German>
+        <Italian>Configura equipaggiamento</Italian>
+        <Russian>Настроить снаряжение</Russian>
+        <Chinese>设置装备</Chinese>
+        <Japanese>装備を設定する</Japanese>
     </Key>
     <Key ID="STR_ACTIONS_RECRUIT_UNITS">
         <Original>Recruit unit</Original>
         <English>Recruit unit</English>
         <French>Recruter des unités</French>
+        <Spanish>Reclutar unidad</Spanish>
+        <German>Einheit rekrutieren</German>
+        <Italian>Recluta unità</Italian>
+        <Russian>Нанять подразделение</Russian>
+        <Chinese>招募单位</Chinese>
+        <Japanese>部隊を募集する</Japanese>
     </Key>
     <Key ID="STR_ACTIONS_TEAM_SETTINGS">
         <Original>Create or join group</Original>
         <English>Create or join group</English>
         <French>Créer ou rejoindre un groupe</French>
+        <Spanish>Crear o unirse a un grupo</Spanish>
+        <German>Gruppe erstellen oder beitreten</German>
+        <Italian>Crea o unisciti a un gruppo</Italian>
+        <Russian>Создать или присоединиться к группе</Russian>
+        <Chinese>创建或加入小队</Chinese>
+        <Japanese>グループを作成または参加する</Japanese>
     </Key>
     <Key ID="STR_ACTIONS_DELETE_TENT">
         <Original>Get back reinforcement tent</Original>
         <English>Get back reinforcement tent</English>
         <French>Récupérer la tente de renfort</French>
+        <Spanish>Recuperar tienda de refuerzos</Spanish>
+        <German>Verstärkungszelt zurückholen</German>
+        <Italian>Recupera la tenda dei rinforzi</Italian>
+        <Russian>Забрать палатку подкрепления</Russian>
+        <Chinese>收回增援帐篷</Chinese>
+        <Japanese>援軍テントを回収する</Japanese>
     </Key>
     <Key ID="STR_ACTIONS_SLEEP">
         <Original>Sleep until next morning</Original>
         <English>Sleep until next morning</English>
         <French>Dormir jusqu'au lendemain</French>
+        <Spanish>Dormir hasta la mañana siguiente</Spanish>
+        <German>Bis zum nächsten Morgen schlafen</German>
+        <Italian>Dormi fino al mattino successivo</Italian>
+        <Russian>Спать до следующего утра</Russian>
+        <Chinese>睡到第二天早上</Chinese>
+        <Japanese>翌朝まで眠る</Japanese>
     </Key>
     <Key ID="STR_ACTIONS_JOINPATACOMPANY">
         <Original>Join the PataCompany</Original>
         <English>Join the PataCompany</English>
         <French>Rejoindre la PataCompany</French>
+        <Spanish>Unirse a PataCompany</Spanish>
+        <German>PataCompany beitreten</German>
+        <Italian>Unisciti alla PataCompany</Italian>
+        <Russian>Присоединиться к PataCompany</Russian>
+        <Chinese>加入 PataCompany</Chinese>
+        <Japanese>PataCompany に参加する</Japanese>
     </Key>
     </Container>
-     <Container name="RPG_SUPPORT_MENU">
-        <Key ID="STR_GUI_SUPPORT_CAT_RECON">
-            <Original>Recon</Original>
-            <English>Recon</English>
-            <French>Reconnaissance</French>
-        </Key>
-        <Key ID="STR_GUI_SUPPORT_CAT_REINFORCEMENT">
-            <Original>Reinforcement</Original>
-            <English>Renfort</English>
-            <French>Renfort</French>
-        </Key>
-        <Key ID="STR_GUI_SUPPORT_CAT_ARTILLERY">
-            <Original>Artillery</Original>
-            <English>Artillery</English>
-            <French>Artillerie</French>
-        </Key>
-        <Key ID="STR_GUI_SUPPORT_CAT_MOVE">
-            <Original>Movement</Original>
-            <English>Movement</English>
-            <French>Déplacement</French>
-        </Key>
-        <Key ID="STR_GUI_SUPPORT_CAT_ATTACK">
-            <Original>Attack</Original>
-            <English>Attack</English>
-            <French>Attaque</French>
-        </Key>
-        <Key ID="STR_GUI_SUPPORT_CAT_LOGISTIC">
-            <Original>Logistic</Original>
-            <English>Logistic</English>
-            <French>Logistique</French>
-        </Key>
-        <Key ID="STR_GUI_SUPPORT_RECON">
-            <Original>Recon for intel</Original>
-            <English>Recon for intel</English>
-            <French>Recherche d'informations</French>
-        </Key>
-        <Key ID="STR_GUI_SUPPORT_REINFORCEMENT_NOW">
-            <Original>Ask for reinforcement now</Original>
-            <English>Ask for reinforcement now</English>
-            <French>Demander des renforts</French>
-        </Key>
-        <Key ID="STR_GUI_SUPPORT_REINFORCEMENT_RADIO">
-            <Original>Call reinforcement (radio)</Original>
-            <English>Call reinforcement (radio)</English>
-            <French>Appeler des renforts (radio)</French>
-        </Key>
-        <Key ID="STR_GUI_SUPPORT_FORCE_REINFORCEMENT_NOW">
-            <Original>Force reinforcement now</Original>
-            <English>Force reinforcement now</English>
-            <French>Exiger des renforts maintenant</French>
-        </Key>
-        <Key ID="STR_GUI_SUPPORT_ARTILLERY">
-            <Original>Artillery (radio)</Original>
-            <English>Artillery (radio)</English>
-            <French>Artillerie (radio)</French>
-        </Key>
-        <Key ID="STR_GUI_SUPPORT_HALO">
-            <Original>Halo Jump</Original>
-            <English>Halo Jump</English>
-            <French>Déploiement en parachute</French>
-        </Key>
-        <Key ID="STR_GUI_SUPPORT_MASSIVE_HALO">
-            <Original>Halo jump with everyone around</Original>
-            <English>Halo jump with everyone around</English>
-            <French>Déployer tout le monde en parachute</French>
-        </Key>
-        <Key ID="STR_GUI_SUPPORT_TENT">
-            <Original>Move to your group tent</Original>
-            <English>Move to your group tent</English>
-            <French>Déplacement vers la tente du groupe</French>
-        </Key>
-        <Key ID="STR_GUI_SUPPORT_TAC_INS">
-            <Original>Tactical Insertion</Original>
-            <English>Tactical Insertion</English>
-            <French>Insertion tactique</French>
-        </Key>
-        <Key ID="STR_GUI_SUPPORT_ATTACK_SQUAD">
-            <Original>Recruit a squad to attack position</Original>
-            <English>Recruit a squad to attack position</English>
-            <French>Recruter une escouade pour attaquer la position</French>
-        </Key>
-        <Key ID="STR_GUI_SUPPORT_EXTRACT_CHOPPER">
-            <Original>Extract helicopter (radio)</Original>
-            <English>Extract helicopter (radio)</English>
-            <French>Hélicoptère d'extraction (radio)</French>
-        </Key>
-        <Key ID="STR_GUI_SUPPORT_TRANSPORT_CHOPPER">
-            <Original>Transport helicopter (radio)</Original>
-            <English>Transport helicopter (radio)</English>
-            <French>Hélicoptère de transport (radio)</French>
-        </Key>
-        <Key ID="STR_GUI_SUPPORT_SUPPLY_DROP">
-            <Original>Logistic supply drop (radio)</Original>
-            <English>Logistic supply drop (radio)</English>
-            <French>Soutien logistique (radio)</French>
-        </Key>
-        <Key ID="STR_GUI_SUPPORT_ADV_SUPPLY_DROP">
-            <Original>Arsenal supply drop (radio)</Original>
-            <English>Arsenal supply drop (radio)</English>
-            <French>Arsenal logistique (radio)</French>
-        </Key>
-        <Key ID="STR_GUI_SUPPORT_RECON_DRONE">
-            <Original>Send drone for recon</Original>
-            <English>Send drone for recon</English>
-            <French>Envoyer un drone de reconnaissance</French>
-        </Key>
-        <Key ID="STR_GUI_BASE_NAME">
-            <Original>Support name</Original>
-            <English>Support name</English>
-            <French>Nom du support</French>
-        </Key>
-        <Key ID="STR_GUI_BASE_TYPE">
-            <Original>Support type</Original>
-            <English>Support type</English>
-            <French>Type du support</French>
-        </Key>
-        <Key ID="STR_GUI_BASE_WEAPON_NAME">
-            <Original>Name</Original>
-            <English>Name</English>
-            <French>Nom</French>
-        </Key>
-        <Key ID="STR_GUI_BASE_WEAPON_TYPE">
-            <Original>Type</Original>
-            <English>Type</English>
-            <French>Type</French>
-        </Key>
-        <Key ID="STR_GUI_BASE_CREDIT">
-            <Original>Credit</Original>
-            <English>Credit</English>
-            <French>Crédit</French>
-        </Key>
-        <Key ID="STR_GUI_BASE_TOKEN">
-            <Original>Token</Original>
-            <English>Token</English>
-            <French>Jeton</French>
-        </Key>
-        <Key ID="STR_GUI_BASE_ICON">
-            <Original>Icon</Original>
-            <English>Icon</English>
-            <French>Icône</French>
-        </Key>
-        <Key ID="STR_GUI_BASE_TITLE">
-            <Original>Support shop</Original>
-            <English>Support shop</English>
-            <French>Magasin de support</French>
-        </Key>
-        <Key ID="STR_GUI_BASE_BUY">
-            <Original>Buy</Original>
-            <English>Buy</English>
-            <French>Acheter</French>
-        </Key>
-        <Key ID="STR_GUI_BASE_UNLOCK">
-            <Original>Unlock</Original>
-            <English>Unlock</English>
-            <French>Débloquer</French>
-        </Key>
-    </Container>
+    <Container name="RPG_SUPPORT_MENU">
+    <Key ID="STR_GUI_SUPPORT_CAT_RECON">
+        <Original>Recon</Original>
+        <English>Recon</English>
+        <French>Reconnaissance</French>
+        <Spanish>Reconocimiento</Spanish>
+        <German>Aufklärung</German>
+        <Italian>Ricognizione</Italian>
+        <Russian>Разведка</Russian>
+        <Chinese>侦察</Chinese>
+        <Japanese>偵察</Japanese>
+    </Key>
+    <Key ID="STR_GUI_SUPPORT_CAT_REINFORCEMENT">
+        <Original>Reinforcement</Original>
+        <English>Reinforcement</English>
+        <French>Renfort</French>
+        <Spanish>Refuerzo</Spanish>
+        <German>Verstärkung</German>
+        <Italian>Rinforzo</Italian>
+        <Russian>Подкрепление</Russian>
+        <Chinese>增援</Chinese>
+        <Japanese>援軍</Japanese>
+    </Key>
+    <Key ID="STR_GUI_SUPPORT_CAT_ARTILLERY">
+        <Original>Artillery</Original>
+        <English>Artillery</English>
+        <French>Artillerie</French>
+        <Spanish>Artillería</Spanish>
+        <German>Artillerie</German>
+        <Italian>Artiglieria</Italian>
+        <Russian>Артиллерия</Russian>
+        <Chinese>火炮</Chinese>
+        <Japanese>砲撃</Japanese>
+    </Key>
+    <Key ID="STR_GUI_SUPPORT_CAT_MOVE">
+        <Original>Movement</Original>
+        <English>Movement</English>
+        <French>Déplacement</French>
+        <Spanish>Movimiento</Spanish>
+        <German>Bewegung</German>
+        <Italian>Spostamento</Italian>
+        <Russian>Передвижение</Russian>
+        <Chinese>移动</Chinese>
+        <Japanese>移動</Japanese>
+    </Key>
+    <Key ID="STR_GUI_SUPPORT_CAT_ATTACK">
+        <Original>Attack</Original>
+        <English>Attack</English>
+        <French>Attaque</French>
+        <Spanish>Ataque</Spanish>
+        <German>Angriff</German>
+        <Italian>Attacco</Italian>
+        <Russian>Атака</Russian>
+        <Chinese>攻击</Chinese>
+        <Japanese>攻撃</Japanese>
+    </Key>
+    <Key ID="STR_GUI_SUPPORT_CAT_LOGISTIC">
+        <Original>Logistic</Original>
+        <English>Logistic</English>
+        <French>Logistique</French>
+        <Spanish>Logística</Spanish>
+        <German>Logistik</German>
+        <Italian>Logistica</Italian>
+        <Russian>Логистика</Russian>
+        <Chinese>后勤</Chinese>
+        <Japanese>兵站</Japanese>
+    </Key>
+    <Key ID="STR_GUI_SUPPORT_RECON">
+        <Original>Recon for intel</Original>
+        <English>Recon for intel</English>
+        <French>Recherche d'informations</French>
+        <Spanish>Reconocimiento para información</Spanish>
+        <German>Aufklärung für Informationen</German>
+        <Italian>Ricognizione per informazioni</Italian>
+        <Russian>Разведка для получения данных</Russian>
+        <Chinese>侦察获取情报</Chinese>
+        <Japanese>情報収集のための偵察</Japanese>
+    </Key>
+    <Key ID="STR_GUI_SUPPORT_REINFORCEMENT_NOW">
+        <Original>Ask for reinforcement now</Original>
+        <English>Ask for reinforcement now</English>
+        <French>Demander des renforts</French>
+        <Spanish>Solicitar refuerzos ahora</Spanish>
+        <German>Jetzt Verstärkung anfordern</German>
+        <Italian>Richiedi rinforzi ora</Italian>
+        <Russian>Запросить подкрепление</Russian>
+        <Chinese>立即请求增援</Chinese>
+        <Japanese>今すぐ援軍を要請</Japanese>
+    </Key>
+    <Key ID="STR_GUI_SUPPORT_REINFORCEMENT_RADIO">
+        <Original>Call reinforcement (radio)</Original>
+        <English>Call reinforcement (radio)</English>
+        <French>Appeler des renforts (radio)</French>
+        <Spanish>Llamar refuerzos (radio)</Spanish>
+        <German>Verstärkung anfordern (Funk)</German>
+        <Italian>Chiama rinforzi (radio)</Italian>
+        <Russian>Вызвать подкрепление (по радио)</Russian>
+        <Chinese>呼叫增援（无线电）</Chinese>
+        <Japanese>援軍を呼ぶ（無線）</Japanese>
+    </Key>
+    <Key ID="STR_GUI_SUPPORT_FORCE_REINFORCEMENT_NOW">
+        <Original>Force reinforcement now</Original>
+        <English>Force reinforcement now</English>
+        <French>Exiger des renforts maintenant</French>
+        <Spanish>Forzar refuerzos ahora</Spanish>
+        <German>Verstärkung erzwingen</German>
+        <Italian>Forza rinforzi immediati</Italian>
+        <Russian>Добиться подкрепления</Russian>
+        <Chinese>立即强制增援</Chinese>
+        <Japanese>強制的に援軍を要請</Japanese>
+    </Key>
+    <Key ID="STR_GUI_SUPPORT_ARTILLERY">
+        <Original>Artillery (radio)</Original>
+        <English>Artillery (radio)</English>
+        <French>Artillerie (radio)</French>
+        <Spanish>Artillería (radio)</Spanish>
+        <German>Artillerie (Funk)</German>
+        <Italian>Artiglieria (radio)</Italian>
+        <Russian>Артиллерия (по радио)</Russian>
+        <Chinese>火炮（无线电）</Chinese>
+        <Japanese>砲撃（無線）</Japanese>
+    </Key>
+    <Key ID="STR_GUI_SUPPORT_HALO">
+        <Original>Halo Jump</Original>
+        <English>Halo Jump</English>
+        <French>Déploiement en parachute</French>
+        <Spanish>Salto HALO</Spanish>
+        <German>HALO-Sprung</German>
+        <Italian>Lancio HALO</Italian>
+        <Russian>Прыжок HALO</Russian>
+        <Chinese>高空跳伞（HALO）</Chinese>
+        <Japanese>HALOジャンプ</Japanese>
+    </Key>
+    <Key ID="STR_GUI_SUPPORT_MASSIVE_HALO">
+        <Original>Halo jump with everyone around</Original>
+        <English>Halo jump with everyone around</English>
+        <French>Déployer tout le monde en parachute</French>
+        <Spanish>Salto HALO con todos alrededor</Spanish>
+        <German>HALO-Sprung mit allen in der Nähe</German>
+        <Italian>Lancio HALO con tutti</Italian>
+        <Russian>Групповой прыжок HALO</Russian>
+        <Chinese>全员高空跳伞</Chinese>
+        <Japanese>全員でHALOジャンプ</Japanese>
+    </Key>
+    <Key ID="STR_GUI_SUPPORT_TENT">
+        <Original>Move to your group tent</Original>
+        <English>Move to your group tent</English>
+        <French>Déplacement vers la tente du groupe</French>
+        <Spanish>Moverse a la tienda del grupo</Spanish>
+        <German>Zur Gruppenzelt bewegen</German>
+        <Italian>Spostati alla tenda del gruppo</Italian>
+        <Russian>Переместиться к палатке группы</Russian>
+        <Chinese>前往小队帐篷</Chinese>
+        <Japanese>グループのテントに移動</Japanese>
+    </Key>
+    <Key ID="STR_GUI_SUPPORT_TAC_INS">
+        <Original>Tactical Insertion</Original>
+        <English>Tactical Insertion</English>
+        <French>Insertion tactique</French>
+        <Spanish>Inserción táctica</Spanish>
+        <German>Taktische Insertion</German>
+        <Italian>Inserimento tattico</Italian>
+        <Russian>Тактическая вставка</Russian>
+        <Chinese>战术插入</Chinese>
+        <Japanese>戦術投入</Japanese>
+    </Key>
+    <Key ID="STR_GUI_SUPPORT_ATTACK_SQUAD">
+        <Original>Recruit a squad to attack position</Original>
+        <English>Recruit a squad to attack position</English>
+        <French>Recruter une escouade pour attaquer la position</French>
+        <Spanish>Reclutar una escuadra para atacar la posición</Spanish>
+        <German>Trupp rekrutieren zum Angriff</German>
+        <Italian>Recluta una squadra per attaccare la posizione</Italian>
+        <Russian>Нанять отряд для атаки позиции</Russian>
+        <Chinese>招募小队攻击目标</Chinese>
+        <Japanese>攻撃用の分隊を募集する</Japanese>
+    </Key>
+    <Key ID="STR_GUI_SUPPORT_EXTRACT_CHOPPER">
+        <Original>Extract helicopter (radio)</Original>
+        <English>Extract helicopter (radio)</English>
+        <French>Hélicoptère d'extraction (radio)</French>
+        <Spanish>Helicóptero de extracción (radio)</Spanish>
+        <German>Evakuierungshelikopter (Funk)</German>
+        <Italian>Elicottero di estrazione (radio)</Italian>
+        <Russian>Вертолет эвакуации (по радио)</Russian>
+        <Chinese>撤离直升机（无线电）</Chinese>
+        <Japanese>救出ヘリ（無線）</Japanese>
+    </Key>
+    <Key ID="STR_GUI_SUPPORT_TRANSPORT_CHOPPER">
+        <Original>Transport helicopter (radio)</Original>
+        <English>Transport helicopter (radio)</English>
+        <French>Hélicoptère de transport (radio)</French>
+        <Spanish>Helicóptero de transporte (radio)</Spanish>
+        <German>Transporthelikopter (Funk)</German>
+        <Italian>Elicottero da trasporto (radio)</Italian>
+        <Russian>Транспортный вертолет (по радио)</Russian>
+        <Chinese>运输直升机（无线电）</Chinese>
+        <Japanese>輸送ヘリ（無線）</Japanese>
+    </Key>
+    <Key ID="STR_GUI_SUPPORT_SUPPLY_DROP">
+        <Original>Logistic supply drop (radio)</Original>
+        <English>Logistic supply drop (radio)</English>
+        <French>Soutien logistique (radio)</French>
+        <Spanish>Suministro logístico (radio)</Spanish>
+        <German>Nachschubabwurf (Funk)</German>
+        <Italian>Rifornimento logistico (radio)</Italian>
+        <Russian>Снабжение (по радио)</Russian>
+        <Chinese>后勤补给投放（无线电）</Chinese>
+        <Japanese>補給物資投下（無線）</Japanese>
+    </Key>
+    <Key ID="STR_GUI_SUPPORT_ADV_SUPPLY_DROP">
+        <Original>Arsenal supply drop (radio)</Original>
+        <English>Arsenal supply drop (radio)</English>
+        <French>Arsenal logistique (radio)</French>
+        <Spanish>Suministro de arsenal (radio)</Spanish>
+        <German>Arsenal-Nachschubabwurf (Funk)</German>
+        <Italian>Rifornimento arsenale (radio)</Italian>
+        <Russian>Снабжение арсеналом (по радио)</Russian>
+        <Chinese>军械补给投放（无线电）</Chinese>
+        <Japanese>兵器補給投下（無線）</Japanese>
+    </Key>
+    <Key ID="STR_GUI_SUPPORT_RECON_DRONE">
+        <Original>Send drone for recon</Original>
+        <English>Send drone for recon</English>
+        <French>Envoyer un drone de reconnaissance</French>
+        <Spanish>Enviar dron de reconocimiento</Spanish>
+        <German>Aufklärungsdrohne senden</German>
+        <Italian>Invia drone da ricognizione</Italian>
+        <Russian>Отправить дрон на разведку</Russian>
+        <Chinese>派遣侦察无人机</Chinese>
+        <Japanese>偵察ドローンを送る</Japanese>
+    </Key>
+    <Key ID="STR_GUI_BASE_NAME">
+        <Original>Support name</Original>
+        <English>Support name</English>
+        <French>Nom du support</French>
+        <Spanish>Nombre del apoyo</Spanish>
+        <German>Unterstützungsname</German>
+        <Italian>Nome supporto</Italian>
+        <Russian>Название поддержки</Russian>
+        <Chinese>支援名称</Chinese>
+        <Japanese>支援名</Japanese>
+    </Key>
+    <Key ID="STR_GUI_BASE_TYPE">
+        <Original>Support type</Original>
+        <English>Support type</English>
+        <French>Type du support</French>
+        <Spanish>Tipo de apoyo</Spanish>
+        <German>Unterstützungstyp</German>
+        <Italian>Tipo di supporto</Italian>
+        <Russian>Тип поддержки</Russian>
+        <Chinese>支援类型</Chinese>
+        <Japanese>支援タイプ</Japanese>
+    </Key>
+    <Key ID="STR_GUI_BASE_WEAPON_NAME">
+        <Original>Name</Original>
+        <English>Name</English>
+        <French>Nom</French>
+        <Spanish>Nombre</Spanish>
+        <German>Name</German>
+        <Italian>Nome</Italian>
+        <Russian>Название</Russian>
+        <Chinese>名称</Chinese>
+        <Japanese>名前</Japanese>
+    </Key>
+    <Key ID="STR_GUI_BASE_WEAPON_TYPE">
+        <Original>Type</Original>
+        <English>Type</English>
+        <French>Type</French>
+        <Spanish>Tipo</Spanish>
+        <German>Typ</German>
+        <Italian>Tipo</Italian>
+        <Russian>Тип</Russian>
+        <Chinese>类型</Chinese>
+        <Japanese>タイプ</Japanese>
+    </Key>
+    <Key ID="STR_GUI_BASE_CREDIT">
+        <Original>Credit</Original>
+        <English>Credit</English>
+        <French>Crédit</French>
+        <Spanish>Crédito</Spanish>
+        <German>Kredit</German>
+        <Italian>Credito</Italian>
+        <Russian>Кредит</Russian>
+        <Chinese>积分</Chinese>
+        <Japanese>クレジット</Japanese>
+    </Key>
+    <Key ID="STR_GUI_BASE_TOKEN">
+        <Original>Token</Original>
+        <English>Token</English>
+        <French>Jeton</French>
+        <Spanish>Ficha</Spanish>
+        <German>Marke</German>
+        <Italian>Gettone</Italian>
+        <Russian>Жетон</Russian>
+        <Chinese>令牌</Chinese>
+        <Japanese>トークン</Japanese>
+    </Key>
+    <Key ID="STR_GUI_BASE_ICON">
+        <Original>Icon</Original>
+        <English>Icon</English>
+        <French>Icône</French>
+        <Spanish>Ícono</Spanish>
+        <German>Symbol</German>
+        <Italian>Icona</Italian>
+        <Russian>Иконка</Russian>
+        <Chinese>图标</Chinese>
+        <Japanese>アイコン</Japanese>
+    </Key>
+    <Key ID="STR_GUI_BASE_TITLE">
+        <Original>Support shop</Original>
+        <English>Support shop</English>
+        <French>Magasin de support</French>
+        <Spanish>Tienda de apoyo</Spanish>
+        <German>Support-Shop</German>
+        <Italian>Negozio di supporto</Italian>
+        <Russian>Магазин поддержки</Russian>
+        <Chinese>支援商店</Chinese>
+        <Japanese>支援ショップ</Japanese>
+    </Key>
+    <Key ID="STR_GUI_BASE_BUY">
+        <Original>Buy</Original>
+        <English>Buy</English>
+        <French>Acheter</French>
+        <Spanish>Comprar</Spanish>
+        <German>Kaufen</German>
+        <Italian>Compra</Italian>
+        <Russian>Купить</Russian>
+        <Chinese>购买</Chinese>
+        <Japanese>購入</Japanese>
+    </Key>
+    <Key ID="STR_GUI_BASE_UNLOCK">
+        <Original>Unlock</Original>
+        <English>Unlock</English>
+        <French>Débloquer</French>
+        <Spanish>Desbloquear</Spanish>
+        <German>Freischalten</German>
+        <Italian>Sblocca</Italian>
+        <Russian>Открыть</Russian>
+        <Chinese>解锁</Chinese>
+        <Japanese>解除</Japanese>
+    </Key>
+</Container>
 </Project>

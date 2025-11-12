@@ -152,11 +152,39 @@ paramsToManageNow pushBack ["Button", localize "STR_RPG_LOADOUT_SHOWRANK", forma
 		};
 	}];
 
+//Add XP Display custom for players
+if (missionNameSpace getVariable ["xpDisplay", 0] == 1) then 
+{
+
+		listxpDisplayMode = [
+			["N","None"],
+			["R","Right"]
+		];
+
+		_actualXPDisplay = profileNameSpace getVariable ["RPG_xpDisplayMode", "R"];
+		_currenItemPos = (listxpDisplayMode) findIf {_x#0 == _actualXPDisplay };
+
+
+	paramsToManageNow pushBack ["Button", "Change Real time XP DISPLAY", format ["Current display : %1", listxpDisplayMode#_currenItemPos#1], {
+
+		_actualXPDisplay = profileNameSpace getVariable ["RPG_xpDisplayMode", "R"];
+		_currenItemPos = (listxpDisplayMode) findIf {_x#0 == _actualXPDisplay };
+		_newPos = (_currenItemPos+1)%(count listxpDisplayMode);
+		
+		profileNameSpace setVariable ["RPG_xpDisplayMode", (listxpDisplayMode#_newPos)#0];
+
+		[[], 'GUI\RPGMenuGUI\RPGMenu.sqf'] remoteExec ['BIS_fnc_execVM', player];
+	}];
+};
+
+
 if (missionNameSpace getVariable ["enableOpforWeaponShop",1] == 1) then 
 {
 	paramsToManageNow pushBack ["Button", localize "RPG_GUI_GENERAL_WEAPON_SHOP", localize "RPG_GUI_GENERAL_WEAPON_SHOP_DESC", {
-			[[false], "GUI\weaponShopGUI\weaponShopGUI.sqf"] remoteExec ['BIS_fnc_execVM', player];
+			[[[false, "OPFOR"]], "GUI\weaponShopGUI\weaponShopGUI.sqf"] remoteExec ['BIS_fnc_execVM', player];
 		}];
+} else {
+	paramsToManageNow pushBack ["Text", localize "STR_GUI_BASE_TOKEN", format ["%1", [] call getUnlockCredit], {	}];
 };
 
 //Add feature to allow opfor player to remote control enemy unit
@@ -167,6 +195,7 @@ if (missionNameSpace getVariable ["sideRelations",0] == 2 && side player == inde
 			switchCamera player; // if needed
 			_unitToControl = selectRandom (allUnits select {side _x == opfor && alive _x});
 			_unitToControl switchCamera "INTERNAL"; 
+			hint format ["You are now %1", name _unitToControl];
 			player remoteControl _unitToControl;
 		}];
 };

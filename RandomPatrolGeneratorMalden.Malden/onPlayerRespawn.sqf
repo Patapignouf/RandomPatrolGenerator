@@ -1,6 +1,12 @@
 //Set default respawn loadout
 player setUnitLoadout (player getVariable "spawnLoadout");
 
+//Adjust trait 
+[player, player getVariable "role"] call setUnitTraitAccordingToRole;
+
+//Set player normal state 
+player setVariable ["isUnconscious", false, true];
+
 //Make the player doesn't count on RTB for 90 secs 
 player setVariable ["canRTB", false, true];
 [] spawn 
@@ -97,6 +103,27 @@ if !(isClass (configFile >> "CfgPatches" >> "ace_medical")) then
 };
 
 
+//Weapon forbidden script 
+if (missionNameSpace getVariable ["gunsOnly", 0] == 1) then 
+{
+	[player] spawn {
+		params ["_choosenPlayer"];
+
+		while {sleep 1; true} do 
+		{
+			//Get reporter weapon
+			_primaryWeapon = primaryWeapon _choosenPlayer;
+			//_secondaryWeapon = secondaryWeapon _choosenPlayer;
+
+			if (_primaryWeapon != "") then
+			{
+				[["<t color='#ff0000' size='5'>RIFLES ARE NOT ALLOWED</t><br/>", "PLAIN", -1, true, true]] remoteExec ['cutText', _choosenPlayer];
+			};
+		};
+	};
+};
+
+
 
 //Hide HUD group to debug the UI after death
 if (isClass (configFile >> "CfgPatches" >> "ace_medical")) then 
@@ -126,8 +153,10 @@ missionNamespace setVariable ["deadPlayer", _deadPlayerList, true];
 
 ["Respawn on start position", format ["Year %1", date select 0], mapGridPosition player] spawn BIS_fnc_infoText;
 
-
-#include "engine\tentActionManagement.sqf"
+if (missionNameSpace getVariable ["enableAdvancedRespawn", 1] == 1) then 
+{
+	#include "engine\tentActionManagement.sqf"
+};
 
 _KilledEH = player addEventHandler ["Killed", {
 	params ["_unit", "_killer", "_instigator", "_useEffects"];
@@ -162,6 +191,10 @@ _KilledEH = player addEventHandler ["Killed", {
 							//systemChat "The player is sure.";
 							_instigator setDamage 1;
 							[[_instigator], {params ["_instigator"]; ["STR_RPG_HC_NAME", "STR_RPG_HC_PUNISH", name _instigator] call doDialog}] remoteExec ["spawn", side _instigator]; 
+							
+							//Fix spectator 
+							["Terminate"] call BIS_fnc_EGSpectator;
+							["Initialize", [player, [playerSide] , true, false ]] call BIS_fnc_EGSpectator;
 						} else {
 							//systemChat "The player is not sure.";
 						};

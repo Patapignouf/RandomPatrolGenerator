@@ -14,7 +14,19 @@ private _type = _mainDisplay displayCtrl 602401;
 private _credit = _mainDisplay displayCtrl 602402;
 private _buy = _mainDisplay displayCtrl 60001;
 
-_vehicleShopTitle ctrlSetText (format ["Weapon shop | Unlock Token %1", [] call getUnlockCredit]);
+_openArsenal = _specialParam#0;
+_shopMode = _specialParam#1;
+
+
+if (_shopMode == "OPFOR") then 
+{
+	_vehicleShopTitle ctrlSetText (format ["%2 | Unlock Token %1", [] call getUnlockCredit, localize "RPG_GUI_GENERAL_WEAPON_SHOP"]);
+
+} else 
+{
+	_vehicleShopTitle ctrlSetText (format ["%2 | Unlock Token %1", [] call getUnlockCredit, localize "RPG_GUI_GENERAL_BM_SHOP"]);
+};
+
 _icon ctrlSetText (localize "STR_GUI_BASE_ICON");
 _name ctrlSetText (localize "STR_GUI_BASE_WEAPON_NAME");
 _type ctrlSetText (localize "STR_GUI_BASE_WEAPON_TYPE");
@@ -31,7 +43,15 @@ switch (_mode) do
 		_lnbEntries = _display displayCtrl 60002;
 
 		//Add support   
-		_opFactionWeapon = [missionNamespace getVariable "opforFaction"] call getOpforWeaponCategory;
+		_opFactionWeapon = [];
+		if (_shopMode == "OPFOR") then 
+		{
+			_opFactionWeapon = [missionNamespace getVariable "opforFaction"] call getOpforWeaponCategory;
+
+		} else 
+		{
+			_opFactionWeapon = [] call getBMWeaponCategory;
+		};
 
 		_currentFaction = indFaction;
 		if (side player == blufor) then 
@@ -45,11 +65,11 @@ switch (_mode) do
 		_opFactionWeapon = [_opFactionWeapon, _currentFaction] call removeAlreadyUnlockedWeaponFromFlatList; //OnlyBluFaction for now 
 
 		{
-			_price = 1;
 			_weaponClassName = _x#1;
+			_categoryName = _x#0;
 			_supportName = getText (configFile >> "CfgWeapons" >> _weaponClassName >> "displayName");
 			_supportNameCode = "";
-			switch (_x#0) do 
+			switch (_categoryName) do 
 			{
 				case "rifle":
 				{
@@ -85,11 +105,37 @@ switch (_mode) do
 				};
 			};
 
+			_price = 1; //Set default price of 1 for accessories
+			_priceAnalysisReturn = [];
+
+			if (_categoryName != "shortAccessories" && _categoryName != "longAccessories") then 
+			{
+				_priceAnalysisReturn = [_weaponClassName] call defineWeaponPrice;
+				_price = _priceAnalysisReturn#0;
+				//systemChat format ["Impact : %1 \nMax range : %2", _priceAnalysisReturn#1, _priceAnalysisReturn#2];
+			} else 
+			{
+				_price = [_weaponClassName] call defineScopePrice;
+			};
+
 			_supportIcon = getText (configFile >> "CfgWeapons" >> _weaponClassName >> "picture");
 			_supportType = _x#0;
 
 			//Add row for support
+			if (_shopMode == "BM") then 
+			{
+				//Increase price of Black market item by 5
+				_price = _price + 5;
+			};
+
 			_ind = _ctrl lnbAddRow ["", _supportName, _supportNameCode, str _price];
+
+			//Set tooltip
+			if (count _priceAnalysisReturn != 0) then 
+			{
+				//_ctrl lnbSetTooltip [_ind, format ["Impact : %1 \nMax range : %2m", _priceAnalysisReturn#1, _priceAnalysisReturn#2]];
+				_ctrl lnbSetTooltip [[_ind,0], format ["Impact : %1 \nMax range : %2m\nDefault ammo : %3\nAccuracy : %4%%", _priceAnalysisReturn#1, _priceAnalysisReturn#2, _priceAnalysisReturn#3, _priceAnalysisReturn#4]];
+			};
 
 			//Set picture
 			_ctrl lnbSetPicture [[_ind, 0], _supportIcon];
@@ -125,7 +171,7 @@ switch (_mode) do
 	};
 };
 
-
+shopMode = _shopMode;
 _buttonOK ctrlAddEventHandler [ "ButtonClick", 
 	{ 
 		params ["_ctrl"];
@@ -164,7 +210,14 @@ _buttonOK ctrlAddEventHandler [ "ButtonClick",
 
 				//Close mission setup
 				//Refresh title
-				(_display displayCtrl 59999) ctrlSetText (format ["Weapon shop | Unlock Token %1", [] call getUnlockCredit]);
+				if (shopMode == "OPFOR") then 
+				{
+					(_display displayCtrl 59999) ctrlSetText (format ["%2 | Unlock Token %1", [] call getUnlockCredit, localize "RPG_GUI_GENERAL_WEAPON_SHOP"]);
+
+				} else 
+				{
+					(_display displayCtrl 59999) ctrlSetText (format ["%2 | Unlock Token %1", [] call getUnlockCredit, localize "RPG_GUI_GENERAL_BM_SHOP"]);
+				};
 
 			} else 
 			{
@@ -176,7 +229,7 @@ _buttonOK ctrlAddEventHandler [ "ButtonClick",
 
 waitUntil {isNull _mainDisplay};
 
-if (_specialParam) then 
+if (_openArsenal) then 
 {
 	//Restart arsenal GUI
 	[] execVM "GUI\LoadoutGUI\initPlayerLoadoutSetupRemake.sqf";

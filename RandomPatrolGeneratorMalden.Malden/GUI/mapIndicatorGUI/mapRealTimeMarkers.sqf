@@ -50,6 +50,37 @@ getIconColor = {
 };
 
 
+getPlayerToDisplay = {
+	params ["_unitToCheck"];
+
+	_resultUnits = [];
+	_listOfJammedArea = missionNameSpace getVariable ["jammedArea", []];
+
+	if ([_unitToCheck, _listOfJammedArea] call isInJammedArea) then 
+	{
+		//["Vous êtes entré dans une zone interdite."] remoteExec ["hint", _unitToCheck];
+		//cutText ["<t color='#ff0000' size='2'>GPS Jammed</t><br/>***********", "PLAIN DOWN", 0.5, false, true];
+		// ["<t color='#ffffff' size='.8'>GPS Jammed</t>",0,0,4,1,0,789] spawn BIS_fnc_dynamicText;
+		// systemChat "GPS Jammed";
+	} else 
+	{
+		_resultUnitsToCheck = allPlayers select {(side _x == side _unitToCheck) && (lifeState _x != "INCAPACITATED")};
+		_nearResult = [];
+
+		{
+			if (!([_x, _listOfJammedArea] call isInJammedArea)) then 
+			{
+				_nearResult pushBack _x;
+			};
+		} foreach _resultUnitsToCheck;
+		_resultUnits = _nearResult;
+	};
+
+	_resultUnits
+};
+
+
+
 //Add map players marker
 if (missionNameSpace getVariable "playerMarkerAllowed" == 1) then 
 {
@@ -69,6 +100,6 @@ if (missionNameSpace getVariable "playerMarkerAllowed" == 1) then
 			"TahomaB",
 			"right"
 		]
-		} foreach (allPlayers select {(side _x == side player) && (lifeState _x != "INCAPACITATED")});
+		} foreach ([player] call getPlayerToDisplay);
 	}];
 };

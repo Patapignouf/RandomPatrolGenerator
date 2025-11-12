@@ -35,6 +35,9 @@ addVehicleXPSetup = {
 			params ["_object","_caller","_ID","_objectParams","_progress","_maxProgress"];
 			
 			_object setVariable ["vehicleLastHit", _caller, true];
+
+			//Alert player
+			[[parseText "The vehicle will be destroyed in 10 seconds", "intel"], 'engine\hintManagement\addCustomHint.sqf'] remoteExec ['BIS_fnc_execVM', _caller]; 
 			
 			//destroy vehicle
 			[_object] spawn {

@@ -1,4 +1,5 @@
 #include "..\..\objectGenerator\vehicleXPManagement.sqf" 
+#include "..\..\enemyManagement\behaviorEngine\unitsBehaviorFunctions.sqf"
 
 doGenerateEnemyGroup = 
 {
@@ -47,6 +48,9 @@ doGenerateEnemyGroup =
 	//Opfor group
 	if (_thisFaction == opfor) then 
 	{
+		//Setup gunsOnly 
+		_gunsOnly = (missionNameSpace getVariable ["gunsOnly", 0] == 1);
+
 		{	
 			//Case infantry
 			//Add eventHandler suppress
@@ -97,7 +101,22 @@ doGenerateEnemyGroup =
 					deleteVehicle _unit;
 				};
 			}];
-			
+
+			//Add guns of needed
+			if (_gunsOnly) then 
+			{
+				//Remove primary weapon
+				_primaryWeapon = primaryWeapon _x;
+				_x removeWeapon _primaryWeapon;
+
+				//Add secondary weapon if needed
+				_secondaryWeapon = secondaryWeapon _x;
+				if (_secondaryWeapon == "") then 
+				{
+					_x addWeapon "hgun_Rook40_F"; //Inspire by DRO waiting for RPG version ;)
+					_x addMagazines ["16Rnd_9x21_Mag", 3];
+				};
+			};
 
 		} foreach (units _currentGroupPatrol);
 
@@ -203,6 +222,9 @@ doGenerateEnemyGroup =
 						{
 							//diag_log ["Hostile suicide bomber civilian at %1",getPos _x];
 							[_x] spawn civils_fnc_suicidebomber;
+
+							// //Quick give life to suicide bombers
+							[group _x, getPos _x, 60] call doPatrol; 
 						};
 					};
 				};

@@ -12,10 +12,10 @@ params ["_currentGroup", "_thisObjective"];
 				//Add search for intel action
 				[
 					_unit, 
-					"Search for intel", 
+					localize "STR_RPG_MISC_SEARCHINTEL", 
 					"\a3\ui_f\data\IGUI\Cfg\holdactions\holdAction_search_ca.paa", 
 					"\a3\ui_f\data\IGUI\Cfg\holdactions\holdAction_search_ca.paa", 
-					"_this distance _target < 2",						// Condition for the action to be shown
+					"(_this distance _target < 2) && (_this getVariable ['canTalkToCiv', true])",						// Condition for the action to be shown
 					"_caller distance _target < 2",						// Condition for the action to progress
 					{
 						// Action start code

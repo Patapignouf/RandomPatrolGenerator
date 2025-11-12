@@ -10,7 +10,7 @@
 #include "engine\hintManagement\customDialog.sqf"
 #include "GUI\scoreBoardGUI\scoreFunctions.sqf"
 #include "database\factionParameters.sqf"
-
+#include "GUI\mapIndicatorGUI\triggerDisplay.sqf"
 
 //Init base mission parameters 
 enableInitAttack = "EnableInitAttack" call BIS_fnc_getParamValue;
@@ -232,6 +232,13 @@ if (isClass (configFile >> "CfgPatches" >> "fow_main")) then
 		avalaibleEnemyFOB = avalaibleEnemyFOB_FOW;
 	};
 };
+
+if (isClass (configFile >> "CfgPatches" >> "OPTRE_Core")) then 
+{
+	avalaibleEnemyFOB = avalaibleEnemyFOB_Halo;
+};
+
+
 
 /////////////////////////
 /////Find locations//////
@@ -566,6 +573,12 @@ if !(_isOnWater) then
 			initBlueforLocation = [selectMax [selectMin [initBlueforLocation select 0, worldSize-75 ],75],selectMax [selectMin [initBlueforLocation select 1, worldSize-75],75]]; 
 		};
 
+		//Load Halo FOB is OPTRE is enabled
+		if (isClass (configFile >> "CfgPatches" >> "OPTRE_Core")) then 
+		{
+			avalaibleFOB = avalaibleFOBHalo;
+		};
+
 		//Generate blufor FOB
 		if (missionNameSpace getVariable ["enableBluforFOB", 1] == 1) then 
 		{
@@ -628,7 +641,9 @@ if !(_isOnWater) then
 		};
 	};
 };
-	
+
+
+
 //Clean area WIP only if there is a FOB spawned
 if (missionNameSpace getVariable ["enableBluforFOB", 1] == 1) then 
 {
@@ -765,6 +780,59 @@ if (count baseEnemyMortarGroup > 0 && (missionNameSpace getVariable ["enableOpfo
 			};
 		};
 	}; 
+};
+
+//Add black market 
+if (missionNameSpace getVariable ["enableOpforBMShop",1] == 1) then 
+{
+	//_boxLocation = ([_OpforFobLocation, 1, 30, 1, 0, 20, 0, [], [_OpforFobLocation, _OpforFobLocation]] call BIS_fnc_findSafePos);
+
+	_unitBM = (createGroup (civilian)) createUnit ["C_Nikos", initCityLocation, [], 0, "NONE"];
+
+	//Garrison BM in a random building
+	_allBuildings = nearestTerrainObjects [initCityLocation, ["house", "FORTRESS", "BUNKER"], 200, false, true];
+	_allPositions = [];
+	_allBuildings apply {_allPositions append (_x buildingPos -1)};
+
+	if (count _allPositions != 0) then 
+	{
+		_unitBM setPos (selectRandom _allPositions);
+	};
+
+	[_unitBM, ["<img size='2' image='\a3\ui_f_oldman\data\IGUI\Cfg\holdactions\map_ca.paa'/><t size='1'>Open black market</t>",{
+			params ["_object","_caller","_ID","_thisObjective"];
+			[[[false, "BM"]], "GUI\weaponShopGUI\weaponShopGUI.sqf"] remoteExec ['BIS_fnc_execVM', _caller];
+		},[],10,true,false,"","_target distance _this <4"]] remoteExec ["addAction", 0, true];
+
+	_unitBM addEventHandler ["Killed", {
+		params ["_unit", "_killer", "_instigator", "_useEffects"];
+
+		//Remove all actions
+		[_unit] remoteExec ["removeAllEventHandlers", 0, true];
+		[_unit] remoteExec ["removeAllActions", 0, true];
+
+		//Punish player
+		if (isPlayer _instigator) then 
+		{
+			//Add penalty
+			[{[-50,3] call doUpdateRankWithPenalty}] remoteExec ["call", _instigator];
+		};
+	}];	
+
+	//Add anim
+	[_unitBM] spawn 
+	{
+		params ["_unitBM"];
+
+		//Wait for unit correctly spawn and garrison 
+		sleep 10;
+		_unitBM disableAI "ALL";
+		_unitBM enableAI "ANIM";
+		[_unitBM, "BRIEFING", "NONE"] remoteExecCall ["BIS_fnc_ambientAnim"];
+	};
+
+	//3D Display
+	[["RPG_GUI_GENERAL_BM_SHOP", (getPosATL _unitBM) vectorAdd [0,0,((getPos _unitBM)#2)+3],"\a3\ui_f_oldman\data\IGUI\Cfg\holdactions\map_ca.paa" , [0,0,1,1]], 'GUI\3DNames\3DNames.sqf'] remoteExec ['BIS_fnc_execVM', 0, true];
 };
 
 
@@ -967,9 +1035,29 @@ switch (timeOfDay) do
 		};
 };
 
-//Setup weather
-86400 setOvercast (random 1);
-forceWeatherChange;
+switch (missionNameSpace getVariable ["WeatherSetting", 2]) do
+{
+	case 0:
+		{
+			//Set sun
+			[[], 'engine\clearWeather.sqf'] remoteExec ['BIS_fnc_execVM', 0];
+		};
+	case 1:
+		{
+			//Set cloud
+			[[], 'engine\cloudyWeather.sqf'] remoteExec ['BIS_fnc_execVM', 0];
+		};
+	case 2:
+		{
+			//Randomize time
+			[[], 'engine\randomizeWeather.sqf'] remoteExec ['BIS_fnc_execVM', 0];
+		};
+	default
+		{
+			//Do nothing
+		};
+};
+
 
 //Setup difficulty management
 if (enableAutoDifficultyBalance==1) then 
@@ -990,6 +1078,12 @@ if (disableZoom == 1) then
 
 //Init checkdeath
 [] execVM 'engine\checkdeath.sqf';
+
+//Init black market 
+if (missionNameSpace getVariable ["enableOpforBMShop",1] == 1) then 
+{
+	[warEra] execVM 'database\blackmarket.sqf';
+};
 
 
 

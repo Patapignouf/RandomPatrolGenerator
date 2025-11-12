@@ -29,6 +29,16 @@ generateObjective =
 
 	//GenerateAnimals 
 	[[_selectedObjectivePosition, 40, 200, 7, 0, 0, 0, [], [[0,0,0],[0,0,0]]] call BIS_fnc_findSafePos] call doGenerateAnimalGroup;
+
+	//Generate Jammed antenna 
+	if ((missionNameSpace getVariable ["enableGPSJammerOnMap", 1]) == 1) then 
+	{
+		//30% chance to generate antenna
+		if (random 100 < 30) then 
+		{
+			[_selectedObjectivePosition] call generateJammedAntenna;
+		};
+	};
 	
 	//Generate mission environement
 	switch (currentObjType) do 
@@ -126,9 +136,96 @@ generateObjective =
 	_possibleObjectivePosition;
 };
 
+
+generateJammedAntenna = 
+{
+	params ["_antennaPos"];
+	//Jammed Area init 
+	_randomPosMapNoWater = [[[_antennaPos, 400]], ["water"]] call BIS_fnc_randomPos;
+	_missionJammer = missionNameSpace getVariable ["jammedArea", []];
+	_trgJammer = createTrigger ["EmptyDetector", _randomPosMapNoWater];
+	_trgJammer setTriggerArea [400, 400, 0, false];
+	_missionJammer pushBack [true, _trgJammer];
+	missionNameSpace setVariable ["jammedArea", _missionJammer, true];
+
+	if (missionNameSpace getVariable ["displayGPSJammerOnMap", 1] == 1) then 
+	{		
+		[_trgJammer] call displayTriggerOnMap;
+	};
+
+	//Create antenna
+	_antenna = createVehicle [selectRandom avalaibleJammedAntenna,[_randomPosMapNoWater#0,_randomPosMapNoWater#1,0],[],0,"NONE"];
+
+	//Decrease jammed antena health
+	_antenna setDamage 0.8;
+
+	//Delete antenna
+	[_antenna, _trgJammer] spawn 
+	{
+		params ["_antenna", "_trgJammer"];
+		waitUntil {!alive _antenna};
+		_missionJammer = missionNameSpace getVariable ["jammedArea", []];
+		missionNameSpace setVariable ["jammedArea", _missionJammer - [[true, _trgJammer]], true];
+		deleteVehicle _trgJammer;
+	};
+
+	//Add eventhandler killed
+	_antenna addEventHandler ["Killed", {
+		params ["_unit", "_killer", "_instigator", "_useEffects"];
+
+		if (isPlayer _instigator) then 
+		{
+			[{[5, "RPG_ranking_repair"] call doUpdateRank}] remoteExec ["call", _instigator];
+		} else {
+			//Debug IA killed log
+			diag_log format ["The IA %1 has been killed by %2", name _unit, name _instigator];
+		}; 
+	}];
+
+	//Add sabotage action
+	[
+		_antenna, 
+		"Sabotage the antenna", 
+		"\a3\ui_f\data\IGUI\Cfg\holdactions\holdAction_search_ca.paa", 
+		"\a3\ui_f\data\IGUI\Cfg\holdactions\holdAction_search_ca.paa", 
+		"(_this distance _target < 100) && (_this getVariable 'role' == 'engineer') ",		// Condition for the action to be shown
+		"_caller distance _target < 100",		// Condition for the action to progress
+		{
+			// Action start code
+		}, 
+		{
+			// Action on going code
+		},  
+		{
+			// Action successfull code
+			params ["_object","_caller","_ID","_objectParams","_progress","_maxProgress"];
+			
+			[format ["The antenna will be destroyed in 60 secs", name _caller]] remoteExec ["hint", _caller,true];
+			sleep 60;
+			_object setDamage 1;
+			[{[5, "RPG_ranking_repair"] call doUpdateRank}] remoteExec ["call", _caller];
+		}, 
+		{
+			// Action failed code
+		}, 
+		[],  
+		5,
+		5, 
+		true, 
+		false
+	] remoteExec ["BIS_fnc_holdActionAdd", 0, true];
+};
+
 generateOutpostProcess = {
 	params ["_basePosition"];
 	[_basePosition, 30] execVM 'objectGenerator\doCleanArea.sqf'; 
+
+	//Replace basic outpost with Halo outpost
+	if (isClass (configFile >> "CfgPatches" >> "OPTRE_Core")) then 
+	{
+		Outpost = OutpostHalo;
+	};
+
 	_spawnFOBObjects = [_basePosition, (random 360), selectRandom Outpost] call BIS_fnc_ObjectsMapper;
 	_OpforFobStandardOpforLocation = nearestObjects [_basePosition, ["Sign_Arrow_Large_F"], 50];
 
@@ -498,7 +595,7 @@ generateObjectiveObject =
 					params ["_object","_caller","_ID","_thisObjective"];
 
 						[_object, _caller, _thisObjective] spawn 
-						{_thisObjectivePosition
+						{
 							params ["_object", "_caller", "_thisObjective"];
 							disableSerialization;
 							code = _object getVariable "RPG_DefuseCode";
@@ -892,7 +989,7 @@ generateObjectiveObject =
 				_thisObjective = [_objectiveObjectBox, _thisObjectiveType] call generateObjectiveTracker;
 
 
-				[_objectiveObjectBox, ["Send signal to defend the location",{
+				[_objectiveObjectBox, ["<img size='2' image='\a3\ui_f_orange\Data\CfgOrange\Missions\action_aaf_ca.paa'/><t color='#af5d00ff'>Send signal to defend the location</t>",{
 					params ["_object","_caller","_ID","_thisObjective"];
 
 					//Remove object interaction

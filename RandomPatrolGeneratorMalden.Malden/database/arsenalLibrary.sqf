@@ -51,6 +51,12 @@ getAllStringInArray = {
 		{
 			_array = _array - [_x];
 			_array = _array + ([_x] call getAllStringInArray);
+		} else 
+		{
+			if (typeName _x != "STRING") then 
+			{
+				_array = _array - [_x];
+			};
 		};
 	} foreach _array;
 	_array
@@ -109,7 +115,7 @@ getVirtualWeaponList = {
 	_unlockedStuff = [];
 
 	//Get all unlocked stuff for current faction
-	if (missionNameSpace getVariable ["enableOpforWeaponShop",1] == 1) then 
+	if (missionNameSpace getVariable ["enableOpforWeaponShop",1] >= 1) then 
 	{
 		_unlockedStuff = [_currentFaction] call getPlayerFactionUnlockedWeapons;
 	};
@@ -122,7 +128,7 @@ getVirtualWeaponList = {
 				_virtualWeaponList = _virtualWeaponList + (smgList_db select {_x select 1  == _currentFaction} select 0 select 0);
 				_virtualWeaponList = _virtualWeaponList + (launcherList_db select {_x select 1  == _currentFaction} select 0 select 0);
 
-				if (missionNameSpace getVariable ["enableOpforWeaponShop",1] == 1) then 
+				if (missionNameSpace getVariable ["enableOpforWeaponShop",1] >= 1) then 
 				{
 					_virtualWeaponList = _virtualWeaponList +([_currentFaction, "rifle", _unlockedStuff] call getPlayerFactionUnlockedWeaponForCategoryWithUnlockedInput);
 					_virtualWeaponList = _virtualWeaponList +([_currentFaction, "smg", _unlockedStuff] call getPlayerFactionUnlockedWeaponForCategoryWithUnlockedInput);
@@ -134,9 +140,10 @@ getVirtualWeaponList = {
 				_virtualWeaponList = _virtualWeaponList + (rifleList_db select {_x select 1  == _currentFaction} select 0 select 0);
 				_virtualWeaponList = _virtualWeaponList + (autorifleList_db select {_x select 1  == _currentFaction} select 0 select 0);
 
-				if (missionNameSpace getVariable ["enableOpforWeaponShop",1] == 1) then 
+				if (missionNameSpace getVariable ["enableOpforWeaponShop",1] >= 1) then 
 				{
 					_virtualWeaponList = _virtualWeaponList +([_currentFaction, "rifle", _unlockedStuff] call getPlayerFactionUnlockedWeaponForCategoryWithUnlockedInput);
+					_virtualWeaponList = _virtualWeaponList +([_currentFaction, "smg", _unlockedStuff] call getPlayerFactionUnlockedWeaponForCategoryWithUnlockedInput);
 					_virtualWeaponList = _virtualWeaponList +([_currentFaction, "autoRifle", _unlockedStuff] call getPlayerFactionUnlockedWeaponForCategoryWithUnlockedInput);
 				};
 			};
@@ -145,11 +152,11 @@ getVirtualWeaponList = {
 			{
 				_virtualWeaponList = _virtualWeaponList + (rifleList_db select {_x select 1  == _currentFaction} select 0 select 0);
 				_virtualWeaponList = _virtualWeaponList + (marksmanrifleList_db select {_x select 1  == _currentFaction} select 0 select 0);
-				_virtualWeaponList = _virtualWeaponList + (smgList_db select {_x select 1  == _currentFaction} select 0 select 0);
 
-				if (missionNameSpace getVariable ["enableOpforWeaponShop",1] == 1) then 
+				if (missionNameSpace getVariable ["enableOpforWeaponShop",1] >= 1) then 
 				{
 					_virtualWeaponList = _virtualWeaponList +([_currentFaction, "rifle", _unlockedStuff] call getPlayerFactionUnlockedWeaponForCategoryWithUnlockedInput);
+					_virtualWeaponList = _virtualWeaponList +([_currentFaction, "smg", _unlockedStuff] call getPlayerFactionUnlockedWeaponForCategoryWithUnlockedInput);
 					_virtualWeaponList = _virtualWeaponList +([_currentFaction, "sniperRifle", _unlockedStuff] call getPlayerFactionUnlockedWeaponForCategoryWithUnlockedInput);
 				};
 			};
@@ -158,10 +165,11 @@ getVirtualWeaponList = {
 				_virtualWeaponList = _virtualWeaponList + (rifleList_db select {_x select 1  == _currentFaction} select 0 select 0);
 				_virtualWeaponList = _virtualWeaponList + (grenadeLauncherList_db select {_x select 1  == _currentFaction} select 0 select 0);
 
-				if (missionNameSpace getVariable ["enableOpforWeaponShop",1] == 1) then 
+				if (missionNameSpace getVariable ["enableOpforWeaponShop",1] >= 1) then 
 				{
 					_virtualWeaponList = _virtualWeaponList +([_currentFaction, "rifle", _unlockedStuff] call getPlayerFactionUnlockedWeaponForCategoryWithUnlockedInput);
 					_virtualWeaponList = _virtualWeaponList +([_currentFaction, "grenadeLauncher", _unlockedStuff] call getPlayerFactionUnlockedWeaponForCategoryWithUnlockedInput);
+					_virtualWeaponList = _virtualWeaponList +([_currentFaction, "smg", _unlockedStuff] call getPlayerFactionUnlockedWeaponForCategoryWithUnlockedInput);
 				};
 			};				
 		default
@@ -170,7 +178,7 @@ getVirtualWeaponList = {
 			 	_virtualWeaponList = _virtualWeaponList + (rifleList_db select {_x select 1  == _currentFaction} select 0 select 0); 
 				_virtualWeaponList = _virtualWeaponList + (smgList_db select {_x select 1  == _currentFaction} select 0 select 0);
 
-				if (missionNameSpace getVariable ["enableOpforWeaponShop",1] == 1) then 
+				if (missionNameSpace getVariable ["enableOpforWeaponShop",1] >= 1) then 
 				{
 					_virtualWeaponList = _virtualWeaponList +([_currentFaction, "rifle", _unlockedStuff] call getPlayerFactionUnlockedWeaponForCategoryWithUnlockedInput);
 					_virtualWeaponList = _virtualWeaponList +([_currentFaction, "smg", _unlockedStuff] call getPlayerFactionUnlockedWeaponForCategoryWithUnlockedInput);
@@ -363,7 +371,7 @@ getVirtualAttachement = {
 	_unlockedStuff = [];
 
 	//Get all unlocked stuff for current faction
-	if (missionNameSpace getVariable ["enableOpforWeaponShop",1] == 1) then 
+	if (missionNameSpace getVariable ["enableOpforWeaponShop",1] >= 1) then 
 	{
 		_unlockedStuff = [_currentFaction] call getPlayerFactionUnlockedWeapons;
 	};
@@ -376,7 +384,7 @@ getVirtualAttachement = {
 				virtualAttachementList = virtualAttachementList + (attachmentShortList_db select {_x select 1  == currentFaction} select 0 select 0);
 				virtualAttachementList = virtualAttachementList + (attachmentLongList_db select {_x select 1  == currentFaction} select 0 select 0);
 
-				if (missionNameSpace getVariable ["enableOpforWeaponShop",1] == 1) then 
+				if (missionNameSpace getVariable ["enableOpforWeaponShop",1] >= 1) then 
 				{
 					virtualAttachementList = virtualAttachementList +([_currentFaction, "shortAccessories", _unlockedStuff] call getPlayerFactionUnlockedWeaponForCategoryWithUnlockedInput);
 					virtualAttachementList = virtualAttachementList +([_currentFaction, "longAccessories", _unlockedStuff] call getPlayerFactionUnlockedWeaponForCategoryWithUnlockedInput);
@@ -387,7 +395,7 @@ getVirtualAttachement = {
 				//Default attachment list
 				virtualAttachementList = virtualAttachementList + (attachmentShortList_db select {_x select 1  == currentFaction} select 0 select 0); 
 
-				if (missionNameSpace getVariable ["enableOpforWeaponShop",1] == 1) then 
+				if (missionNameSpace getVariable ["enableOpforWeaponShop",1] >= 1) then 
 				{
 					virtualAttachementList = virtualAttachementList +([_currentFaction, "shortAccessories", _unlockedStuff] call getPlayerFactionUnlockedWeaponForCategoryWithUnlockedInput);
 				};
@@ -468,7 +476,7 @@ getVirtualMagazine = {
 			{ 
 				{
 				//Add default weapon magazine except large magazine
-				_listOfLargeMagazineText = ["40Rnd","50Rnd", "60Rnd", "75Rnd", "75rnd", "100Rnd", "150Rnd", "200Rnd"]; //
+				_listOfLargeMagazineText = ["60Rnd", "75Rnd", "75rnd", "100Rnd", "150Rnd", "200Rnd"]; //
 				_currentWeaponMagazineList = getArray (configfile >> "CfgWeapons" >> _x >> "magazines");
 				if (count _currentWeaponMagazineList != 0) then 
 				{
@@ -587,7 +595,7 @@ doInitializeLoadout = {
 
 	//Save personnal loadout
 	_currentPlayerClass = _player getVariable "role";
-	_loadableLoadout = profileNamespace getVariable [format [loadoutSaveName, name player, _currentFaction, _currentPlayerClass], []];
+	_loadableLoadout = profileNamespace getVariable [format [loadoutSaveName, name _player, _currentFaction, _currentPlayerClass], []];
 	_isDefault = false;
 
 	//Setup default stuff
@@ -605,6 +613,10 @@ doInitializeLoadout = {
 
 	//Load player loadout
 	_player setUnitLoadout _loadableLoadout;
+
+	//Set Unit trait
+	[_player, _player getVariable "role"] call setUnitTraitAccordingToRole;
+
 
 	//If it's a default loadout then adjust
 	if (_isDefault) then 
@@ -742,6 +754,34 @@ doInitializeLoadout = {
 };
 
 
+setUnitTraitAccordingToRole = {
+	params ["_caller", "_role"];
+	//Manage Unit trait
+	//Reset unit trait
+	_caller setVariable ["ace_medical_medicClass", 0, true]; //Remove special ACE medic trait
+	_caller setVariable ["ace_isEngineer", 0, true];
+	_caller setUnitTrait ["Medic", false];
+	_caller setUnitTrait ["Engineer", false];
+	_caller setUnitTrait ["ExplosiveSpecialist", false];
+
+	//Set specific trait
+	if (_role == c_medic) then 
+	{
+		_caller setUnitTrait ["Medic", true];
+		_caller setVariable ["ace_medical_medicClass", 2, true]; //add special ACE medic trait doctor
+	};
+	if (_role == c_engineer) then 
+	{
+		_caller setUnitTrait ["Engineer", true];
+		_caller setUnitTrait ["ExplosiveSpecialist", true];
+		_caller setVariable ["ace_isEngineer", 2, true]; //add special ACE medic trait advanced engineer
+	};
+	if (_role == c_leader) then 
+	{
+		group _caller selectLeader _caller;
+	};
+};
+
 switchToRole = {
 	//Init params
 	params ["_arsenalItem", "_caller", "_faction", "_role", "_allowCustomLoad", "_skipAnimation"];
@@ -774,30 +814,7 @@ switchToRole = {
 		titleCut [format ["Switching to role %1", _role], "BLACK FADED", 5];
 	};
 
-	//Manage Unit trait
-	//Reset unit trait
-	_caller setVariable ["ace_medical_medicClass", 0, true]; //Remove special ACE medic trait
-	_caller setVariable ["ace_isEngineer", 0, true];
-	_caller setUnitTrait ["Medic", false];
-	_caller setUnitTrait ["Engineer", false];
-	_caller setUnitTrait ["ExplosiveSpecialist", false];
-
-	//Set specific trait
-	if (_role == c_medic) then 
-	{
-		_caller setUnitTrait ["Medic", true];
-		_caller setVariable ["ace_medical_medicClass", 2, true]; //add special ACE medic trait doctor
-	};
-	if (_role == c_engineer) then 
-	{
-		_caller setUnitTrait ["Engineer", true];
-		_caller setUnitTrait ["ExplosiveSpecialist", true];
-		_caller setVariable ["ace_isEngineer", 2, true]; //add special ACE medic trait advanced engineer
-	};
-	if (_role == c_leader) then 
-	{
-		group _caller selectLeader _caller;
-	};
+	[_caller, _role] call setUnitTraitAccordingToRole;
 
 	//Manage default stuff
 	_personalLoadout = profileNamespace getVariable [format [loadoutSaveName, name _caller, _faction , _role], []];
@@ -836,6 +853,38 @@ checkRoleAvalaibility = {
 					_isOkToSwitch = true;
 				};
 			};
+			case c_engineer:
+			{
+				//Max 1 
+				if ([_caller, _roleToCheck] call numberOfUnitWithRoleInGroup == 0) then 
+				{
+					_isOkToSwitch = true;
+				};
+			};
+			case c_pilot:
+			{
+				//Max 1 
+				if ([_caller, _roleToCheck] call numberOfUnitWithRoleInGroup == 0) then 
+				{
+					_isOkToSwitch = true;
+				};
+			};
+			case c_grenadier:
+			{
+				//Max 1 
+				if ([_caller, _roleToCheck] call numberOfUnitWithRoleInGroup == 0) then 
+				{
+					_isOkToSwitch = true;
+				};
+			};
+			case c_marksman:
+			{
+				//Max 1 
+				if ([_caller, _roleToCheck] call numberOfUnitWithRoleInGroup == 0) then 
+				{
+					_isOkToSwitch = true;
+				};
+			};
 			case c_rifleman:
 			{
 				//No Max
@@ -866,6 +915,26 @@ checkRoleMaxNumber = {
 	switch (_roleToCheck) do
 	{
 		case c_leader:
+		{
+			//Max 1 
+			_maxNumberInRole = "1";
+		};
+		case c_engineer:
+		{
+			//Max 1 
+			_maxNumberInRole = "1";
+		};
+		case c_pilot:
+		{
+			//Max 1 
+			_maxNumberInRole = "1";
+		};
+		case c_grenadier:
+		{
+			//Max 1 
+			_maxNumberInRole = "1";
+		};
+		case c_marksman:
 		{
 			//Max 1 
 			_maxNumberInRole = "1";
@@ -929,11 +998,11 @@ isAreaEligibleForArsenal = {
 	_controlDistance = "";
 	if (side _caller == blufor) then 
 	{
-		_controlDistance = "(_this distance _target < 15) && ((_target distance initBlueforLocation < 150) || (_target distance (missionNamespace getVariable 'advancedBlueforLocation') < 30))"
+		_controlDistance = "((_this distance _target < 15) && (_this getVariable ['isReporter', false] == false)) && ((_target distance initBlueforLocation < 150) || (_target distance (missionNamespace getVariable 'advancedBlueforLocation') < 30) )"
 	};
 	if (side _caller == independent) then 
 	{
-		_controlDistance = "(_this distance _target < 15) && (_target distance (initCityLocation) < 1000)";
+		_controlDistance = "(_this distance _target < 15) && (_target distance (initCityLocation) < 1000) && (_this getVariable ['isReporter', false] == false)";
 	};
 	_controlDistance;
 };

@@ -69,6 +69,7 @@ class PlayerLoadoutSetup
 			y = GUI_GRID_CENTER_Y + 5 * GUI_GRID_CENTER_H;
 			w = 10 * GUI_GRID_CENTER_W;
 			h = 1 * GUI_GRID_CENTER_H;
+			tooltip = "Stuff will be loaded on respawn"; 
 		};
 
 		//Load button
@@ -91,6 +92,7 @@ class PlayerLoadoutSetup
 			y = 0.25 * safezoneH + safezoneY;
 			w = 5 * GUI_GRID_CENTER_W;
 			h = 0.0219952 * safezoneH;
+			tooltip = "Delete items in vest, uniform and bag."; 
 		};
 
 

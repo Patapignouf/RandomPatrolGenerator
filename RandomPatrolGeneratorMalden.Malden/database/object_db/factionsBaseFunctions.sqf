@@ -28,7 +28,7 @@ adjustRole = {
 			_cfgRole = "pilot";
 		};
 
-		if (["marksman", _cfgName] call BIS_fnc_inString || ["spotter", _cfgName] call BIS_fnc_inString || ["_MRK", _cfgName] call BIS_fnc_inString || ["_RMRK", _cfgName] call BIS_fnc_inString) then 
+		if (["marksman", _cfgName] call BIS_fnc_inString || ["spotter", _cfgName] call BIS_fnc_inString || ["_MRK", _cfgName] call BIS_fnc_inString || ["_RMRK", _cfgName] call BIS_fnc_inString || ["_hunter", _cfgName] call BIS_fnc_inString) then 
 		{
 			_cfgRole = "marksman";
 		};
@@ -40,11 +40,11 @@ adjustRole = {
 		{
 			_cfgRole = "grenadier";
 		};
-		if (["mechanic", _cfgName] call BIS_fnc_inString || ["_SAP", _cfgName] call BIS_fnc_inString || ["_DEM", _cfgName] call BIS_fnc_inString) then 
+		if (["mechanic", _cfgName] call BIS_fnc_inString || ["_SAP", _cfgName] call BIS_fnc_inString || ["_DEM", _cfgName] call BIS_fnc_inString || ["Engineer", _cfgName] call BIS_fnc_inString || ["_Breacher", _cfgName] call BIS_fnc_inString) then 
 		{
 			_cfgRole = "engineer";
 		};
-		if (["_arifleman", _cfgName] call BIS_fnc_inString || ["_HMG", _cfgName] call BIS_fnc_inString || ["_LMG", _cfgName] call BIS_fnc_inString || ["_RMG", _cfgName] call BIS_fnc_inString || ["_RA", _cfgName] call BIS_fnc_inString) then 
+		if (["_arifleman", _cfgName] call BIS_fnc_inString || ["_HMG", _cfgName] call BIS_fnc_inString || ["_LMG", _cfgName] call BIS_fnc_inString || ["_RMG", _cfgName] call BIS_fnc_inString || ["_RA", _cfgName] call BIS_fnc_inString || ["_Automatic", _cfgName] call BIS_fnc_inString) then 
 		{
 			_cfgRole = "autorifleman";
 		};

@@ -27,6 +27,7 @@ private _poiList = [
 _poiList = [];
 baseSpawn = [];
 
+//Add init player pos as spawn point
 if (side player == blufor) then 
 {
     _poiList pushBack ["", initBlueforLocation, "colorBLUFOR"];
@@ -37,6 +38,7 @@ if (side player == blufor) then
     baseSpawn = initCityLocation;
 };  
 
+//Add completed objective as spawn point
 {
     if (typeName _x == "ARRAY" ) then 
     {
@@ -48,12 +50,23 @@ if (side player == blufor) then
     };
 } foreach ((missionNameSpace getVariable ["completedObjectives",[]]));
 
-_tentFOBLocation = missionNamespace getVariable [format ['bluforPositionAdvancedRespawn%1', str (group player)], [0,0,0]];
-if (playerSide == blufor && !([_tentFOBLocation, [0,0,0]] call BIS_fnc_areEqual)) then 
+//Add player group tent to spawn point
+_tentLocation = missionNamespace getVariable [format ['bluforPositionAdvancedRespawn%1', str (group player)], [0,0,0]];
+if (playerSide == blufor && !([_tentLocation, [0,0,0]] call BIS_fnc_areEqual)) then 
 {
-    _poiList pushBack ["", _tentFOBLocation, "colorBLUFOR"];
+    _poiList pushBack ["", _tentLocation, "colorBLUFOR"];
 };
 
+//Add other groups tent as spawn point
+{
+    _groupTentLocation = missionNamespace getVariable [format ['bluforPositionAdvancedRespawn%1', str (_x)], [0,0,0]];
+    if (playerSide == blufor && !([_groupTentLocation, [0,0,0]] call BIS_fnc_areEqual)) then 
+    {
+        _poiList pushBack ["", _groupTentLocation, "colorBLUFOR"];
+    };
+} foreach (allGroups select {(side _x == side player) && (_x != (group player))});
+
+//Add advanced FOB location
 _advFOBLocation = missionNamespace getVariable ["advancedBlueforLocation", [0,0,0]];
 if (playerSide == blufor && !([_advFOBLocation, [0,0,0]] call BIS_fnc_areEqual)) then 
 {
@@ -123,7 +136,7 @@ spawnSelection_selectNearest = {
 
         // Mise en évidence visuelle
         private _selMarkerName = _resMeta select 1;
-        _selMarkerName setMarkerType _majorPulseType;
+        _selMarkerName setMarkerTypeLocal _majorPulseType;
 
         _res
     } else {
@@ -145,10 +158,10 @@ private _createMarkers = {
         private _pos   = _x select 1;
         private _color = _x select 2;
 
-        createMarker [_name, _pos];
-        _name setMarkerType  "selector_selectedMission";
-        _name setMarkerText  _label;
-        _name setMarkerColor _color;
+        createMarkerLocal [_name, _pos];
+        _name setMarkerTypeLocal  "selector_selectedMission";
+        _name setMarkerTextLocal  _label;
+        _name setMarkerColorLocal _color;
 
         _arr pushBack [_i, _name, _label, _pos, _color];
         _i = _i + 1;
@@ -166,11 +179,11 @@ applyPulseToMarker = {
     private _mName = _markerMeta select 1;
     if ((_step < _steps/2)) then {
         //_mName setMarkerType _majorPulseType;
-        _mName setMarkerSize [_baseSize*_step/_steps, _baseSize*_step/_steps];
+        _mName setMarkerSizeLocal [_baseSize*_step/_steps, _baseSize*_step/_steps];
 
     } else {
         //_mName setMarkerType _minorPulseType;
-         _mName setMarkerSize [_baseSize*(_steps-_step)/_steps, _baseSize*(_steps-_step)/_steps];
+         _mName setMarkerSizeLocal [_baseSize*(_steps-_step)/_steps, _baseSize*(_steps-_step)/_steps];
     };
 };
 
@@ -209,7 +222,7 @@ if (!isDedicated) then {
     onMapSingleClick "selectedLoc = _pos; onMapSingleClick ''; openMap false; true;";
     waitUntil{!(visibleMap)};  
 
-    _selectedSpawn = [ selectedLoc, 1000] call spawnSelection_selectNearest;  
+    _selectedSpawn = [ selectedLoc, 10000] call spawnSelection_selectNearest;  
 
     player setPos ([_selectedSpawn#2, 1, 30, 1, 0, 30, 0, [], [_selectedSpawn#2, _selectedSpawn#2]] call BIS_fnc_findSafePos);
     

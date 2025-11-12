@@ -59,7 +59,18 @@ if (!([_OpforFobLocation] call isLocationOnMap)) then
 		_randomAvalaiblePos = selectRandom _OpforFobTurretOpforLocation;
 		if (!isNil "_randomAvalaiblePos") then 
 		{
-			_turret = createVehicle ["B_G_HMG_02_high_F", getPosATL _randomAvalaiblePos, [], 0, "CAN_COLLIDE"];
+			
+			//Load HMG according to loaded mods
+			_availableHMG = "";
+			if (isClass (configFile >> "CfgPatches" >> "OPTRE_Core")) then 
+			{
+				_availableHMG = "OPTRE_AIE_486H_Static_HMG_Standalone_Spartan";
+			} else 
+			{
+				_availableHMG = "B_G_HMG_02_high_F";
+			};			
+
+			_turret = createVehicle [_availableHMG, getPosATL _randomAvalaiblePos, [], 0, "CAN_COLLIDE"];
 			_turret setDir (getDir _randomAvalaiblePos);
 			_x moveInAny _turret;
 			_x disableAI "PATH";
@@ -107,4 +118,3 @@ if (!([_OpforFobLocation] call isLocationOnMap)) then
 };
 
 deletevehicle _trgAOC;
-

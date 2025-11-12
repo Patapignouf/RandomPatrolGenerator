@@ -117,7 +117,7 @@ _missionSettings = "";
 	_paramValue = ((_currentParam#0) select {(missionNameSpace getVariable [_currentParam#3,0]) == _x#0})#0#1;
 	_missionSettings = format ["%1%2 : %3<br />", _missionSettings, _paramName, _paramValue];
 } foreach baseParamsToManage;
-[format ["<t color='#ffffff' align='left' size='.6'>Mission settings :<br />%1</t>", _missionSettings],1,-0.1,10,1,0,789] spawn BIS_fnc_dynamicText;
+[format ["<t color='#ffffff' align='left' size='.6'>Mission settings :<br />%1</t>", _missionSettings],1,-0.1,15,1,-1,789] spawn BIS_fnc_dynamicText;
 
 
 if (player getVariable ["isSetupMission", false]) then 
@@ -250,6 +250,10 @@ if !(isClass (configFile >> "CfgPatches" >> "ace_medical")) then
 		//Exclude other players
 		if (player != _unit) exitWith {}; 
 
+		//Disable physX collision 
+		//_unit setPhysicsCollisionFlag !_status;
+		_unit setVariable ["isUnconscious", _status, true]; 
+
 		//If unit become unconscious
 		if (_status) then 
 		{
@@ -268,10 +272,22 @@ if !(isClass (configFile >> "CfgPatches" >> "ace_medical")) then
 					};
 				};
 			};
-
+			
 			[[_unit] , "GUI\displayNearestMedicGUI\displayNearestMedicGUI.sqf"] remoteExec ['BIS_fnc_execVM', _unit];
 		};
 	}] call CBA_fnc_addEventHandler;
+
+	// player addEventHandler ["HandleDamage", {
+	// 	params ["_unit", "_selection", "_damage", "_source", "_projectile", "_hitIndex", "_instigator", "_hitPoint"];
+
+	// 	if (lifeState _unit == "INCAPACITATED") then 
+	// 	{
+	// 		_unit setVariable ["isUnconscious", true, true]; 
+	// 	};
+
+	// 	// Retourner la valeur du dommage pour l’appliquer normalement
+	// 	_damage
+	// }];
 };
 
 //Init player rank
@@ -588,7 +604,20 @@ if (side player == blufor) then
 			[[true], 'GUI\supportGUI\supportGUI.sqf'] remoteExec ['BIS_fnc_execVM', _caller];
 	},_x,3,true,false,"","_target distance _this <5"];
 
-		//Add abort action to TPFlag1
+
+	//Add fast travel 
+	if (missionNameSpace getVariable ["fastTravel", 0] == 1) then
+	{
+		TPFlag1 addAction [format ["<img size='2' image='\a3\ui_f_orange\Data\CfgOrange\Missions\action_fragment_back_ca.paa'/><t size='1'>%1</t>", localize "STR_ACTIONS_OPEN_FAST_TRAVEL"],{
+				//Define parameters
+				params ["_object","_caller","_ID","_avalaibleVehicle"];
+
+				
+				[[], 'GUI\respawnGUI\respawnMapGUI.sqf'] remoteExec ['BIS_fnc_execVM', _caller];
+		},_x,5,true,false,"","_target distance _this <5"];
+	};
+
+	//Add abort action to TPFlag1
 	_actionIdAbortMission = TPFlag1 addAction 
 	[
 		"<img size='2' image='\a3\ui_f\data\IGUI\Cfg\holdactions\holdAction_takeOff1_ca.paa'/><t color='#FF0000'>Abort mission</t>", 
@@ -627,6 +656,38 @@ setPlayerRespawnTime (missionNamespace getVariable "missionRespawnParam");
 //Generate civilian dialogs
 [] spawn _generateCivDialogs;
 
+
+//Weapon forbidden script 
+if (missionNameSpace getVariable ["gunsOnly", 0] == 1) then 
+{
+	[player] spawn {
+		params ["_choosenPlayer"];
+
+		while {sleep 1; true} do 
+		{
+			//Get reporter weapon
+			_primaryWeapon = primaryWeapon _choosenPlayer;
+			//_secondaryWeapon = secondaryWeapon _choosenPlayer;
+
+			if (_primaryWeapon != "") then
+			{
+				[["<t color='#ff0000' size='5'>RIFLES ARE NOT ALLOWED</t><br/>", "PLAIN", -1, true, true]] remoteExec ['cutText', _choosenPlayer];
+			};
+		};
+	};
+};
+
+
+//Talk to civilian 
+if (missionNameSpace getVariable ["talkToCiv", 1] == 1) then 
+{
+	player setVariable ["canTalkToCiv", true, true];
+} else 
+{
+	player setVariable ["canTalkToCiv", false, true];
+};
+
+
 //Show a special message when there is a teamkill
 _KilledEH = player addEventHandler ["Killed", {
 	params ["_unit", "_killer", "_instigator", "_useEffects"];
@@ -662,6 +723,10 @@ _KilledEH = player addEventHandler ["Killed", {
 							//systemChat "The player is sure.";
 							_instigator setDamage 1;
 							[[_instigator], {params ["_instigator"]; ["STR_RPG_HC_NAME", "STR_RPG_HC_PUNISH", name _instigator] call doDialog}] remoteExec ["spawn", side _instigator]; 
+
+							//Fix spectator 
+							["Terminate"] call BIS_fnc_EGSpectator;
+							["Initialize", [player, [playerSide] , true, false ]] call BIS_fnc_EGSpectator;
 						} else {
 							//systemChat "The player is not sure.";
 						};
@@ -752,15 +817,16 @@ if (isClass (configFile >> "CfgPatches" >> "task_force_radio")) then {
 //Heal player if mission's setup wasn't safe 
 if (isClass (configFile >> "CfgPatches" >> "ace_medical")) then 
 {
-  [objNull, player] call ace_medical_treatment_fnc_fullHeal;
+	[objNull, player] call ace_medical_treatment_fnc_fullHeal;
 } else 
 {
-  player setDamage 0;
+	player setDamage 0;
 };
 
+
+#include "GUI\mapIndicatorGUI\GPSJamManager.sqf"
 #include "GUI\mapIndicatorGUI\mapRealTimeMarkers.sqf"
 #include "engine\tentActionManagement.sqf"
-
 
 
 //Display welcome message

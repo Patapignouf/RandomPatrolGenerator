@@ -176,6 +176,29 @@ getOpforWeaponCategory = {
 	_resultWPOpfor
 };
 
+
+getBMWeaponCategory = {
+	//Get opfor weapon minus player faction 
+	_currentPlayerFaction = indFaction;
+	if (side player == blufor) then 
+	{
+		_currentPlayerFaction = bluFaction;
+	};
+
+	_resultWPOpfor = [
+		[ "rifle",(BMrifleList) - (rifleList_db select {_x select 1  == _currentPlayerFaction} select 0 select 0)],
+		[ "smg",(BMsmgList) - (smgList_db select {_x select 1  == _currentPlayerFaction} select 0 select 0)],
+		[ "sniperRifle",(BMsniperRifleList) - (marksmanrifleList_db select {_x select 1  == _currentPlayerFaction} select 0 select 0)],
+		[ "autoRifle",(BMautoRifleList) - (autorifleList_db select {_x select 1  == _currentPlayerFaction} select 0 select 0)],
+		[ "launcher",(BMlauncherList) - (launcherList_db select {_x select 1  == _currentPlayerFaction} select 0 select 0)],
+		[ "grenadeLauncher",(BMgrenadeLauncherList) - (grenadeLauncherList_db select {_x select 1  == _currentPlayerFaction} select 0 select 0)],
+		[ "shortAccessories",(BMshortAccessoriesList) - (attachmentShortList_db select {_x select 1  == _currentPlayerFaction} select 0 select 0)],
+		[ "longAccessories", (BMlongAccessoriesList) - (attachmentLongList_db select {_x select 1  == _currentPlayerFaction} select 0 select 0)]
+	];
+	_resultWPOpfor
+};
+
+
 cleanWeaponsAndItems = {
 	params ["_listToClean"];
 
@@ -281,4 +304,191 @@ cleanWeaponsAndItems = {
 	diag_log format ["_cleanList = %1", _cleanList];
 
 	_cleanList;
+};
+
+
+
+defineWeaponPrice = {
+	params ["_weaponClassName"];
+	_priceResult = 1;
+
+	_cfgWpn = configFile >> "CfgWeapons" >> _weaponClassName;
+
+
+	if !(isClass _cfgWpn) exitWith {
+		diag_log format ["Arme introuvable : %1", _weaponClassName];
+	};
+
+	_mags = getArray (_cfgWpn >> "magazines");
+
+	// Si vide, on check les wells
+	if (_mags isEqualTo []) then {
+		private _wells = getArray (_cfgWpn >> "magazineWell");
+		{
+			private _well = _x;
+			private _magsInWell = getArray (configFile >> "CfgMagazineWells" >> _well >> "magazines");
+			_mags append _magsInWell;
+		} forEach _wells;
+	};
+
+	// Nettoyage doublons
+	_mags = _mags arrayIntersect _mags;
+
+	// --- 1) Premier mode de tir
+	private _modes = getArray (_cfgWpn >> "modes");
+	if (_modes isEqualTo []) exitWith { hint "Pas de modes trouvés."; };
+	private _mode = _modes select 0;
+	private _cfgMode = _cfgWpn >> _mode;
+	if !(isClass _cfgMode) then {
+		_score = 100;
+	};
+
+	private _disp = getNumber (_cfgMode >> "dispersion");
+	if (_disp <= 0) then {_disp = 0.002}; // fallback
+
+
+	if (_mags isEqualTo []) exitWith {
+		diag_log format ["Aucun chargeur trouvé pour %1", _weaponClassName];
+	};
+
+	//Take the default mag
+	_output = "";
+	_rangeEst = 0;
+	_hit = 0;
+	_cal = 0;
+	_spd = 0;
+	_score = 0;
+
+	_ammoRange = [];
+	_scoreRangeArray = [];
+	
+	{
+		private _mag = _x;
+		private _ammo = getText (configFile >> "CfgMagazines" >> _mag >> "ammo");
+		private _cfgAmmo = configFile >> "CfgAmmo" >> _ammo;
+
+		_hit = getNumber (_cfgAmmo >> "hit");
+		_cal = getNumber (_cfgAmmo >> "caliber");
+		_spd = getNumber (_cfgAmmo >> "typicalSpeed");
+		_airF = getNumber (_cfgAmmo >> "airFriction");
+		_ttl = getNumber (_cfgAmmo >> "timeToLive");
+
+		// --- Estimation de la portée ---
+		private _energy0 = _hit * _spd * _spd;
+		private _energy = _energy0;
+		private _v = _spd;
+		private _t = 0;
+		private _dt = 0.01;
+		private _dist = 0;
+		private _rangeEff = 0;
+		private _found = false;
+
+		// simulation du vol
+		while {_t < _ttl && _v > 1} do {
+			_dist = _dist + (_v * _dt);
+			_v = _v + (_airF * _v * _v * _dt);
+			_energy = _hit * _v * _v;
+			if (!_found && _energy < (_energy0 * 0.5)) then {
+				_rangeEff = _dist;
+				_found = true;
+			};
+			_t = _t + _dt;
+		};
+
+		private _rangeMax = round _dist;
+		private _rangeEffFinal = if (_found) then {round _rangeEff} else {_rangeMax};
+		_ammoRange pushBackUnique _rangeEffFinal;
+
+		private _refDisp = 0.002;   // rad
+		private _refPower = 10 * 1.0; // hit*caliber
+		private _refRange = 600;    // m
+
+		private _power = _hit * _cal;
+		private _scoreDisp = (1 - (_disp / _refDisp)) max 0 min 1; 
+		private _scorePower = (_power / _refPower) min 1;
+		private _scoreRange = (_rangeEffFinal / _refRange) min 1;
+
+		// pondération
+		private _score = (_scoreDisp * 0.4 + _scorePower * 0.3 + _scoreRange * 0.3) * 100;
+		_scoreRangeArray pushBackUnique _score;
+
+		_output = _output + format [
+			"\n\nMagazine : %1\n  Ammo: %2\n  Dégâts (hit): %3\n  Pénétration (caliber): %4\n  Vitesse (m/s): %5\n  AirFriction: %6\n  Durée de vie (s): %7",
+			_mag, _ammo, _hit, _cal, _spd, _airF, _ttl
+		];
+	} foreach _mags; //Take only the first mag
+
+	_rangeEst = selectMax _ammoRange;
+	_score = selectMax _scoreRangeArray;
+
+	//Adjust price with range
+	if (_rangeEst > 1500) then 
+	{
+		_priceResult = _priceResult + 1;
+	};
+
+	//Adjust price with range
+	if (_cal > 1) then 
+	{
+		_priceResult = _priceResult + 1;
+	};
+
+	//Adjust price with damage
+	if (_hit > 10) then 
+	{
+		_priceResult = _priceResult + 1;
+	};
+
+	//systemChat str _score;
+
+	[_priceResult, _hit, _rangeEst, getText (configFile >> "CfgMagazines" >> _mags#0 >> "displayName"), _score];
+};
+
+defineScopePrice = {
+	params ["_optic"];
+
+	_priceResult = 1;
+
+	private _cfg = configFile >> "CfgWeapons" >> _optic >> "ItemInfo" >> "OpticsModes";
+
+	if !(isClass _cfg) exitWith { 
+		//hint format["Lunette introuvable : %1", _optic]; 
+		_priceResult;
+		};
+
+	private _out = format ["Lunette : %1", _optic];
+	private _fovNormal = 0.75; // valeur approximative du FOV normal
+	_magMax = 0;
+
+	for "_i" from 0 to (count _cfg - 1) do {
+		private _mode = _cfg select _i;
+		if (isClass _mode) then {
+			private _name = configName _mode;
+			private _zMin = getNumber (_mode >> "opticsZoomMin");
+			private _zMax = getNumber (_mode >> "opticsZoomMax");
+			private _zInit = getNumber (_mode >> "opticsZoomInit");
+
+			private _magMin = if (_zMax > 0) then { round((_fovNormal / _zMax) * 10) / 10 } else {0};
+			_magMax = if (_zMin > 0) then { round((_fovNormal / _zMin) * 10) / 10 } else {0};
+			private _magInit = if (_zInit > 0) then { round((_fovNormal / _zInit) * 10) / 10 } else {0};
+
+			_out = _out + format [
+				"\n\nMode: %1\n Zoom init: x%2\n Zoom min: x%3\n Zoom max: x%4",
+				_name, _magInit, _magMin, _magMax
+			];
+		};
+	};
+
+	//Adjust price with range
+	if (_magMax > 3) then 
+	{
+		_priceResult = _priceResult + 1;
+	};
+
+	if (_magMax > 10) then 
+	{
+		_priceResult = _priceResult + 1;
+	};
+
+	_priceResult
 };

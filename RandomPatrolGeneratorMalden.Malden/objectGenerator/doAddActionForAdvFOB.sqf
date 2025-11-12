@@ -49,7 +49,7 @@ params ["_deployableFOBItem", "_deployableFOBMounted"];
 				} else {
 					hint "No need to rest";
 				};
-			},objNull,1.5,true,false,"","_target distance _this <7"]] remoteExec [ "addAction", 0, true ];
+			},objNull,1.5,true,false,"","(_this getVariable 'role' == 'leader') &&(_target distance _this <7)"]] remoteExec [ "addAction", 0, true ];
 
 			//Add action to rest until morning
 			[TPFlag2, [format ["<img size='2' image='\a3\ui_f_oldman\data\IGUI\Cfg\holdactions\holdAction_sleep2_ca.paa'/>%1</t>", localize "STR_ACTIONS_SLEEP"],{
@@ -66,7 +66,7 @@ params ["_deployableFOBItem", "_deployableFOBMounted"];
 				} else {
 					hint "No need to rest";
 				};
-			},objNull,1.5,true,false,"","_target distance _this <7"]] remoteExec [ "addAction", 0, true ];
+			},objNull,1.5,true,false,"","(_this getVariable 'role' == 'leader') && (_target distance _this <7)"]] remoteExec [ "addAction", 0, true ];
 
 			//Add support shop
 			[TPFlag2, [format ["<img size='2' image='\a3\ui_f_oldman\data\IGUI\Cfg\holdactions\holdAction_market_ca.paa'/><t size='1'>%1</t>", localize "STR_ACTIONS_OPEN_SUPPORT_SHOP"],{
