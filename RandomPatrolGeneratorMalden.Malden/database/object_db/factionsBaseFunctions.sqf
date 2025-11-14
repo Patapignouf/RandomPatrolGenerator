@@ -44,7 +44,7 @@ adjustRole = {
 		{
 			_cfgRole = "engineer";
 		};
-		if (["_arifleman", _cfgName] call BIS_fnc_inString || ["_HMG", _cfgName] call BIS_fnc_inString || ["_LMG", _cfgName] call BIS_fnc_inString || ["_RMG", _cfgName] call BIS_fnc_inString || ["_RA", _cfgName] call BIS_fnc_inString || ["_Automatic", _cfgName] call BIS_fnc_inString) then 
+		if (["_arifleman", _cfgName] call BIS_fnc_inString || ["_HMG", _cfgName] call BIS_fnc_inString || ["_LMG", _cfgName] call BIS_fnc_inString || ["_RMG", _cfgName] call BIS_fnc_inString || ["_auto_rifleman", _cfgName] call BIS_fnc_inString || ["_RA", _cfgName] call BIS_fnc_inString || ["_Automatic", _cfgName] call BIS_fnc_inString) then 
 		{
 			_cfgRole = "autorifleman";
 		};
