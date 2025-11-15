@@ -192,7 +192,8 @@ backPackList_FP_GIGN = [
 	"TFAR_rt1523g",
 	"TFAR_rt1523g_green",
 	"B_parachute",
-	"ace_gunbag_Tan"
+	"ace_gunbag_Tan",
+	"ACE_TacticalLadder_Pack"
 ];
 
 //Uniform, vest, headgear, avalaible for all unit
