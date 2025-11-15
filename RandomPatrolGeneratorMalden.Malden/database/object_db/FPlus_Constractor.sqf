@@ -5,6 +5,7 @@ if (isClass (configFile >> "CfgWeapons" >> "FP_MPC_Car")) then
 {
 	factionInfos pushBack ["_FP_Contractor", factionID,"[F+] Contractors", true, false, false];
 };
+factionID = factionID+1;
 
 
 ////////////////////////f

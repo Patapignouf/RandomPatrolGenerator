@@ -1605,7 +1605,7 @@ getNumberOfClassInSquad = {
 getClassInformation = {
 	params ["_class"];
 
-	_classDescription = "";
+	_classDescription = _class;
 
 	switch (_class) do
 		{
