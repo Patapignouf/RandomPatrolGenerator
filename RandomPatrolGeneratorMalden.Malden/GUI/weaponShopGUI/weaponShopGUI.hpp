@@ -92,6 +92,15 @@ class weaponShopGUI
 			w = 8 * GUI_GRID_W;
 			h = 1 * GUI_GRID_H;
 		};
+		class btnRandom: RscButtonMenuOK
+		{
+			idc = 60003;
+			text = "RANDOM BUTTON";
+			x = -4 * GUI_GRID_W + 0.5;
+			y = 9.5 * GUI_GRID_H + 0.5;
+			w = 8 * GUI_GRID_W;
+			h = 1 * GUI_GRID_H;
+		};
 		class btnOK: RscButtonMenuOK
 		{
 			idc = 60001;

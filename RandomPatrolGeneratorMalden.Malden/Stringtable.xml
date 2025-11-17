@@ -2623,5 +2623,16 @@
         <Chinese>解锁</Chinese>
         <Japanese>解除</Japanese>
     </Key>
+    <Key ID="STR_GUI_BASE_RANDOM">
+        <Original>Random</Original>
+        <English>Random</English>
+        <French>Aléatoire</French>
+        <Spanish>Aleatorio</Spanish>
+        <German>Zufällig</German>
+        <Italian>Casuale</Italian>
+        <Russian>Случайно</Russian>
+        <Chinese>随机</Chinese>
+        <Japanese>ランダム</Japanese>
+    </Key>
 </Container>
 </Project>
