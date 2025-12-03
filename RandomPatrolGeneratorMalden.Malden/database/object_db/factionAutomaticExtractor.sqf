@@ -171,7 +171,7 @@ publicVariable "factionInfos";
 					missionNamespace setVariable [_currentFactionName, _currentCivMans]; 
 				} else 
 				{
-					if !(["unarmed", _cfgName, false] call BIS_fnc_inString || ["story", _cfgName, false] call BIS_fnc_inString || ["story", ((_cfgVehName >> "editorSubcategory") call BIS_fnc_GetCfgData), false] call BIS_fnc_inString) then 
+					if !(["unarmed", _cfgName, false] call BIS_fnc_inString || ["story", _cfgName, false] call BIS_fnc_inString || ["story", ((_cfgVehName >> "editorSubcategory") call BIS_fnc_GetCfgData), false] call BIS_fnc_inString || ["survivor", _cfgName, false] call BIS_fnc_inString) then 
 					{		
 						_thisRole = ((_cfgVehName >> "role") call BIS_fnc_GetCfgData);
 
