@@ -290,14 +290,16 @@ publicVariable "factionInfos";
 									_accessoriesShort = _accessoriesShort + _listOfWeaponsAndAccessoriesFromStuff#1;
 									missionNamespace setVariable [_currentFactionName, _accessoriesShort];
 
+									//Whitelist complete weapons and weapons
+									_currentFactionName = format ["rifleList%1", _thisFac];
+									_rifleList = missionNamespace getVariable [_currentFactionName, []];
+									_rifleList = _rifleList + _weaponParsingList#5 + _weaponParsingList#2; //Sometimes assault rifle are considered as sniper rifle
+									missionNamespace setVariable [_currentFactionName, _rifleList]; 
+
 									//Rifleman can share uniform
 									if (_thisRole == "rifleman") then 
 									{
-										//Whitelist complete weapons and weapons
-										_currentFactionName = format ["rifleList%1", _thisFac];
-										_rifleList = missionNamespace getVariable [_currentFactionName, []];
-										_rifleList = _rifleList + _weaponParsingList#5 + _weaponParsingList#2; //Sometimes assault rifle are considered as sniper rifle
-										missionNamespace setVariable [_currentFactionName, _rifleList]; 
+
 
 										_currentFactionName = format ["uniformList%1", _thisFac];
 										_uniformList = missionNamespace getVariable [_currentFactionName, []];
