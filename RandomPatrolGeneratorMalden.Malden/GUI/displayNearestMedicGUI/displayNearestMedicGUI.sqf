@@ -22,7 +22,7 @@ checkUnconscious = {
 
 goUnconscious = {
 	params ["_unit"];
-	[_unit, true, 3, false] call ace_medical_fnc_setUnconscious;
+	//[_unit, true, 3, false] call ace_medical_fnc_setUnconscious;
 	_unit setDamage 0.2;
 	_unit setUnconscious true;
 	_unit setVelocity [0, 0, 0];
@@ -40,7 +40,7 @@ if (missionNameSpace getVariable ["ACETryFixUnconscious", 1] == 1) then
 			{
 				sleep 0.5;
 				//Check if there is a bug, the player is "HEALTHY" if there is a bug
-				if (lifeState _unit != "INCAPACITATED" && (_unit getVariable ["isUnconscious", false])) then 
+				if (alive _unit && lifeState _unit != "INCAPACITATED" && (_unit getVariable ["isUnconscious", false])) then 
 				{
 					[_unit] call goUnconscious;
 					diag_log "GOING UNCONSCIOUS";
