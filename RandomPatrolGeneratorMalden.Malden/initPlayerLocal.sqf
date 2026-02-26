@@ -272,7 +272,43 @@ if !(isClass (configFile >> "CfgPatches" >> "ace_medical")) then
 					};
 				};
 			};
-			
+
+			//Setup timer GUI
+			if (missionNameSpace getVariable ["enableSelfRespawnTimer", 0] == 0) then 
+			{
+				//No self respawn timer (directed by the server)
+				addMissionEventHandler ["EachFrame",
+					{
+						if (!(lifeState player == "HEALTHY")) then 
+						{
+							_currentRespawnTimer = missionNamespace getVariable "missionRespawnParam";
+							_currentCounter = _currentRespawnTimer - (round (serverTime) % _currentRespawnTimer);
+							hintSilent format ["Respawn : %1", [(_currentCounter/60)+.01,"HH:MM"] call BIS_fnc_timetostring];
+
+							//Respawn players if timer is going near 0 secs remaining
+							if (_currentCounter == 0 || _currentCounter < 2) then 
+							{
+								setPlayerRespawnTime 0;
+							};
+						};
+					}
+				];
+			} else 
+			{
+				_respawnTimer = missionNamespace getVariable "missionRespawnParam";
+				setPlayerRespawnTime (_respawnTimer);
+				_initialCountDown = [_respawnTimer, false] call BIS_fnc_countDown;
+				addMissionEventHandler ["EachFrame",
+					{
+						if (!(lifeState player == "HEALTHY")) then 
+						{
+							hintSilent format["Respawn : %1", [(([0, false] call BIS_fnc_countdown)/60)+.01,"HH:MM"] call BIS_fnc_timetostring]
+						};
+					}
+				];
+			};
+
+			//Display nearest medic GUI
 			[[_unit] , "GUI\displayNearestMedicGUI\displayNearestMedicGUI.sqf"] remoteExec ['BIS_fnc_execVM', _unit];
 		};
 	}] call CBA_fnc_addEventHandler;
