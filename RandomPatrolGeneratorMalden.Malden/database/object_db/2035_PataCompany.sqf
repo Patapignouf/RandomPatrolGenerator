@@ -31,7 +31,7 @@ bluforStaticWeapon_2035_PataCompany =
 
 //Armored vehicle avalaible for blufor : Ex light tank
 bluforArmoredVehicle_2035_PataCompany = [
-
+	"Atlas_B_L_AFV_Wheeled_01_cannon_F"
 ];
 
 bluforUnarmedVehicleChopper_2035_PataCompany = [
@@ -55,6 +55,7 @@ bluforBoat_2035_PataCompany = [
 
 //FixedWing vehicle avalaible for blufor
 bluforFixedWing_2035_PataCompany = [
+	"Atlas_O_T_Plane_Fighter_03_dynamicLoadout_F"
 ];
 
 //Vehicule able to do HQ features (Loadout management and more)
