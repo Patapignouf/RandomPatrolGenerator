@@ -149,7 +149,8 @@ itemList_2035_PataCompany = [
 ];
 
 itemEngineerList_2035_PataCompany = [
-	"DemoCharge_Remote_Mag"
+	"DemoCharge_Remote_Mag",
+	"Laserdesignator"
 ];
 	
 itemMedicList_2035_PataCompany = [
@@ -167,8 +168,12 @@ backPackList_2035_PataCompany = [
 	"B_Mortar_01_weapon_F",
 	"B_Mortar_01_support_F",
 	"B_AssaultPack_khk",
-	"B_AssaultPack_blk"
+	"B_AssaultPack_blk",
+	"B_Carryall_blk"
 ];
+
+
+
 
 //Uniform, vest, headgear, avalaible for all unit
 uniformList_2035_PataCompany = [
@@ -182,6 +187,7 @@ uniformList_2035_PataCompany = [
 	"G_Tactical_Yellow",
 	"G_Bandanna_khk",
 	"G_Bandanna_blk",
+	"G_Balaclava_blk",
 
 	//vest
 	"V_TacVest_oli",
@@ -190,6 +196,9 @@ uniformList_2035_PataCompany = [
 	"V_TacVest_oli",
 	"V_lxWS_TacVestIR_oli",
 	"V_HarnessOSpec_blk",
+	//"V_CarrierRigKBT_01_light_Black_F",
+
+
 	//Holster 
 
 
@@ -204,10 +213,12 @@ uniformList_2035_PataCompany = [
 	"U_B_ION_Uniform_01_poloshirt_blue_F",
 	"U_B_ION_Uniform_01_poloshirt_wdl_F",
 	"U_B_ION_Uniform_01_tshirt_black_F",
+	"U_O_R_Gorka_01_black_F",
 
 	//uniform
 	"Atlas_U_B_CombatUniform_ffl_vest"
 ];
+
 
 uniformListSniper_2035_PataCompany = [
 	"U_B_GhillieSuit",
