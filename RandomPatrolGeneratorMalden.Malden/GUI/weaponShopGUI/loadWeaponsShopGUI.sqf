@@ -18,7 +18,7 @@ private _buttonRandom = _mainDisplay displayCtrl 60003;
 _openArsenal = _specialParam#0;
 _shopMode = _specialParam#1;
 
-_randomPrice = 1;
+randomPrice = 1;
 if (_shopMode == "OPFOR") then 
 {
 	_vehicleShopTitle ctrlSetText (format ["%2 | Unlock Token %1", [] call getUnlockCredit, localize "RPG_GUI_GENERAL_WEAPON_SHOP"]);
@@ -28,7 +28,7 @@ if (_shopMode == "OPFOR") then
 	_vehicleShopTitle ctrlSetText (format ["%2 | Unlock Token %1", [] call getUnlockCredit, localize "RPG_GUI_GENERAL_BM_SHOP"]);
 
 	//hide random buy
-	_randomPrice = 5;
+	randomPrice = 5;
 };
 
 _icon ctrlSetText (localize "STR_GUI_BASE_ICON");
@@ -37,7 +37,7 @@ _type ctrlSetText (localize "STR_GUI_BASE_WEAPON_TYPE");
 _credit ctrlSetText (localize "STR_GUI_BASE_TOKEN");
 _buy ctrlSetText (localize "STR_GUI_BASE_UNLOCK");
 
-_buttonRandom ctrlSetText (format ["%1 : %2", localize "STR_GUI_BASE_RANDOM", _randomPrice]);
+_buttonRandom ctrlSetText (format ["%1 : %2", localize "STR_GUI_BASE_RANDOM", randomPrice]);
 
 diag_log format ["Init loadSupport GUI"];
 
@@ -190,10 +190,10 @@ _buttonRandom ctrlAddEventHandler [ "ButtonClick",
 		_lnbEntries = _display displayCtrl 60002;
 		_numberOfRows = (lnbSize _lnbEntries)#0;
 		_lnbEntries lnbSetCurSelRow (floor random (_numberOfRows - 1)); //Select random index
-		hint (format ["number of entries : %1", _numberOfRows ]);
+		//hint (format ["number of entries : %1", _numberOfRows ]);
 		_supportClass = (_lnbEntries lnbData [lnbCurSelRow _lnbEntries, 0]);
 		_supportType = (_lnbEntries lnbData [lnbCurSelRow _lnbEntries, 1]);
-		_supportPrice = parseNumber (_lnbEntries lnbData [lnbCurSelRow _lnbEntries, 2]);
+		_supportPrice = randomPrice;
 		_supportName = (_lnbEntries lnbData [lnbCurSelRow _lnbEntries, 3]);
 		_weaponIcon = getText (configFile >> "CfgWeapons" >> _supportClass >> "picture");
 
