@@ -44,8 +44,8 @@ bluforArmedChopper_2035_PataCompany = [
 ];
 
 bluforDrone_2035_PataCompany = [
-	"C_IDAP_UAV_01_F",
-	"C_IDAP_UAV_06_antimine_F"
+	"Atlas_B_L_UAV_01_F",
+	"Atlas_B_L_UAV_07_F"
 ]; 
 
 bluforBoat_2035_PataCompany = [
@@ -55,7 +55,9 @@ bluforBoat_2035_PataCompany = [
 
 //FixedWing vehicle avalaible for blufor
 bluforFixedWing_2035_PataCompany = [
-	"Atlas_O_T_Plane_Fighter_03_dynamicLoadout_F"
+	"Atlas_O_T_Plane_Fighter_03_dynamicLoadout_F",
+	"Atlas_B_A_Plane_Transport_01_infantry_F",
+	"Atlas_B_A_Plane_Transport_01_vehicle_F"
 ];
 
 //Vehicule able to do HQ features (Loadout management and more)
