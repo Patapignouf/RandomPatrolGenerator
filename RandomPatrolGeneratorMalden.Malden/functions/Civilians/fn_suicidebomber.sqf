@@ -82,7 +82,7 @@ _civilian addEventHandler ["Killed", {
 
 	_attachedMine attachTo [_holder, [0, 0, 0]];
 	_holder addweaponcargo ["V_TacChestrig_grn_F", 1];
-	_holder enableSimulation false;
+	//_holder enableSimulation false;
 
 	// Add a hold action to defuse the mine
 	[

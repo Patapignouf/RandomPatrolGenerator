@@ -224,7 +224,15 @@ doGenerateEnemyGroup =
 							[_x] spawn civils_fnc_suicidebomber;
 
 							// //Quick give life to suicide bombers
-							[group _x, getPos _x, 60] call doPatrol; 
+							[_x] spawn {
+								params ["_suicideBomber"];
+
+								//wait suicide bomber to be fully spawned
+								sleep 15;
+
+								//Make him more civilian behaviour
+								[group _suicideBomber, getPos _suicideBomber, 60] call doPatrol; 
+							};
 						};
 					};
 				};
