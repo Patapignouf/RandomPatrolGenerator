@@ -16,7 +16,9 @@ factionID = factionID+1;
 bluforUnarmedVehicle_2035_PataCompany = [
 	"Atlas_B_L_Quadbike_01_F",
 	"Atlas_B_L_LSV_01_unarmed_F",
-	"Atlas_B_L_Truck_01_covered_F"
+	"Atlas_B_L_Truck_01_covered_F",
+	"Aegis_C_Offroad_01_covered_F_Tanoa",
+	"Aegis_C_Offroad_01_F_Tanoa"
 ];
 
 bluforArmedVehicle_2035_PataCompany = [
@@ -184,12 +186,20 @@ uniformList_2035_PataCompany = [
 	"H_EarProtectors_sand_F",
 	"H_HelmetSpecB_light_grass",
 	"H_HelmetSpecB_light_black",
+	"H_HelmetSpecB_light_sand",
+	"H_Cap_tan",
+	"Aegis_H_Helmet_FASTMT_Cover_tan_F",
+	"H_HelmetSpecO_whex_F",
 	
 	//Glasses 
 	"G_Tactical_Yellow",
 	"G_Bandanna_khk",
 	"G_Bandanna_blk",
 	"G_Balaclava_blk",
+	"G_Bandanna_shades",
+	"G_Shemag_tan",
+	"dvk_shemag_w_altcsat",
+	"G_Bandanna_tan",
 
 	//vest
 	"V_TacVest_oli",
@@ -198,7 +208,8 @@ uniformList_2035_PataCompany = [
 	"V_TacVest_oli",
 	"V_lxWS_TacVestIR_oli",
 	"V_HarnessOSpec_blk",
-	//"V_CarrierRigKBT_01_light_Black_F",
+	"V_PlateCarrier2_cbr",
+	"V_CarrierRigKBT_01_light_Black_F",
 
 
 	//Holster 
@@ -215,11 +226,13 @@ uniformList_2035_PataCompany = [
 	"U_B_ION_Uniform_01_poloshirt_blue_F",
 	"U_B_ION_Uniform_01_poloshirt_wdl_F",
 	"U_B_ION_Uniform_01_tshirt_black_F",
+	"U_I_L_Uniform_01_tshirt_skull_F",
 	"U_O_R_Gorka_01_black_F",
 
 	//uniform
 	"Atlas_U_B_CombatUniform_ffl_vest"
 ];
+
 
 
 uniformListSniper_2035_PataCompany = [
