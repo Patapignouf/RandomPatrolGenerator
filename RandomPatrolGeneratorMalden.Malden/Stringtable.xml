@@ -707,6 +707,22 @@
                 <Chinese>一名平民被%1杀死，注意你的火力</Chinese>
                 <Japanese>市民が%1に殺されました。火に注意してください</Japanese>
             </Key>
+            <Key ID="STR_RPG_HC_VIPKILL">
+                <English>The VIP was killed by %1, objective failed</English>
+                <French>Le VIP a été tué par %1, objectif non atteint</French>
+                <Italian>Il VIP è stato ucciso da %1, obiettivo fallito</Italian>
+                <Spanish>El VIP ha sido asesinado por %1, objetivo no alcanzado</Spanish>
+                <German>Der VIP wurde von %1 getötet, Missionsziel gescheitert</German>
+                <Polish>VIP został zabity przez %1, cel nieosiągnięty</Polish>
+                <Czech>VIP byl zabit hráčem %1, úkol nesplněn</Czech>
+                <Russian>VIP-персона была убита %1, цель не достигнута</Russian>
+                <Portuguese>O VIP foi morto por %1, objetivo não alcançado</Portuguese>
+                <Japanese>VIPが%1によって殺害されました。目的は達成されませんでした</Japanese>
+                <Korean>VIP가 %1에 의해 사살되었습니다. 목표 달성 실패</Korean>
+                <Chinese>VIP被 %1 击杀，任务失败</Chinese>
+                <Chinesesimp>VIP被 %1 击杀，任务失败</Chinesesimp>
+                <Turkish>VIP, %1 tarafından öldürüldü, görev başarısız</Turkish>
+            </Key>
             <Key ID="STR_RPG_HC_SURRENDER_KILL">
                 <Original>%1 has surrender and has been killed by %2, watch your fire</Original>
                 <English>%1 has surrender and has been killed by %2, watch your fire</English>
