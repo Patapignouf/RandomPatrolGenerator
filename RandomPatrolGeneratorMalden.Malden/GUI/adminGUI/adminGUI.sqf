@@ -29,6 +29,8 @@ switch (_mode) do
 		[_lnbEntries] call addCloudyWeather;
 		[_lnbEntries] call addRandomWeather;
 		[_lnbEntries] call addEndMission;
+		[_lnbEntries] call addOpforShop;
+
 	};
 	case "sortCol":{
 		params ["_display","_ctrl"];

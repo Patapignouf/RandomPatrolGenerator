@@ -60,6 +60,13 @@ params ["_supportType"];
 		{
 			[['PLY_DEAD'], 'engine\objectiveManagement\endMission.sqf'] remoteExec ['BIS_fnc_execVM', 2];
 		};
+		case "OpforShop":
+		{
+			//Close admin menu
+			_mainDisplay = (findDisplay 60000);
+			_mainDisplay closeDisplay 1;
+			[[[false, "OPFOR"]], "GUI\weaponShopGUI\weaponShopGUI.sqf"] remoteExec ['BIS_fnc_execVM', player];
+		};
 		default
 		{
 			//Do nothing
@@ -188,6 +195,17 @@ addEndMission = {
 	_supportNameCode = "EndMission";
 	_supportIcon = "\a3\ui_f\data\igui\cfg\simpletasks\types\Radio_ca.paa";
 	_supportType = "Mission";
+
+	[_ctrl, _supportName, _supportNameCode, _supportIcon, _supportType] call addSupportOption;
+};
+
+addOpforShop = {
+	params ["_ctrl"];
+
+	_supportName = "Show opfor shop";
+	_supportNameCode = "OpforShop";
+	_supportIcon = "\a3\ui_f\data\igui\cfg\simpletasks\types\Radio_ca.paa";
+	_supportType = "Support";
 
 	[_ctrl, _supportName, _supportNameCode, _supportIcon, _supportType] call addSupportOption;
 };
