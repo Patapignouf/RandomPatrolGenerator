@@ -609,7 +609,8 @@ if !(_isOnWater) then
 	[_object] call BIS_fnc_Carrier01PosUpdate;
 
 	// Broadcast Carrier ID over network
-	missionNamespace setVariable ["USS_FREEDOM_CARRIER",_object]; publicVariable "USS_FREEDOM_CARRIER";
+	missionNamespace setVariable ["USS_FREEDOM_CARRIER",_object]; 
+	publicVariable "USS_FREEDOM_CARRIER";
 
 	// Broadcast carrier position as blufor init base
 	initBlueforLocation = [_spawnPos#0, _spawnPos#1, 24];

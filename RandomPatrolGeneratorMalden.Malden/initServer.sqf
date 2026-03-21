@@ -44,6 +44,12 @@ missionNamespace setVariable ["transportSupportCounter", 0, true]; //default tra
 missionNamespace setVariable ["airDropSupportCounter", 0, true]; //default air drop support counter
 missionNamespace setVariable ["reinforcementSupportCounter", 0, true]; //default reinforcement support counter
 
+//Variable used to manage vehicle spawn on aicraft carrier
+missionNameSpace setVariable ["AicraftCarrierBluforIndex", 0, true];
+missionNameSpace setVariable ["AicraftCarrierBluforSpawn", [], true];
+
+
+
 //Spawn bloc to avoid player swimming
 _spawnBloc = createVehicle ["BlockConcrete_F", [worldSize,worldSize,0], [], 0, "NONE"];
 _spawnBloc setPos [worldSize,worldSize,0];

@@ -193,8 +193,11 @@ _KilledEH = player addEventHandler ["Killed", {
 							[[_instigator], {params ["_instigator"]; ["STR_RPG_HC_NAME", "STR_RPG_HC_PUNISH", name _instigator] call doDialog}] remoteExec ["spawn", side _instigator]; 
 							
 							//Fix spectator 
-							["Terminate"] call BIS_fnc_EGSpectator;
-							["Initialize", [player, [playerSide] , true, false ]] call BIS_fnc_EGSpectator;
+							if (!alive player) then 
+							{
+								// ["Terminate"] call BIS_fnc_EGSpectator;
+								// ["Initialize", [player, [playerSide] , true, false ]] call BIS_fnc_EGSpectator;
+							};
 						} else {
 							//systemChat "The player is not sure.";
 						};

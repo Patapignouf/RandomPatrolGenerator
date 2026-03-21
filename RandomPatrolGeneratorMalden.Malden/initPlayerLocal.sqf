@@ -466,10 +466,12 @@ if (side player == blufor) then
 				[USS_FREEDOM_CARRIER,_spawnPos] spawn { 
 					params ["_USSCarrier","_spawnPos"];
 					_handleScirpt = _USSCarrier call BIS_fnc_Carrier01Init;
-					waitUntil {isNull _handleScirpt};
 
 					cutText ["ARRIVING ON CARRIER", "BLACK FADED", 100];
-					uiSleep 15; 
+					uiSleep 2; 
+					waitUntil {isNull _handleScirpt};
+					cutText ["ARRIVING ON CARRIER", "BLACK FADED", 100];
+					uiSleep 5; 
 
 					//Play random radio sound
 					[] spawn {
@@ -631,6 +633,15 @@ if (side player == blufor) then
 
 					[["bluforVehicleAvalaibleSpawn", bluforUnarmedVehicle, bluforArmedVehicle, bluforArmoredVehicle, bluforUnarmedVehicleChopper, bluforArmedChopper, bluforDrone, bluforFixedWing, bluforFixedWingTransport, bluforBoat, bluforStaticWeapon], 'GUI\vehicleSpawnerGUI\vehicleSpawner.sqf'] remoteExec ['BIS_fnc_execVM', _caller];
 			},_x,3,true,false,"","(_target distance _this <5) && (_this getVariable 'role' == 'leader' || _this getVariable 'role' == 'pilot')"];	
+	} else 
+	{
+		TPFlag1 addAction [format ["<img size='2' image='\a3\ui_f_oldman\data\IGUI\Cfg\holdactions\holdAction_market_ca.paa'/><t size='1'>%1</t>", localize "STR_ACTIONS_OPEN_VEHICLE_SHOP"],{
+
+					//Define parameters
+					params ["_object","_caller","_ID","_avalaibleVehicle"];
+
+					[["bluforVehicleAvalaibleSpawn", bluforUnarmedVehicle, bluforArmedVehicle, bluforArmoredVehicle, bluforUnarmedVehicleChopper, bluforArmedChopper, bluforDrone, bluforFixedWing, bluforFixedWingTransport, bluforBoat, bluforStaticWeapon], 'GUI\vehicleSpawnerGUI\vehicleSpawnerCarrier.sqf'] remoteExec ['BIS_fnc_execVM', _caller];
+			},_x,3,true,false,"","(_target distance _this <5) && (_this getVariable 'role' == 'leader' || _this getVariable 'role' == 'pilot')"];	
 	};
 
 	TPFlag1 addAction [format ["<img size='2' image='\a3\ui_f_oldman\data\IGUI\Cfg\holdactions\holdAction_market_ca.paa'/><t size='1'>%1</t>", localize "STR_ACTIONS_OPEN_SUPPORT_SHOP"],{
@@ -761,8 +772,12 @@ _KilledEH = player addEventHandler ["Killed", {
 							[[_instigator], {params ["_instigator"]; ["STR_RPG_HC_NAME", "STR_RPG_HC_PUNISH", name _instigator] call doDialog}] remoteExec ["spawn", side _instigator]; 
 
 							//Fix spectator 
-							["Terminate"] call BIS_fnc_EGSpectator;
-							["Initialize", [player, [playerSide] , true, false ]] call BIS_fnc_EGSpectator;
+							if (!alive player) then 
+							{
+								// ["Terminate"] call BIS_fnc_EGSpectator;
+								// ["Initialize", [player, [playerSide] , true, false ]] call BIS_fnc_EGSpectator;
+							};
+
 						} else {
 							//systemChat "The player is not sure.";
 						};

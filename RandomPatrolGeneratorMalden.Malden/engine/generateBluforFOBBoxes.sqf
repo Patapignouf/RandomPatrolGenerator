@@ -20,6 +20,7 @@ clearBackpackCargoGlobal VA2;
 VA2 allowDamage false; 
 //VA2 enableSimulationGlobal false;
 publicvariable "VA2";
+VA2 enableSimulationGlobal false;
 
 [["STR_RPG_3D_LOADOUT", (getPos VA2) vectorAdd [0,0,2],"\a3\ui_f\data\igui\cfg\simpletasks\types\rifle_ca.paa" , [1,1,0,1]], 'GUI\3DNames\3DNames.sqf'] remoteExec ['BIS_fnc_execVM', blufor, true];
 
@@ -134,6 +135,7 @@ clearWeaponCargoGlobal BluforVehicleAmmoBox;
 clearMagazineCargoGlobal BluforVehicleAmmoBox;
 clearItemCargoGlobal BluforVehicleAmmoBox;
 clearBackpackCargoGlobal BluforVehicleAmmoBox;
+BluforVehicleAmmoBox enableSimulationGlobal false;
 
 _vehicleRefuelBox = createVehicle ["B_Slingload_01_Fuel_F", [ _initBlueforLocation, 20, 50, 2, 0, 20, 0, [], [_initBlueforLocation,_initBlueforLocation]] call BIS_fnc_findSafePos, [], 0, "NONE"];
 clearWeaponCargoGlobal _vehicleRefuelBox;
@@ -147,6 +149,11 @@ if (isClass (configFile >> "CfgPatches" >> "ace_medical")) then
 {
 	[BluforVehicleAmmoBox, 1200] call ace_rearm_fnc_makeSource;
 	[BluforVehicleAmmoBox, true, [0, 2, 0], 45] call ace_dragging_fnc_setDraggable;
+	BluforVehicleAmmoBox setVariable ["bis_disabled_VehicleInVehicle", true, true];
+	[BluforVehicleAmmoBox, -1] call ace_cargo_fnc_setSize;
+
+	_vehicleRefuelBox setVariable ["bis_disabled_VehicleInVehicle", true, true];
+	[_vehicleRefuelBox, -1] call ace_cargo_fnc_setSize;
 };
 publicVariable "BluforVehicleAmmoBox";
  
@@ -333,9 +340,9 @@ if (!isNil "USS_FREEDOM_CARRIER") then
 	waitUntil{!isNil "HQCommander"};
 
 	_warEra = missionNamespace getVariable "warEra";
-
-	VA2 setPosASL [initBlueforLocation#0-105, initBlueforLocation#1-18, initBlueforLocation#2];
-	TPFlag1 setPosASL [initBlueforLocation#0-115, initBlueforLocation#1-18, initBlueforLocation#2-0.5];
+	VA2 setVectorUp [0, 0, 1];
+	VA2 setPosASL [initBlueforLocation#0-105, initBlueforLocation#1-18, initBlueforLocation#2-0.5]; //Arsenal box
+	TPFlag1 setPosASL [initBlueforLocation#0-115, initBlueforLocation#1-18, initBlueforLocation#2-0.5]; //Shop 
 	deployableFOBItem setPosASL [initBlueforLocation#0-50, initBlueforLocation#1-15, initBlueforLocation#2];
 	HQCommander setPosASL [initBlueforLocation#0-117, initBlueforLocation#1-18, initBlueforLocation#2-0.5];
 	
@@ -352,102 +359,10 @@ if (!isNil "USS_FREEDOM_CARRIER") then
 	if (isClass (configFile >> "CfgPatches" >> "ace_medical")) then 
 	{
 		waitUntil{!isNil "BluforVehicleAmmoBox"};
-		BluforVehicleAmmoBox setPosASL [initBlueforLocation#0-95, initBlueforLocation#1+40, initBlueforLocation#2+2];
+		BluforVehicleAmmoBox setPosASL [initBlueforLocation#0-95, initBlueforLocation#1+40, initBlueforLocation#2-0.5];
 	};
 
-
-	//Try to spawn chopper on carrier (WIP)
-	_baseSpawnChopper = [initBlueforLocation#0-100, initBlueforLocation#1-30, initBlueforLocation#2+1];
-	{
-		_baseSpawnChopper = [_baseSpawnChopper#0+25, _baseSpawnChopper#1, _baseSpawnChopper#2];
-		_chopper = createVehicle [_x,  [_baseSpawnChopper#0, _baseSpawnChopper#1, _baseSpawnChopper#2+100], [], 0, "NONE"];
-		_chopper enableSimulationGlobal false;
-		_chopper setPosASL _baseSpawnChopper;
-
-		//Repair vehicle
-		[_chopper] spawn {
-			params ["_vehicle"];
-			sleep 1;
-			_vehicle setfuel 1;
-			_vehicle setVelocity [0, 0, 0];
-			_vehicle setdamage 0;
-			_vehicle enableSimulationGlobal true;
-			if (!(alive _vehicle)) then 
-			{
-				deleteVehicle _vehicle;
-			}; 
-
-			//Add ACE keys
-			if (isClass (configFile >> "CfgPatches" >> "ace_medical")) then 
-			{
-				[_vehicle] call doAddKeys;
-			};
-		};
-	} foreach bluforUnarmedVehicleChopper;
-
-
-
-	//Try to spawn armed chopper on carrier (WIP)
-	_baseSpawnChopper = [initBlueforLocation#0-110, initBlueforLocation#1-30, initBlueforLocation#2+1];
-	{
-		_baseSpawnChopper = [_baseSpawnChopper#0-20, _baseSpawnChopper#1, _baseSpawnChopper#2];
-		_chopper = createVehicle [_x,  [_baseSpawnChopper#0, _baseSpawnChopper#1, _baseSpawnChopper#2+100], [], 0, "NONE"];
-		_chopper enableSimulationGlobal false;
-		_chopper setPosASL _baseSpawnChopper;
-
-		//Repair vehicle
-		[_chopper] spawn {
-			params ["_vehicle"];
-			sleep 1;
-			_vehicle setfuel 1;
-			_vehicle setVelocity [0, 0, 0];
-			_vehicle setdamage 0;
-			_vehicle enableSimulationGlobal true;
-			if (!(alive _vehicle)) then 
-			{
-				deleteVehicle _vehicle;
-			}; 
-
-			//Add ACE keys
-			if (isClass (configFile >> "CfgPatches" >> "ace_medical")) then 
-			{
-				[_vehicle] call doAddKeys;
-			};
-		};
-	} foreach bluforArmedChopper;
-
-
-	_baseSpawnVehicle = [initBlueforLocation#0-100, initBlueforLocation#1+30, initBlueforLocation#2];
-	{
-		_baseSpawnVehicle = [_baseSpawnVehicle#0-5, _baseSpawnVehicle#1, _baseSpawnVehicle#2];
-		_vehicle = createVehicle [_x,  [_baseSpawnVehicle#0, _baseSpawnVehicle#1, _baseSpawnVehicle#2+100], [], 180, "NONE"];
-		_vehicle enableSimulationGlobal false;
-		_vehicle setPosASL _baseSpawnVehicle;
-		_vehicle setDir 180;
-
-		//Repair vehicle
-		[_vehicle] spawn {
-			params ["_vehicle"];
-			sleep 1;
-			_vehicle setfuel 1;
-			_vehicle setdamage 0;
-			_vehicle setVelocity [0, 0, 0];
-			_vehicle enableSimulationGlobal true;
-
-			if (!(alive _vehicle)) then 
-			{
-				deleteVehicle _vehicle;
-			};
-
-			//Add ACE keys
-			if (isClass (configFile >> "CfgPatches" >> "ace_medical")) then 
-			{
-				[_vehicle] call doAddKeys;
-			};
-
-		};
-	} foreach bluforUnarmedVehicle;
-
+	//Spawn ship
 	_baseSpawnShip = [initBlueforLocation#0-100, initBlueforLocation#1+70, 0];
 	{
 		_baseSpawnShip = [_baseSpawnShip#0+40, _baseSpawnShip#1, 0];
@@ -462,6 +377,7 @@ if (!isNil "USS_FREEDOM_CARRIER") then
 		}; 
 	} foreach bluforBoat;
 
+	//Calculate spawn position
 	_baseSpawnPlane = [initBlueforLocation#0-78, initBlueforLocation#1+70, initBlueforLocation#2+2];
 	_planeNumber = 0;
 	{
@@ -474,71 +390,12 @@ if (!isNil "USS_FREEDOM_CARRIER") then
 		if (_planeNumber<=3) then
 		{
 			_baseSpawnPlane = [_baseSpawnPlane#0, _baseSpawnPlane#1-30, _baseSpawnPlane#2];
-			_plane = createVehicle [_x,  [_baseSpawnPlane#0, _baseSpawnPlane#1, _baseSpawnPlane#2+100], [], 0, "NONE"];
-			_plane enableSimulationGlobal false;
-			_plane allowDamage false;
-
-			_bbr = boundingBoxReal vehicle _plane;
-			_p1 = _bbr select 0;
-			_p2 = _bbr select 1;
-			_maxHeight = abs ((_p2 select 2) - (_p1 select 2));
-
-			_plane setPosASL [_baseSpawnPlane#0, _baseSpawnPlane#1, _baseSpawnPlane#2];
-			_plane setDir 90;
-			_planeNumber = _planeNumber+1;
-
-			//Add custom plane catapult on WWII planes because of heavy bugs on USS Freedom
-			if (_warEra == 0) then 
-			{
-				[_plane, [format ["<img size='2' image='\a3\data_f_destroyer\data\UI\IGUI\Cfg\holdactions\holdAction_unloadVehicle_ca.paa'/><t size='1'>Catapult the plane</t>"],{
-					//Define parameters
-					params ["_object","_caller","_ID","_avalaibleVehicle"];
-
-					//Move caller in the player
-    				_caller moveInAny _object;
-
-					//Start the plane
-    				_object engineOn true;
-					_objectPos = getPos _object;
-					_object setPosASL [_objectPos#0, _objectPos#1, _objectPos#2+300];
-					_vel = velocity _object;
-					_dir = getDir _object;
-					_additionalSpeed = 150; // in m/s
-					_object setVelocity [
-						(_vel select 0) + (sin _dir * _additionalSpeed),
-						(_vel select 1) + (cos _dir * _additionalSpeed),
-						(_vel select 2) // horizontal only
-					];
-
-					//Delete the action 
-					[_object, _ID] remoteExec ["removeAction", 0, true];
- 
-				},_x,3,true,false,"","(_target distance _this <3) && (_this getVariable 'role' == 'leader' || _this getVariable 'role' == 'pilot')"]] remoteExec ["addAction", 0, true];
-			};
-
-			//Repair vehicle
-			[_plane] spawn {
-				params ["_vehicle"];
-				_vehicle enableSimulationGlobal true;
-				waitUntil {(getPos _vehicle)#2<1};
-				_vehicle setfuel 1;
-				_vehicle setVelocity [0, 0, 0];
-				_vehicle setdamage 0;
-				_vehicle setDir 90;
-				_vehicle allowDamage true;
-				if (!(alive _vehicle)) then 
-				{
-					deleteVehicle _vehicle;
-				}; 
-
-				//Add ACE keys
-				if (isClass (configFile >> "CfgPatches" >> "ace_medical")) then 
-				{
-					[_vehicle] call doAddKeys;
-				};
-			};
+			_planeNumber = _planeNumber +1;
+			_acSpawns = missionNameSpace getVariable ["AicraftCarrierBluforSpawn",[]];
+			_acSpawns pushBack _baseSpawnPlane;
+			missionNameSpace setVariable ["AicraftCarrierBluforSpawn", _acSpawns, true];
 		};
-	} foreach bluforFixedWing;
+	} foreach [1,2,3,4]; //Some random place older TODO fix ulgy code
 } else 
 {
 	//Create patrol
@@ -567,3 +424,4 @@ if (missionNameSpace getVariable ["enableBluforFOB", 1] == 1) then
 
 bluforFOBBuild = true;
 publicvariable "bluforFOBBuild";
+

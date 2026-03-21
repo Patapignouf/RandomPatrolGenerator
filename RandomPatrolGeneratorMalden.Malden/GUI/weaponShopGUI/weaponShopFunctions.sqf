@@ -265,12 +265,27 @@ cleanWeaponsAndItems = {
 			_cleanList deleteAt _weaponIndex;
 
 			_weaponBaseParents = [configFile >> "CfgWeapons" >> _rifleBase, true] call BIS_fnc_returnParents;
-			_weaponBaseParents = (_weaponBaseParents select {getNumber (configFile >> "CfgWeapons" >> _x >> "scope")  == 2}) select 0;
-			if (_weaponBaseParents != "") then 
+			if (count _weaponBaseParents != 0) then 
 			{
+				_weaponBaseParent = (_weaponBaseParents select {getNumber (configFile >> "CfgWeapons" >> _x >> "scope")  == 2});
 
-				_cleanList pushBackUnique [_typeBase, toLower _weaponBaseParents];
+				if (count _weaponBaseParent != 0) then 
+				{
+					_weaponBaseParent = _weaponBaseParent#0;
+					_cleanList pushBackUnique [_typeBase, toLower _weaponBaseParent];
+				} else 
+				{
+					//Check scope in cfgVehicle
+					_weaponBaseParent = (_weaponBaseParents select {getNumber (configFile >> "CfgVehicles" >> format ["%1%2","Weapon_",_x] >> "scope")  == 2});
+					if (count _weaponBaseParent != 0) then 
+					{
+						//Remove non functionnal feature :p
+						//_weaponBaseParent = _weaponBaseParent#0;
+						//_cleanList pushBackUnique [_typeBase, toLower _weaponBaseParent];
+					};
+				};
 			};
+
 		};
 	} foreach _baseAccToClean;
 
@@ -283,12 +298,12 @@ cleanWeaponsAndItems = {
 	} foreach _baseRifleToClean;
 
 	//Clean duplicate smg
-	_baseRifleToClean = _cleanList select {_x#0 == "smg"};
+	_baseSmgToClean = _cleanList select {_x#0 == "smg"};
 	{
 		_rifleBase = _x#1;
 		_listWeaponsToClean = _cleanList select {_x#1 == _rifleBase && _x#0 != "smg"};
 		_cleanList = _cleanList - _listWeaponsToClean;
-	} foreach _baseRifleToClean;
+	} foreach _baseSmgToClean;
 
 	//Clean duplicate accessories
 	_baseAccToClean = _cleanList select {_x#0 == "shortAccessories"};
