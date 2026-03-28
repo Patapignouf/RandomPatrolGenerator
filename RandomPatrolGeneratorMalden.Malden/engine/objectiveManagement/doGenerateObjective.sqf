@@ -572,12 +572,18 @@ generateObjectiveObject =
 							[_thisTaskID, "FAILED"] call BIS_fnc_taskSetState;
 						};
 
+
+
 						//Explode
 						_bombType = "Bo_GBU12_LGB" createVehicle (getPosATL _objectiveObject);
 						soilCrater = "Land_ShellCrater_02_large_F" createVehicle (getPos _objectiveObject);
 
 						//Clean bomb
 						deleteVehicle _objectiveObject;
+
+						//Bomb timer end
+						[[], {["STR_RPG_HC_NAME", "STR_RPG_HC_TIMER_BOMB"] call doDialog}] remoteExec ["spawn", 0]; 
+						diag_log format ["Bomb's timer end"];
 					};
 				};
 
@@ -599,7 +605,7 @@ generateObjectiveObject =
 							params ["_object", "_caller", "_thisObjective"];
 							disableSerialization;
 							code = _object getVariable "RPG_DefuseCode";
-							diag_log format ["The bomb code is %1",code];
+							//diag_log format ["The bomb code is %1",code];
 							private _display = findDisplay 46 createDisplay "RscDisplayEmpty";
 							private _ctrlGroup = _display ctrlCreate ["RscControlsGroupNoScrollbars", -1];
 							private _ctrlBackground = _display ctrlCreate ["RscTextMulti", -1, _ctrlGroup];
@@ -668,6 +674,8 @@ generateObjectiveObject =
 
 									//Clean bomb
 									deleteVehicle _objectiveObject;
+
+									diag_log format ["Wrong code boom %1 != %2",code, _text];
 								};
 							}];
 							ctrlSetFocus _ctrlEdit;

@@ -810,6 +810,17 @@
                 <Chinese>位于%1的前进作战基地已被清理</Chinese>
                 <Japanese>位置%1のFOBがクリアされました</Japanese>
             </Key>
+            <Key ID="STR_RPG_HC_TIMER_BOMB">
+                <Original>The bomb has detonated. You arrived too late.</Original>
+                <English>The bomb has detonated. You arrived too late.</English>
+                <French>La bombe a explosé, vous êtes arrivés trop tard</French>
+                <Spanish>La bomba ha detonado. Llegasteis demasiado tarde.</Spanish>
+                <German>Die Bombe ist detoniert. Ihr seid zu spät gekommen.</German>
+                <Italian>La bomba è esplosa. Siete arrivati troppo tardi.</Italian>
+                <Russian>Бомба взорвалась. Вы прибыли слишком поздно.</Russian>
+                <Chinese>炸弹已爆炸，你们来得太晚了</Chinese>
+                <Japanese>爆弾はすでに爆発した。到着が遅すぎた。</Japanese>
+            </Key>
             <Key ID="STR_RPG_HC_OPFOR_AROUND">
                 <Original>We have spotted enemies around your position, be ready</Original>
                 <English>We have spotted enemies around your position, be ready</English>
