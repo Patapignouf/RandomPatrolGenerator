@@ -177,7 +177,7 @@ _buttonOK ctrlAddEventHandler[ "ButtonClick",
 		_vehicleClassToSpawn = (_lnbEntries lnbData [lnbCurSelRow _lnbEntries, 0]);
 		_vehicleNameToSpawn = (_lnbEntries lnbData [lnbCurSelRow _lnbEntries, 1]);
 		_vehiclePriceToSpawn = parseNumber (_lnbEntries lnbData [lnbCurSelRow _lnbEntries, 2]);
-		_vehicleIsUAV = getText (configFile >> "CfgVehicles" >> _vehicleClassToSpawn >> "vehicleClass") == "Autonomous";
+		_vehicleIsUAV = _vehicleClassToSpawn isKindOf "UAV";
 
 		_VehicleAvalaibleSpawnName = _display getVariable "VehicleAvalaibleSpawn";
 		_bluforVehicleAvalaibleSpawnCounter = missionNamespace getVariable _VehicleAvalaibleSpawnName;
@@ -186,24 +186,80 @@ _buttonOK ctrlAddEventHandler[ "ButtonClick",
 		{
 			if (_bluforVehicleAvalaibleSpawnCounter>=_vehiclePriceToSpawn) then 
 			{
-
-				//Reduce avalaible spawn counter
-				missionNamespace setVariable [_VehicleAvalaibleSpawnName, _bluforVehicleAvalaibleSpawnCounter-_vehiclePriceToSpawn, true];
-				hint format ["A %2 has spawned, %1 avdvanced spawn credit left.", _bluforVehicleAvalaibleSpawnCounter-_vehiclePriceToSpawn, _vehicleNameToSpawn];
-
-				_index = missionNameSpace getVariable ["AicraftCarrierBluforIndex", 0];
-				_spawnPositions = missionNameSpace getVariable ["AicraftCarrierBluforSpawn", []];
-
-				if ((count _spawnPositions)-1 < _index  ) then 
-				{
-					_index = 0;
-				};
-
-				[_vehicleClassToSpawn, _spawnPositions#_index] call spawnVehicleOnAicraft;
 				
-				//adjust global variable
-				missionNameSpace setVariable ["AicraftCarrierBluforIndex", _index+1, true];
+				if (_vehicleClassToSpawn isKindOf "Ship") then 
+				{
+					//Spawn ship
+					//Open map and spawn plane
+					[_vehicleClassToSpawn, _vehiclePriceToSpawn, _VehicleAvalaibleSpawnName, _vehicleNameToSpawn, _bluforVehicleAvalaibleSpawnCounter] spawn {
+						params ["_vehicleClassToSpawn", "_vehiclePriceToSpawn", "_VehicleAvalaibleSpawnName", "_vehicleNameToSpawn", "_bluforVehicleAvalaibleSpawnCounter"];
 
+						//Click on map to spawn
+						selectedLoc = [0,0,0];
+						openMap true;
+						uiSleep 1;
+
+						["<t color='#ffffff' size='.8'>Click on map to spawn an ship<br />The ship will spawn oriented on the north</t>",0,0,2,0,0,789] spawn BIS_fnc_dynamicText;
+						onMapSingleClick "selectedLoc = _pos; onMapSingleClick ''; openMap false; true;";
+						waitUntil{!(visibleMap)};  
+						if (!([selectedLoc, [0,0,0]] call BIS_fnc_areEqual)) then 
+						{
+							_spawnedVehicle = createVehicle [_vehicleClassToSpawn, selectedLoc, [], 0, "NONE"];
+							//player moveInAny (vehicle _spawnedVehicle);
+
+							//Reduce avalaible spawn counter
+							missionNamespace setVariable [_VehicleAvalaibleSpawnName, _bluforVehicleAvalaibleSpawnCounter-_vehiclePriceToSpawn, true];
+							hint format ["A %2 has spawned, %1 avdvanced spawn credit left.", _bluforVehicleAvalaibleSpawnCounter-_vehiclePriceToSpawn, _vehicleNameToSpawn];
+						};
+					};
+				} else 
+				{
+
+					//Reduce avalaible spawn counter
+					missionNamespace setVariable [_VehicleAvalaibleSpawnName, _bluforVehicleAvalaibleSpawnCounter-_vehiclePriceToSpawn, true];
+					hint format ["A %2 has spawned, %1 avdvanced spawn credit left.", _bluforVehicleAvalaibleSpawnCounter-_vehiclePriceToSpawn, _vehicleNameToSpawn];
+
+					_index = missionNameSpace getVariable ["AicraftCarrierBluforIndex", 0];
+					_spawnPositions = missionNameSpace getVariable ["AicraftCarrierBluforSpawn", []];
+
+
+
+					if ((count _spawnPositions)-1 < _index  ) then 
+					{
+						_index = 0;
+					};
+
+					if (_vehicleIsUAV && _vehicleClassToSpawn isKindOf "Plane") then 
+					{
+						//UAV spawn is only avalaible for blufor
+						_thisPosition = _spawnPositions#_index;
+						//systemChat format ["test pos : %1", _thisPosition];
+						_tempPos = [_thisPosition select 0, _thisPosition select 1];
+						_tempPos pushBack ((_thisPosition select 2)+1400); //Set 3 dimension position
+						//_currentUAVArray = [_tempPos, 0, _vehicleClass, blufor] call BIS_fnc_spawnVehicle;
+						_currentVehicle = createVehicle [_vehicleClassToSpawn,  [_tempPos#0, _tempPos#1, _tempPos#2+100], [], 0, "FLY"];
+						createVehicleCrew _currentVehicle;
+						//systemChat format ["test : %1", _currentUAVArray];
+						//_currentVehicle = _currentUAVArray select 0;
+						//_currentUAVGroup = _currentUAVArray select 2;
+
+						//Set waypoint to current pos to the UAV
+						_wp = _currentUAVGroup addWaypoint [_tempPos, 0];
+
+						//Set unlimited fuel to the UAV
+						[[_currentVehicle], 'objectGenerator\setUnlimitedFuel.sqf'] remoteExec ['BIS_fnc_execVM', 0, true];
+					} else 
+					{
+						[_vehicleClassToSpawn, _spawnPositions#_index] call spawnVehicleOnAicraft;
+					};
+
+
+
+					
+					
+					//adjust global variable
+					missionNameSpace setVariable ["AicraftCarrierBluforIndex", _index+1, true];
+				};
 
 				//Close mission setup
 				_display closeDisplay 1;
