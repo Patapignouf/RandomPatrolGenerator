@@ -202,7 +202,7 @@ doGenerateVehicleForFOB =
 						_wp = _currentUAVGroup addWaypoint [_tempPos, 0];
 
 						//Set unlimited fuel to the UAV
-						[[_currentVehicle], 'objectGenerator\setUnlimitedFuel.sqf'] remoteExec ['BIS_fnc_execVM', 0, true];
+						[_currentVehicle, 'objectGenerator\setUnlimitedFuel.sqf'] remoteExec ['BIS_fnc_execVM', 0, true];
 					};
 					if (_isUAV) then 
 					{
@@ -405,6 +405,10 @@ spawnVehicleOnAicraft = {
 	{
 		[_vehicle] call doAddKeys;
 	};
+
+	//Clear vehicle cargo
+	clearWeaponCargoGlobal _currentVehicle;
+	clearBackpackCargo _currentVehicle;
 
 	//Repair vehicle
 	[_objectToSpawn] spawn {
