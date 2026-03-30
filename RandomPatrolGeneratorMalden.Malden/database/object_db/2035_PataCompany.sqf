@@ -59,7 +59,8 @@ bluforBoat_2035_PataCompany = [
 bluforFixedWing_2035_PataCompany = [
 	"Atlas_O_T_Plane_Fighter_03_dynamicLoadout_F",
 	"Atlas_B_A_Plane_Transport_01_infantry_F",
-	"Atlas_B_A_Plane_Transport_01_vehicle_F"
+	"Atlas_B_A_Plane_Transport_01_vehicle_F",
+	"Aegis_B_E_Plane_Fighter_04_ard_F"
 ];
 
 //Vehicule able to do HQ features (Loadout management and more)
@@ -175,7 +176,8 @@ backPackList_2035_PataCompany = [
 	"B_AssaultPack_blk",
 	"B_Carryall_blk",
 	"B_AssaultPackSpec_cbr",
-	"B_AssaultPack_mcamo"
+	"B_AssaultPack_mcamo",
+	"B_Carryall_mcamo"
 ];
 
 
@@ -195,6 +197,7 @@ uniformList_2035_PataCompany = [
 	"H_HelmetSpecB_cover_Multitarn_F",
 	"H_Booniehat_mcamo_hs",
 	"H_HelmetSpecB_mcamo",
+	"Aegis_H_Helmet_Virtus_Scrim_mtp_F",
 	
 	//Glasses 
 	"G_Tactical_Yellow",
