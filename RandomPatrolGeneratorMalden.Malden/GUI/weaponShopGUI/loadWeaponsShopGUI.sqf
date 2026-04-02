@@ -211,6 +211,7 @@ _buttonRandom ctrlAddEventHandler [ "ButtonClick",
 				if (side player == blufor) then 
 				{
 					_currentFaction = bluFaction;
+
 				};
 
 				[_supportClass, _supportType, _currentFaction] call addUnlockedWeapon;		
@@ -218,7 +219,8 @@ _buttonRandom ctrlAddEventHandler [ "ButtonClick",
 				[_bluforVehicleAvalaibleSpawnCounter-_supportPrice] call saveUnlockCredit;
 			
 				[player, player, player call getPlayerFaction] call setupArsenalToItem;
-				hint parseText format ["<img image='%1' size='5'/><br/><br/><t size='1.5'>You have unlocked <br/> %2 <br/>for the faction %3</t><br/><br/><t size='1.2'></t>", _weaponIcon, _supportName, _currentFaction];
+				_factionName = (factionInfos select {_x#1 == _currentFaction})#0#2;
+				hint parseText format ["<img image='%1' size='5'/><br/><br/><t size='1.5'>You have unlocked <br/> %2 <br/>for the faction %3</t><br/><br/><t size='1.2'></t>", _weaponIcon, _supportName, _factionName];
 
 				//Close mission setup
 				//Refresh title
@@ -274,7 +276,8 @@ _buttonOK ctrlAddEventHandler [ "ButtonClick",
 				[_bluforVehicleAvalaibleSpawnCounter-_supportPrice] call saveUnlockCredit;
 			
 				[player, player, player call getPlayerFaction] call setupArsenalToItem;
-				hint parseText format ["<img image='%1' size='5'/><br/><br/><t size='1.5'>You have unlocked <br/> %2 <br/>for the faction %3</t><br/><br/><t size='1.2'></t>", _weaponIcon, _supportName, _currentFaction];
+				_factionName = (factionInfos select {_x#1 == _currentFaction})#0#2;
+				hint parseText format ["<img image='%1' size='5'/><br/><br/><t size='1.5'>You have unlocked <br/> %2 <br/>for the faction %3</t><br/><br/><t size='1.2'></t>", _weaponIcon, _supportName, _factionName];
 
 				//Close mission setup
 				//Refresh title
