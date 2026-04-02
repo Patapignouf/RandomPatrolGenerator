@@ -1324,6 +1324,17 @@
         <Chinese>步兵击杀</Chinese>
         <Japanese>歩兵の殺害</Japanese>
     </Key>
+    <Key ID="STR_RPG_SCORE_INFANTRY_MAX_RANGE">
+        <Original>Max distance</Original>
+        <English>Max distance</English>
+        <French>Distance max.</French>
+        <Spanish>Distancia máxima</Spanish>
+        <German>Maximale Distanz</German>
+        <Italian>Distanza massima</Italian>
+        <Russian>Макс. дистанция</Russian>
+        <Chinese>最大距离</Chinese>
+        <Japanese>最大射程</Japanese>
+    </Key>
     <Key ID="STR_RPG_SCORE_VEHICLE_KILL">
         <Original>Vehicle kill</Original>
         <English>Vehicle kill</English>

@@ -170,6 +170,19 @@ _KilledEH = player addEventHandler ["Killed", {
 		{
 			//Reward PvP kill
 			_distance = _instigator distance _unit;
+
+			//Store kill distance
+			[[_distance], 
+			{
+				params ["_distance"];
+				_infantryKillRange = player getVariable ["RPG_ranking_infantry_killRange", 0];
+
+				if (_infantryKillRange < _distance) then 
+				{
+					player setVariable ["RPG_ranking_infantry_killRange", _distance, true];
+				};
+			}] remoteExec ["spawn", _instigator]; 
+
 			if (_distance<100 || _distance>5000) then {_distance = nil};
 			[[_distance], {params ["_distance"]; [1, "RPG_ranking_infantry_kill", _distance] call doUpdateRank}] remoteExec ["spawn", _instigator]; 
 		} else 

@@ -16,6 +16,7 @@ if (!_isEndMissionRunning) then
 	_basicInfoToGather = ["rank", "name", "progression"];
 	_basicXPToGather = [["RPG_ranking_infantry_kill","infantry kill"],
 						["RPG_ranking_vehicle_kill","vehicle kill"],
+						["RPG_ranking_infantry_killRange","max distance"],
 						["deathNumber","death"],
 						["RPG_ranking_suppress","suppress"],
 						["RPG_ranking_heal","heal"],

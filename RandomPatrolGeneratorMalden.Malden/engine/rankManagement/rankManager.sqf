@@ -25,6 +25,7 @@ if (_isFirstStart) then
 	//Init all XP categories
 	_basicXPToInit = ["RPG_ranking_infantry_kill",
 					"RPG_ranking_vehicle_kill",
+					"RPG_ranking_infantry_killRange",
 					"deathNumber",
 					"RPG_ranking_suppress",
 					"RPG_ranking_heal",
