@@ -125,6 +125,17 @@
                 <Chinese>最后一件事...</Chinese>
                 <Japanese>最後に一つ...</Japanese>
             </Key>
+            <Key ID="STR_RPG_SETUP_ROLE_ANNOUNCEMENT">
+                <Original>%1 has joined the mission as %2</Original>
+                <English>%1 has joined the mission as %2</English>
+                <French>%1 a rejoint la mission en tant que %2</French>
+                <Spanish>%1 se ha unido a la misión como %2</Spanish>
+                <German>%1 ist der Mission als %2 beigetreten</German>
+                <Italian>%1 si è unito alla missione come %2</Italian>
+                <Russian>%1 присоединился к миссии в качестве %2</Russian>
+                <Chinese>%1 已作为 %2 加入任务</Chinese>
+                <Japanese>%1 が %2 としてミッションに参加しました</Japanese>
+            </Key>
         </Container>
         <Container name="OBJECTIVES">
             <Key ID="STR_RPG_OBJ_SURVIVE">
@@ -1391,15 +1402,15 @@
         <Japanese>IEDの解除</Japanese>
     </Key>
     <Key ID="STR_RPG_SCORE_INTEL">
-        <Original>Intel Collect</Original>
-        <English>Intel Collect</English>
-        <French>Information collectée</French>
-        <Spanish>Recolección de información</Spanish>
-        <German>Informationen sammeln</German>
-        <Italian>Raccolta informazioni</Italian>
-        <Russian>Сбор информации</Russian>
-        <Chinese>收集情报</Chinese>
-        <Japanese>情報収集</Japanese>
+        <Original>Intel</Original>
+        <English>Intel</English>
+        <French>Information</French>
+        <Spanish>Información</Spanish>
+        <German>Aufklärung</German>
+        <Italian>Info</Italian>
+        <Russian>Разведданные</Russian>
+        <Chinese>情报</Chinese>
+        <Japanese>情報</Japanese>
     </Key>
     <Key ID="STR_RPG_SCORE_OBJECTIVE">
         <Original>Objective</Original>

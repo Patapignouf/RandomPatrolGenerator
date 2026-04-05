@@ -894,6 +894,8 @@ if (isClass (configFile >> "CfgPatches" >> "ace_medical")) then
 #include "GUI\mapIndicatorGUI\mapRealTimeMarkers.sqf"
 #include "engine\tentActionManagement.sqf"
 
+//Joining message 
+[format [(format ["%1", localize "STR_RPG_SETUP_ROLE_ANNOUNCEMENT"]), name player,  [player getVariable "role"] call getClassInformation]] remoteExec ["systemChat", 0, true]; //Display message to every client 
 
 //Display welcome message
 5 fadeMusic 0;
