@@ -177,7 +177,8 @@ backPackList_2035_PataCompany = [
 	"B_Carryall_blk",
 	"B_AssaultPackSpec_cbr",
 	"B_AssaultPack_mcamo",
-	"B_Carryall_mcamo"
+	"B_Carryall_mcamo",
+	"B_RadioBag_01_mtp_F"
 ];
 
 
@@ -193,6 +194,7 @@ uniformList_2035_PataCompany = [
 	"H_HelmetSpecB_light_sand",
 	"H_Cap_tan",
 	"Aegis_H_Helmet_FASTMT_Cover_tan_F",
+	"Aegis_H_Helmet_FASTMT_Headset_blk_F",
 	"H_HelmetSpecO_whex_F",
 	"H_HelmetSpecB_cover_Multitarn_F",
 	"H_Booniehat_mcamo_hs",
@@ -242,8 +244,11 @@ uniformList_2035_PataCompany = [
 	"U_O_R_Gorka_01_black_F",
 	"U_B_CombatUniform_mcam_tshirt",
 	"Atlas_U_B_CombatUniform_ffl_vest",
-	"Atlas_U_CombatUniformNCU_01_mcam_F"
+	"Atlas_U_CombatUniformNCU_01_mcam_F",
+	"Atlas_U_CombatUniformNCU_02_mcam_F"
 ];
+
+
 
 
 uniformListSniper_2035_PataCompany = [
