@@ -95,6 +95,7 @@ loadout_2035_PataCompany = [
 rifleList_2035_PataCompany = [	
 	"atlas_arifle_famasF1_F",
 	"atlas_arifle_famasF1_Grip_F",
+	"atlas_arifle_famasG4_Grip_F",
 	"hgun_G17_F"
 ];	
 
@@ -102,7 +103,7 @@ rifleList_2035_PataCompany = [
 
 //Grenade launcher or weapon with grenade launcher option
 grenadeLauncherList_2035_PataCompany = [		
-
+	"Atlas_Arifle_famasG4_GL_F"
 ];
 
 
@@ -178,10 +179,9 @@ backPackList_2035_PataCompany = [
 	"B_AssaultPackSpec_cbr",
 	"B_AssaultPack_mcamo",
 	"B_Carryall_mcamo",
-	"B_RadioBag_01_mtp_F"
+	"B_RadioBag_01_mtp_F",
+	"I_shield_backpack_lxWS"
 ];
-
-
 
 
 //Uniform, vest, headgear, avalaible for all unit
@@ -200,6 +200,7 @@ uniformList_2035_PataCompany = [
 	"H_Booniehat_mcamo_hs",
 	"H_HelmetSpecB_mcamo",
 	"Aegis_H_Helmet_Virtus_Scrim_mtp_F",
+	"H_Bandanna_mcamo_hs",
 	
 	//Glasses 
 	"G_Tactical_Yellow",
@@ -210,6 +211,11 @@ uniformList_2035_PataCompany = [
 	"G_Shemag_tan",
 	"dvk_shemag_w_altcsat",
 	"G_Bandanna_tan",
+	"G_Balaclava_combat",
+	"G_Balaclava_oli",
+	"G_Shemag_oli",
+	"G_Balaclava_light_mtp_F",
+	"G_Lowprofile",
 
 	//vest
 	"V_TacVest_oli",
@@ -247,7 +253,6 @@ uniformList_2035_PataCompany = [
 	"Atlas_U_CombatUniformNCU_01_mcam_F",
 	"Atlas_U_CombatUniformNCU_02_mcam_F"
 ];
-
 
 
 
