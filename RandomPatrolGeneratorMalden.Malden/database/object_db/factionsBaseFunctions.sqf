@@ -250,7 +250,6 @@ getBasicUnitsGroup = {
 			if (count (baseEnemyGroup_db select {_x select 1  == opFaction} select 0 select 0) == 0) then 
 			{
 				_resultGroup = [_resultGroup, _currentStuffFaction, 8] call doFillWithRifleman;
-
 			} else 
 			{
 				_resultGroup = baseEnemyGroup_db select {_x select 1  == opFaction} select 0 select 0;
@@ -265,8 +264,6 @@ getBasicUnitsGroup = {
 				_resultGroup pushBack ([_currentStuffFaction, "grenadier"] call getUnitByRole);
 
 				_resultGroup = [_resultGroup, _currentStuffFaction, 6] call doFillWithRifleman;
-				//diag_log format ["_baseEnemyATGroup %1 ",_baseEnemyATGroup];
-
 			} else 
 			{
 				_resultGroup = baseEnemyATGroup_db select {_x select 1  == opFaction} select 0 select 0;
@@ -367,9 +364,22 @@ doFillWithRifleman = {
 		_neededUnits = _desiredNumber-(count _groupToEvaluate);
 		for [{_i = 0}, {_i < (_neededUnits)}, {_i = _i + 1}] do
 		{ 
-			_groupToEvaluate pushBack ([_currentStuffFaction, "rifleman"] call getUnitByRole);
+			_currentRiflemanRole = ([_currentStuffFaction, "rifleman"] call getUnitByRole);
+
+			if (_currentRiflemanRole != "") then 
+			{
+				_groupToEvaluate pushBack _currentRiflemanRole;
+			} else 
+			{
+				//If there is no rifleman complete with leader (fix raven faction)
+				_groupToEvaluate pushBack ([_currentStuffFaction, "leader"] call getUnitByRole);
+			};
 		};
 	};
+
+
+
+
 	//diag_log format ["_groupToEvaluate after %1 %3 desiredNumber %2",_groupToEvaluate, _desiredNumber, count _groupToEvaluate];
 	_groupToEvaluate
 };
