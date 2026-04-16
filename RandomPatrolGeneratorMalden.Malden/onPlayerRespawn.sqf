@@ -4,6 +4,9 @@ player setUnitLoadout (player getVariable "spawnLoadout");
 //Adjust trait 
 [player, player getVariable "role"] call setUnitTraitAccordingToRole;
 
+//Close spectator mode
+["Terminate"] call BIS_fnc_EGSpectator;
+
 //Set player normal state 
 player setVariable ["isUnconscious", false, true];
 
