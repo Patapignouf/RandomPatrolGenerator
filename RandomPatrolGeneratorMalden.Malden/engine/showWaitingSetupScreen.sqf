@@ -23,7 +23,11 @@
 	};
 	_camera cameraEffect ["terminate", "back"];
 	camDestroy _camera;
+
+	//Enable camera to player
+	[[], 'engine\cameraZoomIn.sqf'] remoteExec ['BIS_fnc_execVM', player];
 };
 
 waitUntil {!isNil "missionGenerated"};
 ["",0,0,10,0.5,0,0] spawn BIS_fnc_dynamicText;
+
