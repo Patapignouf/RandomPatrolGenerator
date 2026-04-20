@@ -12,6 +12,8 @@ private _buttonRespawnAdvFOB = _mainDisplay displayCtrl 8201;
 private _buttonRespawnTent = _mainDisplay displayCtrl 8202;
 private _buttonRespawnMap = _mainDisplay displayCtrl 8203;
 
+//Close spectator mode
+["Terminate"] call BIS_fnc_EGSpectator;
 
 //Prevent restriction system from killing default loadout
 whiteListCurrentLoadout = 
