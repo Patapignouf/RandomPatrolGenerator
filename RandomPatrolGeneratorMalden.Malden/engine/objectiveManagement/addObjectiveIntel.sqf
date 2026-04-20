@@ -60,7 +60,8 @@ params ["_currentGroup", "_thisObjective"];
 									case "bomb":
 										{
 											_code = _thisObject getVariable "RPG_DefuseCode";
-											_currentObjectiveDescription = format ["The password is %1", _code];
+											_bombID = _thisObject getVariable "RPG_BombID";
+											_currentObjectiveDescription = format ["The password is %1 for the bomb with the ID %2", _code, _bombID];
 										};
 									case "vip":
 										{

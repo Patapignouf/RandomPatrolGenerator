@@ -372,6 +372,13 @@ currentRandObj = objNull;
 
 //Generate objectives according to the mission's length parameter
 _minNumberOfMission = missionLength min(count AllPossibleObjectivePosition);
+_numberOfObjectivePerLocation = missionNameSpace getVariable ["objectivePerLocation", 1];
+
+
+if (!enableCampaignMode) then 
+{
+	missionNameSpace setVariable ["maxObjectivesGeneratedSetting", _minNumberOfMission, true];
+};
 
 for [{_counterOfMission = 0}, {_counterOfMission < _minNumberOfMission}, {_counterOfMission = _counterOfMission + 1}] do //Peut être optimisé
 {
@@ -381,13 +388,13 @@ for [{_counterOfMission = 0}, {_counterOfMission < _minNumberOfMission}, {_count
 		//Classic order
 		case 0:
 		{
-			[avalaibleTypeOfObj, [PossibleObjectivePosition#0]] call generateObjective;
+			[avalaibleTypeOfObj, [PossibleObjectivePosition#0], _numberOfObjectivePerLocation] call generateObjectives;
 			PossibleObjectivePosition = PossibleObjectivePosition - [PossibleObjectivePosition#0];
 		};
 		//Random order
 		case 1:
 		{
-			PossibleObjectivePosition = [avalaibleTypeOfObj, PossibleObjectivePosition] call generateObjective;
+			PossibleObjectivePosition = [avalaibleTypeOfObj, PossibleObjectivePosition, _numberOfObjectivePerLocation] call generateObjectives;
 		};
 		//Closest objective
 		case 2:
@@ -397,7 +404,7 @@ for [{_counterOfMission = 0}, {_counterOfMission < _minNumberOfMission}, {_count
 			{	
 				//Case where this is the first objective
 				//Generate objective at first position
-				[avalaibleTypeOfObj, [PossibleObjectivePosition#0]] call generateObjective;
+				[avalaibleTypeOfObj, [PossibleObjectivePosition#0], _numberOfObjectivePerLocation] call generateObjectives;
 				PossibleObjectivePosition = PossibleObjectivePosition - [PossibleObjectivePosition#0];
 			} else 
 			{
@@ -405,7 +412,7 @@ for [{_counterOfMission = 0}, {_counterOfMission < _minNumberOfMission}, {_count
 				if (count PossibleObjectivePosition != 0) then 
 				{
 					_selectedPosition = [(MissionObjectives#-1)#3, PossibleObjectivePosition] call getClosest;
-					[avalaibleTypeOfObj, [_selectedPosition]] call generateObjective;
+					[avalaibleTypeOfObj, [_selectedPosition], _numberOfObjectivePerLocation] call generateObjectives;
 					PossibleObjectivePosition = PossibleObjectivePosition - [_selectedPosition];
 				};
 			};
@@ -879,7 +886,7 @@ switch (startIntel) do
 			//reveal objective for ind
 			if (_mainPlayerSide == independent) then 
 			{
-					for [{_i = 0}, {_i <= missionLength}, {_i = _i + 1}] do //Peut être optimisé
+					for [{_i = 0}, {_i < (missionLength*maxObjectivesGeneratedSetting)}, {_i = _i + 1}] do //Peut être optimisé
 				{
 					[objNull, [], _mainPlayerSide] execVM 'engine\objectiveManagement\revealObjective.sqf';
 				};
@@ -888,7 +895,7 @@ switch (startIntel) do
 	case 2:
 		{
 			//Give task to blufor
-			for [{_i = 0}, {_i <= missionLength}, {_i = _i + 1}] do //Peut être optimisé
+			for [{_i = 0}, {_i < missionLength*maxObjectivesGeneratedSetting}, {_i = _i + 1}] do //Peut être optimisé
 			{
 				[objNull, [], _mainPlayerSide] execVM 'engine\objectiveManagement\revealObjective.sqf';
 			};
@@ -1183,13 +1190,13 @@ if (enableCampaignMode) then
 				//Classic order
 				case 0:
 				{
-					[avalaibleTypeOfObj, [PossibleObjectivePosition#0]] call generateObjective;
+					[avalaibleTypeOfObj, [PossibleObjectivePosition#0], _numberOfObjectivePerLocation] call generateObjectives;
 					PossibleObjectivePosition = PossibleObjectivePosition - [PossibleObjectivePosition#0];
 				};
 				//Random order
 				case 1:
 				{
-					PossibleObjectivePosition = [avalaibleTypeOfObj, PossibleObjectivePosition] call generateObjective;
+					PossibleObjectivePosition = [avalaibleTypeOfObj, PossibleObjectivePosition, _numberOfObjectivePerLocation] call generateObjectives;
 				};
 				//Closest objective
 				case 2:
@@ -1200,7 +1207,7 @@ if (enableCampaignMode) then
 						//Case where this is the first objective
 						//Generate objective at first position
 						_randomSelectedObjective = selectRandom PossibleObjectivePosition;
-						[avalaibleTypeOfObj, [_randomSelectedObjective]] call generateObjective;
+						[avalaibleTypeOfObj, [_randomSelectedObjective], _numberOfObjectivePerLocation] call generateObjectives;
 						PossibleObjectivePosition = PossibleObjectivePosition - [_randomSelectedObjective];
 					} else 
 					{
@@ -1208,7 +1215,7 @@ if (enableCampaignMode) then
 						if (count PossibleObjectivePosition != 0) then 
 						{
 							_selectedPosition = [(MissionObjectives#-1)#3, PossibleObjectivePosition] call getClosest;
-							[avalaibleTypeOfObj, [_selectedPosition]] call generateObjective;
+							[avalaibleTypeOfObj, [_selectedPosition], _numberOfObjectivePerLocation] call generateObjectives;
 							PossibleObjectivePosition = PossibleObjectivePosition - [_selectedPosition];
 						};
 					};
@@ -1223,7 +1230,10 @@ if (enableCampaignMode) then
 			//Reveal objective to the player
 			if (startIntel == 2) then 
 			{
-				[objNull, [], _mainPlayerSide] execVM 'engine\objectiveManagement\revealObjective.sqf';
+				for [{_i = 0}, {_i < maxObjectivesGeneratedSetting}, {_i = _i + 1}] do //Peut être optimisé
+				{
+					[objNull, [], _mainPlayerSide] execVM 'engine\objectiveManagement\revealObjective.sqf';
+				};
 			};
 
 			//Update objective complete counter

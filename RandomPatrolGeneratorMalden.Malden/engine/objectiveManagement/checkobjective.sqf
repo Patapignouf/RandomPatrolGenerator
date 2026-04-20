@@ -34,6 +34,14 @@ while {sleep 10; (!RTBComplete)&&(!(missionNamespace getVariable ["isEndMissionR
 	_completedObjectives = missionNamespace getVariable ["completedObjectives",[]];
 	_missionObjectives = missionNamespace getVariable ["MissionObjectives",[]];
 	_missionFailedObjectives = missionNamespace getVariable ["missionFailedObjectives",[]];
+	_numberOfObjectivePerLocation = missionNameSpace getVariable ["objectivePerLocation",1];
+
+
+	// systemChat format ["_completedObjectives = %1", count _completedObjectives];
+	// systemChat format ["_missionFailedObjectives = %1", count _missionFailedObjectives];
+	// systemChat format ["_missionObjectives = %1", count _missionObjectives];
+	// systemChat format ["_numberOfObjectivePerLocation = %1", _numberOfObjectivePerLocation];
+
 
 	//Check if the server is setup with only one objective
 	if (missionLengthParam == 1) then 
@@ -45,8 +53,10 @@ while {sleep 10; (!RTBComplete)&&(!(missionNamespace getVariable ["isEndMissionR
 		missionComplete = ((count _completedObjectives)+ (count _missionFailedObjectives)) + 1 >= count _missionObjectives;
 	};
 
+	//_numberOfLocationNeeded = floor ((maxObjectivesGeneratedSetting+0.5)/_numberOfObjectivePerLocation);
+
 	//Check if mission is complete
-	if (((missionComplete && !enableCampaignMode)||(count _completedObjectives >= count AllPossibleObjectivePosition)|| (((count _completedObjectives) + (count _missionFailedObjectives)) >= maxObjectivesGeneratedSetting))&&((count _missionObjectives)>0)) then 
+	if (((missionComplete && !enableCampaignMode)||(count _completedObjectives >= (count (AllPossibleObjectivePosition)*_numberOfObjectivePerLocation))|| (((count _completedObjectives) + (count _missionFailedObjectives)) >= maxObjectivesGeneratedSetting))&&((count _missionObjectives)>0)) then 
 	{
 		//Check if RTB mission has to be created 
 		if (missionComplete && missionNameSpace getVariable ["enableRTBMission", 1] == 1) then 

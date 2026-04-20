@@ -3,7 +3,7 @@
 
 generateObjective =
 {
-	params ["_avalaibleTypeOfObj","_possibleObjectivePosition"];
+	params ["_avalaibleTypeOfObj","_possibleObjectivePosition", "_generateShop"];
 
 	//Init mission objective status
 	_completedObjectives = missionNamespace getVariable ["completedObjectives",[]];
@@ -39,6 +39,35 @@ generateObjective =
 			[_selectedObjectivePosition] call generateJammedAntenna;
 		};
 	};
+
+	//GenerateShop Box
+	if (_generateShop) then 
+	{
+		_boxLocation = ([_selectedObjectivePosition, 1, 60, 1, 0, 20, 0, [], [_selectedObjectivePosition, _selectedObjectivePosition]] call BIS_fnc_findSafePos);
+
+		_boxObject = createVehicle ["Box_FIA_Wps_F", _boxLocation, [], 0, "NONE"];
+
+		clearWeaponCargoGlobal _boxObject;
+		clearMagazineCargoGlobal _boxObject;
+		clearItemCargoGlobal _boxObject;
+		clearBackpackCargoGlobal _boxObject;
+
+		//Add shop to the box
+		[_boxObject, [format ["<img size='2' image='\a3\ui_f_oldman\data\IGUI\Cfg\holdactions\map_ca.paa'/><t size='1'>%1</t>", localize "RPG_GUI_GENERAL_WEAPON_SHOP"],{
+				params ["_object","_caller","_ID","_thisObjective"];
+				[[[false, "OPFOR"]], "GUI\weaponShopGUI\weaponShopGUI.sqf"] remoteExec ['BIS_fnc_execVM', _caller];
+			},[],10,true,false,"","_target distance _this <4"]] remoteExec ["addAction", 0, true];
+
+		//Remove weapon shop if the box has been destroyed
+		_boxObject addEventHandler ["Killed", {
+			params ["_unit", "_killer", "_instigator", "_useEffects"];
+
+			//Remove all actions
+			[_unit] remoteExec ["removeAllEventHandlers", 0, true];
+			[_unit] remoteExec ["removeAllActions", 0, true];
+		}];
+	};
+
 	
 	//Generate mission environement
 	switch (currentObjType) do 
@@ -134,6 +163,28 @@ generateObjective =
 
 	//Return objective selected location
 	_possibleObjectivePosition;
+};
+
+
+generateObjectives = {
+	params ["_avalaibleTypeOfObjList","_possibleObjectivePositions", "_numberOfObjPerPosition"];
+	
+	_possibleObjectivePositionResult = objNull;
+
+	//Add weapon shop
+	_mustGenerateShop = (missionNameSpace getVariable ["enableOpforWeaponShop",1] == 2);
+
+	for [{_indexObj = 0}, {_indexObj < _numberOfObjPerPosition}, {_indexObj = _indexObj + 1}] do
+	{
+		if (maxObjectivesGeneratedSetting != count MissionObjectives) then 
+		{
+			//Generate mission
+			_possibleObjectivePositionResult = [_avalaibleTypeOfObjList, _possibleObjectivePositions, _mustGenerateShop] call generateObjective;
+			_mustGenerateShop = false; //Generate shop once
+		};
+	}; 
+
+	_possibleObjectivePositionResult;
 };
 
 
@@ -512,7 +563,7 @@ generateObjectiveObject =
 				//Add intel action to the intel case
 				_objectiveObject setPosATL _thisObjectivePosition;
 
-
+				//Bomb code
 				_code = random [10000000000,
 								55555555555,
 								99999999999];				
@@ -520,6 +571,18 @@ generateObjectiveObject =
 
 				_code = _code regexReplace  [" ", ""]; 
 				_objectiveObject setVariable ["RPG_DefuseCode", _code, true];
+
+
+				//BombID
+				_bombID = random [1000000,
+								5555555,
+								9999999];				
+   				_bombID = [_bombID] call BIS_fnc_numberText;	
+
+				_bombID = _bombID regexReplace  [" ", ""]; 
+				_objectiveObject setVariable ["RPG_BombID", _bombID, true];
+
+
 				//systemChat _code;
 
 				//Detecting player in the area to begin the countdown 
@@ -616,10 +679,10 @@ generateObjectiveObject =
 							_ctrlGroup ctrlCommit 0;
 							_ctrlBackground ctrlSetPosition [0, 0, 0.5, 0.5];
 							_ctrlBackground ctrlSetBackgroundColor [0.5, 0.5, 0.5, 0.9];
-							_ctrlBackground ctrlSetText "ENTER THE DEFUSE CODE :";
+							_ctrlBackground ctrlSetText format ["BOMB %1\nENTER THE DEFUSE CODE :", _object getVariable "RPG_BombID"];
 							_ctrlBackground ctrlEnable false;
 							_ctrlBackground ctrlCommit 0;
-							_ctrlEdit ctrlSetPosition [0.01, 0.05, 0.48, 0.34];
+							_ctrlEdit ctrlSetPosition [0.01, 0.12, 0.45, 0.25];
 							_ctrlEdit ctrlSetBackgroundColor [0, 0, 0, 0.5];
 							_ctrlEdit ctrlCommit 0;
 							_ctrlButton ctrlSetPosition [0.185, 0.42, 0.13, 0.05];
