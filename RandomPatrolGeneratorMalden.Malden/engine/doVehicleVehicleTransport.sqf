@@ -47,7 +47,7 @@ waitUntil {isTouchingGround (_heli)};
 //Bug with Smart AI
 if (isClass (configFile >> "CfgPatches" >> "SAAI_main")) then 
 {
-	_heli setFuel 0;
+	[_heli, 0] remoteExec ["setFuel", _heli];
 };
 
 //Add action to take off
@@ -79,7 +79,7 @@ if (isClass (configFile >> "CfgPatches" >> "SAAI_main")) then
 					if (isClass (configFile >> "CfgPatches" >> "SAAI_main")) then 
 					{
 						_heli = vehicle (leader _vehicleTransportGroup);
-						_heli setFuel 1;
+						[_heli, 1] remoteExec ["setFuel", _heli];
 					};
 
 					_tempWaypoint = _vehicleTransportGroup addWaypoint [_lzSafePos, -1];
@@ -96,7 +96,7 @@ if (isClass (configFile >> "CfgPatches" >> "SAAI_main")) then
 					//Bug with Smart AI
 					if (isClass (configFile >> "CfgPatches" >> "SAAI_main")) then 
 					{
-						_heli setFuel 0;
+						[_heli, 0] remoteExec ["setFuel", _heli];
 					};
 				};
 			};

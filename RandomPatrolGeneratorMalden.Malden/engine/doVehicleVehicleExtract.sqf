@@ -47,7 +47,7 @@ waitUntil {isTouchingGround (_heli)};
 //Bug with Smart AI
 if (isClass (configFile >> "CfgPatches" >> "SAAI_main")) then 
 {
-	_heli setFuel 0;
+	[_heli, 0] remoteExec ["setFuel", _heli];
 };
 
 
@@ -69,7 +69,7 @@ waitUntil {_heli getVariable ["helicopterReady", false] == true};
 //Bug with Smart AI
 if (isClass (configFile >> "CfgPatches" >> "SAAI_main")) then 
 {
-	_heli setFuel 1;
+	[_heli, 1] remoteExec ["setFuel", _heli];
 };
 
 //Go to blufor base
@@ -92,7 +92,7 @@ waitUntil {isTouchingGround (_heli)};
 //Bug with Smart AI
 if (isClass (configFile >> "CfgPatches" >> "SAAI_main")) then 
 {
-	_heli setFuel 0;
+	[_heli, 0] remoteExec ["setFuel", _heli];
 };
 
 //Wait 10 minutes
@@ -102,7 +102,7 @@ sleep 600;
 //Bug with Smart AI
 if (isClass (configFile >> "CfgPatches" >> "SAAI_main")) then 
 {
-	_heli setFuel 1;
+	[_heli, 1] remoteExec ["setFuel", _heli];
 };
 
 //back to map border
