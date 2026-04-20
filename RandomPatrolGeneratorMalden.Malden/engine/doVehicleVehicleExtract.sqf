@@ -43,6 +43,14 @@ wp1 setWaypointStatements ["true", "(vehicle this) LAND 'LAND';"];
 //Waiting for heli to land
 waitUntil {isTouchingGround (_heli)};
 
+//Force chopper to stay here 
+//Bug with Smart AI
+if (isClass (configFile >> "CfgPatches" >> "SAAI_main")) then 
+{
+	_heli setFuel 0;
+};
+
+
 //Add action to take off
 [_heli, [format ["Extract"],{
 		params ["_object","_caller","_ID","_thisParams"];
@@ -57,6 +65,12 @@ waitUntil {isTouchingGround (_heli)};
 //Wait for chopper to be ready and with players
 waitUntil {_heli getVariable ["helicopterReady", false] == true};
 
+//Fix chopper by refueling 
+//Bug with Smart AI
+if (isClass (configFile >> "CfgPatches" >> "SAAI_main")) then 
+{
+	_heli setFuel 1;
+};
 
 //Go to blufor base
 _lzPos = initBlueforLocation findEmptyPosition [30, 300,"Land_HelipadCircle_F"];
@@ -73,7 +87,23 @@ wp1 setWaypointStatements ["true", "(vehicle this) LAND 'LAND';"];
 
 //Waiting for crew to dismount
 waitUntil {isTouchingGround (_heli)};
+
+//Force chopper to stay here 
+//Bug with Smart AI
+if (isClass (configFile >> "CfgPatches" >> "SAAI_main")) then 
+{
+	_heli setFuel 0;
+};
+
+//Wait 10 minutes
 sleep 600;
+
+//Fix chopper by refueling 
+//Bug with Smart AI
+if (isClass (configFile >> "CfgPatches" >> "SAAI_main")) then 
+{
+	_heli setFuel 1;
+};
 
 //back to map border
 wp2 = _vehicleTransportGroup addWaypoint [[selectRandom [0,worldSize],selectRandom [0,worldSize]], 25];

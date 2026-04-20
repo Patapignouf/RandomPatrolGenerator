@@ -43,6 +43,13 @@ wp1 setWaypointStatements ["true", "(vehicle this) LAND 'LAND';"];
 //Waiting for heli to land
 waitUntil {isTouchingGround (_heli)};
 
+//Force chopper to stay here 
+//Bug with Smart AI
+if (isClass (configFile >> "CfgPatches" >> "SAAI_main")) then 
+{
+	_heli setFuel 0;
+};
+
 //Add action to take off
 [_heli, [format ["Set transport destination"],{
 		params ["_object","_caller","_ID","_thisParams"];
@@ -66,12 +73,31 @@ waitUntil {isTouchingGround (_heli)};
 					//Go to landing pos
 					_lzSafePos = [selectedHaloLoc, 0, 250, 10, 0, 0.25, 0, [], [selectedHaloLoc, selectedHaloLoc]] call BIS_fnc_findSafePos;
 					_lz =  createVehicle ["Land_HelipadEmpty_F", _lzSafePos, [], 0, "NONE"];
+
+					//Force chopper to stay here 
+					//Bug with Smart AI
+					if (isClass (configFile >> "CfgPatches" >> "SAAI_main")) then 
+					{
+						_heli = vehicle (leader _vehicleTransportGroup);
+						_heli setFuel 1;
+					};
+
 					_tempWaypoint = _vehicleTransportGroup addWaypoint [_lzSafePos, -1];
 					_tempWaypoint setwaypointtype"TR UNLOAD"; 
 					_tempWaypoint setWaypointBehaviour "CARELESS";
 					_tempWaypoint setWaypointCombatMode "BLUE";
 					_tempWaypoint setWaypointSpeed "FULL";
 					_tempWaypoint setWaypointStatements ["true", "(vehicle this) LAND 'LAND';"]; 
+
+					//Waiting for heli to land
+					waitUntil {isTouchingGround (_heli)};
+
+					//Force chopper to stay here 
+					//Bug with Smart AI
+					if (isClass (configFile >> "CfgPatches" >> "SAAI_main")) then 
+					{
+						_heli setFuel 0;
+					};
 				};
 			};
 	},[_vehicleTransportGroup],1.5,true,false,"","_target distance _this <5"]] remoteExec ["addAction", 0, true];
