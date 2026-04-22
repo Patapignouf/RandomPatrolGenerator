@@ -204,11 +204,6 @@ doGenerateVehicleForFOB =
 						//Set unlimited fuel to the UAV
 						[_currentVehicle, 'objectGenerator\setUnlimitedFuel.sqf'] remoteExec ['BIS_fnc_execVM', 0, true];
 					};
-					if (_isUAV) then 
-					{
-						_kind = "Plane";
-						//WIP
-					};   
 				};
 				default {_kind = "Other";};   
 			};
