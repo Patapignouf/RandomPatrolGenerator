@@ -7,17 +7,17 @@ doGenerateEnemyGroup =
 	params ["_thisGroupToSpawn","_thisSpawnPosition","_thisFaction","_thisGroupType"];
 
 	//Group spawn
-	_currentGroupPatrol = [_thisSpawnPosition, _thisFaction, _thisGroupToSpawn,[],[],[],[],[], random 360] call BIS_fnc_spawnGroup;
+	_currentGroupToSpawn = [_thisSpawnPosition, _thisFaction, _thisGroupToSpawn,[],[],[],[],[], random 360] call BIS_fnc_spawnGroup;
 
 	//Optimize IA 
-	_currentGroupPatrol enableDynamicSimulation true;
+	_currentGroupToSpawn enableDynamicSimulation true;
 	
 
 	//Intel Synchronization
 	if (_thisGroupType != "") then
 	{
 		_missionEnemyInfo = missionNamespace getVariable ["MissionEnemyInfo",[]];
-		_missionEnemyInfo pushBack [_thisGroupType,_thisSpawnPosition, _currentGroupPatrol];
+		_missionEnemyInfo pushBack [_thisGroupType,_thisSpawnPosition, _currentGroupToSpawn];
 		missionNamespace setVariable ["MissionEnemyInfo", _missionEnemyInfo, true];
 	};
 
@@ -33,16 +33,16 @@ doGenerateEnemyGroup =
 						_unit setUnitPos "MIDDLE"; 
 					}; 
 				}];
-		} foreach (units _currentGroupPatrol);
+		} foreach (units _currentGroupToSpawn);
 	};
 	
 	//Set IA Skills
-	[_currentGroupPatrol, missionIASkillParam] call doSetGroupSkills;
+	[_currentGroupToSpawn, missionIASkillParam] call doSetGroupSkills;
 
 	//Adjust ACE Medic items 
 	if (isClass (configFile >> "CfgPatches" >> "ace_medical")) then 
 	{
-		[_currentGroupPatrol] call doAdjustACEMedic;
+		[_currentGroupToSpawn] call doAdjustACEMedic;
 	};
 
 	//Opfor group
@@ -95,7 +95,7 @@ doGenerateEnemyGroup =
 
 					//Update player rank
 					if (_distance<100 || _distance>5000) then {_distance = nil};
-					[[_distance], {params ["_distance"]; [1, "RPG_ranking_infantry_kill", _distance] call doUpdateRank}] remoteExec ["spawn", _instigator]; 
+					[[_distance], {params [["_distance", 0]]; [1, "RPG_ranking_infantry_kill", _distance] call doUpdateRank}] remoteExec ["spawn", _instigator]; 
 
 				} else {
 					//Debug IA killed log
@@ -132,12 +132,12 @@ doGenerateEnemyGroup =
 				};
 			};
 
-		} foreach (units _currentGroupPatrol);
+		} foreach (units _currentGroupToSpawn);
 
 		//Manage unit surrender
 		if (missionNameSpace getVariable ["enableSurrenderUnit", 1] == 1) then 
 		{
-			_currentGroupPatrol addEventHandler ["UnitKilled", {
+			_currentGroupToSpawn addEventHandler ["UnitKilled", {
 				params ["_group", "_unit", "_killer", "_instigator", "_useEffects"];
 
 				if (count ((units _group) select {alive _x}) <=2) then 
@@ -170,7 +170,7 @@ doGenerateEnemyGroup =
 	//Define specific vehicle trigger
 	if (_thisGroupType == "Car" || _thisGroupType == "LightArmored" || _thisGroupType == "HeavyArmored") then 
 	{
-		_vehicleFromGroup = vehicle (leader _currentGroupPatrol);
+		_vehicleFromGroup = vehicle (leader _currentGroupToSpawn);
 
 		[_vehicleFromGroup] call addVehicleXPSetup;
 		
@@ -251,11 +251,11 @@ doGenerateEnemyGroup =
 					};
 				};
 			};
-		} foreach (units _currentGroupPatrol);
+		} foreach (units _currentGroupToSpawn);
 	};
 
 	//Return spawned group
-	_currentGroupPatrol
+	_currentGroupToSpawn
 };
 
 
@@ -265,21 +265,21 @@ doGenerateHostileCivilianGroup =
 	params ["_thisGroupToSpawn","_thisSpawnPosition", "_hostileProba"];
 	_thisGroupType = "Civilian";
 	//Group spawn
-	_currentGroupPatrol = [_thisSpawnPosition, civilian, _thisGroupToSpawn,[],[],[],[],[], random 360] call BIS_fnc_spawnGroup;
+	_currentGroupToSpawn = [_thisSpawnPosition, civilian, _thisGroupToSpawn,[],[],[],[],[], random 360] call BIS_fnc_spawnGroup;
 
 	//Optimize IA 
-	_currentGroupPatrol enableDynamicSimulation true;
+	_currentGroupToSpawn enableDynamicSimulation true;
 
 	//Intel Synchronization
 	if (_thisGroupType != "") then
 	{
 		_missionEnemyInfo = missionNamespace getVariable ["MissionEnemyInfo",[]];
-		_missionEnemyInfo pushBack [_thisGroupType,_thisSpawnPosition, _currentGroupPatrol];
+		_missionEnemyInfo pushBack [_thisGroupType,_thisSpawnPosition, _currentGroupToSpawn];
 		missionNamespace setVariable ["MissionEnemyInfo", _missionEnemyInfo, true];
 	};
 	
 	//Set IA Skills
-	[_currentGroupPatrol, missionIASkillParam] call doSetGroupSkills;
+	[_currentGroupToSpawn, missionIASkillParam] call doSetGroupSkills;
 
 
 	//Manage civilian specific feature
@@ -318,10 +318,10 @@ doGenerateHostileCivilianGroup =
 				[{[-50,3] call doUpdateRankWithPenalty}] remoteExec ["call", _instigator];
 			}; 
 		}];
-	} foreach (units _currentGroupPatrol);
+	} foreach (units _currentGroupToSpawn);
 
 	//Return spawned group
-	_currentGroupPatrol
+	_currentGroupToSpawn
 };
 
 

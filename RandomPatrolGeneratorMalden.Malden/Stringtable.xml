@@ -546,6 +546,28 @@
                 <Chinese>你必须控制位于%1的敌方前进作战基地。</Chinese>
                 <Japanese>位置%1のオプフォーFOBを制御しなければなりません。</Japanese>
             </Key>
+            <Key ID="STR_RPG_OBJ_ATK_DESTROYER">
+                <Original>Attack Opfor Destroyer</Original>
+                <English>Attack Opfor Destroyer</English>
+                <French>Attaquer le destroyer ennemi</French>
+                <Spanish>Atacar el destructor de Opfor</Spanish>
+                <German>Opfor-Zerstörer angreifen</German>
+                <Italian>Attaccare il cacciatorpediniere di Opfor</Italian>
+                <Russian>Атаковать эсминец Опфор</Russian>
+                <Chinese>攻击敌方驱逐舰</Chinese>
+                <Japanese>オプフォー駆逐艦を攻撃</Japanese>
+            </Key>
+            <Key ID="STR_RPG_OBJ_ATK_DESTROYER_TEXT">
+                <Original>You have to control the opfor destroyer on position %1.</Original>
+                <English>You have to control the opfor destroyer on position %1.</English>
+                <French>Vous devez prendre le contrôle du destroyer ennemi près de %1</French>
+                <Spanish>Debes controlar el destructor de Opfor en la posición %1.</Spanish>
+                <German>Du musst den Opfor-Zerstörer an Position %1 kontrollieren.</German>
+                <Italian>Devi controllare il cacciatorpediniere di Opfor in posizione %1.</Italian>
+                <Russian>Вы должны контролировать эсминец Опфор на позиции %1.</Russian>
+                <Chinese>你必须控制位于%1的敌方驱逐舰。</Chinese>
+                <Japanese>位置%1のオプフォー駆逐艦を制御しなければなりません。</Japanese>
+            </Key>
             <Key ID="STR_RPG_OBJ_ATK_OUTPOST">
                 <Original>Attack Opfor Outpost</Original>
                 <English>Attack Opfor Outpost</English>

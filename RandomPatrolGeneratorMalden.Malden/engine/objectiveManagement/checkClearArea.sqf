@@ -1,6 +1,6 @@
 #include "..\..\objectGenerator\vehicleManagement.sqf"
 
-params ["_thisTrigger"];
+params ["_thisTrigger", ["_addMoreOpfor", true]];
 
 //Count independent and blufor player
 _nbBluePlayer = count ((allPlayers select {alive _x && side _x == blufor} ) inAreaArray _thisTrigger);
@@ -9,16 +9,19 @@ _nbOpfor = count ((allUnits select {alive _x && side _x == opfor} ) inAreaArray 
 
 
 //Add more opfor to the area
-_baseRadius = 100;
-for [{_i = 0}, {_i < missionDifficultyParam+1}, {_i = _i + 1}] do 
+if (_addMoreOpfor) then 
 {
-	_basicEnemyGroups = [[opFaction, "BASIC"] call getBasicUnitsGroup, [opFaction, "AT"] call getBasicUnitsGroup];
-	currentRandomGroup = selectRandom _basicEnemyGroups;
-	currentGroup = [currentRandomGroup, getPos _thisTrigger, east, "DefenseInfantry"] call doGenerateEnemyGroup;
-	
-	//Spawn group
-	[currentGroup, getPos (leader currentGroup), _baseRadius, false] call doGarrison;
-	_baseRadius = _baseRadius + 20;
+	_baseRadius = 100;
+	for [{_i = 0}, {_i < missionDifficultyParam+1}, {_i = _i + 1}] do 
+	{
+		_basicEnemyGroups = [[opFaction, "BASIC"] call getBasicUnitsGroup, [opFaction, "AT"] call getBasicUnitsGroup];
+		currentRandomGroup = selectRandom _basicEnemyGroups;
+		currentGroup = [currentRandomGroup, getPos _thisTrigger, east, "DefenseInfantry"] call doGenerateEnemyGroup;
+		
+		//Spawn group
+		[currentGroup, getPos (leader currentGroup), _baseRadius, false] call doGarrison;
+		_baseRadius = _baseRadius + 20;
+	};
 };
 
 //Add more opfor to the area

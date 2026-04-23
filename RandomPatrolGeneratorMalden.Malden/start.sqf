@@ -846,7 +846,32 @@ if (missionNameSpace getVariable ["enableOpforBMShop",1] == 1) then
 
 for [{_i = 0}, {_i < missionLength}, {_i = _i + 1}] do //Peut être optimisé
 {
-	[] execVM 'enemyManagement\generationEngine\generateOpforFOB.sqf';
+	if (random 100 <75) then 
+	{	
+		_destroyerProb = 50;
+		if (missionNameSpace getVariable ["enableDestroyer", 1] == 1) then 
+		{
+			_destroyerProb = 0; 
+		};
+
+		if (random 100 < (50+_destroyerProb)) then 
+		{
+			[] execVM 'enemyManagement\generationEngine\generateOpforFOB.sqf';
+
+		} else 
+		{
+			//Add opfor destroyer
+			_resultSearchLoc =  [] call searchLocationWithWaterDepth;
+			if (_resultSearchLoc#1) then 
+			{
+				_pos = _resultSearchLoc#0;
+				if (400 < initBlueforLocation distance _pos) then //Spawn at least at 400m from blufor
+				{
+					[_pos] execVM 'enemyManagement\generationEngine\generateDestroyer.sqf';
+				};
+			};
+		};	
+	};
 };
 
 ////////////////////////////
@@ -1224,7 +1249,34 @@ if (enableCampaignMode) then
 
 			//Generate opfor FOB in campaign mode
 			if (random 100<25) then {
-				[] execVM 'enemyManagement\generationEngine\generateOpforFOB.sqf';
+
+				//50% chance to generate destroyer or FOB
+				if (random 100 <50) then 
+				{
+					_destroyerProb = 50;
+					if (missionNameSpace getVariable ["enableDestroyer", 1] == 1) then 
+					{
+						_destroyerProb = 0; 
+					};
+
+					if (random 100 < (50+_destroyerProb)) then 
+					{
+						[] execVM 'enemyManagement\generationEngine\generateOpforFOB.sqf';
+
+					} else 
+					{
+						//Add opfor destroyer
+						_resultSearchLoc =  [] call searchLocationWithWaterDepth;
+						if (_resultSearchLoc#1) then 
+						{
+							_pos = _resultSearchLoc#0;
+							if (400 < initBlueforLocation distance _pos) then //Spawn at least at 400m from blufor
+							{
+								[_pos] execVM 'enemyManagement\generationEngine\generateDestroyer.sqf';
+							};
+						};
+					};	
+				};
 			};
 
 			//Reveal objective to the player
