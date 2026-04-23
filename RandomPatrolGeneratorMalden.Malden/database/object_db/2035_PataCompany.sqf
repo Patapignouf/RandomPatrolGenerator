@@ -33,16 +33,16 @@ bluforStaticWeapon_2035_PataCompany =
 
 //Armored vehicle avalaible for blufor : Ex light tank
 bluforArmoredVehicle_2035_PataCompany = [
-	"Atlas_B_L_AFV_Wheeled_01_cannon_F"
+	selectRandom ["Atlas_B_L_AFV_Wheeled_01_cannon_F", "B_APC_Wheeled_01_cannon_v2_F"]
 ];
 
 bluforUnarmedVehicleChopper_2035_PataCompany = [
-	"B_Heli_Light_01_F",
-	"C_IDAP_Heli_Transport_02_F"
+	selectRandom ["B_A_Heli_light_03_unarmed_F", "B_Heli_Light_01_F"],
+	selectRandom ["Aegis_B_A_Heli_Transport_02_F", "B_Heli_Transport_03_unarmed_F"]
 ];
 
 bluforArmedChopper_2035_PataCompany = [
-
+	selectRandom ["B_W_Heli_Light_01_dynamicLoadout_F", "Atlas_B_M_Heli_Light_02_dynamicLoadout_F"]
 ];
 
 bluforDrone_2035_PataCompany = [
@@ -52,20 +52,21 @@ bluforDrone_2035_PataCompany = [
 
 bluforBoat_2035_PataCompany = [
 	"C_Boat_Civil_01_F",
-	"FP_PMC_OG_G_RHIB"
+	"B_A_Boat_Transport_01_F"
 ];
 
 //FixedWing vehicle avalaible for blufor
 bluforFixedWing_2035_PataCompany = [
-	"Atlas_O_T_Plane_Fighter_03_dynamicLoadout_F",
 	"Atlas_B_A_Plane_Transport_01_infantry_F",
 	"Atlas_B_A_Plane_Transport_01_vehicle_F",
-	"Aegis_B_E_Plane_Fighter_04_ard_F"
+	selectRandom ["Aegis_B_E_Plane_Fighter_04_F",
+			"B_T_Plane_CAS_01_dynamicLoadout_F",
+			"I_Plane_Fighter_03_dynamicLoadout_F"]
 ];
 
 //Vehicule able to do HQ features (Loadout management and more)
 bluforHQVehicle_2035_PataCompany = [
-
+	"Atlas_B_A_Truck_01_covered_F"
 ];	
 
 
