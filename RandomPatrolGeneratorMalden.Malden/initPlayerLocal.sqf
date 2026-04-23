@@ -4,6 +4,7 @@ cutText ["FINISHING LOADING MISSION", "BLACK FADED", 100];
 player setPos [worldSize,worldSize, 1000];
 player enableSimulationGlobal false;
 player allowdamage false;
+setPlayerRespawnTime 99999999; //Init respawn time
 
 #include "engine\modManager.sqf"
 #include "database\missionParameters.sqf"
