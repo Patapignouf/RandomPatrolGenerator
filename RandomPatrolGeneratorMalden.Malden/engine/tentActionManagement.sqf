@@ -10,11 +10,14 @@ if (missionNameSpace getVariable ["enableAdvancedRespawn", 1] == 1) then
 		{
 		
 			missionNameSpace setVariable [format ['bluforAdvancedRespawn%1', str (group _caller)], false, true];
-			missionNameSpace setVariable [format ['bluforPositionAdvancedRespawn%1', str (group _caller)], getPos _object, true];
+			missionNameSpace setVariable [format ['bluforPositionAdvancedRespawn%1', str (group _caller)], getPosATL _object, true];
 
 			//Create tent
 			
 			_createTent = createVehicle ["Land_TentDome_F", (_caller modelToWorld [0, 1, 0]), [], 0, "NONE"];
+			_callerPos = getPosATL _caller;
+			_tentPos = getPos _createTent;
+			_createTent setPosATL [_tentPos#0, _tentPos#1, _callerPos#2];
 			_createTent setVariable [str (group _caller), true, true];
 			_createTent allowDamage false;
 

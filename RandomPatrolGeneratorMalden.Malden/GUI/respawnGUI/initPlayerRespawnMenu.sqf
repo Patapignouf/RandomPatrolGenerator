@@ -111,7 +111,7 @@ if (!ironMan) then
 				{
 					normalClose = true;
 					_advFOBLocation = missionNamespace getVariable [format ['bluforPositionAdvancedRespawn%1', str (group player)], [0,0,0]];
-					player setPos [_advFOBLocation#0, _advFOBLocation#1, 0];
+					player setPosATL _advFOBLocation;
 
 					["Respawn on group tent position", format ["Year %1", date select 0], mapGridPosition player] spawn BIS_fnc_infoText;
 
