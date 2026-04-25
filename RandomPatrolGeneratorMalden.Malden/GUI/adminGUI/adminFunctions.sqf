@@ -67,6 +67,23 @@ params ["_supportType"];
 			_mainDisplay closeDisplay 1;
 			[[[false, "OPFOR"]], "GUI\weaponShopGUI\weaponShopGUI.sqf"] remoteExec ['BIS_fnc_execVM', player];
 		};
+		case "SpawnOpforDestroyer":
+		{
+			//Close admin menu
+			_mainDisplay = (findDisplay 60000);
+			_mainDisplay closeDisplay 1;
+			
+			//Add opfor destroyer
+			_resultSearchLoc =  [] call searchLocationWithWaterDepth;
+			if (_resultSearchLoc#1) then 
+			{
+				_pos = _resultSearchLoc#0;
+				if (400 < initBlueforLocation distance _pos) then //Spawn at least at 400m from blufor
+				{
+					[_pos] execVM 'enemyManagement\generationEngine\generateDestroyer.sqf';
+				};
+			};
+		};
 		default
 		{
 			//Do nothing
@@ -209,4 +226,16 @@ addOpforShop = {
 
 	[_ctrl, _supportName, _supportNameCode, _supportIcon, _supportType] call addSupportOption;
 };
+
+addSpawnOpforDestroyer = {
+	params ["_ctrl"];
+
+	_supportName = "Spawn Opfor Destroyer";
+	_supportNameCode = "SpawnOpforDestroyer";
+	_supportIcon = "\a3\ui_f\data\igui\cfg\simpletasks\types\Boat_ca.paa";
+	_supportType = "Mission";
+
+	[_ctrl, _supportName, _supportNameCode, _supportIcon, _supportType] call addSupportOption;
+};
+
 
