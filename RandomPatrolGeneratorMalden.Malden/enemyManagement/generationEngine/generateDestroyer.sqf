@@ -340,8 +340,8 @@ for [{_i = 0}, {_i < ((_thisDifficulty)*2)+1}, {_i = _i + 1}] do
 //Count number of AI to manage
 //systemChat format ["number of Opfor post filter %1",count _groupAssociatedToDestroyer];
 
-//Add side objective 50%
-if (random 100 < 50) then 
+//Add side objective 75%
+if (random 100 < 75) then 
 {
 	[[format ["%1%2","_sideQuestFOB", random 10000],"AttackDestroyer", _pos, objNull], "engine\objectiveManagement\doGenerateSideObjective.sqf"] remoteExec ['BIS_fnc_execVM', 2];
 
