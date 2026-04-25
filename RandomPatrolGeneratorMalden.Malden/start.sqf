@@ -848,13 +848,17 @@ for [{_i = 0}, {_i < missionLength}, {_i = _i + 1}] do //Peut être optimisé
 {
 	if (random 100 <75) then 
 	{	
-		_destroyerProb = 50;
-		if (missionNameSpace getVariable ["enableDestroyer", 1] == 1) then 
+		_destroyerProb = 100;
+		if (missionNameSpace getVariable ["enableDestroyerFOB", 1] == 1) then 
+		{
+			_destroyerProb = 50; 
+		};
+		if (missionNameSpace getVariable ["enableDestroyerFOB", 1] == 2) then 
 		{
 			_destroyerProb = 0; 
 		};
 
-		if (random 100 < (50+_destroyerProb)) then 
+		if (random 100 < (0+_destroyerProb)) then 
 		{
 			[] execVM 'enemyManagement\generationEngine\generateOpforFOB.sqf';
 
@@ -1253,13 +1257,17 @@ if (enableCampaignMode) then
 				//50% chance to generate destroyer or FOB
 				if (random 100 <50) then 
 				{
-					_destroyerProb = 50;
-					if (missionNameSpace getVariable ["enableDestroyer", 1] == 1) then 
+					_destroyerProb = 100;
+					if (missionNameSpace getVariable ["enableDestroyerFOB", 1] == 1) then 
+					{
+						_destroyerProb = 50; 
+					};
+					if (missionNameSpace getVariable ["enableDestroyerFOB", 1] == 2) then 
 					{
 						_destroyerProb = 0; 
 					};
 
-					if (random 100 < (50+_destroyerProb)) then 
+					if (random 100 < (0+_destroyerProb)) then 
 					{
 						[] execVM 'enemyManagement\generationEngine\generateOpforFOB.sqf';
 
