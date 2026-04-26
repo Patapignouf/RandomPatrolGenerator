@@ -309,6 +309,19 @@ if (isClass (configFile >> "CfgPatches" >> "ace_medical")) then
 
 				} forEach _medicalParticipationHashMap;
 			};
+
+
+			//Disable collision with other players
+			{
+				[_unit, _x] remoteExecCall ["enableCollisionWith", 0, _unit];
+			} foreach AllPlayers;
+
+		} else 
+		{
+			//Disable collision with other players
+			{
+				[_unit, _x] remoteExecCall ["disableCollisionWith", 0, _unit];
+			} foreach AllPlayers;
 		};
 		_unit setVariable ["medicalParticipationHashMap", createHashMap, true];
 	}] call CBA_fnc_addEventHandler;
