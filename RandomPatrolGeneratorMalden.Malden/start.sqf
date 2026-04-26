@@ -394,7 +394,9 @@ for [{_counterOfMission = 0}, {_counterOfMission < _minNumberOfMission}, {_count
 		//Random order
 		case 1:
 		{
-			PossibleObjectivePosition = [avalaibleTypeOfObj, PossibleObjectivePosition, _numberOfObjectivePerLocation] call generateObjectives;
+			_selectedRandomObjective = selectRandom PossibleObjectivePosition;
+			[avalaibleTypeOfObj, [_selectedRandomObjective], _numberOfObjectivePerLocation] call generateObjectives;
+			PossibleObjectivePosition = PossibleObjectivePosition - [_selectedRandomObjective];
 		};
 		//Closest objective
 		case 2:
@@ -1227,7 +1229,9 @@ if (enableCampaignMode) then
 				//Random order
 				case 1:
 				{
-					PossibleObjectivePosition = [avalaibleTypeOfObj, PossibleObjectivePosition, _numberOfObjectivePerLocation] call generateObjectives;
+					_selectedRandomObjective = selectRandom PossibleObjectivePosition;
+					[avalaibleTypeOfObj, [_selectedRandomObjective], _numberOfObjectivePerLocation] call generateObjectives;
+					PossibleObjectivePosition = PossibleObjectivePosition - [_selectedRandomObjective];
 				};
 				//Closest objective
 				case 2:
