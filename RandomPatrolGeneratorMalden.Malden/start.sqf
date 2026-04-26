@@ -594,6 +594,8 @@ if !(_isOnWater) then
 			//Snap FOB object to ground
 			{
 				_x setVectorUp surfaceNormal position _x;
+				_groundPos = getPos _x;
+				_x setPos [_groundPos#0, _groundPos#1, 0];
 			} foreach spawnFOBObjects;
 
 			initBlueforLocation = getPos (spawnFOBObjects select 0);	
