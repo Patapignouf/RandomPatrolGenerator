@@ -74,15 +74,19 @@ params ["_supportType"];
 			_mainDisplay closeDisplay 1;
 			
 			//Add opfor destroyer
-			_resultSearchLoc =  [] call searchLocationWithWaterDepth;
-			if (_resultSearchLoc#1) then 
-			{
-				_pos = _resultSearchLoc#0;
-				if (400 < initBlueforLocation distance _pos) then //Spawn at least at 400m from blufor
+			[[positionToAttack], {
+				params ["_positionToAttack"]; 
+				_resultSearchLoc =  [] call searchLocationWithWaterDepth;
+				if (_resultSearchLoc#1) then 
 				{
-					[_pos] execVM 'enemyManagement\generationEngine\generateDestroyer.sqf';
+					_pos = _resultSearchLoc#0;
+					if (400 < initBlueforLocation distance _pos) then //Spawn at least at 400m from blufor
+					{
+						[_pos] execVM 'enemyManagement\generationEngine\generateDestroyer.sqf';
+					};
 				};
-			};
+				}] remoteExec ["spawn", 0]; 
+
 		};
 		default
 		{
