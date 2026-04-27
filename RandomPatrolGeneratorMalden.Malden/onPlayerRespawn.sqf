@@ -5,7 +5,15 @@ player setUnitLoadout (player getVariable "spawnLoadout");
 [player, player getVariable "role"] call setUnitTraitAccordingToRole;
 
 //Close spectator mode
-["Terminate"] call BIS_fnc_EGSpectator;
+if (isClass (configFile >> "CfgPatches" >> "ace_medical")) then 
+{
+	[false] call ace_spectator_fnc_setSpectator;
+	["Terminate"] call BIS_fnc_EGSpectator;
+} else 
+{
+	["Terminate"] call BIS_fnc_EGSpectator;
+};
+
 
 //Set player normal state 
 player setVariable ["isUnconscious", false, true];
