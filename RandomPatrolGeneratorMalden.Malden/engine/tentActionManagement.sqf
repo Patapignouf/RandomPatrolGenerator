@@ -137,7 +137,7 @@ if (missionNameSpace getVariable ["enableAdvancedRespawn", 1] == 1) then
 
 					_variableToCheck = format ['bluforPositionAdvancedRespawn%1', _groupCaller];
 					_lastTentPositionKnown = missionNameSpace getVariable _variableToCheck;
-					waitUntil {!([missionNameSpace getVariable _variableToCheck , _lastTentPositionKnown] call BIS_fnc_areEqual)};
+					waitUntil {([missionNameSpace getVariable _variableToCheck , [0,0,0]] call BIS_fnc_areEqual)};
 					_createTent setDamage 1;
 					[_createTent] remoteExec ["removeAllEventHandlers", 0, true];
 					[_createTent] remoteExec ["removeAllActions", 0, true];
