@@ -458,6 +458,28 @@
                 <Chinese>在%1有一些敌人，你必须夺取该地点并防御敌人的增援</Chinese>
                 <Japanese>%1には敵がいます。場所を奪取し、敵の増援から防衛しなければなりません</Japanese>
             </Key>
+            <Key ID="STR_RPG_OBJ_DESTROYER">
+                <Original>Capture the destroyer</Original>
+                <English>Capture the destroyer</English>
+                <French>Capturer le destroyer</French>
+                <Spanish>Capturar el destructor</Spanish>
+                <German>Zerstörer kapern</German>
+                <Italian>Cattura il cacciatorpediniere</Italian>
+                <Russian>Захватить эсминец</Russian>
+                <Chinese>俘获驱逐舰</Chinese>
+                <Japanese>駆逐艦を鹵獲せよ</Japanese>
+            </Key>
+            <Key ID="STR_RPG_OBJ_DESTROYER_TEXT">
+                <Original>You must take control of the destroyer near %1.</Original>
+                <English>You must take control of the destroyer near %1.</English>
+                <French>Vous devez prendre le contrôle du destroyer près de %1.</French>
+                <Spanish>Debes tomar el control del destructor cerca de %1.</Spanish>
+                <German>Du musst die Kontrolle über den Zerstörer in der Nähe von %1 übernehmen.</German>
+                <Italian>Devi prendere il controllo del cacciatorpediniere vicino a %1.</Italian>
+                <Russian>Вы должны взять под контроль эсминец рядом с %1.</Russian>
+                <Chinese>你必须控制 %1 附近的驱逐舰。</Chinese>
+                <Japanese>%1 付近にある駆逐艦を制圧しなければならない。</Japanese>
+            </Key>
             <Key ID="STR_RPG_OBJ_INTEL">
                 <Original>Collect intel</Original>
                 <English>Collect intel</English>

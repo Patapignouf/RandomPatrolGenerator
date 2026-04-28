@@ -68,7 +68,12 @@ if (!isDedicated) then
 				case "takeAndHold":
 					{
 					_markerstr setMarkerColorLocal "ColorEAST";
-					_markerstr setMarkerTextLocal format ["Défendez %1 en nous débarassant des ennemis qui veulent s'emparer de la ville", getText (configFile >> "cfgVehicles" >> typeOf _thisObject >> "displayName")];
+					_markerstr setMarkerTextLocal format ["Pacifiez %1 en nous débarassant des ennemis", getText (configFile >> "cfgVehicles" >> typeOf _thisObject >> "displayName")];
+					};
+				case "destoyer":
+					{
+					_markerstr setMarkerColorLocal "ColorEAST";
+					_markerstr setMarkerTextLocal format ["Capturez le destroyer %1 en nous débarassant des ennemis", getText (configFile >> "cfgVehicles" >> typeOf _thisObject >> "displayName")];
 					};
 				case "collectIntel":
 					{

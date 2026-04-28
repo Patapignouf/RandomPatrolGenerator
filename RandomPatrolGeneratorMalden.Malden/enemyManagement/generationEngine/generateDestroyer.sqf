@@ -1,14 +1,15 @@
 //[_pos] execVM 'enemyManagement\generationEngine\generateDestroyer.sqf';
-params ["_pos"];
+params ["_pos",["_isMainObj", false]];
 
 //If there is no water then don't spawn destroyer
 if ([_pos, [0,0]] call BIS_fnc_areEqual) exitWith {};
 
 //_pos = [0,0,0]; //Debug only
+_boatDir = (random 360);
 _side = east;		 // Camp des soldats (east = OPFOR)
 _ship = createVehicle ["Land_Destroyer_01_base_F", [_pos#0,_pos#1,0], [], 0, "NONE"];
 _ship setPosASL [_pos select 0, _pos select 1, 0]; // On s'assure qu'il est au niveau de la mer
-_ship setDir 0; // Orientation
+_ship setDir _boatDir; // Orientation
 [_ship] call BIS_fnc_Carrier01PosUpdate;
 
 // Wait spawn 
@@ -93,7 +94,7 @@ if (random 100 < 50) then
 		_chopperToSpawn = createVehicle [selectRandom _baseEnemyChopper, [0,0,0], [], 0, "CAN_COLLIDE"];
 		_chopperToSpawn attachTo [_ship, _chopperBackPos];
 		detach _chopperToSpawn;
-		_chopperToSpawn setDir 0;
+		_chopperToSpawn setDir _boatDir;
 	};
 };
 
@@ -111,7 +112,7 @@ _boxPossibleSpawn = [
 	{
 		_boxSpawnObject = createVehicle [selectRandom ["Land_PaperBox_closed_F"], [0,0,0], [], 0, "CAN_COLLIDE"];
 		_boxSpawnObject attachTo [_ship, _x];
-		_boxSpawnObject setDir 0;
+		_boxSpawnObject setDir _boatDir;
 	};
 } foreach _boxPossibleSpawn;
 
@@ -120,7 +121,7 @@ _boxPossibleSpawn = [
 _AmmoCachePos = [-0.926269,41.6359,10];
 _AmmoCacheObject = createVehicle [selectRandom ["Box_FIA_Wps_F"], [0,0,0], [], 0, "CAN_COLLIDE"];
 _AmmoCacheObject attachTo [_ship, _AmmoCachePos];
-_AmmoCacheObject setDir 0;
+_AmmoCacheObject setDir _boatDir;
 _mustGenerateShop = (missionNameSpace getVariable ["enableOpforWeaponShop",1] == 2);
 
 clearWeaponCargoGlobal _AmmoCacheObject;
@@ -152,7 +153,7 @@ _rewardPos = [0.0968822,-35.206, 19.3];
 
 _rewardObject = createVehicle [selectRandom ["Land_File_research_F"], [0,0,0], [], 0, "CAN_COLLIDE"];
 _rewardObject attachTo [_ship, _rewardPos];
-_rewardObject setDir 0;
+_rewardObject setDir _boatDir;
 
 [_rewardObject, ["<img size='2' image='\a3\ui_f_oldman\data\IGUI\Cfg\holdactions\map_ca.paa'/><t size='1'>Collect intel (Win 1 token)</t>",{
 			params ["_object","_caller","_ID","_thisObjective"];
@@ -186,7 +187,7 @@ detach _turret;
 //_turret setPosASL _turretPos;
 //_turret setPos _turretPos;
 
-_turret setDir 0;
+_turret setDir _boatDir;
 
 // Create AI crew and force them to OPFOR side
 createVehicleCrew _turret;
@@ -198,7 +199,7 @@ _turretPos2 = [0, 50, 19];
 _turret2 = createVehicle [selectRandom ["B_AAA_System_01_F", "B_SAM_System_02_F", "B_SAM_System_01_F"], [0,0,0], [], 0, "CAN_COLLIDE"];
 _turret2 attachTo [_ship, _turretPos2];
 detach _turret2;
-_turret2 setDir 0;
+_turret2 setDir _boatDir;
 createVehicleCrew _turret2;
 _crew2 = crew _turret2;
 _crew2 joinSilent _turretGroup;
@@ -339,15 +340,18 @@ for [{_i = 0}, {_i < ((_thisDifficulty)*2)+1}, {_i = _i + 1}] do
 
 //Count number of AI to manage
 //systemChat format ["number of Opfor post filter %1",count _groupAssociatedToDestroyer];
-
-//Add side objective 75%
-if (random 100 < 75) then 
+//If it is already a main objective, it cannot be side objective 
+if (!_isMainObj) then 
 {
-	[[format ["%1%2","_sideQuestFOB", random 10000],"AttackDestroyer", _pos, objNull], "engine\objectiveManagement\doGenerateSideObjective.sqf"] remoteExec ['BIS_fnc_execVM', 2];
-
-	//Locate on map
-	if (missionNameSpace getVariable ["enableObjectiveExactLocation", 0] != 0) then 
+	//Add side objective 75%
+	if (random 100 < 75) then 
 	{
-		[["Destroyer", "ColorRed", "loc_boat", _pos, blufor], 'objectGenerator\doGenerateMarker.sqf'] remoteExec ['BIS_fnc_execVM', 0, true];
+		[[format ["%1%2","_sideQuestFOB", random 10000],"AttackDestroyer", _pos, objNull], "engine\objectiveManagement\doGenerateSideObjective.sqf"] remoteExec ['BIS_fnc_execVM', 2];
+
+		//Locate on map
+		if (missionNameSpace getVariable ["enableObjectiveExactLocation", 0] != 0) then 
+		{
+			[["Destroyer", "ColorRed", "loc_boat", _pos, blufor], 'objectGenerator\doGenerateMarker.sqf'] remoteExec ['BIS_fnc_execVM', 0, true];
+		};
 	};
 };

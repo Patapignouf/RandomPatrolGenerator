@@ -247,13 +247,14 @@ getDepthAtLocation = {
 };
 
 searchLocationWithWaterDepth = {
+	params [["_numberOfAttempts", 3]];
 
 	_searchResult = [[], false];
 
 	_positionCandidate = [nil, ["ground"]] call BIS_fnc_randomPos; // Ou une position fixe ex: [1200, 4500, 0]
 
 	//Search max 4 times water at 20 meters deep
-	for [{_i = 0}, {_i < 3}, {_i = _i + 1}] do
+	for [{_i = 0}, {_i < _numberOfAttempts}, {_i = _i + 1}] do
 	{ 
 		_depthAtLoc = [_positionCandidate] call getDepthAtLocation;
 		if (20 < _depthAtLoc) then 

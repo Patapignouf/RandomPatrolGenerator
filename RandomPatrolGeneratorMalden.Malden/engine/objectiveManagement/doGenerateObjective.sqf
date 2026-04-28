@@ -95,6 +95,26 @@ generateObjective =
 			diag_log format ["_selectedObjectivePosition %1", _selectedObjectivePosition];
 			_objectiveCreated = [currentObjType, _selectedObjectivePosition] call generateObjectiveObject; 
 		};
+		case "destroyer":
+		{
+			//Add opfor destroyer
+			_resultSearchLoc =  [10] call searchLocationWithWaterDepth;
+			if (_resultSearchLoc#1) then 
+			{
+				_pos = _resultSearchLoc#0;
+				if (!isNil"initBlueforLocation") then 
+				{
+					if (400 < initBlueforLocation distance _pos) then //Spawn at least at 400m from blufor
+					{
+						[_pos] execVM 'enemyManagement\generationEngine\generateDestroyer.sqf';
+						[currentObjType, _pos] call generateObjectiveObject; 
+					};
+				} else {
+					[_pos] execVM 'enemyManagement\generationEngine\generateDestroyer.sqf';
+					[currentObjType, _pos] call generateObjectiveObject; 
+				};
+			};
+		};
 		default
 		{
 			//Generate mission objectives
@@ -407,7 +427,7 @@ generateObjectiveObject =
 
 	
 	//Test if there's an avalaible position
-	if (_thisObjectiveType != "hostage") then 
+	if (_thisObjectiveType != "hostage" && _thisObjectiveType != "destroyer") then 
 	{
 		if (count _thistempObjectivePosition != 0) then 
 		{
@@ -511,6 +531,8 @@ generateObjectiveObject =
 				_objectiveObject setVariable ["isObjectiveObject", true, true];
 				_thisObjective = [_objectiveObject, _thisObjectiveType] call generateObjectiveTracker;
 
+				//Clear weapon
+				clearWeaponCargoGlobal _objectiveObject;
 
 				_objectiveObject setPos ([( _thisObjectivePosition), 1, 25, 5, 0, 20, 0] call BIS_fnc_findSafePos);
 				_objectiveObject setVariable ["thisTask", _thisObjective select 2, true];
@@ -1105,7 +1127,20 @@ generateObjectiveObject =
 				_objectiveObject setTriggerArea [200, 200, 0, false]; // trigger area with a radius of 200m.
 				_objectiveObject setVariable ["associatedTask", _thisObjective];
 				[_objectiveObject, 1] execVM 'engine\objectiveManagement\checkDefendArea.sqf';
-			};	
+			};
+		case "destroyer":
+			{
+				//Generate objective object
+				_objectiveObject = createTrigger ["EmptyDetector", _currentRandomPos]; //create a trigger area created at object with variable name my_object
+				_objectiveObject setVariable ["isObjectiveObject", true, true];
+				_thisObjective = [_objectiveObject, _thisObjectiveType] call generateObjectiveTracker;
+
+				//Add trigger to detect cleared area
+				_objectiveObject setPos _thisObjectivePosition; //create a trigger area created at object with variable name my_object
+				_objectiveObject setTriggerArea [200, 200, 0, false]; // trigger area with a radius of 200m.
+				_objectiveObject setVariable ["associatedTask", _thisObjective];
+				[_objectiveObject, false] execVM 'engine\objectiveManagement\checkClearArea.sqf'; 
+			};		
 		case "collectIntel":
 			{
 				//Generate objective object
