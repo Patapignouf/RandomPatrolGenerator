@@ -1076,6 +1076,7 @@ switch (timeOfDay) do
 		};
 };
 
+
 switch (missionNameSpace getVariable ["WeatherSetting", 2]) do
 {
 	case 0:
@@ -1139,7 +1140,7 @@ if (enableCampaignMode) then
 {
 	//Init mission objective status
 	_completedObjectives = missionNamespace getVariable ["completedObjectives",[]];
-	_objectiveCompletedCounter = count _completedObjectives;
+	_objectiveCompletedCounter = floor ((count _completedObjectives)/_numberOfObjectivePerLocation);
 	_maxObjectivesGenerated = false;
 
 	//Add this action on campaign mode blufor side
@@ -1180,7 +1181,7 @@ if (enableCampaignMode) then
 	while {sleep 10; (!_maxObjectivesGenerated)} do 
 	{
 		//Is an objective been completed ?
-		if (_objectiveCompletedCounter == (count ((missionNamespace getVariable ["completedObjectives",[]]) + (missionNamespace getVariable ["missionFailedObjectives",[]])))) then 
+		if (_objectiveCompletedCounter == floor ((count ((missionNamespace getVariable ["completedObjectives",[]]) + (missionNamespace getVariable ["missionFailedObjectives",[]])))/_numberOfObjectivePerLocation)) then 
 		{
 			//Do nothing
 			sleep 30;
@@ -1303,7 +1304,7 @@ if (enableCampaignMode) then
 			};
 
 			//Update objective complete counter
-			_objectiveCompletedCounter = count ((missionNamespace getVariable ["completedObjectives",[]]) + (missionNamespace getVariable ["missionFailedObjectives",[]]));
+			_objectiveCompletedCounter = floor ((count ((missionNamespace getVariable ["completedObjectives",[]]) + (missionNamespace getVariable ["missionFailedObjectives",[]])))/_numberOfObjectivePerLocation);
 		};
 
 
