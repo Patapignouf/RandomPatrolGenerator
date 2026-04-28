@@ -1047,33 +1047,13 @@ switch (warEra) do
 };
 
 //Setup time 
-switch (timeOfDay) do
+//Setup time 
+if (timeOfDay != 24) then 
 {
-	case 1:
-		{
-			//set morning
-			skipTime ((06 - dayTime + 24) % 24);
-		};
-	case 2:
-		{
-			//set day
-			skipTime ((12 - dayTime + 24) % 24);
-		};
-	case 3:
-		{
-			//set afternoon
-			skipTime ((18 - dayTime + 24) % 24);
-		};
-	case 4:
-		{
-			//set night
-			skipTime ((00 - dayTime + 24) % 24);
-		};
-	default
-		{
-			//set random time
-			skipTime ((round (random (24)) - dayTime + 24) % 24);
-		};
+	skipTime ((timeOfDay - dayTime + 24) % 24);
+} else 
+{
+	skipTime ((round (random (24)) - dayTime + 24) % 24);
 };
 
 
