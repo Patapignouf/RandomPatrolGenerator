@@ -59,6 +59,15 @@ if (!alive player) then
 {
 	["Terminate"] call BIS_fnc_EGSpectator;
 	["Initialize", [player, [playerSide] , true, false ]] call BIS_fnc_EGSpectator;
+
+	//Wait before ending spectator mode
+	[] spawn {
+		sleep 5;
+		if (alive player) then 
+		{
+			["Terminate"] call BIS_fnc_EGSpectator;
+		};
+	};
 };
 
 if (isMultiplayer) then 

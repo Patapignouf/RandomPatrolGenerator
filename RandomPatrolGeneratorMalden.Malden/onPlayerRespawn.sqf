@@ -9,9 +9,11 @@ if (isClass (configFile >> "CfgPatches" >> "ace_medical")) then
 {
 	[false] call ace_spectator_fnc_setSpectator;
 	["Terminate"] call BIS_fnc_EGSpectator;
+	(findDisplay 60492) closeDisplay 2;
 } else 
 {
 	["Terminate"] call BIS_fnc_EGSpectator;
+	(findDisplay 60492) closeDisplay 2;
 };
 
 
