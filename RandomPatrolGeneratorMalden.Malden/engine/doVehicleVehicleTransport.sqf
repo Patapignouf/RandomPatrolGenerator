@@ -47,7 +47,9 @@ waitUntil {isTouchingGround (_heli)};
 //Bug with Smart AI
 if (isClass (configFile >> "CfgPatches" >> "SAAI_main")) then 
 {
-	[_heli, 0] remoteExec ["setFuel", _heli];
+	private _owner = owner _heli;
+	[_heli, 0] remoteExec ["setFuel", _owner, false];
+	_heli setVariable ["flyWithSAAI", true, true];
 };
 
 //Add action to take off
@@ -56,8 +58,8 @@ if (isClass (configFile >> "CfgPatches" >> "SAAI_main")) then
 
 		_vehicleTransportGroup = _thisParams#0;
 		
-		[_vehicleTransportGroup] spawn {
-				params ["_vehicleTransportGroup"];
+		[_vehicleTransportGroup, _object] spawn {
+				params ["_vehicleTransportGroup", "_object"];
 				//Click on map to Halo spawn
 				selectedHaloLoc = [0,0,0];
 				openMap true;
@@ -76,10 +78,10 @@ if (isClass (configFile >> "CfgPatches" >> "SAAI_main")) then
 
 					//Force chopper to stay here 
 					//Bug with Smart AI
-					if (isClass (configFile >> "CfgPatches" >> "SAAI_main")) then 
+					if (_object getVariable ["flyWithSAAI", false]) then 
 					{
-						_heli = vehicle (leader _vehicleTransportGroup);
-						[_heli, 1] remoteExec ["setFuel", _heli];
+						private _owner = owner _object;
+						[_object, 1] remoteExec ["setFuel", _owner, false];
 					};
 
 					_tempWaypoint = _vehicleTransportGroup addWaypoint [_lzSafePos, -1];
@@ -90,13 +92,14 @@ if (isClass (configFile >> "CfgPatches" >> "SAAI_main")) then
 					_tempWaypoint setWaypointStatements ["true", "(vehicle this) LAND 'LAND';"]; 
 
 					//Waiting for heli to land
-					waitUntil {isTouchingGround (_heli)};
+					waitUntil {isTouchingGround (_object)};
 
 					//Force chopper to stay here 
 					//Bug with Smart AI
-					if (isClass (configFile >> "CfgPatches" >> "SAAI_main")) then 
+					if (_object getVariable ["flyWithSAAI", false]) then 
 					{
-						[_heli, 0] remoteExec ["setFuel", _heli];
+						private _owner = owner _object;
+						[_object, 0] remoteExec ["setFuel", _owner, false];
 					};
 				};
 			};
