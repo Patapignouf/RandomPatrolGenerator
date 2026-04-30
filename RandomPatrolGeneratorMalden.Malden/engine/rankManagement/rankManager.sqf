@@ -313,14 +313,20 @@ if (isClass (configFile >> "CfgPatches" >> "ace_medical")) then
 
 			//Disable collision with other players
 			{
-				[_unit, _x] remoteExecCall ["enableCollisionWith", 0, _unit];
+				if (!(_x getVariable ["isUnconscious", false])) then 
+				{
+					[_unit, _x] remoteExecCall ["enableCollisionWith", 0, _unit];
+				};
 			} foreach AllPlayers;
 
 		} else 
 		{
 			//Disable collision with other players
 			{
-				[_unit, _x] remoteExecCall ["disableCollisionWith", 0, _unit];
+				if (!(_x getVariable ["isUnconscious", false])) then 
+				{
+					[_unit, _x] remoteExecCall ["disableCollisionWith", 0, _unit];
+				};
 			} foreach AllPlayers;
 		};
 		_unit setVariable ["medicalParticipationHashMap", createHashMap, true];
