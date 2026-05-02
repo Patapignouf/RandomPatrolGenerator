@@ -29,22 +29,27 @@ if (missionNameSpace getVariable ["enableAdvancedRespawn", 1] == 1) then
 			if (count (allUnits select {side _x == opfor && ((getPos _caller) distance _x < 15 )})==0) then 
 			{
 				missionNameSpace setVariable [format ['bluforAdvancedRespawn%1', str (group _caller)], false, true];
-				missionNameSpace setVariable [format ['bluforPositionAdvancedRespawn%1', str (group _caller)], getPosATL _object, true];
 
 				//Create tent
 				_createTent = createVehicle ["Land_TentDome_F", (_caller modelToWorld [0, 1, 0]), [], 0, "NONE"];
 				_callerPos = getPosATL _caller;
+
+				//setup tent pos
+				missionNameSpace setVariable [format ['bluforPositionAdvancedRespawn%1', str (group _caller)], getPosATL _createTent, true];
+
 				_tentPos = getPos _createTent;
 				_createTent setPosATL [_tentPos#0, _tentPos#1, _callerPos#2];
 				_createTent setVariable [str (group _caller), true, true];
+				_createTent setVariable ["tentGroupName", str (group _caller),true];
+
 
 				//Create opfor control trigger
 				_triggerTent = createTrigger ["EmptyDetector", getPos _createTent];
 				_triggerTent setTriggerArea [7, 7, 0, true];
 
 				//Check if there are enemy nearby to delete tent
-				[_triggerTent, _caller] spawn {
-					params ["_triggerTent", "_caller"];
+				[_triggerTent, _caller, _createTent] spawn {
+					params ["_triggerTent", "_caller", "_createTent"];
 
 					_groupName = str (group (_caller));
 					_nbOpfor = count ((allUnits select {alive _x && side _x == opfor} ) inAreaArray _triggerTent);
@@ -54,9 +59,9 @@ if (missionNameSpace getVariable ["enableAdvancedRespawn", 1] == 1) then
 						_nbOpfor = count ((allUnits select {alive _x && side _x == opfor} ) inAreaArray _triggerTent);
 					};
 
-					//Reset group tent
-					_variableToCheck = format ['bluforPositionAdvancedRespawn%1', _groupName];
-					missionNameSpace setVariable [_variableToCheck , [0,0,0], true];
+					[_createTent] call destroyTent;
+
+					[_createTent] call adjustRespawnPos;
 
 					//Tell all the group that the tent has been destroyed by opfor
 					[{["STR_RPG_HC_NAME", "STR_RPG_HC_DESTROY_TENT"] call doDialog}] remoteExec ["call", units (group _caller)];
@@ -120,51 +125,27 @@ if (missionNameSpace getVariable ["enableAdvancedRespawn", 1] == 1) then
 
 				//Create marker
 				//Delete tent if respawn coordinates changed
-				[_createTent, str (group _caller), _triggerTent, _caller] spawn 
-				{
-					params ["_createTent", "_groupCaller","_triggerTent" ,"_caller"];
-
-					//Create marker
-					_markerName = format ["tent%1", str (group _caller)];
-					if !(_markerName in allMapMarkers) then 
-					{
-						_marker = createMarker [_markerName, getPos _caller]; // Not visible yet.
-						_marker setMarkerText (format ["Tent %1", str (group _caller)]);
-						_marker setMarkerType "b_hq"; // Visible.
-						_marker setMarkerSize [1, 1];
-						_marker setMarkerColor "ColorBlue";
-					};
-
-					_variableToCheck = format ['bluforPositionAdvancedRespawn%1', _groupCaller];
-					_lastTentPositionKnown = missionNameSpace getVariable _variableToCheck;
-					waitUntil {([missionNameSpace getVariable _variableToCheck , [0,0,0]] call BIS_fnc_areEqual)};
-					_createTent setDamage 1;
-					[_createTent] remoteExec ["removeAllEventHandlers", 0, true];
-					[_createTent] remoteExec ["removeAllActions", 0, true];
-
-					_markerName = format ["tent%1", _groupCaller];
-					deleteMarker _markerName;
-
-					//Delete associated trigger
-					deleteVehicle _triggerTent;	
-
-
-					//Destroy tent 
-					sleep 120;
-					deleteVehicle _createTent;
-				};
+				[_createTent, _triggerTent]  call invokeTentManager;
 
 				//Disable tent if it dies
-				_createTent setVariable ["tentGroupName", str (group _caller),true];
 				_createTent addEventHandler ["Killed", {
 					params ["_unit", "_killer", "_instigator", "_useEffects"];
-					//get task associated to the object
-					[_unit] remoteExec ["removeAllEventHandlers", 0, true];
-					[_unit] remoteExec ["removeAllActions", 0, true];
 
 					//Reset group tent
-					_variableToCheck = format ['bluforPositionAdvancedRespawn%1', _unit getVariable ["tentGroupName", ""]];
-					missionNameSpace setVariable [_variableToCheck , [0,0,0], true];
+					_groupCaller = _unit getVariable ["tentGroupName", ""];
+					_tentCompleteListName = format ['bluforPositionAdvancedRespawnHistory%1', _groupCaller];
+					_tentCompleteList = missionNameSpace getVariable [_tentCompleteListName, []];
+					_tentElement = _tentCompleteList select {_x#1 distance  (getPosATL _createTent)>3};
+					if (count _tentElement != 0) then 
+					{
+						_lastTentPosition = _tentElement select -1;
+						_variableToCheck = format ['bluforPositionAdvancedRespawn%1', _unit getVariable ["tentGroupName", ""]];
+						missionNameSpace setVariable [_variableToCheck , _lastTentPosition, true];
+					};
+
+					[_unit] call destroyTent;
+
+					[_unit] call adjustRespawnPos;
 				}];
 
 			} else 
@@ -179,5 +160,103 @@ if (missionNameSpace getVariable ["enableAdvancedRespawn", 1] == 1) then
 		false,
 		false
 	] call BIS_fnc_holdActionAdd;
+};
 
+
+invokeTentManager = {
+	params ["_createTent", "_triggerTent"];
+
+	//Get tent name
+	_groupCaller = _createTent getVariable ["tentGroupName", ""];
+
+	//Store tent in history
+	_tentCompleteListName = format ['bluforPositionAdvancedRespawnHistory%1', _groupCaller];
+	_tentCompleteList = missionNameSpace getVariable [_tentCompleteListName, []];
+	_tentCompleteList pushBackUnique [(count _tentCompleteList)+1, getPosATL _createTent, _createTent];
+	missionNameSpace setVariable [_tentCompleteListName, _tentCompleteList, true];
+
+	//Place marker
+	[_createTent] call adjustRespawnPos;
+};
+
+
+destroyTent = {
+	params ["_createTent", ["_triggerTent", objNull]];
+
+	//Delete associated trigger
+	if (!(isNull _triggerTent)) then 
+	{
+		deleteVehicle _triggerTent;	
+	};
+
+	//Destroy tent and remove EH
+	_createTent setDamage 1;
+	[_createTent] remoteExec ["removeAllEventHandlers", 0, true];
+	[_createTent] remoteExec ["removeAllActions", 0, true];
+	_groupCaller = _createTent getVariable ["tentGroupName", ""];
+
+	//Clear history list
+	_tentCompleteListName = format ['bluforPositionAdvancedRespawnHistory%1', _groupCaller];
+	_tentCompleteList = missionNameSpace getVariable [_tentCompleteListName, []];
+	_tentElement = _tentCompleteList select {_x#1 distance  (getPosATL _createTent)<5};
+	//systemChat format ["_tentElement to destroy : %1", _tentElement];
+	if (count _tentElement != 0) then 
+	{
+		_tentCompleteList = _tentCompleteList - _tentElement;
+		missionNameSpace setVariable [_tentCompleteListName, _tentCompleteList, true];
+
+		//Replicate
+		{
+			[_x#2] call destroyTent;
+		}  foreach _tentElement;
+	};
+
+	//Destroy tent 
+	[_createTent] spawn {
+		params ["_createTent"];
+		sleep 120;
+		deleteVehicle _createTent;
+	};
+};
+
+
+adjustRespawnPos = {
+	params [["_createTent", objNull]];
+
+	//Reset group tent
+	_groupCaller = _createTent getVariable ["tentGroupName", ""]; 
+	_tentCompleteListName = format ['bluforPositionAdvancedRespawnHistory%1', _groupCaller];
+	_tentCompleteList = missionNameSpace getVariable [_tentCompleteListName, []];
+
+	//Create marker
+	_markerName = format ["tent%1", _groupCaller];
+
+	_defaultTentLocation = getPosATL _createTent;
+
+	//Remove old tent position if there is no available position to spawn
+	if (count _tentCompleteList == 0) then 
+	{
+		//Reset TentPosition
+		deleteMarker _markerName;
+		missionNameSpace setVariable [format ['bluforPositionAdvancedRespawn%1', _groupCaller], [0,0,0], true];
+	} else 
+	{
+		//Get last tent in history
+		_lastTentPosition = _tentCompleteList select -1;
+		_variableToCheck = format ['bluforPositionAdvancedRespawn%1', _createTent getVariable ["tentGroupName", ""]];
+		missionNameSpace setVariable [_variableToCheck , _lastTentPosition#1, true];
+		_defaultTentLocation = _lastTentPosition#1;
+
+		if !(_markerName in allMapMarkers) then 
+		{
+			_marker = createMarker [_markerName, _defaultTentLocation]; // Not visible yet.
+			_marker setMarkerText (format ["Tent %1", _groupCaller]);
+			_marker setMarkerType "b_hq"; // Visible.
+			_marker setMarkerSize [1, 1];
+			_marker setMarkerColor "ColorBlue";
+		} else 
+		{
+			_markerName setMarkerPos _defaultTentLocation;
+		};
+	};
 };
