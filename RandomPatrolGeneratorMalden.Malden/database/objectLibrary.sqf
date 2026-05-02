@@ -20,8 +20,7 @@ if (isClass (configFile >> "CfgPatches" >> "rhs_main")) then
 avalaibleBomb = 
 [
 	"DemoCharge_F",
-	"SatchelCharge_F",
-	"AmmoCrate_NoInteractive_"
+	"SatchelCharge_F"
 ];
 
 avalaibleSupplyBox = [
