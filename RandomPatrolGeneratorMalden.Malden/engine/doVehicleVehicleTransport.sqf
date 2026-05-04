@@ -91,16 +91,25 @@ if (isClass (configFile >> "CfgPatches" >> "SAAI_main")) then
 					_tempWaypoint setWaypointSpeed "FULL";
 					_tempWaypoint setWaypointStatements ["true", "(vehicle this) LAND 'LAND';"]; 
 
-					//Waiting for heli to land
-					waitUntil {isTouchingGround (_object)};
+					//Wait next landing
+					[_object] spawn {
+						params ["_object"];
+						
+						//Wait heli leaving current position
+						sleep 60;
 
-					//Force chopper to stay here 
-					//Bug with Smart AI
-					if (_object getVariable ["flyWithSAAI", false]) then 
-					{
-						private _owner = owner _object;
-						[_object, 0] remoteExec ["setFuel", _owner, false];
+						//Waiting for heli to land
+						waitUntil {isTouchingGround (_object)};
+
+						//Force chopper to stay here 
+						//Bug with Smart AI
+						if (_object getVariable ["flyWithSAAI", false]) then 
+						{
+							private _owner = owner _object;
+							[_object, 0] remoteExec ["setFuel", _owner, false];
+						};
 					};
+
 				};
 			};
 	},[_vehicleTransportGroup],1.5,true,false,"","_target distance _this <5"]] remoteExec ["addAction", 0, true];
