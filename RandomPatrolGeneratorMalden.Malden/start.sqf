@@ -659,7 +659,7 @@ if !(_isOnWater) then
 //Clean area WIP only if there is a FOB spawned
 if (missionNameSpace getVariable ["enableBluforFOB", 1] == 1) then 
 {
-	[initBlueforLocation, 150] execVM 'objectGenerator\doCleanArea.sqf';
+	[initBlueforLocation, 70] execVM 'objectGenerator\doCleanArea.sqf';
 }; 				
 
 //Generate ground vehicle
