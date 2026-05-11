@@ -106,11 +106,11 @@ generateObjective =
 				{
 					if (400 < initBlueforLocation distance _pos) then //Spawn at least at 400m from blufor
 					{
-						[_pos] execVM 'enemyManagement\generationEngine\generateDestroyer.sqf';
+						[_pos, true] execVM 'enemyManagement\generationEngine\generateDestroyer.sqf';
 						[currentObjType, _pos] call generateObjectiveObject; 
 					};
 				} else {
-					[_pos] execVM 'enemyManagement\generationEngine\generateDestroyer.sqf';
+					[_pos, true] execVM 'enemyManagement\generationEngine\generateDestroyer.sqf';
 					[currentObjType, _pos] call generateObjectiveObject; 
 				};
 			};
