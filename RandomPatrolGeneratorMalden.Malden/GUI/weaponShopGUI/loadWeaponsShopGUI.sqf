@@ -13,11 +13,12 @@ private _name = _mainDisplay displayCtrl 602400;
 private _type = _mainDisplay displayCtrl 602401;
 private _credit = _mainDisplay displayCtrl 602402;
 private _buy = _mainDisplay displayCtrl 60001;
+private _buttonRandom = _mainDisplay displayCtrl 60003;
 
 _openArsenal = _specialParam#0;
 _shopMode = _specialParam#1;
 
-
+randomPrice = 1;
 if (_shopMode == "OPFOR") then 
 {
 	_vehicleShopTitle ctrlSetText (format ["%2 | Unlock Token %1", [] call getUnlockCredit, localize "RPG_GUI_GENERAL_WEAPON_SHOP"]);
@@ -25,6 +26,9 @@ if (_shopMode == "OPFOR") then
 } else 
 {
 	_vehicleShopTitle ctrlSetText (format ["%2 | Unlock Token %1", [] call getUnlockCredit, localize "RPG_GUI_GENERAL_BM_SHOP"]);
+
+	//hide random buy
+	randomPrice = 5;
 };
 
 _icon ctrlSetText (localize "STR_GUI_BASE_ICON");
@@ -32,6 +36,8 @@ _name ctrlSetText (localize "STR_GUI_BASE_WEAPON_NAME");
 _type ctrlSetText (localize "STR_GUI_BASE_WEAPON_TYPE");
 _credit ctrlSetText (localize "STR_GUI_BASE_TOKEN");
 _buy ctrlSetText (localize "STR_GUI_BASE_UNLOCK");
+
+_buttonRandom ctrlSetText (format ["%1 : %2", localize "STR_GUI_BASE_RANDOM", randomPrice]);
 
 diag_log format ["Init loadSupport GUI"];
 
@@ -128,23 +134,26 @@ switch (_mode) do
 				_price = _price + 5;
 			};
 
-			_ind = _ctrl lnbAddRow ["", _supportName, _supportNameCode, str _price];
-
-			//Set tooltip
-			if (count _priceAnalysisReturn != 0) then 
+			if (typeName _price == "SCALAR") then 
 			{
-				//_ctrl lnbSetTooltip [_ind, format ["Impact : %1 \nMax range : %2m", _priceAnalysisReturn#1, _priceAnalysisReturn#2]];
-				_ctrl lnbSetTooltip [[_ind,0], format ["Impact : %1 \nMax range : %2m\nDefault ammo : %3\nAccuracy : %4%%", _priceAnalysisReturn#1, _priceAnalysisReturn#2, _priceAnalysisReturn#3, _priceAnalysisReturn#4]];
+				_ind = _ctrl lnbAddRow ["", _supportName, _supportNameCode, str _price];
+			
+				//Set tooltip
+				if (count _priceAnalysisReturn != 0) then 
+				{
+					//_ctrl lnbSetTooltip [_ind, format ["Impact : %1 \nMax range : %2m", _priceAnalysisReturn#1, _priceAnalysisReturn#2]];
+					_ctrl lnbSetTooltip [[_ind,0], format ["Impact : %1 \nMax range : %2m\nDefault ammo : %3\nAccuracy : %4%%", _priceAnalysisReturn#1, _priceAnalysisReturn#2, _priceAnalysisReturn#3, _priceAnalysisReturn#4]];
+				};
+
+				//Set picture
+				_ctrl lnbSetPicture [[_ind, 0], _supportIcon];
+
+				//Set data
+				_ctrl lnbSetData [[_ind, 0], _weaponClassName];
+				_ctrl lnbSetData [[_ind, 1], _supportType];
+				_ctrl lnbSetData [[_ind, 2], str _price];
+				_ctrl lnbSetData [[_ind, 3], _supportName];
 			};
-
-			//Set picture
-			_ctrl lnbSetPicture [[_ind, 0], _supportIcon];
-
-			//Set data
-			_ctrl lnbSetData [[_ind, 0], _weaponClassName];
-			_ctrl lnbSetData [[_ind, 1], _supportType];
-			_ctrl lnbSetData [[_ind, 2], str _price];
-			_ctrl lnbSetData [[_ind, 3], _supportName];
 
 		} foreach (_opFactionWeapon);
 
@@ -171,13 +180,74 @@ switch (_mode) do
 	};
 };
 
+//Add a button to buy random item
+_buttonRandom ctrlAddEventHandler [ "ButtonClick", 
+	{ 
+		params ["_ctrl"];
+		_display = ctrlParent _ctrl;
+
+		//
+		_lnbEntries = _display displayCtrl 60002;
+		_numberOfRows = (lnbSize _lnbEntries)#0;
+		_lnbEntries lnbSetCurSelRow (floor random (_numberOfRows - 1)); //Select random index
+		//hint (format ["number of entries : %1", _numberOfRows ]);
+		_supportClass = (_lnbEntries lnbData [lnbCurSelRow _lnbEntries, 0]);
+		_supportType = (_lnbEntries lnbData [lnbCurSelRow _lnbEntries, 1]);
+		_supportPrice = randomPrice;
+		_supportName = (_lnbEntries lnbData [lnbCurSelRow _lnbEntries, 3]);
+		_weaponIcon = getText (configFile >> "CfgWeapons" >> _supportClass >> "picture");
+
+		_bluforVehicleAvalaibleSpawnCounter = [] call getUnlockCredit;
+
+		if (_supportClass != "") then 
+		{
+			if (_bluforVehicleAvalaibleSpawnCounter>=_supportPrice) then 
+			{
+				//Remove entry 
+				_lnbEntries lnbDeleteRow (lnbCurSelRow _lnbEntries);
+
+				//get current player faction
+				_currentFaction = indFaction;
+				if (side player == blufor) then 
+				{
+					_currentFaction = bluFaction;
+
+				};
+
+				[_supportClass, _supportType, _currentFaction] call addUnlockedWeapon;		
+
+				[_bluforVehicleAvalaibleSpawnCounter-_supportPrice] call saveUnlockCredit;
+			
+				[player, player, player call getPlayerFaction] call setupArsenalToItem;
+				_factionName = (factionInfos select {_x#1 == _currentFaction})#0#2;
+				hint parseText format ["<img image='%1' size='5'/><br/><br/><t size='1.5'>You have unlocked <br/> %2 <br/>for the faction %3</t><br/><br/><t size='1.2'></t>", _weaponIcon, _supportName, _factionName];
+
+				//Close mission setup
+				//Refresh title
+				if (shopMode == "OPFOR") then 
+				{
+					(_display displayCtrl 59999) ctrlSetText (format ["%2 | Unlock Token %1", [] call getUnlockCredit, localize "RPG_GUI_GENERAL_WEAPON_SHOP"]);
+
+				} else 
+				{
+					(_display displayCtrl 59999) ctrlSetText (format ["%2 | Unlock Token %1", [] call getUnlockCredit, localize "RPG_GUI_GENERAL_BM_SHOP"]);
+				};
+
+			} else 
+			{
+				[{["STR_RPG_HC_NAME", "STR_RPG_HC_NOT_ENOUGH_CREDIT"] call doDialog}] remoteExec ["call", player];
+			};
+		};
+	}
+];
+
 shopMode = _shopMode;
 _buttonOK ctrlAddEventHandler [ "ButtonClick", 
 	{ 
 		params ["_ctrl"];
 		_display = ctrlParent _ctrl;
 
-		//Spawn vehicle
+		//Select item to buy
 		_lnbEntries = _display displayCtrl 60002;
 		_supportClass = (_lnbEntries lnbData [lnbCurSelRow _lnbEntries, 0]);
 		_supportType = (_lnbEntries lnbData [lnbCurSelRow _lnbEntries, 1]);
@@ -206,7 +276,8 @@ _buttonOK ctrlAddEventHandler [ "ButtonClick",
 				[_bluforVehicleAvalaibleSpawnCounter-_supportPrice] call saveUnlockCredit;
 			
 				[player, player, player call getPlayerFaction] call setupArsenalToItem;
-				hint parseText format ["<img image='%1' size='5'/><br/><br/><t size='1.5'>You have unlocked <br/> %2 <br/>for the faction %3</t><br/><br/><t size='1.2'></t>", _weaponIcon, _supportName, _currentFaction];
+				_factionName = (factionInfos select {_x#1 == _currentFaction})#0#2;
+				hint parseText format ["<img image='%1' size='5'/><br/><br/><t size='1.5'>You have unlocked <br/> %2 <br/>for the faction %3</t><br/><br/><t size='1.2'></t>", _weaponIcon, _supportName, _factionName];
 
 				//Close mission setup
 				//Refresh title

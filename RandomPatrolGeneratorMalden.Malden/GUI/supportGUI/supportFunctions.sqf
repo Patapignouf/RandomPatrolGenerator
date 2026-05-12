@@ -294,7 +294,7 @@ params ["_caller", "_supportType"];
 				if (playerSide == blufor && !([_tentFOBLocation, [0,0,0]] call BIS_fnc_areEqual)) then 
 				{
 					_advFOBLocation = missionNamespace getVariable [format ['bluforPositionAdvancedRespawn%1', str (group _caller)], [0,0,0]];
-					_caller setPos _advFOBLocation;
+					_caller setPosATL _advFOBLocation;
 
 					["Respawn on group tent position", format ["Year %1", date select 0], mapGridPosition _caller] spawn BIS_fnc_infoText;
 				} else 

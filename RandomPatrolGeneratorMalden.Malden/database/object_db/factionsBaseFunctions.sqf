@@ -28,7 +28,7 @@ adjustRole = {
 			_cfgRole = "pilot";
 		};
 
-		if (["marksman", _cfgName] call BIS_fnc_inString || ["spotter", _cfgName] call BIS_fnc_inString || ["_MRK", _cfgName] call BIS_fnc_inString || ["_RMRK", _cfgName] call BIS_fnc_inString || ["_hunter", _cfgName] call BIS_fnc_inString) then 
+		if (["marksman", _cfgName] call BIS_fnc_inString || ["spotter", _cfgName] call BIS_fnc_inString || ["_MRK", _cfgName] call BIS_fnc_inString || ["_RMRK", _cfgName] call BIS_fnc_inString || ["_hunter", _cfgName] call BIS_fnc_inString || ["_scout_", _cfgName] call BIS_fnc_inString || ["_M_M_", _cfgName] call BIS_fnc_inString) then 
 		{
 			_cfgRole = "marksman";
 		};
@@ -44,7 +44,7 @@ adjustRole = {
 		{
 			_cfgRole = "engineer";
 		};
-		if (["_arifleman", _cfgName] call BIS_fnc_inString || ["_HMG", _cfgName] call BIS_fnc_inString || ["_LMG", _cfgName] call BIS_fnc_inString || ["_RMG", _cfgName] call BIS_fnc_inString || ["_RA", _cfgName] call BIS_fnc_inString || ["_Automatic", _cfgName] call BIS_fnc_inString) then 
+		if (["_arifleman", _cfgName] call BIS_fnc_inString || ["_HMG", _cfgName] call BIS_fnc_inString || ["_LMG", _cfgName] call BIS_fnc_inString || ["_RMG", _cfgName] call BIS_fnc_inString || ["_auto_rifleman", _cfgName] call BIS_fnc_inString || ["_RA", _cfgName] call BIS_fnc_inString || ["_Automatic", _cfgName] call BIS_fnc_inString) then 
 		{
 			_cfgRole = "autorifleman";
 		};
@@ -250,7 +250,6 @@ getBasicUnitsGroup = {
 			if (count (baseEnemyGroup_db select {_x select 1  == opFaction} select 0 select 0) == 0) then 
 			{
 				_resultGroup = [_resultGroup, _currentStuffFaction, 8] call doFillWithRifleman;
-
 			} else 
 			{
 				_resultGroup = baseEnemyGroup_db select {_x select 1  == opFaction} select 0 select 0;
@@ -265,8 +264,6 @@ getBasicUnitsGroup = {
 				_resultGroup pushBack ([_currentStuffFaction, "grenadier"] call getUnitByRole);
 
 				_resultGroup = [_resultGroup, _currentStuffFaction, 6] call doFillWithRifleman;
-				//diag_log format ["_baseEnemyATGroup %1 ",_baseEnemyATGroup];
-
 			} else 
 			{
 				_resultGroup = baseEnemyATGroup_db select {_x select 1  == opFaction} select 0 select 0;
@@ -367,9 +364,22 @@ doFillWithRifleman = {
 		_neededUnits = _desiredNumber-(count _groupToEvaluate);
 		for [{_i = 0}, {_i < (_neededUnits)}, {_i = _i + 1}] do
 		{ 
-			_groupToEvaluate pushBack ([_currentStuffFaction, "rifleman"] call getUnitByRole);
+			_currentRiflemanRole = ([_currentStuffFaction, "rifleman"] call getUnitByRole);
+
+			if (_currentRiflemanRole != "") then 
+			{
+				_groupToEvaluate pushBack _currentRiflemanRole;
+			} else 
+			{
+				//If there is no rifleman complete with leader (fix raven faction)
+				_groupToEvaluate pushBack ([_currentStuffFaction, "leader"] call getUnitByRole);
+			};
 		};
 	};
+
+
+
+
 	//diag_log format ["_groupToEvaluate after %1 %3 desiredNumber %2",_groupToEvaluate, _desiredNumber, count _groupToEvaluate];
 	_groupToEvaluate
 };

@@ -4,6 +4,7 @@ cutText ["FINISHING LOADING MISSION", "BLACK FADED", 100];
 player setPos [worldSize,worldSize, 1000];
 player enableSimulationGlobal false;
 player allowdamage false;
+setPlayerRespawnTime 99999999; //Init respawn time
 
 #include "engine\modManager.sqf"
 #include "database\missionParameters.sqf"
@@ -272,7 +273,43 @@ if !(isClass (configFile >> "CfgPatches" >> "ace_medical")) then
 					};
 				};
 			};
-			
+
+			//Setup timer GUI
+			if (missionNameSpace getVariable ["enableSelfRespawnTimer", 0] == 0) then 
+			{
+				//No self respawn timer (directed by the server)
+				addMissionEventHandler ["EachFrame",
+					{
+						if (!(lifeState player == "HEALTHY")) then 
+						{
+							_currentRespawnTimer = missionNamespace getVariable "missionRespawnParam";
+							_currentCounter = _currentRespawnTimer - (round (serverTime) % _currentRespawnTimer);
+							hintSilent format ["Respawn : %1", [(_currentCounter/60)+.01,"HH:MM"] call BIS_fnc_timetostring];
+
+							//Respawn players if timer is going near 0 secs remaining
+							if (_currentCounter == 0 || _currentCounter < 2) then 
+							{
+								setPlayerRespawnTime 0;
+							};
+						};
+					}
+				];
+			} else 
+			{
+				_respawnTimer = missionNamespace getVariable "missionRespawnParam";
+				setPlayerRespawnTime (_respawnTimer);
+				_initialCountDown = [_respawnTimer, false] call BIS_fnc_countDown;
+				addMissionEventHandler ["EachFrame",
+					{
+						if (!(lifeState player == "HEALTHY")) then 
+						{
+							hintSilent format["Respawn : %1", [(([0, false] call BIS_fnc_countdown)/60)+.01,"HH:MM"] call BIS_fnc_timetostring]
+						};
+					}
+				];
+			};
+
+			//Display nearest medic GUI
 			[[_unit] , "GUI\displayNearestMedicGUI\displayNearestMedicGUI.sqf"] remoteExec ['BIS_fnc_execVM', _unit];
 		};
 	}] call CBA_fnc_addEventHandler;
@@ -430,10 +467,12 @@ if (side player == blufor) then
 				[USS_FREEDOM_CARRIER,_spawnPos] spawn { 
 					params ["_USSCarrier","_spawnPos"];
 					_handleScirpt = _USSCarrier call BIS_fnc_Carrier01Init;
-					waitUntil {isNull _handleScirpt};
 
 					cutText ["ARRIVING ON CARRIER", "BLACK FADED", 100];
-					uiSleep 15; 
+					uiSleep 2; 
+					waitUntil {isNull _handleScirpt};
+					cutText ["ARRIVING ON CARRIER", "BLACK FADED", 100];
+					uiSleep 5; 
 
 					//Play random radio sound
 					[] spawn {
@@ -595,6 +634,15 @@ if (side player == blufor) then
 
 					[["bluforVehicleAvalaibleSpawn", bluforUnarmedVehicle, bluforArmedVehicle, bluforArmoredVehicle, bluforUnarmedVehicleChopper, bluforArmedChopper, bluforDrone, bluforFixedWing, bluforFixedWingTransport, bluforBoat, bluforStaticWeapon], 'GUI\vehicleSpawnerGUI\vehicleSpawner.sqf'] remoteExec ['BIS_fnc_execVM', _caller];
 			},_x,3,true,false,"","(_target distance _this <5) && (_this getVariable 'role' == 'leader' || _this getVariable 'role' == 'pilot')"];	
+	} else 
+	{
+		TPFlag1 addAction [format ["<img size='2' image='\a3\ui_f_oldman\data\IGUI\Cfg\holdactions\holdAction_market_ca.paa'/><t size='1'>%1</t>", localize "STR_ACTIONS_OPEN_VEHICLE_SHOP"],{
+
+					//Define parameters
+					params ["_object","_caller","_ID","_avalaibleVehicle"];
+
+					[["bluforVehicleAvalaibleSpawn", bluforUnarmedVehicle, bluforArmedVehicle, bluforArmoredVehicle, bluforUnarmedVehicleChopper, bluforArmedChopper, bluforDrone, bluforFixedWing, bluforFixedWingTransport, bluforBoat, bluforStaticWeapon], 'GUI\vehicleSpawnerGUI\vehicleSpawnerCarrier.sqf'] remoteExec ['BIS_fnc_execVM', _caller];
+			},_x,3,true,false,"","(_target distance _this <5) && (_this getVariable 'role' == 'leader' || _this getVariable 'role' == 'pilot')"];	
 	};
 
 	TPFlag1 addAction [format ["<img size='2' image='\a3\ui_f_oldman\data\IGUI\Cfg\holdactions\holdAction_market_ca.paa'/><t size='1'>%1</t>", localize "STR_ACTIONS_OPEN_SUPPORT_SHOP"],{
@@ -701,8 +749,23 @@ _KilledEH = player addEventHandler ["Killed", {
 		{
 			//Reward PvP kill
 			_distance = _instigator distance _unit;
+
+			//Store kill distance
+			[[_distance], 
+			{
+				params ["_distance"];
+				_infantryKillRange = player getVariable ["RPG_ranking_infantry_killRange", 0];
+
+				if (_infantryKillRange < _distance) then 
+				{
+					player setVariable ["RPG_ranking_infantry_killRange", _distance, true];
+				};
+			}] remoteExec ["spawn", _instigator]; 
+
+
 			if (_distance<100 || _distance>5000) then {_distance = nil};
 			[[_distance], {params ["_distance"]; [1, "RPG_ranking_infantry_kill", _distance] call doUpdateRank}] remoteExec ["spawn", _instigator]; 
+
 		} else 
 		{
 			
@@ -724,9 +787,6 @@ _KilledEH = player addEventHandler ["Killed", {
 							_instigator setDamage 1;
 							[[_instigator], {params ["_instigator"]; ["STR_RPG_HC_NAME", "STR_RPG_HC_PUNISH", name _instigator] call doDialog}] remoteExec ["spawn", side _instigator]; 
 
-							//Fix spectator 
-							["Terminate"] call BIS_fnc_EGSpectator;
-							["Initialize", [player, [playerSide] , true, false ]] call BIS_fnc_EGSpectator;
 						} else {
 							//systemChat "The player is not sure.";
 						};
@@ -828,6 +888,8 @@ if (isClass (configFile >> "CfgPatches" >> "ace_medical")) then
 #include "GUI\mapIndicatorGUI\mapRealTimeMarkers.sqf"
 #include "engine\tentActionManagement.sqf"
 
+//Joining message 
+[format [(format ["%1", localize "STR_RPG_SETUP_ROLE_ANNOUNCEMENT"]), name player,  [player getVariable "role"] call getClassInformation]] remoteExec ["systemChat", 0, true]; //Display message to every client 
 
 //Display welcome message
 5 fadeMusic 0;

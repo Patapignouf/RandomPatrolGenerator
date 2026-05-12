@@ -125,6 +125,12 @@ if ((count _revealedObjectives != count _tempMissionObjectives)) then
 							[_side, _objectiveToReveal select 2, [_currentObjectiveDescription, ["STR_RPG_OBJ_TAKE"], "cookiemarker2"], objNull, "CREATED", 3, true] call BIS_fnc_taskCreate;
 							[_objectiveToReveal select 2,"upload"] call BIS_fnc_taskSetType;
 						};
+					case "destroyer":
+						{
+							_currentObjectiveDescription = ["STR_RPG_OBJ_DESTROYER_TEXT", _objectiveLocationName];
+							[_side, _objectiveToReveal select 2, [_currentObjectiveDescription, ["STR_RPG_OBJ_DESTROYER"], "cookiemarker2"], objNull, "CREATED", 3, true] call BIS_fnc_taskCreate;
+							[_objectiveToReveal select 2,"danger"] call BIS_fnc_taskSetType;
+						};
 					case "collectIntel":
 						{
 							_currentObjectiveDescription = ["STR_RPG_OBJ_INTEL_TEXT", getText (configFile >> "cfgVehicles" >> typeOf _thisObject >> "displayName"),_objectiveLocationName];

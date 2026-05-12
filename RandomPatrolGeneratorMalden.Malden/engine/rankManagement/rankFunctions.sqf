@@ -295,6 +295,10 @@ doGetScoreName = {
 		{
 			_scoreName = localize "STR_RPG_SCORE_INFANTRY_KILL";
 		};
+		case "RPG_ranking_infantry_killRange":
+		{
+			_scoreName = localize "STR_RPG_SCORE_INFANTRY_MAX_RANGE";
+		};
 		case "RPG_ranking_vehicle_kill":
 		{
 			_scoreName = localize "STR_RPG_SCORE_VEHICLE_KILL";

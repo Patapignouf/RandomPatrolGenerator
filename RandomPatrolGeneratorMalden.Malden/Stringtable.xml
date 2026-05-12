@@ -125,6 +125,17 @@
                 <Chinese>最后一件事...</Chinese>
                 <Japanese>最後に一つ...</Japanese>
             </Key>
+            <Key ID="STR_RPG_SETUP_ROLE_ANNOUNCEMENT">
+                <Original>%1 has joined the mission as %2</Original>
+                <English>%1 has joined the mission as %2</English>
+                <French>%1 a rejoint la mission en tant que %2</French>
+                <Spanish>%1 se ha unido a la misión como %2</Spanish>
+                <German>%1 ist der Mission als %2 beigetreten</German>
+                <Italian>%1 si è unito alla missione come %2</Italian>
+                <Russian>%1 присоединился к миссии в качестве %2</Russian>
+                <Chinese>%1 已作为 %2 加入任务</Chinese>
+                <Japanese>%1 が %2 としてミッションに参加しました</Japanese>
+            </Key>
         </Container>
         <Container name="OBJECTIVES">
             <Key ID="STR_RPG_OBJ_SURVIVE">
@@ -447,6 +458,28 @@
                 <Chinese>在%1有一些敌人，你必须夺取该地点并防御敌人的增援</Chinese>
                 <Japanese>%1には敵がいます。場所を奪取し、敵の増援から防衛しなければなりません</Japanese>
             </Key>
+            <Key ID="STR_RPG_OBJ_DESTROYER">
+                <Original>Capture the destroyer</Original>
+                <English>Capture the destroyer</English>
+                <French>Capturer le destroyer</French>
+                <Spanish>Capturar el destructor</Spanish>
+                <German>Zerstörer kapern</German>
+                <Italian>Cattura il cacciatorpediniere</Italian>
+                <Russian>Захватить эсминец</Russian>
+                <Chinese>俘获驱逐舰</Chinese>
+                <Japanese>駆逐艦を鹵獲せよ</Japanese>
+            </Key>
+            <Key ID="STR_RPG_OBJ_DESTROYER_TEXT">
+                <Original>You must take control of the destroyer near %1.</Original>
+                <English>You must take control of the destroyer near %1.</English>
+                <French>Vous devez prendre le contrôle du destroyer près de %1.</French>
+                <Spanish>Debes tomar el control del destructor cerca de %1.</Spanish>
+                <German>Du musst die Kontrolle über den Zerstörer in der Nähe von %1 übernehmen.</German>
+                <Italian>Devi prendere il controllo del cacciatorpediniere vicino a %1.</Italian>
+                <Russian>Вы должны взять под контроль эсминец рядом с %1.</Russian>
+                <Chinese>你必须控制 %1 附近的驱逐舰。</Chinese>
+                <Japanese>%1 付近にある駆逐艦を制圧しなければならない。</Japanese>
+            </Key>
             <Key ID="STR_RPG_OBJ_INTEL">
                 <Original>Collect intel</Original>
                 <English>Collect intel</English>
@@ -534,6 +567,28 @@
                 <Russian>Вы должны контролировать FOB Опфор на позиции %1.</Russian>
                 <Chinese>你必须控制位于%1的敌方前进作战基地。</Chinese>
                 <Japanese>位置%1のオプフォーFOBを制御しなければなりません。</Japanese>
+            </Key>
+            <Key ID="STR_RPG_OBJ_ATK_DESTROYER">
+                <Original>Attack Opfor Destroyer</Original>
+                <English>Attack Opfor Destroyer</English>
+                <French>Attaquer le destroyer ennemi</French>
+                <Spanish>Atacar el destructor de Opfor</Spanish>
+                <German>Opfor-Zerstörer angreifen</German>
+                <Italian>Attaccare il cacciatorpediniere di Opfor</Italian>
+                <Russian>Атаковать эсминец Опфор</Russian>
+                <Chinese>攻击敌方驱逐舰</Chinese>
+                <Japanese>オプフォー駆逐艦を攻撃</Japanese>
+            </Key>
+            <Key ID="STR_RPG_OBJ_ATK_DESTROYER_TEXT">
+                <Original>You have to control the opfor destroyer on position %1.</Original>
+                <English>You have to control the opfor destroyer on position %1.</English>
+                <French>Vous devez prendre le contrôle du destroyer ennemi près de %1</French>
+                <Spanish>Debes controlar el destructor de Opfor en la posición %1.</Spanish>
+                <German>Du musst den Opfor-Zerstörer an Position %1 kontrollieren.</German>
+                <Italian>Devi controllare il cacciatorpediniere di Opfor in posizione %1.</Italian>
+                <Russian>Вы должны контролировать эсминец Опфор на позиции %1.</Russian>
+                <Chinese>你必须控制位于%1的敌方驱逐舰。</Chinese>
+                <Japanese>位置%1のオプフォー駆逐艦を制御しなければなりません。</Japanese>
             </Key>
             <Key ID="STR_RPG_OBJ_ATK_OUTPOST">
                 <Original>Attack Opfor Outpost</Original>
@@ -707,6 +762,22 @@
                 <Chinese>一名平民被%1杀死，注意你的火力</Chinese>
                 <Japanese>市民が%1に殺されました。火に注意してください</Japanese>
             </Key>
+            <Key ID="STR_RPG_HC_VIPKILL">
+                <English>The VIP was killed by %1, objective failed</English>
+                <French>Le VIP a été tué par %1, objectif non atteint</French>
+                <Italian>Il VIP è stato ucciso da %1, obiettivo fallito</Italian>
+                <Spanish>El VIP ha sido asesinado por %1, objetivo no alcanzado</Spanish>
+                <German>Der VIP wurde von %1 getötet, Missionsziel gescheitert</German>
+                <Polish>VIP został zabity przez %1, cel nieosiągnięty</Polish>
+                <Czech>VIP byl zabit hráčem %1, úkol nesplněn</Czech>
+                <Russian>VIP-персона была убита %1, цель не достигнута</Russian>
+                <Portuguese>O VIP foi morto por %1, objetivo não alcançado</Portuguese>
+                <Japanese>VIPが%1によって殺害されました。目的は達成されませんでした</Japanese>
+                <Korean>VIP가 %1에 의해 사살되었습니다. 목표 달성 실패</Korean>
+                <Chinese>VIP被 %1 击杀，任务失败</Chinese>
+                <Chinesesimp>VIP被 %1 击杀，任务失败</Chinesesimp>
+                <Turkish>VIP, %1 tarafından öldürüldü, görev başarısız</Turkish>
+            </Key>
             <Key ID="STR_RPG_HC_SURRENDER_KILL">
                 <Original>%1 has surrender and has been killed by %2, watch your fire</Original>
                 <English>%1 has surrender and has been killed by %2, watch your fire</English>
@@ -793,6 +864,17 @@
                 <Russian>FOB на позиции %1 была очищена</Russian>
                 <Chinese>位于%1的前进作战基地已被清理</Chinese>
                 <Japanese>位置%1のFOBがクリアされました</Japanese>
+            </Key>
+            <Key ID="STR_RPG_HC_TIMER_BOMB">
+                <Original>The bomb has detonated. You arrived too late.</Original>
+                <English>The bomb has detonated. You arrived too late.</English>
+                <French>La bombe a explosé, vous êtes arrivés trop tard</French>
+                <Spanish>La bomba ha detonado. Llegasteis demasiado tarde.</Spanish>
+                <German>Die Bombe ist detoniert. Ihr seid zu spät gekommen.</German>
+                <Italian>La bomba è esplosa. Siete arrivati troppo tardi.</Italian>
+                <Russian>Бомба взорвалась. Вы прибыли слишком поздно.</Russian>
+                <Chinese>炸弹已爆炸，你们来得太晚了</Chinese>
+                <Japanese>爆弾はすでに爆発した。到着が遅すぎた。</Japanese>
             </Key>
             <Key ID="STR_RPG_HC_OPFOR_AROUND">
                 <Original>We have spotted enemies around your position, be ready</Original>
@@ -1297,6 +1379,17 @@
         <Chinese>步兵击杀</Chinese>
         <Japanese>歩兵の殺害</Japanese>
     </Key>
+    <Key ID="STR_RPG_SCORE_INFANTRY_MAX_RANGE">
+        <Original>Max distance</Original>
+        <English>Max distance</English>
+        <French>Distance max.</French>
+        <Spanish>Distancia máxima</Spanish>
+        <German>Maximale Distanz</German>
+        <Italian>Distanza massima</Italian>
+        <Russian>Макс. дистанция</Russian>
+        <Chinese>最大距离</Chinese>
+        <Japanese>最大射程</Japanese>
+    </Key>
     <Key ID="STR_RPG_SCORE_VEHICLE_KILL">
         <Original>Vehicle kill</Original>
         <English>Vehicle kill</English>
@@ -1353,15 +1446,15 @@
         <Japanese>IEDの解除</Japanese>
     </Key>
     <Key ID="STR_RPG_SCORE_INTEL">
-        <Original>Intel Collect</Original>
-        <English>Intel Collect</English>
-        <French>Information collectée</French>
-        <Spanish>Recolección de información</Spanish>
-        <German>Informationen sammeln</German>
-        <Italian>Raccolta informazioni</Italian>
-        <Russian>Сбор информации</Russian>
-        <Chinese>收集情报</Chinese>
-        <Japanese>情報収集</Japanese>
+        <Original>Intel</Original>
+        <English>Intel</English>
+        <French>Information</French>
+        <Spanish>Información</Spanish>
+        <German>Aufklärung</German>
+        <Italian>Info</Italian>
+        <Russian>Разведданные</Russian>
+        <Chinese>情报</Chinese>
+        <Japanese>情報</Japanese>
     </Key>
     <Key ID="STR_RPG_SCORE_OBJECTIVE">
         <Original>Objective</Original>
@@ -2622,6 +2715,17 @@
         <Russian>Открыть</Russian>
         <Chinese>解锁</Chinese>
         <Japanese>解除</Japanese>
+    </Key>
+    <Key ID="STR_GUI_BASE_RANDOM">
+        <Original>Random</Original>
+        <English>Random</English>
+        <French>Aléatoire</French>
+        <Spanish>Aleatorio</Spanish>
+        <German>Zufällig</German>
+        <Italian>Casuale</Italian>
+        <Russian>Случайно</Russian>
+        <Chinese>随机</Chinese>
+        <Japanese>ランダム</Japanese>
     </Key>
 </Container>
 </Project>

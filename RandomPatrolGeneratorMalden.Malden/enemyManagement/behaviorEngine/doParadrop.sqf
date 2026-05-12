@@ -50,6 +50,14 @@ waitUntil {[(getPos _heli)#0,(getPos _heli)#1,0] distance _destinationPos < 400}
 	moveOut _unit;
 	_parachute setPosASL (getPosASL _unit);
 	_unit attachTo [_parachute, [0, 0, -1.3]];
+
+	//Remove parachute after one minute of falling to prevent parachute stuck in buildings/trees
+	[_parachute] spawn {
+		params ["_parachute"];
+		sleep 60;
+		deleteVehicle _parachute;
+	};
+
 } forEach (units _currentEnemyGroup); 
 
 

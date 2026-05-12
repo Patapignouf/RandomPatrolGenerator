@@ -60,7 +60,8 @@ params ["_currentGroup", "_thisObjective"];
 									case "bomb":
 										{
 											_code = _thisObject getVariable "RPG_DefuseCode";
-											_currentObjectiveDescription = format ["The password is %1", _code];
+											_bombID = _thisObject getVariable "RPG_BombID";
+											_currentObjectiveDescription = format ["The password is %1 for the bomb with the ID %2", _code, _bombID];
 										};
 									case "vip":
 										{
@@ -110,7 +111,18 @@ params ["_currentGroup", "_thisObjective"];
 											{
 												_currentObjectiveDescription = format ["There no more enemy in %1, congratulation guys", text _nearestLoc, _opforCount];
 											};
-										};							
+										};
+									case "destroyer":
+										{
+											_opforCount = count ((allUnits select {alive _x && side _x == opfor} ) inAreaArray _thisObject);
+											if (_opforCount >0) then 
+											{
+												_currentObjectiveDescription = format ["There %2 enemies in %1, you have to clear the location...", text _nearestLoc, _opforCount];
+											} else 
+											{
+												_currentObjectiveDescription = format ["There no more enemy in %1, congratulation guys", text _nearestLoc, _opforCount];
+											};
+										};
 									case "collectIntel":
 										{
 											_currentObjectiveDescription = format ["The intel %1 is at %2", getText (configFile >> "cfgVehicles" >> typeOf _thisObject >> "displayName"), mapGridPosition (getPos _thisObject)];

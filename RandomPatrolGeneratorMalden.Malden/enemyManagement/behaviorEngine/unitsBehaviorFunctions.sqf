@@ -27,16 +27,7 @@ params ["_thisGroup", "_position", "_distance","_allowCamp"];
 		if (!isNull _thisGroup) then
 		{
 			//Randomly place IA group in garrison or camp
-			if (round (random 3) != 0 && _allowCamp) then 
-			{
-				diag_log "Task_Camp ! [LAMBS]";
-				[_thisGroup, _position, _distance, [], true, true] call lambs_wp_fnc_taskCamp;
-			} 
-			else 
-			{
-				diag_log "Task_Garrison ! [LAMBS]";
-				[_thisGroup, _position, _distance, [], true, false, -2, true] call lambs_wp_fnc_taskGarrison;
-			};
+			[_thisGroup, _position, _distance, [], true, false, -2, true] call lambs_wp_fnc_taskGarrison;
 		};
 	} else 
 	{

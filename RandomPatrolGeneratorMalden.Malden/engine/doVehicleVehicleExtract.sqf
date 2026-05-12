@@ -43,6 +43,16 @@ wp1 setWaypointStatements ["true", "(vehicle this) LAND 'LAND';"];
 //Waiting for heli to land
 waitUntil {isTouchingGround (_heli)};
 
+//Force chopper to stay here 
+//Bug with Smart AI
+if (isClass (configFile >> "CfgPatches" >> "SAAI_main")) then 
+{
+	private _owner = owner _heli;
+	[_heli, 0] remoteExec ["setFuel", _owner, false];
+	_heli setVariable ["flyWithSAAI", true, true];
+};
+
+
 //Add action to take off
 [_heli, [format ["Extract"],{
 		params ["_object","_caller","_ID","_thisParams"];
@@ -52,10 +62,20 @@ waitUntil {isTouchingGround (_heli)};
 		//Delete extract actions
 		_object setVariable ["helicopterReady", true, true];
 		[_object] remoteExec ["removeAllActions", 0, true];
+
+		//Fix chopper by refueling 
+		//Bug with Smart AI
+		if (_object getVariable ["flyWithSAAI", false]) then 
+		{
+			private _owner = owner _object;
+			[_object, 1] remoteExec ["setFuel", _owner, false];
+		};
+
 	},[],1.5,true,true,"","_target distance _this <5"]] remoteExec ["addAction", 0, true];
 
 //Wait for chopper to be ready and with players
 waitUntil {_heli getVariable ["helicopterReady", false] == true};
+
 
 
 //Go to blufor base
@@ -73,6 +93,8 @@ wp1 setWaypointStatements ["true", "(vehicle this) LAND 'LAND';"];
 
 //Waiting for crew to dismount
 waitUntil {isTouchingGround (_heli)};
+
+//Wait 10 minutes
 sleep 600;
 
 //back to map border

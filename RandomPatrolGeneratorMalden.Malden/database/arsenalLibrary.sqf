@@ -472,25 +472,60 @@ getVirtualMagazine = {
 					};
 				} foreach currentWeaponList;
 			};
+		case c_grenadier:
+			{ 
+				{
+					_currentWeapon = _x;
+					//Add default weapon magazine except large magazine
+					_listOfLargeMagazineText = ["60Rnd", "75Rnd", "75rnd", "100Rnd", "150Rnd", "200Rnd"]; //
+					_currentWeaponMagazineList = [_currentWeapon] call getListOfMagazines;
+					//Standard magazine
+					if (count (_currentWeaponMagazineList#0) != 0) then 
+					{
+						{
+							if ((virtualMagazineList) findIf {_currentWeapon == (_x)} == -1) then 
+							{
+								if (!([_x, _listOfLargeMagazineText] call isElementOfArrayInString) && !([_x] call isBannedItem)) then 
+								{
+									virtualMagazineList pushBackUnique _x;
+								};
+							};
+						} foreach (_currentWeaponMagazineList#0);
+					};
+					//Grenades
+					if (count (_currentWeaponMagazineList#1) != 0) then 
+					{
+						{
+							if ((virtualMagazineList) findIf {_currentWeapon == (_x)} == -1) then 
+							{
+								if (!([_x, _listOfLargeMagazineText] call isElementOfArrayInString) && !([_x] call isBannedItem)) then 
+								{
+									virtualMagazineList pushBackUnique _x;
+								};
+							};
+						} foreach (_currentWeaponMagazineList#1);
+					};
+				} foreach currentWeaponList;
+			};
 		default 
 			{ 
 				{
-				//Add default weapon magazine except large magazine
-				_listOfLargeMagazineText = ["60Rnd", "75Rnd", "75rnd", "100Rnd", "150Rnd", "200Rnd"]; //
-				_currentWeaponMagazineList = getArray (configfile >> "CfgWeapons" >> _x >> "magazines");
-				if (count _currentWeaponMagazineList != 0) then 
-				{
-					_currentWeapon = _x;
+					//Add default weapon magazine except large magazine
+					_listOfLargeMagazineText = ["60Rnd", "75Rnd", "75rnd", "100Rnd", "150Rnd", "200Rnd"]; //
+					_currentWeaponMagazineList = getArray (configfile >> "CfgWeapons" >> _x >> "magazines");
+					if (count _currentWeaponMagazineList != 0) then 
 					{
-						if ((virtualMagazineList) findIf {_currentWeapon == (_x)} == -1) then 
+						_currentWeapon = _x;
 						{
-							if (!([_x, _listOfLargeMagazineText] call isElementOfArrayInString) && !([_x] call isBannedItem)) then 
+							if ((virtualMagazineList) findIf {_currentWeapon == (_x)} == -1) then 
 							{
-								virtualMagazineList pushBackUnique _x;
+								if (!([_x, _listOfLargeMagazineText] call isElementOfArrayInString) && !([_x] call isBannedItem)) then 
+								{
+									virtualMagazineList pushBackUnique _x;
+								};
 							};
-						};
-					} foreach _currentWeaponMagazineList;
-				};
+						} foreach _currentWeaponMagazineList;
+					};
 				} foreach currentWeaponList;
 			};
 	};
@@ -500,6 +535,46 @@ getVirtualMagazine = {
 
 	//diag_log format ["Player %1 with role %2 has access to items %3", name currentPlayer, currentPlayerClass, virtualMagazineList ];
 	virtualMagazineList
+};
+
+
+getListOfMagazines = 
+{
+	params ["_weapon"];
+
+	private _normalMags = [];
+	private _glMags = [];
+
+	if !(isClass (configFile >> "CfgWeapons" >> _weapon)) exitWith {
+		[_normalMags, _glMags]
+	};
+
+	private _weaponCfg = configFile >> "CfgWeapons" >> _weapon;
+
+	// tous les muzzles
+	private _muzzles = getArray (_weaponCfg >> "muzzles");
+
+	// 🔫 muzzle principal
+	if ("this" in _muzzles) then {
+		_normalMags = getArray (_weaponCfg >> "magazines");
+	};
+
+	// 💣 autres muzzles = GL / secondaires
+	{
+		if (_x != "this") then {
+			private _muzzleCfg = _weaponCfg >> _x;
+
+			if (isClass _muzzleCfg) then {
+				_glMags append getArray (_muzzleCfg >> "magazines");
+			};
+		};
+	} forEach _muzzles;
+
+	// supprimer doublons
+	_normalMags = _normalMags arrayIntersect _normalMags;
+	_glMags     = _glMags arrayIntersect _glMags;
+
+	[_normalMags, _glMags]
 };
 
 setupArsenalToItem = {
@@ -1605,7 +1680,7 @@ getNumberOfClassInSquad = {
 getClassInformation = {
 	params ["_class"];
 
-	_classDescription = "";
+	_classDescription = _class;
 
 	switch (_class) do
 		{

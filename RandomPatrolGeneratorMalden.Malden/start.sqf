@@ -372,6 +372,13 @@ currentRandObj = objNull;
 
 //Generate objectives according to the mission's length parameter
 _minNumberOfMission = missionLength min(count AllPossibleObjectivePosition);
+_numberOfObjectivePerLocation = missionNameSpace getVariable ["objectivePerLocation", 1];
+
+
+if (!enableCampaignMode) then 
+{
+	missionNameSpace setVariable ["maxObjectivesGeneratedSetting", _minNumberOfMission, true];
+};
 
 for [{_counterOfMission = 0}, {_counterOfMission < _minNumberOfMission}, {_counterOfMission = _counterOfMission + 1}] do //Peut être optimisé
 {
@@ -381,13 +388,15 @@ for [{_counterOfMission = 0}, {_counterOfMission < _minNumberOfMission}, {_count
 		//Classic order
 		case 0:
 		{
-			[avalaibleTypeOfObj, [PossibleObjectivePosition#0]] call generateObjective;
+			[avalaibleTypeOfObj, [PossibleObjectivePosition#0], _numberOfObjectivePerLocation] call generateObjectives;
 			PossibleObjectivePosition = PossibleObjectivePosition - [PossibleObjectivePosition#0];
 		};
 		//Random order
 		case 1:
 		{
-			PossibleObjectivePosition = [avalaibleTypeOfObj, PossibleObjectivePosition] call generateObjective;
+			_selectedRandomObjective = selectRandom PossibleObjectivePosition;
+			[avalaibleTypeOfObj, [_selectedRandomObjective], _numberOfObjectivePerLocation] call generateObjectives;
+			PossibleObjectivePosition = PossibleObjectivePosition - [_selectedRandomObjective];
 		};
 		//Closest objective
 		case 2:
@@ -397,7 +406,7 @@ for [{_counterOfMission = 0}, {_counterOfMission < _minNumberOfMission}, {_count
 			{	
 				//Case where this is the first objective
 				//Generate objective at first position
-				[avalaibleTypeOfObj, [PossibleObjectivePosition#0]] call generateObjective;
+				[avalaibleTypeOfObj, [PossibleObjectivePosition#0], _numberOfObjectivePerLocation] call generateObjectives;
 				PossibleObjectivePosition = PossibleObjectivePosition - [PossibleObjectivePosition#0];
 			} else 
 			{
@@ -405,7 +414,7 @@ for [{_counterOfMission = 0}, {_counterOfMission < _minNumberOfMission}, {_count
 				if (count PossibleObjectivePosition != 0) then 
 				{
 					_selectedPosition = [(MissionObjectives#-1)#3, PossibleObjectivePosition] call getClosest;
-					[avalaibleTypeOfObj, [_selectedPosition]] call generateObjective;
+					[avalaibleTypeOfObj, [_selectedPosition], _numberOfObjectivePerLocation] call generateObjectives;
 					PossibleObjectivePosition = PossibleObjectivePosition - [_selectedPosition];
 				};
 			};
@@ -587,6 +596,8 @@ if !(_isOnWater) then
 			//Snap FOB object to ground
 			{
 				_x setVectorUp surfaceNormal position _x;
+				_groundPos = getPos _x;
+				_x setPos [_groundPos#0, _groundPos#1, 0];
 			} foreach spawnFOBObjects;
 
 			initBlueforLocation = getPos (spawnFOBObjects select 0);	
@@ -609,7 +620,8 @@ if !(_isOnWater) then
 	[_object] call BIS_fnc_Carrier01PosUpdate;
 
 	// Broadcast Carrier ID over network
-	missionNamespace setVariable ["USS_FREEDOM_CARRIER",_object]; publicVariable "USS_FREEDOM_CARRIER";
+	missionNamespace setVariable ["USS_FREEDOM_CARRIER",_object]; 
+	publicVariable "USS_FREEDOM_CARRIER";
 
 	// Broadcast carrier position as blufor init base
 	initBlueforLocation = [_spawnPos#0, _spawnPos#1, 24];
@@ -647,7 +659,7 @@ if !(_isOnWater) then
 //Clean area WIP only if there is a FOB spawned
 if (missionNameSpace getVariable ["enableBluforFOB", 1] == 1) then 
 {
-	[initBlueforLocation, 150] execVM 'objectGenerator\doCleanArea.sqf';
+	[initBlueforLocation, 70] execVM 'objectGenerator\doCleanArea.sqf';
 }; 				
 
 //Generate ground vehicle
@@ -838,7 +850,36 @@ if (missionNameSpace getVariable ["enableOpforBMShop",1] == 1) then
 
 for [{_i = 0}, {_i < missionLength}, {_i = _i + 1}] do //Peut être optimisé
 {
-	[] execVM 'enemyManagement\generationEngine\generateOpforFOB.sqf';
+	if (random 100 <75) then 
+	{	
+		_destroyerProb = 100;
+		if (missionNameSpace getVariable ["enableDestroyerFOB", 1] == 1) then 
+		{
+			_destroyerProb = 50; 
+		};
+		if (missionNameSpace getVariable ["enableDestroyerFOB", 1] == 2) then 
+		{
+			_destroyerProb = 0; 
+		};
+
+		if (random 100 < (0+_destroyerProb)) then 
+		{
+			[] execVM 'enemyManagement\generationEngine\generateOpforFOB.sqf';
+
+		} else 
+		{
+			//Add opfor destroyer
+			_resultSearchLoc =  [] call searchLocationWithWaterDepth;
+			if (_resultSearchLoc#1) then 
+			{
+				_pos = _resultSearchLoc#0;
+				if (400 < initBlueforLocation distance _pos) then //Spawn at least at 400m from blufor
+				{
+					[_pos] execVM 'enemyManagement\generationEngine\generateDestroyer.sqf';
+				};
+			};
+		};	
+	};
 };
 
 ////////////////////////////
@@ -878,7 +919,7 @@ switch (startIntel) do
 			//reveal objective for ind
 			if (_mainPlayerSide == independent) then 
 			{
-					for [{_i = 0}, {_i <= missionLength}, {_i = _i + 1}] do //Peut être optimisé
+					for [{_i = 0}, {_i < (missionLength*maxObjectivesGeneratedSetting)}, {_i = _i + 1}] do //Peut être optimisé
 				{
 					[objNull, [], _mainPlayerSide] execVM 'engine\objectiveManagement\revealObjective.sqf';
 				};
@@ -887,7 +928,7 @@ switch (startIntel) do
 	case 2:
 		{
 			//Give task to blufor
-			for [{_i = 0}, {_i <= missionLength}, {_i = _i + 1}] do //Peut être optimisé
+			for [{_i = 0}, {_i < missionLength*maxObjectivesGeneratedSetting}, {_i = _i + 1}] do //Peut être optimisé
 			{
 				[objNull, [], _mainPlayerSide] execVM 'engine\objectiveManagement\revealObjective.sqf';
 			};
@@ -1006,34 +1047,15 @@ switch (warEra) do
 };
 
 //Setup time 
-switch (timeOfDay) do
+//Setup time 
+if (timeOfDay != 24) then 
 {
-	case 1:
-		{
-			//set morning
-			skipTime ((06 - dayTime + 24) % 24);
-		};
-	case 2:
-		{
-			//set day
-			skipTime ((12 - dayTime + 24) % 24);
-		};
-	case 3:
-		{
-			//set afternoon
-			skipTime ((18 - dayTime + 24) % 24);
-		};
-	case 4:
-		{
-			//set night
-			skipTime ((00 - dayTime + 24) % 24);
-		};
-	default
-		{
-			//set random time
-			skipTime ((round (random (24)) - dayTime + 24) % 24);
-		};
+	skipTime ((timeOfDay - dayTime + 24) % 24);
+} else 
+{
+	skipTime ((round (random (24)) - dayTime + 24) % 24);
 };
+
 
 switch (missionNameSpace getVariable ["WeatherSetting", 2]) do
 {
@@ -1098,7 +1120,7 @@ if (enableCampaignMode) then
 {
 	//Init mission objective status
 	_completedObjectives = missionNamespace getVariable ["completedObjectives",[]];
-	_objectiveCompletedCounter = count _completedObjectives;
+	_objectiveCompletedCounter = floor ((count _completedObjectives)/_numberOfObjectivePerLocation);
 	_maxObjectivesGenerated = false;
 
 	//Add this action on campaign mode blufor side
@@ -1139,7 +1161,7 @@ if (enableCampaignMode) then
 	while {sleep 10; (!_maxObjectivesGenerated)} do 
 	{
 		//Is an objective been completed ?
-		if (_objectiveCompletedCounter == (count ((missionNamespace getVariable ["completedObjectives",[]]) + (missionNamespace getVariable ["missionFailedObjectives",[]])))) then 
+		if (_objectiveCompletedCounter == floor ((count ((missionNamespace getVariable ["completedObjectives",[]]) + (missionNamespace getVariable ["missionFailedObjectives",[]])))/_numberOfObjectivePerLocation)) then 
 		{
 			//Do nothing
 			sleep 30;
@@ -1182,13 +1204,15 @@ if (enableCampaignMode) then
 				//Classic order
 				case 0:
 				{
-					[avalaibleTypeOfObj, [PossibleObjectivePosition#0]] call generateObjective;
+					[avalaibleTypeOfObj, [PossibleObjectivePosition#0], _numberOfObjectivePerLocation] call generateObjectives;
 					PossibleObjectivePosition = PossibleObjectivePosition - [PossibleObjectivePosition#0];
 				};
 				//Random order
 				case 1:
 				{
-					PossibleObjectivePosition = [avalaibleTypeOfObj, PossibleObjectivePosition] call generateObjective;
+					_selectedRandomObjective = selectRandom PossibleObjectivePosition;
+					[avalaibleTypeOfObj, [_selectedRandomObjective], _numberOfObjectivePerLocation] call generateObjectives;
+					PossibleObjectivePosition = PossibleObjectivePosition - [_selectedRandomObjective];
 				};
 				//Closest objective
 				case 2:
@@ -1199,7 +1223,7 @@ if (enableCampaignMode) then
 						//Case where this is the first objective
 						//Generate objective at first position
 						_randomSelectedObjective = selectRandom PossibleObjectivePosition;
-						[avalaibleTypeOfObj, [_randomSelectedObjective]] call generateObjective;
+						[avalaibleTypeOfObj, [_randomSelectedObjective], _numberOfObjectivePerLocation] call generateObjectives;
 						PossibleObjectivePosition = PossibleObjectivePosition - [_randomSelectedObjective];
 					} else 
 					{
@@ -1207,7 +1231,7 @@ if (enableCampaignMode) then
 						if (count PossibleObjectivePosition != 0) then 
 						{
 							_selectedPosition = [(MissionObjectives#-1)#3, PossibleObjectivePosition] call getClosest;
-							[avalaibleTypeOfObj, [_selectedPosition]] call generateObjective;
+							[avalaibleTypeOfObj, [_selectedPosition], _numberOfObjectivePerLocation] call generateObjectives;
 							PossibleObjectivePosition = PossibleObjectivePosition - [_selectedPosition];
 						};
 					};
@@ -1216,17 +1240,51 @@ if (enableCampaignMode) then
 
 			//Generate opfor FOB in campaign mode
 			if (random 100<25) then {
-				[] execVM 'enemyManagement\generationEngine\generateOpforFOB.sqf';
+
+				//50% chance to generate destroyer or FOB
+				if (random 100 <50) then 
+				{
+					_destroyerProb = 100;
+					if (missionNameSpace getVariable ["enableDestroyerFOB", 1] == 1) then 
+					{
+						_destroyerProb = 50; 
+					};
+					if (missionNameSpace getVariable ["enableDestroyerFOB", 1] == 2) then 
+					{
+						_destroyerProb = 0; 
+					};
+
+					if (random 100 < (0+_destroyerProb)) then 
+					{
+						[] execVM 'enemyManagement\generationEngine\generateOpforFOB.sqf';
+
+					} else 
+					{
+						//Add opfor destroyer
+						_resultSearchLoc =  [] call searchLocationWithWaterDepth;
+						if (_resultSearchLoc#1) then 
+						{
+							_pos = _resultSearchLoc#0;
+							if (400 < initBlueforLocation distance _pos) then //Spawn at least at 400m from blufor
+							{
+								[_pos] execVM 'enemyManagement\generationEngine\generateDestroyer.sqf';
+							};
+						};
+					};	
+				};
 			};
 
 			//Reveal objective to the player
 			if (startIntel == 2) then 
 			{
-				[objNull, [], _mainPlayerSide] execVM 'engine\objectiveManagement\revealObjective.sqf';
+				for [{_i = 0}, {_i < maxObjectivesGeneratedSetting}, {_i = _i + 1}] do //Peut être optimisé
+				{
+					[objNull, [], _mainPlayerSide] execVM 'engine\objectiveManagement\revealObjective.sqf';
+				};
 			};
 
 			//Update objective complete counter
-			_objectiveCompletedCounter = count ((missionNamespace getVariable ["completedObjectives",[]]) + (missionNamespace getVariable ["missionFailedObjectives",[]]));
+			_objectiveCompletedCounter = floor ((count ((missionNamespace getVariable ["completedObjectives",[]]) + (missionNamespace getVariable ["missionFailedObjectives",[]])))/_numberOfObjectivePerLocation);
 		};
 
 

@@ -5,7 +5,10 @@ avalaibleAmmoBox = [
 	"Box_NATO_AmmoOrd_F",  
 	"Box_NATO_WpsLaunch_F", 
 	"Box_IND_Support_F",
-	"Box_FIA_Wps_F"
+	"B_A_CargoNet_01_ammo_tropic_F",
+	"Box_T_CSAT_Equip_F",
+	"Box_GEN_Equip_F",
+	"O_R_CargoNet_01_ammo_F"
 ];
 
 if (isClass (configFile >> "CfgPatches" >> "rhs_main")) then 
@@ -17,8 +20,7 @@ if (isClass (configFile >> "CfgPatches" >> "rhs_main")) then
 avalaibleBomb = 
 [
 	"DemoCharge_F",
-	"SatchelCharge_F",
-	"AmmoCrate_NoInteractive_"
+	"SatchelCharge_F"
 ];
 
 avalaibleSupplyBox = [
@@ -76,8 +78,11 @@ avalaibleVIP = [
 	"C_IDAP_Man_EOD_01_F", 
 	"C_IDAP_Man_AidWorker_09_F", 
 	"C_scientist_01_formal_F",
-	"C_Nikos",
-	"C_Man_smart_casual_2_F"
+	"C_IDAP_Pilot_01_F",
+	"C_Man_smart_casual_2_F",
+	"C_IDAP_Man_Paramedic_01_F",
+	"C_Man_smart_casual_1_F_asia",
+	"C_Man_Messenger_01_F"
 ];
 
 if (isClass (configFile >> "CfgPatches" >> "CUP_BaseData")) then 
@@ -147,7 +152,8 @@ avalaibleTypeOfObjectives = [
 	["collectIntel", "Collect Intel", "Support", true],
 	["steal", "Steal vehicle", "Support", true],
 	["captureFlag", "Capture city", "Attack", true],
-	["hostage", "Hostage rescue", "Attack", true]
+	["hostage", "Hostage rescue", "Attack", true],
+	["destroyer", "Capture Destroyer", "Attack", true]
 ];
 
 //If ACE is enable on the server, specific objectives are avalaible

@@ -25,6 +25,7 @@ if (_isFirstStart) then
 	//Init all XP categories
 	_basicXPToInit = ["RPG_ranking_infantry_kill",
 					"RPG_ranking_vehicle_kill",
+					"RPG_ranking_infantry_killRange",
 					"deathNumber",
 					"RPG_ranking_suppress",
 					"RPG_ranking_heal",
@@ -308,6 +309,25 @@ if (isClass (configFile >> "CfgPatches" >> "ace_medical")) then
 
 				} forEach _medicalParticipationHashMap;
 			};
+
+
+			//Disable collision with other players
+			{
+				if (!(_x getVariable ["isUnconscious", false])) then 
+				{
+					[_unit, _x] remoteExecCall ["enableCollisionWith", 0, _unit];
+				};
+			} foreach AllPlayers;
+
+		} else 
+		{
+			//Disable collision with other players
+			{
+				if (!(_x getVariable ["isUnconscious", false])) then 
+				{
+					[_unit, _x] remoteExecCall ["disableCollisionWith", 0, _unit];
+				};
+			} foreach AllPlayers;
 		};
 		_unit setVariable ["medicalParticipationHashMap", createHashMap, true];
 	}] call CBA_fnc_addEventHandler;

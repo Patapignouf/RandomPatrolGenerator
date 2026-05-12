@@ -2,6 +2,7 @@ params ["_target"];
 
 if((!isNull _target) && {alive _target} && {count crew _target == 0} && {_target isKindOf 'Landvehicle' || _target isKindOf 'Air' || _target isKindOf 'Ship'})then {
 	_target setVectorUp [0, 0, 1];
+	//[format ["flip %1", _target]] remoteExec ["systemChat", 0, true];
 	['Flipped vehicle!',0,0.7,2,0] spawn bis_fnc_dynamictext;
 } else 
 {

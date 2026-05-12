@@ -43,14 +43,23 @@ wp1 setWaypointStatements ["true", "(vehicle this) LAND 'LAND';"];
 //Waiting for heli to land
 waitUntil {isTouchingGround (_heli)};
 
+//Force chopper to stay here 
+//Bug with Smart AI
+if (isClass (configFile >> "CfgPatches" >> "SAAI_main")) then 
+{
+	private _owner = owner _heli;
+	[_heli, 0] remoteExec ["setFuel", _owner, false];
+	_heli setVariable ["flyWithSAAI", true, true];
+};
+
 //Add action to take off
 [_heli, [format ["Set transport destination"],{
 		params ["_object","_caller","_ID","_thisParams"];
 
 		_vehicleTransportGroup = _thisParams#0;
 		
-		[_vehicleTransportGroup] spawn {
-				params ["_vehicleTransportGroup"];
+		[_vehicleTransportGroup, _object] spawn {
+				params ["_vehicleTransportGroup", "_object"];
 				//Click on map to Halo spawn
 				selectedHaloLoc = [0,0,0];
 				openMap true;
@@ -66,12 +75,41 @@ waitUntil {isTouchingGround (_heli)};
 					//Go to landing pos
 					_lzSafePos = [selectedHaloLoc, 0, 250, 10, 0, 0.25, 0, [], [selectedHaloLoc, selectedHaloLoc]] call BIS_fnc_findSafePos;
 					_lz =  createVehicle ["Land_HelipadEmpty_F", _lzSafePos, [], 0, "NONE"];
+
+					//Force chopper to stay here 
+					//Bug with Smart AI
+					if (_object getVariable ["flyWithSAAI", false]) then 
+					{
+						private _owner = owner _object;
+						[_object, 1] remoteExec ["setFuel", _owner, false];
+					};
+
 					_tempWaypoint = _vehicleTransportGroup addWaypoint [_lzSafePos, -1];
 					_tempWaypoint setwaypointtype"TR UNLOAD"; 
 					_tempWaypoint setWaypointBehaviour "CARELESS";
 					_tempWaypoint setWaypointCombatMode "BLUE";
 					_tempWaypoint setWaypointSpeed "FULL";
 					_tempWaypoint setWaypointStatements ["true", "(vehicle this) LAND 'LAND';"]; 
+
+					//Wait next landing
+					[_object] spawn {
+						params ["_object"];
+						
+						//Wait heli leaving current position
+						sleep 60;
+
+						//Waiting for heli to land
+						waitUntil {isTouchingGround (_object)};
+
+						//Force chopper to stay here 
+						//Bug with Smart AI
+						if (_object getVariable ["flyWithSAAI", false]) then 
+						{
+							private _owner = owner _object;
+							[_object, 0] remoteExec ["setFuel", _owner, false];
+						};
+					};
+
 				};
 			};
 	},[_vehicleTransportGroup],1.5,true,false,"","_target distance _this <5"]] remoteExec ["addAction", 0, true];

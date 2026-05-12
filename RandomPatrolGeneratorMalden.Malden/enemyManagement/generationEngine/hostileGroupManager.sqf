@@ -64,25 +64,8 @@ generateOpforInBiggestBuildings = {
 			if (count _listOfAllavalaiblePos >0) then 
 			{	
 				//teleport in building
-				_x setPos _listOfAllavalaiblePos#0;
-				_listOfAllavalaiblePos = _listOfAllavalaiblePos - [_listOfAllavalaiblePos#0];
 
-				//Set defensive behaviour
-				_x disableAI "PATH";
-				_x setUnitPos selectRandom ["UP","UP","MIDDLE"];
-
-				//50% to give an EH which enable movement for IA
-				if (random 100 >50) then 
-				{
-					_x addEventHandler["Fired",
-					{
-						params ["_unit"];
-						_unit enableAI "PATH";
-						_unit dofollow leader _unit;
-						_unit setUnitPos "AUTO";
-						_unit removeEventHandler ["Fired",_thisEventHandler];
-					}];
-				};
+				_listOfAllavalaiblePos = [_x, _listOfAllavalaiblePos] call moveUnitToBuilding;
 			};
 
 		} foreach _group;
@@ -92,4 +75,63 @@ generateOpforInBiggestBuildings = {
 	_avalaibleFreePos;
 };
 
+moveUnitToBuilding = {
+	params ["_thisUnit", "_listOfAllavalaiblePosInBuildings"];
 
+	//If there is avalaible places
+	if (count _listOfAllavalaiblePosInBuildings >0) then 
+	{	
+
+
+		if ([_listOfAllavalaiblePosInBuildings#0] call isPositionAvailableForSpawn) then 
+		{
+			//teleport in building
+			_thisUnit setPos _listOfAllavalaiblePosInBuildings#0;
+			_listOfAllavalaiblePosInBuildings = _listOfAllavalaiblePosInBuildings - [_listOfAllavalaiblePosInBuildings#0];
+
+			//Set defensive behaviour
+			_thisUnit disableAI "PATH";
+			_thisUnit setUnitPos selectRandom ["UP","UP","MIDDLE"];
+
+			//50% to give an EH which enable movement for IA
+			if (random 100 >50) then 
+			{
+				_thisUnit addEventHandler["Fired",
+				{
+					params ["_unit"];
+					_unit enableAI "PATH";
+					_unit dofollow leader _unit;
+					_unit setUnitPos "AUTO";
+					_unit removeEventHandler ["Fired",_thisEventHandler];
+				}];
+			};
+		} else 
+		{
+			_listOfAllavalaiblePosInBuildings = _listOfAllavalaiblePosInBuildings - [_listOfAllavalaiblePosInBuildings#0];
+			_listOfAllavalaiblePosInBuildings = [_thisUnit, _listOfAllavalaiblePosInBuildings] call moveUnitToBuilding;
+		};
+		
+	};
+
+	_listOfAllavalaiblePosInBuildings
+};
+
+
+/*
+    Arguments:
+    0: POSITION (Array) - La position à vérifier [x, y, z]
+    1: RAYON (Number) - La précision du test (ex: 1 mètre)
+*/
+isPositionAvailableForSpawn = {
+	params ["_pos", ["_radius", 1]];
+
+	private _units = _pos nearEntities ["Man", _radius];
+
+	if (count _units > 0) then {
+		//hint format ["Position occupée par : %1", name (_units select 0)];
+		false // Retourne false
+	} else {
+		//hint "La position est libre";
+		true // Retourne vrai
+	};
+};

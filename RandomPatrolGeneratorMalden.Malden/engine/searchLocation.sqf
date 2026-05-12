@@ -230,3 +230,41 @@ getClosest = {
 	_allPositions = [_allPositions, [], {_position distance _x}, "ASCEND"] call BIS_fnc_sortBy;
 	_allPositions#0;
 };
+
+
+getDepthAtLocation = {
+	params ["_position"];
+	private _depth = 0;
+	private _terrainHeight = getTerrainHeightASL _position;
+
+	if (_terrainHeight < 0) then {
+		_depth = abs _terrainHeight; // On transforme la valeur négative en profondeur positive
+	} else {
+		_depth = 0; // On est sur la terre ferme
+	};
+
+	_depth
+};
+
+searchLocationWithWaterDepth = {
+	params [["_numberOfAttempts", 3]];
+
+	_searchResult = [[], false];
+
+	_positionCandidate = [nil, ["ground"]] call BIS_fnc_randomPos; // Ou une position fixe ex: [1200, 4500, 0]
+
+	//Search max 4 times water at 20 meters deep
+	for [{_i = 0}, {_i < _numberOfAttempts}, {_i = _i + 1}] do
+	{ 
+		_depthAtLoc = [_positionCandidate] call getDepthAtLocation;
+		if (20 < _depthAtLoc) then 
+		{
+			_searchResult set [0, _positionCandidate];
+			_searchResult set [1, true];
+		} else 
+		{
+			_positionCandidate = [nil, ["ground"]] call BIS_fnc_randomPos;
+		};
+	};
+	_searchResult
+};

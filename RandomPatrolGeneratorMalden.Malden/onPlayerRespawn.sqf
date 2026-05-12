@@ -4,6 +4,19 @@ player setUnitLoadout (player getVariable "spawnLoadout");
 //Adjust trait 
 [player, player getVariable "role"] call setUnitTraitAccordingToRole;
 
+//Close spectator mode
+if (isClass (configFile >> "CfgPatches" >> "ace_medical")) then 
+{
+	[false] call ace_spectator_fnc_setSpectator;
+	["Terminate"] call BIS_fnc_EGSpectator;
+	(findDisplay 60492) closeDisplay 2;
+} else 
+{
+	["Terminate"] call BIS_fnc_EGSpectator;
+	(findDisplay 60492) closeDisplay 2;
+};
+
+
 //Set player normal state 
 player setVariable ["isUnconscious", false, true];
 
@@ -170,6 +183,19 @@ _KilledEH = player addEventHandler ["Killed", {
 		{
 			//Reward PvP kill
 			_distance = _instigator distance _unit;
+
+			//Store kill distance
+			[[_distance], 
+			{
+				params ["_distance"];
+				_infantryKillRange = player getVariable ["RPG_ranking_infantry_killRange", 0];
+
+				if (_infantryKillRange < _distance) then 
+				{
+					player setVariable ["RPG_ranking_infantry_killRange", _distance, true];
+				};
+			}] remoteExec ["spawn", _instigator]; 
+
 			if (_distance<100 || _distance>5000) then {_distance = nil};
 			[[_distance], {params ["_distance"]; [1, "RPG_ranking_infantry_kill", _distance] call doUpdateRank}] remoteExec ["spawn", _instigator]; 
 		} else 
@@ -192,9 +218,6 @@ _KilledEH = player addEventHandler ["Killed", {
 							_instigator setDamage 1;
 							[[_instigator], {params ["_instigator"]; ["STR_RPG_HC_NAME", "STR_RPG_HC_PUNISH", name _instigator] call doDialog}] remoteExec ["spawn", side _instigator]; 
 							
-							//Fix spectator 
-							["Terminate"] call BIS_fnc_EGSpectator;
-							["Initialize", [player, [playerSide] , true, false ]] call BIS_fnc_EGSpectator;
 						} else {
 							//systemChat "The player is not sure.";
 						};

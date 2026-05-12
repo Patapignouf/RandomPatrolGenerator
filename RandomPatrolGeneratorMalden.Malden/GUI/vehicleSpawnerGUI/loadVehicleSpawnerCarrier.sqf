@@ -148,7 +148,7 @@ switch (_mode) do
 			_btn = _display displayCtrl _idc;
 			_btn setVariable ["reverseSort",false];
 			_btn ctrlAddEventHandler ["ButtonClick",{
-				["sortCol",[ctrlParent (_this#0)] +_this , _VehicleAvalaibleSpawn, _UnarmedVehicle, _ArmedVehicle, _ArmoredVehicle, _UnarmedVehicleChopper, _ArmedChopper, _Drone, _FixedWing, _FixedWingTransport, _Boat] execVM "GUI\vehicleSpawnerGUI\loadVehicleSpawner.sqf";
+				["sortCol",[ctrlParent (_this#0)] +_this , _VehicleAvalaibleSpawn, _UnarmedVehicle, _ArmedVehicle, _ArmoredVehicle, _UnarmedVehicleChopper, _ArmedChopper, _Drone, _FixedWing, _FixedWingTransport, _Boat] execVM "GUI\vehicleSpawnerGUI\loadVehicleSpawnerCarrier.sqf";
 			}];
 		};
 	};
@@ -177,7 +177,7 @@ _buttonOK ctrlAddEventHandler[ "ButtonClick",
 		_vehicleClassToSpawn = (_lnbEntries lnbData [lnbCurSelRow _lnbEntries, 0]);
 		_vehicleNameToSpawn = (_lnbEntries lnbData [lnbCurSelRow _lnbEntries, 1]);
 		_vehiclePriceToSpawn = parseNumber (_lnbEntries lnbData [lnbCurSelRow _lnbEntries, 2]);
-		_vehicleIsUAV = (getText (configFile >> "CfgVehicles" >> _vehicleClassToSpawn >> "vehicleClass") == "Autonomous") || (_vehicleClassToSpawn isKindOf "UAV");
+		_vehicleIsUAV = _vehicleClassToSpawn isKindOf "UAV";
 
 		_VehicleAvalaibleSpawnName = _display getVariable "VehicleAvalaibleSpawn";
 		_bluforVehicleAvalaibleSpawnCounter = missionNamespace getVariable _VehicleAvalaibleSpawnName;
@@ -186,125 +186,80 @@ _buttonOK ctrlAddEventHandler[ "ButtonClick",
 		{
 			if (_bluforVehicleAvalaibleSpawnCounter>=_vehiclePriceToSpawn) then 
 			{
-				//Check if this is a plane
-				if (_vehicleClassToSpawn isKindOf "Plane" && _vehicleIsUAV == false) then 
+				
+				if (_vehicleClassToSpawn isKindOf "Ship") then 
 				{
-						//Open map and spawn plane
-						[_vehicleClassToSpawn, _vehiclePriceToSpawn,_VehicleAvalaibleSpawnName, _vehicleNameToSpawn, _bluforVehicleAvalaibleSpawnCounter] spawn {
-							params ["_vehicleClassToSpawn", "_vehiclePriceToSpawn","_VehicleAvalaibleSpawnName", "_vehicleNameToSpawn", "_bluforVehicleAvalaibleSpawnCounter"];
+					//Spawn ship
+					//Open map and spawn plane
+					[_vehicleClassToSpawn, _vehiclePriceToSpawn, _VehicleAvalaibleSpawnName, _vehicleNameToSpawn, _bluforVehicleAvalaibleSpawnCounter] spawn {
+						params ["_vehicleClassToSpawn", "_vehiclePriceToSpawn", "_VehicleAvalaibleSpawnName", "_vehicleNameToSpawn", "_bluforVehicleAvalaibleSpawnCounter"];
 
-							//Click on map to spawn
-							selectedLoc = [0,0,0];
-							openMap true;
-							uiSleep 1;
+						//Click on map to spawn
+						selectedLoc = [0,0,0];
+						openMap true;
+						uiSleep 1;
 
-							["<t color='#ffffff' size='.8'>Click on map to spawn an aircraft and teleport<br />The aircraft will spawn oriented on the north</t>",0,0,4,1,0,789] spawn BIS_fnc_dynamicText;
-							onMapSingleClick "selectedLoc = _pos; onMapSingleClick ''; openMap false; true;";
-							waitUntil{!(visibleMap)};  
-							if (!([selectedLoc, [0,0,0]] call BIS_fnc_areEqual)) then 
-							{
-								_spawnedVehicle = createVehicle [_vehicleClassToSpawn, selectedLoc, [], 0, "NONE"];
-								player moveInAny (vehicle _spawnedVehicle);
+						["<t color='#ffffff' size='.8'>Click on map to spawn an ship<br />The ship will spawn oriented on the north</t>",0,0,2,0,0,789] spawn BIS_fnc_dynamicText;
+						onMapSingleClick "selectedLoc = _pos; onMapSingleClick ''; openMap false; true;";
+						waitUntil{!(visibleMap)};  
+						if (!([selectedLoc, [0,0,0]] call BIS_fnc_areEqual)) then 
+						{
+							_spawnedVehicle = createVehicle [_vehicleClassToSpawn, selectedLoc, [], 0, "NONE"];
+							//player moveInAny (vehicle _spawnedVehicle);
 
-								//Add action to take off
-								[_spawnedVehicle, [format ["Jump"],{
-										params ["_object","_caller","_ID","_thisParams"];
-
-										moveOut _caller;
-										cutText ["", "BLACK IN", 5];
-										uiSleep 3;
-
-										//Halo jump script of pierremgi
-										0 = _caller spawn {
-											private _plyr = _this;
-											private "_whs";
-											_plyr setVariable ["bpk",unitBackpack _plyr];
-											_bpktype = backpack _plyr;
-											if (_bpktype != "") then {
-												_whs = createVehicle ["WeaponHolderSimulated_Scripted",[0,0,0],[],0,"can_collide"];
-												_plyr action ["DropBag", _whs, _bpktype];
-												_plyr addBackpackGlobal "B_parachute";
-												waitUntil {0.5; !isNull objectParent _plyr or (position _plyr)#2<0.6}; 
-												waitUntil {0.5; isNull objectParent _plyr or (position _plyr)#2<0.6};
-												uiSleep 0.5;
-												if (!isNull _whs) then {
-													_plyr action ["AddBag",objectParent (_plyr getVariable "bpk"), _bpktype];
-													_plyr setVariable ["bpk",nil];
-													uiSleep 3;
-													deleteVehicle _whs;
-												};
-											} else 
-											{
-												_plyr addBackpackGlobal "B_parachute";
-											};
-										};
-
-
-									},[],1.5,true,true,"","(_target distance _this < 15) && ((assignedVehicleRole player)#0 == 'cargo')"]] remoteExec ["addAction", 0, true];
-
-								//Reduce avalaible spawn counter
-								missionNamespace setVariable [_VehicleAvalaibleSpawnName, _bluforVehicleAvalaibleSpawnCounter-_vehiclePriceToSpawn, true];
-								hint format ["A %2 has spawned, %1 avdvanced spawn credit left.", _bluforVehicleAvalaibleSpawnCounter-_vehiclePriceToSpawn, _vehicleNameToSpawn];
-							};
-						};	
+							//Reduce avalaible spawn counter
+							missionNamespace setVariable [_VehicleAvalaibleSpawnName, _bluforVehicleAvalaibleSpawnCounter-_vehiclePriceToSpawn, true];
+							hint format ["A %2 has spawned, %1 avdvanced spawn credit left.", _bluforVehicleAvalaibleSpawnCounter-_vehiclePriceToSpawn, _vehicleNameToSpawn];
+						};
+					};
 				} else 
 				{
-					if (_vehicleClassToSpawn isKindOf "Ship") then 
+
+					//Reduce avalaible spawn counter
+					missionNamespace setVariable [_VehicleAvalaibleSpawnName, _bluforVehicleAvalaibleSpawnCounter-_vehiclePriceToSpawn, true];
+					hint format ["A %2 has spawned, %1 avdvanced spawn credit left.", _bluforVehicleAvalaibleSpawnCounter-_vehiclePriceToSpawn, _vehicleNameToSpawn];
+
+					_index = missionNameSpace getVariable ["AicraftCarrierBluforIndex", 0];
+					_spawnPositions = missionNameSpace getVariable ["AicraftCarrierBluforSpawn", []];
+
+
+
+					if ((count _spawnPositions)-1 < _index  ) then 
 					{
-						//Spawn ship
-						//Open map and spawn plane
-						[_vehicleClassToSpawn, _vehiclePriceToSpawn, _VehicleAvalaibleSpawnName, _vehicleNameToSpawn, _bluforVehicleAvalaibleSpawnCounter] spawn {
-							params ["_vehicleClassToSpawn", "_vehiclePriceToSpawn", "_VehicleAvalaibleSpawnName", "_vehicleNameToSpawn", "_bluforVehicleAvalaibleSpawnCounter"];
+						_index = 0;
+					};
 
-							//Click on map to spawn
-							selectedLoc = [0,0,0];
-							openMap true;
-							uiSleep 1;
+					if (_vehicleIsUAV && _vehicleClassToSpawn isKindOf "Plane") then 
+					{
+						//UAV spawn is only avalaible for blufor
+						_thisPosition = _spawnPositions#_index;
+						//systemChat format ["test pos : %1", _thisPosition];
+						_tempPos = [_thisPosition select 0, _thisPosition select 1];
+						_tempPos pushBack ((_thisPosition select 2)+1400); //Set 3 dimension position
+						//_currentUAVArray = [_tempPos, 0, _vehicleClass, blufor] call BIS_fnc_spawnVehicle;
+						_currentVehicle = createVehicle [_vehicleClassToSpawn,  [_tempPos#0, _tempPos#1, _tempPos#2+100], [], 0, "FLY"];
+						createVehicleCrew _currentVehicle;
+						//systemChat format ["test : %1", _currentUAVArray];
+						//_currentVehicle = _currentUAVArray select 0;
+						//_currentUAVGroup = _currentUAVArray select 2;
 
-							["<t color='#ffffff' size='.8'>Click on map to spawn an ship<br />The ship will spawn oriented on the north</t>",0,0,2,0,0,789] spawn BIS_fnc_dynamicText;
-							onMapSingleClick "selectedLoc = _pos; onMapSingleClick ''; openMap false; true;";
-							waitUntil{!(visibleMap)};  
-							if (!([selectedLoc, [0,0,0]] call BIS_fnc_areEqual)) then 
-							{
-								_spawnedVehicle = createVehicle [_vehicleClassToSpawn, selectedLoc, [], 0, "NONE"];
-								//player moveInAny (vehicle _spawnedVehicle);
+						//Set waypoint to current pos to the UAV
+						_wp = _currentUAVGroup addWaypoint [_tempPos, 0];
 
-								//Reduce avalaible spawn counter
-								missionNamespace setVariable [_VehicleAvalaibleSpawnName, _bluforVehicleAvalaibleSpawnCounter-_vehiclePriceToSpawn, true];
-								hint format ["A %2 has spawned, %1 avdvanced spawn credit left.", _bluforVehicleAvalaibleSpawnCounter-_vehiclePriceToSpawn, _vehicleNameToSpawn];
-							};
-						};
+						//Set unlimited fuel to the UAV
+						[[_currentVehicle], 'objectGenerator\setUnlimitedFuel.sqf'] remoteExec ['BIS_fnc_execVM', 0, true];
 					} else 
 					{
-						//Else (other type of vehicle) do normal spawn around FOB
-						[_vehicleClassToSpawn, _vehicleIsUAV, _VehicleAvalaibleSpawnName, _bluforVehicleAvalaibleSpawnCounter, _vehiclePriceToSpawn] spawn {
-							params ["_vehicleClassToSpawn", "_vehicleIsUAV","_VehicleAvalaibleSpawnName", "_bluforVehicleAvalaibleSpawnCounter", "_vehiclePriceToSpawn"];
-
-							//Spawn the vehicle around the player or on blufor initial position if called from server
-							_spawnedVehicle = [];
-							if (hasInterface) then 
-							{
-								_spawnedVehicle = [getPos player, [[_vehicleClassToSpawn, _vehicleIsUAV]], 5, 100] call doGenerateVehicleForFOB;	
-							} else 
-							{
-								_spawnedVehicle = [initBlueforLocation, [[_vehicleClassToSpawn, _vehicleIsUAV]], 30, 100] call doGenerateVehicleForFOB;	
-							};
-
-							//Refund player if no vehicle can spawn
-							if (count _spawnedVehicle != 0) then 
-							{
-								missionNamespace setVariable [_VehicleAvalaibleSpawnName, _bluforVehicleAvalaibleSpawnCounter -_vehiclePriceToSpawn, true];
-							} else 
-							{
-								hint "No place for vehicle around here";
-							};
-						};	
-
-						
+						[_vehicleClassToSpawn, _spawnPositions#_index] call spawnVehicleOnAicraft;
 					};
-					//hint format ["A %2 has spawned, %1 avdvanced spawn credit left.", _bluforVehicleAvalaibleSpawnCounter-_vehiclePriceToSpawn, _vehicleNameToSpawn];
-				};
 
+
+
+					
+					
+					//adjust global variable
+					missionNameSpace setVariable ["AicraftCarrierBluforIndex", _index+1, true];
+				};
 
 				//Close mission setup
 				_display closeDisplay 1;

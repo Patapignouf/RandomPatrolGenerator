@@ -3,7 +3,7 @@
 
 generateObjective =
 {
-	params ["_avalaibleTypeOfObj","_possibleObjectivePosition"];
+	params ["_avalaibleTypeOfObj","_possibleObjectivePosition", "_generateShop"];
 
 	//Init mission objective status
 	_completedObjectives = missionNamespace getVariable ["completedObjectives",[]];
@@ -39,6 +39,35 @@ generateObjective =
 			[_selectedObjectivePosition] call generateJammedAntenna;
 		};
 	};
+
+	//GenerateShop Box
+	if (_generateShop) then 
+	{
+		_boxLocation = ([_selectedObjectivePosition, 1, 60, 1, 0, 20, 0, [], [_selectedObjectivePosition, _selectedObjectivePosition]] call BIS_fnc_findSafePos);
+
+		_boxObject = createVehicle ["Box_FIA_Wps_F", _boxLocation, [], 0, "NONE"];
+
+		clearWeaponCargoGlobal _boxObject;
+		clearMagazineCargoGlobal _boxObject;
+		clearItemCargoGlobal _boxObject;
+		clearBackpackCargoGlobal _boxObject;
+
+		//Add shop to the box
+		[_boxObject, [format ["<img size='2' image='\a3\ui_f_oldman\data\IGUI\Cfg\holdactions\map_ca.paa'/><t size='1'>%1</t>", localize "RPG_GUI_GENERAL_WEAPON_SHOP"],{
+				params ["_object","_caller","_ID","_thisObjective"];
+				[[[false, "OPFOR"]], "GUI\weaponShopGUI\weaponShopGUI.sqf"] remoteExec ['BIS_fnc_execVM', _caller];
+			},[],10,true,false,"","_target distance _this <4"]] remoteExec ["addAction", 0, true];
+
+		//Remove weapon shop if the box has been destroyed
+		_boxObject addEventHandler ["Killed", {
+			params ["_unit", "_killer", "_instigator", "_useEffects"];
+
+			//Remove all actions
+			[_unit] remoteExec ["removeAllEventHandlers", 0, true];
+			[_unit] remoteExec ["removeAllActions", 0, true];
+		}];
+	};
+
 	
 	//Generate mission environement
 	switch (currentObjType) do 
@@ -65,6 +94,26 @@ generateObjective =
 			//Generate mission objectives
 			diag_log format ["_selectedObjectivePosition %1", _selectedObjectivePosition];
 			_objectiveCreated = [currentObjType, _selectedObjectivePosition] call generateObjectiveObject; 
+		};
+		case "destroyer":
+		{
+			//Add opfor destroyer
+			_resultSearchLoc =  [10] call searchLocationWithWaterDepth;
+			if (_resultSearchLoc#1) then 
+			{
+				_pos = _resultSearchLoc#0;
+				if (!isNil"initBlueforLocation") then 
+				{
+					if (400 < initBlueforLocation distance _pos) then //Spawn at least at 400m from blufor
+					{
+						[_pos, true] execVM 'enemyManagement\generationEngine\generateDestroyer.sqf';
+						[currentObjType, _pos] call generateObjectiveObject; 
+					};
+				} else {
+					[_pos, true] execVM 'enemyManagement\generationEngine\generateDestroyer.sqf';
+					[currentObjType, _pos] call generateObjectiveObject; 
+				};
+			};
 		};
 		default
 		{
@@ -134,6 +183,28 @@ generateObjective =
 
 	//Return objective selected location
 	_possibleObjectivePosition;
+};
+
+
+generateObjectives = {
+	params ["_avalaibleTypeOfObjList","_possibleObjectivePositions", "_numberOfObjPerPosition"];
+	
+	_possibleObjectivePositionResult = objNull;
+
+	//Add weapon shop
+	_mustGenerateShop = (missionNameSpace getVariable ["enableOpforWeaponShop",1] == 2);
+
+	for [{_indexObj = 0}, {_indexObj < _numberOfObjPerPosition}, {_indexObj = _indexObj + 1}] do
+	{
+		if (maxObjectivesGeneratedSetting != count MissionObjectives) then 
+		{
+			//Generate mission
+			_possibleObjectivePositionResult = [_avalaibleTypeOfObjList, _possibleObjectivePositions, _mustGenerateShop] call generateObjective;
+			_mustGenerateShop = false; //Generate shop once
+		};
+	}; 
+
+	_possibleObjectivePositionResult;
 };
 
 
@@ -356,7 +427,7 @@ generateObjectiveObject =
 
 	
 	//Test if there's an avalaible position
-	if (_thisObjectiveType != "hostage") then 
+	if (_thisObjectiveType != "hostage" && _thisObjectiveType != "destroyer") then 
 	{
 		if (count _thistempObjectivePosition != 0) then 
 		{
@@ -460,6 +531,8 @@ generateObjectiveObject =
 				_objectiveObject setVariable ["isObjectiveObject", true, true];
 				_thisObjective = [_objectiveObject, _thisObjectiveType] call generateObjectiveTracker;
 
+				//Clear weapon
+				clearWeaponCargoGlobal _objectiveObject;
 
 				_objectiveObject setPos ([( _thisObjectivePosition), 1, 25, 5, 0, 20, 0] call BIS_fnc_findSafePos);
 				_objectiveObject setVariable ["thisTask", _thisObjective select 2, true];
@@ -512,7 +585,7 @@ generateObjectiveObject =
 				//Add intel action to the intel case
 				_objectiveObject setPosATL _thisObjectivePosition;
 
-
+				//Bomb code
 				_code = random [10000000000,
 								55555555555,
 								99999999999];				
@@ -520,6 +593,18 @@ generateObjectiveObject =
 
 				_code = _code regexReplace  [" ", ""]; 
 				_objectiveObject setVariable ["RPG_DefuseCode", _code, true];
+
+
+				//BombID
+				_bombID = random [1000000,
+								5555555,
+								9999999];				
+   				_bombID = [_bombID] call BIS_fnc_numberText;	
+
+				_bombID = _bombID regexReplace  [" ", ""]; 
+				_objectiveObject setVariable ["RPG_BombID", _bombID, true];
+
+
 				//systemChat _code;
 
 				//Detecting player in the area to begin the countdown 
@@ -572,12 +657,18 @@ generateObjectiveObject =
 							[_thisTaskID, "FAILED"] call BIS_fnc_taskSetState;
 						};
 
+
+
 						//Explode
 						_bombType = "Bo_GBU12_LGB" createVehicle (getPosATL _objectiveObject);
 						soilCrater = "Land_ShellCrater_02_large_F" createVehicle (getPos _objectiveObject);
 
 						//Clean bomb
 						deleteVehicle _objectiveObject;
+
+						//Bomb timer end
+						[[], {["STR_RPG_HC_NAME", "STR_RPG_HC_TIMER_BOMB"] call doDialog}] remoteExec ["spawn", 0]; 
+						diag_log format ["Bomb's timer end"];
 					};
 				};
 
@@ -599,7 +690,7 @@ generateObjectiveObject =
 							params ["_object", "_caller", "_thisObjective"];
 							disableSerialization;
 							code = _object getVariable "RPG_DefuseCode";
-							diag_log format ["The bomb code is %1",code];
+							//diag_log format ["The bomb code is %1",code];
 							private _display = findDisplay 46 createDisplay "RscDisplayEmpty";
 							private _ctrlGroup = _display ctrlCreate ["RscControlsGroupNoScrollbars", -1];
 							private _ctrlBackground = _display ctrlCreate ["RscTextMulti", -1, _ctrlGroup];
@@ -610,10 +701,10 @@ generateObjectiveObject =
 							_ctrlGroup ctrlCommit 0;
 							_ctrlBackground ctrlSetPosition [0, 0, 0.5, 0.5];
 							_ctrlBackground ctrlSetBackgroundColor [0.5, 0.5, 0.5, 0.9];
-							_ctrlBackground ctrlSetText "ENTER THE DEFUSE CODE :";
+							_ctrlBackground ctrlSetText format ["BOMB %1\nENTER THE DEFUSE CODE :", _object getVariable "RPG_BombID"];
 							_ctrlBackground ctrlEnable false;
 							_ctrlBackground ctrlCommit 0;
-							_ctrlEdit ctrlSetPosition [0.01, 0.05, 0.48, 0.34];
+							_ctrlEdit ctrlSetPosition [0.01, 0.12, 0.45, 0.25];
 							_ctrlEdit ctrlSetBackgroundColor [0, 0, 0, 0.5];
 							_ctrlEdit ctrlCommit 0;
 							_ctrlButton ctrlSetPosition [0.185, 0.42, 0.13, 0.05];
@@ -668,6 +759,8 @@ generateObjectiveObject =
 
 									//Clean bomb
 									deleteVehicle _objectiveObject;
+
+									diag_log format ["Wrong code boom %1 != %2",code, _text];
 								};
 							}];
 							ctrlSetFocus _ctrlEdit;
@@ -781,6 +874,9 @@ generateObjectiveObject =
 					{
 						//Add penalty
 						[{[-50,3] call doUpdateRankWithPenalty}] remoteExec ["call", _instigator];
+
+						//Inform other players
+						[[_instigator], {params ["_instigator"]; ["STR_RPG_HC_NAME", "STR_RPG_HC_VIPKILL", name _instigator] call doDialog}] remoteExec ["spawn", side _instigator]; 
 					};
 
 					//Manage objective
@@ -1031,7 +1127,20 @@ generateObjectiveObject =
 				_objectiveObject setTriggerArea [200, 200, 0, false]; // trigger area with a radius of 200m.
 				_objectiveObject setVariable ["associatedTask", _thisObjective];
 				[_objectiveObject, 1] execVM 'engine\objectiveManagement\checkDefendArea.sqf';
-			};	
+			};
+		case "destroyer":
+			{
+				//Generate objective object
+				_objectiveObject = createTrigger ["EmptyDetector", _currentRandomPos]; //create a trigger area created at object with variable name my_object
+				_objectiveObject setVariable ["isObjectiveObject", true, true];
+				_thisObjective = [_objectiveObject, _thisObjectiveType] call generateObjectiveTracker;
+
+				//Add trigger to detect cleared area
+				_objectiveObject setPos _thisObjectivePosition; //create a trigger area created at object with variable name my_object
+				_objectiveObject setTriggerArea [200, 200, 0, false]; // trigger area with a radius of 200m.
+				_objectiveObject setVariable ["associatedTask", _thisObjective];
+				[_objectiveObject, false] execVM 'engine\objectiveManagement\checkClearArea.sqf'; 
+			};		
 		case "collectIntel":
 			{
 				//Generate objective object
@@ -1286,6 +1395,9 @@ generateObjectiveObject =
 					{
 						//Add penalty
 						[{[-50,3] call doUpdateRankWithPenalty}] remoteExec ["call", _instigator];
+
+						//Inform players 
+						[[_instigator], {params ["_instigator"]; ["STR_RPG_HC_NAME", "STR_RPG_HC_VIPKILL", name _instigator] call doDialog}] remoteExec ["spawn", side _instigator]; 
 					};
 
 					//Delete task marker
