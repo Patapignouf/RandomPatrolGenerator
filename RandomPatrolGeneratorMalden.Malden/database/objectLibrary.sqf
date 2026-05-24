@@ -7,8 +7,7 @@ avalaibleAmmoBox = [
 	"Box_IND_Support_F",
 	"B_A_CargoNet_01_ammo_tropic_F",
 	"Box_T_CSAT_Equip_F",
-	"Box_GEN_Equip_F",
-	"O_R_CargoNet_01_ammo_F"
+	"Box_GEN_Equip_F"
 ];
 
 if (isClass (configFile >> "CfgPatches" >> "rhs_main")) then 
