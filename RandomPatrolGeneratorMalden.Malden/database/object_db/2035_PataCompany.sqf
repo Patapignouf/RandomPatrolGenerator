@@ -18,11 +18,12 @@ bluforUnarmedVehicle_2035_PataCompany = [
 	"Atlas_B_L_LSV_01_unarmed_F",
 	"Atlas_B_L_Truck_01_covered_F",
 	"Aegis_C_Offroad_01_covered_F_Tanoa",
-	"Aegis_C_Offroad_01_F_Tanoa"
+	"Aegis_C_Offroad_01_F_Tanoa",
+	"B_A_LSV_01_light_F"
 ];
 
 bluforArmedVehicle_2035_PataCompany = [
-
+	"B_A_LSV_01_armed_F", "B_G_Offroad_01_armed_F"
 ];
 
 
@@ -42,7 +43,7 @@ bluforUnarmedVehicleChopper_2035_PataCompany = [
 ];
 
 bluforArmedChopper_2035_PataCompany = [
-	selectRandom ["B_W_Heli_Light_01_dynamicLoadout_F", "Atlas_B_M_Heli_Light_02_dynamicLoadout_F"]
+	selectRandom ["B_W_Heli_Light_01_dynamicLoadout_F", "Atlas_B_M_Heli_Light_02_dynamicLoadout_F", "B_CTRG_Heli_Transport_01_tropic_F", "B_Heli_Attack_01_dynamicLoadout_F"]
 ];
 
 bluforDrone_2035_PataCompany = [
