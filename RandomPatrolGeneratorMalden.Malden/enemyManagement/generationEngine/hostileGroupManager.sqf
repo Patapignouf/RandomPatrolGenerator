@@ -28,47 +28,49 @@ generateOpforInBiggestBuildings = {
 		//Populate buildings
 		_listOfAllavalaiblePos = _buildingToKeep#0 buildingPos -1;
 
-		//Find hostage location
-		_avalaibleFreePos = selectRandom _listOfAllavalaiblePos;
-		_listOfAllavalaiblePos = _listOfAllavalaiblePos - [_avalaibleFreePos];
-
-		//Find all other buildings arround 
-		_allBuildingsAround = (nearestTerrainObjects [getPos (_buildingToKeep#0), ["house", "FORTRESS", "BUNKER"], _maxRangeFromCenter, false, true]);
-		_allBuildingsAround = [_allBuildingsAround, [], {(getPos _x) distance (getPos (_buildingToKeep#0))}, "ASCEND"] call BIS_fnc_sortBy;
-		_allBuildingsAround = _allBuildingsAround - [_buildingToKeep#0];
-		_allBuildingsAround apply {_listOfAllavalaiblePos append (_x buildingPos -1)};
-
-		//Spawn enemies
-		_group = [];
-		for [{_i = 0}, {_i < ((_thisDifficulty)*2)+1}, {_i = _i + 1}] do 
+		//Find hostage location 
+		if (count _listOfAllavalaiblePos != 0) then 
 		{
-			_spawnedGroup = ([selectRandom _opforGroup, _center, opfor, "Infantry"] call doGenerateEnemyGroup);
-			(units _spawnedGroup) apply {_group pushBack _x};
+			_avalaibleFreePos = selectRandom _listOfAllavalaiblePos;
+			_listOfAllavalaiblePos = _listOfAllavalaiblePos - [_avalaibleFreePos];
+
+			//Find all other buildings arround 
+			_allBuildingsAround = (nearestTerrainObjects [getPos (_buildingToKeep#0), ["house", "FORTRESS", "BUNKER"], _maxRangeFromCenter, false, true]);
+			_allBuildingsAround = [_allBuildingsAround, [], {(getPos _x) distance (getPos (_buildingToKeep#0))}, "ASCEND"] call BIS_fnc_sortBy;
+			_allBuildingsAround = _allBuildingsAround - [_buildingToKeep#0];
+			_allBuildingsAround apply {_listOfAllavalaiblePos append (_x buildingPos -1)};
+
+			//Spawn enemies
+			_group = [];
+			for [{_i = 0}, {_i < ((_thisDifficulty)*2)+1}, {_i = _i + 1}] do 
+			{
+				_spawnedGroup = ([selectRandom _opforGroup, _center, opfor, "Infantry"] call doGenerateEnemyGroup);
+				(units _spawnedGroup) apply {_group pushBack _x};
+			};
+
+			{
+				_currentUnit = _x;
+				//Disable LAMBS IA behaviour
+				if (isClass (configFile >> "CfgPatches" >> "lambs_danger")) then 
+				{
+					_currentUnit setVariable ["lambs_danger_disableAI", true];
+				};
+
+				//Remove grenade that can kill hostage
+				_throwableItems = (magazines _currentUnit) select {_x call BIS_fnc_isThrowable;};
+				{
+					_currentUnit removeMagazines _x;
+				} foreach _throwableItems;
+
+				//If there is avalaible places
+				if (count _listOfAllavalaiblePos >0) then 
+				{	
+					//teleport in building
+
+					_listOfAllavalaiblePos = [_x, _listOfAllavalaiblePos] call moveUnitToBuilding;
+				};
+			} foreach _group;
 		};
-
-		{
-			_currentUnit = _x;
-			//Disable LAMBS IA behaviour
-			if (isClass (configFile >> "CfgPatches" >> "lambs_danger")) then 
-			{
-				_currentUnit setVariable ["lambs_danger_disableAI", true];
-			};
-
-			//Remove grenade that can kill hostage
-			_throwableItems = (magazines _currentUnit) select {_x call BIS_fnc_isThrowable;};
-			{
-   				_currentUnit removeMagazines _x;
-			} foreach _throwableItems;
-
-			//If there is avalaible places
-			if (count _listOfAllavalaiblePos >0) then 
-			{	
-				//teleport in building
-
-				_listOfAllavalaiblePos = [_x, _listOfAllavalaiblePos] call moveUnitToBuilding;
-			};
-
-		} foreach _group;
 	};
 
 	diag_log format ["_avalaibleFreePos %1", _avalaibleFreePos];
