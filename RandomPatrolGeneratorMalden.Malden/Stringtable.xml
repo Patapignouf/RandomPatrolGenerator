@@ -2264,15 +2264,15 @@
 </Container>
 <Container name="ACTIONS">
     <Key ID="STR_ACTIONS_PLACE_TENT">
-        <Original>Place reinforcement tent</Original>
-        <English>Place reinforcement tent</English>
-        <French>Placer la tente de renforts</French>
-        <Spanish>Colocar tienda de refuerzos</Spanish>
-        <German>Verstärkungszelt aufstellen</German>
-        <Italian>Posiziona la tenda dei rinforzi</Italian>
-        <Russian>Установить палатку подкрепления</Russian>
-        <Chinese>放置增援帐篷</Chinese>
-        <Japanese>援軍テントを設置する</Japanese>
+        <Original>Place reinforcement tent (100 credits)</Original>
+        <English>Place reinforcement tent (100 credits)</English>
+        <French>Placer la tente de renforts (100 crédits)</French>
+        <Spanish>Colocar tienda de refuerzos (100 créditos)</Spanish>
+        <German>Verstärkungszelt aufstellen (100 Credits)</German>
+        <Italian>Posiziona la tenda dei rinforzi (100 crediti)</Italian>
+        <Russian>Установить палатку подкрепления (100 кредитов)</Russian>
+        <Chinese>放置增援帐篷（100信用点）</Chinese>
+        <Japanese>援軍テントを設置する（100クレジット）</Japanese>
     </Key>
     <Key ID="STR_ACTIONS_OPEN_SUPPORT_SHOP">
         <Original>Open support shop</Original>
