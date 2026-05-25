@@ -271,8 +271,8 @@ generateJammedAntenna =
 			// Action successfull code
 			params ["_object","_caller","_ID","_objectParams","_progress","_maxProgress"];
 			
-			[format ["The antenna will be destroyed in 60 secs", name _caller]] remoteExec ["hint", _caller,true];
-			sleep 60;
+			[format ["The antenna will be destroyed in 90 secs", name _caller]] remoteExec ["hint", _caller,true];
+			sleep 90;
 			_object setDamage 1;
 			[{[5, "RPG_ranking_repair"] call doUpdateRank}] remoteExec ["call", _caller];
 		}, 
