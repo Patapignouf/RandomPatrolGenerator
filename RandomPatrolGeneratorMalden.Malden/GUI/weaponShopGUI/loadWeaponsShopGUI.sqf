@@ -137,12 +137,24 @@ switch (_mode) do
 			if (typeName _price == "SCALAR") then 
 			{
 				_ind = _ctrl lnbAddRow ["", _supportName, _supportNameCode, str _price];
+
+				//DLC check 
+				_DLCStatus = [];
+				_DLCStatus = getAssetDLCInfo [_weaponClassName, configFile >> "CfgWeapons"];
+
+				if (_DLCStatus#5 == "ArmA 3") then 
+				{
+					_DLCStatus set [5, "None"];
+				};
 			
 				//Set tooltip
 				if (count _priceAnalysisReturn != 0) then 
 				{
 					//_ctrl lnbSetTooltip [_ind, format ["Impact : %1 \nMax range : %2m", _priceAnalysisReturn#1, _priceAnalysisReturn#2]];
-					_ctrl lnbSetTooltip [[_ind,0], format ["Impact : %1 \nMax range : %2m\nDefault ammo : %3\nAccuracy : %4%%", _priceAnalysisReturn#1, _priceAnalysisReturn#2, _priceAnalysisReturn#3, _priceAnalysisReturn#4]];
+					_ctrl lnbSetTooltip [[_ind,0], format ["Impact : %1 \nMax range : %2m\nDefault ammo : %3\nAccuracy : %4%% \nDLC : %5", _priceAnalysisReturn#1, _priceAnalysisReturn#2, _priceAnalysisReturn#3, _priceAnalysisReturn#4, _DLCStatus#5]];
+				} else 
+				{
+					_ctrl lnbSetTooltip [[_ind,0], format ["DLC : %1", _DLCStatus#5]];
 				};
 
 				//Set picture
