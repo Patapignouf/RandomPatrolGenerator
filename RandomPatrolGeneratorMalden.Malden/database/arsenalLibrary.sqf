@@ -1334,7 +1334,11 @@ adjustLoadout = {
 	_currentPlayer addItem "ACE_morphine";	
 	_currentPlayer addItem "ACE_WaterBottle";
 	_currentPlayer addItem "ACE_EarPlugs";
-	_currentPlayer setSpeaker "noVoice";
+
+	if (missionNameSpace getVariable ["enableBotRadio", 1] == 0) then 
+	{
+		_currentPlayer setSpeaker "noVoice";
+	};
 
 	//Adapt loadout to a specific Era
 	[_currentPlayer] call doAdjustAdvancedStuff;
