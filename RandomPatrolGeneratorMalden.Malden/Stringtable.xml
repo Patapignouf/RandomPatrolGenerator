@@ -2274,6 +2274,17 @@
         <Chinese>放置增援帐篷（100信用点）</Chinese>
         <Japanese>援軍テントを設置する（100クレジット）</Japanese>
     </Key>
+    <Key ID="STR_ACTIONS_PLACE_BARRICADE">
+        <Original>Place barricade (50 credits)</Original>
+        <English>Place barricade (50 credits)</English>
+        <French>Placer une barricade (50 crédits)</French>
+        <Spanish>Colocar barricada (50 créditos)</Spanish>
+        <German>Barrikade aufstellen (50 Credits)</German>
+        <Italian>Posiziona la barricata (50 crediti)</Italian>
+        <Russian>Установить баррикаду (50 кредитов)</Russian>
+        <Chinese>放置路障（50信用点）</Chinese>
+        <Japanese>バリケードを設置する（50クレジット）</Japanese>
+    </Key>
     <Key ID="STR_ACTIONS_OPEN_SUPPORT_SHOP">
         <Original>Open support shop</Original>
         <English>Open support shop</English>

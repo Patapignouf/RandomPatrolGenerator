@@ -1,6 +1,8 @@
 #include "classConstant.sqf"
 #include "itemdb.sqf"
 #include "..\GUI\weaponShopGUI\weaponShopFunctions.sqf"
+#include "..\engine\fortifyActionManagement.sqf"
+
 
 //Import mission params
 warEra = missionNamespace getVariable "warEra"; // Default actual warfare
@@ -850,6 +852,21 @@ setUnitTraitAccordingToRole = {
 		_caller setUnitTrait ["Engineer", true];
 		_caller setUnitTrait ["ExplosiveSpecialist", true];
 		_caller setVariable ["ace_isEngineer", 2, true]; //add special ACE medic trait advanced engineer
+		
+		if (isPlayer _caller && (_caller getVariable ["fortifyActionID", -1] == -1)) then 
+		{
+			[_caller] call addFortifyAction;
+		};
+		
+	} else 
+	{
+		if (isPlayer _caller) then 
+		{
+			//Remove fortify action
+			_fortifyID =  _caller getVariable ["fortifyActionID", -1];
+			[_caller, _fortifyID] call BIS_fnc_holdActionRemove;
+			_caller setVariable ["fortifyActionID", -1];
+		};
 	};
 	if (_role == c_leader) then 
 	{

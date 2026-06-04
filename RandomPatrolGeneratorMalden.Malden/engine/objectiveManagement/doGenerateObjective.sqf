@@ -5,6 +5,9 @@ generateObjective =
 {
 	params ["_avalaibleTypeOfObj","_possibleObjectivePosition", "_generateShop"];
 
+	//Log objective generation
+	diag_log format ["RPG_generateObjective : _avalaibleTypeOfObj = %1, _possibleObjectivePosition = %2, _generateShop = %3", _avalaibleTypeOfObj, _possibleObjectivePosition, _generateShop];
+
 	//Init mission objective status
 	_completedObjectives = missionNamespace getVariable ["completedObjectives",[]];
 	_missionObjectives = missionNamespace getVariable ["MissionObjectives",[]];
@@ -25,8 +28,6 @@ generateObjective =
 	_selectedObjectivePosition = selectRandom _possibleObjectivePosition;
 	_possibleObjectivePosition = _possibleObjectivePosition - [_selectedObjectivePosition];
 
-	diag_log format ["Objective generation started : %1 on position %2", currentObjType, _selectedObjectivePosition];
-
 	//GenerateAnimals 
 	[[_selectedObjectivePosition, 40, 200, 7, 0, 0, 0, [], [[0,0,0],[0,0,0]]] call BIS_fnc_findSafePos] call doGenerateAnimalGroup;
 
@@ -43,6 +44,8 @@ generateObjective =
 	//GenerateShop Box
 	if (_generateShop) then 
 	{
+		diag_log format ["RPG_generateObjective : start generate shop"];
+
 		_boxLocation = ([_selectedObjectivePosition, 1, 60, 1, 0, 20, 0, [], [_selectedObjectivePosition, _selectedObjectivePosition]] call BIS_fnc_findSafePos);
 
 		_boxObject = createVehicle ["Box_FIA_Wps_F", _boxLocation, [], 0, "NONE"];
@@ -66,10 +69,13 @@ generateObjective =
 			[_unit] remoteExec ["removeAllEventHandlers", 0, true];
 			[_unit] remoteExec ["removeAllActions", 0, true];
 		}];
+
+		diag_log format ["RPG_generateObjective : end generate shop"];
 	};
 
 	
 	//Generate mission environement
+	diag_log format ["RPG_generateObjective : start generate mission environement"];
 	switch (currentObjType) do 
 	{
 		case "defendArea":
@@ -181,13 +187,18 @@ generateObjective =
 		};
 	};
 
+	diag_log format ["RPG_generateObjective : end generate mission environement, returned position %1", _possibleObjectivePosition];
+
 	//Return objective selected location
 	_possibleObjectivePosition;
 };
-
+   
 
 generateObjectives = {
 	params ["_avalaibleTypeOfObjList","_possibleObjectivePositions", "_numberOfObjPerPosition"];
+
+	//Log objective generation
+	diag_log format ["RPG_generateObjectives : _avalaibleTypeOfObjList = %1, _possibleObjectivePositions = %2, _numberOfObjPerPosition = %3", _avalaibleTypeOfObjList, _possibleObjectivePositions, _numberOfObjPerPosition];
 	
 	_possibleObjectivePositionResult = objNull;
 
