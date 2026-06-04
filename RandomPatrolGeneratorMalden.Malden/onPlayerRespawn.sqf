@@ -1,6 +1,9 @@
 //Set default respawn loadout
 player setUnitLoadout (player getVariable "spawnLoadout");
 
+//Reset enginneer action
+player setVariable ["fortifyActionID", -1];
+
 //Adjust trait 
 [player, player getVariable "role"] call setUnitTraitAccordingToRole;
 
@@ -15,6 +18,8 @@ if (isClass (configFile >> "CfgPatches" >> "ace_medical")) then
 	["Terminate"] call BIS_fnc_EGSpectator;
 	(findDisplay 60492) closeDisplay 2;
 };
+
+
 
 
 //Set player normal state 
