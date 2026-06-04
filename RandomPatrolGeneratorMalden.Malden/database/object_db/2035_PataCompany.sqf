@@ -203,6 +203,16 @@ uniformList_2035_PataCompany = [
 	"H_HelmetSpecB_mcamo",
 	"Aegis_H_Helmet_Virtus_Scrim_mtp_F",
 	"H_Bandanna_mcamo_hs",
+	"H_Booniehat_eaf",
+	"H_Shemag_olive_hs",
+	"H_Booniehat_khk",
+	"H_Cap_blk",
+	"H_Bandanna_tna_hs_F",
+	"Aegis_H_Helmet_FASTMT_Cover_tan_F",
+	"Aegis_H_Helmet_FASTMT_Cover_rgr_F",
+	"Aegis_H_Helmet_FASTMT_Cover_mtp_F",
+	"lxWS_H_turban_03_green_pattern",
+	"lxWS_H_turban_03_sand",
 	
 	//Glasses 
 	"G_Tactical_Yellow",
@@ -219,6 +229,7 @@ uniformList_2035_PataCompany = [
 	"G_Balaclava_light_mtp_F",
 	"G_Lowprofile",
 
+
 	//vest
 	"V_TacVest_oli",
 	"V_Chestrig_blk",
@@ -227,6 +238,9 @@ uniformList_2035_PataCompany = [
 	"V_lxWS_TacVestIR_oli",
 	"V_HarnessOSpec_blk",
 	"V_PlateCarrier2_cbr",
+	"V_PlateCarrier2_oli",
+	"V_PlateCarrier2_blk",
+	"V_PlateCarrier1_cbr",
 	"V_CarrierRigKBT_01_light_Black_F",
 	"Aegis_V_CarrierRigKBT_01_recon_cbr_F",
 	"V_CarrierRigKBT_01_light_CDF_F",
@@ -253,7 +267,13 @@ uniformList_2035_PataCompany = [
 	"U_B_CombatUniform_mcam_tshirt",
 	"Atlas_U_B_CombatUniform_ffl_vest",
 	"Atlas_U_CombatUniformNCU_01_mcam_F",
-	"Atlas_U_CombatUniformNCU_02_mcam_F"
+	"Atlas_U_CombatUniformNCU_02_mcam_F",
+	"U_BG_Guerilla2_1",
+	"U_BG_Guerilla2_2",
+	"U_BG_Guerilla2_3",
+	"U_I_E_Uniform_01_tanktop_F",
+	"Aegis_U_lxWS_ION_Casualtna_F",
+	"U_B_UBACS_tshirt_wdl_f"
 ];
 
 
@@ -261,6 +281,8 @@ uniformList_2035_PataCompany = [
 uniformListSniper_2035_PataCompany = [
 	"U_B_GhillieSuit",
 	"U_B_FullGhillie_ard",
+	"U_O_R_FullGhillie_ard_F",
+	"U_O_R_FullGhillie_wdl_F",
 	"Laserdesignator", //Add laser designator only for sniper
 	"ACE_Tripod"
 ];
