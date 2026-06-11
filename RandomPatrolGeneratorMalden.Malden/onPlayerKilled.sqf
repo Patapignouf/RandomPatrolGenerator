@@ -41,6 +41,7 @@ if (missionNameSpace getVariable ["enableSelfRespawnTimer", 0] == 0) then
 	];
 };
 
+diag_log ["RPG_Respawn setup : %1", missionNamespace getVariable "missionRespawnParam"];
 
 //Update dead counter 
 player setVariable ["deathNumber", (player getVariable ["deathNumber", 0])+1, true];
