@@ -236,27 +236,6 @@ _KilledEH = player addEventHandler ["Killed", {
 }];
 player setVariable ["KilledEH", _KilledEH, true];
 
-//Dirty fix camera bug on spawn
-[] spawn {
-	//Wait a little bit
-	sleep 3;
-	//Force close spectator mode 
-	if (alive player) then 
-	{
-		if (isClass (configFile >> "CfgPatches" >> "ace_medical")) then 
-		{
-			[false] call ace_spectator_fnc_setSpectator;
-			["Terminate"] call BIS_fnc_EGSpectator;
-			(findDisplay 60492) closeDisplay 2;
-			player switchCamera "INTERNAL"; 
-		} else 
-		{
-			["Terminate"] call BIS_fnc_EGSpectator;
-			(findDisplay 60492) closeDisplay 2;
-			player switchCamera "INTERNAL"; 
-		};
-	};
-};
 
 //Allow damage post respawn
 sleep 30;
