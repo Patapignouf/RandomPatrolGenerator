@@ -198,6 +198,11 @@ if (missionNameSpace getVariable ["sideRelations",0] == 2 && side player == inde
 			hint format ["You are now %1", name _unitToControl];
 			player remoteControl _unitToControl;
 		}];
+
+	paramsToManageNow pushBack ["Button", "Cancel control OPFOR", "Return to your body", {
+			player remoteControl objNull; 
+			switchCamera player; // if needed
+		}];
 };
 
 //Add empty line
