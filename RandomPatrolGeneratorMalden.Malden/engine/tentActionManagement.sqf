@@ -284,6 +284,8 @@ adjustRespawnPos = {
 			_marker setMarkerType "b_hq"; // Visible.
 			_marker setMarkerSize [1, 1];
 			_marker setMarkerColor "ColorBlue";
+			_marker setMarkerAlpha 0;
+			[_marker, 1] remoteExec ["setMarkerAlphaLocal", side player, true];
 		} else 
 		{
 			_markerName setMarkerPos _defaultTentLocation;
