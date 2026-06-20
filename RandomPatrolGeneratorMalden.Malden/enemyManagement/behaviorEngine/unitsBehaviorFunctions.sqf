@@ -98,6 +98,7 @@ doPatrol = {
 	{
 		diag_log "Task_Patrol !";
 		[_thisGroup, _position, _distance] call BIS_fnc_taskPatrol;
+		{_x enableSimulation true;} foreach (units _thisGroup);
 	};
 };
 
