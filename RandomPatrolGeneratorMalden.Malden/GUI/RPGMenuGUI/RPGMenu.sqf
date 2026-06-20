@@ -200,6 +200,8 @@ if (missionNameSpace getVariable ["sideRelations",0] == 2 && side player == inde
 				_unitToControl switchCamera "INTERNAL"; 
 				hint format ["You are now %1", name _unitToControl];
 				player remoteControl _unitToControl;
+				(group _unitToControl) enableDynamicSimulation false;
+				[_unitToControl, 30] call createOPFORBotMarker;
 			} else 
 			{
 				hint format ["Nobody avalaible"];
@@ -416,3 +418,37 @@ waituntil {(IsNull (_display))};
 	//systemChat format ["listOfMissionEventHandlerToDestroy %1 %2", _x#0, _x#1];
     removeMissionEventHandler [_x#0, _x#1];
 } foreach  listOfMissionEventHandlerToDestroy;
+
+
+
+createOPFORBotMarker = {
+	// --- CONFIGURATION ---
+	params ["_cible", ["_duree", 30]]; // _cible = l'unité OPFOR, _duree = temps en secondes avant disparition
+
+	// Sécurité : on vérifie que la cible existe
+	if (isNull _cible) exitWith {};
+
+	[_cible, _duree] spawn 
+	{
+		params ["_cible", "_duree"];
+
+		// Création du marqueur unique en LOCAL
+		private _markerName = format ["mk_temp_%1_%2", name _cible, serverTime];
+		private _marker = createMarkerLocal [_markerName, getPosATL _cible];
+
+		// Configuration visuelle du marqueur (Infanterie OPFOR)
+		_marker setMarkerTypeLocal "o_inf";     // Icône standard OTAN pour infanterie OPFOR (rouge)
+		_marker setMarkerColorLocal "ColorEAST"; // Couleur rouge de l'Est
+		_marker setMarkerTextLocal format ["OPFOR : %1", name _cible];
+		_marker setMarkerSizeLocal [0.8, 0.8];
+
+		// Boucle de mise à jour de la position
+		private _endTime = serverTime + _duree;
+		_marker setMarkerPosLocal (getPosATL _cible);
+
+		waitUntil {(!alive _cible) || (_endTime < serverTime)};	
+
+		// Suppression du marqueur à la fin
+		deleteMarkerLocal _marker;
+	};
+};
