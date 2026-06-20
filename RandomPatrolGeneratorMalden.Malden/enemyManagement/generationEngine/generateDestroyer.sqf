@@ -169,7 +169,7 @@ _rewardObject setDir _boatDir;
 
 			//Manage respawn and delete object
 			deleteVehicle _object;
-			if (["Respawn",1] call BIS_fnc_getParamValue == 1) then 
+			if ((["Respawn",1] call BIS_fnc_getParamValue) == 1) then 
 			{
 				[[], "engine\respawnManagement\respawnManager.sqf"] remoteExec ['BIS_fnc_execVM', 0];
 			};
