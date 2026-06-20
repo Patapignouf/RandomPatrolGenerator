@@ -55,8 +55,16 @@ _civilian addEventHandler ["Killed", {
 
 	_attachedMine = _unit getVariable "AttachedMine";
 
-	// Reward the kill
-	_distance = _instigator distance _unit;
+	//Find distance between killed unit and killer
+	_distance = 0;
+
+	if (isRemoteControlling _instigator) then 
+	{
+		_distance = (remoteControlled _instigator) distance _unit;
+	} else 
+	{
+		_distance = _instigator distance _unit;
+	};	
 
 	//Store kill distance
 	[[_distance], 
@@ -95,7 +103,7 @@ _civilian addEventHandler ["Killed", {
 
 	_attachedMine attachTo [_holder, [0, 0, 0]];
 	_holder addweaponcargo ["V_TacChestrig_grn_F", 1];
-	//_holder enableSimulation false;
+
 
 	// Add a hold action to defuse the mine
 	[

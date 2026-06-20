@@ -79,7 +79,23 @@ doGenerateEnemyGroup =
 
 				if (isPlayer _instigator) then 
 				{
-					_distance = _instigator distance _unit;
+					//Find distance between killed unit and killer
+					_distance = 0;
+
+					if (isRemoteControlling _instigator) then 
+					{
+						// systemChat format ["_killer %1", name _killer];
+						// systemChat format ["_instigator %1", name _instigator];
+						// systemChat format ["remoteControlled _killer %1", name (remoteControlled _killer)];
+						// systemChat format ["remoteControlled _instigator %1", name (remoteControlled _instigator)];
+						// systemChat format ["getPos (remoteControlled _instigator)  %1", getPos (remoteControlled _instigator)];
+						// systemChat format ["getPos (_unit)  %1", getPos (_unit)];
+
+						_distance = (remoteControlled _instigator) distance (_unit);
+					} else 
+					{
+						_distance = _instigator distance _unit;
+					};	
 
 					//Store kill distance
 					[[_distance], 
@@ -95,7 +111,7 @@ doGenerateEnemyGroup =
 
 					//Update player rank
 					if (_distance<100 || _distance>5000) then {_distance = nil};
-					[[_distance], {params [["_distance", 0]]; [1, "RPG_ranking_infantry_kill", _distance] call doUpdateRank}] remoteExec ["spawn", _instigator]; 
+					[[_distance], {params [["_distance", ""]]; [1, "RPG_ranking_infantry_kill", _distance] call doUpdateRank}] remoteExec ["spawn", _instigator]; 
 
 				} else {
 					//Debug IA killed log
@@ -268,7 +284,7 @@ doGenerateHostileCivilianGroup =
 	_currentGroupToSpawn = [_thisSpawnPosition, civilian, _thisGroupToSpawn,[],[],[],[],[], random 360] call BIS_fnc_spawnGroup;
 
 	//Optimize IA 
-	_currentGroupToSpawn enableDynamicSimulation true;
+	//_currentGroupToSpawn enableDynamicSimulation true;
 
 	//Intel Synchronization
 	if (_thisGroupType != "") then

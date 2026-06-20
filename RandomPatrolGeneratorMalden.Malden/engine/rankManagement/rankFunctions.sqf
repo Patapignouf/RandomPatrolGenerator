@@ -103,7 +103,7 @@ adjustRank = {
 
 
 addExperience = {
-	params ["_experience", "_experienceType", "_experienceCustomParam"];
+	params ["_experience", "_experienceType", ["_experienceCustomParam", ""]];
 
 	//Unit current experience
 	_unitExperience = profileNamespace getVariable ["RPG_ranking", 0];
@@ -246,12 +246,7 @@ increasePrestige = {
 };
 
 doUpdateRank = {
-	params ["_experienceBonus", "_experienceType", "_experienceCustomParam"];
-
-	if (isNil "_experienceCustomParam") then 
-	{
-		_experienceCustomParam = "";
-	};
+	params ["_experienceBonus", "_experienceType", ["_experienceCustomParam", ""]];
 
 	if (typeName _experienceBonus == "SCALAR") then 
 	{

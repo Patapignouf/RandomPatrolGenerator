@@ -188,8 +188,16 @@ _KilledEH = player addEventHandler ["Killed", {
 		//Check if player are on opposite side
 		if ([side _instigator, playerSide] call BIS_fnc_sideIsEnemy) then 
 		{
-			//Reward PvP kill
-			_distance = _instigator distance _unit;
+			//Find distance between killed unit and killer
+			_distance = 0;
+
+			if (isRemoteControlling _instigator) then 
+			{
+				_distance = (remoteControlled _instigator) distance _unit;
+			} else 
+			{
+				_distance = _instigator distance _unit;
+			};	
 
 			//Store kill distance
 			[[_distance], 
