@@ -64,7 +64,7 @@ while {alive _unit && _unit getVariable ["dynamicCamo_active", false]} do {
     _unit setUnitTrait ["camouflageCoef", _finalCamo];
 
     /* --- DEBUGGING (Optional: uncomment to test in-game values) --- */
-     hintSilent format ["Stance: %1\nSurface: %2\nPlants Near: %3\nFinal Camo: %4", _stance, _surface, count _nearPlants, _finalCamo];
+    //hintSilent format ["Stance: %1\nSurface: %2\nPlants Near: %3\nFinal Camo: %4", _stance, _surface, count _nearPlants, _finalCamo];
     /* --------------------------------------------------------------- */
 
     sleep 2; // Checked every second to optimize performance
