@@ -847,6 +847,13 @@ setUnitTraitAccordingToRole = {
 		_caller setUnitTrait ["Medic", true];
 		_caller setVariable ["ace_medical_medicClass", 2, true]; //add special ACE medic trait doctor
 	};
+	if (_role == c_sniper && isPlayer _caller) then 
+	{
+		[[_caller], 'engine\camouflageManagement.sqf'] remoteExec ['BIS_fnc_execVM', _caller];
+	} else 
+	{
+		_caller setVariable ["dynamicCamo_active", false];
+	};
 	if (_role == c_engineer) then 
 	{
 		_caller setUnitTrait ["Engineer", true];
@@ -871,6 +878,7 @@ setUnitTraitAccordingToRole = {
 	if (_role == c_leader) then 
 	{
 		group _caller selectLeader _caller;
+		[group _caller, _caller] remoteExec ["selectLeader", groupOwner group _caller];
 	};
 };
 
