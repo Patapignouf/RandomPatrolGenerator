@@ -8,6 +8,7 @@ if (!isServer) exitWith {}; // Ensures the script only runs on the server
 
     private _gridSize = 100; // Size of a map grid square in meters (default is 100m)
     private _mapWidth = worldSize; // Automatically retrieves the map size
+    private _sideRelation = missionNameSpace getVariable ["sideRelations",0];
     
     while {true} do {
         // 1. Collect all alive units on the map
@@ -37,10 +38,10 @@ if (!isServer) exitWith {}; // Ensures the script only runs on the server
             _tempGroupPosX = (floor ((_tempGroupPos#0)/_gridSize))*_gridSize;
             _tempGroupPosY = (floor ((_tempGroupPos#1)/_gridSize))*_gridSize;
 
-            [_tempGroupPosX, _tempGroupPosY, _gridSize, _allUnits, _minimumOPFORCounter] spawn 
+            [_tempGroupPosX, _tempGroupPosY, _gridSize, _allUnits, _minimumOPFORCounter, _sideRelation] spawn 
             {
-                params ["_xCoord", "_yCoord", "_gridSize", "_allUnits", "_minimumOPFORCounter"];
-                [_xCoord, _yCoord, _gridSize, _allUnits, _minimumOPFORCounter] call updateAreaMarker;
+                params ["_xCoord", "_yCoord", "_gridSize", "_allUnits", "_minimumOPFORCounter", "_sideRelation"];
+                [_xCoord, _yCoord, _gridSize, _allUnits, _minimumOPFORCounter, _sideRelation] call updateAreaMarker;
             };
         } foreach _allGroups;
         
@@ -51,7 +52,7 @@ if (!isServer) exitWith {}; // Ensures the script only runs on the server
 
 
 updateAreaMarker = {
-    params ["_xCoord", "_yCoord", "_gridSize", "_allUnits", "_minimumOPFORCounter"];
+    params ["_xCoord", "_yCoord", "_gridSize", "_allUnits", "_minimumOPFORCounter", "_sideRelation"];
 
     // Calculate the center of the current grid square
     private _centerX = _xCoord + (_gridSize / 2);
@@ -92,7 +93,15 @@ updateAreaMarker = {
             _markerName setMarkerBrush "DiagGrid"; // Applies the diagonal hatching pattern
         };
         _markerName setMarkerColor _color;
-        _markerName setMarkerAlpha 0.6;
+        if (_sideRelation == 2 && _color == "ColorBLUFOR") then 
+        {
+            //Hide blufor marker for independent
+            [_markerName, 0.6] remoteExec ["setMarkerAlphaLocal", blufor, true];
+            [_markerName, 0] remoteExec ["setMarkerAlphaLocal", independent, true];
+        } else 
+        {
+            _markerName setMarkerAlpha 0.6;
+        };
     } else {
         // If the square is empty, delete the marker if it existed
         if (getMarkerColor _markerName != "") then {
