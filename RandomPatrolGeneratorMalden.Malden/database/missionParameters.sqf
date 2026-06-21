@@ -513,7 +513,10 @@ playerMarkerAllowedParam =
 [
 	[	
 		[0, "Disable"],
-		[1, "Enable"]
+		[1, "BLUFOR Accurate"],
+		[2, "All Units area"],
+		[3, "BLUFOR area"]
+
 	],
 	"Display player real time position on map",
 	1,

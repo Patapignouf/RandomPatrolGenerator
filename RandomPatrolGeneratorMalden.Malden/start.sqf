@@ -755,6 +755,22 @@ if ( count AvalaibleInitAttackPositions != 0 && (enableInitBluAttack == 1 || ((e
 [initBlueforLocation, deployableFOBMounted, deployableFOB] execVM 'engine\generateBluforFOBBoxes.sqf'; 
 
 
+//Display units on map
+switch (missionNameSpace getVariable "playerMarkerAllowed") do
+{
+	case 2:
+	{
+		[5, "ALL"] execVM "GUI\mapIndicatorGUI\areaPresenceMarker.sqf";
+	};
+	case 3:
+	{
+		[5, "BLUFOR"] execVM "GUI\mapIndicatorGUI\areaPresenceMarker.sqf";
+	};
+	default
+	{
+		//Do nothing
+	};
+};
 
 /////////////////////////
 ///////Generate Opfor///////
