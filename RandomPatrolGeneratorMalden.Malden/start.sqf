@@ -591,6 +591,33 @@ if !(_isOnWater) then
 		//Generate blufor FOB
 		if (missionNameSpace getVariable ["enableBluforFOB", 1] == 1) then 
 		{
+			
+			//Make the blufor FOB flat (avoid blufor base spawn bug)
+			if (missionNameSpace getVariable ["enableFlatBluforBase", 1] == 1) then 
+			{
+				//Flat the base 
+				private _fnc_flattenTerrain =
+				{
+					params ["_start", "_a", "_b", "_h"];
+					private _newPositions = [];
+
+					for "_xStep" from 0 to _a do
+					{
+						for "_yStep" from 0 to _b do
+						{
+							private _newHeight = _start vectorAdd [_xStep, _yStep, 0];
+							_newHeight set [2, _h];
+							_newPositions pushBack _newHeight;
+						};
+					};
+
+					_newPositions;
+				};
+
+				private _positionsAndHeights = [[initBlueforLocation#0-20, initBlueforLocation#1-20], 40, 40, getTerrainHeight initBlueforLocation] call _fnc_flattenTerrain;
+				setTerrainHeight [_positionsAndHeights, true];
+			};
+
 			spawnFOBObjects = [initBlueforLocation, (random 360), selectRandom avalaibleFOB] call BIS_fnc_ObjectsMapper;
 				
 			//Snap FOB object to ground
@@ -601,6 +628,7 @@ if !(_isOnWater) then
 			} foreach spawnFOBObjects;
 
 			initBlueforLocation = getPos (spawnFOBObjects select 0);	
+
 			publicvariable "initBlueforLocation";
 			waitUntil {!isNil "spawnFOBObjects"};
 		} else 
