@@ -45,12 +45,34 @@ if (isClass (configFile >> "CfgPatches" >> "ace_medical")) then
 	"ace_flags_red",
 	"ace_marker_flags_blue",
 	"ACE_EHP",
-	"ACE_Canteen",
-	"ACE_Humanitarian_Ration",
 	"ACE_bodyBag_white",
 	"ACE_bodyBag_blue",
 	"ACE_IR_Strobe_Item",
-	"ACE_Chemlight_IR"
+	"ACE_Chemlight_IR",
+	"ACE_ChalkBlack",
+	"ACE_ChalkBlue",
+	"ACE_ChalkGreen",
+	"ACE_ChalkRed",
+	"ACE_ChalkWhite",
+	"ACE_ChalkYellow",
+	"ACE_SpraypaintWhite",
+	"ACE_SpraypaintBlue",
+	"ACE_SpraypaintYellow",
+	"ACE_SpraypaintBlack",
+	"ACE_SpraypaintRed",
+	"ACE_SpraypaintGreen",
+	"ACE_MRE_ChickenHerbDumplings",
+	"ACE_MRE_MeatballsPasta",
+	"ACE_MRE_ChickenTikkaMasala",
+	"ACE_MRE_BeefStew",
+	"ACE_MRE_CreamChickenSoup",
+	"ACE_MRE_CreamTomatoSoup",
+	"ACE_MRE_SteakVegetables",
+	"ACE_Humanitarian_Ration",
+	"ACE_Can_Spirit",
+	"ACE_Can_RedGull",
+	"ACE_Can_Franta",
+	"ACE_Canteen"
 ];
 };
 
@@ -104,11 +126,22 @@ if (isClass (configFile >> "CfgPatches" >> "ace_medical")) then
 	"ACE_DefusalKit",
 	"ACE_Clacker",
 	"ACE_M26_Clacker",
+	"ace_flags_white",
+	"ace_flags_blue",
+	"ace_flags_yellow",
+	"ace_flags_black",
+	"ace_flags_orange",
+	"ace_flags_red",
+	"ace_flags_green",
+	"ace_flags_purple",
 	"ace_marker_flags_white",
+	"ace_marker_flags_blue",
 	"ace_marker_flags_yellow",
-	"ace_marker_flags_purple",
+	"ace_marker_flags_black",
 	"ace_marker_flags_orange",
 	"ace_marker_flags_red",
+	"ace_marker_flags_green",
+	"ace_marker_flags_purple",
 	"ACE_VMH3",
 	"ACE_VMM3"];
 
@@ -138,6 +171,19 @@ basicAmmunitions = [
 	"O_IR_Grenade",
 	"Laserbatteries"
 ];
+
+//Add Handflare from aegis
+if (isClass (configFile >> "CfgPatches" >> "A3_Aegis_UI_F_Aegis")) then 
+{
+basicAmmunitions = basicAmmunitions + [
+		"Aegis_HandFlare_Red",
+		"Aegis_HandFlare_Green",
+		"Aegis_SignalFlare_Green",
+		"Aegis_SignalFlare_Red"
+	];
+};
+
+
 
 prestigeItem = [
 	"H_EarProtectors_yellow_F",
