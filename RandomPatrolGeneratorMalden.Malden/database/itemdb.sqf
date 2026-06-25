@@ -153,6 +153,8 @@ prestigeItem = [
 ];
 
 
+
+//Black market database
 // //2nd War
 // case 0:
 
@@ -171,8 +173,8 @@ BMrifleList_db = [
 	[0,["rhs_weap_MP44"]],
 	[1,["sgun_HunterShotgun_01_F","srifle_DMR_06_hunter_F","rhs_weap_m1garand_sa43","rhs_weap_ak74_3","rhs_weap_m4a1_wd_mstock","rhs_weap_m4a1_d","rhs_weap_l1a1_wood","rhs_weap_m14_wd","rhs_weap_Izh18"]],
 	[2,["sgun_Mp153_classic_F", "arifle_AUG_F","arifle_AUG_black_F","arifle_AUG_C_F","rhs_weap_SCARH_USA_STD","arifle_CTAR_hex_F","rhs_weap_vhsd2_ct15x","rhs_weap_m4a1_blockII_wd","rhs_weap_hk416d145_d_2","AK74M_B30_B31C_CTR_RVG_camoB","AK105_B30_B31C_CTR_RVG_camoB","rhs_weap_m4a1_blockII_d","rhs_weap_mk18_wd","bcb_weap_ak104_zenitco01_tan"]],
-	[3,["KAR_XM7", "KAR_XM7_G"]],
-	[4,["arifle_MSBS65_F"]]
+	[3,["KAR_XM7", "KAR_XM7_G", "Aegis_arifle_AK74_gold_F"]],
+	[4,["arifle_MSBS65_F", "arifle_NCAR15_F"]]
 ];
 
 BMsmgList_db = [
@@ -196,7 +198,7 @@ BMautoRifleList_db = [
 	[1,["rhs_weap_m240B","rhs_weap_m240G","rhs_weap_mg42"]],
 	[2,["arifle_CTARS_blk_F"]],
 	[3,["MMG_02_sand_F","LMG_03_snd_F"]],
-	[4,["MMG_01_hex_F"]]
+	[4,["MMG_01_hex_F", "Atlas_LMG_Negev_black_F", "arifle_NCAR15_MG_F"]]
 ];
 
 BMlauncherList_db = [
