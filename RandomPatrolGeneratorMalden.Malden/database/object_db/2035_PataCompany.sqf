@@ -46,6 +46,23 @@ bluforArmedChopper_2035_PataCompany = [
 	selectRandom ["B_W_Heli_Light_01_dynamicLoadout_F", "Atlas_B_M_Heli_Light_02_dynamicLoadout_F", "B_CTRG_Heli_Transport_01_tropic_F", "B_Heli_Attack_01_dynamicLoadout_F"]
 ];
 
+//Hatchet H-60 pack - Stable Version mod enable
+if (isClass (configFile >> "CfgVehicles" >> "vtx_S70M")) then 
+{
+	bluforUnarmedVehicleChopper_2035_PataCompany = bluforUnarmedVehicleChopper_2035_PataCompany + [selectRandom [
+		"vtx_S70M",
+		"vtx_UH60M_MEDEVAC"
+	]];
+
+	bluforArmedChopper_2035_PataCompany = bluforArmedChopper_2035_PataCompany + [selectRandom [
+		"vtx_UH60M_SLICK",
+		"vtx_MH60M",
+		"vtx_MH60M_DAP_MLASS",
+		"vtx_HH60"
+	]];
+};
+
+
 bluforDrone_2035_PataCompany = [
 	"Atlas_B_L_UAV_01_F",
 	"Atlas_B_L_UAV_07_F"
