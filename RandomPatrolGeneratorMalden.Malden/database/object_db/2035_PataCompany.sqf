@@ -196,9 +196,11 @@ backPackList_2035_PataCompany = [
 	"B_AssaultPack_blk",
 	"B_Carryall_blk",
 	"B_AssaultPackSpec_cbr",
+	"B_AssaultPackSpec_rgr",
 	"B_AssaultPack_mcamo",
 	"B_Carryall_mcamo",
 	"B_RadioBag_01_mtp_F",
+	"B_Kitbag_desert_lxWS",
 	"I_shield_backpack_lxWS"
 ];
 
@@ -230,6 +232,7 @@ uniformList_2035_PataCompany = [
 	"Aegis_H_Helmet_FASTMT_Cover_mtp_F",
 	"lxWS_H_turban_03_green_pattern",
 	"lxWS_H_turban_03_sand",
+	"H_HelmetB_green",
 	
 	//Glasses 
 	"G_Tactical_Yellow",
@@ -245,6 +248,9 @@ uniformList_2035_PataCompany = [
 	"G_Shemag_oli",
 	"G_Balaclava_light_mtp_F",
 	"G_Lowprofile",
+	"G_Combat_Goggles_tna_F",
+	"G_shemag_white",
+	"G_Shemag_shades",
 
 
 	//vest
@@ -263,6 +269,7 @@ uniformList_2035_PataCompany = [
 	"V_CarrierRigKBT_01_light_CDF_F",
 	"V_CarrierRigKBT_01_light_MTP_F",
 	"Aegis_V_CarrierRigKBT_01_recon_mtp_F",
+	"V_PlateCarrier2_snd",
 
 
 	//Holster 
@@ -290,7 +297,10 @@ uniformList_2035_PataCompany = [
 	"U_BG_Guerilla2_3",
 	"U_I_E_Uniform_01_tanktop_F",
 	"Aegis_U_lxWS_ION_Casualtna_F",
-	"U_B_UBACS_tshirt_wdl_f"
+	"U_B_UBACS_tshirt_wdl_f",
+	"Atlas_U_B_CombatUniform_ffl_tshirt",
+	"U_B_CombatUniform_sgg_vest",
+	"U_lxWS_B_CombatUniform_desert_tshirt"
 ];
 
 
