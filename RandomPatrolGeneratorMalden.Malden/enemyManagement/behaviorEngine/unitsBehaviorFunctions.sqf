@@ -6,7 +6,7 @@ doAttack = {
 		if (!isNil "_thisGroup") then
 		{
 			diag_log "Task ATTACK [LAMBS]!";
-			[_thisGroup, _thisTarget] spawn lambs_wp_fnc_taskAssault;;
+			[_thisGroup, 1000] spawn lambs_wp_fnc_taskRush;
 
 		};
 	} else 

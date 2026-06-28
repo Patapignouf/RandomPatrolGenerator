@@ -268,3 +268,45 @@ searchLocationWithWaterDepth = {
 	};
 	_searchResult
 };
+
+
+getEdgePoints = {
+	params [["_destination", [0,0,0], [[]], 3]];
+	
+	private _destX = _destination select 0;
+	private _destY = _destination select 1;
+	private _mapSize = worldSize;
+	
+	// Generate a random vector direction
+	private _angle = random 360;
+	private _cos = cos _angle;
+	private _sin = sin _angle;
+
+	// Prevent division by zero
+	if (abs _cos < 1e-6) then { _cos = 1e-6; };
+	if (abs _sin < 1e-6) then { _sin = 1e-6; };
+
+	private _edgePoints = [];
+
+	// Left Border (x = 0)
+	private _t = (0 - _destX) / _cos;
+	private _y = _destY + _t * _sin;
+	if (_y >= 0 && _y <= _mapSize) then { _edgePoints pushBackUnique [0, _y, 0]; };
+
+	// Right Border (x = mapSize)
+	_t = (_mapSize - _destX) / _cos;
+	_y = _destY + _t * _sin;
+	if (_y >= 0 && _y <= _mapSize) then { _edgePoints pushBackUnique [_mapSize, _y, 0]; };
+
+	// Bottom Border (y = 0)
+	_t = (0 - _destY) / _sin;
+	private _x = _destX + _t * _cos;
+	if (_x >= 0 && _x <= _mapSize) then { _edgePoints pushBackUnique [_x, 0, 0]; };
+
+	// Top Border (y = mapSize)
+	_t = (_mapSize - _destY) / _sin;
+	_x = _destX + _t * _cos;
+	if (_x >= 0 && _x <= _mapSize) then { _edgePoints pushBackUnique [_x, _mapSize, 0]; };
+
+	_edgePoints select [0, 2]
+};
