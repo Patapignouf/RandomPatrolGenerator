@@ -34,7 +34,7 @@ if (!_isEndMissionRunning) then
 	{
 		_playerName = name _x;
 		playersRankName = format ["%1<br />%2", playersRankName, format ["%2 %1", _playerName, [_x] call getPlayerRankCompleteName]];
-	} foreach ([allPlayers, [], {_x getVariable ["currentXP", 0]}, "DESCEND"] call BIS_fnc_sortBy);
+	} foreach ([allPlayers, [], {(_x getVariable ["currentXP", 0]) - (_x getVariable ["startingXP", 0])}, "DESCEND"] call BIS_fnc_sortBy);
 
 	//Thanks player
 	[format ["<t color='#ffffff' size='1.5'>Random Patrol Generator</t><br /><t color='#ffffff' size='0.8'> Starring <br />%1</t>", playersRankName],0,0,5,1,0,789] remoteExec ['BIS_fnc_dynamicText', 0];

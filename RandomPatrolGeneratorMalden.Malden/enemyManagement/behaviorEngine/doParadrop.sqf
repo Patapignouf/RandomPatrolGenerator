@@ -21,7 +21,7 @@ _vehicleTransportGroup = [[_transportVehicle], [_initPos#0, _initPos#1, 500], ea
 _heli = vehicle (leader _vehicleTransportGroup);
 
 //Add Experience
-//Add eventhandler killedssssssss
+//Add eventhandler killed
 _vehicleFromGroup = vehicle (leader _vehicleTransportGroup);
 
 [_vehicleFromGroup] call addVehicleXPSetup;
@@ -62,29 +62,6 @@ _vehicleTransportGroup setCurrentWaypoint wp1;
 waitUntil {[(getPos _heli)#0,(getPos _heli)#1,0] distance _destinationPos < 400};
 
 
-//drop group
-// {
-// 	_unit = _x;
-// 	sleep 0.1;
-// 	_parachute = "B_parachute_02_F" createVehicle [0,0,0];
-// 	moveOut _unit;
-// 	_parachute setPosASL (getPosASL _unit);
-// 	_unit attachTo [_parachute, [0, 0, -1.3]];
-
-// 	//Remove parachute after one minute of falling to prevent parachute stuck in buildings/trees
-// 	[_parachute] spawn {
-// 		params ["_parachute"];
-// 		sleep 60;
-// 		deleteVehicle _parachute;
-// 	};
-
-// } forEach (units _currentEnemyGroup); 
-
-
-//Delete waypoint
-// { deleteWaypoint _x } forEachReversed waypoints _vehicleTransportGroup; 
-//back to map border
-// _vehicleTransportGroup move [selectRandom [0,worldSize],selectRandom [0,worldSize]];
 
 //Do paradrop units
 [_currentEnemyGroup, _destinationPos] spawn 
