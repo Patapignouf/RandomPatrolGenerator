@@ -303,6 +303,9 @@ doGenerateHostileCivilianGroup =
 		//Remove basic civilian weapons 
 		removeAllWeapons _x;
 
+		//Enable simulation for hostile civilian 
+		_x enableSimulation true;
+
 		//Manage hostile civilian
 		if (random 100 < _hostileProba) then 
 		{
