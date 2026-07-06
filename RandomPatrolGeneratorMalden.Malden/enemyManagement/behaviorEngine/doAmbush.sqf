@@ -1,6 +1,9 @@
 //Init params
 params ["_thisAvailablePosition","_thisTargetPosition","_thisAvailableInfantryGroups","_thisAvailableVehicleGroups","_thisDifficulty"];
 
+//Ex : [AvalaibleInitAttackPositions, initCityLocation,[baseEnemyGroup,baseEnemyATGroup],baseEnemyVehicleGroup, missionDifficultyParam] execVM 'enemyManagement\behaviorEngine\doAmbush.sqf'; 
+
+
 currentAttackGroup = objNull;
 currentPosition = [];
 if (isServer) then
@@ -28,7 +31,6 @@ if (isServer) then
 
 				//Assault for infantry
 				[_currentGroup, _thisTargetPosition] call doAttack;
-				//[currentGroup, (currentPosition distance _thisTargetPosition) + 500] spawn lambs_wp_fnc_taskHunt;
 				_currentGroup setFormation "DIAMOND";
 				diag_log format ["Group %1 ready to assault", _j];
 
@@ -64,14 +66,14 @@ if (isServer) then
 				
 				if (((_players apply {_x#1})#0) distance currentPosition >= 300) then 
 				{
-					currentVehicleGroup =[currentAttackVehicleGroup, ([currentPosition,1,60,10,0] call BIS_fnc_findSafePos), east, ""] call doGenerateEnemyGroup;
+					currentVehicleGroup =[[currentAttackVehicleGroup], ([currentPosition, 0, 60, 10, 0, 0.25, 0, [], [currentPosition, currentPosition]] call BIS_fnc_findSafePos), east, ""] call doGenerateEnemyGroup;
 					diag_log format ["Create group : %1 at position %2 and assault to position %3", currentVehicleGroup, getPos (leader currentVehicleGroup), _thisTargetPosition];
 
 					//Assault for vehicle
-					currentVehicleGroup move (_thisTargetPosition);
 					currentVehicleGroup setBehaviour "SAFE";
 					_numberOfVehicleSpawned = _numberOfVehicleSpawned + 1;
 					(vehicle leader currentVehicleGroup) limitSpeed 15; //limit speed of vehicle
+					[currentVehicleGroup, _thisTargetPosition] call BIS_fnc_taskAttack;
 				} else 
 				{
 					diag_log format ["doAmbush : Spawn on %1 near players %2 blocked", getPos ((_players apply {_x#1})#0), currentPosition];
