@@ -45,14 +45,14 @@ wp1 setwaypointtype"MOVE";
 wp1 setWaypointBehaviour "AWARE";
 wp1 setWaypointCombatMode "BLUE";
 wp1 setWaypointSpeed "FULL";
-wp1 setWaypointCompletionRadius 100;
+wp1 setWaypointCompletionRadius 150;
 
 wp2 = _vehicleTransportGroup addWaypoint [_finalDestinationPos, 0];
 wp2 setwaypointtype"MOVE"; 
 wp2 setWaypointBehaviour "AWARE";
 wp2 setWaypointCombatMode "BLUE";
 wp2 setWaypointSpeed "FULL";
-wp2 setWaypointCompletionRadius 100;
+wp2 setWaypointCompletionRadius 150;
 
 _heli flyInHeight [150, true];	// helicopter will hover at 150m altitude
 
@@ -61,6 +61,8 @@ _vehicleTransportGroup setCurrentWaypoint wp1;
 
 waitUntil {[(getPos _heli)#0,(getPos _heli)#1,0] distance _destinationPos < 400};
 
+//set second waypoint as active wp
+_vehicleTransportGroup setCurrentWaypoint wp2;
 
 
 //Do paradrop units
