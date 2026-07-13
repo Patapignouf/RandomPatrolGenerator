@@ -782,6 +782,9 @@ defenseNumberWavesParam =
 defenseTimeWavesParam = 
 [
 	[	
+		[60, "1 minute"],
+		[120, "2 minutes"],
+		[180, "3 minutes"],
 		[300, "5 minutes"],
 		[420, "7 minutes"],
 		[600, "10 minutes"],
