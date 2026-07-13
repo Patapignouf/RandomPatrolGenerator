@@ -1114,7 +1114,7 @@ generateObjectiveObject =
 					[{["STR_RPG_HC_NAME", "STR_RPG_HC_OPFOR_AROUND"] call doDialog}] remoteExec ["call", side _caller];
 
 					//Start defend
-					[[_objectiveObject, 3], 'engine\objectiveManagement\checkDefendArea.sqf'] remoteExec ['BIS_fnc_execVM', 2];
+					[[_objectiveObject, missionNameSpace getVariable ["defenseNumberWaves", 1]], 'engine\objectiveManagement\checkDefendArea.sqf'] remoteExec ['BIS_fnc_execVM', 2];
 				},_thisObjective, 10,true,true,"","_target distance _this <3"]] remoteExec ["addAction", 0, true];
 				
 				//Set objective box invincible

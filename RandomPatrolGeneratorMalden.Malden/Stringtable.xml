@@ -436,6 +436,17 @@
                 <Chinese>你必须在%1保卫弹药箱，前往该地点，找到它并防御敌人的增援</Chinese>
                 <Japanese>%1で弾薬箱を防衛しなければなりません。場所に行き、それを見つけて、敵の増援から防衛します</Japanese>
             </Key>
+            <Key ID="STR_RPG_OBJ_DEFEND_WAVE">
+                <Original>Warning, wave %1 starting</Original>
+                <English>Warning, wave %1 starting</English>
+                <French>Attention début de la vague %1</French>
+                <Spanish>Atención, comienzo de la oleada %1</Spanish>
+                <German>Achtung, Welle %1 beginnt</German>
+                <Italian>Attenzione, inizio della ondata %1</Italian>
+                <Russian>Внимание, начало волны %1</Russian>
+                <Chinese>注意，第 %1 波开始</Chinese>
+                <Japanese>警告、ウェーブ %1 が開始します</Japanese>
+            </Key>
             <Key ID="STR_RPG_OBJ_TAKE">
                 <Original>Take And Hold</Original>
                 <English>Take And Hold</English>

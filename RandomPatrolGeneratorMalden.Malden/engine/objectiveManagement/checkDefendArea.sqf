@@ -1,8 +1,14 @@
 #include "..\..\objectGenerator\vehicleManagement.sqf"
 
-params ["_thisTrigger", "_numberOfWaves"];
+params ["_thisTrigger", ["_numberOfWaves", 1]];
 
 //diag_log format ["Log : checkDefendArea , _thisTrigger = %1 , getPos _thisTrigger = %2 , associatedTask = %3", _thisTrigger, getPos _thisTrigger, _thisTrigger getVariable "associatedTask"];
+
+//Define number of waves default value
+if (_numberOfWaves == 0 ) then 
+{
+	_numberOfWaves = missionNameSpace getVariable ["defenseNumberWaves", 1];
+};
 
 //Count independent and blufor player
 _nbBluePlayer = count ((allPlayers select {alive _x && side _x == blufor} ) inAreaArray _thisTrigger);
@@ -30,21 +36,56 @@ while {sleep 15; _nbBluePlayer + _nbIndPlayer == 0 || _nbOpfor > 2} do
 	};
 };
 
+//Setup time of each waves
+_timeOfWaves = missionNameSpace getVariable ["defenseTimeWaves", 300];
+
+//SetupInit Difficulty 
+missionDifficultyParamModified = missionDifficultyParam;
+
 //Deploy multiples opfor reinforcement waves
 for [{_waveCount = 0}, {_waveCount < _numberOfWaves}, {_waveCount = _waveCount + 1}] do
 {
-	[getPos _thisTrigger, missionDifficultyParam, baseEnemyVehicleGroup, baseEnemyGroup, baseEnemyATGroup, _waveCount] spawn 
+	[getPos _thisTrigger, missionDifficultyParamModified, baseEnemyVehicleGroup, baseEnemyLightArmoredVehicleGroup, baseEnemyHeavyArmoredVehicleGroup, baseEnemyGroup, baseEnemyATGroup, baseEnemyDemoGroup, _waveCount, _timeOfWaves] spawn 
 	{
-		params ["_triggerPos", "_missionDifficultyParam", "_baseEnemyVehicleGroup", "_baseEnemyGroup", "_baseEnemyATGroup", "_waveCountInt"];
+		params ["_triggerPos", "_missionDifficultyParam", "_baseEnemyVehicleGroup", "_baseEnemyLightArmoredVehicleGroup", "_baseEnemyHeavyArmoredVehicleGroup", "_baseEnemyGroup", "_baseEnemyATGroup", "_baseEnemyDemoGroup", "_waveCountInt", "_timeOfWaves"];
 
 		//Wait before incoming wave
-		sleep ((_waveCountInt)*300);
-		//systemChat format ["wave number %1, %2", _waveCountInt, (_waveCountInt)*300]; 
+		sleep ((_waveCountInt)*_timeOfWaves);
+		// sleep (15*_waveCountInt); //Debug only
+
+		//Announce wave number
+		if (missionNameSpace getVariable ["defenseAnnounceWaves", 0] == 1 && _waveCountInt != 0) then 
+		{
+			//systemChat format ["wave number %1, %2", _waveCountInt, (_waveCountInt)*_timeOfWaves]; 
+			[[_waveCountInt+1], {params ["_waveCountInt"]; ["STR_RPG_HC_NAME", "STR_RPG_OBJ_DEFEND_WAVE", _waveCountInt] call doDialog}] remoteExec ["spawn", 0]; 
+		};
+
+		//Removes vehicles accord to mission settings
+		if ((missionNameSpace getVariable ["enableOpforVehicle", 0]) == 0) then 
+		{
+			_baseEnemyVehicleGroup = [];
+			_baseEnemyLightArmoredVehicleGroup = [];
+			_baseEnemyHeavyArmoredVehicleGroup = [];
+		};
+
+		_baseSelectedVehicle = _baseEnemyVehicleGroup;
+
+		//Armored vehicle management
+		if (missionNamespace getVariable ["enableArmoredVehicle", false]) then 
+		{
+			_baseSelectedVehicle = _baseSelectedVehicle + _baseEnemyLightArmoredVehicleGroup + _baseEnemyHeavyArmoredVehicleGroup;
+		};
 
 		//Generate enemy attack wave
 		AvalaibleInitAttackPositions = [];
 		AvalaibleInitAttackPositions = [_triggerPos, 550, 800, round (_missionDifficultyParam/2)] call getListOfPositionsAroundTarget;
-		[AvalaibleInitAttackPositions, _triggerPos, [_baseEnemyGroup,_baseEnemyATGroup], _baseEnemyVehicleGroup, _missionDifficultyParam+1] execVM 'enemyManagement\behaviorEngine\doAmbush.sqf'; 
+		[AvalaibleInitAttackPositions, _triggerPos, [_baseEnemyGroup,_baseEnemyATGroup, _baseEnemyDemoGroup], _baseSelectedVehicle, _missionDifficultyParam+1] execVM 'enemyManagement\behaviorEngine\doAmbush.sqf'; 
+	};
+
+	//Increase waves difficulty between each waves
+	if ((missionNameSpace getVariable ["defenseIncreaseDifficulty", 1]) == 1) then 
+	{
+		missionDifficultyParamModified = missionDifficultyParamModified + 1;
 	};
 };
 
@@ -65,7 +106,7 @@ if (_thisFOBCheck) then
 };
 
 //Wait enemy reinforcement
-sleep (((_numberOfWaves)*300)+120);
+sleep (((_numberOfWaves)*_timeOfWaves)+120);
 
 _nbBluePlayer = count ((allPlayers select {alive _x && side _x == blufor} ) inAreaArray _thisTrigger);
 _nbIndPlayer = count ((allPlayers select {alive _x && side _x == independent} ) inAreaArray _thisTrigger);
