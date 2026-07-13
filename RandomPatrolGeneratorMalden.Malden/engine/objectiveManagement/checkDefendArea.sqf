@@ -98,7 +98,7 @@ for [{_waveCount = 0}, {_waveCount < _numberOfWaves}, {_waveCount = _waveCount +
 		};
 	
 		//Wait an additional minute without enemies coming
-		sleep 180;
+		sleep 220;
 		// sleep (15*_waveCountInt); //Debug only
 
 		//Refresh unit counter
@@ -148,8 +148,6 @@ for [{_waveCount = 0}, {_waveCount < _numberOfWaves}, {_waveCount = _waveCount +
 };
 
 //diag_log format ["Log : checkDefendArea , enemy generation completed"];
-
-
 //Check tasks
 if (!([_thisObjectiveToComplete,[]] call BIS_fnc_areEqual)) then 
 {
