@@ -232,8 +232,6 @@ getBasicUnitsGroup = {
 	//Start building groups
 	_resultGroup = [];
 	_coreEnemyGroup = [];
-	_resultGroup = +_coreEnemyGroup;
-
 	//Setup core group
 	_coreEnemyGroup pushBack ([_currentStuffFaction, "leader"] call getUnitByRole);
 	for [{_i = 0}, {_i < 3}, {_i = _i + 1}] do
@@ -241,11 +239,14 @@ getBasicUnitsGroup = {
 		_coreEnemyGroup pushBack ([_currentStuffFaction, "rifleman"] call getUnitByRole);
 	};
 
+	_resultGroup = +_coreEnemyGroup;
+
 	switch (_unitType) do {
 		case "BASIC":
 		{
 			if (count (baseEnemyGroup_db select {_x select 1  == opFaction} select 0 select 0) == 0) then 
 			{
+				_resultGroup pushBack ([_currentStuffFaction, "medic"] call getUnitByRole);
 				_resultGroup = [_resultGroup, _currentStuffFaction, 8] call doFillWithRifleman;
 			} else 
 			{
