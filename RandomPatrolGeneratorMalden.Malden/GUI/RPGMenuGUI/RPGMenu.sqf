@@ -192,7 +192,7 @@ if (missionNameSpace getVariable ["enableOpforWeaponShop", 0] != 0) then
 			_currenItemPos = (rewardModeParam) findIf {_x#0 == _actualReward };
 
 
-		paramsToManageNow pushBack ["Button", "Change reward mode", format ["Current display : %1", rewardModeParam#_currenItemPos#1], {
+		paramsToManageNow pushBack ["Button", "Change reward mode", format ["Reward type : %1", rewardModeParam#_currenItemPos#1], {
 
 			_actualReward = profileNameSpace getVariable ["RPG_rewardMode", "Token"];
 			_currenItemPos = (rewardModeParam) findIf {_x#0 == _actualReward };
