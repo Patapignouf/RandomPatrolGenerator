@@ -532,6 +532,12 @@ publicVariable "extendedTriggerArea";
 
 missionNameSpace setVariable ["missionSetupMessage", "STR_RPG_SETUP_BLU", true];
 
+//Define starting credits
+//Credits are needed for both support and vehicle shop
+_startingCredits = missionNameSpace getVariable ["bluforVehicleAvalaibleSpawnInit", 1000];
+missionNamespace setVariable ["bluforVehicleAvalaibleSpawn", _startingCredits, true];
+missionNamespace setVariable ["independentVehicleAvalaibleSpawn", _startingCredits, true];
+
 //Init
 selectedBluforVehicle =[];
 selectedBluforAirDroneVehicle = [];
