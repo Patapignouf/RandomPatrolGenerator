@@ -66,9 +66,7 @@ switch (_mode) do
 		};
 		_ctrl = _lnbEntries;
 
-		_opFactionWeapon = [_opFactionWeapon] call toFlatDesign;
-		_opFactionWeapon = [_opFactionWeapon] call cleanWeaponsAndItems;
-		_opFactionWeapon = [_opFactionWeapon, _currentFaction] call removeAlreadyUnlockedWeaponFromFlatList; //OnlyBluFaction for now 
+		_opFactionWeapon = [_opFactionWeapon, _currentFaction] call prepareShopList;
 
 		{
 			_weaponClassName = _x#1;
@@ -206,7 +204,6 @@ _buttonRandom ctrlAddEventHandler [ "ButtonClick",
 		_supportClass = (_lnbEntries lnbData [lnbCurSelRow _lnbEntries, 0]);
 		_supportType = (_lnbEntries lnbData [lnbCurSelRow _lnbEntries, 1]);
 		_supportPrice = randomPrice;
-		_supportName = (_lnbEntries lnbData [lnbCurSelRow _lnbEntries, 3]);
 		_weaponIcon = getText (configFile >> "CfgWeapons" >> _supportClass >> "picture");
 
 		_bluforVehicleAvalaibleSpawnCounter = [] call getUnlockCredit;
@@ -231,8 +228,9 @@ _buttonRandom ctrlAddEventHandler [ "ButtonClick",
 				[_bluforVehicleAvalaibleSpawnCounter-_supportPrice] call saveUnlockCredit;
 			
 				[player, player, player call getPlayerFaction] call setupArsenalToItem;
-				_factionName = (factionInfos select {_x#1 == _currentFaction})#0#2;
-				hint parseText format ["<img image='%1' size='5'/><br/><br/><t size='1.5'>You have unlocked <br/> %2 <br/>for the faction %3</t><br/><br/><t size='1.2'></t>", _weaponIcon, _supportName, _factionName];
+				
+				//Display reward hint
+				[_supportClass, _currentFaction] call displayReward;
 
 				//Close mission setup
 				//Refresh title
@@ -264,8 +262,6 @@ _buttonOK ctrlAddEventHandler [ "ButtonClick",
 		_supportClass = (_lnbEntries lnbData [lnbCurSelRow _lnbEntries, 0]);
 		_supportType = (_lnbEntries lnbData [lnbCurSelRow _lnbEntries, 1]);
 		_supportPrice = parseNumber (_lnbEntries lnbData [lnbCurSelRow _lnbEntries, 2]);
-		_supportName = (_lnbEntries lnbData [lnbCurSelRow _lnbEntries, 3]);
-		_weaponIcon = getText (configFile >> "CfgWeapons" >> _supportClass >> "picture");
 
 		_bluforVehicleAvalaibleSpawnCounter = [] call getUnlockCredit;
 
@@ -288,8 +284,9 @@ _buttonOK ctrlAddEventHandler [ "ButtonClick",
 				[_bluforVehicleAvalaibleSpawnCounter-_supportPrice] call saveUnlockCredit;
 			
 				[player, player, player call getPlayerFaction] call setupArsenalToItem;
-				_factionName = (factionInfos select {_x#1 == _currentFaction})#0#2;
-				hint parseText format ["<img image='%1' size='5'/><br/><br/><t size='1.5'>You have unlocked <br/> %2 <br/>for the faction %3</t><br/><br/><t size='1.2'></t>", _weaponIcon, _supportName, _factionName];
+
+				//Display reward hint
+				[_supportClass, _currentFaction] call displayReward;
 
 				//Close mission setup
 				//Refresh title

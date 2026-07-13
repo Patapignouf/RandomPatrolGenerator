@@ -177,6 +177,35 @@ if (missionNameSpace getVariable ["xpDisplay", 0] == 1) then
 	}];
 };
 
+//Add XP Display custom for players
+if (missionNameSpace getVariable ["enableOpforWeaponShop", 0] != 0) then 
+{
+	if (missionNameSpace getVariable ["rewardMode", 2] == 2) then 
+	{
+
+			rewardModeParam = [
+				["Token","Token"],
+				["Instant","Instant random"]
+			];
+
+			_actualReward = profileNameSpace getVariable ["RPG_rewardMode", "Token"];
+			_currenItemPos = (rewardModeParam) findIf {_x#0 == _actualReward };
+
+
+		paramsToManageNow pushBack ["Button", "Change reward mode", format ["Current display : %1", rewardModeParam#_currenItemPos#1], {
+
+			_actualReward = profileNameSpace getVariable ["RPG_rewardMode", "Token"];
+			_currenItemPos = (rewardModeParam) findIf {_x#0 == _actualReward };
+			_newPos = (_currenItemPos+1)%(count rewardModeParam);
+			
+			profileNameSpace setVariable ["RPG_rewardMode", (rewardModeParam#_newPos)#0];
+
+			[[], 'GUI\RPGMenuGUI\RPGMenu.sqf'] remoteExec ['BIS_fnc_execVM', player];
+		}];
+	};
+};
+
+
 
 if (missionNameSpace getVariable ["enableOpforWeaponShop",1] == 1) then 
 {
@@ -390,7 +419,7 @@ _yPosition = 0.10;
 	// }];
 
 	//Move next input down 
-	_yPosition = _yPosition + 0.07;
+	_yPosition = _yPosition + 0.06;
 
 } foreach paramsToManageNow;
 

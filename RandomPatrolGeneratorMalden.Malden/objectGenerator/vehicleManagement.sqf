@@ -303,8 +303,7 @@ doIncrementAllCredits =
 	[[], 
 	{
 		params ["_unit", "_instigator"];
-	 	_unblockCredit = profileNameSpace getVariable ["RPG_UnlockCredit",0];
-		profileNameSpace setVariable ["RPG_UnlockCredit",_unblockCredit+1];
+	 	[] call shopRelatedReward;
 	}
 	] remoteExec ["spawn", 0]; 
 

@@ -29,6 +29,7 @@ getPlayerFactionUnlockedWeapons = {
 	_resultOpforWeaponsUnlocked
 };
 
+
 getPlayerFactionUnlockedWeaponForCategory = {
 	params ["_playerFaction", "_category"];
 	_tempCategoryResult = [_playerFaction] call getPlayerFactionUnlockedWeapons;
@@ -153,6 +154,7 @@ toFlatDesign = {
 	_resultFlat
 };
 
+//Get a complete shop with OPFOR items
 getOpforWeaponCategory = {
 	params ["_currentOpforFaction"];
 
@@ -176,7 +178,7 @@ getOpforWeaponCategory = {
 	_resultWPOpfor
 };
 
-
+//Get a complete shop with Black market items
 getBMWeaponCategory = {
 	//Get opfor weapon minus player faction 
 	_currentPlayerFaction = indFaction;
@@ -198,6 +200,113 @@ getBMWeaponCategory = {
 	_resultWPOpfor
 };
 
+//Get a complete shop with both OPFOR and BM
+//Test with [missionNamespace getVariable "opforFaction"] call getBMAndOpforWeaponsCategory
+getBMAndOpforWeaponsCategory = {
+	params ["_currentOpforFaction"];
+
+	_opforShop = [_currentOpforFaction] call getOpforWeaponCategory;
+	_bmShop = [] call getBMWeaponCategory;
+
+	//Merge both shops
+	{
+		_catName = _x#0;
+		_temp = _bmShop select {_x#0 == _catName};
+		_x set [1, (_x#1)+(_temp#0#1)];
+
+		//systemChat format ["Items %1 %2",_catName,  (_x#1)+(_temp#0#1)];
+	} foreach _opforShop;
+
+	//Return merged array
+	_opforShop
+};
+
+//GetShopList to flat design and remove duplicate
+prepareShopList = {
+	params ["_shopToClean", "_currentFaction"];
+
+	_shopToClean = [_shopToClean] call toFlatDesign;
+	_shopToClean = [_shopToClean] call cleanWeaponsAndItems;
+	_shopToClean = [_shopToClean, _currentFaction] call removeAlreadyUnlockedWeaponFromFlatList; //OnlyBluFaction for now 
+	
+	//Return a clean shop in format [["category", "itemName"],["category2", "itemName2"]]
+	_shopToClean
+};
+
+//Display a little reward hint with picture of unlocked item
+//Test with ["optic_lrps_ghex_f","64"] call displayReward;
+displayReward = {
+	params ["_supportClass", "_currentFaction"];
+
+	_supportName = getText (configFile >> "CfgWeapons" >> _supportClass >> "displayName");
+	_weaponIcon = getText (configFile >> "CfgWeapons" >> _supportClass >> "picture");
+	_factionName = (factionInfos select {_x#1 == _currentFaction})#0#2;
+
+	hint parseText format ["<img image='%1' size='5'/><br/><br/><t size='1.5'>You have unlocked <br/> %2 <br/>for the faction %3</t><br/><br/><t size='1.2'></t>", _weaponIcon, _supportName, _factionName];
+};
+
+
+rewardRandomItem = {
+
+	//get current player faction
+	_currentFaction = indFaction;
+	if (side player == blufor) then 
+	{
+		_currentFaction = bluFaction;
+	};
+
+	//Define full shop OPFOR + Black Market
+	_fullShop = [missionNamespace getVariable "opforFaction"] call getBMAndOpforWeaponsCategory;
+	_fullShop = [_fullShop, _currentFaction] call prepareShopList;
+
+	//Unlock random item in list
+	if (count _fullShop != 0) then 
+	{
+		//Define item to unlock
+		_itemToUnlock = selectRandom _fullShop;
+		_supportClass = _itemToUnlock#1;
+		_supportType = _itemToUnlock#0;
+
+		//Add unlocked Item to current Faction
+		[_supportClass, _supportType, _currentFaction] call addUnlockedWeapon;		
+
+		//Refresh BIS_fnc_arsenal
+		[player, player, player call getPlayerFaction] call setupArsenalToItem;
+
+		//Display reward hint
+		[_supportClass, _currentFaction] call displayReward;
+	} else 
+	{
+		systemChat "Nothing to unlock";
+	};
+};
+
+//Increase personal token counter or unlock random stuff from OPFOR or Black market 
+//Test [] call shopRelatedReward;
+shopRelatedReward = {
+
+	//Check if shop/token reward has been enabled
+	if (missionNameSpace getVariable ["enableOpforWeaponShop", 2] != 0) then 
+	{
+		_rewardMode = missionNameSpace getVariable ["rewardMode", 2];
+
+		//Reward Token
+		if (_rewardMode == 0 || (_rewardMode == 2 && (profileNameSpace getVariable ["RPG_rewardMode", "Token"] == "Token"))) then 
+		{
+			//Get current token number
+			_unblockCredit = profileNameSpace getVariable ["RPG_UnlockCredit",0];
+			profileNameSpace setVariable ["RPG_UnlockCredit",_unblockCredit+1];
+			
+			//systemChat "Increase token"; //Debug only
+		};
+
+		//Reward random stuff
+		if (_rewardMode == 1 || (_rewardMode == 2 && (profileNameSpace getVariable ["RPG_rewardMode", "Token"] == "Instant"))) then 
+		{
+			[] call rewardRandomItem;
+		};
+	};
+};
 
 cleanWeaponsAndItems = {
 	params ["_listToClean"];
