@@ -242,7 +242,7 @@ displayReward = {
 	_weaponIcon = getText (configFile >> "CfgWeapons" >> _supportClass >> "picture");
 	_factionName = (factionInfos select {_x#1 == _currentFaction})#0#2;
 
-	hint parseText format ["<img image='%1' size='5'/><br/><br/><t size='1.5'>You have unlocked <br/> %2 <br/>for the faction %3</t><br/><br/><t size='1.2'></t>", _weaponIcon, _supportName, _factionName];
+	[[parseText format ["<img image='%1' size='5'/><br/><br/><t size='1.5'>You have unlocked <br/> %2 <br/>for the faction %3</t><br/><br/><t size='1.2'></t>", _weaponIcon, _supportName, _factionName], "intel"], 'engine\hintManagement\addCustomHint.sqf'] remoteExec ['BIS_fnc_execVM', player]; 
 };
 
 
