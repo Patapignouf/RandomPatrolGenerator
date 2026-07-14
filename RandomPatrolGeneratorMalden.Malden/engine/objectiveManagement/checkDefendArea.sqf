@@ -98,7 +98,7 @@ for [{_waveCount = 0}, {_waveCount < _numberOfWaves}, {_waveCount = _waveCount +
 		};
 	
 		//Wait an additional minute without enemies coming
-		sleep 220;
+		sleep 250;
 		// sleep (15*_waveCountInt); //Debug only
 
 		//Refresh unit counter
