@@ -72,7 +72,7 @@ if (isServer) then
 					//Assault for vehicle
 					currentVehicleGroup setBehaviour "SAFE";
 					_numberOfVehicleSpawned = _numberOfVehicleSpawned + 1;
-					(vehicle leader currentVehicleGroup) limitSpeed 15; //limit speed of vehicle
+					(vehicle leader currentVehicleGroup) limitSpeed 20; //limit speed of vehicle
 					[currentVehicleGroup, _thisTargetPosition] call BIS_fnc_taskAttack;
 				} else 
 				{

@@ -93,8 +93,8 @@ for [{_waveCount = 0}, {_waveCount < _numberOfWaves}, {_waveCount = _waveCount +
 
 			//Generate enemy attack wave
 			AvalaibleInitAttackPositions = [];
-			AvalaibleInitAttackPositions = [_triggerPos, 550, 800, round (_missionDifficultyParam/2)] call getListOfPositionsAroundTarget;
-			[AvalaibleInitAttackPositions, _triggerPos, [_baseEnemyGroup,_baseEnemyATGroup, _baseEnemyDemoGroup], _baseSelectedVehicle, _missionDifficultyParam+1] execVM 'enemyManagement\behaviorEngine\doAmbush.sqf'; 
+			AvalaibleInitAttackPositions = [_triggerPos, 550, 800, _missionDifficultyParam+1] call getListOfPositionsAroundTarget;
+			[AvalaibleInitAttackPositions, _triggerPos, [_baseEnemyGroup,_baseEnemyATGroup, _baseEnemyDemoGroup], _baseSelectedVehicle, _missionDifficultyParam] execVM 'enemyManagement\behaviorEngine\doAmbush.sqf'; 
 		};
 	
 		//Wait an additional minute without enemies coming
