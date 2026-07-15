@@ -188,87 +188,94 @@ detach _turret;
 
 _turret setDir _boatDir;
 
-// Create AI crew and force them to OPFOR side
-createVehicleCrew _turret;
-_crew = crew _turret;
-_turretGroup = createGroup opfor; //Create opfor group
-_crew joinSilent _turretGroup;
+//Do not place turret in WW2 era (soon fixed)
+warEra = missionNamespace getVariable "warEra"; 
 
-_turretPos2 = [0, 50, 19];
-_turret2 = createVehicle [selectRandom ["B_AAA_System_01_F", "B_SAM_System_02_F", "B_SAM_System_01_F"], [0,0,0], [], 0, "CAN_COLLIDE"];
-_turret2 attachTo [_ship, _turretPos2];
-detach _turret2;
-_turret2 setDir _boatDir;
-createVehicleCrew _turret2;
-_crew2 = crew _turret2;
-_crew2 joinSilent _turretGroup;
+if (warEra != 0) then 
+{
+	// Create AI crew and force them to OPFOR side
+	createVehicleCrew _turret;
+	_crew = crew _turret;
+	_turretGroup = createGroup opfor; //Create opfor group
+	_crew joinSilent _turretGroup;
+
+	_turretPos2 = [0, 50, 19];
+	_turret2 = createVehicle [selectRandom ["B_AAA_System_01_F", "B_SAM_System_02_F", "B_SAM_System_01_F"], [0,0,0], [], 0, "CAN_COLLIDE"];
+	_turret2 attachTo [_ship, _turretPos2];
+	detach _turret2;
+	_turret2 setDir _boatDir;
+	createVehicleCrew _turret2;
+	_crew2 = crew _turret2;
+	_crew2 joinSilent _turretGroup;
 
 
-//Add sabotage action
-[
-	_turret, 
-	"Sabotage the turret", 
-	"\a3\ui_f\data\IGUI\Cfg\holdactions\holdAction_search_ca.paa", 
-	"\a3\ui_f\data\IGUI\Cfg\holdactions\holdAction_search_ca.paa", 
-	"(_this distance _target < 100) && (_this getVariable 'role' == 'engineer') ",		// Condition for the action to be shown
-	"_caller distance _target < 100",		// Condition for the action to progress
-	{
-		// Action start code
-	}, 
-	{
-		// Action on going code
-	},  
-	{
-		// Action successfull code
-		params ["_object","_caller","_ID","_objectParams","_progress","_maxProgress"];
-		
-		[format ["The turret will be destroyed in 60 secs", name _caller]] remoteExec ["hint", _caller,true];
-		sleep 60;
-		_object setDamage 1;
-		[{[5, "RPG_ranking_repair"] call doUpdateRank}] remoteExec ["call", _caller];
-	}, 
-	{
-		// Action failed code
-	}, 
-	[],  
-	5,
-	5, 
-	true, 
-	false
-] remoteExec ["BIS_fnc_holdActionAdd", 0, true];
+	//Add sabotage action
+	[
+		_turret, 
+		"Sabotage the turret", 
+		"\a3\ui_f\data\IGUI\Cfg\holdactions\holdAction_search_ca.paa", 
+		"\a3\ui_f\data\IGUI\Cfg\holdactions\holdAction_search_ca.paa", 
+		"(_this distance _target < 100) && (_this getVariable 'role' == 'engineer') ",		// Condition for the action to be shown
+		"_caller distance _target < 100",		// Condition for the action to progress
+		{
+			// Action start code
+		}, 
+		{
+			// Action on going code
+		},  
+		{
+			// Action successfull code
+			params ["_object","_caller","_ID","_objectParams","_progress","_maxProgress"];
+			
+			[format ["The turret will be destroyed in 60 secs", name _caller]] remoteExec ["hint", _caller,true];
+			sleep 60;
+			_object setDamage 1;
+			[{[5, "RPG_ranking_repair"] call doUpdateRank}] remoteExec ["call", _caller];
+		}, 
+		{
+			// Action failed code
+		}, 
+		[],  
+		5,
+		5, 
+		true, 
+		false
+	] remoteExec ["BIS_fnc_holdActionAdd", 0, true];
 
-//Add sabotage action
-[
-	_turret2, 
-	"Sabotage the turret", 
-	"\a3\ui_f\data\IGUI\Cfg\holdactions\holdAction_search_ca.paa", 
-	"\a3\ui_f\data\IGUI\Cfg\holdactions\holdAction_search_ca.paa", 
-	"(_this distance _target < 100) && (_this getVariable 'role' == 'engineer') ",		// Condition for the action to be shown
-	"_caller distance _target < 100",		// Condition for the action to progress
-	{
-		// Action start code
-	}, 
-	{
-		// Action on going code
-	},  
-	{
-		// Action successfull code
-		params ["_object","_caller","_ID","_objectParams","_progress","_maxProgress"];
-		
-		[format ["The turret will be destroyed in 60 secs", name _caller]] remoteExec ["hint", _caller,true];
-		sleep 60;
-		_object setDamage 1;
-		[{[5, "RPG_ranking_repair"] call doUpdateRank}] remoteExec ["call", _caller];
-	}, 
-	{
-		// Action failed code
-	}, 
-	[],  
-	5,
-	5, 
-	true, 
-	false
-] remoteExec ["BIS_fnc_holdActionAdd", 0, true];
+	//Add sabotage action
+	[
+		_turret2, 
+		"Sabotage the turret", 
+		"\a3\ui_f\data\IGUI\Cfg\holdactions\holdAction_search_ca.paa", 
+		"\a3\ui_f\data\IGUI\Cfg\holdactions\holdAction_search_ca.paa", 
+		"(_this distance _target < 100) && (_this getVariable 'role' == 'engineer') ",		// Condition for the action to be shown
+		"_caller distance _target < 100",		// Condition for the action to progress
+		{
+			// Action start code
+		}, 
+		{
+			// Action on going code
+		},  
+		{
+			// Action successfull code
+			params ["_object","_caller","_ID","_objectParams","_progress","_maxProgress"];
+			
+			[format ["The turret will be destroyed in 60 secs", name _caller]] remoteExec ["hint", _caller,true];
+			sleep 60;
+			_object setDamage 1;
+			[{[5, "RPG_ranking_repair"] call doUpdateRank}] remoteExec ["call", _caller];
+		}, 
+		{
+			// Action failed code
+		}, 
+		[],  
+		5,
+		5, 
+		true, 
+		false
+	] remoteExec ["BIS_fnc_holdActionAdd", 0, true];
+};
+
 
 
 
@@ -282,7 +289,6 @@ for [{_i = 0}, {_i < ((_thisDifficulty)*2)+1}, {_i = _i + 1}] do
 {
 	_spawnedGroupDestroyer = ([selectRandom _opforGroup, [0,0,0], opfor, "Infantry"] call doGenerateEnemyGroup);
 	(units _spawnedGroupDestroyer) apply {_groupAssociatedToDestroyer pushBack _x};
-
 };
 
 //Count number of AI to manage
