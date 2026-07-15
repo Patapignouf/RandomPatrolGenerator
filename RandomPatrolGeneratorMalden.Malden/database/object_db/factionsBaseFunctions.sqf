@@ -83,7 +83,8 @@ adjustRole = {
 		case "\uns_men_c\icon\pavntroops\icon_leader_ca.paa";
 		case "\uns_men_c\icon\ustroops\icon_officer_ca.paa";
 		case "\uns_men_c\icon\ustroops\icon_leader_ca.paa";
-		case "iconManOfficer":
+		case "iconManOfficer";
+		case "iconManCommander":
 		{
 			_cfgRole = "leader";
 		};
@@ -117,7 +118,8 @@ adjustRole = {
 			_cfgRole = "marksman";
 		};
 		case "\uns_men_c\icon\ustroops\icon_rto_ca.paa";
-		case "\uns_men_c\icon\pavntroops\icon_rto_ca.paa":
+		case "\uns_men_c\icon\pavntroops\icon_rto_ca.paa";
+		case "iconManRTO":
 		{
 			_cfgRole = "radioman";
 		};
@@ -126,6 +128,11 @@ adjustRole = {
 		case "iconManMG":
 		{
 			_cfgRole = "autorifleman";
+		};
+		case "iconManPilot";
+		case "iconManTankcrew":
+		{
+			_cfgRole = "pilot";
 		};
 		default
 		{
