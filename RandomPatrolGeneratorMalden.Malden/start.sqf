@@ -300,33 +300,6 @@ if ( count possiblePOILocation < missionLength) then
 	possiblePOILocation = ([initCityLocation, _searchRadius+2000] call getLocationsAroundWithBuilding) - [initCityLocationLoc];
 };
 
-//Search road around AO
-possibleAmbushPosition = [];
-tempPossibleAmbush = [];
-currentAO = objNull;
-_distance = 0;
-{
-	currentAO = _x;
-	tempPossibleAmbush = (getPos _x) nearRoads 1500;
-	{
-		_distance = (getPos _x) distance (getPos currentAO);
-		if (350<_distance && _distance<1000) then	//Il faudrait tester si ce n'est pas trop près des villes adjacentes
-		{
-			possibleAmbushPosition pushBack _x;
-		};		
-	}
-	foreach tempPossibleAmbush;
-} foreach possiblePOILocation;
-
-
-numberOfAmbush = (missionLength+1)*4;
-AmbushPositions = [];
-for [{_i = 0}, {_i < numberOfAmbush}, {_i = _i + 1}] do
-{
-	AmbushPositions pushBack (selectRandom possibleAmbushPosition);
-	possibleAmbushPosition = possibleAmbushPosition - [AmbushPositions select ((count AmbushPositions)-1)];
-};
-
 //Manually Determine objective location will not be randomize
 NeedToRandomizePOI = missionNameSpace getVariable ["randomizeObjectiveOrder", 1];
 
@@ -813,7 +786,7 @@ switch (missionNameSpace getVariable "playerMarkerAllowed") do
 
 missionNameSpace setVariable ["missionSetupMessage", "STR_RPG_SETUP_OPF", true];
 
-[EnemyWaveLevel_1,AmbushPositions, missionDifficultyParam] execVM 'enemyManagement\generationEngine\generatePatrol.sqf'; 
+[EnemyWaveLevel_1, possiblePOILocation, missionDifficultyParam] execVM 'enemyManagement\generationEngine\generatePatrol.sqf'; 
 
 //Generate Wave
 if (1 <= (count EnemyWaveSpawnPositions)) then 
