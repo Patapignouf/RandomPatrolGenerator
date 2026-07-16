@@ -121,6 +121,68 @@ if (missionNameSpace getVariable ["enableAdvancedRespawn", 1] == 1) then
 						};
 					},_x,3,true,false,"","(_this getVariable 'role' == 'leader') && (_target distance _this <5) && (_target getVariable [str (group _this), false])"];
 
+					//Create action to authorize tent disassembly
+					[
+						_createTent, 
+						"Disassemble tent", 
+						"\a3\ui_f\data\IGUI\Cfg\holdactions\holdAction_unbind_ca.paa", 
+						"\a3\ui_f\data\IGUI\Cfg\holdactions\holdAction_unbind_ca.paa", 
+						"(_this distance _target < 3) && (_this == leader group _this) && (vehicle _this == _this)",
+						"true", 
+						{
+							// Action start code
+						}, 
+						{
+							// Action on going code
+						},  
+						{
+							// Action successfull code
+							params ["_object","_caller","_ID","_param"];
+
+							//Refund fortification
+							_price = 100;
+							if (side _caller == blufor) then 
+							{
+								bluforVehicleAvalaibleSpawnCounter = missionNamespace getVariable "bluforVehicleAvalaibleSpawn";
+								if (_price <= bluforVehicleAvalaibleSpawnCounter) then 
+								{
+									_haveCredits = true;
+									bluforVehicleAvalaibleSpawnCounter = bluforVehicleAvalaibleSpawnCounter + _price;
+									missionNamespace setVariable ["bluforVehicleAvalaibleSpawn", bluforVehicleAvalaibleSpawnCounter, true];
+								};	
+							} else 
+							{
+								independentVehicleAvalaibleSpawnCounter = missionNamespace getVariable "bluforVehicleAvalaibleSpawn";
+								if (_price <= independentVehicleAvalaibleSpawnCounter) then 
+								{
+									_haveCredits = true;
+									independentVehicleAvalaibleSpawnCounter = independentVehicleAvalaibleSpawnCounter + _price;
+									missionNamespace setVariable ["bluforVehicleAvalaibleSpawn", independentVehicleAvalaibleSpawnCounter, true];
+								};					
+							};
+
+							//Destroy fortification
+							[_object] spawn {
+								params ["_object"];
+
+								//Destroy tent
+								_object setDamage 1;
+
+								//Remove tent
+								sleep 2;
+								deleteVehicle _object;
+							};
+						}, 
+						{
+							// Action failed code
+						}, 
+						[],  
+						2,
+						1000, 
+						false,
+						false
+					] remoteExec ["BIS_fnc_holdActionAdd", 0, true];
+
 					if (side player == blufor) then 
 					{
 						//Add action to add arsenal to the tent

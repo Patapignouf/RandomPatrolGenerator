@@ -78,6 +78,28 @@ addFortifyAction =
 						// Action successfull code
 						params ["_object","_caller","_ID","_param"];
 
+						//Refund fortification
+						_price = 50;
+						if (side _caller == blufor) then 
+						{
+							bluforVehicleAvalaibleSpawnCounter = missionNamespace getVariable "bluforVehicleAvalaibleSpawn";
+							if (_price <= bluforVehicleAvalaibleSpawnCounter) then 
+							{
+								_haveCredits = true;
+								bluforVehicleAvalaibleSpawnCounter = bluforVehicleAvalaibleSpawnCounter + _price;
+								missionNamespace setVariable ["bluforVehicleAvalaibleSpawn", bluforVehicleAvalaibleSpawnCounter, true];
+							};	
+						} else 
+						{
+							independentVehicleAvalaibleSpawnCounter = missionNamespace getVariable "bluforVehicleAvalaibleSpawn";
+							if (_price <= independentVehicleAvalaibleSpawnCounter) then 
+							{
+								_haveCredits = true;
+								independentVehicleAvalaibleSpawnCounter = independentVehicleAvalaibleSpawnCounter + _price;
+								missionNamespace setVariable ["bluforVehicleAvalaibleSpawn", independentVehicleAvalaibleSpawnCounter, true];
+							};					
+						};
+
 						//Destroy fortification
 						deleteVehicle _object;
 					}, 
