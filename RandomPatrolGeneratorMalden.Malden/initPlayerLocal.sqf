@@ -212,6 +212,64 @@ if (isClass (configFile >> "CfgPatches" >> "ace_medical")) then
 	player enableInfoPanelComponent ["right", "MinimapDisplay", false];
 };
 
+
+//Add ace fortify budget management
+if (isClass (configFile >> "CfgPatches" >> "ace_medical")) then 
+{
+	["ace_fortify_deployFinished", {
+		_caller = _this#0#0;
+		_price = 50;
+
+		//Add real cost to ace fortifications
+		if (side _caller == blufor) then 
+		{
+			bluforVehicleAvalaibleSpawnCounter = missionNamespace getVariable "bluforVehicleAvalaibleSpawn";
+			if (_price <= bluforVehicleAvalaibleSpawnCounter) then 
+			{
+				_haveCredits = true;
+				bluforVehicleAvalaibleSpawnCounter = bluforVehicleAvalaibleSpawnCounter - _price;
+				missionNamespace setVariable ["bluforVehicleAvalaibleSpawn", bluforVehicleAvalaibleSpawnCounter, true];
+			};	
+		} else 
+		{
+			independentVehicleAvalaibleSpawnCounter = missionNamespace getVariable "bluforVehicleAvalaibleSpawn";
+			if (_price <= independentVehicleAvalaibleSpawnCounter) then 
+			{
+				_haveCredits = true;
+				independentVehicleAvalaibleSpawnCounter = independentVehicleAvalaibleSpawnCounter - _price;
+				missionNamespace setVariable ["bluforVehicleAvalaibleSpawn", independentVehicleAvalaibleSpawnCounter, true];
+			};					
+		};
+	}] call CBA_fnc_addEventHandler;
+
+	["acex_fortify_objectDeleted", {
+		_caller = _this#0;
+		_price = 50;
+
+		//Add real cost to ace fortifications
+		if (side _caller == blufor) then 
+		{
+			bluforVehicleAvalaibleSpawnCounter = missionNamespace getVariable "bluforVehicleAvalaibleSpawn";
+			if (_price <= bluforVehicleAvalaibleSpawnCounter) then 
+			{
+				_haveCredits = true;
+				bluforVehicleAvalaibleSpawnCounter = bluforVehicleAvalaibleSpawnCounter + _price;
+				missionNamespace setVariable ["bluforVehicleAvalaibleSpawn", bluforVehicleAvalaibleSpawnCounter, true];
+			};	
+		} else 
+		{
+			independentVehicleAvalaibleSpawnCounter = missionNamespace getVariable "bluforVehicleAvalaibleSpawn";
+			if (_price <= independentVehicleAvalaibleSpawnCounter) then 
+			{
+				_haveCredits = true;
+				independentVehicleAvalaibleSpawnCounter = independentVehicleAvalaibleSpawnCounter + _price;
+				missionNamespace setVariable ["bluforVehicleAvalaibleSpawn", independentVehicleAvalaibleSpawnCounter, true];
+			};					
+		};
+	}] call CBA_fnc_addEventHandler;
+
+};
+
 //Prevent players from instant death
 if !(isClass (configFile >> "CfgPatches" >> "ace_medical")) then 
 {
