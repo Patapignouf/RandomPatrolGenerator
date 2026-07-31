@@ -488,6 +488,12 @@ if (missionNameSpace getVariable ["enableAmbiantWar", 0] == 1) then
 	[] execVM 'engine\doAmbiantWar.sqf';
 };
 
+//Init ambiant artillery
+if (missionNameSpace getVariable ["enableAmbiantArtillery", 0] == 1) then 
+{
+	[] execVM 'engine\doAmbiantArtillery.sqf';
+};
+
 // Get smallest distance to an AO
 areaOfOperation = [AllPossibleObjectivePosition] call getAreaOfMission;
 aoSize = 1500;
@@ -860,7 +866,7 @@ if (missionNameSpace getVariable ["enableOpforBMShop",1] == 1) then
 		params ["_unitBM"];
 
 		//Wait for unit correctly spawn and garrison 
-		sleep 10;
+		sleep 15;
 		_unitBM disableAI "ALL";
 		_unitBM enableAI "ANIM";
 		[_unitBM, "BRIEFING", "NONE"] remoteExecCall ["BIS_fnc_ambientAnim"];
