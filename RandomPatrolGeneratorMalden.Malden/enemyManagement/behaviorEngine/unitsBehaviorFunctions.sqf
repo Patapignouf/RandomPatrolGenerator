@@ -64,8 +64,10 @@ params ["_thisGroup", "_position", "_distance","_allowCamp"];
 				_x disableAI "PATH";
 				_tempPosition = selectRandom _allPositions;
 				_allPositions = _allPositions - [_tempPosition];
-				//[_x, "STAND1", "ASIS"] call BIS_fnc_ambientAnim;
 				_x setPos (_tempPosition);
+
+				//Garrison unit will do some standing animation
+				[_x, selectRandom ["STAND", "STAND_IA", "WATCH", "WATCH1", "WATCH2"], "FULL", { false }] call BIS_fnc_ambientAnimCombat;
 
 				//80% to leave the position if fired
 				if (random 100>80) then 
