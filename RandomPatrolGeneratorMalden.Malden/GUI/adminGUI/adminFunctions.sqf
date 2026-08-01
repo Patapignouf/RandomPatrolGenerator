@@ -67,6 +67,13 @@ params ["_supportType"];
 			_mainDisplay closeDisplay 1;
 			[[[false, "OPFOR"]], "GUI\weaponShopGUI\weaponShopGUI.sqf"] remoteExec ['BIS_fnc_execVM', player];
 		};
+		case "TeleportPlayer":
+		{
+			//Close admin menu
+			_mainDisplay = (findDisplay 60000);
+			_mainDisplay closeDisplay 1;
+			[[], 'GUI\adminGUI\teleportGUI.sqf'] remoteExec ['BIS_fnc_execVM', player];
+		};
 		case "SpawnOpforDestroyer":
 		{
 			//Close admin menu
@@ -214,6 +221,18 @@ addEndMission = {
 
 	_supportName = "End current mission";
 	_supportNameCode = "EndMission";
+	_supportIcon = "\a3\ui_f\data\igui\cfg\simpletasks\types\Radio_ca.paa";
+	_supportType = "Mission";
+
+	[_ctrl, _supportName, _supportNameCode, _supportIcon, _supportType] call addSupportOption;
+};
+
+
+addTeleportPlayer = {
+	params ["_ctrl"];
+
+	_supportName = "Teleport player to your position";
+	_supportNameCode = "TeleportPlayer";
 	_supportIcon = "\a3\ui_f\data\igui\cfg\simpletasks\types\Radio_ca.paa";
 	_supportType = "Mission";
 

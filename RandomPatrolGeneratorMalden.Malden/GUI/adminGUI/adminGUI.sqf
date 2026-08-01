@@ -29,6 +29,7 @@ switch (_mode) do
 		[_lnbEntries] call addCloudyWeather;
 		[_lnbEntries] call addRandomWeather;
 		[_lnbEntries] call addEndMission;
+		[_lnbEntries] call addTeleportPlayer;
 		[_lnbEntries] call addOpforShop;
 		[_lnbEntries] call addSpawnOpforDestroyer;
 	};
