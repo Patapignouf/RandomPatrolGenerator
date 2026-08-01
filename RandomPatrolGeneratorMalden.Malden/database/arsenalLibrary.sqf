@@ -513,7 +513,8 @@ getVirtualMagazine = {
 			{ 
 				{
 					//Add default weapon magazine except large magazine
-					_listOfLargeMagazineText = ["60Rnd", "75Rnd", "75rnd", "100Rnd", "150Rnd", "200Rnd"]; //
+					//Add explosive bullet to exception
+					_listOfLargeMagazineText = ["60Rnd", "75Rnd", "75rnd", "100Rnd", "150Rnd", "200Rnd", "_Mod0"]; //
 					_currentWeaponMagazineList = getArray (configfile >> "CfgWeapons" >> _x >> "magazines");
 					if (count _currentWeaponMagazineList != 0) then 
 					{
