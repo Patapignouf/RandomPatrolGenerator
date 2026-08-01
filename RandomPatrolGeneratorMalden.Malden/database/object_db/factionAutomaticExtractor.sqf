@@ -584,6 +584,16 @@ publicVariable "factionInfos";
 			missionNamespace setVariable [_currentFactionName, _currentStuffFaction]; 
 		};
 
+		//Engineer
+		if (count (_currentStuffFaction select {_x#0 == "engineer"}) == 0) then 
+		{
+			_defaultRifleman = (_currentStuffFaction select {_x#0 == "rifleman"})#0;
+			_defaultLeader =+ _defaultRifleman;
+			_defaultLeader set [0, "engineer"];
+			_currentStuffFaction pushBack _defaultLeader;
+			missionNamespace setVariable [_currentFactionName, _currentStuffFaction]; 
+		};
+
 		//Medic
 		if (count (_currentStuffFaction select {_x#0 == "medic"}) == 0) then 
 		{
