@@ -11,15 +11,15 @@ if (isServer) then
 
 		_position = [[[_basePosition, 400]], [[_basePosition, 70]]] call BIS_fnc_randomPos;
 
-		//Hint to artillery call
-		[[_position], {params ["_position"]; ["STR_RPG_HC_NAME", "STR_RPG_HC_ARTILLERY", mapGridPosition _position] call doDialog}] remoteExec ["spawn", blufor]; 
+		// //Hint to artillery call
+		// [[_position], {params ["_position"]; ["STR_RPG_HC_NAME", "STR_RPG_HC_ARTILLERY", mapGridPosition _position] call doDialog}] remoteExec ["spawn", blufor]; 
 
-		//Play random radio sound
-		[] spawn {
-			playMusic ["RadioAmbient5", 1];
-			sleep 4;
-			playMusic "";
-		};
+		// //Play random radio sound
+		// [] spawn {
+		// 	playMusic ["RadioAmbient5", 1];
+		// 	sleep 4;
+		// 	playMusic "";
+		// };
 
 		//Simulate waiting for shots
 		sleep (3 + random 2);
