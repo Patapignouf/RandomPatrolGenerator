@@ -326,6 +326,9 @@ generateOutpostProcess = {
 		{
 			(_outpostUnits#_unitNumber) setPosASL (getPosASL _x);
 			(_outpostUnits#_unitNumber) disableAI "PATH";
+			
+			//Add guard animation to outpost
+			[(_outpostUnits#_unitNumber), selectRandom ["STAND", "STAND_IA", "WATCH", "WATCH1", "WATCH2"], "FULL", { false }] call BIS_fnc_ambientAnimCombat;
 
 			//80% to leave the position if fired
 			if (random 100>80) then 
