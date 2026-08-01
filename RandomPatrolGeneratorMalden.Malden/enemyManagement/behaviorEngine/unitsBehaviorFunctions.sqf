@@ -67,7 +67,10 @@ params ["_thisGroup", "_position", "_distance","_allowCamp"];
 				_x setPos (_tempPosition);
 
 				//Garrison unit will do some standing animation
-				[_x, selectRandom ["STAND", "STAND_IA", "WATCH", "WATCH1", "WATCH2"], "FULL", { false }] call BIS_fnc_ambientAnimCombat;
+				if (side _x != civilian) then 
+				{
+					[_x, selectRandom ["STAND", "STAND_IA", "WATCH", "WATCH1", "WATCH2"], "FULL", { false }] call BIS_fnc_ambientAnimCombat;
+				};
 
 				//80% to leave the position if fired
 				if (random 100>80) then 
