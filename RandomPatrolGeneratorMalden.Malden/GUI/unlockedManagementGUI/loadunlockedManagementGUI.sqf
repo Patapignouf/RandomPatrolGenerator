@@ -1,0 +1,275 @@
+//Based on the work of 7erra
+//Github : https://github.com/7erra/LNBSort
+
+#include "..\weaponShopGUI\weaponShopFunctions.sqf"
+
+params ["_mode", "_this", ["_specialParam", [false]]];
+
+private _mainDisplay = (findDisplay 60000);
+private _buttonOK = _mainDisplay displayCtrl 60001;
+private _vehicleShopTitle = _mainDisplay displayCtrl 59999;
+private _icon = _mainDisplay displayCtrl 602399;
+private _name = _mainDisplay displayCtrl 602400;
+private _type = _mainDisplay displayCtrl 602401;
+private _credit = _mainDisplay displayCtrl 602402;
+private _buttonRandom = _mainDisplay displayCtrl 60003;
+
+_vehicleShopTitle ctrlSetText (format ["%2 | Unlock Token %1", [] call getUnlockCredit, localize "RPG_GUI_GENERAL_UNLOCK"]);
+
+_isModeSell = _specialParam#0;
+
+_icon ctrlSetText (localize "STR_GUI_BASE_ICON");
+_name ctrlSetText (localize "STR_GUI_BASE_WEAPON_NAME");
+_type ctrlSetText (localize "STR_GUI_BASE_WEAPON_TYPE");
+_credit ctrlSetText (localize "STR_GUI_BASE_TOKEN");
+
+if (_isModeSell) then 
+{
+	_buttonOK ctrlSetText (localize "STR_GUI_BASE_SELL");
+} else 
+{
+	_buttonOK ctrlSetText (localize "STR_GUI_BASE_GIVE");
+};
+
+// _buttonRandom ctrlSetText (format ["%1 : %2", localize "STR_GUI_BASE_RANDOM", randomPrice]);
+_buttonRandom ctrlShow false; //Hide random buy button
+
+
+diag_log format ["Init weapon management GUI"];
+
+switch (_mode) do
+{
+	case "onLoad":
+	{
+		_this params ["_display"];
+		_lnbEntries = _display displayCtrl 60002;
+
+		//Add support   
+		_opFactionWeapon = [];
+
+		_currentFaction = indFaction;
+		if (side player == blufor) then 
+		{
+			_currentFaction = bluFaction;
+		};
+		_ctrl = _lnbEntries;
+		_opFactionWeapon = [_currentFaction] call getPlayerFactionUnlockedWeapons;
+		_opFactionWeapon = [_opFactionWeapon] call toFlatDesign;
+
+		{
+			_weaponClassName = _x#1;
+			_categoryName = _x#0;
+			_supportName = getText (configFile >> "CfgWeapons" >> _weaponClassName >> "displayName");
+			_supportNameCode = "";
+			switch (_categoryName) do 
+			{
+				case "rifle":
+				{
+					_supportNameCode = "Medium range";
+				};
+				case "smg":
+				{
+					_supportNameCode = "Short range";
+				};
+				case "grenadeLauncher":
+				{
+					_supportNameCode = localize "STR_RPG_LOADOUT_ROLE_GRENADIER";
+				};
+				case "launcher":
+				{
+					_supportNameCode = localize "STR_RPG_LOADOUT_ROLE_AT";
+				};
+				case "sniperRifle":
+				{
+					_supportNameCode = localize "STR_RPG_LOADOUT_ROLE_MARKSMAN";
+				};
+				case "autoRifle":
+				{
+					_supportNameCode = localize "STR_RPG_LOADOUT_ROLE_AUTORIFLEMAN";
+				};
+				case "shortAccessories":
+				{
+					_supportNameCode = "Base accessories";
+				};
+				case "longAccessories":
+				{
+					_supportNameCode = localize "STR_RPG_LOADOUT_ROLE_MARKSMAN";
+				};
+			};
+
+			//Determine items carac
+			_priceAnalysisReturn = [];
+			if (_categoryName != "shortAccessories" && _categoryName != "longAccessories") then 
+			{
+				_priceAnalysisReturn = [_weaponClassName] call defineWeaponPrice;
+				//systemChat format ["Impact : %1 \nMax range : %2", _priceAnalysisReturn#1, _priceAnalysisReturn#2];
+			} else 
+			{
+				_price = [_weaponClassName] call defineScopePrice;
+			};
+
+			_price = 1;
+			_supportIcon = getText (configFile >> "CfgWeapons" >> _weaponClassName >> "picture");
+			_supportType = _x#0;
+
+
+			if (typeName _price == "SCALAR") then 
+			{
+				_ind = _ctrl lnbAddRow ["", _supportName, _supportNameCode, str _price];
+
+				//DLC check 
+				_DLCStatus = [];
+				_DLCStatus = getAssetDLCInfo [_weaponClassName, configFile >> "CfgWeapons"];
+
+				if (_DLCStatus#5 == "ArmA 3") then 
+				{
+					_DLCStatus set [5, "None"];
+				};
+			
+				//Set tooltip
+				if (count _priceAnalysisReturn != 0) then 
+				{
+					//_ctrl lnbSetTooltip [_ind, format ["Impact : %1 \nMax range : %2m", _priceAnalysisReturn#1, _priceAnalysisReturn#2]];
+					_ctrl lnbSetTooltip [[_ind,0], format ["Impact : %1 \nMax range : %2m\nDefault ammo : %3\nAccuracy : %4%% \nDLC : %5", _priceAnalysisReturn#1, _priceAnalysisReturn#2, _priceAnalysisReturn#3, _priceAnalysisReturn#4, _DLCStatus#5]];
+				} else 
+				{
+					_ctrl lnbSetTooltip [[_ind,0], format ["DLC : %1", _DLCStatus#5]];
+				};
+
+				//Set picture
+				_ctrl lnbSetPicture [[_ind, 0], _supportIcon];
+
+				//Set data
+				_ctrl lnbSetData [[_ind, 0], _weaponClassName];
+				_ctrl lnbSetData [[_ind, 1], _supportType];
+				_ctrl lnbSetData [[_ind, 2], str _price];
+				_ctrl lnbSetData [[_ind, 3], _supportName];
+			};
+
+		} foreach (_opFactionWeapon);
+
+
+		for "_idc" from 602400 to 602402 do {
+			_btn = _display displayCtrl _idc;
+			_btn setVariable ["reverseSort",false];
+			_btn ctrlAddEventHandler ["ButtonClick",{
+				["sortCol",[ctrlParent (_this#0)] +_this] execVM "GUI\vehicleSpawnerGUI\loadVehicleSpawner.sqf";
+			}];
+		};
+	};
+	case "sortCol":{
+		params ["_display","_ctrl"];
+		_lnbEntries = _display displayCtrl 1500;
+		_column = [602400,602401,602402] find ctrlIDC _ctrl;
+		_reverse = _ctrl getVariable "reverseSort";
+		if (_column == 2) then {
+			_lnbEntries lnbSortByValue [_column,_reverse];
+		} else {
+			_lnbEntries lnbSort [_column,_reverse];
+		};
+		_ctrl setVariable ["reverseSort",!_reverse];
+	};
+};
+
+//Add a button to buy random item
+// _buttonRandom ctrlAddEventHandler [ "ButtonClick", 
+// 	{ 
+// 		params ["_ctrl"];
+// 		_display = ctrlParent _ctrl;
+
+// 		//
+// 		_lnbEntries = _display displayCtrl 60002;
+// 		_numberOfRows = (lnbSize _lnbEntries)#0;
+// 		_lnbEntries lnbSetCurSelRow (floor random (_numberOfRows - 1)); //Select random index
+// 		//hint (format ["number of entries : %1", _numberOfRows ]);
+// 		_supportClass = (_lnbEntries lnbData [lnbCurSelRow _lnbEntries, 0]);
+// 		_supportType = (_lnbEntries lnbData [lnbCurSelRow _lnbEntries, 1]);
+// 		_supportPrice = randomPrice;
+// 		_weaponIcon = getText (configFile >> "CfgWeapons" >> _supportClass >> "picture");
+
+// 	}
+// ];
+
+if (_isModeSell) then 
+{
+	//Sell item
+	_buttonOK ctrlAddEventHandler [ "ButtonClick", 
+		{ 
+			params ["_ctrl"];
+			_display = ctrlParent _ctrl;
+
+			//Select item to buy
+			_lnbEntries = _display displayCtrl 60002;
+			_vehicleShopTitle = _display displayCtrl 59999;
+			_supportClass = (_lnbEntries lnbData [lnbCurSelRow _lnbEntries, 0]);
+			_supportType = (_lnbEntries lnbData [lnbCurSelRow _lnbEntries, 1]);
+			_supportPrice = parseNumber (_lnbEntries lnbData [lnbCurSelRow _lnbEntries, 2]);
+
+
+			if (_supportClass != "") then 
+			{
+				//Remove entry 
+				_lnbEntries lnbDeleteRow (lnbCurSelRow _lnbEntries);
+
+				//get current player faction
+				_currentFaction = indFaction;
+				if (side player == blufor) then 
+				{
+					_currentFaction = bluFaction;
+				};
+
+
+				[_supportClass, _supportType, _currentFaction] call removeUnlockedWeapon;		
+
+				[player, player, player call getPlayerFaction] call setupArsenalToItem;
+
+				//Get current token number
+				_unblockCredit = profileNameSpace getVariable ["RPG_UnlockCredit",0];
+				profileNameSpace setVariable ["RPG_UnlockCredit",_unblockCredit+1];
+
+				//Update credit display
+				_vehicleShopTitle ctrlSetText (format ["%2 | Unlock Token %1", [] call getUnlockCredit, localize "RPG_GUI_GENERAL_UNLOCK"]);
+			};
+		}
+	];
+} else 
+{
+	//Give item
+	_buttonOK ctrlAddEventHandler [ "ButtonClick", 
+		{ 
+			params ["_ctrl"];
+			_display = ctrlParent _ctrl;
+
+			//Select item to buy
+			_lnbEntries = _display displayCtrl 60002;
+			_supportClass = (_lnbEntries lnbData [lnbCurSelRow _lnbEntries, 0]);
+			_supportType = (_lnbEntries lnbData [lnbCurSelRow _lnbEntries, 1]);
+			_supportPrice = parseNumber (_lnbEntries lnbData [lnbCurSelRow _lnbEntries, 2]);
+
+
+			if (_supportClass != "") then 
+			{
+				//Remove item management display
+				_display closeDisplay 1;
+				//Remove entry 
+				//_lnbEntries lnbDeleteRow (lnbCurSelRow _lnbEntries);
+
+				[[_supportClass, _supportType], 'GUI\unlockedManagementGUI\giveGUI.sqf'] remoteExec ['BIS_fnc_execVM', player];
+
+				//Get current token number
+				// _unblockCredit = profileNameSpace getVariable ["RPG_UnlockCredit",0];
+				// profileNameSpace setVariable ["RPG_UnlockCredit",_unblockCredit+0];
+
+				//Display reward hint
+				//[_supportClass, _currentFaction] call displayReward;
+
+			};
+		}
+	];
+};
+
+
+
+waitUntil {isNull _mainDisplay};
+
+

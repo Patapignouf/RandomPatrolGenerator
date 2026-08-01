@@ -757,6 +757,17 @@
                 <Chinese>%1被他的队友%2杀死，注意你的火力</Chinese>
                 <Japanese>%1はチームメイトの%2に殺されました。火に注意してください</Japanese>
             </Key>
+            <Key ID="STR_RPG_HC_GIVE_CALL">
+                <Original>%1 gave item %3 to %2</Original>
+                <English>%1 gave item %3 to %2</English>
+                <French>%1 donné l'objet %3 à %2</French>
+                <Spanish>%1 dio el objeto %3 a %2</Spanish>
+                <German>%1 hat %2 den Gegenstand %3 gegeben</German>
+                <Italian>%1 ha dato l'oggetto %3 a %2</Italian>
+                <Russian>%1 передал(а) предмет %3 игроку %2</Russian>
+                <Chinese>%1 将物品 %3 给了 %2</Chinese>
+                <Japanese>%1 が %2 にアイテム %3 を渡しました</Japanese>
+            </Key>
             <Key ID="STR_RPG_HC_PUNISH">
                 <Original>%1 has been punished</Original>
                 <English>%1 has been punished</English>
@@ -2041,6 +2052,17 @@
         <Chinese>武器商店</Chinese>
         <Japanese>武器ショップ</Japanese>
     </Key>
+    <Key ID="RPG_GUI_GENERAL_UNLOCK">
+        <Original>Unlock Management</Original>
+        <English>Unlock Management</English>
+        <French>Gestion des débloquages</French>
+        <Spanish>Gestión de desbloqueos</Spanish>
+        <German>Freischaltverwaltung</German>
+        <Italian>Gestione sblocchi</Italian>
+        <Russian>Управление разблокировкой</Russian>
+        <Chinese>解锁管理</Chinese>
+        <Japanese>アンロック管理</Japanese>
+    </Key>
     <Key ID="RPG_GUI_GENERAL_WEAPON_SHOP_DESC">
         <Original>Unlock weapons and accessories</Original>
         <English>Unlock weapons and accessories</English>
@@ -2737,6 +2759,28 @@
         <Russian>Открыть</Russian>
         <Chinese>解锁</Chinese>
         <Japanese>解除</Japanese>
+    </Key>
+    <Key ID="STR_GUI_BASE_GIVE">
+        <Original>Give</Original>
+        <English>Give</English>
+        <French>Donner</French>
+        <Spanish>Dar</Spanish>
+        <German>Geben</German>
+        <Italian>Dai</Italian>
+        <Russian>Отдать</Russian>
+        <Chinese>给予</Chinese>
+        <Japanese>を与える</Japanese>
+    </Key>
+    <Key ID="STR_GUI_BASE_SELL">
+        <Original>Sell</Original>
+        <English>Sell</English>
+        <French>Vendre</French>
+        <Spanish>Vender</Spanish>
+        <German>Verkaufen</German>
+        <Italian>Vendi</Italian>
+        <Russian>Продать</Russian>
+        <Chinese>出售</Chinese>
+        <Japanese>売却</Japanese>
     </Key>
     <Key ID="STR_GUI_BASE_RANDOM">
         <Original>Random</Original>

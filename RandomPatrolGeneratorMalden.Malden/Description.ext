@@ -11,6 +11,7 @@
 #include "GUI\botteamGUI\botteamGUI.hpp"
 #include "GUI\adminGUI\adminGUI.hpp"
 #include "GUI\weaponShopGUI\weaponShopGUI.hpp"
+#include "GUI\unlockedManagementGUI\unlockedManagementGUI.hpp"
 #include "GUI\teamManagementGUI\teamManagementGUI.hpp"
 
 respawnDialog = 0;

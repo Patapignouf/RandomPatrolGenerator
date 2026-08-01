@@ -840,9 +840,15 @@ if (missionNameSpace getVariable ["enableOpforBMShop",1] == 1) then
 		_unitBM setPos (selectRandom _allPositions);
 	};
 
-	[_unitBM, ["<img size='2' image='\a3\ui_f_oldman\data\IGUI\Cfg\holdactions\map_ca.paa'/><t size='1'>Open black market</t>",{
+	[_unitBM, ["<img size='2' image='\a3\ui_f_oldman\data\IGUI\Cfg\holdactions\map_ca.paa'/><t size='1'>Buy from black market</t>",{
 			params ["_object","_caller","_ID","_thisObjective"];
 			[[[false, "BM"]], "GUI\weaponShopGUI\weaponShopGUI.sqf"] remoteExec ['BIS_fnc_execVM', _caller];
+		},[],10,true,false,"","_target distance _this <4"]] remoteExec ["addAction", 0, true];
+
+	//Temp add selling option to Black Market 
+	[_unitBM, ["<img size='2' image='\a3\ui_f_oldman\data\IGUI\Cfg\holdactions\map_ca.paa'/><t size='1'>Sell to black market</t>",{
+			params ["_object","_caller","_ID","_thisObjective"];
+			[[[true]], 'GUI\unlockedManagementGUI\unlockedManagementGUI.sqf'] remoteExec ['BIS_fnc_execVM', _caller];
 		},[],10,true,false,"","_target distance _this <4"]] remoteExec ["addAction", 0, true];
 
 	_unitBM addEventHandler ["Killed", {

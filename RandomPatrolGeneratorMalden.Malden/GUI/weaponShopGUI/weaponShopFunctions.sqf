@@ -89,6 +89,16 @@ addWeaponToCategory = {
 	_baseWeaponCategoryCopy
 };
 
+RemoveWeaponFromCategory = {
+	params ["_weaponToRemove", "_weaponCategory", "_categories"];
+	_baseWeaponCategoryCopy = _categories;
+	_findWeaponCategory = _baseWeaponCategoryCopy findIf {_weaponCategory == _x#0};
+    //systemChat format ["test : %1", (_baseWeaponCategoryCopy#_findWeaponCategory#1)];
+	_baseWeaponCategoryCopy set [_findWeaponCategory ,[_weaponCategory, (_baseWeaponCategoryCopy#_findWeaponCategory#1) select {_x != _weaponToRemove}]];
+
+	_baseWeaponCategoryCopy
+};
+
 addUnlockedWeapon = {
 	params ["_weapon", "_weaponCategory", "_currentFaction"];
 
@@ -111,6 +121,26 @@ addUnlockedWeapon = {
 	[_currentWeapons] call saveAllUnlockedWeapons;
 };
 
+removeUnlockedWeapon = {
+	params ["_weapon", "_weaponCategory", "_currentFaction"];
+
+	//Get all weapons
+	_currentWeapons =  [] call getAllUnlockedWeapons;
+	//Get unlocked weapons for this faction
+	_weaponIndex = _currentWeapons findIf {_currentFaction == _x#0};
+
+	//Faction found
+	if (_weaponIndex != -1) then 
+	{
+		//Add new weapon to the faction
+		_weaponsListWithOneMore = [_weapon, _weaponCategory, (_currentWeapons#_weaponIndex)#1] call RemoveWeaponFromCategory;
+		_currentWeapons set [_weaponIndex, [_currentFaction, _weaponsListWithOneMore]];
+	};
+
+	[_currentWeapons] call saveAllUnlockedWeapons;
+};
+
+/// Deprecated use removeUnlockedWeapon instead
 removeAlreadyUnlockedWeapon = {
 	params ["_weaponsListToCheck", "_currentFaction"];
 	_listToRemove = [_currentFaction] call getPlayerFactionUnlockedWeapons;
@@ -120,6 +150,7 @@ removeAlreadyUnlockedWeapon = {
 	} foreach _weaponsListToCheck;
 	_weaponsListToCheck
 };
+///
 
 removeAlreadyUnlockedWeaponFromFlatList = {
 	params ["_weaponsListToCheck", "_currentFaction"];

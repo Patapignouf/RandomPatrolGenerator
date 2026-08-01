@@ -203,6 +203,10 @@ if (missionNameSpace getVariable ["enableOpforWeaponShop", 0] != 0) then
 			[[], 'GUI\RPGMenuGUI\RPGMenu.sqf'] remoteExec ['BIS_fnc_execVM', player];
 		}];
 	};
+
+	paramsToManageNow pushBack ["Button", "Reward management", format ["Give items to others !"], {
+		[[[false]], 'GUI\unlockedManagementGUI\unlockedManagementGUI.sqf'] remoteExec ['BIS_fnc_execVM', player];
+	}];
 };
 
 
