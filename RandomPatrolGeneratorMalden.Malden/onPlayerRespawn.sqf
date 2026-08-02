@@ -249,6 +249,54 @@ _KilledEH = player addEventHandler ["Killed", {
 player setVariable ["KilledEH", _KilledEH, true];
 
 
+//Add solo tank crew feature
+if (missionNameSpace getVariable ["enableSoloCrewTank", 1] == 1) then 
+{
+	player addEventHandler ["GetInMan", {
+		params ["_unit", "_role", "_vehicle", "_turret"];
+
+		// check if the vehicle is a tank or tank like
+		if (_vehicle isKindOf "Tank" || _vehicle isKindOf "Wheeled_APC_F" || _vehicle isKindOf "TrackedAPC") then {
+			
+			// if the player enter as driver then start solo crew script
+			if (_role == "driver") then {
+				
+
+				// 1. If turret is empty add an AI to make solo crew
+				if (isNull (gunner _vehicle)) then {
+					private _group = createGroup [side _unit, true];
+					private _aiGunner = _group createUnit ["B_Survivor_F", [0,0,0], [], 0, "NONE"];
+					
+					_aiGunner hideObjectGlobal true; // make AI invisible
+					_aiGunner allowDamage false;     // Invincible
+					_aiGunner moveInGunner _vehicle; // Move AI to gunner place, maybe driver is better :p
+					
+					// Keep ai variable in the vehicle to allow cleaning
+					_vehicle setVariable ["my_solo_ai_gunner", _aiGunner, true];
+				};
+
+				// 2. Give control to gunner
+				_unit action ["TakeVehicleControl", _vehicle];
+				
+				//Move player to turret role to allow solo crew
+				_unit action ["MoveToGunner", _vehicle];  
+			};
+		};
+	}];
+
+	// Clean when player leave vehicle
+	player addEventHandler ["GetOutMan", {
+		params ["_unit", "_role", "_vehicle", "_turret"];
+
+		private _aiGunner = _vehicle getVariable ["my_solo_ai_gunner", objNull];
+		if (!isNull _aiGunner) then {
+			deleteVehicle _aiGunner; // Delete AI
+			_vehicle setVariable ["my_solo_ai_gunner", nil, true];
+		};
+	}];
+};
+
+
 //Allow damage post respawn
 sleep 30;
 player allowDamage true;
