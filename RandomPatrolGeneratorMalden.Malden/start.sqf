@@ -225,17 +225,40 @@ switch (missionNameSpace getVariable "sideRelations") do
 };
 
 //Init bunker FOB depending of war era and mod
+_isFOWFOBEnabled = false;
 if (isClass (configFile >> "CfgPatches" >> "fow_main")) then 
 {
 	if (warEra == 0) then 
 	{
+		_isFOWFOBEnabled = true;
 		avalaibleEnemyFOB = avalaibleEnemyFOB_FOW;
+	};
+};
+
+//Setup IFA3 FOB
+if (isClass (configFile >> "CfgPatches" >> "IFA3_Core")) then 
+{
+	if (warEra == 0) then 
+	{
+		if (_isFOWFOBEnabled) then 
+		{
+			avalaibleEnemyFOB = avalaibleEnemyFOB_FOW + avalaibleEnemyFOB_IFA3;
+		} else 
+		{
+			avalaibleEnemyFOB = avalaibleEnemyFOB_IFA3;
+		};
 	};
 };
 
 if (isClass (configFile >> "CfgPatches" >> "OPTRE_Core")) then 
 {
 	avalaibleEnemyFOB = avalaibleEnemyFOB_Halo;
+};
+
+//Force blufor FOB as tent
+if (missionNameSpace getVariable ["forceTentFOB",1] == 1) then 
+{
+	avalaibleFOB = avalaibleTentFOB;
 };
 
 
@@ -612,7 +635,10 @@ if !(_isOnWater) then
 				_x setPos [_groundPos#0, _groundPos#1, 0];
 			} foreach spawnFOBObjects;
 
-			initBlueforLocation = getPos (spawnFOBObjects select 0);	
+			initBlueforLocation = getPos (spawnFOBObjects select 0);
+			
+			//Wait FOB spawn end
+			sleep 3;	
 
 			publicvariable "initBlueforLocation";
 			waitUntil {!isNil "spawnFOBObjects"};

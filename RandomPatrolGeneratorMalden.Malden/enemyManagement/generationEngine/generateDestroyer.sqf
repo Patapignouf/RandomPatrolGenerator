@@ -177,22 +177,22 @@ _rewardObject setDir _boatDir;
 
 
 
-
-//Add turret 
-_turretPos = [0,-80,16];
-_turret = createVehicle [selectRandom ["B_AAA_System_01_F", "B_SAM_System_02_F", "B_SAM_System_01_F"], [0,0,0], [], 0, "CAN_COLLIDE"];
-_turret attachTo [_ship, _turretPos];
-detach _turret;
-//_turret setPosASL _turretPos;
-//_turret setPos _turretPos;
-
-_turret setDir _boatDir;
-
-//Do not place turret in WW2 era (soon fixed)
-warEra = missionNamespace getVariable "warEra"; 
-
 if (warEra != 0) then 
 {
+	//Add turret 
+	_turretPos = [0,-80,16];
+	_turret = createVehicle [selectRandom ["B_AAA_System_01_F", "B_SAM_System_02_F", "B_SAM_System_01_F"], [0,0,0], [], 0, "CAN_COLLIDE"];
+	_turret attachTo [_ship, _turretPos];
+	detach _turret;
+	//_turret setPosASL _turretPos;
+	//_turret setPos _turretPos;
+
+	_turret setDir _boatDir;
+
+	//Do not place turret in WW2 era (soon fixed)
+	warEra = missionNamespace getVariable "warEra"; 
+
+
 	// Create AI crew and force them to OPFOR side
 	createVehicleCrew _turret;
 	_crew = crew _turret;
