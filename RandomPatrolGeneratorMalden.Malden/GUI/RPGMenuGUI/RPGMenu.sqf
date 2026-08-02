@@ -158,7 +158,8 @@ if (missionNameSpace getVariable ["xpDisplay", 0] == 1) then
 
 		listxpDisplayMode = [
 			["N","None"],
-			["R","Right"]
+			["R","Right"],
+			["B","Bottom"]
 		];
 
 		_actualXPDisplay = profileNameSpace getVariable ["RPG_xpDisplayMode", "R"];

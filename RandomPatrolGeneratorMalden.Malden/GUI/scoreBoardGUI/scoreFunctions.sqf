@@ -55,7 +55,19 @@ doDisplayScore = {
 				_ctrl ctrlSetStructuredText parseText format ["<t color='#00ff00' size='1.3'>+ %1 </t><t color='#FFFFFF' size='1.3'>%2  %3m</t>", _score, _scoreText, _scoreParam1];
 			};
 
-			_ctrl ctrlSetPosition [0.6, 0.4+_baseY*_numberOfScoreDisplay, ctrlTextWidth _ctrl, 0.1];
+			//Manage score position
+			//Right position
+			if (profileNameSpace getVariable ["RPG_xpDisplayMode", "R"] == "R") then 
+			{
+				_ctrl ctrlSetPosition [0.6, 0.4+_baseY*_numberOfScoreDisplay, ctrlTextWidth _ctrl, 0.1];
+			};
+
+			//Bottom position
+			if (profileNameSpace getVariable ["RPG_xpDisplayMode", "R"] == "B") then 
+			{
+				_ctrl ctrlSetPosition [0.3, 0.8+_baseY*_numberOfScoreDisplay, ctrlTextWidth _ctrl, 0.1];
+			};
+
 			_ctrl ctrlCommit 0;
 
 			waitUntil {ctrlCommitted _ctrl};
