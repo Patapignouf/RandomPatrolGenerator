@@ -437,21 +437,28 @@ for [{_i = 0}, {_i < numberOfSpawnWave}, {_i = _i + 1}] do
 
 missionNameSpace setVariable ["missionSetupMessage", "STR_RPG_SETUP_CIV", true];
 
+
+
 //IA civilian taskGarrison
 diag_log format ["Begin generation of civilian AO : %1 on position %2", civilian_big_group, initCityLocation];
-currentCivGroup = objNull;
-civsGroup = [];
-for [{_i = 0}, {_i <= 2}, {_i = _i + 1}] do
-{ 
-	currentCivGroup = [civilian_big_group, ((initCityLocation) findEmptyPosition [5, 60]), civilian, "Civilian"] call doGenerateEnemyGroup;
-	civsGroup pushBack currentCivGroup;
-	diag_log format ["Generation of civilian group : %1 on position %2 has been completed", currentCivGroup, initCityLocation];
-};
 
-//Garrison or camp every civ group
+
+if (missionNameSpace getVariable ["enableCivilianOnCity",1] == 1) then 
 {
-	[_x, getPos (leader _x), 80, true] call doGarrison;
-} foreach civsGroup;
+	currentCivGroup = objNull;
+	civsGroup = [];
+	for [{_i = 0}, {_i <= 2}, {_i = _i + 1}] do
+	{ 
+		currentCivGroup = [civilian_big_group, ((initCityLocation) findEmptyPosition [5, 60]), civilian, "Civilian"] call doGenerateEnemyGroup;
+		civsGroup pushBack currentCivGroup;
+		diag_log format ["Generation of civilian group : %1 on position %2 has been completed", currentCivGroup, initCityLocation];
+	};
+
+	//Garrison or camp every civ group
+	{
+		[_x, getPos (leader _x), 80, true] call doGarrison;
+	} foreach civsGroup;
+};
 
 
 //Init VA
