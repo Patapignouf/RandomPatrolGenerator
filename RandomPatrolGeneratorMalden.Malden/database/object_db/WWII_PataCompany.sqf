@@ -73,7 +73,7 @@ loadout_WWII_PANY = [
 	[c_engineer,"JMSSA_fraNA_tirCol_rifle"],
 	[c_autorifleman,"JMSSA_fraNA_tirCol_mg"],
 	[c_marksman,"JMSSA_fraNA_tirCol_lebel"],
-	[c_medic,[[["JMSSA_berthier_Rifle","","","",["JMSSA_3Rnd_8x50R_D",3],[],""],[],[],["JMSSA_fra_NA_bright_F_CombatUniform",[["FirstAidKit",1],["JMSSA_F1_HandGrenade",1,1]]],["JMSSA_fra_mle35rifle16_bag",[["JMSSA_3Rnd_8x50R_T",15,3]]],["JMSSA_fra_m1893_b",[["ACE_bloodIV",5],["ACE_bloodIV_500",5],["ACE_epinephrine",10],["ACE_morphine",5],["ACE_surgicalKit",1],["ACE_elasticBandage",61],["ACE_painkillers",5,10]]],"JMSSA_fra_chechia_khaki","",[],["ItemMap","","ItemRadio","ItemCompass","ItemWatch",""]],[]]]
+	[c_medic,[["JMSSA_berthier_Rifle","","","",["JMSSA_3Rnd_8x50R_D",3],[],""],[],[],["JMSSA_fra_NA_bright_F_CombatUniform",[["FirstAidKit",1],["JMSSA_F1_HandGrenade",1,1]]],["JMSSA_fra_mle35rifle16_bag",[["JMSSA_3Rnd_8x50R_T",15,3]]],["JMSSA_fra_m1893_b",[["ACE_bloodIV",5],["ACE_bloodIV_500",5],["ACE_epinephrine",10],["ACE_morphine",5],["ACE_surgicalKit",1],["ACE_elasticBandage",61],["ACE_painkillers",5,10]]],"JMSSA_fra_chechia_khaki","",[],["ItemMap","","ItemRadio","ItemCompass","ItemWatch",""]]]
 ];
 
 
