@@ -7,10 +7,12 @@
     _sel = [ position player ] call spawnSelection_selectNearest;  // [_idx, _name, _pos]
     [] call spawnSelection_cleanup; // nettoie (affiche rien)
     [false] call spawnSelection_cleanup; // nettoie et affiche un hint
-    [[], 'GUI\respawnGUI\respawnMapGUI.sqf'] remoteExec ['BIS_fnc_execVM', player];
+    [[false], 'GUI\respawnGUI\respawnMapGUI.sqf'] remoteExec ['BIS_fnc_execVM', player];
 
   Remarque : ce fichier est autonome.
 */
+
+params [["_isFastTraver", false]];
 
 /* --------------------------
    CONFIGURATION
@@ -30,11 +32,11 @@ baseSpawn = [];
 //Add init player pos as spawn point
 if (side player == blufor) then 
 {
-    _poiList pushBack ["", initBlueforLocation, "colorBLUFOR"];
+    _poiList pushBack ["", initBlueforLocation, "colorBLUFOR", false];
     baseSpawn = initBlueforLocation;
 } else 
 {
-    _poiList pushBack ["Base Independent", initCityLocation, "colorIndependent"];
+    _poiList pushBack ["Base Independent", initCityLocation, "colorIndependent", false];
     baseSpawn = initCityLocation;
 };  
 
@@ -45,7 +47,7 @@ if (side player == blufor) then
         if (3 < count _x) then 
         {
             _currentObjectivePosition = (_x)#3;
-            _poiList pushBack ["Mission checkpoint", _currentObjectivePosition, "ColorGreen"];
+            _poiList pushBack ["Mission checkpoint", _currentObjectivePosition, "ColorGreen", false];
         };
     };
 } foreach ((missionNameSpace getVariable ["completedObjectives",[]]));
@@ -54,7 +56,7 @@ if (side player == blufor) then
 _tentLocation = missionNamespace getVariable [format ['bluforPositionAdvancedRespawn%1', str (group player)], [0,0,0]];
 if (playerSide == blufor && !([_tentLocation, [0,0,0]] call BIS_fnc_areEqual)) then 
 {
-    _poiList pushBack ["", _tentLocation, "colorBLUFOR"];
+    _poiList pushBack ["", _tentLocation, "colorBLUFOR", true];
 };
 
 //Add other groups tent as spawn point
@@ -62,7 +64,7 @@ if (playerSide == blufor && !([_tentLocation, [0,0,0]] call BIS_fnc_areEqual)) t
     _groupTentLocation = missionNamespace getVariable [format ['bluforPositionAdvancedRespawn%1', str (_x)], [0,0,0]];
     if (playerSide == blufor && !([_groupTentLocation, [0,0,0]] call BIS_fnc_areEqual)) then 
     {
-        _poiList pushBack ["", _groupTentLocation, "colorBLUFOR"];
+        _poiList pushBack ["", _groupTentLocation, "colorBLUFOR", true];
     };
 } foreach (allGroups select {(side _x == side player) && (_x != (group player))});
 
@@ -70,7 +72,7 @@ if (playerSide == blufor && !([_tentLocation, [0,0,0]] call BIS_fnc_areEqual)) t
 _advFOBLocation = missionNamespace getVariable ["advancedBlueforLocation", [0,0,0]];
 if (playerSide == blufor && !([_advFOBLocation, [0,0,0]] call BIS_fnc_areEqual)) then 
 {
-    _poiList pushBack ["Advanced FOB", _advFOBLocation, "colorBLUFOR"];
+    _poiList pushBack ["Advanced FOB", _advFOBLocation, "colorBLUFOR", false];
 };
 
 private _markerPrefix = "SPAWN_POI_";
@@ -132,7 +134,9 @@ spawnSelection_selectNearest = {
 
     if (_best >= 0) then {
         private _resMeta = (_markersMeta select { _x select 0 == _best }) select 0;
-        private _res = [_resMeta select 0, _resMeta select 2, _resMeta select 3];
+        private _res = [_resMeta select 1, _resMeta select 2, _resMeta select 3];
+
+        //systemChat format ["_resMeta : %1", _res];
 
         // Mise en évidence visuelle
         private _selMarkerName = _resMeta select 1;
@@ -157,12 +161,14 @@ private _createMarkers = {
         private _label = _x select 0;
         private _pos   = _x select 1;
         private _color = _x select 2;
+        private _isASL = _x select 3;
 
         createMarkerLocal [_name, _pos];
         _name setMarkerTypeLocal  "selector_selectedMission";
         _name setMarkerTextLocal  _label;
         _name setMarkerColorLocal _color;
-
+        player setVariable [format ["RPG_Marker_isASL%1", _name], _isASL];
+        //systemChat format ["RPG_Marker_isASL%1", _name];
         _arr pushBack [_i, _name, _label, _pos, _color];
         _i = _i + 1;
     } forEach _poiList;
@@ -193,7 +199,13 @@ applyPulseToMarker = {
 if (!isDedicated) then {
     _markersMeta = call _createMarkers;
 
-	["<t color='#ffffff' size='.8'>Select your respawn location<br /></t>",0,0,4,1,0,789] spawn BIS_fnc_dynamicText;
+    if (!_isFastTraver) then 
+    {
+	    ["<t color='#ffffff' size='.8'>Select your respawn location<br /></t>",0,0,4,1,0,789] spawn BIS_fnc_dynamicText;
+    } else 
+    {
+        ["<t color='#ffffff' size='.8'>Select your travel location<br /></t>",0,0,4,1,0,789] spawn BIS_fnc_dynamicText;
+    };
 
     //Open map
     openMap true;
@@ -220,11 +232,84 @@ if (!isDedicated) then {
 
     //When user clicked
     onMapSingleClick "selectedLoc = _pos; onMapSingleClick ''; openMap false; true;";
+
+    if (!_isFastTraver) then 
+    {
+        // 1. Afficher l'overlay GUI
+        ("TAG_RscHealPrompt" call BIS_fnc_rscLayer) cutRsc ["TAG_RscHealPrompt", "PLAIN", 0, true];
+
+        [] spawn {
+            // 2. Attendre que l'affichage soit chargé et stocké
+            private _titleDisplay = objNull;
+            waitUntil {
+                _titleDisplay = uiNamespace getVariable ["TAG_HealPrompt_Display", objNull];
+                !isNull _titleDisplay
+            };
+
+            // 3. Obtenir les coordonnées exactes à l'écran du texte 'cliquable'
+            private _clickCtrl = _titleDisplay displayCtrl 8001;
+            private _pos = ctrlPosition _clickCtrl; // [x, y, w, h]
+            private _minX = _pos select 0;
+            private _minY = _pos select 1;
+            private _maxX = _minX + (_pos select 2);
+            private _maxY = _minY + (_pos select 3);
+
+            // Stocker les limites dans missionNamespace pour l'EH de clic
+            player setVariable ["TAG_healPrompt_Bounds", [_minX, _maxX, _minY, _maxY]];
+            player setVariable ["TAG_healPrompt_IsActive", true];
+
+            // 4. Ajouter l'écouteur de clic de souris sur l'affichage de la carte
+            private _mapDisplay = findDisplay 12; // ID natif d'ArmA pour la carte principale
+            if (isNull _mapDisplay) exitWith {}; // Cas d'erreur
+
+            TAG_healPrompt_MouseEHId = _mapDisplay displayAddEventHandler ["MouseButtonDown", {
+                params ["_mapDisplay", "_button", "_mx", "_my"];
+                
+                // Uniquement le clic gauche (_button == 0) et si le prompt est actif
+                if (_button == 0 && {player getVariable ["TAG_healPrompt_IsActive", false]}) then {
+                    private _bounds = player getVariable ["TAG_healPrompt_Bounds", []];
+                    if (_bounds isEqualTo []) exitWith {};
+                    _bounds params ["_minX", "_maxX", "_minY", "_maxY"];
+
+                    // 5. Calculer si le clic souris est dans la zone cliquable
+                    if (_mx >= _minX && _mx <= _maxX && _my >= _minY && _my <= _maxY) then {
+                        // CLIC DÉTECTÉ ET VALIDE !
+                        openMap [false, false];	
+                        [[], 'GUI\respawnGUI\initPlayerRespawnMenu.sqf'] remoteExec ['BIS_fnc_execVM', player];
+
+                        //systemChat "[Soin] Soins complets appliqués !";
+
+                        // Désactiver et nettoyer
+                        player setVariable ["TAG_healPrompt_IsActive", false];
+                        ("TAG_RscHealPrompt" call BIS_fnc_rscLayer) cutFadeOut 0.1;
+                    };
+                };
+            }];
+        };
+    };
+
     waitUntil{!(visibleMap)};  
 
-    _selectedSpawn = [ selectedLoc, 10000] call spawnSelection_selectNearest;  
+    //Clean UI
+    if (_isFastTraver) then 
+    {
+        player setVariable ["TAG_healPrompt_IsActive", false];
+        ("TAG_RscHealPrompt" call BIS_fnc_rscLayer) cutFadeOut 0.1;
+    };
 
-    player setPos ([_selectedSpawn#2, 1, 30, 1, 0, 30, 0, [], [_selectedSpawn#2, _selectedSpawn#2]] call BIS_fnc_findSafePos);
+    _selectedSpawn = [selectedLoc, 10000] call spawnSelection_selectNearest;  
+
+    //Manage ASL Pos with tent
+    //systemChat format ["RPG_Marker_isASL%1", _selectedSpawn#0];
+    if (player getVariable [format ["RPG_Marker_isASL%1", _selectedSpawn#0], false]) then 
+    {
+        player setPosATL (_selectedSpawn#2);
+        //systemChat "setPosATL";
+    } else 
+    {
+        player setPos ([_selectedSpawn#2, 1, 30, 1, 0, 30, 0, [], [_selectedSpawn#2, _selectedSpawn#2]] call BIS_fnc_findSafePos);
+        //systemChat "setPos";
+    };
     
     [] call spawnSelection_cleanup;
 };

@@ -141,7 +141,7 @@ if (!ironMan) then
 		normalClose = true;
 
 		//open map GUI
-		[[], 'GUI\respawnGUI\respawnMapGUI.sqf'] remoteExec ['BIS_fnc_execVM', player];
+		[[false], 'GUI\respawnGUI\respawnMapGUI.sqf'] remoteExec ['BIS_fnc_execVM', player];
 
 		//Initialize player
 		[] call doInitializePlayer;

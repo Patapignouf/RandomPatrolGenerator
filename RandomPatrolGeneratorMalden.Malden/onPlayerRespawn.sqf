@@ -72,7 +72,21 @@ if (missionNameSpace getVariable ["enableSelfRespawnTimer", 0] == 0) then
 //Setup respawn GUI
 cutText ["", "BLACK FADED", 4];
 uiSleep 3;
-[[], 'GUI\respawnGUI\initPlayerRespawnMenu.sqf'] remoteExec ['BIS_fnc_execVM', player];
+
+
+if (missionNameSpace getVariable ["respawnOnOtherPlayers", 1] == 1) then 
+{
+	[[], 'GUI\respawnGUI\initPlayerRespawnMenu.sqf'] remoteExec ['BIS_fnc_execVM', player];
+} else 
+{
+	//Clear screen
+	cutText ["", "BLACK IN", 5];
+
+	//Open Map
+	[[false], 'GUI\respawnGUI\respawnMapGUI.sqf'] remoteExec ['BIS_fnc_execVM', player];
+};
+
+
 
 
 // Fix player damaged on respawn 
@@ -225,20 +239,68 @@ _KilledEH = player addEventHandler ["Killed", {
 				//Add dialog to punish the teamkiller
 				[[_instigator], {
 					params ["_instigator"]; 
-						sleep 10; 
-						private _resultAlone = [format ["Do you want to punish your killer %1 ?", name _instigator], "Yes", true, true] call BIS_fnc_guiMessage;
 
-						if (_resultAlone) then {
-							//systemChat "The player is sure.";
-							_instigator setDamage 1;
-							[[_instigator], {params ["_instigator"]; ["STR_RPG_HC_NAME", "STR_RPG_HC_PUNISH", name _instigator] call doDialog}] remoteExec ["spawn", side _instigator]; 
-							sleep 1;
-							["Initialize", [player, [playerSide] , true, false ]] call BIS_fnc_EGSpectator;
+						//Wait spectator mode
+						sleep 5;
+					
+						// 1. display GUI
+						("TAG_RscPunishPrompt" call BIS_fnc_rscLayer) cutRsc ["TAG_RscPunishPrompt", "PLAIN", 0, true];
+
+						[_instigator] spawn {
+							params ["_instigator"];
+							// 2. wait display to be available
+							private _titleDisplay = objNull;
+							waitUntil {
+								_titleDisplay = uiNamespace getVariable ["TAG_PunishPrompt_Display", objNull];
+								!isNull _titleDisplay
+							};
+
+							// 3. move display and adjust content
+							private _clickCtrl = _titleDisplay displayCtrl 9001;
+							private _pos = ctrlPosition _clickCtrl; // [x, y, w, h]
+							private _minX = _pos select 0;
+							private _minY = _pos select 1;
+							private _maxX = _minX + (_pos select 2);
+							private _maxY = _minY + (_pos select 3);
+
+							// store data on player
+							player setVariable ["TAG_punishPrompt_Bounds", [_minX, _maxX, _minY, _maxY]];
+							player setVariable ["TAG_punishPrompt_IsActive", true];
+							player setVariable ["TAG_punishTeamKiller", _instigator];
+							_clickCtrl ctrlSetStructuredText parseText format ["<a color='#ff0000' size='1'><t color='#ff0000'>Click here to punish %1</t></a>", name _instigator];
+
+							// 4. Add listener to spectator mode
+							private _mapDisplay = findDisplay 60492; // ID natif d'ArmA pour la carte principale
+
+							TAG_healPrompt_MouseEHId = _mapDisplay displayAddEventHandler ["MouseButtonDown", {
+								params ["_mapDisplay", "_button", "_mx", "_my"];
+								
+								// Listen left mouse button
+								if (_button == 0 && {player getVariable ["TAG_punishPrompt_IsActive", false]}) then {
+									private _bounds = player getVariable ["TAG_punishPrompt_Bounds", []];
+									if (_bounds isEqualTo []) exitWith {};
+									_bounds params ["_minX", "_maxX", "_minY", "_maxY"];
+
+									// 5. check if the player click on the display
+									if (_mx >= _minX && _mx <= _maxX && _my >= _minY && _my <= _maxY) then {
+										
+										_instigator = player getVariable "TAG_punishTeamKiller";
+										_instigator setDamage 1;
+										[[_instigator], {params ["_instigator"]; ["STR_RPG_HC_NAME", "STR_RPG_HC_PUNISH", name _instigator] call doDialog}] remoteExec ["spawn", side _instigator]; 
+
+										// clean
+										player setVariable ["TAG_punishPrompt_IsActive", false];
+										("TAG_RscPunishPrompt" call BIS_fnc_rscLayer) cutFadeOut 0.1;
+									};
+								};
+							}];
 							
-						} else {
-							//systemChat "The player is not sure.";
-							sleep 1;
-							["Initialize", [player, [playerSide] , true, false ]] call BIS_fnc_EGSpectator;
+							//wait display to vanish
+							sleep 10;
+							// clean 
+							player setVariable ["TAG_punishPrompt_IsActive", false];
+							("TAG_RscPunishPrompt" call BIS_fnc_rscLayer) cutFadeOut 0.1;
+
 						};
 					}
 				] remoteExec ["spawn", _unit]; 

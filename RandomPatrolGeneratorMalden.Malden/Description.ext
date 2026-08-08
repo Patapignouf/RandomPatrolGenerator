@@ -5,6 +5,7 @@
 #include "GUI\setupGUI\missionSetupLocation.hpp"
 #include "GUI\loadoutGUI\playerLoadoutSetup.hpp"
 #include "GUI\respawnGUI\playerRespawnMenu.hpp"
+#include "GUI\respawnGUI\RespawnOpenMenu.hpp"
 #include "GUI\dialogGUI\dialogCivilian.hpp"
 #include "GUI\vehicleSpawnerGUI\vehicleSpawner.hpp"
 #include "GUI\supportGUI\supportGUI.hpp"
