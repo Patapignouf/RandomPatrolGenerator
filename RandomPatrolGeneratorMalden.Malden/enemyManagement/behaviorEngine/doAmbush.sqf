@@ -1,5 +1,5 @@
 //Init params
-params ["_thisAvailablePosition","_thisTargetPosition","_thisAvailableInfantryGroups","_thisAvailableVehicleGroups","_thisDifficulty"];
+params ["_thisAvailablePosition","_thisTargetPosition","_thisAvailableInfantryGroups","_thisAvailableVehicleGroups","_thisDifficulty", ["_vehicleProb", 0.5]];
 
 //Ex : [AvalaibleInitAttackPositions, initCityLocation,[baseEnemyGroup,baseEnemyATGroup],baseEnemyVehicleGroup, missionDifficultyParam] execVM 'enemyManagement\behaviorEngine\doAmbush.sqf'; 
 
@@ -9,7 +9,7 @@ currentPosition = [];
 if (isServer) then
 {
 	_numberOfVehicleSpawned = 0;
-	_waveHaveVehicle = random 100 > 50;
+	_waveHaveVehicle = random 1 > _vehicleProb;
 	diag_log format ["Avalaible spawn position %1", _thisAvailablePosition ];
 	for [{_k = 0}, {_k < (count _thisAvailablePosition)}, {_k = _k + 1}] do 
 	{

@@ -64,9 +64,9 @@ for [{_waveCount = 0}, {_waveCount < _numberOfWaves}, {_waveCount = _waveCount +
 	//Check if players have lost previous wave
 	if (!_defendFailed) then 
 	{
-		[getPos _thisTrigger, missionDifficultyParamModified, baseEnemyVehicleGroup, baseEnemyLightArmoredVehicleGroup, baseEnemyHeavyArmoredVehicleGroup, baseEnemyGroup, baseEnemyATGroup, baseEnemyDemoGroup, _waveCount, _timeOfWaves] spawn 
+		[getPos _thisTrigger, missionDifficultyParamModified, baseEnemyVehicleGroup, baseEnemyLightArmoredVehicleGroup, baseEnemyHeavyArmoredVehicleGroup, baseEnemyGroup, baseEnemyATGroup, baseEnemyDemoGroup, _waveCount, _timeOfWaves, _numberOfWaves] spawn 
 		{
-			params ["_triggerPos", "_missionDifficultyParam", "_baseEnemyVehicleGroup", "_baseEnemyLightArmoredVehicleGroup", "_baseEnemyHeavyArmoredVehicleGroup", "_baseEnemyGroup", "_baseEnemyATGroup", "_baseEnemyDemoGroup", "_waveCountInt", "_timeOfWaves"];
+			params ["_triggerPos", "_missionDifficultyParam", "_baseEnemyVehicleGroup", "_baseEnemyLightArmoredVehicleGroup", "_baseEnemyHeavyArmoredVehicleGroup", "_baseEnemyGroup", "_baseEnemyATGroup", "_baseEnemyDemoGroup", "_waveCountInt", "_timeOfWaves", "_numberOfWaves"];
 
 			//Announce wave number
 			if (missionNameSpace getVariable ["defenseAnnounceWaves", 0] == 1 && _waveCountInt != 0) then 
@@ -94,7 +94,7 @@ for [{_waveCount = 0}, {_waveCount < _numberOfWaves}, {_waveCount = _waveCount +
 			//Generate enemy attack wave
 			AvalaibleInitAttackPositions = [];
 			AvalaibleInitAttackPositions = [_triggerPos, 550, 800, _missionDifficultyParam+1] call getListOfPositionsAroundTarget;
-			[AvalaibleInitAttackPositions, _triggerPos, [_baseEnemyGroup,_baseEnemyATGroup, _baseEnemyDemoGroup], _baseSelectedVehicle, _missionDifficultyParam] execVM 'enemyManagement\behaviorEngine\doAmbush.sqf'; 
+			[AvalaibleInitAttackPositions, _triggerPos, [_baseEnemyGroup,_baseEnemyATGroup, _baseEnemyDemoGroup], _baseSelectedVehicle, _missionDifficultyParam, (_waveCountInt+1)/_numberOfWaves] execVM 'enemyManagement\behaviorEngine\doAmbush.sqf'; 
 		};
 	
 		//Wait an additional minute without enemies coming
@@ -141,7 +141,7 @@ for [{_waveCount = 0}, {_waveCount < _numberOfWaves}, {_waveCount = _waveCount +
 			//Increase waves difficulty between each waves
 			if ((missionNameSpace getVariable ["defenseIncreaseDifficulty", 1]) == 1) then 
 			{
-				missionDifficultyParamModified = missionDifficultyParamModified + 1;
+				missionDifficultyParamModified = missionDifficultyParamModified + floor ((_waveCount+1)/2);
 			};
 		};
 	};
