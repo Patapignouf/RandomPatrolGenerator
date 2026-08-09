@@ -9,7 +9,8 @@ if (missionNameSpace getVariable ["enableAdvancedRespawn", 1] == 1) then
 		"\a3\ui_f_oldman\data\IGUI\Cfg\holdactions\holdAction_sleep2_ca.paa",
 		"\a3\ui_f_oldman\data\IGUI\Cfg\holdactions\holdAction_sleep2_ca.paa",
 		"
-			(_this == leader group _this)
+			((_this == leader group _this)||(_this getVariable 'role' == 'leader'))
+
 			&&
 			(vehicle _this == _this)
 		    &&
