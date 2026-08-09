@@ -192,7 +192,7 @@ respawnOnOtherPlayersParam =
 		[1, "Enable"]
 	],
 	"Enable respawn on other players",
-	1,
+	0,
 	"respawnOnOtherPlayers"
 ];
 
