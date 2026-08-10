@@ -143,6 +143,20 @@ for [{_waveCount = 0}, {_waveCount < _numberOfWaves}, {_waveCount = _waveCount +
 			{
 				missionDifficultyParamModified = missionDifficultyParamModified + floor ((_waveCount+1)/2);
 			};
+
+
+			//Add respawn between waves
+			if ((missionNameSpace getVariable ["defenseRespawnBetweenWave", 1]) == 1) then 
+			{
+				[[], "engine\respawnManagement\respawnManager.sqf"] remoteExec ['BIS_fnc_execVM', 0];
+			};
+
+
+			//Give reward between waves
+			if ((missionNameSpace getVariable ["defenseRewardBetweenWave", 1]) == 1) then 
+			{
+				[] call shopRelatedReward;
+			};
 		};
 	};
 };
