@@ -22,7 +22,11 @@ if ((isClass (configFile >> "CfgPatches" >> "IFA3_Core")) && isClass (configFile
 ////////////////////////
 //WWII_USA
 bluforUnarmedVehicle_WWII_PANY = [
-	"JMSSA_veh_citroen11cv_fra40_F"
+	"JMSSA_veh_citroen11cv_fra40_F",
+	"JMSSA_veh_BSA_m20_F",
+	"JMSSA_veh_willys_tent_des_F",
+	"JMSSA_veh_bedfordMW_F_des",
+	"JMSSA_veh_matador_des_F"
 ];
 
 bluforArmedVehicle_WWII_PANY = [
@@ -128,6 +132,7 @@ itemList_WWII_PANY = [
 	"ItemCompass",
 	"ItemWatch",
 	"JMSSA_w_bino_No2Mk2_strap",
+	"JMSSA_w_bino_No2Mk2",
 	"ACE_MapTools",
 	"ACE_CableTie",
 	"ACE_Canteen",
@@ -165,14 +170,23 @@ itemMedicList_WWII_PANY = [
 backPackList_WWII_PANY = [
 	//Medium bags
 	"JMSSA_fra_m1893_b",
-	
+	//Special bags
+	"B_LIB_US_Radio",
+	"JMSSA_B_back_p37_2inchAB_desert_F",
 	//Parachute
 	"B_LIB_US_Type5",
 	"B_LIB_US_TypeA3"
 ];
 
 uniformList_WWII_PANY = [
+	//Head
+	"G_JMSSA_fra_des_googles",
+	"G_JMSSA_CIV_CigaretteR",
+	"G_JMSSA_CIV_CigaretteL"
 
+	//Vest 
+
+	//Uniform 
 ];
 
 magazineList_WWII_PANY = [
