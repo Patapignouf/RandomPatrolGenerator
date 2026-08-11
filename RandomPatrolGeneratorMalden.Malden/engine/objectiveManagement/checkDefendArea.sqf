@@ -155,7 +155,12 @@ for [{_waveCount = 0}, {_waveCount < _numberOfWaves}, {_waveCount = _waveCount +
 			//Give reward between waves
 			if ((missionNameSpace getVariable ["defenseRewardBetweenWave", 1]) == 1) then 
 			{
-				[] call shopRelatedReward;
+				//Give reward to alive players
+				[[], 
+				{
+					[] call shopRelatedReward;
+				}
+				] remoteExec ["spawn", allPlayers select {alive _x}]; 
 			};
 		};
 	};
