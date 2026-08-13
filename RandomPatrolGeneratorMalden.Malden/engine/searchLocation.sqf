@@ -10,7 +10,15 @@ getRandomCenterLocations =
 {
 	_size = worldSize;
 	_worldCenter = (_size/2);
-	_LocList = nearestLocations [[_worldCenter, _worldCenter], ["NameLocal","NameVillage","NameCity","NameCityCapital","CityCenter","Area", "Airport", "Name", "SafetyZone", "StrongpointArea", "Hill"], _size];
+	_locationType = ["NameLocal","NameVillage","NameCity","NameCityCapital","CityCenter", "Airport", "Name", "SafetyZone", "StrongpointArea"];
+	_smallType = ["Hill", "Area"];
+
+	if (missionNameSpace getVariable ["allowSmallLocations", 0] == 1) then 
+	{
+		_locationType = _locationType + _smallType;
+	};
+
+	_LocList = nearestLocations [[_worldCenter, _worldCenter], _locationType, _size];
 
 	//Purge noname locations
 	{
@@ -22,6 +30,37 @@ getRandomCenterLocations =
 
 	_LocList
 };
+
+
+getAllBigLocationsWithBuildings = {
+	_tempAllLocations = [] call getRandomCenterLocations;
+
+	//Clear location without building
+	{
+		//Select smallest location (mountain, forest, plains)
+		if (type _x == "NameLocal" || type _x == "Hill" ) then 
+		{
+			//Check if there is building near the location
+			if (count ((nearestTerrainObjects [locationPosition _x, ["house", "FORTRESS", "BUNKER"], 150, false, true])) == 0) then 
+			{
+				//Remove the location
+				_tempAllLocations = _tempAllLocations - [_x];
+			} else 
+			{
+				//Debug mode to view found location
+				// _name = text _x;
+				// _pos = getPos _x;
+				// createMarkerLocal [_name, _pos];
+				// _name setMarkerTypeLocal  "selector_selectedMission";
+				// _name setMarkerTextLocal  _name;
+				//_name setMarkerColorLocal _color;
+			};
+		};
+	} foreach _tempAllLocations;
+	_tempAllLocations
+};
+
+
 
 getLocationsAround = 
 {
