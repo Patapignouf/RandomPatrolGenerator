@@ -825,6 +825,51 @@ switch (missionNameSpace getVariable "playerMarkerAllowed") do
 
 missionNameSpace setVariable ["missionSetupMessage", "STR_RPG_SETUP_OPF", true];
 
+//Generate ambient enemy positions
+if (missionNameSpace getVariable ["addAmbientOpforLoc", 1] == 1) then 
+{
+	_allLoc = [] call getAllBigLocationsWithBuildings;
+	if (count _allLoc != 0) then 
+	{
+		{
+			//50% chance spawn
+			if (random 100 < 50) then 
+			{
+				_currentLocPos = getPos _x;
+				_locName = text _x;
+				
+				if ((initBlueforLocation distance _currentLocPos > 1000) && (initCityLocation distance _currentLocPos > 1000)) then 
+				{
+					_trgLocation = createTrigger ["EmptyDetector", _currentLocPos];
+					_trgLocation setTriggerArea [1000, 1000, 0, true];
+					_trgLocation setTriggerActivation ["WEST", "PRESENT", true];
+					_trgLocation setTriggerStatements [
+						"this",
+						'
+							//Create enemy units
+							_currentRandomGroup = selectRandom EnemyWaveLevel_6;
+							_currentGroup = [_currentRandomGroup, getPos thisTrigger, east, "DefenseInfantry"] call doGenerateEnemyGroup;
+
+							//Spawn group
+							[_currentGroup, getPos (leader _currentGroup), 200, false] call doGarrison;
+							
+							deleteVehicle thisTrigger;
+						',
+						"" //Maybe add clean code here
+					];
+
+					// _name = text _x;
+					// _pos = getPos _x;
+					// createMarkerLocal [_name, _pos];
+					// _name setMarkerTypeLocal  "selector_selectedMission";
+					// _name setMarkerTextLocal  _name;
+				};
+			};
+		} foreach _allLoc;
+	};
+};
+
+//Generate patrol 
 [EnemyWaveLevel_1, possiblePOILocation, missionDifficultyParam] execVM 'enemyManagement\generationEngine\generatePatrol.sqf'; 
 
 //Generate Wave
