@@ -135,9 +135,6 @@ for [{_waveCount = 0}, {_waveCount < _numberOfWaves}, {_waveCount = _waveCount +
 		//Check if it's loose for defending players
 		if (!_defendFailed) then 
 		{
-			//Wait time between waves
-			sleep (_timeOfWaves);
-
 			//Increase waves difficulty between each waves
 			if ((missionNameSpace getVariable ["defenseIncreaseDifficulty", 1]) == 1) then 
 			{
@@ -162,6 +159,9 @@ for [{_waveCount = 0}, {_waveCount < _numberOfWaves}, {_waveCount = _waveCount +
 				}
 				] remoteExec ["spawn", allPlayers select {alive _x}]; 
 			};
+
+			//Wait time between waves
+			sleep (_timeOfWaves);
 		};
 	};
 };
