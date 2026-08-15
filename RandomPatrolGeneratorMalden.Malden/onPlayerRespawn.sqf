@@ -335,6 +335,17 @@ if (missionNameSpace getVariable ["enableSoloCrewTank", 1] == 1) then
 					
 					// Keep ai variable in the vehicle to allow cleaning
 					_vehicle setVariable ["my_solo_ai_gunner", _aiGunner, true];
+
+
+					// Clean AI if it leave the vehicle
+					_aiGunner addEventHandler ["GetOutMan", {
+						params ["_unit", "_role", "_vehicle", "_turret"];
+
+						//Clean AI
+						if (!isNull _unit) then {
+							deleteVehicle _unit; // Delete AI
+						};
+					}];
 				};
 
 				// 2. Give control to gunner
