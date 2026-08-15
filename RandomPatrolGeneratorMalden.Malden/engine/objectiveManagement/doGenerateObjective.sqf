@@ -548,7 +548,7 @@ generateObjectiveObject =
 				//Clear weapon
 				clearWeaponCargoGlobal _objectiveObject;
 
-				_objectiveObject setPos ([( _thisObjectivePosition), 1, 25, 5, 0, 20, 0] call BIS_fnc_findSafePos);
+				_objectiveObject setPos ([( _thisObjectivePosition), 1, 60, 5, 0, 20, 0,[], [[[[[_thisObjectivePosition, 100]], []] call BIS_fnc_randomPos], [[[[_thisObjectivePosition, 100]], []] call BIS_fnc_randomPos]]] call BIS_fnc_findSafePos);
 				_objectiveObject setVariable ["thisTask", _thisObjective select 2, true];
 
 				//Manage objective completion
