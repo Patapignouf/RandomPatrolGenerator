@@ -47,7 +47,7 @@ bluforDrone_WWII_PANY = [
 ];
 
 bluforBoat_WWII_PANY = [
-
+	"LIB_LCA"
 ];
 
 bluforFixedWing_WWII_PANY = [
