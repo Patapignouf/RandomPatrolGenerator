@@ -5,8 +5,8 @@ avalaibleAmmoBox = [
 	"Box_NATO_AmmoOrd_F",  
 	"Box_NATO_WpsLaunch_F", 
 	"Box_IND_Support_F",
-	"B_A_CargoNet_01_ammo_tropic_F",
-	"Box_T_CSAT_Equip_F",
+	//"B_A_CargoNet_01_ammo_tropic_F",
+	//"Box_T_CSAT_Equip_F",
 	"Box_GEN_Equip_F"
 ];
 

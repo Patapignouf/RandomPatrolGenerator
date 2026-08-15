@@ -494,7 +494,7 @@ generateObjectiveObject =
 	};
 
 	//Define random pos for objective generation
-	_currentRandomPos = [] call BIS_fnc_randomPos;
+	_currentRandomPos = [nil, ["water"]] call BIS_fnc_randomPos;
 
 	switch (_thisObjectiveType) do
 	{
@@ -541,14 +541,26 @@ generateObjectiveObject =
 		case "ammo":
 			{
 				//Generate objective object
-				_objectiveObject = createVehicle [selectRandom avalaibleAmmoBox, _currentRandomPos, [], 0, "NONE"];
+				//Try to get better position
+				_bestPosition = [( _thisObjectivePosition), 1, 60, 5, 0, 20, 0,[], [[[[[_thisObjectivePosition, 150]], ["water"]] call BIS_fnc_randomPos], [[[[_thisObjectivePosition, 150]], ["water"]] call BIS_fnc_randomPos]]] call BIS_fnc_findSafePos;
+				
+				if (1 < (count _bestPosition)) then 
+				{
+					_currentRandomPos = _bestPosition;
+				} else 
+				{
+					_currentRandomPos = _thisObjectivePosition;
+				};
+				
+				_ammoBox = selectRandom avalaibleAmmoBox;
+				_objectiveObject = createVehicle [_ammoBox, _bestPosition, [], 0, "NONE"];
+
 				_objectiveObject setVariable ["isObjectiveObject", true, true];
 				_thisObjective = [_objectiveObject, _thisObjectiveType] call generateObjectiveTracker;
 
 				//Clear weapon
 				clearWeaponCargoGlobal _objectiveObject;
 
-				_objectiveObject setPos ([( _thisObjectivePosition), 1, 60, 5, 0, 20, 0,[], [[[[[_thisObjectivePosition, 100]], []] call BIS_fnc_randomPos], [[[[_thisObjectivePosition, 100]], []] call BIS_fnc_randomPos]]] call BIS_fnc_findSafePos);
 				_objectiveObject setVariable ["thisTask", _thisObjective select 2, true];
 
 				//Manage objective completion
