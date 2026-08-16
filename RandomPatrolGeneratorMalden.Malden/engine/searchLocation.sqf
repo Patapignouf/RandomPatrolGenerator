@@ -41,7 +41,7 @@ getAllBigLocationsWithBuildings = {
 		if (type _x == "NameLocal" || type _x == "Hill" ) then 
 		{
 			//Check if there is building near the location
-			if (count ((nearestTerrainObjects [locationPosition _x, ["house", "FORTRESS", "BUNKER"], 150, false, true])) == 0) then 
+			if (count ((nearestTerrainObjects [locationPosition _x, ["house", "FORTRESS", "BUNKER", "BUILDING"], 150, false, true])) == 0) then 
 			{
 				//Remove the location
 				_tempAllLocations = _tempAllLocations - [_x];
@@ -53,7 +53,7 @@ getAllBigLocationsWithBuildings = {
 				// createMarkerLocal [_name, _pos];
 				// _name setMarkerTypeLocal  "selector_selectedMission";
 				// _name setMarkerTextLocal  _name;
-				//_name setMarkerColorLocal _color;
+				// //_name setMarkerColorLocal _color;
 			};
 		};
 	} foreach _tempAllLocations;
