@@ -852,7 +852,54 @@ if (missionNameSpace getVariable ["addAmbientOpforLoc", 1] == 1) then
 
 							//Spawn group
 							[_currentGroup, getPos (leader _currentGroup), 200, false] call doGarrison;
-							
+
+							//Create supply 
+							_tempPosition = [getPos thisTrigger, 200] call BIS_fnc_nearestRoad;
+							if (!(isNull _tempPosition)) then 
+							{
+								_boxObject = createVehicle ["Land_PaperBox_open_full_F", _tempPosition, [], 0, "NONE"];
+
+								clearWeaponCargoGlobal _boxObject;
+								clearMagazineCargoGlobal _boxObject;
+								clearItemCargoGlobal _boxObject;
+								clearBackpackCargoGlobal _boxObject;
+
+								//Add action to steal supply and give 500 credits to players
+								[
+									_boxObject, 
+									localize "STR_STEAL_SUPPLY", 
+									"\a3\data_f_destroyer\data\UI\IGUI\Cfg\holdactions\holdAction_unloadVehicle_ca.paa", 
+									"\a3\data_f_destroyer\data\UI\IGUI\Cfg\holdactions\holdAction_unloadVehicle_ca.paa", 
+									"(_this distance _target < 3)",
+									"true", 
+									{
+										// Action start code
+										params ["_target", "_caller", "_actionId", "_arguments"];
+										_caller playMoveNow "AinvPknlMstpSnonWnonDnon_medic_1";
+									}, 
+									{
+										// Action on going code
+									},  
+									{
+										// Action successfull code
+										params ["_object","_caller","_ID","_param"];
+
+										[500] call doIncrementVehicleSpawnCounter;
+
+										deleteVehicle _object;
+									}, 
+									{
+										// Action failed code
+									}, 
+									[],  
+									5,
+									1000, 
+									false,
+									false
+								] remoteExec ["BIS_fnc_holdActionAdd", 0, true];
+
+							};
+
 							deleteVehicle thisTrigger;
 						',
 						"" //Maybe add clean code here

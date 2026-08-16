@@ -2340,6 +2340,17 @@
         <Chinese>快速旅行</Chinese>
         <Japanese>ファストトラベル</Japanese>
     </Key>
+    <Key ID="STR_ACTIONS_UNLOCK_STUFF">
+        <Original>Unlock stored OPFOR items</Original>
+        <English>Unlock stored OPFOR items</English>
+        <French>Débloquer les objets OPFOR stockés</French>
+        <Spanish>Desbloquear objetos de OPFOR almacenados</Spanish>
+        <German>Gespeicherte OPFOR-Gegenstände freischalten</German>
+        <Italian>Sblocca gli oggetti OPFOR depositati</Italian>
+        <Russian>Разблокировать сохраненные предметы OPFOR</Russian>
+        <Chinese>解锁存储的红方物品</Chinese>
+        <Japanese>保管された敵軍（OPFOR）アイテムを解放する</Japanese>
+    </Key>
     <Key ID="STR_ACTIONS_OPEN_VEHICLE_SHOP">
         <Original>Open vehicle shop</Original>
         <English>Open vehicle shop</English>
@@ -2416,6 +2427,17 @@
         <Russian>Присоединиться к PataCompany</Russian>
         <Chinese>加入 PataCompany</Chinese>
         <Japanese>PataCompany に参加する</Japanese>
+    </Key>
+    <Key ID="STR_STEAL_SUPPLY">
+        <Original>Steal supplies (500 credits)</Original>
+        <English>Steal supplies (500 credits)</English>
+        <French>Voler les ravitaillements (500 crédits)</French>
+        <Spanish>Robar suministros (500 créditos)</Spanish>
+        <German>Vorräte stehlen (500 Credits)</German>
+        <Italian>Ruba i rifornimenti (500 crediti)</Italian>
+        <Russian>Украсть припасы (500 кредитов)</Russian>
+        <Chinese>偷取物资（500信用点）</Chinese>
+        <Japanese>物資を奪う（500クレジット）</Japanese>
     </Key>
     </Container>
     <Container name="RPG_SUPPORT_MENU">

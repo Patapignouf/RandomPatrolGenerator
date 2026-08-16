@@ -685,7 +685,7 @@ addAmbientOpforLocParam =
 		[1, "Enable"]
 	],
 	"Populate cities with opfor",
-	0,
+	1,
 	"addAmbientOpforLoc"
 ];
 
