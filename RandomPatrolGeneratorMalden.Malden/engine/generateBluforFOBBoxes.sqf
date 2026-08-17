@@ -20,7 +20,7 @@ clearBackpackCargoGlobal VA2;
 VA2 allowDamage false; 
 //VA2 enableSimulationGlobal false;
 publicvariable "VA2";
-VA2 enableSimulationGlobal false;
+VA2 enableSimulationGlobal true;
 
 [["STR_RPG_3D_LOADOUT", (getPos VA2) vectorAdd [0,0,2],"\a3\ui_f\data\igui\cfg\simpletasks\types\rifle_ca.paa" , [1,1,0,1]], 'GUI\3DNames\3DNames.sqf'] remoteExec ['BIS_fnc_execVM', blufor, true];
 
