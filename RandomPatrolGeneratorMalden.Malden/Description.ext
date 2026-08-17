@@ -39,6 +39,28 @@ class Header
 	maxPlayers = 20;	// maximum number of players the mission supports
 };
 
+class CfgNotifications
+{
+        class scorePos
+        {
+                title = "%1";
+                iconText = "%2";
+                description = "%3";
+                priority = 3;
+                color[] = {0.2,1,0.2,1};
+        };
+        class scoreNeg
+        {
+                title = "%1";
+                iconText = "%2";
+                description = "%3";
+                priority = 3;
+                color[] = {1,0.2,0.2,1};
+        };
+};
+ 
+
+
 class CfgFunctions
 {
 	#include "cfgFunctions.h"

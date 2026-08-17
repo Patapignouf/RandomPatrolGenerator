@@ -198,18 +198,20 @@ doGenerateVehicleForFOB =
 
 doIncrementVehicleSpawnCounter =
 {
+	params [["_income", 1000]];
+
 	//Increment spawn credit counter Vehicle
 	bluforVehicleAvalaibleSpawnCounter = missionNamespace getVariable "bluforVehicleAvalaibleSpawn";
-	bluforVehicleAvalaibleSpawnCounter = bluforVehicleAvalaibleSpawnCounter + 1000;
+	bluforVehicleAvalaibleSpawnCounter = bluforVehicleAvalaibleSpawnCounter + _income;
 	missionNamespace setVariable ["bluforVehicleAvalaibleSpawn", bluforVehicleAvalaibleSpawnCounter, true];
 
 	independentVehicleAvalaibleSpawnCounter = missionNamespace getVariable "independentVehicleAvalaibleSpawn";
-	independentVehicleAvalaibleSpawnCounter = independentVehicleAvalaibleSpawnCounter + 1000;
+	independentVehicleAvalaibleSpawnCounter = independentVehicleAvalaibleSpawnCounter + _income;
 	missionNamespace setVariable ["independentVehicleAvalaibleSpawn", independentVehicleAvalaibleSpawnCounter, true];
 
-	//Show the counter to blufor
-	[[format ["Standard vehicle spawn credits : %1", bluforVehicleAvalaibleSpawnCounter], "intel"], 'engine\hintManagement\addCustomHint.sqf'] remoteExec ['BIS_fnc_execVM', blufor, true]; 
-	[[format ["Standard vehicle spawn credits : %1", independentVehicleAvalaibleSpawnCounter], "intel"], 'engine\hintManagement\addCustomHint.sqf'] remoteExec ['BIS_fnc_execVM', independent, true]; 
+	//Show the counter to blufor and independent
+	["scorePos",["Credits earned",format ["+%1", _income] , format ["Total credits : %1", bluforVehicleAvalaibleSpawnCounter]]] remoteExec ['bis_fnc_showNotification', blufor, true]; 
+	["scorePos",["Credits earned",format ["+%1", _income] , format ["Total credits : %1", independentVehicleAvalaibleSpawnCounter]]] remoteExec ['bis_fnc_showNotification', independent, true]; 
 };
 
 doIncrementAllCredits =

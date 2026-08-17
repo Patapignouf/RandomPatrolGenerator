@@ -227,6 +227,8 @@ if (_isModeSell) then
 				_unblockCredit = profileNameSpace getVariable ["RPG_UnlockCredit",0];
 				profileNameSpace setVariable ["RPG_UnlockCredit",_unblockCredit+1];
 
+				["scorePos",["Token earned","+1",format ["Total tokens : %1", _unblockCredit+1]]] call bis_fnc_showNotification;
+
 				//Update credit display
 				_vehicleShopTitle ctrlSetText (format ["%2 | Unlock Token %1", [] call getUnlockCredit, localize "RPG_GUI_GENERAL_UNLOCK"]);
 			};
