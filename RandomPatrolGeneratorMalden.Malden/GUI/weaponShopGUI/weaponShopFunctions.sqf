@@ -115,7 +115,7 @@ addUnlockedWeapon = {
 	} else 
 	{
 		_freshWeaponCategory = [_weapon, _weaponCategory, baseWeaponCategory] call addWeaponToCategory;
-		_currentWeapons pushBack [_currentFaction, _freshWeaponCategory];
+		_currentWeapons pushBackUnique [_currentFaction, _freshWeaponCategory];
 	};
 
 	[_currentWeapons] call saveAllUnlockedWeapons;
@@ -327,6 +327,8 @@ shopRelatedReward = {
 			//Get current token number
 			_unblockCredit = profileNameSpace getVariable ["RPG_UnlockCredit",0];
 			profileNameSpace setVariable ["RPG_UnlockCredit",_unblockCredit+1];
+
+			["scorePos",["Token","+1","Reward"]] call bis_fnc_showNotification;
 			
 			//systemChat "Increase token"; //Debug only
 		};
