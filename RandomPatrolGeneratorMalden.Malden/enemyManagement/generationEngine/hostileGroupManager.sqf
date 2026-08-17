@@ -5,7 +5,7 @@ generateOpforInBiggestBuildings = {
 
 
 	//Find the biggest building
-	_allBuildings = (nearestTerrainObjects [_center, ["house", "FORTRESS", "BUNKER"], _maxRangeFromCenter, false, true]);
+	_allBuildings = (nearestTerrainObjects [_center, ["house", "FORTRESS", "BUNKER", "BUILDING"], _maxRangeFromCenter, false, true]);
 
 	if (count _allBuildings > 0) then 
 	{
