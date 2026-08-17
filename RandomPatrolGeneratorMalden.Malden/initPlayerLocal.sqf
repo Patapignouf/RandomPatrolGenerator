@@ -405,8 +405,12 @@ diag_log format ["Setup Player %1 at position 1", name player];
 player createDiarySubject ["RPG", "RPG"];
 _diaryIntel = player createDiaryRecord ["RPG", ["RPG intel", "You can see here all intels collected : <br/>"]];
 player setVariable ["diaryIntel", _diaryIntel];
-player createDiaryRecord ["RPG", ["RPG respawn", "There are two ways to respawn on Random Patrol Generator missions :<br/>- First, when a mission is completed<br/>- Secondly, when players call a reinforcement on support Shop<br/><br/><br/>Note : Respawn setting has to be enabled"]];
-player createDiaryRecord ["RPG", ["RPG arsenal", "A limited arsenal is avalaible on your start position, it will allow you to switch between roles."]];
+player createDiaryRecord ["RPG", ["RPG respawn",localize "STR_DIARY_RESPAWN"]];
+player createDiaryRecord ["RPG", ["RPG arsenal",localize "STR_DIARY_ARSENAL"]];
+player createDiaryRecord ["RPG", ["RPG experience",localize "STR_DIARY_EXPERIENCE"]];
+player createDiaryRecord ["RPG", ["RPG side tasks",localize "STR_DIARY_SIDE_TASK"]];
+player createDiaryRecord ["RPG", ["RPG tokens",localize "STR_DIARY_TOKENS"]];
+
 
 if (side player == independent) then 
 {
@@ -467,10 +471,9 @@ if (side player == independent) then
 if (side player == blufor) then
 {
 	//Setup briefing blufor
-	player createDiaryRecord ["RPG", ["RPG objectives", "Help the independent or civilian location. Complete the tasks assigned to your unit to finish the mission.
-	"]];
-	player createDiaryRecord ["RPG", ["RPG FOB", "You can deploy an advanced FOB avalaible in a supply box near main FOB :<br/>- It can be used to skip time<br/>- It can be used to access support shop"]];
-	player createDiaryRecord ["RPG", ["RPG vehicles", "You can use the Vehicle Shop on the main FOB to spawn vehicules. Each vehicle spawned use one specific credit.<br/>Complete a mission to earn credits.<br/><br/> Note : Only the team leader and pilot can spawn vehicles."]];
+	player createDiaryRecord ["RPG", ["RPG objectives", localize "STR_DIARY_OBJECTIVE"]];
+	player createDiaryRecord ["RPG", ["RPG FOB", localize "STR_DIARY_FOB"]];
+	player createDiaryRecord ["RPG", ["RPG vehicles", localize "STR_DIARY_VEHICLE"]];
 	
 	diag_log format ["Setup Player %1 at position 2", name player];
 
@@ -574,7 +577,78 @@ if (side player == blufor) then
 		[VA2] call setupPlayerLoadout;	
 	} else 
 	{
-		[VA2] call setupPlayerLoadoutRemake;	
+		[VA2] call setupPlayerLoadoutRemake;
+
+		//Add an action to unlock all content
+		VA2 setMaxLoad 5000; //Increase max load
+		VA2 addAction [format ["<img size='2' image='\a3\Missions_F_Orange\Data\Img\Showcase_LawsOfWar\action_access_fm_CA.paa'/><t size='1'>%1</t>", localize "STR_ACTIONS_UNLOCK_STUFF"],{
+				//Define parameters
+				params ["_object","_caller","_ID","_avalaibleVehicle"];
+
+				_playerNearby = allPlayers select {(_x distance _caller)<30};
+
+				//Unlock for every player at less than 30 meters
+				[[_object, _caller], 
+				{
+					params ["_object", "_caller"];
+					//Get Opfor weapon
+					_opFactionWeapon = [missionNamespace getVariable "opforFaction"] call getOpforWeaponCategory;
+
+					//Get player faction
+					_currentFaction = indFaction;
+					if (side _caller == blufor) then 
+					{
+						_currentFaction = bluFaction;
+					};
+
+					_opFactionWeapon = [_opFactionWeapon, _currentFaction] call prepareShopList;
+
+					//Check if there are items inside
+					_listOfItemInsideMess = (weaponsItemsCargo _object);
+					_listOfItemInside = _listOfItemInsideMess apply {_x#0};
+					//systemChat format ["((getItemCargo _object) : %1", _listOfItemInside];
+
+					if (count _listOfItemInside != 0) then
+					{
+						//Unlock every item in the box
+						{
+							_className = _x;
+
+							_currentItemCheck = _opFactionWeapon select {_className == _x#1};
+							
+							if (count _currentItemCheck != 0) then 
+							{
+								//Unlock item
+								_itemCategory = _currentItemCheck#0#0;
+								[_className, _itemCategory, _currentFaction] call addUnlockedWeapon;
+								[_className, _currentFaction] call displayReward;
+							} else 
+							{
+								_itemName = getText (configFile >> "CfgWeapons" >> _className >> "displayName");
+								systemChat format ["%1 cannot be unlocked", _itemName];
+							};
+
+						} foreach _listOfItemInside;
+					} else 
+					{
+						systemChat "Nothing to unlock in the box";
+					};
+				}] remoteExec ["spawn", _playerNearby]; 
+
+				//Clean box 
+				[_object] spawn 
+				{
+					params ["_object"];
+
+					sleep 10;
+
+					clearWeaponCargoGlobal _object;
+					clearMagazineCargoGlobal _object;
+					clearItemCargoGlobal _object;
+					clearBackpackCargoGlobal _object;
+				};
+				
+		},_x,5,true,false,"","_target distance _this <5"]; 	
 	};
 
 	[] spawn {
