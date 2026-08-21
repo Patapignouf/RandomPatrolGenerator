@@ -346,7 +346,7 @@ spawnVehicleOnAicraft = {
 	//Add custom plane catapult on WWII planes because of heavy bugs on USS Freedom
 	if (_objectToSpawn isKindOf "Plane") then 
 	{
-		if (_warEra == 0) then 
+		if (warEra == 0) then 
 		{
 			[_objectToSpawn, [format ["<img size='2' image='\a3\data_f_destroyer\data\UI\IGUI\Cfg\holdactions\holdAction_unloadVehicle_ca.paa'/><t size='1'>Catapult the plane</t>"],{
 				//Define parameters
