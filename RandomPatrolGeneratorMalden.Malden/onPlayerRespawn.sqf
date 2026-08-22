@@ -35,6 +35,8 @@ player setVariable ["canRTB", false, true];
 	player setVariable ["canRTB", true, true];
 };
 
+//Remove respawn timer hint
+hint "";
 
 //Respawn on start position by default
 //Protect player for 30 sec on spawn
