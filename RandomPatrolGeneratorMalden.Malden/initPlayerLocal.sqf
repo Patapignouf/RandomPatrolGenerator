@@ -525,11 +525,18 @@ if (side player == blufor) then
 					params ["_USSCarrier","_spawnPos"];
 					_handleScirpt = _USSCarrier call BIS_fnc_Carrier01Init;
 
+					//Disable player physics until carrier has spawn
+					player enableSimulationGlobal false;
 					cutText ["ARRIVING ON CARRIER", "BLACK FADED", 100];
-					uiSleep 2; 
-					waitUntil {isNull _handleScirpt};
-					cutText ["ARRIVING ON CARRIER", "BLACK FADED", 100];
-					uiSleep 5; 
+					//systemChat "_handleScirpt";
+
+					//Loop
+					while {sleep 1; !(isNull _handleScirpt)} do 
+					{ 
+						player enableSimulationGlobal false;
+						cutText ["ARRIVING ON CARRIER", "BLACK FADED", 100];
+						//systemChat "_handleScirpt";
+					};
 
 					//Play random radio sound
 					[] spawn {
@@ -539,6 +546,9 @@ if (side player == blufor) then
 					};
 
 					//Tp player on carrier
+					sleep 15;
+					player enableSimulationGlobal true;
+					systemChat format ["position to move : %1", _spawnPos];
 					player setVelocity [0, 0, 0];
 					player setPosASL [_spawnPos#0-105 + random 15,_spawnPos#1-18+random 15,_spawnPos#2+0.5];
 					titleCut ["WELCOME ON BOARD", "BLACK IN", 5];
@@ -546,7 +556,7 @@ if (side player == blufor) then
 			};
 
 			//Wait for USS Carrier spawn
-			sleep 10;
+			sleep 15;
 
 			//Add Action for TP on the carrier
 			_actionIdCarrier = player addAction ["Move to the carrier",{

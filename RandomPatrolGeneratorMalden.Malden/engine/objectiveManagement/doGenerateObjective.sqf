@@ -544,13 +544,10 @@ generateObjectiveObject =
 				//Try to get better position
 				_bestPosition = [( _thisObjectivePosition), 1, 60, 5, 0, 20, 0,[], [[[[[_thisObjectivePosition, 150]], ["water"]] call BIS_fnc_randomPos], [[[[_thisObjectivePosition, 150]], ["water"]] call BIS_fnc_randomPos]]] call BIS_fnc_findSafePos;
 				
-				if (1 < (count _bestPosition)) then 
-				{
-					_currentRandomPos = _bestPosition;
-				} else 
-				{
-					_currentRandomPos = _thisObjectivePosition;
-				};
+				//Create vehicle take only 2D coordonates
+				_currentRandomPos resize 2;
+
+				diag_log format ["ammo Pos : %1", _currentRandomPos];
 				
 				_ammoBox = selectRandom avalaibleAmmoBox;
 				_objectiveObject = createVehicle [_ammoBox, _bestPosition, [], 0, "NONE"];
