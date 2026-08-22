@@ -11,7 +11,7 @@ _vehicle addEventHandler ["GetOut", {
 
 	if (count _aliveCrew == 0) then {
 		_veh setVariable ["TAG_isCrewDismounted", true, true];
-		systemChat "crew dismounted";
+		//systemChat "crew dismounted";
 	};
 }];
 
