@@ -635,6 +635,9 @@ if (side player == blufor) then
 					};
 				}] remoteExec ["spawn", _playerNearby]; 
 
+				//Display caller name
+				([format ["%1 starts unlock items process", name _caller]]) remoteExec ["systemChat", _playerNearby, true];
+
 				//Clean box 
 				[_object] spawn 
 				{
