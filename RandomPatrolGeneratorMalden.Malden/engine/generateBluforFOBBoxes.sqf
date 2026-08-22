@@ -18,7 +18,7 @@ clearMagazineCargoGlobal VA2;
 clearItemCargoGlobal VA2;
 clearBackpackCargoGlobal VA2;
 VA2 allowDamage false; 
-//VA2 enableSimulationGlobal false;
+VA2 enableSimulationGlobal false;
 publicvariable "VA2";
 VA2 enableSimulationGlobal true;
 
