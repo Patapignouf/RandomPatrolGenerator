@@ -492,6 +492,9 @@ if (side player == blufor) then
 		player setPos (_spawnPos);
 	} else 
 	{
+		waitUntil {(!(isNil "initBlueforLocation"))};
+		waitUntil {((initBlueforLocation#2) == 24)};
+
 		_spawnPos = initBlueforLocation;
 
 		//Fix catapult on carrier
@@ -578,80 +581,6 @@ if (side player == blufor) then
 	} else 
 	{
 		[VA2] call setupPlayerLoadoutRemake;
-
-		//Add an action to unlock all content
-		VA2 setMaxLoad 5000; //Increase max load
-		VA2 addAction [format ["<img size='2' image='\a3\Missions_F_Orange\Data\Img\Showcase_LawsOfWar\action_access_fm_CA.paa'/><t size='1'>%1</t>", localize "STR_ACTIONS_UNLOCK_STUFF"],{
-				//Define parameters
-				params ["_object","_caller","_ID","_avalaibleVehicle"];
-
-				_playerNearby = allPlayers select {(_x distance _caller)<30};
-
-				//Unlock for every player at less than 30 meters
-				[[_object, _caller], 
-				{
-					params ["_object", "_caller"];
-					//Get Opfor weapon
-					_opFactionWeapon = [missionNamespace getVariable "opforFaction"] call getOpforWeaponCategory;
-
-					//Get player faction
-					_currentFaction = indFaction;
-					if (side _caller == blufor) then 
-					{
-						_currentFaction = bluFaction;
-					};
-
-					_opFactionWeapon = [_opFactionWeapon, _currentFaction] call prepareShopList;
-
-					//Check if there are items inside
-					_listOfItemInsideMess = (weaponsItemsCargo _object);
-					_listOfItemInside = _listOfItemInsideMess apply {_x#0};
-					//systemChat format ["((getItemCargo _object) : %1", _listOfItemInside];
-
-					if (count _listOfItemInside != 0) then
-					{
-						//Unlock every item in the box
-						{
-							_className = _x;
-
-							_currentItemCheck = _opFactionWeapon select {_className == _x#1};
-							
-							if (count _currentItemCheck != 0) then 
-							{
-								//Unlock item
-								_itemCategory = _currentItemCheck#0#0;
-								[_className, _itemCategory, _currentFaction] call addUnlockedWeapon;
-								[_className, _currentFaction] call displayReward;
-							} else 
-							{
-								_itemName = getText (configFile >> "CfgWeapons" >> _className >> "displayName");
-								systemChat format ["%1 cannot be unlocked", _itemName];
-							};
-
-						} foreach _listOfItemInside;
-					} else 
-					{
-						systemChat "Nothing to unlock in the box";
-					};
-				}] remoteExec ["spawn", _playerNearby]; 
-
-				//Display caller name
-				([format ["%1 starts unlock items process", name _caller]]) remoteExec ["systemChat", _playerNearby, true];
-
-				//Clean box 
-				[_object] spawn 
-				{
-					params ["_object"];
-
-					sleep 10;
-
-					clearWeaponCargoGlobal _object;
-					clearMagazineCargoGlobal _object;
-					clearItemCargoGlobal _object;
-					clearBackpackCargoGlobal _object;
-				};
-				
-		},_x,5,true,false,"","_target distance _this <5"]; 	
 	};
 
 	[] spawn {
