@@ -662,6 +662,7 @@ getAllDistinctRifleAndPistolAndLauncher = {
 				{
 					_resultAllListWP#4 pushBackUnique _x;
 				};
+				case ("MarksmanRifle");
 				case ("SniperRifle"):
 				{
 					_resultAllListWP#5 pushBackUnique _x;
