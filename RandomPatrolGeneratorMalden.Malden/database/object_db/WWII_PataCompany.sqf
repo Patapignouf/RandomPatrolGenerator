@@ -56,7 +56,7 @@ bluforFixedWing_WWII_PANY = [
 
 //Vehicule able to do HQ features (Loadout management and more)
 bluforHQVehicle_WWII_PANY = [
-
+	"JMSSA_veh_citroen11cv_fra40_F"
 ];
 
 bluforStaticWeapon_WWII_PANY = 
