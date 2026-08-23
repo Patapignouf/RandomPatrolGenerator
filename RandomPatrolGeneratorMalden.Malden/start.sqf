@@ -60,7 +60,8 @@ waitUntil {missionNamespace getVariable "generationSetup" == true};
 //Place goods on building 
 if (missionNameSpace getVariable ["enableFurniture", 1] == 1) then 
 {
-	[] execVM "objectGenerator\PF\init.sqf";
+	if(isServer)then{PFrun=false;[]spawn compileFinal(preprocessFile"objectGenerator\PF\init.sqf")};
+
 };
 
 missionNameSpace setVariable ["missionSetupMessage", "STR_RPG_SETUP_FACTIONS", true];

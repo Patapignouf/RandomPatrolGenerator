@@ -1,21 +1,20 @@
 //Land_i_House_Small_02_V1_F
-private _h=_this;
+isNil{params["_b"];
+if(isNil{_b getVariable"PF_B"})then{_b setVariable["PF_B","h2a_1"]};_dir=getDir _b;_f=[];
+_bed=createSimpleObject["a3\Props_F_Orange\Furniture\WoodenBed_01_F.p3d",[0,0,0]];
+_chair=createSimpleObject["a3\structures_f\furniture\ChairWood_F.p3d",[0,0,0]];
+_desk=createSimpleObject["a3\structures_f\furniture\TableDesk_F.p3d",[0,0,0]];
+_mw=createSimpleObject["A3\Structures_F_Heli\Items\Electronics\Microwave_01_F.p3d",[0,0,0]];
+_sink=createSimpleObject["A3\Structures_F\Civ\Accessories\Sink_F.p3d",[0,0,0]];
+_sofa=createSimpleObject["a3\Props_F_Orange\Furniture\Armchair_01_F.p3d",[0,0,0]];
+_table=createSimpleObject["a3\Props_F_Orange\Furniture\TableBig_01_F.p3d",[0,0,0]];
+{_f pushBack _x}forEach[_bed,_chair,_desk,_mw,_sink,_sofa,_table];
+_b setVariable["PF",_f];
 
-private _bed=createSimpleObject["Land_WoodenBed_01_F",[0,0,0]];
-private _sofa=createSimpleObject["Land_ArmChair_01_F",[0,0,0]];
-private _chairW=createSimpleObject["Land_ChairWood_F",[0,0,0]];
-private _desk=createSimpleObject["Land_TableDesk_F",[0,0,0]];
-private _cTable=createSimpleObject["Land_TableSmall_01_F",[0,0,0]];
-private _dTable=createSimpleObject["Land_TableBig_01_F",[0,0,0]];
-private _sink=createSimpleObject["Land_Sink_F",[0,0,0]];
-
-_bed attachTo[_h,[6.5,0,0.82]];_bed setDir 90;
-_sofa attachTo[_h,[1.8,-2.6,0.86]];_sofa setDir 45;
-_chairW attachTo[_h,[-2.5,2.4,0.37]];_chairW setDir 58;
-_desk attachTo[_h,[0.4,-2.5,0.75]];_desk setDir 90;
-_sink attachTo[_h,[0.35,-0.6,0.75]];_sink setDir 270;
-_dTable attachTo[_h,[-3.2,1.8,0.75]];_dTable setDir 270;
-
-if(PF_Optimize)then{
-sleep .2;
-{_x hideObjectGlobal true}forEach attachedObjects _H;};
+_bed setPos(_b modelToWorld[6.5,0,.17]);_bed setDir(_dir+90);
+_chair setPos(_b modelToWorld[-2.5,2.4,-.74]);_chair setDir(_dir+58);
+_desk setPos(_b modelToWorld[.4,-2.5,0]);_desk setDir(_dir+90);
+_mw setPos(_b modelToWorld[.4,-2.5,.185]);_mw setDir(_dir+99);
+_sink setPos(_b modelToWorld[.35,-.6,.47]);_sink setDir(_dir+270);
+_sofa setPos(_b modelToWorld[1.8,-2.6,.22]);_sofa setDir(_dir+45);
+_table setPos(_b modelToWorld[-3.2,1.8,.14]);_table setDir(_dir+270)}

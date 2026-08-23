@@ -1,33 +1,22 @@
 //Land_i_Addon_02_V1_F
-private _h=_this;
+isNil{params["_b"];
+if(isNil{_b getVariable"PF_B"})then{_b setVariable["PF_B","h8a_1"]};_f=[];_dir=getDir _b;
+_blanket=createSimpleObject[(selectRandom["A3\Structures_F\Civ\Camping\Sleeping_bag_F.p3d","A3\Structures_F\Civ\Camping\Sleeping_bag_blue_F.p3d","A3\Structures_F\Civ\Camping\Sleeping_bag_brown_F.p3d"]),[0,0,0]];
+_chair=createSimpleObject["a3\structures_f\furniture\ChairWood_F.p3d",[0,0,0]];
+_cup=createSimpleObject["A3\Structures_F_Heli\Items\Food\Tableware_01_cup_F.p3d",[0,0,0]];
+_desk=createSimpleObject["OfficeTable_01_old_F",[0,0,0]];
+_laptop=createSimpleObject["Land_Laptop_02_unfolded_F",[0,0,0]];
+_rack1=createSimpleObject["a3\Props_F_Orange\Furniture\OfficeCabinet_02_F.p3d",[0,0,0]];
+_rack2=createSimpleObject["A3\Structures_F_EPB\Furniture\ShelvesWooden_F.p3d",[0,0,0]];
+{_f pushBack _x}forEach[_blanket,_chair,_cup,_desk,_laptop,_rack1,_rack2];
+ _b setVariable["PF",_f];
 
-private _blanket=selectRandom["Land_Sleeping_bag_F","Land_Sleeping_bag_blue_F","Land_Sleeping_bag_brown_F"];
-private _blanket=createVehicle[_blanket,[0,0,0],[],0,"can_collide"];_blanket enableSimulationGlobal false;
-private _chair=createSimpleObject["Land_ChairWood_F",[0,0,0]];
-private _cup=createSimpleObject["Land_Tableware_01_cup_F",[0,0,0]];
-private _desk=createSimpleObject["OfficeTable_01_old_F",[0,0,0]];
-private _laptop=createSimpleObject["Land_Laptop_02_unfolded_F",[0,0,0]];
-private _rack1=createSimpleObject["Land_OfficeCabinet_02_F",[0,0,0]];
-private _rack2=createSimpleObject["Land_ShelvesWooden_F",[0,0,0]];
-
-_desk attachTo[_h,[0,0.07,0.704]];_desk setDir 180;
-_rack1 attachTo[_h,[1.1,-0.04,1.06]];_rack1 setDir 180;
-_chair attachTo[_h,[0.2,0.25,0.28]];
-_laptop attachTo[_h,[0.2,0.2,1.24]];_Laptop setDir 180;
-_cup attachTo[_h,[0,0.3,1.16]];
-_rack2 attachTo[_h,[3,4.1,0.78]];_rack2 setDir 90;
-_blanket attachTo[_h,[-2.3,3.9,.31]];_blanket setDir 270;
-
-if(dayTime>18 || dayTime<5)then{
-	sleep 5;
-	private _guyHome=_h nearEntities["Man",4];
-	if(count _guyHome>0)then{
-	private _fire1=createVehicle["MetalBarrel_burning_F",[0,0,0],[],0,"can_collide"];
-	_fire1 attachTo[_h,[-3.05,.1,.7]];_fire1 setDir(random 359);
-	sleep .5;
-detach _fire1;};
-};
-
-if(PF_Optimize)then{
-sleep .2;
-{_x hideObjectGlobal true}forEach attachedObjects _H;};
+ _blanket setPos(_b modelToWorld[-2.3,3.9,.13]);_blanket setDir(_dir+270);
+_chair setPos(_b modelToWorld[0.2,0.25,.08]);
+_cup setPos(_b modelToWorld[0,0.3,1.008]);
+_desk setPos(_b modelToWorld[0,0.07,0.925]);
+_laptop setPos(_b modelToWorld[0.2,0.2,1.167]);
+_rack1 setPos(_b modelToWorld[1.1,-0.04,1.642]);
+_rack2 setPos(_b modelToWorld[3,4.1,1.08]);_rack2 setDir(_dir+90);
+{_x setDir _dir}forEach[_chair,_cup];
+{_x setDir(_dir+180)}forEach[_desk,_Laptop,_rack1]}

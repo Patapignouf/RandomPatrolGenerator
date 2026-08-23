@@ -1,32 +1,31 @@
 //Land_House_Small_05_F
-private _H=_this;
+isNil{params["_b"];_f=[];_dir=getDir _b;
+_bed=createSimpleObject["a3\Props_F_Orange\Furniture\WoodenBed_01_F.p3d",[0,0,0]];
+_chair1=createSimpleObject["a3\structures_f\furniture\ChairWood_F.p3d",[0,0,0]];
+_chair2=createSimpleObject["A3\Structures_F\Furniture\ChairPlastic_F.p3d",[0,0,0]];
+_chair3=createSimpleObject["A3\Structures_F\Furniture\ChairPlastic_F.p3d",[0,0,0]];
+_chair4=createSimpleObject["A3\Structures_F\Furniture\ChairPlastic_F.p3d",[0,0,0]];
+_desk=createSimpleObject["A3\Structures_F_Heli\Furniture\OfficeTable_01_F.p3d",[0,0,0]];
+_plant=createSimpleObject["a3\Props_F_Orange\Items\Decorative\FlowerPot_01_flower_F.p3d",[0,0,0]];
+_pot1=createSimpleObject["a3\Props_F_Orange\Items\Decorative\FlowerPot_01_F.p3d",[0,0,0]];
+_pot2=createSimpleObject["a3\Props_F_Orange\Items\Decorative\FlowerPot_01_F.p3d",[0,0,0]];
+_shelf=createSimpleObject["A3\Structures_F_Heli\Furniture\OfficeCabinet_01_F.p3d",[0,0,0]];
+_table1=createSimpleObject["A3\Structures_F_Heli\Furniture\RattanTable_01_F.p3d",[0,0,0]];
+_table2=createSimpleObject["A3\Structures_F_EPC\Civ\Accessories\TablePlastic_01_F.p3d",[0,0,0]];
+{_f pushBack _x}forEach[_bed,_chair1,_chair2,_chair3,_chair4,_desk,_plant,_pot1,_pot2,_shelf,_table1,_table2];
+_b setVariable["PF",_f];
 
-private _bed=createSimpleObject["Land_WoodenBed_01_F",[0,0,0]];
-private _chair1=createSimpleObject["Land_ChairWood_F",[0,0,0]];
-private _chair2=createSimpleObject["Land_ChairPlastic_F",[0,0,0]];
-private _chair3=createSimpleObject["Land_ChairPlastic_F",[0,0,0]];
-private _chair4=createSimpleObject["Land_ChairPlastic_F",[0,0,0]];
-private _desk=createSimpleObject["OfficeTable_01_new_F",[0,0,0]];
-private _plant=createSimpleObject["Land_FlowerPot_01_Flower_F",[0,0,0]];
-private _pot1=createSimpleObject["Land_FlowerPot_01_F",[0,0,0]];
-private _pot2=createSimpleObject["Land_FlowerPot_01_F",[0,0,0]];
-private _shelf=createSimpleObject["OfficeCabinet_01_new_F",[0,0,0]];
-private _table1=createSimpleObject["Land_RattanTable_01_F",[0,0,0]];
-private _table2=createSimpleObject["Land_TablePlastic_01_F",[0,0,0]];
-
-_bed attachTo[_H,[-3,4.2,.62]];
-_table1 attachTo[_H,[0,4.8,.56]];
-_desk attachTo[_H,[-2.2,-1.1,.58]];_desk setDir 180;
-_plant attachTo[_H,[-2.6,-1,1.785]];_plant setDir(random 359);
-_chair1 attachTo[_H,[-2,-.65,.15]];_chair1 setDir 0;
-_shelf attachTo[_H,[-3.56,-1.22,.94]];_shelf setDir 180;
-_pot1 attachTo[_H,[-0.56,-1.7,.285]];_pot1 setDir(random 359);
-_pot2 attachTo[_H,[-0.9,-1.7,.285]];_pot2 setDir(random 359);
-_table2 attachTo[_H,[-2.7,-3.3,.6]];_table2 setDir 0;
-_chair2 attachTo[_H,[-3.7,-3.3,.6]];_chair2 setDir 0;
-_chair3 attachTo[_H,[-1.3,-3.3,.6]];_chair3 setDir 180;
-_chair4 attachTo[_H,[-2.6,-3.72,.6]];_chair4 setDir 270;
-
-if(PF_Optimize)then{
-sleep .2;
-{_x hideObjectGlobal true}forEach attachedObjects _H;};
+_bed setPos(_b modelToWorld[-3,4.2,-.175]);
+_chair1 setPos(_b modelToWorld[-2,-.65,-1.09]);
+_chair2 setPos(_b modelToWorld[-3.75,-3.3,-.12]);
+_chair3 setPos(_b modelToWorld[-1.3,-3.3,-.12]);_chair3 setDir(_dir+180);
+_chair4 setPos(_b modelToWorld[-2.6,-3.8,-.12]);_chair4 setDir(_dir+270);
+_desk setPos(_b modelToWorld[-2.2,-1.1,-.242]);_desk setDir(_dir+180);
+_plant setPos(_b modelToWorld[-2.6,-1,1.343]);
+_pot1 setPos(_b modelToWorld[-0.56,-1.7,-.84]);
+_pot2 setPos(_b modelToWorld[-0.9,-1.7,-.84]);
+_shelf setPos(_b modelToWorld[-3.56,-1.24,.48]);_shelf setDir(_dir+180);
+_table1 setPos(_b modelToWorld[0,4.8,-.29]);
+_table2 setPos(_b modelToWorld[-2.7,-3.3,-.2]);
+{_x setDir _dir}forEach[_bed,_chair1,_chair2,_table1,_table2];
+{_x setDir(random 359)}forEach[_plant,_pot1,_pot2]}

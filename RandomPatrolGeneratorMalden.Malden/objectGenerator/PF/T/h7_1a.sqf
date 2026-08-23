@@ -1,18 +1,15 @@
 //Land_Shed_02_F
-private _H=_this;
+isNil{params["_b"];_f=[];_dir=getDir _b;
+_boxes=createSimpleObject["A3\Structures_F\Civ\Market\CratesShabby_F.p3d",[0,0,0]];
+_can=createSimpleObject["A3\Structures_F\Items\Vessels\CanisterPlastic_F.p3d",[0,0,0]];
+_pbox=createSimpleObject["A3\Structures_F\Civ\Market\CratesPlastic_F.p3d",[0,0,0]];
+_sack=createSimpleObject["A3\Structures_F\Civ\Market\Sack_F.p3d",[0,0,0]];
+_shelf=createSimpleObject["A3\Structures_F\Furniture\Metal_rack_Tall_F.p3d",[0,0,0]];
+{_f pushBack _x}forEach[_boxes,_can,_pbox,_sack,_shelf];
+_b setVariable["PF",_f];
 
-private _boxes=createVehicle["Land_CratesShabby_F",[0,0,0],[],0,"can_collide"];_boxes enableSimulationGlobal false;
-private _can=createSimpleObject["Land_CanisterPlastic_F",[0,0,0]];
-private _pbox=createVehicle["Land_CratesPlastic_F",[0,0,0],[],0,"can_collide"];_pbox enableSimulationGlobal false;
-private _sack=createVehicle["Land_Sack_F",[0,0,0],[],0,"can_collide"];_sack enableSimulationGlobal false;
-private _shelf=createSimpleObject["Land_Metal_rack_Tall_F",[0,0,0]];
-
-_pbox attachTo[_H,[1.4,-0.83,0.25]];_pbox setDir 180;
-_can attachTo[_H,[-1.65,-.93,.34]];_can setDir 90;
-_sack attachTo[_H,[1.5,2.2,.4]];_sack setDir 90;
-_boxes attachTo[_H,[-1.6,1.05,.8]];_boxes setDir 0;
-_shelf attachTo[_H,[-1.7,.2,0]];_shelf setDir 270;
-
-if(PF_Optimize)then{
-sleep .2;
-{_x hideObjectGlobal true}forEach attachedObjects _H;};
+_pbox setPos(_b modelToWorld[1.4,-0.83,-.39]);_pbox setDir(_dir+180);
+_can setPos(_b modelToWorld[-1.65,-.93,-.17]);_can setDir(_dir+90);
+_sack setPos(_b modelToWorld[1.5,2.2,-.01]);_sack setDir(_dir+90);
+_boxes setPos(_b modelToWorld[-1.6,1.05,.67]);_boxes setDir _dir;
+_shelf setPos(_b modelToWorld[-1.7,.2,-.86]);_shelf setDir(_dir+270)}

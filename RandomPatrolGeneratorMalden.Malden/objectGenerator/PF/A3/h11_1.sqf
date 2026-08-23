@@ -1,52 +1,37 @@
 //Land_Barn_01_brown_F
-private _h=_this;
+isNil{params["_b"];_f=[];_dir=getDir _b;
+_bucket1=createSimpleObject["A3\Structures_F\Items\Vessels\Bucket_painted_F.p3d",[0,0,0]];
+_bucket2=createSimpleObject["A3\Structures_F\Items\Vessels\Bucket_painted_F.p3d",[0,0,0]];
+_can1=createSimpleObject["A3\Structures_F\Items\Vessels\CanisterPlastic_F.p3d",[0,0,0]];
+_can2=createSimpleObject["A3\Structures_F\Items\Vessels\CanisterPlastic_F.p3d",[0,0,0]];
+_crowbar=createSimpleObject["a3\Props_F_Orange\Items\Tools\Crowbar_01_F.p3d",[0,0,0]];
+_glove1=createSimpleObject["A3\Structures_F\Items\Tools\Gloves_F.p3d",[0,0,0]];
+_glove2=createSimpleObject["A3\Structures_F\Items\Tools\Gloves_F.p3d",[0,0,0]];
+_hammer=createSimpleObject["A3\Structures_F\Items\Tools\Hammer_F.p3d",[0,0,0]];
+_mask=createSimpleObject["A3\Structures_F\Items\Tools\DustMask_F.p3d",[0,0,0]];
+_rope=createSimpleObject["A3\Structures_F_Heli\Items\Tools\Rope_01_F.p3d",[0,0,0]];
+_saw1=createSimpleObject["A3\Structures_F\Items\Tools\Saw_F.p3d",[0,0,0]];
+_saw2=createSimpleObject["A3\Structures_F\Items\Tools\Saw_F.p3d",[0,0,0]];
+_shovel1=createSimpleObject["A3\Structures_F_EPA\Items\Tools\Shovel_F.p3d",[0,0,0]];
+_shovel2=createSimpleObject["A3\Structures_F_EPA\Items\Tools\Shovel_F.p3d",[0,0,0]];
+{_f pushBack _x}forEach[_bucket1,_bucket2,_can1,_can2,_crowbar,_glove1,_glove2,_hammer,_mask,_rope,_saw1,_saw2,_shovel1,_shovel2];
+ _b setVariable["PF",_f];
 
-private _bucket1=createSimpleObject["Land_Bucket_painted_F",[0,0,0]];
-private _bucket2=createSimpleObject["Land_Bucket_painted_F",[0,0,0]];
-private _can1=createSimpleObject["Land_CanisterPlastic_F",[0,0,0]];
-private _can2=createSimpleObject["Land_CanisterPlastic_F",[0,0,0]];
-private _crowbar=createSimpleObject["Land_Crowbar_F",[0,0,0]];
-private _glove1=createSimpleObject["Land_Gloves_F",[0,0,0]];
-private _glove2=createSimpleObject["Land_Gloves_F",[0,0,0]];
-private _hammer=createSimpleObject["Land_Hammer_F",[0,0,0]];
-private _mask=createSimpleObject["Land_DustMask_F",[0,0,0]];
-private _rope=createSimpleObject["Land_Rope_01_F",[0,0,0]];
-private _saw1=createSimpleObject["Land_Saw_F",[0,0,0]];
-private _saw2=createSimpleObject["Land_Saw_F",[0,0,0]];
-private _shovel1=createSimpleObject["Land_Shovel_F",[0,0,0]];
-private _shovel2=createSimpleObject["Land_Shovel_F",[0,0,0]];
-
-_shovel1 attachTo[_h,[4.8,2.05,.814]];_shovel1 setDir 20;
-_can1 attachTo[_h,[-5.7,3.7,1.13]];_can1 setDir 20;
-_can2 attachTo[_h,[-5.6,3.2,1.13]];_can2 setDir 0;
-_mask attachTo[_h,[-7,-3.7,1.689]];_mask setDir 20;
-_bucket1 attachTo[_h,[-7,-3.7,.93]];_bucket1 setDir(random 359);
-_bucket2 attachTo[_h,[-6,-3.9,.93]];_bucket2 setDir(random 359);
-_glove1 attachTo[_h,[-7.6,-3.8,1.679]];_glove1 setDir 40;
-_glove2 attachTo[_h,[-7.42,-3.9,1.679]];_glove2 setDir 80;
-_saw1 attachTo[_h,[-7.25,-3.9,1.685]];_saw1 setDir 60;
-_hammer attachTo[_h,[-8,-3.85,1.7]];_hammer setDir 60;_hammer setVectorUp[-1,0,0];
-_rope attachTo[_h,[5.86,-1.706,1.73]];_rope setVectorUp[-1,0,0];
-_shovel2 attachTo[_h,[5.86,-2.02,1.364]];_shovel2 setVectorUp[-1,0,0];
-_saw2 attachTo[_h,[5.86,-2.534,1.635]];_saw2 setVectorUp[100,5,-.5];
-_crowbar attachTo[_h,[5.86,-2.831,1.482]];_crowbar setVectorUp[-1,0,0];
-
-if(dayTime>18 || dayTime<5)then{
-	sleep 5;
-	private _guyHome=_h nearEntities["Man",6];
-	if(count _guyHome>0)then{
-	private _light1=createVehicle["#lightpoint",[0,0,0],[],0,"can_collide"];
-	_light1 attachTo[_h,[.95,-.02,3.33]];
-	_light1 setLightColor[.6,.3,0];  
-	_light1 setLightAmbient[.1,.1,.1];  
-	_light1 setLightBrightness .08;
-	private _light2=createVehicle["#lightpoint",[0,0,0],[],0,"can_collide"];
-	_light2 attachTo[_h,[5.5, 0.09, 3.20]];
-	_light2 setLightColor[.6,.3,0];  
-	_light2 setLightAmbient[.1,.1,.1];  
-	_light2 setLightBrightness .08;};
-};
-
-if(PF_Optimize)then{
-sleep .2;
-{_x hideObjectGlobal true}forEach attachedObjects _H;};
+_bucket1 setPos(_b modelToWorld[-7,-3.7,-.52]);
+_bucket2 setPos(_b modelToWorld[-6,-3.9,-.52]);
+_can1 setPos(_b modelToWorld[-5.7,3.7,-.11]);
+_can2 setPos(_b modelToWorld[-5.6,3.2,-.11]);_can2 setDir _dir;
+_crowbar setPos(_b modelToWorld[5.89,-3.1,-.08]);_crowbar setVectorUp[-450,.5,5];
+_glove1 setPos(_b modelToWorld[-7.6,-3.8,.545]);_glove1 setDir(_dir+40);
+_glove2 setPos(_b modelToWorld[-7.42,-3.9,.545]);_glove2 setDir(_dir+80);
+_hammer setPos(_b modelToWorld[-8,-3.85,.18]);_hammer setDir(_dir+60);_hammer setVectorUp[-1,0,0];
+_mask setPos(_b modelToWorld[-7,-3.7,.557]);
+_rope setPos(_b modelToWorld[5.86,-1.706,.105]);_rope setVectorUp[-1,0,0];
+_saw1 setPos(_b modelToWorld[-7.25,-3.9,.116]);_saw1 setDir(_dir+60);
+_saw2 setPos(_b modelToWorld[5.86,-2.328,.069]);_saw2 setVectorUp[-1500,0,90];
+_shovel1 setPos(_b modelToWorld[4.8,2.05,-.74]);
+_shovel2 setPos(_b modelToWorld[5.88,-2.02,-.195]);
+{_x setDir(random 359)}forEach[_bucket1,_bucket2];
+{_x setDir(_dir+20)}forEach[_can1,_mask,_shovel1];
+{_x setDir(_dir+90)}forEach[_crowbar,_saw2,_shovel2];
+_crowbar setVectorUp[-450,.5,5];_saw2 setVectorUp[-1500,0,90];_shovel2 setVectorUp[-50,0,-1]}

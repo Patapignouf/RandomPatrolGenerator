@@ -1,19 +1,16 @@
 //Land_i_Stone_Shed_01_c_raw_F
-private _h=_this;
+isNil{params["_b"];_f=[];_dir=getDir _b;
+_blanket=createSimpleObject[(selectRandom["A3\Structures_F\Civ\Camping\Sleeping_bag_F.p3d","A3\Structures_F\Civ\Camping\Sleeping_bag_blue_F.p3d","A3\Structures_F\Civ\Camping\Sleeping_bag_brown_F.p3d"]),[0,0,0]];
+_bucket=createSimpleObject["A3\Structures_F\Items\Vessels\Bucket_F.p3d",[0,0,0]];
+_chair=createSimpleObject["A3\Structures_F\Civ\Camping\CampingChair_V1_F.p3d",[0,0,0]];
+_towels=createSimpleObject["A3\Structures_F_Heli\Items\Food\Tableware_01_stackOfNapkins_F.p3d",[0,0,0]];
+_trash=createSimpleObject["A3\Structures_F\Civ\Garbage\Garbage_square3_F.p3d",[0,0,0]];
+{_f pushBack _x}forEach[_blanket,_bucket,_chair,_towels,_trash];
+_b setVariable["PF",_f];
 
-private _blanket=selectRandom["Land_Sleeping_bag_F","Land_Sleeping_bag_blue_F","Land_Sleeping_bag_brown_F"];
-private _blanket=createVehicle[_blanket,[0,0,0],[],0,"can_collide"];_blanket enableSimulationGlobal false;
-private _bucket=createSimpleObject["Land_Bucket_F",[0,0,0]];
-private _chair=createSimpleObject["Land_CampingChair_V1_F",[0,0,0]];
-private _towels=createSimpleObject["Land_Tableware_01_stackOfNapkins_F",[0,0,0]];
-private _trash=createSimpleObject["Land_Garbage_square3_F",[0,0,0]];
-
-_blanket attachTo[_h,[-.5,3.3,.3]];
-_bucket attachTo[_h,[-.8,2,.41]];_bucket setDir 90;
-_towels attachTo[_h,[-.55,1.9,.3]];_towels setDir(random 359);
-_trash attachTo[_h,[2,2,.3]];_trash setDir(random 359);
-_chair attachTo[_h,[5.7,4,.75]];_chair setDir 45;
-
-if(PF_Optimize)then{
-sleep .2;
-{_x hideObjectGlobal true}forEach attachedObjects _H;};
+_blanket setPos(_b modelToWorld[-.5,3.3,-.06]);_blanket setDir _dir;
+_bucket setPos(_b modelToWorld[-.8,2,.22]);_bucket setDir(_dir+90);
+_chair setPos(_b modelToWorld[5.7,4,.905]);_chair setDir(_dir+45);
+_towels setPos(_b modelToWorld[-.55,1.9,-.04]);
+_trash setPos(_b modelToWorld[2,2,-.02]);
+{_x setDir(random 359)}forEach[_towels,_trash]}
