@@ -546,11 +546,18 @@ generateObjectiveObject =
 				
 				//Create vehicle take only 2D coordonates
 				_currentRandomPos resize 2;
-
-				diag_log format ["ammo Pos : %1", _currentRandomPos];
-				
 				_ammoBox = selectRandom avalaibleAmmoBox;
+
+				diag_log format ["ammo %2 Pos : %1", _currentRandomPos, _ammoBox];
+				
 				_objectiveObject = createVehicle [_ammoBox, _bestPosition, [], 0, "NONE"];
+
+				//Sometimes don't know why but generation failed
+				if (isNull _objectiveObject) then 
+				{
+					_objectiveObject = createVehicle [_ammoBox, _bestPosition, [], 0, "NONE"];
+					diag_log format ["second try ammo %2 Pos : %1", _currentRandomPos, _ammoBox];
+				};
 
 				_objectiveObject setVariable ["isObjectiveObject", true, true];
 				_thisObjective = [_objectiveObject, _thisObjectiveType] call generateObjectiveTracker;
