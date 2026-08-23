@@ -155,24 +155,24 @@ _rewardObject = createVehicle [selectRandom ["Land_File_research_F"], [0,0,0], [
 _rewardObject attachTo [_ship, _rewardPos];
 _rewardObject setDir _boatDir;
 
-[_rewardObject, ["<img size='2' image='\a3\ui_f_oldman\data\IGUI\Cfg\holdactions\map_ca.paa'/><t size='1'>Collect intel (Win 1 token)</t>",{
-			params ["_object","_caller","_ID","_thisObjective"];
+[_rewardObject, ["<img size='2' image='\a3\ui_f_oldman\data\IGUI\Cfg\holdactions\map_ca.paa'/><t size='1'>Collect intel (Win 100 token)</t>",{
+	params ["_object","_caller","_ID","_thisObjective"];
 
-			//Give token to players
-			[[], 
-			{
-				params ["_unit", "_instigator"];
-				[] call shopRelatedReward;
-			}
-			] remoteExec ["spawn", 0]; 
+	//Give token to players
+	[[], 
+	{
+		params ["_unit", "_instigator"];
+		[] call shopRelatedReward;
+	}
+	] remoteExec ["spawn", 0]; 
 
-			//Manage respawn and delete object
-			deleteVehicle _object;
-			if ((["Respawn",1] call BIS_fnc_getParamValue) == 1) then 
-			{
-				[[], "engine\respawnManagement\respawnManager.sqf"] remoteExec ['BIS_fnc_execVM', 0];
-			};
-		},[],10,true,true,"","_target distance _this <4"]] remoteExec ["addAction", 0, true];
+	//Manage respawn and delete object
+	deleteVehicle _object;
+	if ((["Respawn",1] call BIS_fnc_getParamValue) == 1) then 
+	{
+		[[], "engine\respawnManagement\respawnManager.sqf"] remoteExec ['BIS_fnc_execVM', 0];
+	};
+},[],10,true,true,"","_target distance _this <4"]] remoteExec ["addAction", 0, true];
 
 
 
