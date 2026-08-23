@@ -120,6 +120,12 @@ addExperience = {
 	{
 		[_experience, _experienceType, _experienceCustomParam] call doDisplayScore;
 	};
+
+	//Add equivalent amount in token
+	if (missionNameSpace getVariable ["linkXPWithToken", 1] == 1) then 
+	{
+		[_experience] call earnToken;
+	};
 	
 	true
 };

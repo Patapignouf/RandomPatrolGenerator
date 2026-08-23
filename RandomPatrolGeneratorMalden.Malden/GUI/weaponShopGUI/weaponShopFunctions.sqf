@@ -1,5 +1,5 @@
 baseWeaponName = "RPG_Weapon";
-basePlayerCreditName = "RPG_UnlockCredit";
+basePlayerCreditName = "RPG_UnlockCreditV2";
 
 baseWeaponCategory = [
 		["rifle",[]],
@@ -11,6 +11,16 @@ baseWeaponCategory = [
 		["shortAccessories",[]],
 		["longAccessories",[]]
 	];
+
+//Convert old token system 
+_unblockCredit = profileNameSpace getVariable ["RPG_UnlockCredit",0];
+if (_unblockCredit != 0) then 
+{
+	profileNameSpace setVariable ["RPG_UnlockCredit_Old",_unblockCredit];
+	profileNameSpace setVariable ["RPG_UnlockCredit",0];
+	profileNameSpace setVariable [basePlayerCreditName, _unblockCredit*100];
+};
+
 
 //Get all unlocked weapons for a player faction
 getPlayerFactionUnlockedWeapons = {
@@ -325,12 +335,11 @@ shopRelatedReward = {
 		if (_rewardMode == 0 || (_rewardMode == 2 && (profileNameSpace getVariable ["RPG_rewardMode", "Token"] == "Token"))) then 
 		{
 			//Get current token number
-			_unblockCredit = profileNameSpace getVariable ["RPG_UnlockCredit",0];
-			profileNameSpace setVariable ["RPG_UnlockCredit",_unblockCredit+1];
+			_baseTokenReward = 100;
+			_unblockCredit = profileNameSpace getVariable [basePlayerCreditName, 0];
+			profileNameSpace setVariable [basePlayerCreditName, _unblockCredit+_baseTokenReward];
 
-			["scorePos",["Token","+1","Reward"]] call bis_fnc_showNotification;
-			
-			//systemChat "Increase token"; //Debug only
+			["scorePos",["Token", format ["+%1", _baseTokenReward], format ["Total tokens : %1", _unblockCredit+_baseTokenReward]]] call bis_fnc_showNotification;
 		};
 
 		//Reward random stuff
@@ -339,6 +348,13 @@ shopRelatedReward = {
 			[] call rewardRandomItem;
 		};
 	};
+};
+
+earnToken = {
+	params [["_earnedToken", 100]];
+
+	_unblockCredit = profileNameSpace getVariable [basePlayerCreditName, 0];
+	profileNameSpace setVariable [basePlayerCreditName, _unblockCredit+_earnedToken];
 };
 
 cleanWeaponsAndItems = {
@@ -466,11 +482,9 @@ cleanWeaponsAndItems = {
 
 
 defineWeaponPrice = {
-	params ["_weaponClassName"];
-	_priceResult = 1;
+	params [["_priceResult", 100], "_weaponClassName", ["_isBM", false]];
 
 	_cfgWpn = configFile >> "CfgWeapons" >> _weaponClassName;
-
 
 	if !(isClass _cfgWpn) exitWith {
 		diag_log format ["Arme introuvable : %1", _weaponClassName];
@@ -577,23 +591,29 @@ defineWeaponPrice = {
 
 	_rangeEst = selectMax _ammoRange;
 	_score = selectMax _scoreRangeArray;
+	_multiplier = 1;
+
+	if (_isBM) then 
+	{
+		_multiplier = 2;
+	};
 
 	//Adjust price with range
 	if (_rangeEst > 1500) then 
 	{
-		_priceResult = _priceResult + 1;
+		_priceResult = _priceResult + 50*_multiplier;
 	};
 
 	//Adjust price with range
 	if (_cal > 1) then 
 	{
-		_priceResult = _priceResult + 1;
+		_priceResult = _priceResult + 50*_multiplier;
 	};
 
 	//Adjust price with damage
 	if (_hit > 10) then 
 	{
-		_priceResult = _priceResult + 1;
+		_priceResult = _priceResult + 30*_multiplier;
 	};
 
 	//systemChat str _score;
@@ -602,9 +622,7 @@ defineWeaponPrice = {
 };
 
 defineScopePrice = {
-	params ["_optic"];
-
-	_priceResult = 1;
+	params [["_priceResult", 50], "_optic", ["_isBM", false]];
 
 	private _cfg = configFile >> "CfgWeapons" >> _optic >> "ItemInfo" >> "OpticsModes";
 
@@ -636,15 +654,22 @@ defineScopePrice = {
 		};
 	};
 
+	_multiplier = 1;
+
+	if (_isBM) then 
+	{
+		_multiplier = 2;
+	};
+
 	//Adjust price with range
 	if (_magMax > 3) then 
 	{
-		_priceResult = _priceResult + 1;
+		_priceResult = _priceResult + 30*_multiplier;
 	};
 
 	if (_magMax > 10) then 
 	{
-		_priceResult = _priceResult + 1;
+		_priceResult = _priceResult + 50*_multiplier;
 	};
 
 	_priceResult

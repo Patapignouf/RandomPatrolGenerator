@@ -39,7 +39,7 @@ paramsToManageNow pushBack ["Text", localize "STR_GUI_BASE_CREDIT", format ["%1"
 //Get all unlocked stuff for current faction
 if (missionNameSpace getVariable ["enableOpforWeaponShop",1] == 1) then 
 {
-	paramsToManageNow pushBack ["Text", localize "STR_GUI_BASE_TOKEN", format ["%1", profileNameSpace getVariable ["RPG_UnlockCredit", 0]], {	}];
+	paramsToManageNow pushBack ["Text", localize "STR_GUI_BASE_TOKEN", format ["%1", profileNameSpace getVariable ["RPG_UnlockCreditV2", 0]], {	}];
 };
 
 

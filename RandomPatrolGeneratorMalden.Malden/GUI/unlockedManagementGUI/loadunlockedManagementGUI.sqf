@@ -61,39 +61,49 @@ switch (_mode) do
 			_categoryName = _x#0;
 			_supportName = getText (configFile >> "CfgWeapons" >> _weaponClassName >> "displayName");
 			_supportNameCode = "";
+			_price = 50;
+
 			switch (_categoryName) do 
 			{
 				case "rifle":
 				{
 					_supportNameCode = "Medium range";
+					_price = 60;
 				};
 				case "smg":
 				{
 					_supportNameCode = "Short range";
+					_price = 30;
 				};
 				case "grenadeLauncher":
 				{
 					_supportNameCode = localize "STR_RPG_LOADOUT_ROLE_GRENADIER";
+					_price = 80;
 				};
 				case "launcher":
 				{
 					_supportNameCode = localize "STR_RPG_LOADOUT_ROLE_AT";
+					_price = 100;
 				};
 				case "sniperRifle":
 				{
 					_supportNameCode = localize "STR_RPG_LOADOUT_ROLE_MARKSMAN";
+					_price = 90;
 				};
 				case "autoRifle":
 				{
 					_supportNameCode = localize "STR_RPG_LOADOUT_ROLE_AUTORIFLEMAN";
+					_price = 70;
 				};
 				case "shortAccessories":
 				{
 					_supportNameCode = "Base accessories";
+					_price = 30;
 				};
 				case "longAccessories":
 				{
 					_supportNameCode = localize "STR_RPG_LOADOUT_ROLE_MARKSMAN";
+					_price = 50;
 				};
 			};
 
@@ -101,14 +111,13 @@ switch (_mode) do
 			_priceAnalysisReturn = [];
 			if (_categoryName != "shortAccessories" && _categoryName != "longAccessories") then 
 			{
-				_priceAnalysisReturn = [_weaponClassName] call defineWeaponPrice;
+				_priceAnalysisReturn = [0, _weaponClassName] call defineWeaponPrice;
 				//systemChat format ["Impact : %1 \nMax range : %2", _priceAnalysisReturn#1, _priceAnalysisReturn#2];
 			} else 
 			{
-				_price = [_weaponClassName] call defineScopePrice;
+				_priceScope = [_price, _weaponClassName] call defineScopePrice;
 			};
 
-			_price = 1;
 			_supportIcon = getText (configFile >> "CfgWeapons" >> _weaponClassName >> "picture");
 			_supportType = _x#0;
 
@@ -224,10 +233,10 @@ if (_isModeSell) then
 				[player, player, player call getPlayerFaction] call setupArsenalToItem;
 
 				//Get current token number
-				_unblockCredit = profileNameSpace getVariable ["RPG_UnlockCredit",0];
-				profileNameSpace setVariable ["RPG_UnlockCredit",_unblockCredit+1];
+				[_supportPrice] call earnToken;
 
-				["scorePos",["Token earned","+1",format ["Total tokens : %1", _unblockCredit+1]]] call bis_fnc_showNotification;
+				_unlockCredit = profileNamespace getVariable ["RPG_UnlockCreditV2", 0];
+				["scorePos",["Token", format ["+%1", _supportPrice], format ["Total tokens : %1", _unlockCredit]]] call bis_fnc_showNotification;
 
 				//Update credit display
 				_vehicleShopTitle ctrlSetText (format ["%2 | Unlock Token %1", [] call getUnlockCredit, localize "RPG_GUI_GENERAL_UNLOCK"]);
@@ -253,18 +262,9 @@ if (_isModeSell) then
 			{
 				//Remove item management display
 				_display closeDisplay 1;
+				
 				//Remove entry 
-				//_lnbEntries lnbDeleteRow (lnbCurSelRow _lnbEntries);
-
 				[[_supportClass, _supportType], 'GUI\unlockedManagementGUI\giveGUI.sqf'] remoteExec ['BIS_fnc_execVM', player];
-
-				//Get current token number
-				// _unblockCredit = profileNameSpace getVariable ["RPG_UnlockCredit",0];
-				// profileNameSpace setVariable ["RPG_UnlockCredit",_unblockCredit+0];
-
-				//Display reward hint
-				//[_supportClass, _currentFaction] call displayReward;
-
 			};
 		}
 	];

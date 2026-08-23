@@ -18,7 +18,7 @@ private _buttonRandom = _mainDisplay displayCtrl 60003;
 _openArsenal = _specialParam#0;
 _shopMode = _specialParam#1;
 
-randomPrice = 1;
+randomPrice = 100;
 if (_shopMode == "OPFOR") then 
 {
 	_vehicleShopTitle ctrlSetText (format ["%2 | Unlock Token %1", [] call getUnlockCredit, localize "RPG_GUI_GENERAL_WEAPON_SHOP"]);
@@ -28,7 +28,7 @@ if (_shopMode == "OPFOR") then
 	_vehicleShopTitle ctrlSetText (format ["%2 | Unlock Token %1", [] call getUnlockCredit, localize "RPG_GUI_GENERAL_BM_SHOP"]);
 
 	//hide random buy
-	randomPrice = 5;
+	randomPrice = 400;
 };
 
 _icon ctrlSetText (localize "STR_GUI_BASE_ICON");
@@ -73,53 +73,61 @@ switch (_mode) do
 			_categoryName = _x#0;
 			_supportName = getText (configFile >> "CfgWeapons" >> _weaponClassName >> "displayName");
 			_supportNameCode = "";
+			_price = 100;
 			switch (_categoryName) do 
 			{
 				case "rifle":
 				{
 					_supportNameCode = "Medium range";
+					_price = 100;
 				};
 				case "smg":
 				{
 					_supportNameCode = "Short range";
+					_price = 80;
 				};
 				case "grenadeLauncher":
 				{
 					_supportNameCode = localize "STR_RPG_LOADOUT_ROLE_GRENADIER";
+					_price = 150;
 				};
 				case "launcher":
 				{
 					_supportNameCode = localize "STR_RPG_LOADOUT_ROLE_AT";
+					_price = 200;
 				};
 				case "sniperRifle":
 				{
 					_supportNameCode = localize "STR_RPG_LOADOUT_ROLE_MARKSMAN";
+					_price = 300;
 				};
 				case "autoRifle":
 				{
 					_supportNameCode = localize "STR_RPG_LOADOUT_ROLE_AUTORIFLEMAN";
+					_price = 180;
 				};
 				case "shortAccessories":
 				{
 					_supportNameCode = "Base accessories";
+					_price = 80; //Set default price of 1 for accessories
 				};
 				case "longAccessories":
 				{
 					_supportNameCode = localize "STR_RPG_LOADOUT_ROLE_MARKSMAN";
+					_price = 150; //Set default price of 1 for accessories
 				};
 			};
 
-			_price = 1; //Set default price of 1 for accessories
 			_priceAnalysisReturn = [];
 
 			if (_categoryName != "shortAccessories" && _categoryName != "longAccessories") then 
 			{
-				_priceAnalysisReturn = [_weaponClassName] call defineWeaponPrice;
+				_priceAnalysisReturn = [_price, _weaponClassName, _shopMode == "BM"] call defineWeaponPrice;
 				_price = _priceAnalysisReturn#0;
 				//systemChat format ["Impact : %1 \nMax range : %2", _priceAnalysisReturn#1, _priceAnalysisReturn#2];
 			} else 
 			{
-				_price = [_weaponClassName] call defineScopePrice;
+				_price = [_price, _weaponClassName, _shopMode == "BM"] call defineScopePrice;
 			};
 
 			_supportIcon = getText (configFile >> "CfgWeapons" >> _weaponClassName >> "picture");
@@ -129,7 +137,7 @@ switch (_mode) do
 			if (_shopMode == "BM") then 
 			{
 				//Increase price of Black market item by 5
-				_price = _price + 5;
+				_price = _price + 400;
 			};
 
 			if (typeName _price == "SCALAR") then 
