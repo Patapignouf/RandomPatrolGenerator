@@ -155,7 +155,7 @@ _rewardObject = createVehicle [selectRandom ["Land_File_research_F"], [0,0,0], [
 _rewardObject attachTo [_ship, _rewardPos];
 _rewardObject setDir _boatDir;
 
-[_rewardObject, ["<img size='2' image='\a3\ui_f_oldman\data\IGUI\Cfg\holdactions\map_ca.paa'/><t size='1'>Collect intel (Win 100 token)</t>",{
+[_rewardObject, ["<img size='2' image='\a3\ui_f_oldman\data\IGUI\Cfg\holdactions\map_ca.paa'/><t size='1'>Collect confidential intel</t>",{
 	params ["_object","_caller","_ID","_thisObjective"];
 
 	//Give token to players
