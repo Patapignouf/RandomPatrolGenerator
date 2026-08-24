@@ -36,10 +36,10 @@ doGenerateVehicleForFOB =
 			case (_vehicleClass isKindOf "Car"): {
 					_kind = "Car";
 					_spawnAttempts = 0;
-					_vehicleGoodPosition = _thisPosition findEmptyPosition [_thisMinRadius, _thisMaxRadius,_dummyVehicle];
+					_vehicleGoodPosition = _thisPosition findEmptyPosition [_thisMinRadius, _thisMaxRadius,_vehicleClass];
 					while {(isNil "_vehicleGoodPosition" || count _vehicleGoodPosition==0) && _spawnAttempts <10} do 
 					{
-						_vehicleGoodPosition = _thisPosition findEmptyPosition [_thisMinRadius, _thisMaxRadius,_dummyVehicle];
+						_vehicleGoodPosition = _thisPosition findEmptyPosition [_thisMinRadius, _thisMaxRadius,_vehicleClass];
 						_spawnAttempts = _spawnAttempts +1;
 					};
 					if (!isNil "_vehicleGoodPosition" && count _vehicleGoodPosition>0) then 
