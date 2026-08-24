@@ -552,10 +552,13 @@ generateObjectiveObject =
 				
 				_objectiveObject = createVehicle [_ammoBox, _bestPosition, [], 0, "NONE"];
 
+				//wait for the object to generate
+				sleep 1;
+				
 				//Sometimes don't know why but generation failed
 				if (isNull _objectiveObject) then 
 				{
-					_objectiveObject = createVehicle [_ammoBox, _bestPosition, [], 0, "NONE"];
+					_objectiveObject = createVehicle [selectRandom avalaibleAmmoBox, _bestPosition, [], 0, "NONE"];
 					diag_log format ["second try ammo %2 Pos : %1", _currentRandomPos, _ammoBox];
 				};
 
