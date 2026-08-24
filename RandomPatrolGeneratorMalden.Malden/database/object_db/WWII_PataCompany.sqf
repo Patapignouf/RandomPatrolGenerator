@@ -39,7 +39,8 @@ bluforUnarmedVehicleChopper_WWII_PANY = [
 
 bluforArmoredVehicle_WWII_PANY = [
 	"JMSSA_veh_amd35_vichyCol_F",
-	"JMSSA_veh_H35_vichy40_F"
+	"JMSSA_veh_H35_vichy40_F",
+	"LIB_M4A3_75"
 ];
 
 bluforDrone_WWII_PANY = [
