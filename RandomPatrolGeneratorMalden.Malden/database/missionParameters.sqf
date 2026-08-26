@@ -68,7 +68,8 @@ officialPataCompanyServerParam =
 	],
 	"Official PataCompany server (enable Discord and TS)",
 	0,
-	"officialPataCompanyServer"
+	"officialPataCompanyServer",
+	"Only for official server"
 ];
 
 
@@ -80,7 +81,8 @@ enableExperienceSaveParam =
 	],
 	"Enable experience (save on profile)",
 	1,
-	"enableExperienceSave"
+	"enableExperienceSave",
+	"Disable for debug only"
 ];
 
 enableSurrenderUnitParam = 
@@ -91,7 +93,8 @@ enableSurrenderUnitParam =
 	],
 	"Opfor units can surrender",
 	1,
-	"enableSurrenderUnit"
+	"enableSurrenderUnit",
+	"Recommended enabled"
 ];
 
 enableAdvancedRespawnParam = 
@@ -102,7 +105,8 @@ enableAdvancedRespawnParam =
 	],
 	"Leader can place respawn point",
 	1,
-	"enableAdvancedRespawn"
+	"enableAdvancedRespawn",
+	"Recommended enabled"
 ];
 
 enableSelfRespawnTimerParam = 
@@ -113,7 +117,8 @@ enableSelfRespawnTimerParam =
 	],
 	"Respawn timer is global or by player",
 	0,
-	"enableSelfRespawnTimer"
+	"enableSelfRespawnTimer",
+	"Recommended global timer"
 ];
 
 
@@ -149,7 +154,8 @@ missionAreaSizeParam =
 	],
 	"Mission area size",
 	0,
-	"missionAreaSize"
+	"missionAreaSize",
+	"Recommended normal or huge"
 ];
 
 enableAmbiantWarParam = 
@@ -160,7 +166,8 @@ enableAmbiantWarParam =
 	],
 	"Ambiant War (friendly squad)",
 	0,
-	"enableAmbiantWar"
+	"enableAmbiantWar",
+	"Better on war operation"
 ];
 
 enableAmbiantArtilleryParam = 
@@ -171,7 +178,8 @@ enableAmbiantArtilleryParam =
 	],
 	"Ambiant artillery",
 	0,
-	"enableAmbiantArtillery"
+	"enableAmbiantArtillery",
+	"Better on war operation"
 ];
 
 civiliansOnObjectivesParam = 
@@ -182,7 +190,8 @@ civiliansOnObjectivesParam =
 	],
 	"Enable civilian population on objectives",
 	1,
-	"enableCiviliansOnObjectives"
+	"enableCiviliansOnObjectives",
+	"Recommended for challenge"
 ];
 
 respawnOnOtherPlayersParam = 
@@ -202,9 +211,10 @@ respawnCheatParam =
 		[0, "Disable"],
 		[1, "Enable"]
 	],
-	"Enable death cheat protection (prevent player from respawn deco/reco)",
+	"Enable death cheat protection",
 	0,
-	"respawnCheat"
+	"respawnCheat",
+	"(prevent player from respawn deco/reco)"
 ];
 
 enableObjectiveExactLocationParam = 
@@ -216,7 +226,8 @@ enableObjectiveExactLocationParam =
 	],
 	"Objective location markers",
 	0,
-	"enableObjectiveExactLocation"
+	"enableObjectiveExactLocation",
+	"None for immersion"
 ];
 
 enableRegularIncomeParam = 
@@ -226,8 +237,9 @@ enableRegularIncomeParam =
 		[1, "Enable"]
 	],
 	"Enable regular income (when credits under 500)",
-	1,
-	"enableRegularIncome"
+	0,
+	"enableRegularIncome",
+	"Recommended disabled"
 ];
 
 sideRelationParam =
@@ -262,7 +274,8 @@ endlessMissionParam =
 	],
 	"Restart after mission end",
 	0,
-	"endlessMission"
+	"endlessMission",
+	"Experimental"
 ];
 
 
@@ -274,7 +287,8 @@ disableZoomParam =
 	],
 	"Temp Zoom (hold right clic)",
 	0,
-	"disableZoom"
+	"disableZoom",
+	"Experimental"
 ];
 
 
@@ -288,7 +302,8 @@ enableAutoDifficultyBalanceParam =
 	],
 	"Enable Automatic difficulty balance",
 	0,
-	"enableAutoDifficultyBalance"
+	"enableAutoDifficultyBalance",
+	"Enable this option for public server"
 ];
 
 
@@ -300,7 +315,8 @@ enableLoadoutRestrictionParam =
 	],
 	"Enable loadout restriction",
 	1,
-	"enableLoadoutRestriction"
+	"enableLoadoutRestriction",
+	"Recommended enabled"
 ];
 
 enableAccessoriesRestrictionParam = 
@@ -321,8 +337,9 @@ enableHaloParam =
 		[1, "Enable"]
 	],
 	"Enable HALO JUMP",
-	1,
-	"enableHalo"
+	0,
+	"enableHalo",
+	"Recommended disabled"
 ];
 
 enableMassiveHaloParam = 
@@ -418,9 +435,10 @@ for "_i" from 1 to 100 do {
 maxObjectivesGeneratedSettingParam = 
 [
 	_percentages,
-	"Max number of objectives generated (campaign)",
+	"Max number of objectives generated",
 	100,
-	"maxObjectivesGeneratedSetting"
+	"maxObjectivesGeneratedSetting",
+	"Works only on campaign mode"
 ];
 
 enableOpforVehicleParam = 
@@ -434,7 +452,8 @@ enableOpforVehicleParam =
 	],
 	"Number Opfor vehicle",
 	1,
-	"enableOpforVehicle"
+	"enableOpforVehicle",
+	"Recommended few or medium"
 ];
 
 enableOpforMortarParam = 
@@ -445,7 +464,8 @@ enableOpforMortarParam =
 	],
 	"Opfor mortar",
 	1,
-	"enableOpforMortar"
+	"enableOpforMortar",
+	"Disable if it's too hard"
 ];
 
 enableReAirDropAdvFOBParam = 
@@ -468,7 +488,8 @@ randomizeObjectiveOrderParam =
 	],
 	"Randomize objective order",
 	1,
-	"randomizeObjectiveOrder"
+	"randomizeObjectiveOrder",
+	"Closest for short missions"
 ];
 
 objectivePerLocationParam = 
@@ -516,7 +537,8 @@ opforFactionRandomizerParam =
 	],
 	"Change opfor faction after each mission completion",
 	0,
-	"opforFactionRandomizer"
+	"opforFactionRandomizer",
+	"Not recommended"
 ];
 
 playerMarkerAllowedParam = 
@@ -530,7 +552,8 @@ playerMarkerAllowedParam =
 	],
 	"Display player real time position on map",
 	1,
-	"playerMarkerAllowed"
+	"playerMarkerAllowed",
+	"Recommended BLUFOR Accurate"
 ];
 
 addFOBOnObjectiveParam = 
@@ -541,7 +564,8 @@ addFOBOnObjectiveParam =
 	],
 	"Add enemy FOB when AO doesn't have building",
 	0,
-	"addFOBOnObjective"
+	"addFOBOnObjective",
+	"Only for empty maps"
 ];
 
 enableDynamicSimulationParam = 
@@ -552,7 +576,8 @@ enableDynamicSimulationParam =
 	],
 	"Enable dynamic simulation",
 	1,
-	"enableDynamicSimulationSetting"
+	"enableDynamicSimulationSetting",
+	"Recommended enabled for perf"
 ];
 
 enableBluforFOBParam = 
@@ -563,7 +588,8 @@ enableBluforFOBParam =
 	],
 	"Enable blufor FOB spawn",
 	1,
-	"enableBluforFOB"
+	"enableBluforFOB",
+	"Recommended enabled"
 ];
 
 enableSoloCrewTankParam = 
@@ -574,7 +600,8 @@ enableSoloCrewTankParam =
 	],
 	"Enable solo crew tank",
 	0,
-	"enableSoloCrewTank"
+	"enableSoloCrewTank",
+	"Recommended for small team"
 ];
 
 enableOpforWeaponShopParam = 
@@ -586,7 +613,8 @@ enableOpforWeaponShopParam =
 	],
 	"Enable opfor weapon shop",
 	2,
-	"enableOpforWeaponShop"
+	"enableOpforWeaponShop",
+	"Recommended Shop On POI"
 ];
 
 rewardModeParam = 
@@ -620,7 +648,8 @@ vehicleLockedDefaultParam =
 	],
 	"[ACE] Lock vehicle on spawn",
 	0,
-	"vehicleLockedDefault"
+	"vehicleLockedDefault",
+	"ACE Only"
 ];
 
 enableGPSJammerOnMapParam = 
@@ -631,7 +660,8 @@ enableGPSJammerOnMapParam =
 	],
 	"[ACE] GPS and Radio jammer",
 	1,
-	"enableGPSJammerOnMap"
+	"enableGPSJammerOnMap",
+	"ACE and TFAR compatibility"
 ];
 
 displayGPSJammerOnMapParam = 
@@ -642,7 +672,8 @@ displayGPSJammerOnMapParam =
 	],
 	"Display GPS Jammer area on map",
 	1,
-	"displayGPSJammerOnMap"
+	"displayGPSJammerOnMap",
+	"ACE and TFAR compatibility"
 ];
 
 fastTravelParam = 
@@ -664,7 +695,8 @@ ACETryFixUnconsciousParam =
 	],
 	"[ACE] Try fix player not really unconscious",
 	0,
-	"ACETryFixUnconscious"
+	"ACETryFixUnconscious",
+	"Not Recommended debug only"
 ];
 
 allowSmallLocationsParam = 
@@ -675,7 +707,8 @@ allowSmallLocationsParam =
 	],
 	"Allow AO on small locations (ex : hill)",
 	0,
-	"allowSmallLocations"
+	"allowSmallLocations",
+	"Not Recommended on vanilla maps"
 ];
 
 addAmbientOpforLocParam = 
@@ -725,7 +758,8 @@ warReporterOnHQParam =
 	],
 	"Ability to become war reporter (VIP)",
 	0,
-	"warReporterOnHQ"
+	"warReporterOnHQ",
+	"Only for event"
 ];
 
 gunsOnlyParam = 
@@ -736,7 +770,8 @@ gunsOnlyParam =
 	],
 	"Allow only guns (no rifle)",
 	0,
-	"gunsOnly"
+	"gunsOnly",
+	"Only for event"
 ];
 
 hostileCivCanCallReinforcementParam = 
@@ -770,7 +805,8 @@ enableDestroyerFOBParam =
 	],
 	"Opfor Destroyers or FOB",
 	1,
-	"enableDestroyerFOB"
+	"enableDestroyerFOB",
+	"Recommended FOB or Destroyer"
 ];
 
 enableBotRadioParam = 
@@ -781,7 +817,8 @@ enableBotRadioParam =
 	],
 	"Enable friendly radio com",
 	0,
-	"enableBotRadio"
+	"enableBotRadio",
+	"Recommended disable on MP"
 ];
 
 enableFlatBluforBaseParam = 
@@ -792,7 +829,8 @@ enableFlatBluforBaseParam =
 	],
 	"Make blufor base flat",
 	0,
-	"enableFlatBluforBase"
+	"enableFlatBluforBase",
+	"Recommended on mountain map"
 ];
 
 defenseNumberWavesParam = 
@@ -881,7 +919,8 @@ forceTentFOBParam =
 	],
 	"Force tent as blufor FOB",
 	0,
-	"forceTentFOB"
+	"forceTentFOB",
+	"Recommended disabled"
 ];
 
 bluforVehicleAvalaibleSpawnInitParam = 
@@ -895,7 +934,8 @@ bluforVehicleAvalaibleSpawnInitParam =
 	],
 	"Starting credits",
 	1000,
-	"bluforVehicleAvalaibleSpawnInit"
+	"bluforVehicleAvalaibleSpawnInit",
+	"Useful to buy support and vehicle"
 ];
 
 
@@ -907,7 +947,8 @@ enableCivilianOnCityParam =
 	],
 	"Enable civilian on civ city",
 	1,
-	"enableCivilianOnCity"
+	"enableCivilianOnCity",
+	"Recommended enabled"
 ];
 
 
@@ -919,7 +960,8 @@ enableFurnitureParam =
 	],
 	"Enable Phronk's Furniture",
 	1,
-	"enableFurniture"
+	"enableFurniture",
+	"Recommended on vanilla maps"
 ];
 
 linkXPWithTokenParam = 
@@ -930,7 +972,8 @@ linkXPWithTokenParam =
 	],
 	"Link token reward and XP",
 	1,
-	"linkXPWithToken"
+	"linkXPWithToken",
+	"Recommended enabled"
 ];
 
 //Full param list (obsolete)
