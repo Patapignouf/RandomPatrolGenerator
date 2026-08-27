@@ -240,6 +240,12 @@ increasePrestige = {
 		[0] call saveRank;
 		[player, true] call adjustRank;
 
+		//Reset tokens
+		[0] call saveUnlockCredit;
+
+		//Reset weapons
+		[[]] call saveAllUnlockedWeapons;
+
 		//Increase prestige
 		_currentPrestige = profileNamespace getVariable ["RPG_prestige", 0];
 		profileNamespace setVariable ["RPG_prestige", _currentPrestige+1];
