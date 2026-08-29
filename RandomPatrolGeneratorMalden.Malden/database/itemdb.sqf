@@ -222,9 +222,17 @@ BMrifleList_db = [
 		"LIB_LeeEnfield_No4",
 		"LIB_M1_Garand",
 		"LIB_M1903A3_Springfield",
-		"LIB_M44"
+		"LIB_M44",
+		"LIB_M44",
+		"LIB_M38",
+		"JMSSA_P1917enfield_Rifle",
+		"JMSSA_berthierCarbine_br_Rifle",
+		"JMSSA_berthierM16_Rifle",
+		"JMSSA_martini_Rifle",
+		"JMSSA_Pattern14_Rifle",
+		"JMSSA_thompson_Rifle",
+		"JMSSA_mannlicher95stutzen_Rifle"
     ]],
-
     [1,[
         "sgun_HunterShotgun_01_F",
         "srifle_DMR_06_hunter_F",
