@@ -40,7 +40,8 @@ bluforUnarmedVehicleChopper_WWII_PANY = [
 bluforArmoredVehicle_WWII_PANY = [
 	"JMSSA_veh_amd35_vichyCol_F",
 	"JMSSA_veh_H35_vichy40_F",
-	"LIB_M4A3_75"
+	"LIB_M4A3_75",
+	"LIB_M4A3_75_w"
 ];
 
 bluforDrone_WWII_PANY = [
@@ -184,11 +185,16 @@ uniformList_WWII_PANY = [
 	//Head
 	"G_JMSSA_fra_des_googles",
 	"G_JMSSA_CIV_CigaretteR",
-	"G_JMSSA_CIV_CigaretteL"
+	"G_JMSSA_CIV_CigaretteL",
+	"H_LIB_US_Helmet_w",
+	"H_LIB_US_Helmet_Cover_w",
+	"H_LIB_US_Helmet_Net_w",
+	"H_LIB_US_Helmet_Med_w",
 
 	//Vest 
 
 	//Uniform 
+	"U_LIB_US_Private_w" //Winter US Uniform
 ];
 
 magazineList_WWII_PANY = [
