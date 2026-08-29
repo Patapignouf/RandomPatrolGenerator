@@ -336,16 +336,64 @@ if !(isClass (configFile >> "CfgPatches" >> "ace_medical")) then
 			if (missionNameSpace getVariable ["enableSelfRespawnTimer", 0] == 0) then 
 			{
 				//No self respawn timer (directed by the server)
-				addMissionEventHandler ["EachFrame",
-					{
-						if (!(lifeState player == "HEALTHY")) then 
-						{
-							_currentRespawnTimer = missionNamespace getVariable "missionRespawnParam";
-							_currentCounter = _currentRespawnTimer - (round (serverTime) % _currentRespawnTimer);
-							hintSilent format ["Respawn : %1", [(_currentCounter/60)+.01,"HH:MM"] call BIS_fnc_timetostring];
+				[] spawn {
+					private _respawnDelay = missionNamespace getVariable "missionRespawnParam";
+					(format ["%1%2", name player, random 1000]) cutRsc ["RscTitleDisplayEmpty", "PLAIN"];
+					private _display = uiNamespace getVariable "RscTitleDisplayEmpty";
+					if (isNull _display) exitWith {};
+
+					// Dimensions et position (coordonnées "safezone"), centré en haut de l'écran
+					private _boxW = 0.35;
+					private _boxH = 0.05;
+					private _boxX = safezoneX + safezoneW * 0.5 - _boxW * 0.5;
+					private _boxY = safezoneY + 0.15;
+
+					// Fond de l'interface
+					private _ctrlBg = _display ctrlCreate ["RscText", -1];
+					_ctrlBg ctrlSetPosition [_boxX, _boxY, _boxW, _boxH];
+					_ctrlBg ctrlSetBackgroundColor [0, 0, 0, 0.6];
+					_ctrlBg ctrlCommit 0;
+
+					// Texte du décompte
+					private _ctrlText = _display ctrlCreate ["RscText", -1];
+					_ctrlText ctrlSetPosition [_boxX, _boxY, _boxW, _boxH];
+					_ctrlText ctrlSetBackgroundColor [0, 0, 0, 0];
+					_ctrlText ctrlSetTextColor [1, 0.25, 0.25, 1];
+					_ctrlText ctrlSetFont "RobotoCondensedBold";
+					_ctrlText ctrlSetText "";
+					_ctrlText ctrlCommit 0;
+
+					{ _x ctrlShow false } forEach [_ctrlBg, _ctrlText];
+
+					private	_currentRespawnTimer = missionNamespace getVariable "missionRespawnParam";
+					private	_deathTime = -1;
+
+					private _isShown = false;
+
+					while {!isNull _ctrlBg} do {
+						private _notHealthy = (!alive player) || (!(lifeState player == "HEALTHY"));
+
+						if (_notHealthy) then {
+							
+							_deathTime = _currentRespawnTimer - (round (serverTime) % _currentRespawnTimer);
+
+							if (!_isShown) then {
+								{ _x ctrlShow true } forEach [_ctrlBg, _ctrlText];
+								_isShown = true;
+							};
+
+							_ctrlText ctrlSetText format [localize "RPG_GUI_OVERLAY_RESPAWN", [(_deathTime)/60+.01,"HH:MM"] call BIS_fnc_timetostring];
+						} else {
+
+							if (_isShown) then {
+								{ _x ctrlShow false } forEach [_ctrlBg, _ctrlText];
+								_isShown = false;
+							};
 						};
-					}
-				];
+
+						sleep 0.2;
+					};
+				};
 			} else 
 			{
 				_respawnTimer = missionNamespace getVariable "missionRespawnParam";

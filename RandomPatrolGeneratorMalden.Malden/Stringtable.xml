@@ -2006,6 +2006,17 @@
         <Chinese>%1 在 %2 米处</Chinese>
         <Japanese>%1 は %2m の位置にいる</Japanese>
     </Key>
+    <Key ID="RPG_GUI_OVERLAY_RESPAWN">
+        <Original>Next respawn in %1</Original>
+        <English>Next respawn in %1</English>
+        <French>Prochain respawn dans %1</French>
+        <Spanish>Próximo respawn en %1</Spanish>
+        <German>Nächster Respawn in %1</German>
+        <Italian>Prossimo respawn in %1</Italian>
+        <Russian>Следующий респаун через %1</Russian>
+        <Chinese>下一次重生在 %1 后</Chinese>
+        <Japanese>次のリスポーンまで %1</Japanese>
+    </Key>
 </Container>
 <Container name="RPG_GUI_GENERAL">
     <Key ID="RPG_GUI_GENERAL_CLOSE">
