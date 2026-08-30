@@ -202,7 +202,8 @@ respawnOnOtherPlayersParam =
 	],
 	"Enable respawn on other players",
 	0,
-	"respawnOnOtherPlayers"
+	"respawnOnOtherPlayers",
+	"Recommended disabled"
 ];
 
 respawnCheatParam = 
@@ -327,7 +328,8 @@ enableAccessoriesRestrictionParam =
 	],
 	"Enable accessories restriction",
 	1,
-	"enableAccessoriesRestriction"
+	"enableAccessoriesRestriction",
+	"Recommended enabled"
 ];
 
 enableHaloParam = 
@@ -350,7 +352,8 @@ enableMassiveHaloParam =
 	],
 	"Enable HALO JUMP with all team",
 	1,
-	"enableMassiveHalo"
+	"enableMassiveHalo",
+	"Recommended enabled"
 ];
 
 timeOfDayParam = 
@@ -546,14 +549,14 @@ playerMarkerAllowedParam =
 	[	
 		[0, "Disable"],
 		[1, "BLUFOR Accurate"],
-		[2, "All Units area"],
+		[2, "Colored grid area"],
 		[3, "BLUFOR area"]
 
 	],
-	"Display player real time position on map",
-	1,
+	"Players position on map",
+	0,
 	"playerMarkerAllowed",
-	"Recommended BLUFOR Accurate"
+	"Recommended disable"
 ];
 
 addFOBOnObjectiveParam = 
@@ -874,7 +877,8 @@ defenseIncreaseDifficultyParam =
 	],
 	"Defense obj progressive difficulty",
 	0,
-	"defenseIncreaseDifficulty"
+	"defenseIncreaseDifficulty",
+	"Difficulty double every 2 waves"
 ];
 
 
