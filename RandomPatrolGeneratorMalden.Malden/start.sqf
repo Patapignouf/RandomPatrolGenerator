@@ -911,92 +911,99 @@ missionNameSpace setVariable ["missionSetupMessage", "STR_RPG_SETUP_OPF", true];
 //Generate ambient enemy positions
 if (missionNameSpace getVariable ["addAmbientOpforLoc", 1] == 1) then 
 {
-	_allLoc = [] call getAllBigLocationsWithBuildings;
-	if (count _allLoc != 0) then 
+	[] spawn 
 	{
+		//Wait until mission is generated because it will avoid small cities spawn on the default player spawn position (map center)
+		waitUntil {!isNil "missionGenerated"}; 
+
+		_allLoc = [] call getAllBigLocationsWithBuildings;
+		if (count _allLoc != 0) then 
 		{
-			//50% chance spawn
-			if (random 100 < 50) then 
 			{
-				_currentLocPos = getPos _x;
-				_locName = text _x;
-				
-				if ((initBlueforLocation distance _currentLocPos > 1000) && (initCityLocation distance _currentLocPos > 1000)) then 
+				//50% chance spawn
+				if (random 100 < 50) then 
 				{
-					_trgLocation = createTrigger ["EmptyDetector", _currentLocPos];
-					_trgLocation setTriggerArea [1000, 1000, 0, true];
-					_trgLocation setTriggerActivation ["WEST", "PRESENT", true];
-					_trgLocation setTriggerStatements [
-						"this",
-						'
-							//Create enemy units
-							_currentRandomGroup = selectRandom EnemyWaveLevel_6;
-							_currentGroup = [_currentRandomGroup, getPos thisTrigger, east, "DefenseInfantry"] call doGenerateEnemyGroup;
+					_currentLocPos = getPos _x;
+					_locName = text _x;
+					
+					if ((initBlueforLocation distance _currentLocPos > 1000) && (initCityLocation distance _currentLocPos > 1000)) then 
+					{
+						_trgLocation = createTrigger ["EmptyDetector", _currentLocPos];
+						_trgLocation setTriggerArea [1000, 1000, 0, true];
+						_trgLocation setTriggerActivation ["ANYPLAYER", "PRESENT", true];
+						_trgLocation setTriggerStatements [
+							"this",
+							'
+								//Create enemy units
+								_currentRandomGroup = selectRandom EnemyWaveLevel_6;
+								_currentGroup = [_currentRandomGroup, getPos thisTrigger, east, "DefenseInfantry"] call doGenerateEnemyGroup;
 
-							//Spawn group
-							[_currentGroup, getPos (leader _currentGroup), 200, false] call doGarrison;
+								//Spawn group
+								[_currentGroup, getPos (leader _currentGroup), 200, false] call doGarrison;
 
-							//Create supply 
-							_tempPosition = [getPos thisTrigger, 200] call BIS_fnc_nearestRoad;
-							if (!(isNull _tempPosition)) then 
-							{
-								_boxObject = createVehicle ["Land_PaperBox_open_full_F", _tempPosition, [], 0, "NONE"];
+								//Create supply 
+								_tempPosition = [getPos thisTrigger, 200] call BIS_fnc_nearestRoad;
+								if (!(isNull _tempPosition)) then 
+								{
+									_boxObject = createVehicle ["Land_PaperBox_open_full_F", _tempPosition, [], 0, "NONE"];
 
-								clearWeaponCargoGlobal _boxObject;
-								clearMagazineCargoGlobal _boxObject;
-								clearItemCargoGlobal _boxObject;
-								clearBackpackCargoGlobal _boxObject;
+									clearWeaponCargoGlobal _boxObject;
+									clearMagazineCargoGlobal _boxObject;
+									clearItemCargoGlobal _boxObject;
+									clearBackpackCargoGlobal _boxObject;
 
-								//Add action to steal supply and give 500 credits to players
-								[
-									_boxObject, 
-									localize "STR_STEAL_SUPPLY", 
-									"\a3\data_f_destroyer\data\UI\IGUI\Cfg\holdactions\holdAction_unloadVehicle_ca.paa", 
-									"\a3\data_f_destroyer\data\UI\IGUI\Cfg\holdactions\holdAction_unloadVehicle_ca.paa", 
-									"(_this distance _target < 3)",
-									"true", 
-									{
-										// Action start code
-										params ["_target", "_caller", "_actionId", "_arguments"];
-										_caller playMoveNow "AinvPknlMstpSnonWnonDnon_medic_1";
-									}, 
-									{
-										// Action on going code
-									},  
-									{
-										// Action successfull code
-										params ["_object","_caller","_ID","_param"];
+									//Add action to steal supply and give 500 credits to players
+									[
+										_boxObject, 
+										localize "STR_STEAL_SUPPLY", 
+										"\a3\data_f_destroyer\data\UI\IGUI\Cfg\holdactions\holdAction_unloadVehicle_ca.paa", 
+										"\a3\data_f_destroyer\data\UI\IGUI\Cfg\holdactions\holdAction_unloadVehicle_ca.paa", 
+										"(_this distance _target < 3)",
+										"true", 
+										{
+											// Action start code
+											params ["_target", "_caller", "_actionId", "_arguments"];
+											_caller playMoveNow "AinvPknlMstpSnonWnonDnon_medic_1";
+										}, 
+										{
+											// Action on going code
+										},  
+										{
+											// Action successfull code
+											params ["_object","_caller","_ID","_param"];
 
-										[500] call doIncrementVehicleSpawnCounter;
+											[500] call doIncrementVehicleSpawnCounter;
 
-										deleteVehicle _object;
-									}, 
-									{
-										// Action failed code
-									}, 
-									[],  
-									5,
-									1000, 
-									false,
-									false
-								] remoteExec ["BIS_fnc_holdActionAdd", 0, true];
+											deleteVehicle _object;
+										}, 
+										{
+											// Action failed code
+										}, 
+										[],  
+										5,
+										1000, 
+										false,
+										false
+									] remoteExec ["BIS_fnc_holdActionAdd", 0, true];
 
-							};
+								};
 
-							deleteVehicle thisTrigger;
-						',
-						"" //Maybe add clean code here
-					];
+								deleteVehicle thisTrigger;
+							',
+							"" //Maybe add clean code here
+						];
 
-					// _name = text _x;
-					// _pos = getPos _x;
-					// createMarkerLocal [_name, _pos];
-					// _name setMarkerTypeLocal  "selector_selectedMission";
-					// _name setMarkerTextLocal  _name;
+						// _name = text _x;
+						// _pos = getPos _x;
+						// createMarkerLocal [_name, _pos];
+						// _name setMarkerTypeLocal  "selector_selectedMission";
+						// _name setMarkerTextLocal  _name;
+					};
 				};
-			};
-		} foreach _allLoc;
+			} foreach _allLoc;
+		};
 	};
+
 };
 
 //Generate patrol 
