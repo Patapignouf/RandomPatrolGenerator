@@ -60,6 +60,9 @@ if (hasInterface) then
 	_ctrlCount ctrlSetText "";
 	_ctrlCount ctrlCommit 0;
 
+	//Check settings value to display or not text XX vs YY
+	private _isVSTextEnabled = (missionNameSpace getVariable ["playerCounterSectorControl", 1] == 1);
+
 	private _allControls = [_ctrlBg, _ctrlTitle, _ctrlBlue, _ctrlRed, _ctrlCount];
 	private _isShown = true;
 
@@ -90,8 +93,11 @@ if (hasInterface) then
 
 			_ctrlRed ctrlSetPosition [_barX + _barW * (1 - _redRatio), _barY, _barW * _redRatio, _barH];
 			_ctrlRed ctrlCommit UPDATE_DELAY;
-
-			_ctrlCount ctrlSetText format ["%1 vs %2", _blue, _red];
+			
+			if (_isVSTextEnabled) then 
+			{
+				_ctrlCount ctrlSetText format ["%1 vs %2", _blue, _red];
+			};
 		};
 
 		sleep UPDATE_DELAY;
