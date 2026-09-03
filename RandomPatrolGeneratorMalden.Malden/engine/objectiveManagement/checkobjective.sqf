@@ -68,11 +68,85 @@ while {sleep 10; (!RTBComplete)&&(!(missionNamespace getVariable ["isEndMissionR
 				isRTBMissionGenerated = true;
 				safeMargin = 800;
 
-				extractExtendedTriggerArea = createTrigger ["EmptyDetector", areaOfOperationPosition]; //create a trigger area created at object with variable name my_object
-				extractExtendedTriggerArea setTriggerArea [(extendedTriggerArea #0)+safeMargin, (extendedTriggerArea #1)+safeMargin, 0, true]; // trigger area with a radius of 100m.
-				
-				//Display area of operation
-				[[areaOfOperationPosition,[(extendedTriggerArea #0)+safeMargin,(extendedTriggerArea #1)+safeMargin]], "engine\objectiveManagement\drawAORectangle.sqf"] remoteExec ['BIS_fnc_execVM', 0, true];
+				//Define Type of extract
+				_typeOfExtract = missionNameSpace getVariable ["typeRTBMission", 0];
+				if (((_typeOfExtract == 0) && (random 100 > 50)) || (_typeOfExtract == 2)) then 
+				{	
+					//Extract by leaving blue square
+					extractExtendedTriggerArea = createTrigger ["EmptyDetector", areaOfOperationPosition]; //create a trigger area created at object with variable name my_object
+					extractExtendedTriggerArea setTriggerArea [(extendedTriggerArea #0)+safeMargin, (extendedTriggerArea #1)+safeMargin, 0, true]; // trigger area with a radius of 100m.
+
+					//Display area of operation
+					[[areaOfOperationPosition,[(extendedTriggerArea #0)+safeMargin,(extendedTriggerArea #1)+safeMargin]], "engine\objectiveManagement\drawAORectangle.sqf"] remoteExec ['BIS_fnc_execVM', 0, true];
+				} else 
+				{
+
+
+					//Note that objective fourth member is the position 
+					//GenerateExtract green smoke
+					_lastObjectiveLoc = [];
+					if (count _completedObjectives != 0) then 
+					{
+						_lastObjectiveLoc = (_completedObjectives#-1)#3;
+					} else 
+					{
+						if (count _missionFailedObjectives != 0) then 
+						{
+							_lastObjectiveLoc = (_missionFailedObjectives#-1)#3;
+						};
+					};
+
+					if (count _lastObjectiveLoc != 0) then 
+					{
+						_extractLoc = [[[_lastObjectiveLoc, 1200],[_lastObjectiveLoc, 800]], ["water"]] call BIS_fnc_randomPos;
+						
+						//_extractLoc = getPos player; //Debug code to spawn smoke on player pos
+						[[_extractLoc], 'objectGenerator\doSmoke.sqf'] remoteExec ['BIS_fnc_execVM', 0, true]; //Smoke _pos with green particle and light effect on bottom
+						
+						//Display marker of extract
+						if (missionNameSpace getVariable ["enableObjectiveExactLocation",0] != 0) then 
+						{
+							["taskRTB", _extractLoc] call BIS_fnc_taskSetDestination;
+						} else 
+						{
+							[["Extract", "ColorBlue", "mil_start", _extractLoc, "All"], 'objectGenerator\doGenerateMarker.sqf'] remoteExec ['BIS_fnc_execVM', 0, true]; //Place extract marker
+						};
+
+						_trgExtract = createTrigger ["EmptyDetector", _extractLoc];
+						_trgExtract setTriggerArea [30, 30, 0, true];
+						_trgExtract setTriggerActivation ["ANYPLAYER", "PRESENT", true];
+						_trgExtract setTriggerStatements [
+							"
+								private _players = call BIS_fnc_listPlayers;
+								private _total = count _players;
+								_total > 0 && { { _x inArea thisTrigger } count _players >= (_total / 2) }
+							",
+							"
+								['taskRTB','SUCCEEDED'] call BIS_fnc_taskSetState;
+
+								[{[50, 'RPG_ranking_objective_complete'] call doUpdateRank}] remoteExec ['call', -2];
+								
+								RTBComplete = true;
+
+								if (ironMan) then 
+								{
+									[objNull, 'personal'] remoteExec ['saveCustomLoadout', 0, true];
+								};
+
+								[['OBJ_OK'], 'engine\objectiveManagement\endMission.sqf'] remoteExec ['BIS_fnc_execVM', 2];
+							",
+							""
+						]; 
+					} else 
+					{
+						//Extract failed to generate
+						[['OBJ_OK'], 'engine\objectiveManagement\endMission.sqf'] remoteExec ['BIS_fnc_execVM', 2];
+					};
+
+					//Ulgy code to oversize extract area in order to go to green smoke extract
+					extractExtendedTriggerArea = createTrigger ["EmptyDetector", areaOfOperationPosition]; //create a trigger area created at object with variable name my_object
+					extractExtendedTriggerArea setTriggerArea [2*worldSize, 2*worldSize, 0, true]; // trigger area with a radius of 100m.
+				};
 			};
 
 			nbBluePlayer = {alive _x && side _x == blufor && (_x getVariable ["canRTB", false])} count allPlayers;
@@ -85,7 +159,7 @@ while {sleep 10; (!RTBComplete)&&(!(missionNamespace getVariable ["isEndMissionR
 			{
 				["taskRTB","SUCCEEDED"] call BIS_fnc_taskSetState;
 				//Reward player for RTB
-				[{[50, "RPG_ranking_objective_complete"] call doUpdateRank}] remoteExec ["call", 0];
+				[{[50, "RPG_ranking_objective_complete"] call doUpdateRank}] remoteExec ["call", -2];
 				RTBComplete = true;
 
 				//Save current loadout
