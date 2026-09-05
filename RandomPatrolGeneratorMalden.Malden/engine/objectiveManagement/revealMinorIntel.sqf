@@ -108,36 +108,30 @@ if (count _potentialMissionEnemyInfo >0) then
 		[[_mapMarkerName, _color, _mapMarkerIcon, _randomPos, "All"], 'objectGenerator\doGenerateMarker.sqf'] remoteExec ['BIS_fnc_execVM', 0, true];
 	};
 
-	_intelToReveal = "";
+	_intelToReveal = [];
 
 	switch (_revealedMode) do 
 	{
 		case "civilianAsking":
 		{
-			_intelToReveal = _intelCivilianRevelated;
-			_intelToReveal set [0, localize (_intelToReveal#0)];
-			_intelToReveal = format _intelToReveal;
-			
+			_intelToReveal = + _intelCivilianRevelated;
+
 			//Display dialog to the player
-			[[_intelToReveal], {params ["_intelToReveal"]; ["STR_RPG_CIVILIAN_NAME", _intelToReveal] call doDialogWithCustomParam}] remoteExec ["spawn", _caller]; 
+			[[_intelCivilianRevelated], {params ["_intelToRevealPassed"]; ["STR_RPG_CIVILIAN_NAME", _intelToRevealPassed] call doDialogWithCustomParam}] remoteExec ["spawn", _caller]; 
 		};
 		case "corpseLooting":
 		{
-			_intelToReveal = _intelDocumentRevelated;
-			_intelToReveal set [0, localize (_intelToReveal#0)];
-			_intelToReveal = format _intelToReveal;
+			_intelToReveal = + _intelDocumentRevelated;
 
 			//Display dialog to the player
-			[[_intelToReveal], {params ["_intelToReveal"]; ["STR_RPG_CORPSE_NAME", _intelToReveal] call doDialogWithCustomParam}] remoteExec ["spawn", _caller]; 
+			[[_intelDocumentRevelated], {params ["_intelToRevealPassed"]; ["STR_RPG_CORPSE_NAME", _intelToRevealPassed] call doDialogWithCustomParam}] remoteExec ["spawn", _caller]; 
 		};
 		case "HQ":
 		{
-			_intelToReveal = _intelDocumentRevelated;
-			_intelToReveal set [0, localize (_intelToReveal#0)];
-			_intelToReveal = format _intelToReveal;
+			_intelToReveal = + _intelDocumentRevelated;
 
 			//Display dialog to the player
-			[[_intelToReveal], {params ["_intelToReveal"]; ["STR_RPG_HC_NAME", _intelToReveal] call doDialogWithCustomParam}] remoteExec ["spawn", _caller]; 
+			[[_intelDocumentRevelated], {params ["_intelToRevealPassed"]; ["STR_RPG_HC_NAME", _intelToRevealPassed] call doDialogWithCustomParam}] remoteExec ["spawn", _caller]; 
 		};
 		default
 		{
@@ -147,6 +141,11 @@ if (count _potentialMissionEnemyInfo >0) then
 
 	//Create diary entry for the intel 
 	_intelDiaryAlreadyRevealed = _caller getVariable "diaryIntel";
+	
+	//Create message to display on diary
+	_intelToReveal set [0, localize (_intelToReveal#0)];
+	_intelToReveal = format _intelToReveal;
+
 	_allDiaryIntel =  format ["%1 <br/> %2 <br/>", _intelDiaryAlreadyRevealed, _intelToReveal];
 	_caller removeDiaryRecord  ["RPG", _intelDiaryAlreadyRevealed]; //Update diary doesn't work very well so delete/create is the only solution
 	_newIntelDiaryAlreadyRevealed = _caller createDiaryRecord ["RPG", ["RPG intel", _allDiaryIntel]];

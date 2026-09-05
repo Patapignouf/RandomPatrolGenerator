@@ -27,7 +27,11 @@ doDialog = {
 doDialogWithCustomParam = {
 	params ["_speaker", "_message"];
 
-	_textToSpeech = _message;
+	private _messageToDisplay = _message;
+
+	_messageToDisplay set [0, localize (_messageToDisplay#0)];
+	_textToSpeech = format _messageToDisplay;
+
 	_colorAndPos = [_speaker] call getSpeakerColorAndPosition;
 
 	//Localize speaker if necessary
