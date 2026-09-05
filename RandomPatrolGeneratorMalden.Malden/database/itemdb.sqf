@@ -482,7 +482,12 @@ BMrifleList_db = [
 		"MCC_SpearLT_16_300_ANO_SLK",
 		"MCC_SpearLT_9_300_BLK_MPLFS",
 		"MCC_SpearLT_145_762x39_ANO_Bravo",
-		"MCC_SpearLT_16_762x39_FDE_MPLFS"
+		"MCC_SpearLT_16_762x39_FDE_MPLFS",
+		"MCC_SpearLT_9_762x39_FDE_MPLFS",
+		"MCC_RD604",
+		"MCC_RD601",
+		"MCC_RD701",
+		"MCC_RD704"
     ]],
 
     [4,[
@@ -662,9 +667,14 @@ BMsniperRifleList_db = [
 		"MSS_Mk18_24_338LM_CPS_RAL",
 		"MSS_Mk18_24_375SP_CPS_BLK",
 		"MSS_SR25_BLK",
+		"MSS_SR25_FDE",
+		"MSS_SR25_762_16_B5_BLK",
 		"MSS_SR25_65CM_22_B5_BLK",
+		"MSS_SR25_65CM_14_B5_FDE",
 		"MSS_SR25_762_22_B5_FDE",
-		"MSS_Steyr762_13_FAB_FDE"
+		"MSS_Steyr762_13_FAB_FDE",
+		"MSS_Steyr762_16_FAB_FDE",
+		"MSS_Steyr762_13_B5_BLK"
     ]],
 
     [4,[
