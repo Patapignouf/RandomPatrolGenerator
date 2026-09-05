@@ -281,6 +281,68 @@ publicvariable "TPFlag1";
 			] remoteExec ["spawn", 0, true]; 
 		};
 
+		if ((missionNameSpace getVariable "enableChallengeMod") == 1) then 
+		{
+			[[_botHQ], 
+			{
+				params ["_botHQ"]; 
+				_botHQ addAction [format ["<img size='2' image='\a3\ui_f\data\IGUI\Cfg\holdactions\holdAction_requestleadership_ca.paa'/><t size='1'>%1</t>", "Get challenge (XP Bonus)"],{
+					//Define parameters
+					params ["_object","_caller","_ID","_avalaibleVehicle"];
+
+					_hasClickChallenge = _caller getVariable ["RPG_hasClickChallenge", false];
+					
+					if (!_hasClickChallenge) then 
+					{
+						_caller setVariable ["RPG_hasClickChallenge", true, true]; //Comment for debug
+						_currentFaction = indFaction;
+						if (side _caller == blufor) then 
+						{
+							_currentFaction = bluFaction;
+						};
+						
+						//Get all weapon unlocked for the player
+						_weaponAvailableList = [_caller, _currentFaction] call getVirtualWeaponList;
+						_filteredPrimaryWeaponAvailableList = _weaponAvailableList select {([_x] call getTypeOfWeapon) == "primary"}; //Filter primary weapon
+
+						if (count _filteredPrimaryWeaponAvailableList != 0) then 
+						{
+							_supportClass = selectRandom _filteredPrimaryWeaponAvailableList;
+
+							//Save challenge weapon
+							_caller setVariable ["RPG_ChallengeWeapon", _supportClass, true];
+
+							//Display challenge
+							_supportName = getText (configFile >> "CfgWeapons" >> _supportClass >> "displayName");
+							_weaponIcon = getText (configFile >> "CfgWeapons" >> _supportClass >> "picture");
+							_factionName = (factionInfos select {_x#1 == _currentFaction})#0#2;
+
+							//Replace weapon
+							_caller removeWeapon (primaryWeapon _caller);
+							_caller addWeapon _supportClass;
+							_caller selectWeapon _supportClass;
+
+							[[parseText format ["<t size='1.5'>Challenge play with <br/> %2<br/><img image='%1' size='5'/><br/><br/> <br/>Double XP earned %3</t><br/><br/><t size='1.2'></t>", _weaponIcon, _supportName, ""], "intel"], 'engine\hintManagement\addCustomHint.sqf'] remoteExec ['BIS_fnc_execVM', player]; 
+
+							// [[_caller], 'engine\reporterConverter.sqf'] remoteExec ['BIS_fnc_execVM', _caller];
+						} else 
+						{
+							systemChat "No weapons available";
+						};
+						
+					} else 
+					{
+						_weaponChallenge = _caller getVariable ["RPG_ChallengeWeapon", ""];
+						_supportName = getText (configFile >> "CfgWeapons" >> _weaponChallenge >> "displayName");
+
+						systemChat format ["Challenge already underway with %1", _supportName];
+					};
+
+					},[],0,true,false,"","((_target distance _this <7) && (_this getVariable ['isReporter', false] == false))"];
+				}
+			] remoteExec ["spawn", 0, true]; 
+		};
+
 		if ((missionNameSpace getVariable "warReporterOnHQ") == 1) then 
 		{
 			[[_botHQ], 
@@ -297,6 +359,7 @@ publicvariable "TPFlag1";
 				}
 			] remoteExec ["spawn", 0, true]; 
 		};
+
 
 	HQCommander = _botHQ;
 	publicVariable "HQCommander";

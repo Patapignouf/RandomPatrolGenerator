@@ -109,6 +109,32 @@ getPrestigeItems = {
 	_result
 };
 
+
+getTypeOfWeapon = {
+	// fnc_getWeaponSlot.sqf
+	// Usage: _slot = "arifle_MX_F" call fnc_getWeaponSlot;
+
+	params ["_className"];
+
+	private _config = configFile >> "CfgWeapons" >> _className;
+
+	if (!isClass _config) exitWith { "unknown" };
+
+	// "type" is a bitmask in CfgWeapons:
+	// 1 = Primary
+	// 2 = Secondary (launcher)
+	// 4 = Handgun
+	private _type = getNumber (_config >> "type");
+
+	if (_type == 0) exitWith { "unknown" };
+
+	if ((_type mod 2) == 1) exitWith { "primary" };              // bit 1
+	if (floor (_type / 2) mod 2 == 1) exitWith { "secondary" };  // bit 2
+	if (floor (_type / 4) mod 2 == 1) exitWith { "tertiary" };   // bit 4 (handgun)
+
+	"unknown"
+}; 
+
 getVirtualWeaponList = {
 	params ["_currentPlayer", "_currentFaction"];
 
@@ -600,7 +626,7 @@ setupArsenalToItem = {
 	//Add Weapon to arsenal
 	_currentWeaponItems = [_currentPlayer, _currentFaction] call getVirtualWeaponList;
 	[_itemToAttachArsenal, _currentWeaponItems, false, false] call BIS_fnc_addVirtualWeaponCargo;
-	
+		
 	//Add backpack to arsenal
 	_currentBackpackItems = [_currentPlayer, _currentFaction] call getVirtualBackPack;
 	[_itemToAttachArsenal, _currentBackpackItems, false, false] call BIS_fnc_addVirtualBackpackCargo;

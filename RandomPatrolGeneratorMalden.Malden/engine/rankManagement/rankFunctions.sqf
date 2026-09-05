@@ -198,14 +198,14 @@ getDisplayableCurrentXPPerCat = {
 
 	//Unit current experience
 	_basicXPToGather = [["RPG_ranking_infantry_kill","infantry kill"],
-					["RPG_ranking_vehicle_kill","vehicle kill"],
-					["deathNumber","death"],
-					["RPG_ranking_suppress","suppress"],
-					["RPG_ranking_heal","heal"],
-					["RPG_ranking_repair","repair"],
-					["RPG_ied_defuse","IED defuse"],
-					["RPG_ranking_intel_collect","intel collect"],
-					["RPG_ranking_objective_complete","objective complete"]
+						["RPG_ranking_vehicle_kill","vehicle kill"],
+						["deathNumber","death"],
+						["RPG_ranking_suppress","suppress"],
+						["RPG_ranking_heal","heal"],
+						["RPG_ranking_repair","repair"],
+						["RPG_ied_defuse","IED defuse"],
+						["RPG_ranking_intel_collect","intel collect"],
+						["RPG_ranking_objective_complete","objective complete"]
 					];
 
 	{
@@ -259,6 +259,21 @@ increasePrestige = {
 
 doUpdateRank = {
 	params ["_experienceBonus", "_experienceType", ["_experienceCustomParam", ""]];
+
+	//Check if player has accepted a challenge
+	if (player getVariable ["RPG_hasClickChallenge", false]) then 
+	{
+		//Check if player has the challegend weapon
+		if ((player getVariable ["RPG_ChallengeWeapon", ""]) == (primaryWeapon player)) then 
+		{
+			//If experience is positive and is not related to objective apply bonus 2x
+			if ((0<_experienceBonus) && (_experienceType != "RPG_ranking_objective_complete")) then 
+			{
+				_experienceBonus = 2*_experienceBonus;
+			};
+		};
+	};
+
 
 	if (typeName _experienceBonus == "SCALAR") then 
 	{
