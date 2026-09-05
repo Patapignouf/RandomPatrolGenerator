@@ -1063,7 +1063,7 @@ if (missionNameSpace getVariable ["enableOpforBMShop",1] == 1) then
 	//Temp add selling option to Black Market 
 	[_unitBM, ["<img size='2' image='\a3\ui_f_oldman\data\IGUI\Cfg\holdactions\map_ca.paa'/><t size='1'>Sell to black market</t>",{
 			params ["_object","_caller","_ID","_thisObjective"];
-			[[[true]], 'GUI\unlockedManagementGUI\unlockedManagementGUI.sqf'] remoteExec ['BIS_fnc_execVM', _caller];
+			[[[true]], 'GUI\unlockedManagementGUI\unlockedManagementGUI.sqf'] remoteExec ['BIS_fnc_execVM', 0];
 		},[],10,true,false,"","_target distance _this <4"]] remoteExec ["addAction", 0, true];
 
 	_unitBM addEventHandler ["Killed", {
@@ -1092,6 +1092,11 @@ if (missionNameSpace getVariable ["enableOpforBMShop",1] == 1) then
 		_unitBM enableAI "ANIM";
 		[_unitBM, "BRIEFING", "NONE"] remoteExecCall ["BIS_fnc_ambientAnim"];
 	};
+
+
+	_missionEnemyInfo = missionNamespace getVariable ["MissionEnemyInfo",[]];
+	_missionEnemyInfo pushBack ["BlackMarketInfo", getPos _unitBM, _unitBM];
+	missionNamespace setVariable ["MissionEnemyInfo", _missionEnemyInfo, true];
 
 	//3D Display
 	[["RPG_GUI_GENERAL_BM_SHOP", (getPosATL _unitBM) vectorAdd [0,0,((getPos _unitBM)#2)+3],"\a3\ui_f_oldman\data\IGUI\Cfg\holdactions\map_ca.paa" , [0,0,1,1]], 'GUI\3DNames\3DNames.sqf'] remoteExec ['BIS_fnc_execVM', 0, true];

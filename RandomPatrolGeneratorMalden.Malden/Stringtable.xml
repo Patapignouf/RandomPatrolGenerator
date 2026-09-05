@@ -1329,6 +1329,28 @@
         <Chinese>小心，%1位置有平民。注意你的火力...</Chinese>
         <Japanese>位置%1には市民がいます。火に注意してください...</Japanese>
     </Key>
+    <Key ID="STR_RPG_INTEL_BLACKMARKET_CIV">
+        <Original>A black market has been spotted at %1</Original>
+        <English>A black market has been spotted at %1</English>
+        <French>Un marché noir a été repéré à %1</French>
+        <Spanish>Se ha localizado un mercado negro en %1</Spanish>
+        <German>Ein Schwarzmarkt wurde bei %1 gesichtet</German>
+        <Italian>Un mercato nero è stato avvistato a %1</Italian>
+        <Russian>Черный рынок был замечен в %1</Russian>
+        <Chinese>在 %1 发现了黑市</Chinese>
+        <Japanese>闇市場が %1 で発見されました</Japanese>
+    </Key>
+    <Key ID="STR_RPG_INTEL_BLACKMARKET_DOC">
+        <Original>A black market has been located at %1</Original>
+        <English>A black market has been located at %1</English>
+        <French>Un marché noir a été localisé à %1</French>
+        <Spanish>Se ha localizado un mercado negro en %1</Spanish>
+        <German>Ein Schwarzmarkt wurde bei %1 lokalisiert</German>
+        <Italian>Un mercato nero è stato localizzato a %1</Italian>
+        <Russian>Черный рынок был обнаружен в %1</Russian>
+        <Chinese>黑市已在 %1 被定位</Chinese>
+        <Japanese>闇市場が %1 に特定されました</Japanese>
+    </Key>
     <Key ID="STR_RPG_INTEL_NOTHING_FOUND">
         <Original>No intel found</Original>
         <English>No intel found</English>

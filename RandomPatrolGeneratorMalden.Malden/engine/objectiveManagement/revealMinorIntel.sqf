@@ -91,6 +91,14 @@ if (count _potentialMissionEnemyInfo >0) then
 			_mapMarkerIcon = "loc_CivilDefense";
 			_color = "ColorCIV";
 		};
+		case "BlackMarketInfo":
+		{
+			_intelCivilianRevelated = ["STR_RPG_INTEL_BLACKMARKET_CIV", text _nearestCity];
+			_intelDocumentRevelated = ["STR_RPG_INTEL_BLACKMARKET_DOC", mapGridPosition _infoPos];
+			_mapMarkerName = "Black Market";
+			_mapMarkerIcon = "loc_CivilDefense";
+			_color = "ColorBlack";
+		};
 	};
 
 	//Locate on map
@@ -107,18 +115,27 @@ if (count _potentialMissionEnemyInfo >0) then
 		case "civilianAsking":
 		{
 			_intelToReveal = _intelCivilianRevelated;
+			_intelToReveal set [0, localize (_intelToReveal#0)];
+			_intelToReveal = format _intelToReveal;
+			
 			//Display dialog to the player
 			[[_intelToReveal], {params ["_intelToReveal"]; ["STR_RPG_CIVILIAN_NAME", _intelToReveal] call doDialogWithCustomParam}] remoteExec ["spawn", _caller]; 
 		};
 		case "corpseLooting":
 		{
 			_intelToReveal = _intelDocumentRevelated;
+			_intelToReveal set [0, localize (_intelToReveal#0)];
+			_intelToReveal = format _intelToReveal;
+
 			//Display dialog to the player
 			[[_intelToReveal], {params ["_intelToReveal"]; ["STR_RPG_CORPSE_NAME", _intelToReveal] call doDialogWithCustomParam}] remoteExec ["spawn", _caller]; 
 		};
 		case "HQ":
 		{
 			_intelToReveal = _intelDocumentRevelated;
+			_intelToReveal set [0, localize (_intelToReveal#0)];
+			_intelToReveal = format _intelToReveal;
+
 			//Display dialog to the player
 			[[_intelToReveal], {params ["_intelToReveal"]; ["STR_RPG_HC_NAME", _intelToReveal] call doDialogWithCustomParam}] remoteExec ["spawn", _caller]; 
 		};
@@ -130,7 +147,7 @@ if (count _potentialMissionEnemyInfo >0) then
 
 	//Create diary entry for the intel 
 	_intelDiaryAlreadyRevealed = _caller getVariable "diaryIntel";
-	_allDiaryIntel =  format ["%1 <br/> %2 <br/>", _intelDiaryAlreadyRevealed, localize _intelToReveal];
+	_allDiaryIntel =  format ["%1 <br/> %2 <br/>", _intelDiaryAlreadyRevealed, _intelToReveal];
 	_caller removeDiaryRecord  ["RPG", _intelDiaryAlreadyRevealed]; //Update diary doesn't work very well so delete/create is the only solution
 	_newIntelDiaryAlreadyRevealed = _caller createDiaryRecord ["RPG", ["RPG intel", _allDiaryIntel]];
 	_caller setVariable ["diaryIntel", _newIntelDiaryAlreadyRevealed];
