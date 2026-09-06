@@ -271,6 +271,12 @@ doUpdateRank = {
 			{
 				_experienceBonus = 2*_experienceBonus;
 			};
+		} else 
+		{
+			if ((0<_experienceBonus) && (_experienceType != "RPG_ranking_objective_complete")) then 
+			{
+				_experienceBonus = round (_experienceBonus/2);
+			};
 		};
 	};
 
