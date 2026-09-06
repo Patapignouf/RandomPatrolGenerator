@@ -136,7 +136,7 @@ getTypeOfWeapon = {
 }; 
 
 getVirtualWeaponList = {
-	params ["_currentPlayer", "_currentFaction"];
+	params ["_currentPlayer", "_currentFaction", ["_removeCommonWeaponsFromSpecificsClasses", false]];
 
 	_currentPlayerClass = _currentPlayer getVariable "role";
 	_virtualWeaponList = [];
@@ -150,12 +150,26 @@ getVirtualWeaponList = {
 
 	switch (_currentPlayerClass) do
 	{
+		case c_pilot:
+			{
+				//Add smg weapons only
+				_virtualWeaponList = _virtualWeaponList + (smgList_db select {_x select 1  == _currentFaction} select 0 select 0);
+				
+				//Add specific smg
+				if (missionNameSpace getVariable ["enableOpforWeaponShop",1] >= 1) then 
+				{
+					_virtualWeaponList = _virtualWeaponList +([_currentFaction, "smg", _unlockedStuff] call getPlayerFactionUnlockedWeaponForCategoryWithUnlockedInput);
+				};
+			};
 		case c_at:
 			{
-				_virtualWeaponList = _virtualWeaponList + (rifleList_db select {_x select 1  == _currentFaction} select 0 select 0);
-				_virtualWeaponList = _virtualWeaponList + (smgList_db select {_x select 1  == _currentFaction} select 0 select 0);
-				_virtualWeaponList = _virtualWeaponList + (launcherList_db select {_x select 1  == _currentFaction} select 0 select 0);
+				//Add commun weapons
+				_virtualWeaponList = _virtualWeaponList +  ([_currentFaction, _unlockedStuff] call addBasicRifle);
 
+				//Add default launcher
+				_virtualWeaponList = _virtualWeaponList + (launcherList_db select {_x select 1  == _currentFaction} select 0 select 0);
+				
+				//Add specific weapons and launcher
 				if (missionNameSpace getVariable ["enableOpforWeaponShop",1] >= 1) then 
 				{
 					_virtualWeaponList = _virtualWeaponList +([_currentFaction, "rifle", _unlockedStuff] call getPlayerFactionUnlockedWeaponForCategoryWithUnlockedInput);
@@ -165,56 +179,81 @@ getVirtualWeaponList = {
 			};
 		case c_autorifleman:
 			{
-				_virtualWeaponList = _virtualWeaponList + (rifleList_db select {_x select 1  == _currentFaction} select 0 select 0);
+				//Add basic stuff
+				if (!_removeCommonWeaponsFromSpecificsClasses) then 
+				{
+					_virtualWeaponList = _virtualWeaponList +  ([_currentFaction, _unlockedStuff] call addBasicRifle);
+				};
+
+				//Add default specific stuff
 				_virtualWeaponList = _virtualWeaponList + (autorifleList_db select {_x select 1  == _currentFaction} select 0 select 0);
 
+				//add unlocked specific stuff
 				if (missionNameSpace getVariable ["enableOpforWeaponShop",1] >= 1) then 
 				{
-					_virtualWeaponList = _virtualWeaponList +([_currentFaction, "rifle", _unlockedStuff] call getPlayerFactionUnlockedWeaponForCategoryWithUnlockedInput);
-					_virtualWeaponList = _virtualWeaponList +([_currentFaction, "smg", _unlockedStuff] call getPlayerFactionUnlockedWeaponForCategoryWithUnlockedInput);
 					_virtualWeaponList = _virtualWeaponList +([_currentFaction, "autoRifle", _unlockedStuff] call getPlayerFactionUnlockedWeaponForCategoryWithUnlockedInput);
 				};
 			};
 		case c_marksman;
 		case c_sniper: 
 			{
-				_virtualWeaponList = _virtualWeaponList + (rifleList_db select {_x select 1  == _currentFaction} select 0 select 0);
+				//Add basic stuff
+				if (!_removeCommonWeaponsFromSpecificsClasses) then 
+				{
+					_virtualWeaponList = _virtualWeaponList +  ([_currentFaction, _unlockedStuff] call addBasicRifle);
+				};
+
+				//Add default specific stuff
 				_virtualWeaponList = _virtualWeaponList + (marksmanrifleList_db select {_x select 1  == _currentFaction} select 0 select 0);
 
+				//add unlocked specific stuff
 				if (missionNameSpace getVariable ["enableOpforWeaponShop",1] >= 1) then 
 				{
-					_virtualWeaponList = _virtualWeaponList +([_currentFaction, "rifle", _unlockedStuff] call getPlayerFactionUnlockedWeaponForCategoryWithUnlockedInput);
-					_virtualWeaponList = _virtualWeaponList +([_currentFaction, "smg", _unlockedStuff] call getPlayerFactionUnlockedWeaponForCategoryWithUnlockedInput);
 					_virtualWeaponList = _virtualWeaponList +([_currentFaction, "sniperRifle", _unlockedStuff] call getPlayerFactionUnlockedWeaponForCategoryWithUnlockedInput);
 				};
 			};
 		case c_grenadier:
 			{
-				_virtualWeaponList = _virtualWeaponList + (rifleList_db select {_x select 1  == _currentFaction} select 0 select 0);
+				//Add basic stuff
+				if (!_removeCommonWeaponsFromSpecificsClasses) then 
+				{
+					_virtualWeaponList = _virtualWeaponList +  ([_currentFaction, _unlockedStuff] call addBasicRifle);
+				};
+
+				//Add default specific stuff
 				_virtualWeaponList = _virtualWeaponList + (grenadeLauncherList_db select {_x select 1  == _currentFaction} select 0 select 0);
 
+				//add unlocked specific stuff
 				if (missionNameSpace getVariable ["enableOpforWeaponShop",1] >= 1) then 
 				{
-					_virtualWeaponList = _virtualWeaponList +([_currentFaction, "rifle", _unlockedStuff] call getPlayerFactionUnlockedWeaponForCategoryWithUnlockedInput);
 					_virtualWeaponList = _virtualWeaponList +([_currentFaction, "grenadeLauncher", _unlockedStuff] call getPlayerFactionUnlockedWeaponForCategoryWithUnlockedInput);
-					_virtualWeaponList = _virtualWeaponList +([_currentFaction, "smg", _unlockedStuff] call getPlayerFactionUnlockedWeaponForCategoryWithUnlockedInput);
 				};
 			};				
 		default
 			{
-				//Non implemented role : Default rifle
-			 	_virtualWeaponList = _virtualWeaponList + (rifleList_db select {_x select 1  == _currentFaction} select 0 select 0); 
-				_virtualWeaponList = _virtualWeaponList + (smgList_db select {_x select 1  == _currentFaction} select 0 select 0);
-
-				if (missionNameSpace getVariable ["enableOpforWeaponShop",1] >= 1) then 
-				{
-					_virtualWeaponList = _virtualWeaponList +([_currentFaction, "rifle", _unlockedStuff] call getPlayerFactionUnlockedWeaponForCategoryWithUnlockedInput);
-					_virtualWeaponList = _virtualWeaponList +([_currentFaction, "smg", _unlockedStuff] call getPlayerFactionUnlockedWeaponForCategoryWithUnlockedInput);
-				};
+				//Add basic stuff
+				_virtualWeaponList = _virtualWeaponList +  ([_currentFaction, _unlockedStuff] call addBasicRifle);
 			};
 	};
 	//diag_log format ["Player %1 with role %2 has access to weapons %3", name _currentPlayer, _currentPlayerClass,_virtualWeaponList ];
 	_virtualWeaponList
+};
+
+
+addBasicRifle = {
+	params ["_currentFaction", "_unlockedStuff"];
+
+	_basicRifleFilteredList = [];
+
+	_basicRifleFilteredList = _basicRifleFilteredList + (rifleList_db select {_x select 1  == _currentFaction} select 0 select 0); 
+	_basicRifleFilteredList = _basicRifleFilteredList + (smgList_db select {_x select 1  == _currentFaction} select 0 select 0);
+	
+	if (missionNameSpace getVariable ["enableOpforWeaponShop",1] >= 1) then 
+	{
+		_basicRifleFilteredList = _basicRifleFilteredList +([_currentFaction, "rifle", _unlockedStuff] call getPlayerFactionUnlockedWeaponForCategoryWithUnlockedInput);
+		_basicRifleFilteredList = _basicRifleFilteredList +([_currentFaction, "smg", _unlockedStuff] call getPlayerFactionUnlockedWeaponForCategoryWithUnlockedInput);
+	};
+	_basicRifleFilteredList
 };
 
 // //GetFull weapon list of a faction to build a shop

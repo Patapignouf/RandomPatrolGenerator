@@ -302,7 +302,7 @@ publicvariable "TPFlag1";
 						};
 						
 						//Get all weapon unlocked for the player
-						_weaponAvailableList = [_caller, _currentFaction] call getVirtualWeaponList;
+						_weaponAvailableList = [_caller, _currentFaction, true] call getVirtualWeaponList;
 						_filteredPrimaryWeaponAvailableList = _weaponAvailableList select {([_x] call getTypeOfWeapon) == "primary"}; //Filter primary weapon
 
 						if (count _filteredPrimaryWeaponAvailableList != 0) then 
