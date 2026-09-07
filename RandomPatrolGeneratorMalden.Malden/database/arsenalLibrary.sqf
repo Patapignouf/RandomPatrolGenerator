@@ -136,7 +136,7 @@ getTypeOfWeapon = {
 }; 
 
 getVirtualWeaponList = {
-	params ["_currentPlayer", "_currentFaction", ["_removeCommonWeaponsFromSpecificsClasses", false]];
+    params ["_currentPlayer", "_currentFaction", ["_removeCommonWeaponsFromSpecificsClasses", false]];
 
 	_currentPlayerClass = _currentPlayer getVariable "role";
 	_virtualWeaponList = [];
@@ -523,7 +523,8 @@ getVirtualMagazine = {
 		case c_autorifleman:
 			{
 				{
-					_currentWeaponMagazineList = getArray (configfile >> "CfgWeapons" >> _x >> "magazines");
+					//_currentWeaponMagazineList = getArray (configfile >> "CfgWeapons" >> _x >> "magazines");
+					_currentWeaponMagazineList = [_x] call getCompatibleMagazines; //Update magazine function
 					if (count _currentWeaponMagazineList != 0) then 
 					{
 						_currentWeapon = _x;
@@ -539,48 +540,18 @@ getVirtualMagazine = {
 					};
 				} foreach currentWeaponList;
 			};
-		case c_grenadier:
-			{ 
-				{
-					_currentWeapon = _x;
-					//Add default weapon magazine except large magazine
-					_listOfLargeMagazineText = ["60Rnd", "75Rnd", "75rnd", "100Rnd", "150Rnd", "200Rnd"]; //
-					_currentWeaponMagazineList = [_currentWeapon] call getListOfMagazines;
-					//Standard magazine
-					if (count (_currentWeaponMagazineList#0) != 0) then 
-					{
-						{
-							if ((virtualMagazineList) findIf {_currentWeapon == (_x)} == -1) then 
-							{
-								if (!([_x, _listOfLargeMagazineText] call isElementOfArrayInString) && !([_x] call isBannedItem)) then 
-								{
-									virtualMagazineList pushBackUnique _x;
-								};
-							};
-						} foreach (_currentWeaponMagazineList#0);
-					};
-					//Grenades
-					if (count (_currentWeaponMagazineList#1) != 0) then 
-					{
-						{
-							if ((virtualMagazineList) findIf {_currentWeapon == (_x)} == -1) then 
-							{
-								if (!([_x, _listOfLargeMagazineText] call isElementOfArrayInString) && !([_x] call isBannedItem)) then 
-								{
-									virtualMagazineList pushBackUnique _x;
-								};
-							};
-						} foreach (_currentWeaponMagazineList#1);
-					};
-				} foreach currentWeaponList;
-			};
+		// case c_grenadier:
+		// {
+		// 	//TODO Allow grenade muzzle only on this role 
+		// 	//Update getCompatibleMagazines function to add new filter parameter
+		// };
 		default 
 			{ 
 				{
 					//Add default weapon magazine except large magazine
 					//Add explosive bullet to exception
-					_listOfLargeMagazineText = ["60Rnd", "75Rnd", "75rnd", "100Rnd", "150Rnd", "200Rnd", "_Mod0"]; //
-					_currentWeaponMagazineList = getArray (configfile >> "CfgWeapons" >> _x >> "magazines");
+					_listOfLargeMagazineText = ["60Rnd", "75Rnd", "75rnd", "100Rnd", "150Rnd", "200Rnd", "_Mod0", "_60_TSX"]; //
+					_currentWeaponMagazineList = [_x] call getCompatibleMagazines; //Update magazine function
 					if (count _currentWeaponMagazineList != 0) then 
 					{
 						_currentWeapon = _x;
@@ -619,15 +590,15 @@ getListOfMagazines =
 
 	private _weaponCfg = configFile >> "CfgWeapons" >> _weapon;
 
-	// tous les muzzles
+	//Check every muzzle
 	private _muzzles = getArray (_weaponCfg >> "muzzles");
 
-	// 🔫 muzzle principal
+	// main muzzle 
 	if ("this" in _muzzles) then {
 		_normalMags = getArray (_weaponCfg >> "magazines");
 	};
 
-	// 💣 autres muzzles = GL / secondaires
+	// 💣 other muzzles = GL 
 	{
 		if (_x != "this") then {
 			private _muzzleCfg = _weaponCfg >> _x;
@@ -638,11 +609,152 @@ getListOfMagazines =
 		};
 	} forEach _muzzles;
 
-	// supprimer doublons
+	//Clean duplicate
 	_normalMags = _normalMags arrayIntersect _normalMags;
 	_glMags     = _glMags arrayIntersect _glMags;
 
 	[_normalMags, _glMags]
+};
+
+
+getCompatibleMagazines = {
+	params [
+		["_weaponClass", "", [""]]
+	];
+
+	if (_weaponClass == "") exitWith { [] };
+
+	private _allMagazines = [];
+	private _weaponConfig = configFile >> "CfgWeapons" >> _weaponClass;
+
+	if (!isClass _weaponConfig) exitWith { [] };
+
+	// 1. Déterminer tous les muzzles de l'arme (ex: "this", "EGLM")
+	private _muzzles = ["this"];
+	private _configMuzzles = getArray (_weaponConfig >> "muzzles");
+	{
+		if (_x != "this") then { _muzzles pushBackUnique _x };
+	} forEach _configMuzzles;
+
+	// 2. Parcourir chaque muzzle pour extraire les chargeurs et MagWells
+	{
+		private _muzzleName = _x;
+		// Si le muzzle est "this", on lit à la racine de l'arme. Sinon, on lit dans la sous-classe du muzzle.
+		private _muzzleConfig = if (_muzzleName == "this") then { _weaponConfig } else { _weaponConfig >> _muzzleName };
+		
+		// Remonter l'héritage de la classe de l'arme/muzzle pour ne rater aucun chargeur des parents
+		while { isClass _muzzleConfig && { configName _muzzleConfig != "" } } do {
+			
+			// A. Extraction directe via l'array "magazines"
+			if (isArray (_muzzleConfig >> "magazines")) then {
+				{ _allMagazines pushBackUnique _x; } forEach (getArray (_muzzleConfig >> "magazines"));
+			};
+			
+			// B. Extraction via "magazineWell" (et exploration de CfgMagazineWells)
+			if (isArray (_muzzleConfig >> "magazineWell")) then {
+				{
+					private _wellName = _x;
+					private _wellConfig = configFile >> "CfgMagazineWells" >> _wellName;
+					
+					if (isClass _wellConfig) then {
+						// Parcourir toutes les sous-classes (les variantes) présentes dans ce MagazineWell
+						for "_i" from 0 to (count _wellConfig - 1) do {
+							private _subWell = _wellConfig select _i;
+							if (isArray _subWell) then {
+								{ _allMagazines pushBackUnique _x; } forEach (getArray _subWell);
+							};
+						};
+					};
+				} forEach (getArray (_muzzleConfig >> "magazineWell"));
+			};
+			
+			// Passer au parent de la config pour la prochaine itération de la boucle de l'héritage
+			_muzzleConfig = inheritsFrom _muzzleConfig;
+		};
+	} forEach _muzzles;
+
+	// Retourner le tableau final nettoyé des doublons (trié pour le confort)
+	_allMagazines sort true;
+	_allMagazines
+
+};
+
+
+replacePrimaryWeapon = {
+	params [
+		["_unit", player, [objNull]],
+		["_newWeapon", "", [""]]
+	];
+
+	if (isNull _unit) exitWith {
+		hint "Invalid unit";
+	};
+
+	if (_newWeapon == "" || {isNil "_newWeapon"} || {!isClass (configFile >> "CfgWeapons" >> _newWeapon)}) exitWith {
+		hint "Invalid new weapon";
+	};
+
+	// Current primary weapon
+	//_unit = player;
+	private _oldWeapon = primaryWeapon _unit;
+	private _magCount = 10; //Default 10 mags
+
+	
+	//Remove old weapon
+	if (_oldWeapon != "") then {
+
+		// Liste des chargeurs compatibles avec l'ancienne arme
+		private _compatibleMags = [_oldWeapon] call  getCompatibleMagazines;
+
+		private _compatibleMagsLower = _compatibleMags apply {toLower _x};
+
+
+		// Compter le nombre de chargeurs compatibles actuellement en possession
+		// (magazines renvoie aussi bien le chargeur inséré que ceux en réserve)
+		_magCount = {(toLower _x) in _compatibleMagsLower} count magazines _unit;
+
+		// Retirer l'arme principale (et son chargeur inséré)
+		_unit removeWeapon _oldWeapon;
+		_unitMagazine = magazines _unit;
+
+		// Retirer tous les chargeurs compatibles restants dans l'inventaire
+		{
+			if ((toLower _x) in _compatibleMagsLower) then {
+				_unit removeMagazine _x;
+			};
+		} forEach magazines _unit;
+
+	};
+
+	// Ajouter la nouvelle arme
+	_unit addWeapon _newWeapon;
+
+	// Déterminer le chargeur par défaut de la nouvelle arme
+	private _newMags = getArray (configFile >> "CfgWeapons" >> _newWeapon >> "magazines");
+
+	if (count _newMags > 0) then {
+		private _defaultMag = _newMags select 0;
+
+		// Give the first magazine
+		_unit addMagazine _defaultMag;
+
+		// Complete magazine
+		for "_i" from 2 to _magCount do {
+			_unit addMagazine _defaultMag;
+		};
+	} else {
+		hint "Attention : aucun chargeur trouvé pour la nouvelle arme.";
+	};
+
+	// Take primary weapon and force reload
+	_unit selectWeapon (primaryWeapon _unit);
+
+	[_unit] spawn 
+	{
+		params ["_unit"];
+		sleep 2;
+		reload _unit;
+	};
 };
 
 setupArsenalToItem = {
