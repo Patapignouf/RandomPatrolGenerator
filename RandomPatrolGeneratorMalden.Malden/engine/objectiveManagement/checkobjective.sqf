@@ -104,7 +104,7 @@ while {sleep 10; (!RTBComplete)&&(!(missionNamespace getVariable ["isEndMissionR
 						[[_extractLoc], 'objectGenerator\doSmoke.sqf'] remoteExec ['BIS_fnc_execVM', 0, true]; //Smoke _pos with green particle and light effect on bottom
 						
 						//Display marker of extract
-						if (missionNameSpace getVariable ["enableObjectiveExactLocation",0] != 0) then 
+						if (missionNameSpace getVariable ["enableObjectiveExactLocation", 0] != 0) then 
 						{
 							["taskRTB", _extractLoc] call BIS_fnc_taskSetDestination;
 						} else 

@@ -503,10 +503,11 @@ generateObjectiveObject =
 				//Generate objective object
 				_objectiveObject = createVehicle [selectRandom avalaibleSupplyBox, _currentRandomPos, [], 0, "NONE"];
 				_objectiveObject setVariable ["isObjectiveObject", true, true];
-				_thisObjective = [_objectiveObject, _thisObjectiveType] call generateObjectiveTracker;
 
 				//Search safe position around objective position
 				_objectiveObject setPos ([( _thisObjectivePosition), 1, 25, 5, 0, 20, 0] call BIS_fnc_findSafePos);
+
+				_thisObjective = [_objectiveObject, _thisObjectiveType] call generateObjectiveTracker;
 
 				//Manage objective completion
 				[_thisObjective] execVM 'engine\objectiveManagement\checkObjectInArea.sqf';  
@@ -610,13 +611,13 @@ generateObjectiveObject =
 				//Generate objective object
 				_objectiveObject = createVehicle [selectRandom avalaibleBomb, _currentRandomPos, [], 0, "NONE"];
 				_objectiveObject setVariable ["isObjectiveObject", true, true];
-				_thisObjective = [_objectiveObject, _thisObjectiveType] call generateObjectiveTracker;
-
-				//_objectiveObject setPos ([( _thisObjectivePosition), 1, 25, 5, 0, 20, 0] call BIS_fnc_findSafePos);
-				_objectiveObject setVariable ["thisTask", _thisObjective select 2, true];
 
 				//Add intel action to the intel case
 				_objectiveObject setPosATL _thisObjectivePosition;
+
+				_thisObjective = [_objectiveObject, _thisObjectiveType] call generateObjectiveTracker;
+
+				_objectiveObject setVariable ["thisTask", _thisObjective select 2, true];
 
 				//Bomb code
 				_code = random [10000000000,
@@ -821,9 +822,12 @@ generateObjectiveObject =
 				diag_log format ["HVT %2 _thisObjectivePosition : %1",_thisObjectivePosition, _objectiveObject];
 				_objectiveObject setVariable ["isObjectiveObject", true, true];
 				_objectiveObject setVariable ["isObjectiveObject", true, true];
+
+				//Define HVT location
+				_objectiveObject setPos _thisObjectivePosition;
+
 				_thisObjective = [_objectiveObject, _thisObjectiveType] call generateObjectiveTracker;
 				diag_log format ["HVT %2 _thisObjectivePosition : %1",_thisObjectivePosition, _objectiveObject];
-				_objectiveObject setPos _thisObjectivePosition;
 
 				_objectiveObject setVariable ["thisObjective", _thisObjective, true];
 
@@ -861,10 +865,11 @@ generateObjectiveObject =
 				_objectiveObject =  leader ([_currentRandomPos, civilian, [selectRandom avalaibleVIP],[],[],[],[],[], random 360] call BIS_fnc_spawnGroup);
 				removeAllWeapons _objectiveObject;
 				_objectiveObject setVariable ["isObjectiveObject", true, true];
-				_thisObjective = [_objectiveObject, _thisObjectiveType] call generateObjectiveTracker;
 
 				diag_log format ["VIP task setup ! : %1", _objectiveObject];
 				_objectiveObject setPos _thisObjectivePosition;
+
+				_thisObjective = [_objectiveObject, _thisObjectiveType] call generateObjectiveTracker;
 
 				//Play random dialog to help players to find objective
 				[_objectiveObject] spawn {
@@ -935,10 +940,11 @@ generateObjectiveObject =
 				//Generate objective object
 				_objectiveObject =  leader ([_thisObjectivePosition, civilian, [selectRandom avalaibleVIP],[],[],[],[],[], random 360] call BIS_fnc_spawnGroup);
 				_objectiveObject setVariable ["isObjectiveObject", true, true];
-				_thisObjective = [_objectiveObject, _thisObjectiveType] call generateObjectiveTracker;
 
 				diag_log format ["Hostage task setup ! : %1 on pos %2", _objectiveObject, _thisObjectivePosition];
 				_objectiveObject setPos _thisObjectivePosition;
+
+				_thisObjective = [_objectiveObject, _thisObjectiveType] call generateObjectiveTracker;
 
 				//Use ACE function to set hancuffed
 				_objectiveObject setcaptive true;                              // keep tangos from targeting hostage until breach trigger fires
@@ -958,7 +964,10 @@ generateObjectiveObject =
 					"_this distance _target < 3",						// Condition for the action to be shown
 					"_caller distance _target < 3",						// Condition for the action to progress
 					{
+						params ["_object","_caller","_ID","_objectParams"];
+
 						// Action start code
+						_caller playMoveNow "AinvPknlMstpSnonWnonDnon_medic_1";
 					}, 
 					{
 						// Action on going code
@@ -1050,10 +1059,11 @@ generateObjectiveObject =
 				//Generate objective object
 				_objectiveObject = createVehicle [selectRandom avalaibleStealVehicle, _currentRandomPos, [], 0, "NONE"];
 				_objectiveObject setVariable ["isObjectiveObject", true, true];
-				_thisObjective = [_objectiveObject, _thisObjectiveType] call generateObjectiveTracker;
 
 				diag_log format ["Steal task setup ! : %1", _objectiveObject];
 				_objectiveObject setPos ([( _thisObjectivePosition), 1, 100, 7, 0, 20, 0] call BIS_fnc_findSafePos);
+
+				_thisObjective = [_objectiveObject, _thisObjectiveType] call generateObjectiveTracker;
 
 				//Manage objective completion
 				[_thisObjective] execVM 'engine\objectiveManagement\checkObjectInArea.sqf';  
@@ -1090,10 +1100,14 @@ generateObjectiveObject =
 				//Generate objective object
 				_objectiveObject = createTrigger ["EmptyDetector", _currentRandomPos]; //create a trigger area created at object with variable name my_object
 				_objectiveObject setVariable ["isObjectiveObject", true, true];
-				_thisObjective = [_objectiveObject, _thisObjectiveType] call generateObjectiveTracker;
 
 				//Add trigger to detect cleared area
 				_objectiveObject setPos _thisObjectivePosition; //create a trigger area created at object with variable name my_object
+
+				//Define objective metadata
+				_thisObjective = [_objectiveObject, _thisObjectiveType] call generateObjectiveTracker;
+
+				//Define objective property
 				_objectiveObject setTriggerArea [200, 200, 0, false]; // trigger area with a radius of 200m.
 				_objectiveObject setVariable ["associatedTask", _thisObjective];
 				[_objectiveObject] execVM 'engine\objectiveManagement\checkClearArea.sqf'; 
@@ -1153,10 +1167,12 @@ generateObjectiveObject =
 				//Generate objective object
 				_objectiveObject = createTrigger ["EmptyDetector", _currentRandomPos]; //create a trigger area created at object with variable name my_object
 				_objectiveObject setVariable ["isObjectiveObject", true, true];
+
+				_objectiveObject setPos _thisObjectivePosition; //create a trigger area created at object with variable name my_object
+
 				_thisObjective = [_objectiveObject, _thisObjectiveType] call generateObjectiveTracker;
 
 				//Add trigger to detect cleared area
-				_objectiveObject setPos _thisObjectivePosition; //create a trigger area created at object with variable name my_object
 				_objectiveObject setTriggerArea [200, 200, 0, false]; // trigger area with a radius of 200m.
 				_objectiveObject setVariable ["associatedTask", _thisObjective];
 				[_objectiveObject, 1] execVM 'engine\objectiveManagement\checkDefendArea.sqf';
@@ -1166,10 +1182,12 @@ generateObjectiveObject =
 				//Generate objective object
 				_objectiveObject = createTrigger ["EmptyDetector", _currentRandomPos]; //create a trigger area created at object with variable name my_object
 				_objectiveObject setVariable ["isObjectiveObject", true, true];
+
+				_objectiveObject setPos _thisObjectivePosition; //create a trigger area created at object with variable name my_object
+
 				_thisObjective = [_objectiveObject, _thisObjectiveType] call generateObjectiveTracker;
 
 				//Add trigger to detect cleared area
-				_objectiveObject setPos _thisObjectivePosition; //create a trigger area created at object with variable name my_object
 				_objectiveObject setTriggerArea [200, 200, 0, false]; // trigger area with a radius of 200m.
 				_objectiveObject setVariable ["associatedTask", _thisObjective];
 				[_objectiveObject, false] execVM 'engine\objectiveManagement\checkClearArea.sqf'; 
@@ -1226,10 +1244,11 @@ generateObjectiveObject =
 				//Generate objective object
 				_objectiveObject = createVehicle ["Flag_Red_F", _currentRandomPos, [], 0, "NONE"];
 				_objectiveObject setVariable ["isObjectiveObject", true, true];
-				_thisObjective = [_objectiveObject, _thisObjectiveType] call generateObjectiveTracker;
 
 				//Search safe position around objective position
 				_objectiveObject setPos ([( _thisObjectivePosition), 1, 25, 5, 0, 20, 0] call BIS_fnc_findSafePos);
+
+				_thisObjective = [_objectiveObject, _thisObjectiveType] call generateObjectiveTracker;
 
 				//Add capture action to the flag
 				[
@@ -1243,6 +1262,9 @@ generateObjectiveObject =
 						// Action start code
 						params ["_object","_caller","_ID","_objectParams"];
 						{
+							//Play animation 
+							_caller playMoveNow "AinvPknlMstpSnonWnonDnon_medic_1";
+
 							//Check every opfor group near the flag
 							if ((_object distance (leader _x)) < 150 ) then 
 							{
@@ -1329,13 +1351,13 @@ generateObjectiveObject =
 				//Generate objective object
 				_objectiveObject = leader ([_currentRandomPos, civilian, [selectRandom avalaibleVIP],[],[],[],[],[], random 360] call BIS_fnc_spawnGroup);
 				_objectiveObject setVariable ["isObjectiveObject", true, true];
-				_thisObjective = [_objectiveObject, _thisObjectiveType] call generateObjectiveTracker;
 				_objectiveObject disableAI "PATH";
 				removeAllWeapons _objectiveObject;
 
 				//Add dialog to the informant
 				diag_log format ["Informant task setup ! : %1", _objectiveObject];
 				_objectiveObject setPos ( _thisObjectivePosition);
+				_thisObjective = [_objectiveObject, _thisObjectiveType] call generateObjectiveTracker;
 
 				//Play random dialog to help players to find objective
 				[_objectiveObject] spawn {
@@ -1451,9 +1473,6 @@ generateObjectiveObject =
 			};
 	};
 
-	//Add objective location
-	_thisObjective pushBack _thisObjectivePosition;
-
 	//Setup all missions database
 	currentMissionObjectives = missionNamespace getVariable ["MissionObjectives",[]];
 	currentMissionObjectives pushBack _thisObjective;
@@ -1478,5 +1497,6 @@ generateObjectiveTracker =
 	_thisObjective pushBack _thisObjectiveType;
 	_objectiveUniqueID = format ["%1%2",_thisObjectiveType, random 10000];
 	_thisObjective pushBack _objectiveUniqueID;
+	_thisObjective pushBack (getPos _thisObjectiveObject);
 	_thisObjective;
 };
