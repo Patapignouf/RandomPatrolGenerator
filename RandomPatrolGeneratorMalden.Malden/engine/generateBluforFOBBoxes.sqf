@@ -315,16 +315,19 @@ publicvariable "TPFlag1";
 							//Display challenge
 							_supportName = getText (configFile >> "CfgWeapons" >> _supportClass >> "displayName");
 							_weaponIcon = getText (configFile >> "CfgWeapons" >> _supportClass >> "picture");
-							_factionName = (factionInfos select {_x#1 == _currentFaction})#0#2;
 
 							//Replace weapon
-							_caller removeWeapon (primaryWeapon _caller);
-							_caller addWeapon _supportClass;
-							_caller selectWeapon _supportClass;
+							//Old function
+							// _caller removeWeapon (primaryWeapon _caller);
+							// _caller addWeapon _supportClass;
+							// _caller selectWeapon _supportClass;
+
+							[_caller, _supportClass] call replacePrimaryWeapon; //updated function
 
 							[[parseText format ["<t size='1.5'>Challenge play with <br/> %2<br/><img image='%1' size='5'/><br/><br/> <br/>Double XP earned %3</t><br/><br/><t size='1.2'></t>", _weaponIcon, _supportName, ""], "intel"], 'engine\hintManagement\addCustomHint.sqf'] remoteExec ['BIS_fnc_execVM', player]; 
 
-							// [[_caller], 'engine\reporterConverter.sqf'] remoteExec ['BIS_fnc_execVM', _caller];
+							//Display challenge to other players
+							[format ["%1 has a challenge with %2", name _caller, _supportName]] remoteExec ["systemChat", 0, true];
 						} else 
 						{
 							systemChat "No weapons available";
