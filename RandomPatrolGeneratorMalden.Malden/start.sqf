@@ -1335,6 +1335,9 @@ switch (missionNameSpace getVariable ["WeatherSetting", 2]) do
 		};
 };
 
+//Setup time multipler 
+[[missionNameSpace getVariable ["TimeMultiplierVar", 1]], 'engine\timeMultiplierManager.sqf'] remoteExec ['BIS_fnc_execVM', 0];
+
 
 //Setup difficulty management
 if (enableAutoDifficultyBalance==1) then 
