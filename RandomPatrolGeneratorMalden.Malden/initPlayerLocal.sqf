@@ -109,6 +109,11 @@ if (!didJIP) then
 //Wait mission setup
 waitUntil {missionNamespace getVariable "generationSetup" == true};
 
+//Prevent JIP player from spawn corruption
+if (didJIP) then 
+{
+	waitUntil {!isNil "missionGenerated"};
+};
 
 //Format mission settings display to other players
 _missionSettings = "";
