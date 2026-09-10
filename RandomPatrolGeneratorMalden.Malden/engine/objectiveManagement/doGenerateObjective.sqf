@@ -893,7 +893,7 @@ generateObjectiveObject =
 				};
 				
 				//Objective failed
-				_objectiveObject setVariable ["thisTask", _thisObjective select 2, true];
+				_objectiveObject setVariable ["thisTask", _thisObjective, true];
 				
 				//Manage objective completion
 				[_thisObjective] execVM 'engine\objectiveManagement\checkObjectInArea.sqf';  
@@ -901,7 +901,8 @@ generateObjectiveObject =
 				_objectiveObject addEventHandler ["Killed", {
 					params ["_unit", "_killer", "_instigator", "_useEffects"];
 					//get task associated to the object
-					_thisTaskID = _unit getVariable "thisTask";
+					_thisObjective = _unit getVariable "thisTask";
+					_thisTaskID = _thisObjective#2;
 
 					//Remove all actions
 					[_unit] remoteExec ["removeAllEventHandlers", 0, true];
@@ -919,7 +920,7 @@ generateObjectiveObject =
 
 					//Manage objective
 					_missionFailedObjectives = missionNamespace getVariable ["missionFailedObjectives", []];
-					_missionFailedObjectives = _missionFailedObjectives + [_thisTaskID]; //needs to be improved
+					_missionFailedObjectives = _missionFailedObjectives + [_thisObjective]; //needs to be improved
 					missionNamespace setVariable ["missionFailedObjectives", _missionFailedObjectives, true];
 
 					//Delete task marker
@@ -953,7 +954,7 @@ generateObjectiveObject =
 				_objectiveObject disableAI "PATH";
 
 				//Objective failed
-				_objectiveObject setVariable ["thisTask", _thisObjective select 2, true];
+				_objectiveObject setVariable ["thisTask", _thisObjective, true];
 				
 				//Manage objective completion
 				[
@@ -1023,7 +1024,8 @@ generateObjectiveObject =
 				_objectiveObject addEventHandler ["Killed", {
 					params ["_unit", "_killer", "_instigator", "_useEffects"];
 					//get task associated to the object
-					_thisTaskID = _unit getVariable "thisTask";
+					_thisObjective = _unit getVariable "thisTask";
+					_thisTaskID = _thisObjective#2;
 
 					//Remove all actions
 					[_unit] remoteExec ["removeAllEventHandlers", 0, true];
@@ -1038,7 +1040,7 @@ generateObjectiveObject =
 
 					//Manage objective
 					_missionFailedObjectives = missionNamespace getVariable ["missionFailedObjectives", []];
-					_missionFailedObjectives = _missionFailedObjectives + [_thisTaskID]; //needs to be improved
+					_missionFailedObjectives = _missionFailedObjectives + [_thisObjective]; //needs to be improved
 					missionNamespace setVariable ["missionFailedObjectives", _missionFailedObjectives, true];
 
 					//Delete task marker
