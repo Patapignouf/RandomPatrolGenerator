@@ -550,7 +550,7 @@ getVirtualMagazine = {
 				{
 					//Add default weapon magazine except large magazine
 					//Add explosive bullet to exception
-					_listOfLargeMagazineText = ["60Rnd", "75Rnd", "75rnd", "100Rnd", "150Rnd", "200Rnd", "_Mod0", "_60_TSX"]; //
+					_listOfLargeMagazineText = ["60Rnd", "75Rnd", "75rnd", "100Rnd", "150Rnd", "200Rnd", "_Mod0", "_60_TSX", "556_60_"]; //
 					_currentWeaponMagazineList = [_x] call getCompatibleMagazines; //Update magazine function
 					if (count _currentWeaponMagazineList != 0) then 
 					{
