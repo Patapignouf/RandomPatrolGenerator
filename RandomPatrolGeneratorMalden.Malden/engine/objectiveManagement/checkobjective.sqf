@@ -85,17 +85,25 @@ while {sleep 10; (!RTBComplete)&&(!(missionNamespace getVariable ["isEndMissionR
 					//Note that objective fourth member is the position 
 					//GenerateExtract green smoke
 					_lastObjectiveLoc = [];
+					_objectiveCandidate = [];
 					if (count _completedObjectives != 0) then 
 					{
-						_lastObjectiveLoc = (_completedObjectives#-1)#3;
+						_objectiveCandidate = (_completedObjectives#-1);
 					} else 
 					{
 						if (count _missionFailedObjectives != 0) then 
 						{
-							_lastObjectiveLoc = (_missionFailedObjectives#-1)#3;
+							_objectiveCandidate = (_missionFailedObjectives#-1);
 						};
 					};
 
+					//If objective candidate is complete (with metadata like the position)
+					if (3 < count _objectiveCandidate) then 
+					{
+						_lastObjectiveLoc = _objectiveCandidate#3;
+					};
+
+					//If objective candidate is OK then let's do a normal extract ending
 					if (count _lastObjectiveLoc != 0) then 
 					{
 						_extractLoc = [[[_lastObjectiveLoc, 1200],[_lastObjectiveLoc, 800]], ["water"]] call BIS_fnc_randomPos;
