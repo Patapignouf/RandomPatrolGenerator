@@ -77,7 +77,11 @@ if (hasInterface) then
 	};
 
 	//Remove custom voice 
-	player setSpeaker "noVoice";
+	if (missionNameSpace getVariable ["enableBotRadio", 1] == 0) then 
+	{
+		player setSpeaker "noVoice";
+	};
+	
 
 	//Specify all GUI content and button actions
 	_comboBoxClassSelection ctrlAddEventHandler[ "LBSelChanged", 

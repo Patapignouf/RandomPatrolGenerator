@@ -103,7 +103,7 @@ adjustRank = {
 
 
 addExperience = {
-	params ["_experience", "_experienceType", "_experienceCustomParam"];
+	params ["_experience", "_experienceType", ["_experienceCustomParam", ""]];
 
 	//Unit current experience
 	_unitExperience = profileNamespace getVariable ["RPG_ranking", 0];
@@ -119,6 +119,12 @@ addExperience = {
 	if (missionNameSpace getVariable ["xpDisplay", 0] == 1 && profileNameSpace getVariable ["RPG_xpDisplayMode", "R"] != "N") then 
 	{
 		[_experience, _experienceType, _experienceCustomParam] call doDisplayScore;
+	};
+
+	//Add equivalent amount in token
+	if (missionNameSpace getVariable ["linkXPWithToken", 1] == 1) then 
+	{
+		[_experience] call earnToken;
 	};
 	
 	true
@@ -192,14 +198,14 @@ getDisplayableCurrentXPPerCat = {
 
 	//Unit current experience
 	_basicXPToGather = [["RPG_ranking_infantry_kill","infantry kill"],
-					["RPG_ranking_vehicle_kill","vehicle kill"],
-					["deathNumber","death"],
-					["RPG_ranking_suppress","suppress"],
-					["RPG_ranking_heal","heal"],
-					["RPG_ranking_repair","repair"],
-					["RPG_ied_defuse","IED defuse"],
-					["RPG_ranking_intel_collect","intel collect"],
-					["RPG_ranking_objective_complete","objective complete"]
+						["RPG_ranking_vehicle_kill","vehicle kill"],
+						["deathNumber","death"],
+						["RPG_ranking_suppress","suppress"],
+						["RPG_ranking_heal","heal"],
+						["RPG_ranking_repair","repair"],
+						["RPG_ied_defuse","IED defuse"],
+						["RPG_ranking_intel_collect","intel collect"],
+						["RPG_ranking_objective_complete","objective complete"]
 					];
 
 	{
@@ -234,6 +240,12 @@ increasePrestige = {
 		[0] call saveRank;
 		[player, true] call adjustRank;
 
+		//Reset tokens
+		[0] call saveUnlockCredit;
+
+		//Reset weapons
+		[[]] call saveAllUnlockedWeapons;
+
 		//Increase prestige
 		_currentPrestige = profileNamespace getVariable ["RPG_prestige", 0];
 		profileNamespace setVariable ["RPG_prestige", _currentPrestige+1];
@@ -246,12 +258,28 @@ increasePrestige = {
 };
 
 doUpdateRank = {
-	params ["_experienceBonus", "_experienceType", "_experienceCustomParam"];
+	params ["_experienceBonus", "_experienceType", ["_experienceCustomParam", ""]];
 
-	if (isNil "_experienceCustomParam") then 
+	//Check if player has accepted a challenge
+	if (player getVariable ["RPG_hasClickChallenge", false]) then 
 	{
-		_experienceCustomParam = "";
+		//Check if player has the challegend weapon
+		if ((player getVariable ["RPG_ChallengeWeapon", ""]) == (primaryWeapon player)) then 
+		{
+			//If experience is positive and is not related to objective apply bonus 2x
+			if ((0<_experienceBonus) && (_experienceType != "RPG_ranking_objective_complete")) then 
+			{
+				_experienceBonus = 2*_experienceBonus;
+			};
+		} else 
+		{
+			if ((0<_experienceBonus) && (_experienceType != "RPG_ranking_objective_complete")) then 
+			{
+				_experienceBonus = round (_experienceBonus/2);
+			};
+		};
 	};
+
 
 	if (typeName _experienceBonus == "SCALAR") then 
 	{

@@ -1,5 +1,5 @@
 baseWeaponName = "RPG_Weapon";
-basePlayerCreditName = "RPG_UnlockCredit";
+basePlayerCreditName = "RPG_UnlockCreditV2";
 
 baseWeaponCategory = [
 		["rifle",[]],
@@ -11,6 +11,16 @@ baseWeaponCategory = [
 		["shortAccessories",[]],
 		["longAccessories",[]]
 	];
+
+//Convert old token system 
+_unblockCredit = profileNameSpace getVariable ["RPG_UnlockCredit",0];
+if (_unblockCredit != 0) then 
+{
+	profileNameSpace setVariable ["RPG_UnlockCredit_Old",_unblockCredit];
+	profileNameSpace setVariable ["RPG_UnlockCredit",0];
+	profileNameSpace setVariable [basePlayerCreditName, _unblockCredit*100];
+};
+
 
 //Get all unlocked weapons for a player faction
 getPlayerFactionUnlockedWeapons = {
@@ -28,6 +38,7 @@ getPlayerFactionUnlockedWeapons = {
 
 	_resultOpforWeaponsUnlocked
 };
+
 
 getPlayerFactionUnlockedWeaponForCategory = {
 	params ["_playerFaction", "_category"];
@@ -88,6 +99,16 @@ addWeaponToCategory = {
 	_baseWeaponCategoryCopy
 };
 
+RemoveWeaponFromCategory = {
+	params ["_weaponToRemove", "_weaponCategory", "_categories"];
+	_baseWeaponCategoryCopy = _categories;
+	_findWeaponCategory = _baseWeaponCategoryCopy findIf {_weaponCategory == _x#0};
+    //systemChat format ["test : %1", (_baseWeaponCategoryCopy#_findWeaponCategory#1)];
+	_baseWeaponCategoryCopy set [_findWeaponCategory ,[_weaponCategory, (_baseWeaponCategoryCopy#_findWeaponCategory#1) select {_x != _weaponToRemove}]];
+
+	_baseWeaponCategoryCopy
+};
+
 addUnlockedWeapon = {
 	params ["_weapon", "_weaponCategory", "_currentFaction"];
 
@@ -104,12 +125,32 @@ addUnlockedWeapon = {
 	} else 
 	{
 		_freshWeaponCategory = [_weapon, _weaponCategory, baseWeaponCategory] call addWeaponToCategory;
-		_currentWeapons pushBack [_currentFaction, _freshWeaponCategory];
+		_currentWeapons pushBackUnique [_currentFaction, _freshWeaponCategory];
 	};
 
 	[_currentWeapons] call saveAllUnlockedWeapons;
 };
 
+removeUnlockedWeapon = {
+	params ["_weapon", "_weaponCategory", "_currentFaction"];
+
+	//Get all weapons
+	_currentWeapons =  [] call getAllUnlockedWeapons;
+	//Get unlocked weapons for this faction
+	_weaponIndex = _currentWeapons findIf {_currentFaction == _x#0};
+
+	//Faction found
+	if (_weaponIndex != -1) then 
+	{
+		//Add new weapon to the faction
+		_weaponsListWithOneMore = [_weapon, _weaponCategory, (_currentWeapons#_weaponIndex)#1] call RemoveWeaponFromCategory;
+		_currentWeapons set [_weaponIndex, [_currentFaction, _weaponsListWithOneMore]];
+	};
+
+	[_currentWeapons] call saveAllUnlockedWeapons;
+};
+
+/// Deprecated use removeUnlockedWeapon instead
 removeAlreadyUnlockedWeapon = {
 	params ["_weaponsListToCheck", "_currentFaction"];
 	_listToRemove = [_currentFaction] call getPlayerFactionUnlockedWeapons;
@@ -119,6 +160,7 @@ removeAlreadyUnlockedWeapon = {
 	} foreach _weaponsListToCheck;
 	_weaponsListToCheck
 };
+///
 
 removeAlreadyUnlockedWeaponFromFlatList = {
 	params ["_weaponsListToCheck", "_currentFaction"];
@@ -153,6 +195,7 @@ toFlatDesign = {
 	_resultFlat
 };
 
+//Get a complete shop with OPFOR items
 getOpforWeaponCategory = {
 	params ["_currentOpforFaction"];
 
@@ -176,7 +219,7 @@ getOpforWeaponCategory = {
 	_resultWPOpfor
 };
 
-
+//Get a complete shop with Black market items
 getBMWeaponCategory = {
 	//Get opfor weapon minus player faction 
 	_currentPlayerFaction = indFaction;
@@ -198,6 +241,121 @@ getBMWeaponCategory = {
 	_resultWPOpfor
 };
 
+//Get a complete shop with both OPFOR and BM
+//Test with [missionNamespace getVariable "opforFaction"] call getBMAndOpforWeaponsCategory
+getBMAndOpforWeaponsCategory = {
+	params ["_currentOpforFaction"];
+
+	_opforShop = [_currentOpforFaction] call getOpforWeaponCategory;
+	_bmShop = [] call getBMWeaponCategory;
+
+	//Merge both shops
+	{
+		_catName = _x#0;
+		_temp = _bmShop select {_x#0 == _catName};
+		_x set [1, (_x#1)+(_temp#0#1)];
+
+		//systemChat format ["Items %1 %2",_catName,  (_x#1)+(_temp#0#1)];
+	} foreach _opforShop;
+
+	//Return merged array
+	_opforShop
+};
+
+//GetShopList to flat design and remove duplicate
+prepareShopList = {
+	params ["_shopToClean", "_currentFaction"];
+
+	_shopToClean = [_shopToClean] call toFlatDesign;
+	_shopToClean = [_shopToClean] call cleanWeaponsAndItems;
+	_shopToClean = [_shopToClean, _currentFaction] call removeAlreadyUnlockedWeaponFromFlatList; //OnlyBluFaction for now 
+	
+	//Return a clean shop in format [["category", "itemName"],["category2", "itemName2"]]
+	_shopToClean
+};
+
+//Display a little reward hint with picture of unlocked item
+//Test with ["optic_lrps_ghex_f","64"] call displayReward;
+displayReward = {
+	params ["_supportClass", "_currentFaction"];
+
+	_supportName = getText (configFile >> "CfgWeapons" >> _supportClass >> "displayName");
+	_weaponIcon = getText (configFile >> "CfgWeapons" >> _supportClass >> "picture");
+	_factionName = (factionInfos select {_x#1 == _currentFaction})#0#2;
+
+	[[parseText format ["<img image='%1' size='5'/><br/><br/><t size='1.5'>You have unlocked <br/> %2 <br/>for the faction %3</t><br/><br/><t size='1.2'></t>", _weaponIcon, _supportName, _factionName], "intel"], 'engine\hintManagement\addCustomHint.sqf'] remoteExec ['BIS_fnc_execVM', player]; 
+};
+
+
+rewardRandomItem = {
+
+	//get current player faction
+	_currentFaction = indFaction;
+	if (side player == blufor) then 
+	{
+		_currentFaction = bluFaction;
+	};
+
+	//Define full shop OPFOR + Black Market
+	_fullShop = [missionNamespace getVariable "opforFaction"] call getBMAndOpforWeaponsCategory;
+	_fullShop = [_fullShop, _currentFaction] call prepareShopList;
+
+	//Unlock random item in list
+	if (count _fullShop != 0) then 
+	{
+		//Define item to unlock
+		_itemToUnlock = selectRandom _fullShop;
+		_supportClass = _itemToUnlock#1;
+		_supportType = _itemToUnlock#0;
+
+		//Add unlocked Item to current Faction
+		[_supportClass, _supportType, _currentFaction] call addUnlockedWeapon;		
+
+		//Refresh BIS_fnc_arsenal
+		[player, player, player call getPlayerFaction] call setupArsenalToItem;
+
+		//Display reward hint
+		[_supportClass, _currentFaction] call displayReward;
+	} else 
+	{
+		systemChat "Nothing to unlock";
+	};
+};
+
+//Increase personal token counter or unlock random stuff from OPFOR or Black market 
+//Test [] call shopRelatedReward;
+shopRelatedReward = {
+
+	//Check if shop/token reward has been enabled
+	if (missionNameSpace getVariable ["enableOpforWeaponShop", 2] != 0) then 
+	{
+		_rewardMode = missionNameSpace getVariable ["rewardMode", 2];
+
+		//Reward Token
+		if (_rewardMode == 0 || (_rewardMode == 2 && (profileNameSpace getVariable ["RPG_rewardMode", "Token"] == "Token"))) then 
+		{
+			//Get current token number
+			_baseTokenReward = 100;
+			_unblockCredit = profileNameSpace getVariable [basePlayerCreditName, 0];
+			profileNameSpace setVariable [basePlayerCreditName, _unblockCredit+_baseTokenReward];
+
+			["scorePos",["Token", format ["+%1", _baseTokenReward], format ["Total tokens : %1", _unblockCredit+_baseTokenReward]]] call bis_fnc_showNotification;
+		};
+
+		//Reward random stuff
+		if (_rewardMode == 1 || (_rewardMode == 2 && (profileNameSpace getVariable ["RPG_rewardMode", "Token"] == "Instant"))) then 
+		{
+			[] call rewardRandomItem;
+		};
+	};
+};
+
+earnToken = {
+	params [["_earnedToken", 100]];
+
+	_unblockCredit = profileNameSpace getVariable [basePlayerCreditName, 0];
+	profileNameSpace setVariable [basePlayerCreditName, _unblockCredit+_earnedToken];
+};
 
 cleanWeaponsAndItems = {
 	params ["_listToClean"];
@@ -324,11 +482,9 @@ cleanWeaponsAndItems = {
 
 
 defineWeaponPrice = {
-	params ["_weaponClassName"];
-	_priceResult = 1;
+	params [["_priceResult", 100], "_weaponClassName", ["_isBM", false]];
 
 	_cfgWpn = configFile >> "CfgWeapons" >> _weaponClassName;
-
 
 	if !(isClass _cfgWpn) exitWith {
 		diag_log format ["Arme introuvable : %1", _weaponClassName];
@@ -435,23 +591,29 @@ defineWeaponPrice = {
 
 	_rangeEst = selectMax _ammoRange;
 	_score = selectMax _scoreRangeArray;
+	_multiplier = 1;
+
+	if (_isBM) then 
+	{
+		_multiplier = 2;
+	};
 
 	//Adjust price with range
 	if (_rangeEst > 1500) then 
 	{
-		_priceResult = _priceResult + 1;
+		_priceResult = _priceResult + 50*_multiplier;
 	};
 
 	//Adjust price with range
 	if (_cal > 1) then 
 	{
-		_priceResult = _priceResult + 1;
+		_priceResult = _priceResult + 50*_multiplier;
 	};
 
 	//Adjust price with damage
 	if (_hit > 10) then 
 	{
-		_priceResult = _priceResult + 1;
+		_priceResult = _priceResult + 30*_multiplier;
 	};
 
 	//systemChat str _score;
@@ -460,9 +622,7 @@ defineWeaponPrice = {
 };
 
 defineScopePrice = {
-	params ["_optic"];
-
-	_priceResult = 1;
+	params [["_priceResult", 50], "_optic", ["_isBM", false]];
 
 	private _cfg = configFile >> "CfgWeapons" >> _optic >> "ItemInfo" >> "OpticsModes";
 
@@ -494,15 +654,22 @@ defineScopePrice = {
 		};
 	};
 
+	_multiplier = 1;
+
+	if (_isBM) then 
+	{
+		_multiplier = 2;
+	};
+
 	//Adjust price with range
 	if (_magMax > 3) then 
 	{
-		_priceResult = _priceResult + 1;
+		_priceResult = _priceResult + 30*_multiplier;
 	};
 
 	if (_magMax > 10) then 
 	{
-		_priceResult = _priceResult + 1;
+		_priceResult = _priceResult + 50*_multiplier;
 	};
 
 	_priceResult

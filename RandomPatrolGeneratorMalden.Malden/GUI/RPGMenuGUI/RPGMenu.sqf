@@ -39,7 +39,7 @@ paramsToManageNow pushBack ["Text", localize "STR_GUI_BASE_CREDIT", format ["%1"
 //Get all unlocked stuff for current faction
 if (missionNameSpace getVariable ["enableOpforWeaponShop",1] == 1) then 
 {
-	paramsToManageNow pushBack ["Text", localize "STR_GUI_BASE_TOKEN", format ["%1", profileNameSpace getVariable ["RPG_UnlockCredit", 0]], {	}];
+	paramsToManageNow pushBack ["Text", localize "STR_GUI_BASE_TOKEN", format ["%1", profileNameSpace getVariable ["RPG_UnlockCreditV2", 0]], {	}];
 };
 
 
@@ -158,7 +158,8 @@ if (missionNameSpace getVariable ["xpDisplay", 0] == 1) then
 
 		listxpDisplayMode = [
 			["N","None"],
-			["R","Right"]
+			["R","Right"],
+			["B","Bottom"]
 		];
 
 		_actualXPDisplay = profileNameSpace getVariable ["RPG_xpDisplayMode", "R"];
@@ -177,6 +178,39 @@ if (missionNameSpace getVariable ["xpDisplay", 0] == 1) then
 	}];
 };
 
+//Add XP Display custom for players
+if (missionNameSpace getVariable ["enableOpforWeaponShop", 0] != 0) then 
+{
+	if (missionNameSpace getVariable ["rewardMode", 2] == 2) then 
+	{
+
+			rewardModeParam = [
+				["Token","Token"],
+				["Instant","Instant random"]
+			];
+
+			_actualReward = profileNameSpace getVariable ["RPG_rewardMode", "Token"];
+			_currenItemPos = (rewardModeParam) findIf {_x#0 == _actualReward };
+
+
+		paramsToManageNow pushBack ["Button", "Change reward mode", format ["Reward type : %1", rewardModeParam#_currenItemPos#1], {
+
+			_actualReward = profileNameSpace getVariable ["RPG_rewardMode", "Token"];
+			_currenItemPos = (rewardModeParam) findIf {_x#0 == _actualReward };
+			_newPos = (_currenItemPos+1)%(count rewardModeParam);
+			
+			profileNameSpace setVariable ["RPG_rewardMode", (rewardModeParam#_newPos)#0];
+
+			[[], 'GUI\RPGMenuGUI\RPGMenu.sqf'] remoteExec ['BIS_fnc_execVM', player];
+		}];
+	};
+
+	paramsToManageNow pushBack ["Button", "Reward management", format ["Give items to others !"], {
+		[[[false]], 'GUI\unlockedManagementGUI\unlockedManagementGUI.sqf'] remoteExec ['BIS_fnc_execVM', player];
+	}];
+};
+
+
 
 if (missionNameSpace getVariable ["enableOpforWeaponShop",1] == 1) then 
 {
@@ -190,13 +224,27 @@ if (missionNameSpace getVariable ["enableOpforWeaponShop",1] == 1) then
 //Add feature to allow opfor player to remote control enemy unit
 if (missionNameSpace getVariable ["sideRelations",0] == 2 && side player == independent) then 
 {
-	paramsToManageNow pushBack ["Button", "Remote control OPFOR", "Take control of random enemy", {
+	paramsToManageNow pushBack ["Button", "Remote control OPFOR", "Remote control random OPFOR (within 1000m)", {
 			player remoteControl objNull; 
 			switchCamera player; // if needed
-			_unitToControl = selectRandom (allUnits select {side _x == opfor && alive _x});
-			_unitToControl switchCamera "INTERNAL"; 
-			hint format ["You are now %1", name _unitToControl];
-			player remoteControl _unitToControl;
+			_unitToControlList =  (allUnits select {side _x == opfor && (alive _x) && (_x distance player) < 1000});
+			if (count _unitToControlList != 0) then 
+			{
+				_unitToControl = selectRandom _unitToControlList;
+				_unitToControl switchCamera "INTERNAL"; 
+				hint format ["You are now %1", name _unitToControl];
+				player remoteControl _unitToControl;
+				(group _unitToControl) enableDynamicSimulation false;
+				[_unitToControl, 30] call createOPFORBotMarker;
+			} else 
+			{
+				hint format ["Nobody avalaible"];
+			};
+		}];
+
+	paramsToManageNow pushBack ["Button", "Cancel control OPFOR", "Return to your body", {
+			player remoteControl objNull; 
+			switchCamera player; // if needed
 		}];
 };
 
@@ -376,7 +424,7 @@ _yPosition = 0.10;
 	// }];
 
 	//Move next input down 
-	_yPosition = _yPosition + 0.07;
+	_yPosition = _yPosition + 0.06;
 
 } foreach paramsToManageNow;
 
@@ -404,3 +452,37 @@ waituntil {(IsNull (_display))};
 	//systemChat format ["listOfMissionEventHandlerToDestroy %1 %2", _x#0, _x#1];
     removeMissionEventHandler [_x#0, _x#1];
 } foreach  listOfMissionEventHandlerToDestroy;
+
+
+
+createOPFORBotMarker = {
+	// --- CONFIGURATION ---
+	params ["_cible", ["_duree", 30]]; // _cible = l'unité OPFOR, _duree = temps en secondes avant disparition
+
+	// Sécurité : on vérifie que la cible existe
+	if (isNull _cible) exitWith {};
+
+	[_cible, _duree] spawn 
+	{
+		params ["_cible", "_duree"];
+
+		// Création du marqueur unique en LOCAL
+		private _markerName = format ["mk_temp_%1_%2", name _cible, serverTime];
+		private _marker = createMarkerLocal [_markerName, getPosATL _cible];
+
+		// Configuration visuelle du marqueur (Infanterie OPFOR)
+		_marker setMarkerTypeLocal "o_inf";     // Icône standard OTAN pour infanterie OPFOR (rouge)
+		_marker setMarkerColorLocal "ColorEAST"; // Couleur rouge de l'Est
+		_marker setMarkerTextLocal format ["OPFOR : %1", name _cible];
+		_marker setMarkerSizeLocal [0.8, 0.8];
+
+		// Boucle de mise à jour de la position
+		private _endTime = serverTime + _duree;
+		_marker setMarkerPosLocal (getPosATL _cible);
+
+		waitUntil {(!alive _cible) || (_endTime < serverTime)};	
+
+		// Suppression du marqueur à la fin
+		deleteMarkerLocal _marker;
+	};
+};

@@ -109,6 +109,11 @@ if (!didJIP) then
 //Wait mission setup
 waitUntil {missionNamespace getVariable "generationSetup" == true};
 
+//Prevent JIP player from spawn corruption
+if (didJIP) then 
+{
+	waitUntil {!isNil "missionGenerated"};
+};
 
 //Format mission settings display to other players
 _missionSettings = "";
@@ -212,6 +217,64 @@ if (isClass (configFile >> "CfgPatches" >> "ace_medical")) then
 	player enableInfoPanelComponent ["right", "MinimapDisplay", false];
 };
 
+
+//Add ace fortify budget management
+if (isClass (configFile >> "CfgPatches" >> "ace_medical")) then 
+{
+	["ace_fortify_deployFinished", {
+		_caller = _this#0#0;
+		_price = 50;
+
+		//Add real cost to ace fortifications
+		if (side _caller == blufor) then 
+		{
+			bluforVehicleAvalaibleSpawnCounter = missionNamespace getVariable "bluforVehicleAvalaibleSpawn";
+			if (_price <= bluforVehicleAvalaibleSpawnCounter) then 
+			{
+				_haveCredits = true;
+				bluforVehicleAvalaibleSpawnCounter = bluforVehicleAvalaibleSpawnCounter - _price;
+				missionNamespace setVariable ["bluforVehicleAvalaibleSpawn", bluforVehicleAvalaibleSpawnCounter, true];
+			};	
+		} else 
+		{
+			independentVehicleAvalaibleSpawnCounter = missionNamespace getVariable "bluforVehicleAvalaibleSpawn";
+			if (_price <= independentVehicleAvalaibleSpawnCounter) then 
+			{
+				_haveCredits = true;
+				independentVehicleAvalaibleSpawnCounter = independentVehicleAvalaibleSpawnCounter - _price;
+				missionNamespace setVariable ["bluforVehicleAvalaibleSpawn", independentVehicleAvalaibleSpawnCounter, true];
+			};					
+		};
+	}] call CBA_fnc_addEventHandler;
+
+	["acex_fortify_objectDeleted", {
+		_caller = _this#0;
+		_price = 50;
+
+		//Add real cost to ace fortifications
+		if (side _caller == blufor) then 
+		{
+			bluforVehicleAvalaibleSpawnCounter = missionNamespace getVariable "bluforVehicleAvalaibleSpawn";
+			if (_price <= bluforVehicleAvalaibleSpawnCounter) then 
+			{
+				_haveCredits = true;
+				bluforVehicleAvalaibleSpawnCounter = bluforVehicleAvalaibleSpawnCounter + _price;
+				missionNamespace setVariable ["bluforVehicleAvalaibleSpawn", bluforVehicleAvalaibleSpawnCounter, true];
+			};	
+		} else 
+		{
+			independentVehicleAvalaibleSpawnCounter = missionNamespace getVariable "bluforVehicleAvalaibleSpawn";
+			if (_price <= independentVehicleAvalaibleSpawnCounter) then 
+			{
+				_haveCredits = true;
+				independentVehicleAvalaibleSpawnCounter = independentVehicleAvalaibleSpawnCounter + _price;
+				missionNamespace setVariable ["bluforVehicleAvalaibleSpawn", independentVehicleAvalaibleSpawnCounter, true];
+			};					
+		};
+	}] call CBA_fnc_addEventHandler;
+
+};
+
 //Prevent players from instant death
 if !(isClass (configFile >> "CfgPatches" >> "ace_medical")) then 
 {
@@ -278,26 +341,67 @@ if !(isClass (configFile >> "CfgPatches" >> "ace_medical")) then
 			if (missionNameSpace getVariable ["enableSelfRespawnTimer", 0] == 0) then 
 			{
 				//No self respawn timer (directed by the server)
-				addMissionEventHandler ["EachFrame",
-					{
-						if (!(lifeState player == "HEALTHY")) then 
-						{
-							_currentRespawnTimer = missionNamespace getVariable "missionRespawnParam";
-							_currentCounter = _currentRespawnTimer - (round (serverTime) % _currentRespawnTimer);
-							hintSilent format ["Respawn : %1", [(_currentCounter/60)+.01,"HH:MM"] call BIS_fnc_timetostring];
+				[] spawn {
+					private _respawnDelay = missionNamespace getVariable "missionRespawnParam";
+					(format ["%1%2", name player, random 1000]) cutRsc ["RscTitleDisplayEmpty", "PLAIN"];
+					private _display = uiNamespace getVariable "RscTitleDisplayEmpty";
+					if (isNull _display) exitWith {};
 
-							//Respawn players if timer is going near 0 secs remaining
-							if (_currentCounter == 0 || _currentCounter < 2) then 
-							{
-								setPlayerRespawnTime 0;
+					// Dimensions et position (coordonnées "safezone"), centré en haut de l'écran
+					private _boxW = 0.35;
+					private _boxH = 0.05;
+					private _boxX = safezoneX + safezoneW * 0.5 - _boxW * 0.5;
+					private _boxY = safezoneY + 0.15;
+
+					// Fond de l'interface
+					private _ctrlBg = _display ctrlCreate ["RscText", -1];
+					_ctrlBg ctrlSetPosition [_boxX, _boxY, _boxW, _boxH];
+					_ctrlBg ctrlSetBackgroundColor [0, 0, 0, 0.6];
+					_ctrlBg ctrlCommit 0;
+
+					// Texte du décompte
+					private _ctrlText = _display ctrlCreate ["RscText", -1];
+					_ctrlText ctrlSetPosition [_boxX, _boxY, _boxW, _boxH];
+					_ctrlText ctrlSetBackgroundColor [0, 0, 0, 0];
+					_ctrlText ctrlSetTextColor [1, 0.25, 0.25, 1];
+					_ctrlText ctrlSetFont "RobotoCondensedBold";
+					_ctrlText ctrlSetText "";
+					_ctrlText ctrlCommit 0;
+
+					{ _x ctrlShow false } forEach [_ctrlBg, _ctrlText];
+
+					private	_currentRespawnTimer = missionNamespace getVariable "missionRespawnParam";
+					private	_deathTime = -1;
+
+					private _isShown = false;
+
+					while {!isNull _ctrlBg} do {
+						private _notHealthy = (!alive player) || (!(lifeState player == "HEALTHY"));
+
+						if (_notHealthy) then {
+							
+							_deathTime = _currentRespawnTimer - (round (serverTime) % _currentRespawnTimer);
+
+							if (!_isShown) then {
+								{ _x ctrlShow true } forEach [_ctrlBg, _ctrlText];
+								_isShown = true;
+							};
+
+							_ctrlText ctrlSetText format [localize "RPG_GUI_OVERLAY_RESPAWN", [(_deathTime)/60+.01,"HH:MM"] call BIS_fnc_timetostring];
+						} else {
+
+							if (_isShown) then {
+								{ _x ctrlShow false } forEach [_ctrlBg, _ctrlText];
+								_isShown = false;
 							};
 						};
-					}
-				];
+
+						sleep 0.2;
+					};
+				};
 			} else 
 			{
 				_respawnTimer = missionNamespace getVariable "missionRespawnParam";
-				setPlayerRespawnTime (_respawnTimer);
 				_initialCountDown = [_respawnTimer, false] call BIS_fnc_countDown;
 				addMissionEventHandler ["EachFrame",
 					{
@@ -354,8 +458,12 @@ diag_log format ["Setup Player %1 at position 1", name player];
 player createDiarySubject ["RPG", "RPG"];
 _diaryIntel = player createDiaryRecord ["RPG", ["RPG intel", "You can see here all intels collected : <br/>"]];
 player setVariable ["diaryIntel", _diaryIntel];
-player createDiaryRecord ["RPG", ["RPG respawn", "There are two ways to respawn on Random Patrol Generator missions :<br/>- First, when a mission is completed<br/>- Secondly, when players call a reinforcement on support Shop<br/><br/><br/>Note : Respawn setting has to be enabled"]];
-player createDiaryRecord ["RPG", ["RPG arsenal", "A limited arsenal is avalaible on your start position, it will allow you to switch between roles."]];
+player createDiaryRecord ["RPG", ["RPG respawn",localize "STR_DIARY_RESPAWN"]];
+player createDiaryRecord ["RPG", ["RPG arsenal",localize "STR_DIARY_ARSENAL"]];
+player createDiaryRecord ["RPG", ["RPG experience",localize "STR_DIARY_EXPERIENCE"]];
+player createDiaryRecord ["RPG", ["RPG side tasks",localize "STR_DIARY_SIDE_TASK"]];
+player createDiaryRecord ["RPG", ["RPG tokens",localize "STR_DIARY_TOKENS"]];
+
 
 if (side player == independent) then 
 {
@@ -416,10 +524,9 @@ if (side player == independent) then
 if (side player == blufor) then
 {
 	//Setup briefing blufor
-	player createDiaryRecord ["RPG", ["RPG objectives", "Help the independent or civilian location. Complete the tasks assigned to your unit to finish the mission.
-	"]];
-	player createDiaryRecord ["RPG", ["RPG FOB", "You can deploy an advanced FOB avalaible in a supply box near main FOB :<br/>- It can be used to skip time<br/>- It can be used to access support shop"]];
-	player createDiaryRecord ["RPG", ["RPG vehicles", "You can use the Vehicle Shop on the main FOB to spawn vehicules. Each vehicle spawned use one specific credit.<br/>Complete a mission to earn credits.<br/><br/> Note : Only the team leader and pilot can spawn vehicles."]];
+	player createDiaryRecord ["RPG", ["RPG objectives", localize "STR_DIARY_OBJECTIVE"]];
+	player createDiaryRecord ["RPG", ["RPG FOB", localize "STR_DIARY_FOB"]];
+	player createDiaryRecord ["RPG", ["RPG vehicles", localize "STR_DIARY_VEHICLE"]];
 	
 	diag_log format ["Setup Player %1 at position 2", name player];
 
@@ -438,6 +545,9 @@ if (side player == blufor) then
 		player setPos (_spawnPos);
 	} else 
 	{
+		waitUntil {(!(isNil "initBlueforLocation"))};
+		waitUntil {((initBlueforLocation#2) == 24)};
+
 		_spawnPos = initBlueforLocation;
 
 		//Fix catapult on carrier
@@ -468,11 +578,18 @@ if (side player == blufor) then
 					params ["_USSCarrier","_spawnPos"];
 					_handleScirpt = _USSCarrier call BIS_fnc_Carrier01Init;
 
+					//Disable player physics until carrier has spawn
+					player enableSimulationGlobal false;
 					cutText ["ARRIVING ON CARRIER", "BLACK FADED", 100];
-					uiSleep 2; 
-					waitUntil {isNull _handleScirpt};
-					cutText ["ARRIVING ON CARRIER", "BLACK FADED", 100];
-					uiSleep 5; 
+					//systemChat "_handleScirpt";
+
+					//Loop
+					while {sleep 1; !(isNull _handleScirpt)} do 
+					{ 
+						player enableSimulationGlobal false;
+						cutText ["ARRIVING ON CARRIER", "BLACK FADED", 100];
+						//systemChat "_handleScirpt";
+					};
 
 					//Play random radio sound
 					[] spawn {
@@ -482,6 +599,9 @@ if (side player == blufor) then
 					};
 
 					//Tp player on carrier
+					sleep 15;
+					player enableSimulationGlobal true;
+					systemChat format ["position to move : %1", _spawnPos];
 					player setVelocity [0, 0, 0];
 					player setPosASL [_spawnPos#0-105 + random 15,_spawnPos#1-18+random 15,_spawnPos#2+0.5];
 					titleCut ["WELCOME ON BOARD", "BLACK IN", 5];
@@ -489,7 +609,7 @@ if (side player == blufor) then
 			};
 
 			//Wait for USS Carrier spawn
-			sleep 10;
+			sleep 15;
 
 			//Add Action for TP on the carrier
 			_actionIdCarrier = player addAction ["Move to the carrier",{
@@ -523,7 +643,7 @@ if (side player == blufor) then
 		[VA2] call setupPlayerLoadout;	
 	} else 
 	{
-		[VA2] call setupPlayerLoadoutRemake;	
+		[VA2] call setupPlayerLoadoutRemake;
 	};
 
 	[] spawn {
@@ -661,7 +781,7 @@ if (side player == blufor) then
 				params ["_object","_caller","_ID","_avalaibleVehicle"];
 
 				
-				[[], 'GUI\respawnGUI\respawnMapGUI.sqf'] remoteExec ['BIS_fnc_execVM', _caller];
+				[[true], 'GUI\respawnGUI\respawnMapGUI.sqf'] remoteExec ['BIS_fnc_execVM', _caller];
 		},_x,5,true,false,"","_target distance _this <5"];
 	};
 
@@ -698,8 +818,7 @@ if (isClass (configFile >> "CfgPatches" >> "ace_medical")) then
 	[player] call BIS_fnc_disableRevive;
 };
 
-//Respawn setup 
-setPlayerRespawnTime (missionNamespace getVariable "missionRespawnParam");
+
 
 //Generate civilian dialogs
 [] spawn _generateCivDialogs;
@@ -747,9 +866,17 @@ _KilledEH = player addEventHandler ["Killed", {
 		//Check if player are on opposite side
 		if ([side _instigator, playerSide] call BIS_fnc_sideIsEnemy) then 
 		{
-			//Reward PvP kill
-			_distance = _instigator distance _unit;
+			//Find distance between killed unit and killer
+			_distance = 0;
 
+			if (isRemoteControlling _instigator) then 
+			{
+				_distance = (remoteControlled _instigator) distance _unit;
+			} else 
+			{
+				_distance = _instigator distance _unit;
+			};	
+			
 			//Store kill distance
 			[[_distance], 
 			{
@@ -778,17 +905,69 @@ _KilledEH = player addEventHandler ["Killed", {
 
 				//Add dialog to punish the teamkiller
 				[[_instigator], {
-					params ["_instigator"];
-					    sleep 10;
-						private _resultAlone = [format ["Do you want to punish your killer %1 ?", name _instigator], "Yes", true, true] call BIS_fnc_guiMessage;
+					params ["_instigator"]; 
+						
+						//Wait spectator mode
+						sleep 5;
 
-						if (_resultAlone) then {
-							//systemChat "The player is sure.";
-							_instigator setDamage 1;
-							[[_instigator], {params ["_instigator"]; ["STR_RPG_HC_NAME", "STR_RPG_HC_PUNISH", name _instigator] call doDialog}] remoteExec ["spawn", side _instigator]; 
+						// 1. display GUI
+						("TAG_RscPunishPrompt" call BIS_fnc_rscLayer) cutRsc ["TAG_RscPunishPrompt", "PLAIN", 0, true];
 
-						} else {
-							//systemChat "The player is not sure.";
+						[_instigator] spawn {
+							params ["_instigator"];
+							// 2. wait display to be available
+							private _titleDisplay = objNull;
+							waitUntil {
+								_titleDisplay = uiNamespace getVariable ["TAG_PunishPrompt_Display", objNull];
+								!isNull _titleDisplay
+							};
+
+							// 3. move display and adjust content
+							private _clickCtrl = _titleDisplay displayCtrl 9001;
+							private _pos = ctrlPosition _clickCtrl; // [x, y, w, h]
+							private _minX = _pos select 0;
+							private _minY = _pos select 1;
+							private _maxX = _minX + (_pos select 2);
+							private _maxY = _minY + (_pos select 3);
+
+							// store data on player
+							player setVariable ["TAG_punishPrompt_Bounds", [_minX, _maxX, _minY, _maxY]];
+							player setVariable ["TAG_punishPrompt_IsActive", true];
+							player setVariable ["TAG_punishTeamKiller", _instigator];
+							_clickCtrl ctrlSetStructuredText parseText format ["<a color='#ff0000' size='1'><t color='#ff0000'>Click here to punish %1</t></a>", name _instigator];
+
+							// 4. Add listener to spectator mode
+							private _mapDisplay = findDisplay 60492; // ID natif d'ArmA pour la carte principale
+
+							TAG_healPrompt_MouseEHId = _mapDisplay displayAddEventHandler ["MouseButtonDown", {
+								params ["_mapDisplay", "_button", "_mx", "_my"];
+								
+								// Listen left mouse button
+								if (_button == 0 && {player getVariable ["TAG_punishPrompt_IsActive", false]}) then {
+									private _bounds = player getVariable ["TAG_punishPrompt_Bounds", []];
+									if (_bounds isEqualTo []) exitWith {};
+									_bounds params ["_minX", "_maxX", "_minY", "_maxY"];
+
+									// 5. check if the player click on the display
+									if (_mx >= _minX && _mx <= _maxX && _my >= _minY && _my <= _maxY) then {
+										
+										_instigator = player getVariable "TAG_punishTeamKiller";
+										_instigator setDamage 1;
+										[[_instigator], {params ["_instigator"]; ["STR_RPG_HC_NAME", "STR_RPG_HC_PUNISH", name _instigator] call doDialog}] remoteExec ["spawn", side _instigator]; 
+
+										// clean
+										player setVariable ["TAG_punishPrompt_IsActive", false];
+										("TAG_RscPunishPrompt" call BIS_fnc_rscLayer) cutFadeOut 0.1;
+									};
+								};
+							}];
+							
+							//wait display to vanish
+							sleep 10;
+							// clean 
+							player setVariable ["TAG_punishPrompt_IsActive", false];
+							("TAG_RscPunishPrompt" call BIS_fnc_rscLayer) cutFadeOut 0.1;
+
 						};
 					}
 				] remoteExec ["spawn", _unit]; 
@@ -887,6 +1066,53 @@ if (isClass (configFile >> "CfgPatches" >> "ace_medical")) then
 #include "GUI\mapIndicatorGUI\GPSJamManager.sqf"
 #include "GUI\mapIndicatorGUI\mapRealTimeMarkers.sqf"
 #include "engine\tentActionManagement.sqf"
+
+//Add solo tank crew feature
+if (missionNameSpace getVariable ["enableSoloCrewTank", 1] == 1) then 
+{
+	player addEventHandler ["GetInMan", {
+		params ["_unit", "_role", "_vehicle", "_turret"];
+
+		// check if the vehicle is a tank or tank like
+		if (_vehicle isKindOf "Tank" || _vehicle isKindOf "Wheeled_APC_F" || _vehicle isKindOf "TrackedAPC") then {
+			
+			// if the player enter as driver then start solo crew script
+			if (_role == "driver") then {
+				
+
+				// 1. If turret is empty add an AI to make solo crew
+				if (isNull (gunner _vehicle)) then {
+					private _group = createGroup [side _unit, true];
+					private _aiGunner = _group createUnit ["B_Survivor_F", [0,0,0], [], 0, "NONE"];
+					
+					_aiGunner hideObjectGlobal true; // make AI invisible
+					_aiGunner allowDamage false;     // Invincible
+					_aiGunner moveInGunner _vehicle; // Move AI to gunner place, maybe driver is better :p
+					
+					// Keep ai variable in the vehicle to allow cleaning
+					_vehicle setVariable ["my_solo_ai_gunner", _aiGunner, true];
+				};
+
+				// 2. Give control to gunner
+				_unit action ["TakeVehicleControl", _vehicle];
+				
+				//Move player to turret role to allow solo crew
+				_unit action ["MoveToGunner", _vehicle];  
+			};
+		};
+	}];
+
+	// Clean when player leave vehicle
+	player addEventHandler ["GetOutMan", {
+		params ["_unit", "_role", "_vehicle", "_turret"];
+
+		private _aiGunner = _vehicle getVariable ["my_solo_ai_gunner", objNull];
+		if (!isNull _aiGunner) then {
+			deleteVehicle _aiGunner; // Delete AI
+			_vehicle setVariable ["my_solo_ai_gunner", nil, true];
+		};
+	}];
+};
 
 //Joining message 
 [format [(format ["%1", localize "STR_RPG_SETUP_ROLE_ANNOUNCEMENT"]), name player,  [player getVariable "role"] call getClassInformation]] remoteExec ["systemChat", 0, true]; //Display message to every client 

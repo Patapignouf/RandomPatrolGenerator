@@ -70,6 +70,7 @@ factionID = 41;
 #include "object_db\FPlus_Constractor.sqf"
 #include "object_db\FPlus_GIGN.sqf"
 #include "object_db\2035_PataCompany.sqf"
+#include "object_db\WWII_PataCompany.sqf"
 
 
 //Automatic include new faction by search in config file

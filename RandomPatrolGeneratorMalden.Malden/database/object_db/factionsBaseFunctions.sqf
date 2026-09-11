@@ -83,7 +83,8 @@ adjustRole = {
 		case "\uns_men_c\icon\pavntroops\icon_leader_ca.paa";
 		case "\uns_men_c\icon\ustroops\icon_officer_ca.paa";
 		case "\uns_men_c\icon\ustroops\icon_leader_ca.paa";
-		case "iconManOfficer":
+		case "iconManOfficer";
+		case "iconManCommander":
 		{
 			_cfgRole = "leader";
 		};
@@ -117,7 +118,8 @@ adjustRole = {
 			_cfgRole = "marksman";
 		};
 		case "\uns_men_c\icon\ustroops\icon_rto_ca.paa";
-		case "\uns_men_c\icon\pavntroops\icon_rto_ca.paa":
+		case "\uns_men_c\icon\pavntroops\icon_rto_ca.paa";
+		case "iconManRTO":
 		{
 			_cfgRole = "radioman";
 		};
@@ -126,6 +128,11 @@ adjustRole = {
 		case "iconManMG":
 		{
 			_cfgRole = "autorifleman";
+		};
+		case "iconManPilot";
+		case "iconManTankcrew":
+		{
+			_cfgRole = "pilot";
 		};
 		default
 		{
@@ -163,29 +170,26 @@ isPistol = {
 };
 
 isGrenadeLauncher = {
-	params ["_itemClassName"];
-	_result = (([configFile >> "CfgWeapons" >> _itemClassName, true] call BIS_fnc_returnParents) findIf {"GrenadeLauncher" == (_x)} != -1);
+	params [["_itemClassName", "", [""]]];
+    
+    // If the classname is empty or invalid, return false
+    if (_itemClassName == "") exitWith { false };
+    
+    // Get all compatible magazines for this weapon across all muzzles
+    private _compatibleMagazines = [_itemClassName] call BIS_fnc_compatibleMagazines;
+    private _result = false;
 
-	if (!_result) then 
-	{
-		 private _cfg = configFile >> "CfgWeapons" >> _itemClassName;
-		if !(isClass _cfg) exitWith {false};
+    {
+        // Get the ammo class used by this magazine
+        private _ammoClass = getText (configFile >> "CfgMagazines" >> _x >> "ammo");
+        
+        // Check if the ammo inherits from "GrenadeCore"
+        if (_ammoClass != "" && { _ammoClass isKindOf "GrenadeCore" }) exitWith {
+            _result = true;
+        };
+    } forEach _compatibleMagazines;
 
-		private _muzzles = getArray (_cfg >> "muzzles");
-
-		// si juste "this", alors pas de GL
-		if (_muzzles isEqualTo ["this"]) exitWith {false};
-
-		{
-			private _muzzleCfg = _cfg >> _x;
-			if (isClass _muzzleCfg) then {
-				private _base = inheritsFrom _muzzleCfg;
-				if (configName _base == "UGL_F") exitWith {_result = true};
-			};
-		} forEach _muzzles;
-	};
-
-	_result;
+    _result;
 };
 
 
@@ -235,8 +239,6 @@ getBasicUnitsGroup = {
 	//Start building groups
 	_resultGroup = [];
 	_coreEnemyGroup = [];
-	_resultGroup = +_coreEnemyGroup;
-
 	//Setup core group
 	_coreEnemyGroup pushBack ([_currentStuffFaction, "leader"] call getUnitByRole);
 	for [{_i = 0}, {_i < 3}, {_i = _i + 1}] do
@@ -244,11 +246,14 @@ getBasicUnitsGroup = {
 		_coreEnemyGroup pushBack ([_currentStuffFaction, "rifleman"] call getUnitByRole);
 	};
 
+	_resultGroup = +_coreEnemyGroup;
+
 	switch (_unitType) do {
 		case "BASIC":
 		{
 			if (count (baseEnemyGroup_db select {_x select 1  == opFaction} select 0 select 0) == 0) then 
 			{
+				_resultGroup pushBack ([_currentStuffFaction, "medic"] call getUnitByRole);
 				_resultGroup = [_resultGroup, _currentStuffFaction, 8] call doFillWithRifleman;
 			} else 
 			{
@@ -657,6 +662,7 @@ getAllDistinctRifleAndPistolAndLauncher = {
 				{
 					_resultAllListWP#4 pushBackUnique _x;
 				};
+				case ("MarksmanRifle");
 				case ("SniperRifle"):
 				{
 					_resultAllListWP#5 pushBackUnique _x;

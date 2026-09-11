@@ -10,7 +10,15 @@ getRandomCenterLocations =
 {
 	_size = worldSize;
 	_worldCenter = (_size/2);
-	_LocList = nearestLocations [[_worldCenter, _worldCenter], ["NameLocal","NameVillage","NameCity","NameCityCapital","CityCenter","Area", "Airport", "Name", "SafetyZone", "StrongpointArea", "Hill"], _size];
+	_locationType = ["NameLocal","NameVillage","NameCity","NameCityCapital","CityCenter", "Airport", "Name", "SafetyZone", "StrongpointArea"];
+	_smallType = ["Hill", "Area"];
+
+	if (missionNameSpace getVariable ["allowSmallLocations", 0] == 1) then 
+	{
+		_locationType = _locationType + _smallType;
+	};
+
+	_LocList = nearestLocations [[_worldCenter, _worldCenter], _locationType, _size];
 
 	//Purge noname locations
 	{
@@ -22,6 +30,37 @@ getRandomCenterLocations =
 
 	_LocList
 };
+
+
+getAllBigLocationsWithBuildings = {
+	_tempAllLocations = [] call getRandomCenterLocations;
+
+	//Clear location without building
+	{
+		//Select smallest location (mountain, forest, plains)
+		if (type _x == "NameLocal" || type _x == "Hill" ) then 
+		{
+			//Check if there is building near the location
+			if (count ((nearestTerrainObjects [locationPosition _x, ["house", "FORTRESS", "BUNKER", "BUILDING"], 150, false, true])) == 0) then 
+			{
+				//Remove the location
+				_tempAllLocations = _tempAllLocations - [_x];
+			} else 
+			{
+				//Debug mode to view found location
+				// _name = text _x;
+				// _pos = getPos _x;
+				// createMarkerLocal [_name, _pos];
+				// _name setMarkerTypeLocal  "selector_selectedMission";
+				// _name setMarkerTextLocal  _name;
+				// //_name setMarkerColorLocal _color;
+			};
+		};
+	} foreach _tempAllLocations;
+	_tempAllLocations
+};
+
+
 
 getLocationsAround = 
 {
@@ -118,7 +157,7 @@ getListOfPositionsAroundTarget =
 	
 	for [{_i = 0}, {_i < _numberOfPosition}, {_i = _i + 1}] do
 	{ 
-		AvalaiblePositions pushBack ([_targetPosition, (_minDistance), (_maxDistance), 8, 0, 0.25, 0, [], [[0,0,0],[0,0,0]]] call BIS_fnc_findSafePos);
+		AvalaiblePositions pushBack ([_targetPosition, (_minDistance), (_maxDistance), 8, 0, 0.30, 0, [], [[0,0,0],[0,0,0]]] call BIS_fnc_findSafePos);
 	};
 	AvalaiblePositions
 };
@@ -267,4 +306,46 @@ searchLocationWithWaterDepth = {
 		};
 	};
 	_searchResult
+};
+
+
+getEdgePoints = {
+	params [["_destination", [0,0,0], [[]], 3]];
+	
+	private _destX = _destination select 0;
+	private _destY = _destination select 1;
+	private _mapSize = worldSize;
+	
+	// Generate a random vector direction
+	private _angle = random 360;
+	private _cos = cos _angle;
+	private _sin = sin _angle;
+
+	// Prevent division by zero
+	if (abs _cos < 1e-6) then { _cos = 1e-6; };
+	if (abs _sin < 1e-6) then { _sin = 1e-6; };
+
+	private _edgePoints = [];
+
+	// Left Border (x = 0)
+	private _t = (0 - _destX) / _cos;
+	private _y = _destY + _t * _sin;
+	if (_y >= 0 && _y <= _mapSize) then { _edgePoints pushBackUnique [0, _y, 0]; };
+
+	// Right Border (x = mapSize)
+	_t = (_mapSize - _destX) / _cos;
+	_y = _destY + _t * _sin;
+	if (_y >= 0 && _y <= _mapSize) then { _edgePoints pushBackUnique [_mapSize, _y, 0]; };
+
+	// Bottom Border (y = 0)
+	_t = (0 - _destY) / _sin;
+	private _x = _destX + _t * _cos;
+	if (_x >= 0 && _x <= _mapSize) then { _edgePoints pushBackUnique [_x, 0, 0]; };
+
+	// Top Border (y = mapSize)
+	_t = (_mapSize - _destY) / _sin;
+	_x = _destX + _t * _cos;
+	if (_x >= 0 && _x <= _mapSize) then { _edgePoints pushBackUnique [_x, _mapSize, 0]; };
+
+	_edgePoints select [0, 2]
 };

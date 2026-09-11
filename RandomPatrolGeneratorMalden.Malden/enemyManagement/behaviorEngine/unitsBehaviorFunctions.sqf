@@ -6,7 +6,7 @@ doAttack = {
 		if (!isNil "_thisGroup") then
 		{
 			diag_log "Task ATTACK [LAMBS]!";
-			[_thisGroup, _thisTarget] spawn lambs_wp_fnc_taskAssault;;
+			[_thisGroup, 2000] spawn lambs_wp_fnc_taskRush;
 
 		};
 	} else 
@@ -64,8 +64,13 @@ params ["_thisGroup", "_position", "_distance","_allowCamp"];
 				_x disableAI "PATH";
 				_tempPosition = selectRandom _allPositions;
 				_allPositions = _allPositions - [_tempPosition];
-				//[_x, "STAND1", "ASIS"] call BIS_fnc_ambientAnim;
 				_x setPos (_tempPosition);
+
+				//Garrison unit will do some standing animation
+				if (side _x != civilian) then 
+				{
+					[_x, selectRandom ["STAND", "STAND_IA", "WATCH", "WATCH1", "WATCH2"], "FULL", { false }] call BIS_fnc_ambientAnimCombat;
+				};
 
 				//80% to leave the position if fired
 				if (random 100>80) then 
@@ -98,6 +103,7 @@ doPatrol = {
 	{
 		diag_log "Task_Patrol !";
 		[_thisGroup, _position, _distance] call BIS_fnc_taskPatrol;
+		{_x enableSimulation true;} foreach (units _thisGroup);
 	};
 };
 

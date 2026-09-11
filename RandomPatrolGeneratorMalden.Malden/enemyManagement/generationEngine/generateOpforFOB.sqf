@@ -27,6 +27,35 @@ while {([_OpforFobLocation] call isLocationOnMap) && _spawnAttempts <10} do
 };
 if (!([_OpforFobLocation] call isLocationOnMap)) then
 {
+
+	//Flat the terrain with specifics FOB
+	if (isClass (configFile >> "CfgPatches" >> "IFA3_Core")) then 
+	{
+		if (warEra == 0) then 
+		{
+			//Flat the base 
+			private _fnc_flattenTerrain =
+			{
+				params ["_start", "_a", "_b", "_h"];
+				private _newPositions = [];
+
+				for "_xStep" from 0 to _a do
+				{
+					for "_yStep" from 0 to _b do
+					{
+						private _newHeight = _start vectorAdd [_xStep, _yStep, 0];
+						_newHeight set [2, _h];
+						_newPositions pushBack _newHeight;
+					};
+				};
+
+				_newPositions;
+			};
+
+			private _positionsAndHeights = [[_OpforFobLocation#0-45, _OpforFobLocation#1-45], 90, 90, getTerrainHeight _OpforFobLocation] call _fnc_flattenTerrain;
+			setTerrainHeight [_positionsAndHeights, true];
+		};
+	};
 	
 	//Spawn FOB
 	_spawnFOBObjects = [_OpforFobLocation, (random 360), selectRandom avalaibleEnemyFOB] call BIS_fnc_ObjectsMapper;
@@ -46,7 +75,10 @@ if (!([_OpforFobLocation] call isLocationOnMap)) then
 			_x setPosASL (getPosASL _randomAvalaiblePos);
 			_x disableAI "PATH";
 			_x setDir (getDir _randomAvalaiblePos);
-			//[_x, "STAND1", "ASIS"] remoteExecCall ["BIS_fnc_ambientAnim"]; //make unit anim
+
+			//Garrison unit will do some standing animation
+			[_x, selectRandom ["STAND", "STAND_IA", "WATCH", "WATCH1", "WATCH2"], "FULL", { false }] call BIS_fnc_ambientAnimCombat;
+
 			deleteVehicle _randomAvalaiblePos;
 			_OpforFobStandardOpforLocation = _OpforFobStandardOpforLocation - [_randomAvalaiblePos];
 		} foreach units _opforFOBGarrison;

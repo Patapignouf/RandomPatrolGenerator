@@ -2,7 +2,21 @@ params ["_vehicle"];
 
 diag_log format ["The vehicle %1 is on death checking", _vehicle];
 
-while {alive _vehicle} do 
+
+_vehicle addEventHandler ["GetOut", {
+	params ["_veh", ["_role", ""], ["_unit", objNull], ["_turret", []]];
+
+	// On vérifie le nombre de personnes vivantes encore à l'intérieur
+	private _aliveCrew = (crew _veh) select { alive _x };
+
+	if (count _aliveCrew == 0) then {
+		_veh setVariable ["TAG_isCrewDismounted", true, true];
+		//systemChat "crew dismounted";
+	};
+}];
+
+
+while {alive _vehicle || (!(_vehicle getVariable ["TAG_isCrewDismounted", false]))} do 
 {
 	//Just wait
 	sleep 30;

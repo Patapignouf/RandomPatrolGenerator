@@ -1,6 +1,8 @@
 #include "classConstant.sqf"
 #include "itemdb.sqf"
 #include "..\GUI\weaponShopGUI\weaponShopFunctions.sqf"
+#include "..\engine\fortifyActionManagement.sqf"
+
 
 //Import mission params
 warEra = missionNamespace getVariable "warEra"; // Default actual warfare
@@ -107,8 +109,34 @@ getPrestigeItems = {
 	_result
 };
 
+
+getTypeOfWeapon = {
+	// fnc_getWeaponSlot.sqf
+	// Usage: _slot = "arifle_MX_F" call fnc_getWeaponSlot;
+
+	params ["_className"];
+
+	private _config = configFile >> "CfgWeapons" >> _className;
+
+	if (!isClass _config) exitWith { "unknown" };
+
+	// "type" is a bitmask in CfgWeapons:
+	// 1 = Primary
+	// 2 = Secondary (launcher)
+	// 4 = Handgun
+	private _type = getNumber (_config >> "type");
+
+	if (_type == 0) exitWith { "unknown" };
+
+	if ((_type mod 2) == 1) exitWith { "primary" };              // bit 1
+	if (floor (_type / 2) mod 2 == 1) exitWith { "secondary" };  // bit 2
+	if (floor (_type / 4) mod 2 == 1) exitWith { "tertiary" };   // bit 4 (handgun)
+
+	"unknown"
+}; 
+
 getVirtualWeaponList = {
-	params ["_currentPlayer", "_currentFaction"];
+    params ["_currentPlayer", "_currentFaction", ["_removeCommonWeaponsFromSpecificsClasses", false]];
 
 	_currentPlayerClass = _currentPlayer getVariable "role";
 	_virtualWeaponList = [];
@@ -122,12 +150,26 @@ getVirtualWeaponList = {
 
 	switch (_currentPlayerClass) do
 	{
+		case c_pilot:
+			{
+				//Add smg weapons only
+				_virtualWeaponList = _virtualWeaponList + (smgList_db select {_x select 1  == _currentFaction} select 0 select 0);
+				
+				//Add specific smg
+				if (missionNameSpace getVariable ["enableOpforWeaponShop",1] >= 1) then 
+				{
+					_virtualWeaponList = _virtualWeaponList +([_currentFaction, "smg", _unlockedStuff] call getPlayerFactionUnlockedWeaponForCategoryWithUnlockedInput);
+				};
+			};
 		case c_at:
 			{
-				_virtualWeaponList = _virtualWeaponList + (rifleList_db select {_x select 1  == _currentFaction} select 0 select 0);
-				_virtualWeaponList = _virtualWeaponList + (smgList_db select {_x select 1  == _currentFaction} select 0 select 0);
-				_virtualWeaponList = _virtualWeaponList + (launcherList_db select {_x select 1  == _currentFaction} select 0 select 0);
+				//Add commun weapons
+				_virtualWeaponList = _virtualWeaponList +  ([_currentFaction, _unlockedStuff] call addBasicRifle);
 
+				//Add default launcher
+				_virtualWeaponList = _virtualWeaponList + (launcherList_db select {_x select 1  == _currentFaction} select 0 select 0);
+				
+				//Add specific weapons and launcher
 				if (missionNameSpace getVariable ["enableOpforWeaponShop",1] >= 1) then 
 				{
 					_virtualWeaponList = _virtualWeaponList +([_currentFaction, "rifle", _unlockedStuff] call getPlayerFactionUnlockedWeaponForCategoryWithUnlockedInput);
@@ -137,56 +179,81 @@ getVirtualWeaponList = {
 			};
 		case c_autorifleman:
 			{
-				_virtualWeaponList = _virtualWeaponList + (rifleList_db select {_x select 1  == _currentFaction} select 0 select 0);
+				//Add basic stuff
+				if (!_removeCommonWeaponsFromSpecificsClasses) then 
+				{
+					_virtualWeaponList = _virtualWeaponList +  ([_currentFaction, _unlockedStuff] call addBasicRifle);
+				};
+
+				//Add default specific stuff
 				_virtualWeaponList = _virtualWeaponList + (autorifleList_db select {_x select 1  == _currentFaction} select 0 select 0);
 
+				//add unlocked specific stuff
 				if (missionNameSpace getVariable ["enableOpforWeaponShop",1] >= 1) then 
 				{
-					_virtualWeaponList = _virtualWeaponList +([_currentFaction, "rifle", _unlockedStuff] call getPlayerFactionUnlockedWeaponForCategoryWithUnlockedInput);
-					_virtualWeaponList = _virtualWeaponList +([_currentFaction, "smg", _unlockedStuff] call getPlayerFactionUnlockedWeaponForCategoryWithUnlockedInput);
 					_virtualWeaponList = _virtualWeaponList +([_currentFaction, "autoRifle", _unlockedStuff] call getPlayerFactionUnlockedWeaponForCategoryWithUnlockedInput);
 				};
 			};
 		case c_marksman;
 		case c_sniper: 
 			{
-				_virtualWeaponList = _virtualWeaponList + (rifleList_db select {_x select 1  == _currentFaction} select 0 select 0);
+				//Add basic stuff
+				if (!_removeCommonWeaponsFromSpecificsClasses) then 
+				{
+					_virtualWeaponList = _virtualWeaponList +  ([_currentFaction, _unlockedStuff] call addBasicRifle);
+				};
+
+				//Add default specific stuff
 				_virtualWeaponList = _virtualWeaponList + (marksmanrifleList_db select {_x select 1  == _currentFaction} select 0 select 0);
 
+				//add unlocked specific stuff
 				if (missionNameSpace getVariable ["enableOpforWeaponShop",1] >= 1) then 
 				{
-					_virtualWeaponList = _virtualWeaponList +([_currentFaction, "rifle", _unlockedStuff] call getPlayerFactionUnlockedWeaponForCategoryWithUnlockedInput);
-					_virtualWeaponList = _virtualWeaponList +([_currentFaction, "smg", _unlockedStuff] call getPlayerFactionUnlockedWeaponForCategoryWithUnlockedInput);
 					_virtualWeaponList = _virtualWeaponList +([_currentFaction, "sniperRifle", _unlockedStuff] call getPlayerFactionUnlockedWeaponForCategoryWithUnlockedInput);
 				};
 			};
 		case c_grenadier:
 			{
-				_virtualWeaponList = _virtualWeaponList + (rifleList_db select {_x select 1  == _currentFaction} select 0 select 0);
+				//Add basic stuff
+				if (!_removeCommonWeaponsFromSpecificsClasses) then 
+				{
+					_virtualWeaponList = _virtualWeaponList +  ([_currentFaction, _unlockedStuff] call addBasicRifle);
+				};
+
+				//Add default specific stuff
 				_virtualWeaponList = _virtualWeaponList + (grenadeLauncherList_db select {_x select 1  == _currentFaction} select 0 select 0);
 
+				//add unlocked specific stuff
 				if (missionNameSpace getVariable ["enableOpforWeaponShop",1] >= 1) then 
 				{
-					_virtualWeaponList = _virtualWeaponList +([_currentFaction, "rifle", _unlockedStuff] call getPlayerFactionUnlockedWeaponForCategoryWithUnlockedInput);
 					_virtualWeaponList = _virtualWeaponList +([_currentFaction, "grenadeLauncher", _unlockedStuff] call getPlayerFactionUnlockedWeaponForCategoryWithUnlockedInput);
-					_virtualWeaponList = _virtualWeaponList +([_currentFaction, "smg", _unlockedStuff] call getPlayerFactionUnlockedWeaponForCategoryWithUnlockedInput);
 				};
 			};				
 		default
 			{
-				//Non implemented role : Default rifle
-			 	_virtualWeaponList = _virtualWeaponList + (rifleList_db select {_x select 1  == _currentFaction} select 0 select 0); 
-				_virtualWeaponList = _virtualWeaponList + (smgList_db select {_x select 1  == _currentFaction} select 0 select 0);
-
-				if (missionNameSpace getVariable ["enableOpforWeaponShop",1] >= 1) then 
-				{
-					_virtualWeaponList = _virtualWeaponList +([_currentFaction, "rifle", _unlockedStuff] call getPlayerFactionUnlockedWeaponForCategoryWithUnlockedInput);
-					_virtualWeaponList = _virtualWeaponList +([_currentFaction, "smg", _unlockedStuff] call getPlayerFactionUnlockedWeaponForCategoryWithUnlockedInput);
-				};
+				//Add basic stuff
+				_virtualWeaponList = _virtualWeaponList +  ([_currentFaction, _unlockedStuff] call addBasicRifle);
 			};
 	};
 	//diag_log format ["Player %1 with role %2 has access to weapons %3", name _currentPlayer, _currentPlayerClass,_virtualWeaponList ];
 	_virtualWeaponList
+};
+
+
+addBasicRifle = {
+	params ["_currentFaction", "_unlockedStuff"];
+
+	_basicRifleFilteredList = [];
+
+	_basicRifleFilteredList = _basicRifleFilteredList + (rifleList_db select {_x select 1  == _currentFaction} select 0 select 0); 
+	_basicRifleFilteredList = _basicRifleFilteredList + (smgList_db select {_x select 1  == _currentFaction} select 0 select 0);
+	
+	if (missionNameSpace getVariable ["enableOpforWeaponShop",1] >= 1) then 
+	{
+		_basicRifleFilteredList = _basicRifleFilteredList +([_currentFaction, "rifle", _unlockedStuff] call getPlayerFactionUnlockedWeaponForCategoryWithUnlockedInput);
+		_basicRifleFilteredList = _basicRifleFilteredList +([_currentFaction, "smg", _unlockedStuff] call getPlayerFactionUnlockedWeaponForCategoryWithUnlockedInput);
+	};
+	_basicRifleFilteredList
 };
 
 // //GetFull weapon list of a faction to build a shop
@@ -456,7 +523,8 @@ getVirtualMagazine = {
 		case c_autorifleman:
 			{
 				{
-					_currentWeaponMagazineList = getArray (configfile >> "CfgWeapons" >> _x >> "magazines");
+					//_currentWeaponMagazineList = getArray (configfile >> "CfgWeapons" >> _x >> "magazines");
+					_currentWeaponMagazineList = [_x] call getCompatibleMagazines; //Update magazine function
 					if (count _currentWeaponMagazineList != 0) then 
 					{
 						_currentWeapon = _x;
@@ -472,47 +540,18 @@ getVirtualMagazine = {
 					};
 				} foreach currentWeaponList;
 			};
-		case c_grenadier:
-			{ 
-				{
-					_currentWeapon = _x;
-					//Add default weapon magazine except large magazine
-					_listOfLargeMagazineText = ["60Rnd", "75Rnd", "75rnd", "100Rnd", "150Rnd", "200Rnd"]; //
-					_currentWeaponMagazineList = [_currentWeapon] call getListOfMagazines;
-					//Standard magazine
-					if (count (_currentWeaponMagazineList#0) != 0) then 
-					{
-						{
-							if ((virtualMagazineList) findIf {_currentWeapon == (_x)} == -1) then 
-							{
-								if (!([_x, _listOfLargeMagazineText] call isElementOfArrayInString) && !([_x] call isBannedItem)) then 
-								{
-									virtualMagazineList pushBackUnique _x;
-								};
-							};
-						} foreach (_currentWeaponMagazineList#0);
-					};
-					//Grenades
-					if (count (_currentWeaponMagazineList#1) != 0) then 
-					{
-						{
-							if ((virtualMagazineList) findIf {_currentWeapon == (_x)} == -1) then 
-							{
-								if (!([_x, _listOfLargeMagazineText] call isElementOfArrayInString) && !([_x] call isBannedItem)) then 
-								{
-									virtualMagazineList pushBackUnique _x;
-								};
-							};
-						} foreach (_currentWeaponMagazineList#1);
-					};
-				} foreach currentWeaponList;
-			};
+		// case c_grenadier:
+		// {
+		// 	//TODO Allow grenade muzzle only on this role 
+		// 	//Update getCompatibleMagazines function to add new filter parameter
+		// };
 		default 
 			{ 
 				{
 					//Add default weapon magazine except large magazine
-					_listOfLargeMagazineText = ["60Rnd", "75Rnd", "75rnd", "100Rnd", "150Rnd", "200Rnd"]; //
-					_currentWeaponMagazineList = getArray (configfile >> "CfgWeapons" >> _x >> "magazines");
+					//Add explosive bullet to exception
+					_listOfLargeMagazineText = ["60Rnd", "75Rnd", "75rnd", "100Rnd", "150Rnd", "200Rnd", "_Mod0", "_60_TSX", "556_60_"]; //
+					_currentWeaponMagazineList = [_x] call getCompatibleMagazines; //Update magazine function
 					if (count _currentWeaponMagazineList != 0) then 
 					{
 						_currentWeapon = _x;
@@ -551,15 +590,15 @@ getListOfMagazines =
 
 	private _weaponCfg = configFile >> "CfgWeapons" >> _weapon;
 
-	// tous les muzzles
+	//Check every muzzle
 	private _muzzles = getArray (_weaponCfg >> "muzzles");
 
-	// 🔫 muzzle principal
+	// main muzzle 
 	if ("this" in _muzzles) then {
 		_normalMags = getArray (_weaponCfg >> "magazines");
 	};
 
-	// 💣 autres muzzles = GL / secondaires
+	// 💣 other muzzles = GL 
 	{
 		if (_x != "this") then {
 			private _muzzleCfg = _weaponCfg >> _x;
@@ -570,11 +609,152 @@ getListOfMagazines =
 		};
 	} forEach _muzzles;
 
-	// supprimer doublons
+	//Clean duplicate
 	_normalMags = _normalMags arrayIntersect _normalMags;
 	_glMags     = _glMags arrayIntersect _glMags;
 
 	[_normalMags, _glMags]
+};
+
+
+getCompatibleMagazines = {
+	params [
+		["_weaponClass", "", [""]]
+	];
+
+	if (_weaponClass == "") exitWith { [] };
+
+	private _allMagazines = [];
+	private _weaponConfig = configFile >> "CfgWeapons" >> _weaponClass;
+
+	if (!isClass _weaponConfig) exitWith { [] };
+
+	// 1. Déterminer tous les muzzles de l'arme (ex: "this", "EGLM")
+	private _muzzles = ["this"];
+	private _configMuzzles = getArray (_weaponConfig >> "muzzles");
+	{
+		if (_x != "this") then { _muzzles pushBackUnique _x };
+	} forEach _configMuzzles;
+
+	// 2. Parcourir chaque muzzle pour extraire les chargeurs et MagWells
+	{
+		private _muzzleName = _x;
+		// Si le muzzle est "this", on lit à la racine de l'arme. Sinon, on lit dans la sous-classe du muzzle.
+		private _muzzleConfig = if (_muzzleName == "this") then { _weaponConfig } else { _weaponConfig >> _muzzleName };
+		
+		// Remonter l'héritage de la classe de l'arme/muzzle pour ne rater aucun chargeur des parents
+		while { isClass _muzzleConfig && { configName _muzzleConfig != "" } } do {
+			
+			// A. Extraction directe via l'array "magazines"
+			if (isArray (_muzzleConfig >> "magazines")) then {
+				{ _allMagazines pushBackUnique _x; } forEach (getArray (_muzzleConfig >> "magazines"));
+			};
+			
+			// B. Extraction via "magazineWell" (et exploration de CfgMagazineWells)
+			if (isArray (_muzzleConfig >> "magazineWell")) then {
+				{
+					private _wellName = _x;
+					private _wellConfig = configFile >> "CfgMagazineWells" >> _wellName;
+					
+					if (isClass _wellConfig) then {
+						// Parcourir toutes les sous-classes (les variantes) présentes dans ce MagazineWell
+						for "_i" from 0 to (count _wellConfig - 1) do {
+							private _subWell = _wellConfig select _i;
+							if (isArray _subWell) then {
+								{ _allMagazines pushBackUnique _x; } forEach (getArray _subWell);
+							};
+						};
+					};
+				} forEach (getArray (_muzzleConfig >> "magazineWell"));
+			};
+			
+			// Passer au parent de la config pour la prochaine itération de la boucle de l'héritage
+			_muzzleConfig = inheritsFrom _muzzleConfig;
+		};
+	} forEach _muzzles;
+
+	// Retourner le tableau final nettoyé des doublons (trié pour le confort)
+	_allMagazines sort true;
+	_allMagazines
+
+};
+
+
+replacePrimaryWeapon = {
+	params [
+		["_unit", player, [objNull]],
+		["_newWeapon", "", [""]]
+	];
+
+	if (isNull _unit) exitWith {
+		hint "Invalid unit";
+	};
+
+	if (_newWeapon == "" || {isNil "_newWeapon"} || {!isClass (configFile >> "CfgWeapons" >> _newWeapon)}) exitWith {
+		hint "Invalid new weapon";
+	};
+
+	// Current primary weapon
+	//_unit = player;
+	private _oldWeapon = primaryWeapon _unit;
+	private _magCount = 10; //Default 10 mags
+
+	
+	//Remove old weapon
+	if (_oldWeapon != "") then {
+
+		// Liste des chargeurs compatibles avec l'ancienne arme
+		private _compatibleMags = [_oldWeapon] call  getCompatibleMagazines;
+
+		private _compatibleMagsLower = _compatibleMags apply {toLower _x};
+
+
+		// Compter le nombre de chargeurs compatibles actuellement en possession
+		// (magazines renvoie aussi bien le chargeur inséré que ceux en réserve)
+		_magCount = {(toLower _x) in _compatibleMagsLower} count magazines _unit;
+
+		// Retirer l'arme principale (et son chargeur inséré)
+		_unit removeWeapon _oldWeapon;
+		_unitMagazine = magazines _unit;
+
+		// Retirer tous les chargeurs compatibles restants dans l'inventaire
+		{
+			if ((toLower _x) in _compatibleMagsLower) then {
+				_unit removeMagazine _x;
+			};
+		} forEach magazines _unit;
+
+	};
+
+	// Ajouter la nouvelle arme
+	_unit addWeapon _newWeapon;
+
+	// Déterminer le chargeur par défaut de la nouvelle arme
+	private _newMags = getArray (configFile >> "CfgWeapons" >> _newWeapon >> "magazines");
+
+	if (count _newMags > 0) then {
+		private _defaultMag = _newMags select 0;
+
+		// Give the first magazine
+		_unit addMagazine _defaultMag;
+
+		// Complete magazine
+		for "_i" from 2 to _magCount do {
+			_unit addMagazine _defaultMag;
+		};
+	} else {
+		hint "Attention : aucun chargeur trouvé pour la nouvelle arme.";
+	};
+
+	// Take primary weapon and force reload
+	_unit selectWeapon (primaryWeapon _unit);
+
+	[_unit] spawn 
+	{
+		params ["_unit"];
+		sleep 2;
+		reload _unit;
+	};
 };
 
 setupArsenalToItem = {
@@ -597,7 +777,7 @@ setupArsenalToItem = {
 	//Add Weapon to arsenal
 	_currentWeaponItems = [_currentPlayer, _currentFaction] call getVirtualWeaponList;
 	[_itemToAttachArsenal, _currentWeaponItems, false, false] call BIS_fnc_addVirtualWeaponCargo;
-	
+		
 	//Add backpack to arsenal
 	_currentBackpackItems = [_currentPlayer, _currentFaction] call getVirtualBackPack;
 	[_itemToAttachArsenal, _currentBackpackItems, false, false] call BIS_fnc_addVirtualBackpackCargo;
@@ -845,15 +1025,38 @@ setUnitTraitAccordingToRole = {
 		_caller setUnitTrait ["Medic", true];
 		_caller setVariable ["ace_medical_medicClass", 2, true]; //add special ACE medic trait doctor
 	};
+	if (_role == c_sniper && isPlayer _caller) then 
+	{
+		[[_caller], 'engine\camouflageManagement.sqf'] remoteExec ['BIS_fnc_execVM', _caller];
+	} else 
+	{
+		_caller setVariable ["dynamicCamo_active", false];
+	};
 	if (_role == c_engineer) then 
 	{
 		_caller setUnitTrait ["Engineer", true];
 		_caller setUnitTrait ["ExplosiveSpecialist", true];
 		_caller setVariable ["ace_isEngineer", 2, true]; //add special ACE medic trait advanced engineer
+		
+		if (isPlayer _caller && (_caller getVariable ["fortifyActionID", -1] == -1)) then 
+		{
+			[_caller] call addFortifyAction;
+		};
+		
+	} else 
+	{
+		if (isPlayer _caller) then 
+		{
+			//Remove fortify action
+			_fortifyID =  _caller getVariable ["fortifyActionID", -1];
+			[_caller, _fortifyID] call BIS_fnc_holdActionRemove;
+			_caller setVariable ["fortifyActionID", -1];
+		};
 	};
 	if (_role == c_leader) then 
 	{
 		group _caller selectLeader _caller;
+		[group _caller, _caller] remoteExec ["selectLeader", groupOwner group _caller];
 	};
 };
 
@@ -1334,7 +1537,11 @@ adjustLoadout = {
 	_currentPlayer addItem "ACE_morphine";	
 	_currentPlayer addItem "ACE_WaterBottle";
 	_currentPlayer addItem "ACE_EarPlugs";
-	_currentPlayer setSpeaker "noVoice";
+
+	if (missionNameSpace getVariable ["enableBotRadio", 1] == 0) then 
+	{
+		_currentPlayer setSpeaker "noVoice";
+	};
 
 	//Adapt loadout to a specific Era
 	[_currentPlayer] call doAdjustAdvancedStuff;

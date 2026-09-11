@@ -53,7 +53,7 @@ enableModCheckerParam =
 [
 	[	
 		[0, "Disable"],
-		[1, "Enable"]
+		[1, "Enable (default)"]
 	],
 	"Enable mod checker",
 	1,
@@ -63,12 +63,13 @@ enableModCheckerParam =
 officialPataCompanyServerParam = 
 [
 	[	
-		[0, "Disable"],
+		[0, "Disable (default)"],
 		[1, "Enable"]
 	],
 	"Official PataCompany server (enable Discord and TS)",
 	0,
-	"officialPataCompanyServer"
+	"officialPataCompanyServer",
+	"Only for official server"
 ];
 
 
@@ -76,44 +77,48 @@ enableExperienceSaveParam =
 [
 	[	
 		[0, "Disable"],
-		[1, "Enable"]
+		[1, "Enable (default)"]
 	],
 	"Enable experience (save on profile)",
 	1,
-	"enableExperienceSave"
+	"enableExperienceSave",
+	"Disable for debug only"
 ];
 
 enableSurrenderUnitParam = 
 [
 	[	
 		[0, "Disable"],
-		[1, "Enable"]
+		[1, "Enable (default)"]
 	],
 	"Opfor units can surrender",
 	1,
-	"enableSurrenderUnit"
+	"enableSurrenderUnit",
+	"Recommended enabled"
 ];
 
 enableAdvancedRespawnParam = 
 [
 	[	
 		[0, "Disable"],
-		[1, "Enable"]
+		[1, "Enable (default)"]
 	],
 	"Leader can place respawn point",
 	1,
-	"enableAdvancedRespawn"
+	"enableAdvancedRespawn",
+	"Recommended enabled"
 ];
 
 enableSelfRespawnTimerParam = 
 [
 	[	
-		[0, "Global timer"],
+		[0, "Global timer (default)"],
 		[1, "Self timer"]
 	],
 	"Respawn timer is global or by player",
 	0,
-	"enableSelfRespawnTimer"
+	"enableSelfRespawnTimer",
+	"Recommended global timer"
 ];
 
 
@@ -122,18 +127,33 @@ enableRTBMissionParam =
 [
 	[	
 		[0, "Disable"],
-		[1, "Enable"]
+		[1, "Enable (default)"]
 	],
 	"Enable RTB mission after objectives",
 	1,
 	"enableRTBMission"
 ];
 
+
+typeRTBMissionParam = 
+[
+	[	
+		[0, "Random"],
+		[1, "Extract in specific area (green smoke)"],
+		[2, "Leave the area (blue square)"]
+	],
+	"Type of RTB objective",
+	0,
+	"typeRTBMission",
+	"Recommended random"
+];
+
+
 enableOverHeatParam = 
 [
 	[	
 		[0, "Disable"],
-		[1, "Enable (ACE Only)"]
+		[1, "Enable (ACE Only) (default)"]
 	],
 	"Enable overheat on enemy weapon",
 	1,
@@ -143,87 +163,105 @@ enableOverHeatParam =
 missionAreaSizeParam = 
 [
 	[	
-		[0, "Small"],
+		[0, "Small (default)"],
 		[1, "Normal"],
 		[2, "Huge"]
 	],
 	"Mission area size",
 	0,
-	"missionAreaSize"
+	"missionAreaSize",
+	"Recommended normal or huge"
 ];
 
 enableAmbiantWarParam = 
 [
 	[	
-		[0, "Disable"],
+		[0, "Disable (default)"],
 		[1, "Enable"]
 	],
 	"Ambiant War (friendly squad)",
 	0,
-	"enableAmbiantWar"
+	"enableAmbiantWar",
+	"Better on war operation"
 ];
 
+enableAmbiantArtilleryParam = 
+[
+	[	
+		[0, "Disable (default)"],
+		[1, "Enable"]
+	],
+	"Ambiant artillery",
+	0,
+	"enableAmbiantArtillery",
+	"Better on war operation"
+];
 
 civiliansOnObjectivesParam = 
 [
 	[	
 		[0, "Disable"],
-		[1, "Enable"]
+		[1, "Enable (default)"]
 	],
 	"Enable civilian population on objectives",
 	1,
-	"enableCiviliansOnObjectives"
+	"enableCiviliansOnObjectives",
+	"Recommended for challenge"
 ];
 
 respawnOnOtherPlayersParam = 
 [
 	[	
-		[0, "Disable"],
+		[0, "Disable (default)"],
 		[1, "Enable"]
 	],
 	"Enable respawn on other players",
-	1,
-	"respawnOnOtherPlayers"
+	0,
+	"respawnOnOtherPlayers",
+	"Recommended disabled"
 ];
 
 respawnCheatParam = 
 [
 	[	
-		[0, "Disable"],
+		[0, "Disable (default)"],
 		[1, "Enable"]
 	],
-	"Enable death cheat protection (prevent player from respawn deco/reco)",
+	"Enable death cheat protection",
 	0,
-	"respawnCheat"
+	"respawnCheat",
+	"(prevent player from respawn deco/reco)"
 ];
 
 enableObjectiveExactLocationParam = 
 [
 	[	
-		[0, "None"],
+		[0, "None (default)"],
 		[1, "Near (WIP)"],
 		[2, "Exact"]
 	],
 	"Objective location markers",
 	0,
-	"enableObjectiveExactLocation"
+	"enableObjectiveExactLocation",
+	"None for immersion"
 ];
 
 enableRegularIncomeParam = 
 [
 	[	
-		[0, "Disable"],
+		[0, "Disable (default)"],
 		[1, "Enable"]
 	],
 	"Enable regular income (when credits under 500)",
-	1,
-	"enableRegularIncome"
+	0,
+	"enableRegularIncome",
+	"Recommended disabled"
 ];
 
 sideRelationParam =
 [
 	[	
-		[0, "Blufor friend with Independent against Opfor"],
+		[0, "Blufor friend with Independent against Opfor (default)"],
 		[1, "Blufor against Independent against Opfor (PvP)"],
 		[2, "Blufor against Independent and Opfor (PvP)"]
 	],
@@ -235,7 +273,7 @@ sideRelationParam =
 enablePersistentParam = 
 [
 	[	
-		[0, "Disable"],
+		[0, "Disable (default)"],
 		[1, "Enable"]
 	],
 	"Enable Persistent Mode (No fail on death)",
@@ -247,24 +285,26 @@ enablePersistentParam =
 endlessMissionParam = 
 [
 	[	
-		[0, "Disable"],
+		[0, "Disable (default)"],
 		[1, "Enable (WIP)"]
 	],
 	"Restart after mission end",
 	0,
-	"endlessMission"
+	"endlessMission",
+	"Experimental"
 ];
 
 
 disableZoomParam = 
 [
 	[	
-		[0, "Disable"],
+		[0, "Disable (default)"],
 		[1, "Enable (WIP)"]
 	],
 	"Temp Zoom (hold right clic)",
 	0,
-	"disableZoom"
+	"disableZoom",
+	"Experimental"
 ];
 
 
@@ -273,12 +313,13 @@ disableZoomParam =
 enableAutoDifficultyBalanceParam = 
 [
 	[	
-		[0, "Disable"],
+		[0, "Disable (default)"],
 		[1, "Enable (WIP)"]
 	],
 	"Enable Automatic difficulty balance",
 	0,
-	"enableAutoDifficultyBalance"
+	"enableAutoDifficultyBalance",
+	"Enable this option for public server"
 ];
 
 
@@ -286,44 +327,48 @@ enableLoadoutRestrictionParam =
 [
 	[	
 		[0, "Disable"],
-		[1, "Enable"]
+		[1, "Enable (default)"]
 	],
 	"Enable loadout restriction",
 	1,
-	"enableLoadoutRestriction"
+	"enableLoadoutRestriction",
+	"Recommended enabled"
 ];
 
 enableAccessoriesRestrictionParam = 
 [
 	[	
 		[0, "Disable"],
-		[1, "Enable"]
+		[1, "Enable (default)"]
 	],
 	"Enable accessories restriction",
 	1,
-	"enableAccessoriesRestriction"
+	"enableAccessoriesRestriction",
+	"Recommended enabled"
 ];
 
 enableHaloParam = 
 [
 	[	
-		[0, "Disable"],
+		[0, "Disable (default)"],
 		[1, "Enable"]
 	],
 	"Enable HALO JUMP",
-	1,
-	"enableHalo"
+	0,
+	"enableHalo",
+	"Recommended disabled"
 ];
 
 enableMassiveHaloParam = 
 [
 	[	
 		[0, "Disable"],
-		[1, "Enable"]
+		[1, "Enable (default)"]
 	],
 	"Enable HALO JUMP with all team",
 	1,
-	"enableMassiveHalo"
+	"enableMassiveHalo",
+	"Recommended enabled"
 ];
 
 timeOfDayParam = 
@@ -341,7 +386,7 @@ timeOfDayParam =
 		[9, "09:00"],
 		[10, "10:00"],
 		[11, "11:00"],
-		[12, "12:00"],
+		[12, "12:00 (default)"],
 		[13, "13:00"],
 		[14, "14:00"],
 		[15, "15:00"],
@@ -365,7 +410,7 @@ civJoinableFactionParam =
 [
 	[	
 		[0, "Nobody can recruit civilian"],
-		[1, "Only indepedent can recruit civilian"],
+		[1, "Only indepedent can recruit civilian (default)"],
 		[2, "Only blufor can recruit civilian"],
 		[3, "Both independent and blufor can recruit civilian"]
 	],
@@ -378,7 +423,7 @@ civSuicideBomberParam =
 [
 	[	
 		[0, "Disable suicide bomber"],
-		[1, "Active suicide bomber"]
+		[1, "Active suicide bomber (default)"]
 		
 	],
 	"Allowing a suicide bomber",
@@ -408,40 +453,43 @@ for "_i" from 1 to 100 do {
 maxObjectivesGeneratedSettingParam = 
 [
 	_percentages,
-	"Max number of objectives generated (campaign)",
+	"Max number of objectives generated",
 	100,
-	"maxObjectivesGeneratedSetting"
+	"maxObjectivesGeneratedSetting",
+	"Works only on campaign mode"
 ];
 
 enableOpforVehicleParam = 
 [
 	[	
 		[0, "None"],
-		[1, "Few"],
+		[1, "Few (default)"],
 		[2, "Medium"],
 		[3, "Crazy"],
 		[4, "Insane"]
 	],
 	"Number Opfor vehicle",
 	1,
-	"enableOpforVehicle"
+	"enableOpforVehicle",
+	"Recommended few or medium"
 ];
 
 enableOpforMortarParam = 
 [
 	[	
 		[0, "Disable"],
-		[1, "Enable"]
+		[1, "Enable (default)"]
 	],
 	"Opfor mortar",
 	1,
-	"enableOpforMortar"
+	"enableOpforMortar",
+	"Disable if it's too hard"
 ];
 
 enableReAirDropAdvFOBParam = 
 [
 	[	
-		[0, "Disable"],
+		[0, "Disable (default)"],
 		[1, "Enable"]
 	],
 	"Aidrop Adv FOB after disassembly",
@@ -453,18 +501,19 @@ randomizeObjectiveOrderParam =
 [
 	[	
 		[0, "Default order"],
-		[1, "Random"],
+		[1, "Random (default)"],
 		[2, "Closest"]
 	],
 	"Randomize objective order",
 	1,
-	"randomizeObjectiveOrder"
+	"randomizeObjectiveOrder",
+	"Closest for short missions"
 ];
 
 objectivePerLocationParam = 
 [
 	[	
-		[1, "1 objective per location"],
+		[1, "1 objective per location (default)"],
 		[2, "2 objectives per location"],
 		[3, "3 objectives per location"],
 		[4, "4 objectives per location"],
@@ -478,7 +527,7 @@ objectivePerLocationParam =
 xpDisplayParam = 
 [
 	[	
-		[0, "Disable"],
+		[0, "Disable (default)"],
 		[1, "Enable (Arcade)"]
 	],
 	"Experience real time display",
@@ -490,7 +539,7 @@ opforReinforcementParam =
 [
 	[	
 		[0, "Few"],
-		[1, "Normal"],
+		[1, "Normal (default)"],
 		[2, "Often"]
 	],
 	"Opfor Reinforcement frequency",
@@ -501,67 +550,88 @@ opforReinforcementParam =
 opforFactionRandomizerParam = 
 [
 	[	
-		[0, "Disable"],
+		[0, "Disable (default)"],
 		[1, "Enable"]
 	],
 	"Change opfor faction after each mission completion",
 	0,
-	"opforFactionRandomizer"
+	"opforFactionRandomizer",
+	"Not recommended"
 ];
 
 playerMarkerAllowedParam = 
 [
 	[	
-		[0, "Disable"],
-		[1, "Enable"]
+		[0, "Disable (default)"],
+		[1, "BLUFOR Accurate"],
+		[2, "Colored grid area"],
+		[3, "BLUFOR area"]
+
 	],
-	"Display player real time position on map",
+	"Players position on map",
+	0,
+	"playerMarkerAllowed",
+	"Recommended disable"
+];
+
+playerCounterSectorControlParam = 
+[
+	[	
+		[0, "Disable"],
+		[1, "Enable (default)"]
+	],
+	"Players counter on sector control",
 	1,
-	"playerMarkerAllowed"
+	"playerCounterSectorControl",
+	"Recommended enabled"
 ];
 
 addFOBOnObjectiveParam = 
 [
 	[	
-		[0, "Disable"],
+		[0, "Disable (default)"],
 		[1, "Enable"]
 	],
 	"Add enemy FOB when AO doesn't have building",
 	0,
-	"addFOBOnObjective"
+	"addFOBOnObjective",
+	"Only for empty maps"
 ];
 
 enableDynamicSimulationParam = 
 [
 	[	
 		[0, "Disable"],
-		[1, "Enable"]
+		[1, "Enable (default)"]
 	],
 	"Enable dynamic simulation",
 	1,
-	"enableDynamicSimulationSetting"
+	"enableDynamicSimulationSetting",
+	"Recommended enabled for perf"
 ];
 
 enableBluforFOBParam = 
 [
 	[	
 		[0, "Disable"],
-		[1, "Enable"]
+		[1, "Enable (default)"]
 	],
 	"Enable blufor FOB spawn",
 	1,
-	"enableBluforFOB"
+	"enableBluforFOB",
+	"Recommended enabled"
 ];
 
 enableSoloCrewTankParam = 
 [
 	[	
-		[0, "Disable"],
+		[0, "Disable (default)"],
 		[1, "Enable"]
 	],
 	"Enable solo crew tank",
 	0,
-	"enableSoloCrewTank"
+	"enableSoloCrewTank",
+	"Recommended for small team"
 ];
 
 enableOpforWeaponShopParam = 
@@ -569,63 +639,90 @@ enableOpforWeaponShopParam =
 	[	
 		[0, "Disable"],
 		[1, "Shop always available"],
-		[2, "Shop on POI"]
+		[2, "Shop on POI (default)"]
 	],
 	"Enable opfor weapon shop",
 	2,
-	"enableOpforWeaponShop"
+	"enableOpforWeaponShop",
+	"Recommended Shop On POI"
 ];
 
+rewardModeParam = 
+[
+	[	
+		[0, "Force Token"],
+		[1, "Force Items"],
+		[2, "Player can choose (default)"]
+	],
+	"Reward with token or items",
+	2,
+	"rewardMode"
+];
 
 enableOpforBMShopParam = 
 [
 	[	
 		[0, "Disable"],
-		[1, "Enable"]
+		[1, "Enable (default)"]
 	],
 	"Enable black market shop",
 	1,
 	"enableOpforBMShop"
 ];
 
-vehicleLockedDefaultParam = 
+enableChallengeModParam = 
 [
 	[	
 		[0, "Disable"],
+		[1, "Enable (default)"]
+	],
+	"Enable challenge on HQ",
+	1,
+	"enableChallengeMod",
+	"Arcade only"
+];
+
+vehicleLockedDefaultParam = 
+[
+	[	
+		[0, "Disable (default)"],
 		[1, "Enable"]
 	],
 	"[ACE] Lock vehicle on spawn",
 	0,
-	"vehicleLockedDefault"
+	"vehicleLockedDefault",
+	"ACE Only"
 ];
 
 enableGPSJammerOnMapParam = 
 [
 	[	
 		[0, "Disable"],
-		[1, "Enable"]
+		[1, "Enable (default)"]
 	],
-	"GPS and Radio jammer",
+	"[ACE] GPS and Radio jammer",
 	1,
-	"enableGPSJammerOnMap"
+	"enableGPSJammerOnMap",
+	"ACE and TFAR compatibility"
 ];
 
 displayGPSJammerOnMapParam = 
 [
 	[	
 		[0, "Disable"],
-		[1, "Enable"]
+		[1, "Enable (default)"]
 	],
 	"Display GPS Jammer area on map",
 	1,
-	"displayGPSJammerOnMap"
+	"displayGPSJammerOnMap",
+	"ACE and TFAR compatibility"
 ];
 
 fastTravelParam = 
 [
 	[	
 		[0, "Disable"],
-		[1, "Enable"]
+		[1, "Enable (default)"]
 	],
 	"Fast travel",
 	1,
@@ -635,12 +732,36 @@ fastTravelParam =
 ACETryFixUnconsciousParam = 
 [
 	[	
-		[0, "Disable"],
+		[0, "Disable (default)"],
 		[1, "Enable"]
 	],
 	"[ACE] Try fix player not really unconscious",
 	0,
-	"ACETryFixUnconscious"
+	"ACETryFixUnconscious",
+	"Not Recommended debug only"
+];
+
+allowSmallLocationsParam = 
+[
+	[	
+		[0, "Disable (default)"],
+		[1, "Enable"]
+	],
+	"Allow AO on small locations (ex : hill)",
+	0,
+	"allowSmallLocations",
+	"Not Recommended on vanilla maps"
+];
+
+addAmbientOpforLocParam = 
+[
+	[	
+		[0, "Disable"],
+		[1, "Enable (default)"]
+	],
+	"Populate cities with opfor",
+	1,
+	"addAmbientOpforLoc"
 ];
 
 WeatherSettingParam = 
@@ -648,11 +769,28 @@ WeatherSettingParam =
 	[	
 		[0, "Clear"],
 		[1, "Cloudy (no rain)"],
-		[2, "Random"]
+		[2, "Random (default)"]
 	],
 	"Setup mission weather",
 	2,
 	"WeatherSetting"
+];
+
+TimeMultiplierParam = 
+[
+	[	
+		[0.5, "x0.5"],
+		[1, "x1 (default)"],
+		[2, "x2"],
+		[5, "x5"],
+		[10, "x10"],
+		[15, "x15"],
+		[20, "x20"]
+	],
+	"Setup time multiplier",
+	1,
+	"TimeMultiplierVar",
+	"Night are x2 speed"
 ];
 
 _numberOfCivilian = [];
@@ -674,30 +812,32 @@ maxCivKilledParam =
 warReporterOnHQParam = 
 [
 	[	
-		[0, "Disable"],
+		[0, "Disable (default)"],
 		[1, "Enable"]
 	],
 	"Ability to become war reporter (VIP)",
 	0,
-	"warReporterOnHQ"
+	"warReporterOnHQ",
+	"Only for event"
 ];
 
 gunsOnlyParam = 
 [
 	[	
-		[0, "Disable"],
+		[0, "Disable (default)"],
 		[1, "Enable"]
 	],
 	"Allow only guns (no rifle)",
 	0,
-	"gunsOnly"
+	"gunsOnly",
+	"Only for event"
 ];
 
 hostileCivCanCallReinforcementParam = 
 [
 	[	
 		[0, "Disable"],
-		[1, "Enable"]
+		[1, "Enable (default)"]
 	],
 	"Hostile civilian can call enemy reinforcement",
 	1,
@@ -708,7 +848,7 @@ talkToCivParam =
 [
 	[	
 		[0, "Only reporter"],
-		[1, "Everyone"]
+		[1, "Everyone (default)"]
 	],
 	"People who can talk to civilians",
 	1,
@@ -719,20 +859,189 @@ enableDestroyerFOBParam =
 [
 	[	
 		[0, "Only FOB"],
-		[1, "FOB or Destroyer"],
+		[1, "FOB or Destroyer (default)"],
 		[2, "Only Destroyer"]
 	],
 	"Opfor Destroyers or FOB",
 	1,
-	"enableDestroyerFOB"
+	"enableDestroyerFOB",
+	"Recommended FOB or Destroyer"
+];
+
+enableBotRadioParam = 
+[
+	[	
+		[0, "Disable (default)"],
+		[1, "Enable"]
+	],
+	"Enable friendly radio com",
+	0,
+	"enableBotRadio",
+	"Recommended disable on MP"
+];
+
+enableFlatBluforBaseParam = 
+[
+	[	
+		[0, "Disable (default)"],
+		[1, "Enable"]
+	],
+	"Make blufor base flat",
+	0,
+	"enableFlatBluforBase",
+	"Recommended on mountain map"
+];
+
+defenseNumberWavesParam = 
+[
+	[	
+		[1, "1 wave"],
+		[3, "3 waves (default)"],
+		[5, "5 waves"],
+		[7, "7 waves"],
+		[10, "10 waves"],
+		[20, "20 waves"],
+		[50, "50 waves"]
+	],
+	"Defense obj nb waves",
+	3,
+	"defenseNumberWaves"
+];
+
+defenseTimeWavesParam = 
+[
+	[	
+		[60, "1 minute"],
+		[120, "2 minutes"],
+		[180, "3 minutes"],
+		[300, "5 minutes (default)"],
+		[420, "7 minutes"],
+		[600, "10 minutes"],
+		[900, "15 minutes"],
+		[1200, "20 minutes"]
+	],
+	"Defense obj time waves",
+	300,
+	"defenseTimeWaves"
+];
+
+defenseIncreaseDifficultyParam = 
+[
+	[	
+		[0, "Disable (default)"],
+		[1, "Enable"]
+	],
+	"Defense obj progressive difficulty",
+	0,
+	"defenseIncreaseDifficulty",
+	"Difficulty double every 2 waves"
+];
+
+
+defenseAnnounceWavesParam = 
+[
+	[	
+		[0, "Disable (default)"],
+		[1, "Enable"]
+	],
+	"Defense obj announce waves",
+	0,
+	"defenseAnnounceWaves"
+];
+
+defenseRespawnBetweenWaveParam = 
+[
+	[	
+		[0, "Disable (default)"],
+		[1, "Enable"]
+	],
+	"Defense respawn between waves",
+	0,
+	"defenseRespawnBetweenWave"
+];
+
+defenseRewardBetweenWaveParam = 
+[
+	[	
+		[0, "Disable (default)"],
+		[1, "Enable"]
+	],
+	"Defense reward between waves",
+	0,
+	"defenseRewardBetweenWave"
+];
+
+forceTentFOBParam = 
+[
+	[	
+		[0, "Disable (default)"],
+		[1, "Enable"]
+	],
+	"Force tent as blufor FOB",
+	0,
+	"forceTentFOB",
+	"Recommended disabled"
+];
+
+bluforVehicleAvalaibleSpawnInitParam = 
+[
+	[	
+		[0, "0 credit"],
+		[500, "500 credits (default)"],
+		[1000, "1000 credits"],
+		[2000, "2000 credits"],
+		[5000, "5000 credits"]
+	],
+	"Starting credits",
+	1000,
+	"bluforVehicleAvalaibleSpawnInit",
+	"Useful to buy support and vehicle"
+];
+
+
+enableCivilianOnCityParam = 
+[
+	[	
+		[0, "Disable"],
+		[1, "Enable (default)"]
+	],
+	"Enable civilian on civ city",
+	1,
+	"enableCivilianOnCity",
+	"Recommended enabled"
+];
+
+
+enableFurnitureParam = 
+[
+	[	
+		[0, "Disable"],
+		[1, "Enable (default)"]
+	],
+	"Enable Phronk's Furniture",
+	1,
+	"enableFurniture",
+	"Recommended on vanilla maps"
+];
+
+linkXPWithTokenParam = 
+[
+	[	
+		[0, "Disable"],
+		[1, "Enable (default)"]
+	],
+	"Link token reward and XP",
+	1,
+	"linkXPWithToken",
+	"Recommended enabled"
 ];
 
 //Full param list (obsolete)
-baseParamsToManage = [enableExperienceSaveParam, enableRTBMissionParam, missionAreaSizeParam, civiliansOnObjectivesParam, sideRelationParam, enableAmbiantWarParam, enableObjectiveExactLocationParam, enablePersistentParam, enableRegularIncomeParam, disableZoomParam, enableAutoDifficultyBalanceParam, civJoinableFactionParam, enableLoadoutRestrictionParam, enableAccessoriesRestrictionParam, enableOpforVehicleParam, enableSurrenderUnitParam, enableHaloParam, enableMassiveHaloParam, timeOfDayParam, civSuicideBomberParam, civSuicideBomberProbabilityParam, endlessMissionParam, enableOpforMortarParam, enableReAirDropAdvFOBParam, randomizeObjectiveOrderParam, xpDisplayParam, opforReinforcementParam, enableOverHeatParam, enableAdvancedRespawnParam, respawnOnOtherPlayersParam, enableSelfRespawnTimerParam, enableModCheckerParam, officialPataCompanyServerParam, respawnCheatParam, opforFactionRandomizerParam, playerMarkerAllowedParam, addFOBOnObjectiveParam, enableDynamicSimulationParam, maxObjectivesGeneratedSettingParam, enableBluforFOBParam, enableSoloCrewTankParam, enableOpforWeaponShopParam, enableOpforBMShopParam, vehicleLockedDefaultParam, enableGPSJammerOnMapParam, displayGPSJammerOnMapParam, fastTravelParam, ACETryFixUnconsciousParam, maxCivKilledParam, WeatherSettingParam, warReporterOnHQParam, gunsOnlyParam, hostileCivCanCallReinforcementParam, talkToCivParam, objectivePerLocationParam, enableDestroyerFOBParam];
+baseParamsToManage = [enableExperienceSaveParam, enableRTBMissionParam, typeRTBMissionParam, missionAreaSizeParam, civiliansOnObjectivesParam, sideRelationParam, enableAmbiantWarParam, enableAmbiantArtilleryParam, enableObjectiveExactLocationParam, enablePersistentParam, enableRegularIncomeParam, disableZoomParam, enableAutoDifficultyBalanceParam, civJoinableFactionParam, enableFurnitureParam, enableLoadoutRestrictionParam, enableAccessoriesRestrictionParam, enableOpforVehicleParam, enableSurrenderUnitParam, enableHaloParam, enableMassiveHaloParam, timeOfDayParam, civSuicideBomberParam, civSuicideBomberProbabilityParam, endlessMissionParam, enableOpforMortarParam, enableReAirDropAdvFOBParam, randomizeObjectiveOrderParam, xpDisplayParam, opforReinforcementParam, enableOverHeatParam, enableAdvancedRespawnParam, respawnOnOtherPlayersParam, enableSelfRespawnTimerParam, enableModCheckerParam, officialPataCompanyServerParam, respawnCheatParam, opforFactionRandomizerParam, playerMarkerAllowedParam, addFOBOnObjectiveParam, enableDynamicSimulationParam, maxObjectivesGeneratedSettingParam, enableBluforFOBParam, enableSoloCrewTankParam, enableOpforWeaponShopParam, enableOpforBMShopParam, enableChallengeModParam, vehicleLockedDefaultParam, enableGPSJammerOnMapParam, displayGPSJammerOnMapParam, fastTravelParam, ACETryFixUnconsciousParam, maxCivKilledParam, WeatherSettingParam, TimeMultiplierParam, warReporterOnHQParam, gunsOnlyParam, hostileCivCanCallReinforcementParam, talkToCivParam, objectivePerLocationParam, enableDestroyerFOBParam, enableBotRadioParam, enableFlatBluforBaseParam, defenseAnnounceWavesParam, defenseIncreaseDifficultyParam, defenseNumberWavesParam, defenseTimeWavesParam, rewardModeParam, bluforVehicleAvalaibleSpawnInitParam, forceTentFOBParam, enableCivilianOnCityParam, defenseRespawnBetweenWaveParam, defenseRewardBetweenWaveParam, allowSmallLocationsParam, addAmbientOpforLocParam, enableFurnitureParam, linkXPWithTokenParam, playerCounterSectorControlParam];
 
 //Make one list by dedicated menu
-baseGameParamToManage = [enableExperienceSaveParam, sideRelationParam, enableAmbiantWarParam, enablePersistentParam, enableRegularIncomeParam, disableZoomParam, enableLoadoutRestrictionParam, enableAccessoriesRestrictionParam, enableOpforWeaponShopParam, enableOpforBMShopParam, enableReAirDropAdvFOBParam, xpDisplayParam, enableOverHeatParam, enableAdvancedRespawnParam, enableDynamicSimulationParam, enableSelfRespawnTimerParam, officialPataCompanyServerParam, respawnOnOtherPlayersParam, enableModCheckerParam, respawnCheatParam, playerMarkerAllowedParam, enableSoloCrewTankParam, vehicleLockedDefaultParam, enableGPSJammerOnMapParam, displayGPSJammerOnMapParam, fastTravelParam, ACETryFixUnconsciousParam, gunsOnlyParam];
+baseGameParamToManage = [enableExperienceSaveParam, linkXPWithTokenParam, sideRelationParam, enableAmbiantWarParam, enableAmbiantArtilleryParam, enablePersistentParam, enableRegularIncomeParam, disableZoomParam, enableLoadoutRestrictionParam, enableAccessoriesRestrictionParam, enableOpforWeaponShopParam, enableOpforBMShopParam, enableChallengeModParam, rewardModeParam, enableReAirDropAdvFOBParam, xpDisplayParam, enableOverHeatParam, enableAdvancedRespawnParam, enableDynamicSimulationParam, enableSelfRespawnTimerParam, officialPataCompanyServerParam, respawnOnOtherPlayersParam, enableModCheckerParam, respawnCheatParam, playerMarkerAllowedParam, playerCounterSectorControlParam, enableSoloCrewTankParam, vehicleLockedDefaultParam, enableGPSJammerOnMapParam, displayGPSJammerOnMapParam, fastTravelParam, ACETryFixUnconsciousParam, gunsOnlyParam, enableBotRadioParam];
 
-baseOpforParamToManage = [civiliansOnObjectivesParam, enableAutoDifficultyBalanceParam, enableOpforVehicleParam, enableSurrenderUnitParam, civSuicideBomberParam, civSuicideBomberProbabilityParam, enableOpforMortarParam, opforReinforcementParam, addFOBOnObjectiveParam, opforFactionRandomizerParam, hostileCivCanCallReinforcementParam, enableDestroyerFOBParam];
+baseOpforParamToManage = [civiliansOnObjectivesParam, enableAutoDifficultyBalanceParam, enableOpforVehicleParam, addAmbientOpforLocParam, enableSurrenderUnitParam, civSuicideBomberParam, civSuicideBomberProbabilityParam, enableOpforMortarParam, opforReinforcementParam, addFOBOnObjectiveParam, opforFactionRandomizerParam, hostileCivCanCallReinforcementParam, enableDestroyerFOBParam];
 
-baseMissionParamToManage = [WeatherSettingParam, enableHaloParam, enableMassiveHaloParam, enableBluforFOBParam, timeOfDayParam, randomizeObjectiveOrderParam, objectivePerLocationParam, enableRTBMissionParam, missionAreaSizeParam, enableObjectiveExactLocationParam, civJoinableFactionParam, maxObjectivesGeneratedSettingParam, endlessMissionParam, maxCivKilledParam, warReporterOnHQParam, talkToCivParam];
+baseMissionParamToManage = [WeatherSettingParam, TimeMultiplierParam, enableHaloParam, enableMassiveHaloParam, enableBluforFOBParam, enableFlatBluforBaseParam, timeOfDayParam, allowSmallLocationsParam, randomizeObjectiveOrderParam, objectivePerLocationParam, maxObjectivesGeneratedSettingParam, bluforVehicleAvalaibleSpawnInitParam, enableRTBMissionParam, typeRTBMissionParam, missionAreaSizeParam, enableObjectiveExactLocationParam, civJoinableFactionParam, endlessMissionParam, maxCivKilledParam, warReporterOnHQParam, talkToCivParam, defenseNumberWavesParam, defenseIncreaseDifficultyParam, defenseAnnounceWavesParam, defenseTimeWavesParam, defenseRespawnBetweenWaveParam, defenseRewardBetweenWaveParam, forceTentFOBParam, enableCivilianOnCityParam];

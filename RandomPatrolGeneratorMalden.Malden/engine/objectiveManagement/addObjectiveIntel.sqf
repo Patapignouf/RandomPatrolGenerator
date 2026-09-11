@@ -162,7 +162,7 @@ params ["_currentGroup", "_thisObjective"];
 					}, 
 					[_objective],  
 					3,
-					1000, 
+					9999, 
 					true, 
 					false
 				] remoteExec ["BIS_fnc_holdActionAdd", 0, true];

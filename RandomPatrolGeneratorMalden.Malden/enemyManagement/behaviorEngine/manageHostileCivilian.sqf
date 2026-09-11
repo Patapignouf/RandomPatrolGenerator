@@ -119,7 +119,16 @@ while {alive _thisUnit && (side _thisUnit == civilian) && !(_thisUnit getVariabl
 
 				if (isPlayer _instigator) then 
 				{
-					_distance = _instigator distance _unit;
+					//Find distance between killed unit and killer
+					_distance = 0;
+
+					if (isRemoteControlling _instigator) then 
+					{
+						_distance = (remoteControlled _instigator) distance _unit;
+					} else 
+					{
+						_distance = _instigator distance _unit;
+					};		
 
 					//Store kill distance
 					[[_distance], 

@@ -9,7 +9,8 @@ if (missionNameSpace getVariable ["enableAdvancedRespawn", 1] == 1) then
 		"\a3\ui_f_oldman\data\IGUI\Cfg\holdactions\holdAction_sleep2_ca.paa",
 		"\a3\ui_f_oldman\data\IGUI\Cfg\holdactions\holdAction_sleep2_ca.paa",
 		"
-			(_this getVariable 'role' == 'leader')
+			((_this == leader group _this)||(_this getVariable 'role' == 'leader'))
+
 			&&
 			(vehicle _this == _this)
 		    &&
@@ -28,126 +29,218 @@ if (missionNameSpace getVariable ["enableAdvancedRespawn", 1] == 1) then
 
 			if (count (allUnits select {side _x == opfor && ((getPos _caller) distance _x < 15 )})==0) then 
 			{
-				missionNameSpace setVariable [format ['bluforAdvancedRespawn%1', str (group _caller)], false, true];
 
-				//Create tent
-				_createTent = createVehicle ["Land_TentDome_F", (_caller modelToWorld [0, 1, 0]), [], 0, "NONE"];
-				_callerPos = getPosATL _caller;
-
-				//setup tent pos
-				missionNameSpace setVariable [format ['bluforPositionAdvancedRespawn%1', str (group _caller)], getPosATL _createTent, true];
-
-				_tentPos = getPos _createTent;
-				_createTent setPosATL [_tentPos#0, _tentPos#1, _callerPos#2];
-				_createTent setVariable [str (group _caller), true, true];
-				_createTent setVariable ["tentGroupName", str (group _caller),true];
-
-
-				//Create opfor control trigger
-				_triggerTent = createTrigger ["EmptyDetector", getPos _createTent];
-				_triggerTent setTriggerArea [7, 7, 0, true];
-
-				//Check if there are enemy nearby to delete tent
-				[_triggerTent, _caller, _createTent] spawn {
-					params ["_triggerTent", "_caller", "_createTent"];
-
-					_groupName = str (group (_caller));
-					_nbOpfor = count ((allUnits select {alive _x && side _x == opfor} ) inAreaArray _triggerTent);
-
-					while {sleep 15; _nbOpfor == 0} do 
+				//Check faction credit
+				//Tent placement cost 100 credits
+				_haveCredits = false;
+				if (side _caller == blufor) then 
+				{
+					bluforVehicleAvalaibleSpawnCounter = missionNamespace getVariable "bluforVehicleAvalaibleSpawn";
+					if (100 <= bluforVehicleAvalaibleSpawnCounter) then 
 					{
-						_nbOpfor = count ((allUnits select {alive _x && side _x == opfor} ) inAreaArray _triggerTent);
-					};
-
-					[_createTent] call destroyTent;
-
-					[_createTent] call adjustRespawnPos;
-
-					//Tell all the group that the tent has been destroyed by opfor
-					[{["STR_RPG_HC_NAME", "STR_RPG_HC_DESTROY_TENT"] call doDialog}] remoteExec ["call", units (group _caller)];
+						_haveCredits = true;
+						bluforVehicleAvalaibleSpawnCounter = bluforVehicleAvalaibleSpawnCounter - 100;
+						missionNamespace setVariable ["bluforVehicleAvalaibleSpawn", bluforVehicleAvalaibleSpawnCounter, true];
+					};	
+				} else 
+				{
+					independentVehicleAvalaibleSpawnCounter = missionNamespace getVariable "bluforVehicleAvalaibleSpawn";
+					if (100 <= independentVehicleAvalaibleSpawnCounter) then 
+					{
+						_haveCredits = true;
+						independentVehicleAvalaibleSpawnCounter = independentVehicleAvalaibleSpawnCounter - 100;
+						missionNamespace setVariable ["bluforVehicleAvalaibleSpawn", independentVehicleAvalaibleSpawnCounter, true];
+					};					
 				};
 
-				[{["STR_RPG_HC_NAME", "STR_RPG_HC_RESPAWN_TENT"] call doDialog}] remoteExec ["call", units (group _caller)];
-
-				[[str (group _caller), _createTent,"\a3\ui_f\data\IGUI\Cfg\holdactions\holdAction_requestleadership_ca.paa" , [0,0,1,1]], 'GUI\3DNames\3DObjectNames.sqf'] remoteExec ['BIS_fnc_execVM', blufor, true];
-
-				//Add support action on tent
-				[_createTent, [format ["<img size='2' image='\a3\ui_f_oldman\data\IGUI\Cfg\holdactions\holdAction_market_ca.paa'/><t size='1'>%1</t>", localize "STR_ACTIONS_OPEN_SUPPORT_SHOP"],{
-					params ["_object","_caller","_ID","_param"];
-
-					[[false], 'GUI\supportGUI\supportGUI.sqf'] remoteExec ['BIS_fnc_execVM', _caller];
-				},[],3,true,false,"","(_target distance _this <5) && (_target getVariable [str (group _this), false])"]] remoteExec [ "addAction", 0, true ];
-
-				_createTent addAction [format ["<img size='2' image='\a3\ui_f_oldman\data\IGUI\Cfg\holdactions\holdAction_sleep2_ca.paa'/>%1</t>", localize "STR_ACTIONS_SLEEP"],{
-					//Define parameters
-					params ["_object","_caller","_ID","_avalaibleVehicle"];
-
-					if (!(missionNamespace getVariable ["usedFewTimeAgo",false])) then 
-					{
-						//set morning
-						((08 - dayTime + 24) % 24) remoteExec ["skipTime", 2, false]; 
-						[format ["%1 needs to rest", name _caller]] remoteExec ["hint",0,true];
-						missionNamespace setVariable ["usedFewTimeAgo",true,true];
-						sleep 300;
-						missionNamespace setVariable ["usedFewTimeAgo",false,true];
-					} else {
-						hint "No need to rest";
-					};
-				},_x,3,true,false,"","(_this getVariable 'role' == 'leader') && (_target distance _this <5) && (_target getVariable [str (group _this), false])"];
-
-				if (side player == blufor) then 
+				if (_haveCredits) then 
 				{
-					//Add action to add arsenal to the tent
-					_createTent addAction [format ["<img size='2' image='\a3\ui_f_oldman\data\IGUI\Cfg\holdactions\holdAction_sleep2_ca.paa'/>%1</t>", "Add arsenal to the tent (1000 credits)"],{
+					missionNameSpace setVariable [format ['bluforAdvancedRespawn%1', str (group _caller)], false, true];
+
+					//Create tent
+					_createTent = createVehicle ["Land_TentDome_F", (_caller modelToWorld [0, 2, 0]), [], 0, "CAN_COLLIDE"];
+					_callerPos = getPosATL _caller;
+
+					//setup tent pos
+					missionNameSpace setVariable [format ['bluforPositionAdvancedRespawn%1', str (group _caller)], getPosATL _createTent, true];
+
+					_tentPos = getPos _createTent;
+					_createTent setPosATL [_tentPos#0, _tentPos#1, _callerPos#2];
+					_createTent setVariable [str (group _caller), true, true];
+					_createTent setVariable ["tentGroupName", str (group _caller),true];
+
+
+					//Create opfor control trigger
+					_triggerTent = createTrigger ["EmptyDetector", getPos _createTent];
+					_triggerTent setTriggerArea [7, 7, 0, true];
+
+					//Check if there are enemy nearby to delete tent
+					[_triggerTent, _caller, _createTent] spawn {
+						params ["_triggerTent", "_caller", "_createTent"];
+
+						_groupName = str (group (_caller));
+						_nbOpfor = count ((allUnits select {alive _x && side _x == opfor} ) inAreaArray _triggerTent);
+
+						while {sleep 15; _nbOpfor == 0} do 
+						{
+							_nbOpfor = count ((allUnits select {alive _x && side _x == opfor} ) inAreaArray _triggerTent);
+						};
+
+						[_createTent] call destroyTent;
+
+						[_createTent] call adjustRespawnPos;
+
+						//Tell all the group that the tent has been destroyed by opfor
+						[{["STR_RPG_HC_NAME", "STR_RPG_HC_DESTROY_TENT"] call doDialog}] remoteExec ["call", units (group _caller)];
+					};
+
+					[{["STR_RPG_HC_NAME", "STR_RPG_HC_RESPAWN_TENT"] call doDialog}] remoteExec ["call", units (group _caller)];
+
+					[[str (group _caller), _createTent,"\a3\ui_f\data\IGUI\Cfg\holdactions\holdAction_requestleadership_ca.paa" , [0,0,1,1]], 'GUI\3DNames\3DObjectNames.sqf'] remoteExec ['BIS_fnc_execVM', blufor, true];
+
+					//Add support action on tent
+					[_createTent, [format ["<img size='2' image='\a3\ui_f_oldman\data\IGUI\Cfg\holdactions\holdAction_market_ca.paa'/><t size='1'>%1</t>", localize "STR_ACTIONS_OPEN_SUPPORT_SHOP"],{
+						params ["_object","_caller","_ID","_param"];
+
+						[[false], 'GUI\supportGUI\supportGUI.sqf'] remoteExec ['BIS_fnc_execVM', _caller];
+					},[],3,true,false,"","(_target distance _this <5) && (_target getVariable [str (group _this), false])"]] remoteExec [ "addAction", 0, true ];
+
+					_createTent addAction [format ["<img size='2' image='\a3\ui_f_oldman\data\IGUI\Cfg\holdactions\holdAction_sleep2_ca.paa'/>%1</t>", localize "STR_ACTIONS_SLEEP"],{
 						//Define parameters
 						params ["_object","_caller","_ID","_avalaibleVehicle"];
 
-						_vehiclePriceToSpawn = 1000;
-						_bluforVehicleAvalaibleSpawnCounter = missionNamespace getVariable "bluforVehicleAvalaibleSpawn";
-
-						if (_bluforVehicleAvalaibleSpawnCounter>=_vehiclePriceToSpawn) then 
+						if (!(missionNamespace getVariable ["usedFewTimeAgo",false])) then 
 						{
-							missionNamespace setVariable ["bluforVehicleAvalaibleSpawn", _bluforVehicleAvalaibleSpawnCounter-_vehiclePriceToSpawn, true];
-							if (ironMan) then 
+							//set morning
+							((08 - dayTime + 24) % 24) remoteExec ["skipTime", 2, false]; 
+							[format ["%1 needs to rest", name _caller]] remoteExec ["hint",0,true];
+							missionNamespace setVariable ["usedFewTimeAgo",true,true];
+							sleep 300;
+							missionNamespace setVariable ["usedFewTimeAgo",false,true];
+						} else {
+							hint "No need to rest";
+						};
+					},_x,3,true,false,"","(_this getVariable 'role' == 'leader') && (_target distance _this <5) && (_target getVariable [str (group _this), false])"];
+
+					//Create action to authorize tent disassembly
+					[
+						_createTent, 
+						"Disassemble tent", 
+						"\a3\ui_f\data\IGUI\Cfg\holdactions\holdAction_unbind_ca.paa", 
+						"\a3\ui_f\data\IGUI\Cfg\holdactions\holdAction_unbind_ca.paa", 
+						"(_this distance _target < 3) && (_this == leader group _this) && (vehicle _this == _this)",
+						"true", 
+						{
+							// Action start code
+						}, 
+						{
+							// Action on going code
+						},  
+						{
+							// Action successfull code
+							params ["_object","_caller","_ID","_param"];
+
+							//Refund fortification
+							_price = 100;
+							if (side _caller == blufor) then 
 							{
-								[[_object], {params ["_object"]; [_object] call setupPlayerLoadout;	}] remoteExec ["spawn", blufor]; //Adapt for independent
+								bluforVehicleAvalaibleSpawnCounter = missionNamespace getVariable "bluforVehicleAvalaibleSpawn";
+								if (_price <= bluforVehicleAvalaibleSpawnCounter) then 
+								{
+									_haveCredits = true;
+									bluforVehicleAvalaibleSpawnCounter = bluforVehicleAvalaibleSpawnCounter + _price;
+									missionNamespace setVariable ["bluforVehicleAvalaibleSpawn", bluforVehicleAvalaibleSpawnCounter, true];
+								};	
 							} else 
 							{
-								[[_object], {params ["_object"]; [_object] call setupPlayerLoadoutWithoutConditionRemake;	}] remoteExec ["spawn", blufor]; //Adapt for independent
+								independentVehicleAvalaibleSpawnCounter = missionNamespace getVariable "bluforVehicleAvalaibleSpawn";
+								if (_price <= independentVehicleAvalaibleSpawnCounter) then 
+								{
+									_haveCredits = true;
+									independentVehicleAvalaibleSpawnCounter = independentVehicleAvalaibleSpawnCounter + _price;
+									missionNamespace setVariable ["bluforVehicleAvalaibleSpawn", independentVehicleAvalaibleSpawnCounter, true];
+								};					
 							};
-						} else 
+
+							//Destroy fortification
+							[_object] spawn {
+								params ["_object"];
+
+								//Destroy tent
+								_object setDamage 1;
+
+								//Remove tent
+								sleep 2;
+								deleteVehicle _object;
+							};
+						}, 
 						{
-							hint "Not enough credits";
-						};
+							// Action failed code
+						}, 
+						[],  
+						2,
+						1000, 
+						false,
+						false
+					] remoteExec ["BIS_fnc_holdActionAdd", 0, true];
 
-					},_x,3,true,false,"","(_this getVariable 'role' == 'leader') && (_target distance _this <5) && (_target getVariable [str (group _this), false])"];
-				};
-
-				//Create marker
-				//Delete tent if respawn coordinates changed
-				[_createTent, _triggerTent]  call invokeTentManager;
-
-				//Disable tent if it dies
-				_createTent addEventHandler ["Killed", {
-					params ["_unit", "_killer", "_instigator", "_useEffects"];
-
-					//Reset group tent
-					_groupCaller = _unit getVariable ["tentGroupName", ""];
-					_tentCompleteListName = format ['bluforPositionAdvancedRespawnHistory%1', _groupCaller];
-					_tentCompleteList = missionNameSpace getVariable [_tentCompleteListName, []];
-					_tentElement = _tentCompleteList select {_x#1 distance  (getPosATL _createTent)>3};
-					if (count _tentElement != 0) then 
+					if (side player == blufor) then 
 					{
-						_lastTentPosition = _tentElement select -1;
-						_variableToCheck = format ['bluforPositionAdvancedRespawn%1', _unit getVariable ["tentGroupName", ""]];
-						missionNameSpace setVariable [_variableToCheck , _lastTentPosition, true];
+						//Add action to add arsenal to the tent
+						_createTent addAction [format ["<img size='2' image='\a3\ui_f_oldman\data\IGUI\Cfg\holdactions\holdAction_sleep2_ca.paa'/>%1</t>", "Add arsenal to the tent (1000 credits)"],{
+							//Define parameters
+							params ["_object","_caller","_ID","_avalaibleVehicle"];
+
+							_vehiclePriceToSpawn = 1000;
+							_bluforVehicleAvalaibleSpawnCounter = missionNamespace getVariable "bluforVehicleAvalaibleSpawn";
+
+							if (_bluforVehicleAvalaibleSpawnCounter>=_vehiclePriceToSpawn) then 
+							{
+								missionNamespace setVariable ["bluforVehicleAvalaibleSpawn", _bluforVehicleAvalaibleSpawnCounter-_vehiclePriceToSpawn, true];
+								if (ironMan) then 
+								{
+									[[_object], {params ["_object"]; [_object] call setupPlayerLoadout;	}] remoteExec ["spawn", blufor]; //Adapt for independent
+								} else 
+								{
+									[[_object], {params ["_object"]; [_object] call setupPlayerLoadoutWithoutConditionRemake;	}] remoteExec ["spawn", blufor]; //Adapt for independent
+								};
+							} else 
+							{
+								hint "Not enough credits";
+							};
+
+						},_x,3,true,false,"","(_this getVariable 'role' == 'leader') && (_target distance _this <5) && (_target getVariable [str (group _this), false])"];
 					};
 
-					[_unit] call destroyTent;
+					//Create marker
+					//Delete tent if respawn coordinates changed
+					[_createTent, _triggerTent]  call invokeTentManager;
 
-					[_unit] call adjustRespawnPos;
-				}];
+					//Disable tent if it dies
+					_createTent addEventHandler ["Killed", {
+						params ["_unit", "_killer", "_instigator", "_useEffects"];
 
+						//Reset group tent
+						_groupCaller = _unit getVariable ["tentGroupName", ""];
+						_tentCompleteListName = format ['bluforPositionAdvancedRespawnHistory%1', _groupCaller];
+						_tentCompleteList = missionNameSpace getVariable [_tentCompleteListName, []];
+						_tentElement = _tentCompleteList select {_x#1 distance  (getPosATL _createTent)>3};
+						if (count _tentElement != 0) then 
+						{
+							_lastTentPosition = _tentElement select -1;
+							_variableToCheck = format ['bluforPositionAdvancedRespawn%1', _unit getVariable ["tentGroupName", ""]];
+							missionNameSpace setVariable [_variableToCheck , _lastTentPosition, true];
+						};
+
+						[_unit] call destroyTent;
+
+						[_unit] call adjustRespawnPos;
+					}];
+				}
+				else
+				{
+					hint "Not enough credits";
+				};
 			} else 
 			{
 				hint "Enemy nearby cannot place the tent";
@@ -254,6 +347,8 @@ adjustRespawnPos = {
 			_marker setMarkerType "b_hq"; // Visible.
 			_marker setMarkerSize [1, 1];
 			_marker setMarkerColor "ColorBlue";
+			_marker setMarkerAlpha 0;
+			[_marker, 1] remoteExec ["setMarkerAlphaLocal", side player, true];
 		} else 
 		{
 			_markerName setMarkerPos _defaultTentLocation;

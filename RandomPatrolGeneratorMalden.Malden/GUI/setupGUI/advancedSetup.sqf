@@ -23,13 +23,13 @@ paramsToManageLater = paramsToManage - paramsToManageNow;
 _display = (findDisplay 46) createDisplay "RscDisplayEmpty";
 
 _backGround = _display ctrlCreate[ "ctrlStaticPicture", -1 ];
-_backGround ctrlSetPosition[ -0.1, -0.1, 1.2, 1.2 ];
+_backGround ctrlSetPosition[ -0.1, -0.1, 1.3, 1.2 ];
 _backGround ctrlSetText "#(argb,8,8,3)color(0.35,0.35,0.35,1)";
 _backGround ctrlCommit 0;
 
 _RcsTitleDialog = _display ctrlCreate ["RscStructuredText", -1];
 _RcsTitleDialog ctrlSetStructuredText parseText "<t size='0.5'>&#160;</t><br/><t size='1' align='center'>Advanced Settings&#160;&#160;</t>";
-_RcsTitleDialog ctrlSetPosition [ -0.1, -0.1, 1.2, 0.07 ];
+_RcsTitleDialog ctrlSetPosition [ -0.1, -0.1, 1.3, 0.07 ];
 _RcsTitleDialog ctrlSetBackgroundColor [0.8,0.5,0,1];
 _RcsTitleDialog ctrlSetTextColor [1, 1, 1, 1];
 _RcsTitleDialog ctrlCommit 0;
@@ -42,6 +42,16 @@ _yPosition = 0.10;
 	_paramsDefaultValue = _x#2;
 	_paramsSettingName = _x#3;
 
+
+	//Add helper management
+	_hasHelper = count _x == 5;
+	_helperWording = "";
+
+	if (_hasHelper) then 
+	{
+		_helperWording = _x#4;
+	};
+
 	//Create dropdownlist title on the left side
 	_RcsBodyLeftDialog = _display ctrlCreate ["RscStructuredText", -1];
 	_RcsBodyLeftDialog ctrlSetStructuredText  (parseText _paramsName);
@@ -52,7 +62,7 @@ _yPosition = 0.10;
  
 	//Create dropdownlist next to the param title on the right side
 	_dropdown = _display ctrlCreate ["RscCombo", 100];
-	_dropdown ctrlSetPosition [0.5, _yPosition, 0.4, 0.04];
+	_dropdown ctrlSetPosition [0.42, _yPosition, 0.4, 0.04];
 	_dropdown ctrlCommit 0;
 
 	//Populate dropdownlist with params
@@ -82,6 +92,20 @@ _yPosition = 0.10;
 		profileNameSpace setVariable [_diffusionParamName, parseNumber _selectedSetting];
 		saveProfileNamespace;
 	}];
+
+	//Display right helper
+	if (_hasHelper) then 
+	{
+		_RcsBodyRightDialog = _display ctrlCreate ["RscStructuredText", -1];
+		_RcsBodyRightDialog ctrlSetStructuredText  (parseText _helperWording);
+		_RcsBodyRightDialog ctrlSetPosition[0.85, _yPosition, 0.5, 0.07 ];
+		_RcsBodyRightDialog ctrlSetTextColor [1, 1, 1, 0.7];
+		//_RcsBodyLeftDialog ctrlSetBackgroundColor [0,0,0,0.8];
+
+		_RcsBodyRightDialog ctrlCommit 0;
+	};
+
+
 
 	//Move next input down 
 	_yPosition = _yPosition + 0.06;

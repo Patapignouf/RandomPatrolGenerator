@@ -44,8 +44,8 @@ if (!([_possibleRoadPosition] call isLocationOnMap)) then
 			deleteVehicle _randomAvalaiblePos;
 			_OpforFobStandardOpforLocation = _OpforFobStandardOpforLocation - [_randomAvalaiblePos];
 
-			//Make unit anim
-			//[_x, "STAND1", "ASIS"] remoteExecCall ["BIS_fnc_ambientAnim"];
+			//Garrison unit will do some standing animation
+			[_x, selectRandom ["STAND", "STAND_IA", "WATCH", "WATCH1", "WATCH2"], "FULL", { false }] call BIS_fnc_ambientAnimCombat;
 
 			//Disable IA prone
 			_x addEventHandler ["AnimStateChanged",

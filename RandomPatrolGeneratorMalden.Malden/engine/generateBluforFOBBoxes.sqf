@@ -18,9 +18,9 @@ clearMagazineCargoGlobal VA2;
 clearItemCargoGlobal VA2;
 clearBackpackCargoGlobal VA2;
 VA2 allowDamage false; 
-//VA2 enableSimulationGlobal false;
-publicvariable "VA2";
 VA2 enableSimulationGlobal false;
+publicvariable "VA2";
+VA2 enableSimulationGlobal true;
 
 [["STR_RPG_3D_LOADOUT", (getPos VA2) vectorAdd [0,0,2],"\a3\ui_f\data\igui\cfg\simpletasks\types\rifle_ca.paa" , [1,1,0,1]], 'GUI\3DNames\3DNames.sqf'] remoteExec ['BIS_fnc_execVM', blufor, true];
 
@@ -182,7 +182,7 @@ if (isClass (configFile >> "CfgPatches" >> "ace_medical")) then
 	_tempBox addItemCargoGlobal ["ACE_Suture", 100];
 
 	//Setup fortification ACE mod
-	[blufor, 100, [["Land_BagFence_Long_F", 10], ["Land_BagFence_Round_F", 10], ["Land_SandbagBarricade_01_hole_F", 15], ["Land_BagBunker_Small_F", 10], ["Land_BagFence_Long_F", 20]]] call ace_fortify_fnc_registerObjects;
+	[blufor, 100, [["Land_BagFence_Long_F", 10], ["Land_BagFence_Round_F", 10], ["Land_SandbagBarricade_01_hole_F", 15], ["Land_BagFence_Long_F", 20]]] call ace_fortify_fnc_registerObjects;
 } else 
 {
 	_tempBox addItemCargoGlobal ["FirstAidKit", 20];
@@ -281,6 +281,71 @@ publicvariable "TPFlag1";
 			] remoteExec ["spawn", 0, true]; 
 		};
 
+		if ((missionNameSpace getVariable "enableChallengeMod") == 1) then 
+		{
+			[[_botHQ], 
+			{
+				params ["_botHQ"]; 
+				_botHQ addAction [format ["<img size='2' image='\a3\ui_f\data\IGUI\Cfg\holdactions\holdAction_requestleadership_ca.paa'/><t size='1'>%1</t>", "Get challenge (XP Bonus)"],{
+					//Define parameters
+					params ["_object","_caller","_ID","_avalaibleVehicle"];
+
+					_hasClickChallenge = _caller getVariable ["RPG_hasClickChallenge", false];
+					
+					if (!_hasClickChallenge) then 
+					{
+						_caller setVariable ["RPG_hasClickChallenge", true, true]; //Comment for debug
+						_currentFaction = indFaction;
+						if (side _caller == blufor) then 
+						{
+							_currentFaction = bluFaction;
+						};
+						
+						//Get all weapon unlocked for the player
+						_weaponAvailableList = [_caller, _currentFaction, true] call getVirtualWeaponList;
+						_filteredPrimaryWeaponAvailableList = _weaponAvailableList select {([_x] call getTypeOfWeapon) == "primary"}; //Filter primary weapon
+
+						if (count _filteredPrimaryWeaponAvailableList != 0) then 
+						{
+							_supportClass = selectRandom _filteredPrimaryWeaponAvailableList;
+
+							//Save challenge weapon
+							_caller setVariable ["RPG_ChallengeWeapon", _supportClass, true];
+
+							//Display challenge
+							_supportName = getText (configFile >> "CfgWeapons" >> _supportClass >> "displayName");
+							_weaponIcon = getText (configFile >> "CfgWeapons" >> _supportClass >> "picture");
+
+							//Replace weapon
+							//Old function
+							// _caller removeWeapon (primaryWeapon _caller);
+							// _caller addWeapon _supportClass;
+							// _caller selectWeapon _supportClass;
+
+							[_caller, _supportClass] call replacePrimaryWeapon; //updated function
+
+							[[parseText format ["<t size='1.5'>Challenge play with <br/> %2<br/><img image='%1' size='5'/><br/><br/> <br/>Double XP earned %3</t><br/><br/><t size='1.2'></t>", _weaponIcon, _supportName, ""], "intel"], 'engine\hintManagement\addCustomHint.sqf'] remoteExec ['BIS_fnc_execVM', player]; 
+
+							//Display challenge to other players
+							[format ["%1 has a challenge with %2", name _caller, _supportName]] remoteExec ["systemChat", 0, true];
+						} else 
+						{
+							systemChat "No weapons available";
+						};
+						
+					} else 
+					{
+						_weaponChallenge = _caller getVariable ["RPG_ChallengeWeapon", ""];
+						_supportName = getText (configFile >> "CfgWeapons" >> _weaponChallenge >> "displayName");
+
+						systemChat format ["Challenge already underway with %1", _supportName];
+					};
+
+					},[],0,true,false,"","((_target distance _this <7) && (_this getVariable ['isReporter', false] == false))"];
+				}
+			] remoteExec ["spawn", 0, true]; 
+		};
+
 		if ((missionNameSpace getVariable "warReporterOnHQ") == 1) then 
 		{
 			[[_botHQ], 
@@ -297,6 +362,7 @@ publicvariable "TPFlag1";
 				}
 			] remoteExec ["spawn", 0, true]; 
 		};
+
 
 	HQCommander = _botHQ;
 	publicVariable "HQCommander";

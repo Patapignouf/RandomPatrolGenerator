@@ -5,12 +5,14 @@
 #include "GUI\setupGUI\missionSetupLocation.hpp"
 #include "GUI\loadoutGUI\playerLoadoutSetup.hpp"
 #include "GUI\respawnGUI\playerRespawnMenu.hpp"
+#include "GUI\respawnGUI\RespawnOpenMenu.hpp"
 #include "GUI\dialogGUI\dialogCivilian.hpp"
 #include "GUI\vehicleSpawnerGUI\vehicleSpawner.hpp"
 #include "GUI\supportGUI\supportGUI.hpp"
 #include "GUI\botteamGUI\botteamGUI.hpp"
 #include "GUI\adminGUI\adminGUI.hpp"
 #include "GUI\weaponShopGUI\weaponShopGUI.hpp"
+#include "GUI\unlockedManagementGUI\unlockedManagementGUI.hpp"
 #include "GUI\teamManagementGUI\teamManagementGUI.hpp"
 
 respawnDialog = 0;
@@ -36,6 +38,28 @@ class Header
 	minPlayers =  1;	// minimum number of players the mission supports
 	maxPlayers = 20;	// maximum number of players the mission supports
 };
+
+class CfgNotifications
+{
+        class scorePos
+        {
+                title = "%1";
+                iconText = "%2";
+                description = "%3";
+                priority = 3;
+                color[] = {0.2,1,0.2,1};
+        };
+        class scoreNeg
+        {
+                title = "%1";
+                iconText = "%2";
+                description = "%3";
+                priority = 3;
+                color[] = {1,0.2,0.2,1};
+        };
+};
+ 
+
 
 class CfgFunctions
 {

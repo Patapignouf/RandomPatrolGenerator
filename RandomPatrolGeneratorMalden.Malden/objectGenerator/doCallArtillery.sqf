@@ -33,7 +33,7 @@ if (_artlillerySupportCounter > 0) then
 		[_position] spawn {
 			params ["_position"];
 			sleep (random 4);
-			[_position, "Bo_Mk82", 30, (floor (random 3))+2, 5] spawn BIS_fnc_fireSupportVirtual;
+			[_position, "Sh_82mm_AMOS", 30, (floor (random 3))+2, 5] spawn BIS_fnc_fireSupportVirtual;
 		};
 	};
 

@@ -10,7 +10,8 @@ switch (missionNameSpace getVariable ["enableObjectiveExactLocation",0]) do
 
 		_bob = createMarker [_taskID, _randomPos]; 
 		_bob setMarkerShape "ELLIPSE"; 
-		_taskID setMarkerColor "ColorOrange"; 
+		//_taskID setMarkerColor "ColorOrange"; 
+		_taskID setMarkerColor "#(1,0.749,0.514,0.5)"; 
 		_taskID setMarkerSize [150, 150]; 
 		_taskID setMarkerBrush "SOLID";
 		_bob setMarkerPos _randomPos; //reajust after modify shape

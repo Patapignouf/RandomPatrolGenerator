@@ -584,6 +584,16 @@ publicVariable "factionInfos";
 			missionNamespace setVariable [_currentFactionName, _currentStuffFaction]; 
 		};
 
+		//Engineer
+		if (count (_currentStuffFaction select {_x#0 == "engineer"}) == 0) then 
+		{
+			_defaultRifleman = (_currentStuffFaction select {_x#0 == "rifleman"})#0;
+			_defaultLeader =+ _defaultRifleman;
+			_defaultLeader set [0, "engineer"];
+			_currentStuffFaction pushBack _defaultLeader;
+			missionNamespace setVariable [_currentFactionName, _currentStuffFaction]; 
+		};
+
 		//Medic
 		if (count (_currentStuffFaction select {_x#0 == "medic"}) == 0) then 
 		{
@@ -671,38 +681,39 @@ publicVariable "factionInfos";
 
 	systemChat format ["Faction parsing : finishing opfor factions - %1", time];
 
-	//adjust faction radio
+	if (warEra != 0) then 
 	{
-		_factionTechName = _x;
-
-		_bindingFaction = _potentialFactions select {_factionTechName == _x#0};
-
-		if (count _bindingFaction != 0) then 
+		//adjust faction radio
 		{
-			switch ((_bindingFaction#0)#2) do {
-				case 0:
-				{
-					[opfor, _factionTechName] call addRadioToFaction;
-					[opfor, _factionTechName] call addBackPackDroneToFaction;
-					[opfor, _factionTechName] call addModernItemsToFaction;
-				};
-				case 1:
-				{
-					[blufor, _factionTechName] call addRadioToFaction;
-					[blufor, _factionTechName] call addBackPackDroneToFaction;
-					[blufor, _factionTechName] call addModernItemsToFaction;
-				};
-				case 2:
-				{
-					[independent, _factionTechName] call addRadioToFaction;
-					[independent, _factionTechName] call addBackPackDroneToFaction;
-					[independent, _factionTechName] call addModernItemsToFaction;
+			_factionTechName = _x;
+
+			_bindingFaction = _potentialFactions select {_factionTechName == _x#0};
+
+			if (count _bindingFaction != 0) then 
+			{
+				switch ((_bindingFaction#0)#2) do {
+					case 0:
+					{
+						[opfor, _factionTechName] call addRadioToFaction;
+						[opfor, _factionTechName] call addBackPackDroneToFaction;
+						[opfor, _factionTechName] call addModernItemsToFaction;
+					};
+					case 1:
+					{
+						[blufor, _factionTechName] call addRadioToFaction;
+						[blufor, _factionTechName] call addBackPackDroneToFaction;
+						[blufor, _factionTechName] call addModernItemsToFaction;
+					};
+					case 2:
+					{
+						[independent, _factionTechName] call addRadioToFaction;
+						[independent, _factionTechName] call addBackPackDroneToFaction;
+						[independent, _factionTechName] call addModernItemsToFaction;
+					};
 				};
 			};
-		};
-	} foreach _whiteListFactions;
-
-
+		} foreach _whiteListFactions;
+	};
 
 	missionFactionSetup = true;
 	publicVariable "missionFactionSetup";

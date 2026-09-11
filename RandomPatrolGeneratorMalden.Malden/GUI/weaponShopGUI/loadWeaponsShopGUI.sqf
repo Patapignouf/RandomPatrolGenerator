@@ -18,7 +18,7 @@ private _buttonRandom = _mainDisplay displayCtrl 60003;
 _openArsenal = _specialParam#0;
 _shopMode = _specialParam#1;
 
-randomPrice = 1;
+randomPrice = 100;
 if (_shopMode == "OPFOR") then 
 {
 	_vehicleShopTitle ctrlSetText (format ["%2 | Unlock Token %1", [] call getUnlockCredit, localize "RPG_GUI_GENERAL_WEAPON_SHOP"]);
@@ -28,7 +28,7 @@ if (_shopMode == "OPFOR") then
 	_vehicleShopTitle ctrlSetText (format ["%2 | Unlock Token %1", [] call getUnlockCredit, localize "RPG_GUI_GENERAL_BM_SHOP"]);
 
 	//hide random buy
-	randomPrice = 5;
+	randomPrice = 400;
 };
 
 _icon ctrlSetText (localize "STR_GUI_BASE_ICON");
@@ -66,62 +66,68 @@ switch (_mode) do
 		};
 		_ctrl = _lnbEntries;
 
-		_opFactionWeapon = [_opFactionWeapon] call toFlatDesign;
-		_opFactionWeapon = [_opFactionWeapon] call cleanWeaponsAndItems;
-		_opFactionWeapon = [_opFactionWeapon, _currentFaction] call removeAlreadyUnlockedWeaponFromFlatList; //OnlyBluFaction for now 
+		_opFactionWeapon = [_opFactionWeapon, _currentFaction] call prepareShopList;
 
 		{
 			_weaponClassName = _x#1;
 			_categoryName = _x#0;
 			_supportName = getText (configFile >> "CfgWeapons" >> _weaponClassName >> "displayName");
 			_supportNameCode = "";
+			_price = 100;
 			switch (_categoryName) do 
 			{
 				case "rifle":
 				{
 					_supportNameCode = "Medium range";
+					_price = 100;
 				};
 				case "smg":
 				{
 					_supportNameCode = "Short range";
+					_price = 80;
 				};
 				case "grenadeLauncher":
 				{
 					_supportNameCode = localize "STR_RPG_LOADOUT_ROLE_GRENADIER";
+					_price = 150;
 				};
 				case "launcher":
 				{
 					_supportNameCode = localize "STR_RPG_LOADOUT_ROLE_AT";
+					_price = 200;
 				};
 				case "sniperRifle":
 				{
 					_supportNameCode = localize "STR_RPG_LOADOUT_ROLE_MARKSMAN";
+					_price = 300;
 				};
 				case "autoRifle":
 				{
 					_supportNameCode = localize "STR_RPG_LOADOUT_ROLE_AUTORIFLEMAN";
+					_price = 180;
 				};
 				case "shortAccessories":
 				{
 					_supportNameCode = "Base accessories";
+					_price = 80; //Set default price of 1 for accessories
 				};
 				case "longAccessories":
 				{
 					_supportNameCode = localize "STR_RPG_LOADOUT_ROLE_MARKSMAN";
+					_price = 150; //Set default price of 1 for accessories
 				};
 			};
 
-			_price = 1; //Set default price of 1 for accessories
 			_priceAnalysisReturn = [];
 
 			if (_categoryName != "shortAccessories" && _categoryName != "longAccessories") then 
 			{
-				_priceAnalysisReturn = [_weaponClassName] call defineWeaponPrice;
+				_priceAnalysisReturn = [_price, _weaponClassName, _shopMode == "BM"] call defineWeaponPrice;
 				_price = _priceAnalysisReturn#0;
 				//systemChat format ["Impact : %1 \nMax range : %2", _priceAnalysisReturn#1, _priceAnalysisReturn#2];
 			} else 
 			{
-				_price = [_weaponClassName] call defineScopePrice;
+				_price = [_price, _weaponClassName, _shopMode == "BM"] call defineScopePrice;
 			};
 
 			_supportIcon = getText (configFile >> "CfgWeapons" >> _weaponClassName >> "picture");
@@ -131,18 +137,30 @@ switch (_mode) do
 			if (_shopMode == "BM") then 
 			{
 				//Increase price of Black market item by 5
-				_price = _price + 5;
+				_price = _price + 400;
 			};
 
 			if (typeName _price == "SCALAR") then 
 			{
 				_ind = _ctrl lnbAddRow ["", _supportName, _supportNameCode, str _price];
+
+				//DLC check 
+				_DLCStatus = [];
+				_DLCStatus = getAssetDLCInfo [_weaponClassName, configFile >> "CfgWeapons"];
+
+				if (_DLCStatus#5 == "ArmA 3") then 
+				{
+					_DLCStatus set [5, "None"];
+				};
 			
 				//Set tooltip
 				if (count _priceAnalysisReturn != 0) then 
 				{
 					//_ctrl lnbSetTooltip [_ind, format ["Impact : %1 \nMax range : %2m", _priceAnalysisReturn#1, _priceAnalysisReturn#2]];
-					_ctrl lnbSetTooltip [[_ind,0], format ["Impact : %1 \nMax range : %2m\nDefault ammo : %3\nAccuracy : %4%%", _priceAnalysisReturn#1, _priceAnalysisReturn#2, _priceAnalysisReturn#3, _priceAnalysisReturn#4]];
+					_ctrl lnbSetTooltip [[_ind,0], format ["Impact : %1 \nMax range : %2m\nDefault ammo : %3\nAccuracy : %4%% \nDLC : %5", _priceAnalysisReturn#1, _priceAnalysisReturn#2, _priceAnalysisReturn#3, _priceAnalysisReturn#4, _DLCStatus#5]];
+				} else 
+				{
+					_ctrl lnbSetTooltip [[_ind,0], format ["DLC : %1", _DLCStatus#5]];
 				};
 
 				//Set picture
@@ -194,7 +212,6 @@ _buttonRandom ctrlAddEventHandler [ "ButtonClick",
 		_supportClass = (_lnbEntries lnbData [lnbCurSelRow _lnbEntries, 0]);
 		_supportType = (_lnbEntries lnbData [lnbCurSelRow _lnbEntries, 1]);
 		_supportPrice = randomPrice;
-		_supportName = (_lnbEntries lnbData [lnbCurSelRow _lnbEntries, 3]);
 		_weaponIcon = getText (configFile >> "CfgWeapons" >> _supportClass >> "picture");
 
 		_bluforVehicleAvalaibleSpawnCounter = [] call getUnlockCredit;
@@ -219,8 +236,9 @@ _buttonRandom ctrlAddEventHandler [ "ButtonClick",
 				[_bluforVehicleAvalaibleSpawnCounter-_supportPrice] call saveUnlockCredit;
 			
 				[player, player, player call getPlayerFaction] call setupArsenalToItem;
-				_factionName = (factionInfos select {_x#1 == _currentFaction})#0#2;
-				hint parseText format ["<img image='%1' size='5'/><br/><br/><t size='1.5'>You have unlocked <br/> %2 <br/>for the faction %3</t><br/><br/><t size='1.2'></t>", _weaponIcon, _supportName, _factionName];
+				
+				//Display reward hint
+				[_supportClass, _currentFaction] call displayReward;
 
 				//Close mission setup
 				//Refresh title
@@ -252,8 +270,6 @@ _buttonOK ctrlAddEventHandler [ "ButtonClick",
 		_supportClass = (_lnbEntries lnbData [lnbCurSelRow _lnbEntries, 0]);
 		_supportType = (_lnbEntries lnbData [lnbCurSelRow _lnbEntries, 1]);
 		_supportPrice = parseNumber (_lnbEntries lnbData [lnbCurSelRow _lnbEntries, 2]);
-		_supportName = (_lnbEntries lnbData [lnbCurSelRow _lnbEntries, 3]);
-		_weaponIcon = getText (configFile >> "CfgWeapons" >> _supportClass >> "picture");
 
 		_bluforVehicleAvalaibleSpawnCounter = [] call getUnlockCredit;
 
@@ -276,8 +292,9 @@ _buttonOK ctrlAddEventHandler [ "ButtonClick",
 				[_bluforVehicleAvalaibleSpawnCounter-_supportPrice] call saveUnlockCredit;
 			
 				[player, player, player call getPlayerFaction] call setupArsenalToItem;
-				_factionName = (factionInfos select {_x#1 == _currentFaction})#0#2;
-				hint parseText format ["<img image='%1' size='5'/><br/><br/><t size='1.5'>You have unlocked <br/> %2 <br/>for the faction %3</t><br/><br/><t size='1.2'></t>", _weaponIcon, _supportName, _factionName];
+
+				//Display reward hint
+				[_supportClass, _currentFaction] call displayReward;
 
 				//Close mission setup
 				//Refresh title

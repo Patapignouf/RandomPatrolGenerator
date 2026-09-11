@@ -1,6 +1,9 @@
 //Set default respawn loadout
 player setUnitLoadout (player getVariable "spawnLoadout");
 
+//Reset enginneer action
+player setVariable ["fortifyActionID", -1];
+
 //Adjust trait 
 [player, player getVariable "role"] call setUnitTraitAccordingToRole;
 
@@ -10,11 +13,15 @@ if (isClass (configFile >> "CfgPatches" >> "ace_medical")) then
 	[false] call ace_spectator_fnc_setSpectator;
 	["Terminate"] call BIS_fnc_EGSpectator;
 	(findDisplay 60492) closeDisplay 2;
+	player switchCamera "INTERNAL"; 
 } else 
 {
 	["Terminate"] call BIS_fnc_EGSpectator;
 	(findDisplay 60492) closeDisplay 2;
+	player switchCamera "INTERNAL"; 
 };
+
+
 
 
 //Set player normal state 
@@ -28,6 +35,8 @@ player setVariable ["canRTB", false, true];
 	player setVariable ["canRTB", true, true];
 };
 
+//Remove respawn timer hint
+hint "";
 
 //Respawn on start position by default
 //Protect player for 30 sec on spawn
@@ -65,7 +74,21 @@ if (missionNameSpace getVariable ["enableSelfRespawnTimer", 0] == 0) then
 //Setup respawn GUI
 cutText ["", "BLACK FADED", 4];
 uiSleep 3;
-[[], 'GUI\respawnGUI\initPlayerRespawnMenu.sqf'] remoteExec ['BIS_fnc_execVM', player];
+
+
+if (missionNameSpace getVariable ["respawnOnOtherPlayers", 1] == 1) then 
+{
+	[[], 'GUI\respawnGUI\initPlayerRespawnMenu.sqf'] remoteExec ['BIS_fnc_execVM', player];
+} else 
+{
+	//Clear screen
+	cutText ["", "BLACK IN", 5];
+
+	//Open Map
+	[[false], 'GUI\respawnGUI\respawnMapGUI.sqf'] remoteExec ['BIS_fnc_execVM', player];
+};
+
+
 
 
 // Fix player damaged on respawn 
@@ -181,8 +204,16 @@ _KilledEH = player addEventHandler ["Killed", {
 		//Check if player are on opposite side
 		if ([side _instigator, playerSide] call BIS_fnc_sideIsEnemy) then 
 		{
-			//Reward PvP kill
-			_distance = _instigator distance _unit;
+			//Find distance between killed unit and killer
+			_distance = 0;
+
+			if (isRemoteControlling _instigator) then 
+			{
+				_distance = (remoteControlled _instigator) distance _unit;
+			} else 
+			{
+				_distance = _instigator distance _unit;
+			};	
 
 			//Store kill distance
 			[[_distance], 
@@ -210,16 +241,68 @@ _KilledEH = player addEventHandler ["Killed", {
 				//Add dialog to punish the teamkiller
 				[[_instigator], {
 					params ["_instigator"]; 
-						sleep 10; 
-						private _resultAlone = [format ["Do you want to punish your killer %1 ?", name _instigator], "Yes", true, true] call BIS_fnc_guiMessage;
 
-						if (_resultAlone) then {
-							//systemChat "The player is sure.";
-							_instigator setDamage 1;
-							[[_instigator], {params ["_instigator"]; ["STR_RPG_HC_NAME", "STR_RPG_HC_PUNISH", name _instigator] call doDialog}] remoteExec ["spawn", side _instigator]; 
+						//Wait spectator mode
+						sleep 5;
+					
+						// 1. display GUI
+						("TAG_RscPunishPrompt" call BIS_fnc_rscLayer) cutRsc ["TAG_RscPunishPrompt", "PLAIN", 0, true];
+
+						[_instigator] spawn {
+							params ["_instigator"];
+							// 2. wait display to be available
+							private _titleDisplay = objNull;
+							waitUntil {
+								_titleDisplay = uiNamespace getVariable ["TAG_PunishPrompt_Display", objNull];
+								!isNull _titleDisplay
+							};
+
+							// 3. move display and adjust content
+							private _clickCtrl = _titleDisplay displayCtrl 9001;
+							private _pos = ctrlPosition _clickCtrl; // [x, y, w, h]
+							private _minX = _pos select 0;
+							private _minY = _pos select 1;
+							private _maxX = _minX + (_pos select 2);
+							private _maxY = _minY + (_pos select 3);
+
+							// store data on player
+							player setVariable ["TAG_punishPrompt_Bounds", [_minX, _maxX, _minY, _maxY]];
+							player setVariable ["TAG_punishPrompt_IsActive", true];
+							player setVariable ["TAG_punishTeamKiller", _instigator];
+							_clickCtrl ctrlSetStructuredText parseText format ["<a color='#ff0000' size='1'><t color='#ff0000'>Click here to punish %1</t></a>", name _instigator];
+
+							// 4. Add listener to spectator mode
+							private _mapDisplay = findDisplay 60492; // ID natif d'ArmA pour la carte principale
+
+							TAG_healPrompt_MouseEHId = _mapDisplay displayAddEventHandler ["MouseButtonDown", {
+								params ["_mapDisplay", "_button", "_mx", "_my"];
+								
+								// Listen left mouse button
+								if (_button == 0 && {player getVariable ["TAG_punishPrompt_IsActive", false]}) then {
+									private _bounds = player getVariable ["TAG_punishPrompt_Bounds", []];
+									if (_bounds isEqualTo []) exitWith {};
+									_bounds params ["_minX", "_maxX", "_minY", "_maxY"];
+
+									// 5. check if the player click on the display
+									if (_mx >= _minX && _mx <= _maxX && _my >= _minY && _my <= _maxY) then {
+										
+										_instigator = player getVariable "TAG_punishTeamKiller";
+										_instigator setDamage 1;
+										[[_instigator], {params ["_instigator"]; ["STR_RPG_HC_NAME", "STR_RPG_HC_PUNISH", name _instigator] call doDialog}] remoteExec ["spawn", side _instigator]; 
+
+										// clean
+										player setVariable ["TAG_punishPrompt_IsActive", false];
+										("TAG_RscPunishPrompt" call BIS_fnc_rscLayer) cutFadeOut 0.1;
+									};
+								};
+							}];
 							
-						} else {
-							//systemChat "The player is not sure.";
+							//wait display to vanish
+							sleep 10;
+							// clean 
+							player setVariable ["TAG_punishPrompt_IsActive", false];
+							("TAG_RscPunishPrompt" call BIS_fnc_rscLayer) cutFadeOut 0.1;
+
 						};
 					}
 				] remoteExec ["spawn", _unit]; 
@@ -229,6 +312,68 @@ _KilledEH = player addEventHandler ["Killed", {
 }];
 player setVariable ["KilledEH", _KilledEH, true];
 
+
+//Add solo tank crew feature
+if (missionNameSpace getVariable ["enableSoloCrewTank", 1] == 1) then 
+{
+	player addEventHandler ["GetInMan", {
+		params ["_unit", "_role", "_vehicle", "_turret"];
+
+		// check if the vehicle is a tank or tank like
+		if (_vehicle isKindOf "Tank" || _vehicle isKindOf "Wheeled_APC_F" || _vehicle isKindOf "TrackedAPC") then {
+			
+			// if the player enter as driver then start solo crew script
+			if (_role == "driver") then {
+				
+
+				// 1. If turret is empty add an AI to make solo crew
+				if (isNull (gunner _vehicle)) then {
+					private _group = createGroup [side _unit, true];
+					private _aiGunner = _group createUnit ["B_Survivor_F", [0,0,0], [], 0, "NONE"];
+					
+					_aiGunner hideObjectGlobal true; // make AI invisible
+					_aiGunner allowDamage false;     // Invincible
+					_aiGunner moveInGunner _vehicle; // Move AI to gunner place, maybe driver is better :p
+					
+					// Keep ai variable in the vehicle to allow cleaning
+					_vehicle setVariable ["my_solo_ai_gunner", _aiGunner, true];
+
+
+					// Clean AI if it leave the vehicle
+					_aiGunner addEventHandler ["GetOutMan", {
+						params ["_unit", "_role", "_vehicle", "_turret"];
+
+						//Clean AI
+						if (!isNull _unit) then {
+							deleteVehicle _unit; // Delete AI
+						};
+					}];
+				};
+
+				// 2. Give control to gunner
+				_unit action ["TakeVehicleControl", _vehicle];
+				
+				//Move player to turret role to allow solo crew
+				_unit action ["MoveToGunner", _vehicle];  
+			};
+		};
+	}];
+
+	// Clean when player leave vehicle
+	player addEventHandler ["GetOutMan", {
+		params ["_unit", "_role", "_vehicle", "_turret"];
+
+		private _aiGunner = _vehicle getVariable ["my_solo_ai_gunner", objNull];
+		if (!isNull _aiGunner) then {
+			deleteVehicle _aiGunner; // Delete AI
+			_vehicle setVariable ["my_solo_ai_gunner", nil, true];
+		};
+	}];
+};
+
+
 //Allow damage post respawn
 sleep 30;
 player allowDamage true;
+
+

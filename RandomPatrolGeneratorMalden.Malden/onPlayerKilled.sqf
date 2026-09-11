@@ -15,7 +15,6 @@ if (missionNameSpace getVariable ["enableSelfRespawnTimer", 0] == 0) then
 			{
 				_currentRespawnTimer = missionNamespace getVariable "missionRespawnParam";
 				_currentCounter = _currentRespawnTimer - (round (serverTime) % _currentRespawnTimer);
-				hintSilent format ["Respawn : %1", [(_currentCounter/60)+.01,"HH:MM"] call BIS_fnc_timetostring];
 
 				//Respawn players if timer is going near 0 secs remaining
 				if (_currentCounter == 0 || _currentCounter < 2) then 
@@ -41,6 +40,7 @@ if (missionNameSpace getVariable ["enableSelfRespawnTimer", 0] == 0) then
 	];
 };
 
+diag_log ["RPG_Respawn setup : %1", missionNamespace getVariable "missionRespawnParam"];
 
 //Update dead counter 
 player setVariable ["deathNumber", (player getVariable ["deathNumber", 0])+1, true];

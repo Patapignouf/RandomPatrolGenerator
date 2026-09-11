@@ -65,7 +65,7 @@ if (!_isEndMissionRunning) then
 		
 		//Add current player XP info to global XP
 		_dataToDisplay pushBack _currentPlayerScore;
-	} foreach ([allPlayers, [], {_x getVariable ["currentXP", 0]}, "DESCEND"] call BIS_fnc_sortBy);
+	} foreach ([allPlayers, [], {(_x getVariable ["currentXP", 0]) - (_x getVariable ["startingXP", 0])}, "DESCEND"] call BIS_fnc_sortBy);
 	
 	_categories = _basicInfoToGather + (_basicXPToGather apply {[_x#0] call doGetScoreName});
 				

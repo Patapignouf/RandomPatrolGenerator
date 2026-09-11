@@ -436,6 +436,17 @@
                 <Chinese>你必须在%1保卫弹药箱，前往该地点，找到它并防御敌人的增援</Chinese>
                 <Japanese>%1で弾薬箱を防衛しなければなりません。場所に行き、それを見つけて、敵の増援から防衛します</Japanese>
             </Key>
+            <Key ID="STR_RPG_OBJ_DEFEND_WAVE">
+                <Original>Warning, wave %1 starting</Original>
+                <English>Warning, wave %1 starting</English>
+                <French>Attention début de la vague %1</French>
+                <Spanish>Atención, comienzo de la oleada %1</Spanish>
+                <German>Achtung, Welle %1 beginnt</German>
+                <Italian>Attenzione, inizio della ondata %1</Italian>
+                <Russian>Внимание, начало волны %1</Russian>
+                <Chinese>注意，第 %1 波开始</Chinese>
+                <Japanese>警告、ウェーブ %1 が開始します</Japanese>
+            </Key>
             <Key ID="STR_RPG_OBJ_TAKE">
                 <Original>Take And Hold</Original>
                 <English>Take And Hold</English>
@@ -745,6 +756,17 @@
                 <Russian>%1 был убит своим товарищем по команде %2, следите за своим огнем</Russian>
                 <Chinese>%1被他的队友%2杀死，注意你的火力</Chinese>
                 <Japanese>%1はチームメイトの%2に殺されました。火に注意してください</Japanese>
+            </Key>
+            <Key ID="STR_RPG_HC_GIVE_CALL">
+                <Original>%1 gave item %3 to %2</Original>
+                <English>%1 gave item %3 to %2</English>
+                <French>%1 donné l'objet %3 à %2</French>
+                <Spanish>%1 dio el objeto %3 a %2</Spanish>
+                <German>%1 hat %2 den Gegenstand %3 gegeben</German>
+                <Italian>%1 ha dato l'oggetto %3 a %2</Italian>
+                <Russian>%1 передал(а) предмет %3 игроку %2</Russian>
+                <Chinese>%1 将物品 %3 给了 %2</Chinese>
+                <Japanese>%1 が %2 にアイテム %3 を渡しました</Japanese>
             </Key>
             <Key ID="STR_RPG_HC_PUNISH">
                 <Original>%1 has been punished</Original>
@@ -1306,6 +1328,28 @@
         <Russian>Будь осторожен, там есть гражданские лица на позиции %1. Следи за своим огнем...</Russian>
         <Chinese>小心，%1位置有平民。注意你的火力...</Chinese>
         <Japanese>位置%1には市民がいます。火に注意してください...</Japanese>
+    </Key>
+    <Key ID="STR_RPG_INTEL_BLACKMARKET_CIV">
+        <Original>A black market has been spotted at %1</Original>
+        <English>A black market has been spotted at %1</English>
+        <French>Un marché noir a été repéré à %1</French>
+        <Spanish>Se ha localizado un mercado negro en %1</Spanish>
+        <German>Ein Schwarzmarkt wurde bei %1 gesichtet</German>
+        <Italian>Un mercato nero è stato avvistato a %1</Italian>
+        <Russian>Черный рынок был замечен в %1</Russian>
+        <Chinese>在 %1 发现了黑市</Chinese>
+        <Japanese>闇市場が %1 で発見されました</Japanese>
+    </Key>
+    <Key ID="STR_RPG_INTEL_BLACKMARKET_DOC">
+        <Original>A black market has been located at %1</Original>
+        <English>A black market has been located at %1</English>
+        <French>Un marché noir a été localisé à %1</French>
+        <Spanish>Se ha localizado un mercado negro en %1</Spanish>
+        <German>Ein Schwarzmarkt wurde bei %1 lokalisiert</German>
+        <Italian>Un mercato nero è stato localizzato a %1</Italian>
+        <Russian>Черный рынок был обнаружен в %1</Russian>
+        <Chinese>黑市已在 %1 被定位</Chinese>
+        <Japanese>闇市場が %1 に特定されました</Japanese>
     </Key>
     <Key ID="STR_RPG_INTEL_NOTHING_FOUND">
         <Original>No intel found</Original>
@@ -1984,6 +2028,17 @@
         <Chinese>%1 在 %2 米处</Chinese>
         <Japanese>%1 は %2m の位置にいる</Japanese>
     </Key>
+    <Key ID="RPG_GUI_OVERLAY_RESPAWN">
+        <Original>Next respawn in %1</Original>
+        <English>Next respawn in %1</English>
+        <French>Prochain respawn dans %1</French>
+        <Spanish>Próximo respawn en %1</Spanish>
+        <German>Nächster Respawn in %1</German>
+        <Italian>Prossimo respawn in %1</Italian>
+        <Russian>Следующий респаун через %1</Russian>
+        <Chinese>下一次重生在 %1 后</Chinese>
+        <Japanese>次のリスポーンまで %1</Japanese>
+    </Key>
 </Container>
 <Container name="RPG_GUI_GENERAL">
     <Key ID="RPG_GUI_GENERAL_CLOSE">
@@ -2029,6 +2084,17 @@
         <Russian>Магазин оружия</Russian>
         <Chinese>武器商店</Chinese>
         <Japanese>武器ショップ</Japanese>
+    </Key>
+    <Key ID="RPG_GUI_GENERAL_UNLOCK">
+        <Original>Unlock Management</Original>
+        <English>Unlock Management</English>
+        <French>Gestion des débloquages</French>
+        <Spanish>Gestión de desbloqueos</Spanish>
+        <German>Freischaltverwaltung</German>
+        <Italian>Gestione sblocchi</Italian>
+        <Russian>Управление разблокировкой</Russian>
+        <Chinese>解锁管理</Chinese>
+        <Japanese>アンロック管理</Japanese>
     </Key>
     <Key ID="RPG_GUI_GENERAL_WEAPON_SHOP_DESC">
         <Original>Unlock weapons and accessories</Original>
@@ -2264,15 +2330,26 @@
 </Container>
 <Container name="ACTIONS">
     <Key ID="STR_ACTIONS_PLACE_TENT">
-        <Original>Place reinforcement tent</Original>
-        <English>Place reinforcement tent</English>
-        <French>Placer la tente de renforts</French>
-        <Spanish>Colocar tienda de refuerzos</Spanish>
-        <German>Verstärkungszelt aufstellen</German>
-        <Italian>Posiziona la tenda dei rinforzi</Italian>
-        <Russian>Установить палатку подкрепления</Russian>
-        <Chinese>放置增援帐篷</Chinese>
-        <Japanese>援軍テントを設置する</Japanese>
+        <Original>Place reinforcement tent (100 credits)</Original>
+        <English>Place reinforcement tent (100 credits)</English>
+        <French>Placer la tente de renforts (100 crédits)</French>
+        <Spanish>Colocar tienda de refuerzos (100 créditos)</Spanish>
+        <German>Verstärkungszelt aufstellen (100 Credits)</German>
+        <Italian>Posiziona la tenda dei rinforzi (100 crediti)</Italian>
+        <Russian>Установить палатку подкрепления (100 кредитов)</Russian>
+        <Chinese>放置增援帐篷（100信用点）</Chinese>
+        <Japanese>援軍テントを設置する（100クレジット）</Japanese>
+    </Key>
+    <Key ID="STR_ACTIONS_PLACE_BARRICADE">
+        <Original>Place barricade (50 credits)</Original>
+        <English>Place barricade (50 credits)</English>
+        <French>Placer une barricade (50 crédits)</French>
+        <Spanish>Colocar barricada (50 créditos)</Spanish>
+        <German>Barrikade aufstellen (50 Credits)</German>
+        <Italian>Posiziona la barricata (50 crediti)</Italian>
+        <Russian>Установить баррикаду (50 кредитов)</Russian>
+        <Chinese>放置路障（50信用点）</Chinese>
+        <Japanese>バリケードを設置する（50クレジット）</Japanese>
     </Key>
     <Key ID="STR_ACTIONS_OPEN_SUPPORT_SHOP">
         <Original>Open support shop</Original>
@@ -2295,6 +2372,17 @@
         <Russian>Быстрое перемещение</Russian>
         <Chinese>快速旅行</Chinese>
         <Japanese>ファストトラベル</Japanese>
+    </Key>
+    <Key ID="STR_ACTIONS_UNLOCK_STUFF">
+        <Original>Unlock stored OPFOR items</Original>
+        <English>Unlock stored OPFOR items</English>
+        <French>Débloquer les objets OPFOR stockés</French>
+        <Spanish>Desbloquear objetos de OPFOR almacenados</Spanish>
+        <German>Gespeicherte OPFOR-Gegenstände freischalten</German>
+        <Italian>Sblocca gli oggetti OPFOR depositati</Italian>
+        <Russian>Разблокировать сохраненные предметы OPFOR</Russian>
+        <Chinese>解锁存储的红方物品</Chinese>
+        <Japanese>保管された敵軍（OPFOR）アイテムを解放する</Japanese>
     </Key>
     <Key ID="STR_ACTIONS_OPEN_VEHICLE_SHOP">
         <Original>Open vehicle shop</Original>
@@ -2372,6 +2460,17 @@
         <Russian>Присоединиться к PataCompany</Russian>
         <Chinese>加入 PataCompany</Chinese>
         <Japanese>PataCompany に参加する</Japanese>
+    </Key>
+    <Key ID="STR_STEAL_SUPPLY">
+        <Original>Steal supplies (500 credits)</Original>
+        <English>Steal supplies (500 credits)</English>
+        <French>Voler les ravitaillements (500 crédits)</French>
+        <Spanish>Robar suministros (500 créditos)</Spanish>
+        <German>Vorräte stehlen (500 Credits)</German>
+        <Italian>Ruba i rifornimenti (500 crediti)</Italian>
+        <Russian>Украсть припасы (500 кредитов)</Russian>
+        <Chinese>偷取物资（500信用点）</Chinese>
+        <Japanese>物資を奪う（500クレジット）</Japanese>
     </Key>
     </Container>
     <Container name="RPG_SUPPORT_MENU">
@@ -2716,6 +2815,28 @@
         <Chinese>解锁</Chinese>
         <Japanese>解除</Japanese>
     </Key>
+    <Key ID="STR_GUI_BASE_GIVE">
+        <Original>Give</Original>
+        <English>Give</English>
+        <French>Donner</French>
+        <Spanish>Dar</Spanish>
+        <German>Geben</German>
+        <Italian>Dai</Italian>
+        <Russian>Отдать</Russian>
+        <Chinese>给予</Chinese>
+        <Japanese>を与える</Japanese>
+    </Key>
+    <Key ID="STR_GUI_BASE_SELL">
+        <Original>Sell</Original>
+        <English>Sell</English>
+        <French>Vendre</French>
+        <Spanish>Vender</Spanish>
+        <German>Verkaufen</German>
+        <Italian>Vendi</Italian>
+        <Russian>Продать</Russian>
+        <Chinese>出售</Chinese>
+        <Japanese>売却</Japanese>
+    </Key>
     <Key ID="STR_GUI_BASE_RANDOM">
         <Original>Random</Original>
         <English>Random</English>
@@ -2726,6 +2847,96 @@
         <Russian>Случайно</Russian>
         <Chinese>随机</Chinese>
         <Japanese>ランダム</Japanese>
+    </Key>
+</Container>
+<Container name="DIARY">
+    <Key ID="STR_DIARY_RESPAWN">
+        <Original>There are two ways to respawn on Random Patrol Generator missions :&lt;br/&gt;- First, when a mission is completed&lt;br/&gt;- Secondly, when players call a reinforcement on support Shop&lt;br/&gt;&lt;br/&gt;-Thirdly, you can also place respawn tent to call respawn&lt;br/&gt;&lt;br/&gt;Note : Respawn setting has to be enabled</Original>
+        <English>There are two ways to respawn on Random Patrol Generator missions :&lt;br/&gt;- First, when a mission is completed&lt;br/&gt;- Secondly, when players call a reinforcement on support Shop&lt;br/&gt;&lt;br/&gt;-Thirdly, you can also place respawn tent to call respawn&lt;br/&gt;&lt;br/&gt;Note : Respawn setting has to be enabled</English>
+        <French>Il y a deux façons de réapparaître dans les missions Random Patrol Generator :&lt;br/&gt;- Premièrement, lorsqu'une mission est terminée&lt;br/&gt;- Deuxièmement, lorsque les joueurs demandent des renforts dans le magasin de soutien&lt;br/&gt;&lt;br/&gt;- Troisièmement, vous pouvez également placer une tente de réapparition pour déclencher une réapparition&lt;br/&gt;&lt;br/&gt;Note : Le paramètre de réapparition doit être activé</French>
+        <Spanish>Hay dos formas de reaparecer en las misiones de Random Patrol Generator:&lt;br/&gt;- Primero, cuando se completa una misión&lt;br/&gt;- Segundo, cuando los jugadores solicitan refuerzos en la tienda de apoyo&lt;br/&gt;&lt;br/&gt;- Tercero, también puedes colocar una tienda de reaparición para solicitar la reaparición&lt;br/&gt;&lt;br/&gt;Nota: El ajuste de reaparición debe estar activado</Spanish>
+        <German>Es gibt zwei Möglichkeiten, in Random Patrol Generator-Missionen neu zu erscheinen:&lt;br/&gt;- Erstens, wenn eine Mission abgeschlossen ist&lt;br/&gt;- Zweitens, wenn Spieler Verstärkung im Unterstützungs-Shop anfordern&lt;br/&gt;&lt;br/&gt;- Drittens können Sie auch ein Wiedereinstiegszelt aufstellen, um einen Wiedereinstieg anzufordern&lt;br/&gt;&lt;br/&gt;Hinweis: Die Wiedereinstiegs-Einstellung muss aktiviert sein</German>
+        <Italian>Ci sono due modi per rientrare nelle missioni di Random Patrol Generator:&lt;br/&gt;- Primo, quando una missione viene completata&lt;br/&gt;- Secondo, quando i giocatori richiedono rinforzi nel negozio di supporto&lt;br/&gt;&lt;br/&gt;- Terzo, puoi anche posizionare una tenda di rientro per richiedere il rientro&lt;br/&gt;&lt;br/&gt;Nota: L'impostazione di rientro deve essere abilitata</Italian>
+        <Russian>Есть два способа возродиться в миссиях Random Patrol Generator:&lt;br/&gt;- Во-первых, когда миссия завершена&lt;br/&gt;- Во-вторых, когда игроки вызывают подкрепление в магазине поддержки&lt;br/&gt;&lt;br/&gt;- В-третьих, вы также можете установить палатку возрождения, чтобы вызвать возрождение&lt;br/&gt;&lt;br/&gt;Примечание: Настройка возрождения должна быть включена</Russian>
+        <Chinese>在 Random Patrol Generator 任务中有两种重现（重生）方式：&lt;br/&gt;- 第一，当任务完成时&lt;br/&gt;- 第二，当玩家在支援商店呼叫增援时&lt;br/&gt;&lt;br/&gt;- 第三，您还可以放置重生帐篷来呼叫重生&lt;br/&gt;&lt;br/&gt;注意：必须启用重生设置</Chinese>
+        <Japanese>Random Patrol Generatorのミッションでリスポーン（再出撃）するには2つの方法があります：&lt;br/&gt;- 1つ目：ミッションが完了したとき&lt;br/&gt;- 2つ目：プレイヤーが支援ショップで援軍を要請したとき&lt;br/&gt;&lt;br/&gt;- 3つ目：リスポーンテントを設置してリスポーンを呼ぶこともできます&lt;br/&gt;&lt;br/&gt;注：リスポーン設定が有効になっている必要があります</Japanese>
+    </Key>
+    <Key ID="STR_DIARY_ARSENAL">
+        <Original>A limited arsenal is avalaible on your start position, it will allow you to switch between roles.</Original>
+        <English>A limited arsenal is avalaible on your start position, it will allow you to switch between roles.</English>
+        <French>Un arsenal limité est disponible à votre position de départ, il vous permettra de changer de rôle.</French>
+        <Spanish>Un arsenal limitado está disponible en tu posición inicial, te permitirá cambiar de rol.</Spanish>
+        <German>Ein begrenztes Arsenal steht an Ihrer Startposition zur Verfügung, mit dem Sie zwischen den Rollen wechseln können.</German>
+        <Italian>Un arsenale limitato è disponibile nella tua posizione iniziale, ti permetterà di cambiare ruolo.</Italian>
+        <Russian>Ограниченный арсенал доступен на вашей стартовой позиции, он позволит вам менять роли.</Russian>
+        <Chinese>您的起始位置提供有限的兵工厂，允许您切换角色。</Chinese>
+        <Japanese>初期位置には制限付きのアーセナル（装备库）があり、役割（ロール）を変更することができます。</Japanese>
+    </Key>
+    <Key ID="STR_DIARY_EXPERIENCE">
+        <Original>In the RPG mod, you can gain experience by completing objectives or by performing actions such as kills or healing. You can also lose experience by dying or by friendly fire.</Original>
+        <English>In the RPG mod, you can gain experience by completing objectives or by performing actions such as kills or healing. You can also lose experience by dying or by friendly fire.</English>
+        <French>Dans le mod RPG, vous pouvez gagner de l'expérience en remplissant des objectifs ou en effectuant des actions telles que des éliminations ou des soins. Vous pouvez également perdre de l'expérience en mourant ou par tir ami.</French>
+        <Spanish>En el mod RPG, puedes ganar experiencia completando objetivos o realizando acciones como bajas o curaciones. También puedes perder experiencia al morir o por fuego amigo.</Spanish>
+        <German>Im RPG-Mod können Sie Erfahrung sammeln, indem Sie Ziele abschließen oder Aktionen wie Kills oder Heilungen durchführen. Sie können auch Erfahrung durch Sterben oder Eigenbeschuss verlieren.</German>
+        <Italian>Nel mod RPG, puoi guadagnare esperienza completando obiettivi o eseguendo azioni come uccisioni o cure. Puoi anche perdere esperienza morendo o con il fuoco amico.</Italian>
+        <Russian>В моде RPG вы можете получать опыт, выполняя задачи или совершая такие действия, как убийства или лечение. Вы также можете терять опыт из-за смерти или огня по своим.</Russian>
+        <Chinese>在 RPG 模组中，您可以通过完成目标或执行击杀、治疗等操作来获得经验。您也可能因死亡或队友误伤而失去经验。</Chinese>
+        <Japanese>RPGモードでは、目標の達成やキル、治療などのアクションを行うことで経験値を獲得できます。また、死亡やフレンドリーファイア（味方への射撃）によって経験値を失うこともあります。</Japanese>
+    </Key>
+    <Key ID="STR_DIARY_SIDE_TASK">
+        <Original>In the RPG mod, you can complete side quests like capturing a FOB, capturing a destroyer ship, stealing supplies, and more. These side tasks grant various rewards, such as credits, experience, or tokens.</Original>
+        <English>In the RPG mod, you can complete side quests like capturing a FOB, capturing a destroyer ship, stealing supplies, and more. These side tasks grant various rewards, such as credits, experience, or tokens.</English>
+        <French>Dans le mod RPG, vous pouvez accomplir des quêtes secondaires comme capturer une FOB, capturer un destroyer, voler des ravitaillements, et plus encore. Ces tâches secondaires accordent diverses récompenses, telles que des crédits, de l'expérience ou des jetons.</French>
+        <Spanish>En el mod RPG, puedes completar misiones secundarias como capturar una FOB, capturar un destructor, robar suministros y más. Estas tareas secundarias otorgan varias recompensas, como créditos, experiencia o fichas.</Spanish>
+        <German>Im RPG-Mod können Sie Nebenquests wie das Einnehmen einer FOB, das Kaper eines Zerstörers, das Stehlen von Vorräten und mehr abschließen. Diese Nebenaufgaben gewähren verschiedene Belohnungen wie Credits, Erfahrung oder Token.</German>
+        <Italian>Nel mod RPG, puoi completare missioni secondarie come catturare una FOB, catturare un cacciatorpediniere, rubare rifornimenti e altro ancora. Queste attività secondarie offrono varie ricompense, come crediti, esperienza o gettoni.</Italian>
+        <Russian>В моде RPG вы можете выполнять побочные задания, такие как захват FOB, захват эсминца, кража припасов и многое другое. Эти побочные задачи дают различные награды, такие как кредиты, опыт или жетоны.</Russian>
+        <Chinese>在 RPG 模组中，您可以完成支线任务，例如占领前哨基地（FOB）、占领驱逐舰、偷取物资等。这些支线任务会提供各种奖励，例如信用点、经验或代币。</Chinese>
+        <Japanese>RPGモードでは、FOBの占領、駆逐艦の捕獲、物資の脱取などのサイドクエストを完了できます。これらのサブタスクを達成すると、クレジット、経験値、トークンなどのさまざまな報酬を獲得できます。</Japanese>
+    </Key>
+    <Key ID="STR_DIARY_TOKENS">
+        <Original>In the RPG mod, you can earn tokens by completing missions. These tokens allow you to unlock gear to diversify your loadout. You can also buy or sell this specific equipment on the black market.</Original>
+        <English>In the RPG mod, you can earn tokens by completing missions. These tokens allow you to unlock gear to diversify your loadout. You can also buy or sell this specific equipment on the black market.</English>
+        <French>Dans le mod RPG, vous pouvez gagner des jetons en terminant des missions. Ces jetons vous permettent de débloquer de l'équipement pour diversifier votre paquetage. Vous pouvez également acheter ou vendre cet équipement spécifique sur le marché noir.</French>
+        <Spanish>En el mod RPG, puedes ganar fichas completando misiones. Estas fichas te permiten desbloquear equipo para diversificar tu equipamiento. También puedes comprar o vender este equipo específico en el mercado negro.</Spanish>
+        <German>Im RPG-Mod können Sie durch das Abschließen von Missionen Token verdienen. Mit diesen Token können Sie Ausrüstung freischalten, um Ihre Ausrüstung zu diversifizieren. Sie können diese spezielle Ausrüstung auch auf dem Schwarzmarkt kaufen oder verkaufen.</German>
+        <Italian>Nel mod RPG, puoi guadagnare gettoni completando le missioni. Questi gettoni ti consentono di sbloccare equipaggiamento per diversificare la tua configurazione. Puoi anche acquistare o vendere questo equipaggiamento specifico sul mercato nero.</Italian>
+        <Russian>В моде RPG вы можете зарабатывать жетоны, выполняя миссии. Эти жетоны позволяют разблокировать снаряжение, чтобы разнообразить вашу экипировку. Вы также можете покупать или продавать это специальное снаряжение на черном рынке.</Russian>
+        <Chinese>在 RPG 模组中，您可以通过完成任务赚取代币。这些代币允许您解锁装备以丰富您的配装。您还可以在黑市上买卖这些特定装备。</Chinese>
+        <Japanese>RPGモードでは、ミッションを完了することでトークンを獲得できます。このトークンを使用して装備を解放し、ロードアウトを多様化できます。また、ブラックマーケットでこれらの特定装備を売害することも可能です。</Japanese>
+    </Key>
+    <Key ID="STR_DIARY_VEHICLE">
+        <Original>You can use the Vehicle Shop on the main FOB to spawn vehicules. Each vehicle spawned use one specific credit.&lt;br/&gt;Complete a mission to earn credits.&lt;br/&gt;&lt;br/&gt; Note : Only the team leader and pilot can spawn vehicles.</Original>
+        <English>You can use the Vehicle Shop on the main FOB to spawn vehicules. Each vehicle spawned use one specific credit.&lt;br/&gt;Complete a mission to earn credits.&lt;br/&gt;&lt;br/&gt; Note : Only the team leader and pilot can spawn vehicles.</English>
+        <French>Vous pouvez utiliser le magasin de véhicules sur la FOB principale pour faire apparaître des véhicules. Chaque véhicule généré utilise un crédit spécifique.&lt;br/&gt;Terminez une mission pour gagner des crédits.&lt;br/&gt;&lt;br/&gt; Note : Seuls le chef d'équipe et le pilote peuvent faire apparaître des véhicules.</French>
+        <Spanish>Puedes usar la tienda de vehículos en la FOB principal para hacer aparecer vehículos. Cada vehículo creado consume un crédito específico.&lt;br/&gt;Completa una misión para ganar créditos.&lt;br/&gt;&lt;br/&gt; Nota: Solo el líder de escuadra y el piloto pueden hacer aparecer vehículos.</Spanish>
+        <German>Sie können den Fahrzeug-Shop auf der Haupt-FOB nutzen, um Fahrzeuge zu spawnen. Jedes gespawnte Fahrzeug verbraucht einen spezifischen Credit.&lt;br/&gt;Schließen Sie eine Mission ab, um Credits zu verdienen.&lt;br/&gt;&lt;br/&gt; Hinweis: Nur der Teamleiter und der Pilot können Fahrzeuge spawnen.</German>
+        <Italian>Puoi utilizzare il negozio di veicoli sulla FOB principale per far apparire veicoli. Ogni veicolo generato utilizza un credito specifico.&lt;br/&gt;Completa una missione per guadagnare crediti.&lt;br/&gt;&lt;br/&gt; Nota: Solo il caposquadra e il pilota possono far apparire veicoli.</Italian>
+        <Russian>Вы можете использовать магазин техники на главной FOB для спавна техники. Каждая созданная машина использует один специфический кредит.&lt;br/&gt;Выполните миссию, чтобы заработать кредиты.&lt;br/&gt;&lt;br/&gt; Примечание: Только лидер отряда и пилот могут спавнить технику.</Russian>
+        <Chinese>您可以使用主前哨基地（FOB）上的载具商店来生成载具。生成的每辆载具都会消耗特定的信用点。&lt;br/&gt;完成任务即可获得信用点。&lt;br/&gt;&lt;br/&gt; 注意：只有小队长和飞行员可以生成载具。</Chinese>
+        <Japanese>メインFOBにある車両ショップを使用して車両をスポーン（生成）できます。生成された各車両は特定のクレジットを1つ消費します。&lt;br/&gt;ミッションを完了してクレジットを獲得してください。&lt;br/&gt;&lt;br/&gt; 注：車両をスポーンできるのはチームリーダーとパイロットのみです。</Japanese>
+    </Key>
+    <Key ID="STR_DIARY_FOB">
+        <Original>You can deploy an advanced FOB avalaible in a supply box near main FOB :&lt;br/&gt;- It can be used to skip time&lt;br/&gt;- It can be used to access support shop</Original>
+        <English>You can deploy an advanced FOB avalaible in a supply box near main FOB :&lt;br/&gt;- It can be used to skip time&lt;br/&gt;- It can be used to access support shop</English>
+        <French>Vous pouvez déployer une FOB avancée disponible dans une caisse de ravitaillement près de la FOB principale :&lt;br/&gt;- Elle peut être utilisée pour passer le temps&lt;br/&gt;- Elle peut être utilisée pour accéder au magasin de soutien</French>
+        <Spanish>Puedes desplegar una FOB avanzada disponible en una caja de suministros cerca de la FOB principal:&lt;br/&gt;- Se puede usar para pasar el tiempo&lt;br/&gt;- Se puede usar para acceder a la tienda de apoyo</Spanish>
+        <German>Sie können eine erweiterte FOB bereitstellen, die in einer Nachschubkiste in der Nähe der Haupt-FOB verfügbar ist:&lt;br/&gt;- Sie kann verwendet werden, um die Zeit zu überspringen&lt;br/&gt;- Sie kann verwendet werden, um auf den Unterstützungs-Shop zuzugreifen</German>
+        <Italian>Puoi schierare una FOB avanzata disponibile in una cassa di rifornimenti vicino alla FOB principale:&lt;br/&gt;- Può essere utilizzata per far passare il tempo&lt;br/&gt;- Può essere utilizzata per accedere al negozio di supporto</Italian>
+        <Russian>Вы можете развернуть передовую FOB, доступную в ящике с припасами рядом с главной FOB:&lt;br/&gt;- Ее можно использовать для пропуска времени&lt;br/&gt;- Ее можно использовать для доступа к магазину поддержки</Russian>
+        <Chinese>您可以部署主前哨基地（FOB）附近物资箱中的高级前哨基地：&lt;br/&gt;- 可用于跳过时间&lt;br/&gt;- 可用于访问支援商店</Chinese>
+        <Japanese>メインFOB近くの物資箱にある前進FOBを展開できます：&lt;br/&gt;- 時間をスキップ（進める）するために使用できます&lt;br/&gt;- 支援ショップにアクセスするために使用できます</Japanese>
+    </Key>
+    <Key ID="STR_DIARY_OBJECTIVE">
+        <Original>Help the independent or civilian location. Complete the tasks assigned to your unit to finish the mission.</Original>
+        <English>Help the independent or civilian location. Complete the tasks assigned to your unit to finish the mission.</English>
+        <French>Aidez la zone indépendante ou civile. Accomplissez les tâches assignées à votre unité pour terminer la mission.</French>
+        <Spanish>Ayuda a la ubicación independiente o civil. Completa las tareas asignadas a tu unidad para terminar la misión.</Spanish>
+        <German>Helfen Sie dem unabhängigen oder zivilen Ort. Schließen Sie die Ihrer Einheit zugewiesenen Aufgaben ab, um die Mission zu beenden.</German>
+        <Italian>Aiuta la posizione indipendente o civile. Completa i compiti assegnati alla tua unità per terminare la missione.</Italian>
+        <Russian>Помогите независимой или гражданской локации. Выполните задачи, поставленные перед вашим подразделением, чтобы завершить миссию.</Russian>
+        <Chinese>帮助独立或平民据点。完成分配给您小队的任务以完成使命。</Chinese>
+        <Japanese>独立勢力または市民の拠点を支援してください。部隊に割り当てられたタスクを完了してミッションを終了させます。</Japanese>
     </Key>
 </Container>
 </Project>

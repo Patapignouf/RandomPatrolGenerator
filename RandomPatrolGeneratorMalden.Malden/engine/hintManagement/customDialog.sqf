@@ -26,8 +26,12 @@ doDialog = {
 
 doDialogWithCustomParam = {
 	params ["_speaker", "_message"];
-	_message set [0, localize (_message#0)];
-	_textToSpeech = format _message;
+
+	private _messageToDisplay = _message;
+
+	_messageToDisplay set [0, localize (_messageToDisplay#0)];
+	_textToSpeech = format _messageToDisplay;
+
 	_colorAndPos = [_speaker] call getSpeakerColorAndPosition;
 
 	//Localize speaker if necessary
@@ -38,6 +42,7 @@ doDialogWithCustomParam = {
 	};
 
 	titleText [format ["<t align = 'center' shadow = '2' color='%3' size='1.5' font='PuristaMedium' >%2</t><br /><t color='#ffffff' size='1.5' font='PuristaMedium' shadow = '2' >%1</t>", _textToSpeech, _localizedSpeaker, _colorAndPos#0], _colorAndPos#1, -1, true, true];
+	_textToSpeech
 };
 
 getSpeakerColorAndPosition = {

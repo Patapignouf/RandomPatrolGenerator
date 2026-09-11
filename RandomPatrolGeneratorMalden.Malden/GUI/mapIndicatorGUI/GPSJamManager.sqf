@@ -71,7 +71,27 @@ isInJammedArea = {
 						player setVariable ["RPG_TFAR_SW_FREQ", _mainFrequency];
 					};
 				};
-			};	
+			};
+
+			if (missionNameSpace getVariable "playerMarkerAllowed">1) then 
+			{
+				[] spawn {
+					// 1. Get ALL markers present on the map
+					private _allMarkers = allMapMarkers;
+
+					// 2. Filter to keep only the ones starting with "grid_area_marker"
+					private _gridMarkers = _allMarkers select {
+						// (_x find "grid_area_marker") returns 0 if the string starts EXACTLY with this prefix
+						(_x find "grid_area_marker") == 0
+					};
+
+					// 3. Hide each found marker locally
+					{
+						// setMarkerAlphaLocal changes opacity only on the machine executing the script
+						_x setMarkerAlphaLocal 0; 
+					} forEach _gridMarkers;
+				};
+			};
 
 			//Disable TFAR radio
 			if (isClass (configFile >> "CfgPatches" >> "task_force_radio")) then {

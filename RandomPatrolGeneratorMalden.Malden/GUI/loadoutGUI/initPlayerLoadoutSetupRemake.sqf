@@ -149,7 +149,10 @@ _dropdown ctrlSetPosition [0.5, 0.10, 0.4, 0.04];
 _dropdown ctrlCommit 0;
 
 //Remove custom voice 
-player setSpeaker "noVoice";
+if (missionNameSpace getVariable ["enableBotRadio", 1] == 0) then 
+{
+	player setSpeaker "noVoice";
+};
 
 //get list of avalaible role for player's faction
 _listOfAvalaibleRole = [player] call setupSimpleRoleSwitchWithToList;
