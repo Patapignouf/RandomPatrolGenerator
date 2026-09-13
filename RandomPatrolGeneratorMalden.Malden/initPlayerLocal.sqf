@@ -12,6 +12,8 @@ setPlayerRespawnTime 99999999; //Init respawn time
 #include "engine\searchLocation.sqf"
 #include "engine\hintManagement\customDialog.sqf"
 #include "GUI\scoreBoardGUI\scoreFunctions.sqf"
+#include "GUI\qteGUI\qteFunction.sqf"
+
 
 forceBluforSetup = "ForceBluforSetup" call BIS_fnc_getParamValue;
 

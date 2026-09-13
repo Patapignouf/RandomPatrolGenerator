@@ -18,8 +18,18 @@ params ["_caller", "_supportType"];
 				{
 					if (count (allPlayers select {(alive _x) == false})!=0) then //Sorry for the test == false xD
 					{
-						//set morning
-						skipTime 24;
+						//Check if the action has been callable
+						private _isCallable = true;
+						if (missionNameSpace getVariable ["enableQTE", 0] == 1) then 
+						{
+							//Close support menu
+							_mainDisplay = (findDisplay 60000);
+							_mainDisplay closeDisplay 1;
+
+							_isCallable = [4,5] call doQTE;
+						};
+						if (!_isCallable) exitWith {}; // action failed
+
 						[[], "engine\respawnManagement\respawnManager.sqf"] remoteExec ['BIS_fnc_execVM', 0];
 
 						//Send message to everyone
@@ -42,6 +52,7 @@ params ["_caller", "_supportType"];
 			[_caller] spawn 
 			{
 				params ["_caller"];
+
 				[{["STR_RPG_HC_NAME", "STR_RPG_HC_SUPPORT_UNIT"] call doDialog}] remoteExec ["call", side _caller];
 
 				_reinforcementSupportCounter = missionNamespace getVariable ["reinforcementSupportCounter", 0]; 
@@ -62,8 +73,18 @@ params ["_caller", "_supportType"];
 			[_caller] spawn 
 			{
 				params ["_caller"];
-				//set morning
-				skipTime 24;
+
+				//Check if the action has been callable
+				private _isCallable = true;
+				if (missionNameSpace getVariable ["enableQTE", 0] == 1) then 
+				{
+					//Close support menu
+					_mainDisplay = (findDisplay 60000);
+					_mainDisplay closeDisplay 1;
+
+					_isCallable = [6,5] call doQTE;
+				};
+				if (!_isCallable) exitWith {}; // action failed
 
 				[{["STR_RPG_HC_NAME", "STR_RPG_HC_REINFORCEMENT_CALL_3", name _caller] call doDialog}] remoteExec ["call", side _caller];
 
