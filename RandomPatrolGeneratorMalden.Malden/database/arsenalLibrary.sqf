@@ -550,24 +550,21 @@ getVirtualMagazine = {
 				{
 					//Add default weapon magazine except large magazine
 					//Add explosive bullet to exception
-					_listOfLargeMagazineText = ["60Rnd", "75Rnd", "75rnd", "100Rnd", "150Rnd", "200Rnd", "_Mod0", "_60_TSX", "556_60_"]; //
 					_currentWeaponMagazineList = [_x] call getCompatibleMagazines; //Update magazine function
 					if (count _currentWeaponMagazineList != 0) then 
 					{
 						_currentWeapon = _x;
 						{
-							if ((virtualMagazineList) findIf {_currentWeapon == (_x)} == -1) then 
+							//Check if magazine is with less than 50 rounds
+							if (getNumber (configFile >> "CfgMagazines" >> _x >> "count") < 51) then 
 							{
-								if (!([_x, _listOfLargeMagazineText] call isElementOfArrayInString) && !([_x] call isBannedItem)) then 
-								{
-									virtualMagazineList pushBackUnique _x;
-								};
+								virtualMagazineList pushBackUnique _x;
 							};
 						} foreach _currentWeaponMagazineList;
 					};
 				} foreach currentWeaponList;
 			};
-	};
+		};
 
 		//In addition add basic smokes and grenades
 		virtualMagazineList = virtualMagazineList + basicAmmunitions; 
