@@ -252,6 +252,15 @@ uniformList_2035_PataCompany = [
 	"G_shemag_white",
 	"G_Shemag_shades",
 
+	//Armbands
+	"Aegis_G_Armband_BLU_F",
+	"Aegis_G_Armband_IND_F",
+	"Aegis_G_Armband_Medic_F",
+	"Aegis_G_Armband_OPF_F",
+	"Aegis_G_Armband_BLU_alt_F",
+	"Aegis_G_Armband_IND_alt_F",
+	"Aegis_G_Armband_Medic_alt_F",
+	"Aegis_G_Armband_OPF_alt_F",
 
 	//vest
 	"V_TacVest_oli",
