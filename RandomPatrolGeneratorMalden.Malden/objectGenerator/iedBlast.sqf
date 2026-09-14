@@ -32,40 +32,66 @@ _fakeIed hideObjectGlobal true;
 		// Action successfull code	
 		params ["_object","_caller","_ID","_objectParams","_progress","_maxProgress"];
 		
-		_fakeIed = _objectParams#0;
+		[_object, _caller, _ID, _objectParams, _progress, _maxProgress] spawn {
+			params ["_object", "_caller", "_ID", "_objectParams", "_progress", "_maxProgress"];
+			
+			sleep 1; //Let de player release the space button
 
-		_isACE = (isClass (configFile >> "CfgPatches" >> "ace_medical"));
+			_isACE = (isClass (configFile >> "CfgPatches" >> "ace_medical"));
 
-		//Test if the player has engineer skill
-		if ((_caller getUnitTrait "engineer") && ((!_isACE) || (_isACE && ("ACE_DefusalKit" in (items _caller))))) then
-		{
-			//Tell the player that the IED has been defused
-			[1,["The IED has been defused", "PLAIN", 0.5]] remoteExec ["cutText", _caller];
+			_isEngineerAndHaveKit = (_caller getUnitTrait "engineer") && ((!_isACE) || (_isACE && ("ACE_DefusalKit" in (items _caller))));
 
-			//Reward the defuse
-			[{[5, "RPG_ied_defuse"] call doUpdateRank}] remoteExec ["call", _caller];
-		} else 	
-		{
-			//Explode the IED
-			"Land_ShellCrater_01_F" createVehicle (getPos _object);
-			"M_Titan_AT" createVehicle (getPos _object);
-
-			//Kill the unlucky guy
-			_caller setDamage 1;
-
-			//Explain to the player why he failed to defuse
-			if (_isACE) then 
+			//Check if the action has been callable
+			private _isCallable = true;
+			if (missionNameSpace getVariable ["enableQTE", 0] == 1) then 
 			{
-				[[], {["STR_RPG_HC_NAME", "STR_RPG_HC_IED_ACE"] call doDialog}] remoteExec ["spawn", _caller]; 
-			} else 
-			{
-				[[], {["STR_RPG_HC_NAME", "STR_RPG_HC_IED_NOACE"] call doDialog}] remoteExec ["spawn", _caller]; 
+				if (_isEngineerAndHaveKit) then 
+				{
+					//Easy defuse
+					_isCallable = [5,5] call doQTE;
+				} else 
+				{
+					//Very difficult defuse
+					_isCallable = [8,5] call doQTE;
+				};
 			};
+
+			_fakeIed = _objectParams#0;
+
+			//Test if the player has engineer skill
+			if (((_isEngineerAndHaveKit) && (missionNameSpace getVariable ["enableQTE", 0] == 0)) || ((_isCallable)&& (missionNameSpace getVariable ["enableQTE", 0] == 1))) then
+			{
+				//Tell the player that the IED has been defused
+				[1,["The IED has been defused", "PLAIN", 0.5]] remoteExec ["cutText", _caller];
+
+				//Reward the defuse
+				[{[5, "RPG_ied_defuse"] call doUpdateRank}] remoteExec ["call", _caller];
+			} else 	
+			{
+				//Explode the IED
+				"Land_ShellCrater_01_F" createVehicle (getPos _object);
+				"M_Titan_AT" createVehicle (getPos _object);
+
+				//Kill the unlucky guy
+				_caller setDamage 1;
+
+				//Explain to the player why he failed to defuse
+				if (_isACE) then 
+				{
+					[[], {["STR_RPG_HC_NAME", "STR_RPG_HC_IED_ACE"] call doDialog}] remoteExec ["spawn", _caller]; 
+				} else 
+				{
+					[[], {["STR_RPG_HC_NAME", "STR_RPG_HC_IED_NOACE"] call doDialog}] remoteExec ["spawn", _caller]; 
+				};
+			};
+
+			//Remove the IED
+			deleteVehicle _object;
+			deleteVehicle _fakeIed;
 		};
 
-		//Remove the IED
-		deleteVehicle _object;
-		deleteVehicle _fakeIed;
+
+		
 	}, 
 	{
 		// Action failed code

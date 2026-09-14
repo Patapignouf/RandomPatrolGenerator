@@ -123,36 +123,64 @@ _civilian addEventHandler ["Killed", {
 			// action successfull code
 			params ["_object", "_caller", "_ID", "_objectParams", "_progress", "_maxProgress"];
 
-			_attachedMine = _objectParams#0;
+			[_object, _caller, _ID, _objectParams, _progress, _maxProgress] spawn {
+				params ["_object", "_caller", "_ID", "_objectParams", "_progress", "_maxProgress"];
 
-			_isACE = (isClass (configFile >> "CfgPatches" >> "ace_medical"));
+				sleep 1; //Let de player release the space button
 
-			// Test if the player has engineer skill
-			if ((_caller getUnitTrait "Engineer") && ((!_isACE) || (_isACE && ("ACE_DefusalKit" in (items _caller))))) then
-			{
-				// Tell the player that the vest has been defused
-				[1, ["The vest has been defused", "PLAIN", 0.5]] remoteExec ["cutText", _caller];
+				_isACE = (isClass (configFile >> "CfgPatches" >> "ace_medical"));
 
-				// Reward the defuse
-				[{[5, "RPG_ied_defuse"] call doUpdateRank}] remoteExec ["call", _caller];
+				_isEngineerAndHaveKit = (_caller getUnitTrait "engineer") && ((!_isACE) || (_isACE && ("ACE_DefusalKit" in (items _caller))));
 
-			} else {
-				// Explode the vest
-				["M_Titan_AT", (getPos _object), false] call explosions_fnc_doAnExplosion;
+
+				//Check if the action has been callable
+				private _isCallable = true;
+				if (missionNameSpace getVariable ["enableQTE", 0] == 1) then 
+				{
+					if (_isEngineerAndHaveKit) then 
+					{
+						//Easy defuse
+						_isCallable = [5,5] call doQTE;
+					} else 
+					{
+						//Very difficult defuse
+						_isCallable = [8,5] call doQTE;
+					};
+				};
+
+				_attachedMine = _objectParams#0;
+
+
+				// Test if the player has engineer skill
+				if (((_isEngineerAndHaveKit) && (missionNameSpace getVariable ["enableQTE", 0] == 0)) || ((_isCallable)&& (missionNameSpace getVariable ["enableQTE", 0] == 1))) then
+				{
+					// Tell the player that the vest has been defused
+					[1, ["The vest has been defused", "PLAIN", 0.5]] remoteExec ["cutText", _caller];
+
+					// Reward the defuse
+					[{[5, "RPG_ied_defuse"] call doUpdateRank}] remoteExec ["call", _caller];
+
+				} else {
+					// Explode the vest
+					["M_Titan_AT", (getPos _object), false] call explosions_fnc_doAnExplosion;
+					deleteVehicle _attachedMine;
+					deleteVehicle _object;
+
+					// Explain to the player why he failed to defuse
+					if (_isACE) then {
+						[[format ["You need to be engineer and have a defusal kit to defuse the vest"], "intel"], 'engine\hintManagement\addCustomHint.sqf'] remoteExec ['BIS_fnc_execVM', _caller];
+					} else {
+						[[format ["You need to be engineer to defuse the vest"], "intel"], 'engine\hintManagement\addCustomHint.sqf'] remoteExec ['BIS_fnc_execVM', _caller];
+					};
+				};
+
+				// Remove the vest
 				deleteVehicle _attachedMine;
 				deleteVehicle _object;
 
-				// Explain to the player why he failed to defuse
-				if (_isACE) then {
-					[[format ["You need to be engineer and have a defusal kit to defuse the vest"], "intel"], 'engine\hintManagement\addCustomHint.sqf'] remoteExec ['BIS_fnc_execVM', _caller];
-				} else {
-					[[format ["You need to be engineer to defuse the vest"], "intel"], 'engine\hintManagement\addCustomHint.sqf'] remoteExec ['BIS_fnc_execVM', _caller];
-				};
-			};
 
-			// Remove the vest
-			deleteVehicle _attachedMine;
-			deleteVehicle _object;
+
+			};
 		},
 		{
 			// action failed code
