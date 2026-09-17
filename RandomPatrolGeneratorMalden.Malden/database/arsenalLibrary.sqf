@@ -558,7 +558,10 @@ getVirtualMagazine = {
 							//Check if magazine is with less than 50 rounds
 							if (getNumber (configFile >> "CfgMagazines" >> _x >> "count") < 51) then 
 							{
-								virtualMagazineList pushBackUnique _x;
+								if (!([_x] call isBannedItem)) then 
+								{
+									virtualMagazineList pushBackUnique _x;
+								};
 							};
 						} foreach _currentWeaponMagazineList;
 					};
