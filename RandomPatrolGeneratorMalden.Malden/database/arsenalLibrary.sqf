@@ -1856,7 +1856,7 @@ reduceCookOff =
 isBannedItem = {
 	params ["_itemToAnalyse"];
 	_result = false;
-	_bannedItemList = ["rhsusf_mag_10Rnd_STD_50BMG_mk211"];
+	_bannedItemList = ["rhsusf_mag_10Rnd_STD_50BMG_mk211", "MSS_10rnd_50BMG_BLK_MK211_Mod0_AXELR", "MSS_10rnd_50BMG_FDE_MK211_Mod0_AXELR", "MSS_10rnd_50BMG_OD_MK211_Mod0_AXELR"];
 
 	_result = _bannedItemList findIf { _x == _itemToAnalyse } > -1;
 
