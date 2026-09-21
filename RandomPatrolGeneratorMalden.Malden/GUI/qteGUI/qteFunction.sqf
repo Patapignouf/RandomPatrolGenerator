@@ -163,7 +163,7 @@ doQTE = {
 		if (_frozenProgress <= 0) then {
 			if (!qte_success && !qte_failed) then {
 				// Timeout failure sound
-				playSound3D ["A3\Sounds_F\sfx\blip1.wss", player, false, getPosASL player, 4, 0.4];
+				playSound3D ["A3\Sounds_F\sfx\blip1.wss", player, false, getPosASL player, 4, 0.4, 3];
 				qte_failed = true;
 			};
 		};
@@ -173,7 +173,7 @@ doQTE = {
 		if (qte_success) then {
 			if (!_soundPlayed) then {
 				// Success sound: High-pitched clear beep (Volume: 3, Pitch: 1.2)
-				playSound3D ["A3\Sounds_F\sfx\beep_target.wss", player, false, getPosASL player, 3, 1.2];
+				playSound3D ["A3\Sounds_F\sfx\beep_target.wss", player, false, getPosASL player, 3, 1.2, 3];
 				_soundPlayed = true;
 			};
 			_result = true;
@@ -183,7 +183,7 @@ doQTE = {
 		if (qte_failed) then {
 			if (!_soundPlayed) then {
 				// Fallback failure sound if triggered by timeout
-				playSound3D ["A3\Sounds_F\sfx\blip1.wss", player, false, getPosASL player, 4, 0.4];
+				playSound3D ["A3\Sounds_F\sfx\blip1.wss", player, false, getPosASL player, 4, 0.4, 3];
 				_soundPlayed = true;
 			};
 			_result = false;
