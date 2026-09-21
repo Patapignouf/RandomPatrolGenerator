@@ -1062,12 +1062,267 @@ linkXPWithTokenParam =
 	"Recommended enabled"
 ];
 
+//Game related 
+gameExperienceTitle = ["Experience system"];
+gameShopTitle = ["Shop system"];
+gameGameplayTitle = ["Gameplay"];
+gamePerformanceTitle = ["Performance"];
+gameAmbientTitle = ["Ambient life"];
+gameQoLTitle = ["Quality of life"];
+gameEventTitle = ["Event"];
+gameFixTitle = ["Fix"];
+gameMiscTitle = ["Miscellaneous"];
+gameExpTitle = ["Experimental (not recommended)"];
+
+
+//Opfor related 
+opforPopulationTitle = ["Opfor population"];
+opforBehaviorTitle = ["Opfor behavior"];
+opforCivilianTitle = ["Civilian on opfor area"];
+
+//Mission related
+missionWeatherTitle = ["Time and weather"];
+missionFeaturesTitle = ["Features"];
+missionObjectivesTitle = ["Objectives"];
+missionCivilianTitle = ["Civilian"];
+missionEventTitle = ["Event"];
+missionDefenseTitle = ["Defense objective"];
+missionExpTitle = ["Experimental (not recommended)"];
+
+
 //Full param list (obsolete)
-baseParamsToManage = [enableExperienceSaveParam, enableRTBMissionParam, enableQTEParam, typeRTBMissionParam, missionAreaSizeParam, civiliansOnObjectivesParam, sideRelationParam, enableAmbiantWarParam, enableAmbiantArtilleryParam, enableObjectiveExactLocationParam, enablePersistentParam, enableRegularIncomeParam, disableZoomParam, enableAutoDifficultyBalanceParam, civJoinableFactionParam, enableFurnitureParam, enableLoadoutRestrictionParam, enableAccessoriesRestrictionParam, enableOpforVehicleParam, enableSurrenderUnitParam, enableHaloParam, enableMassiveHaloParam, timeOfDayParam, civSuicideBomberParam, civSuicideBomberProbabilityParam, endlessMissionParam, enableOpforMortarParam, enableReAirDropAdvFOBParam, randomizeObjectiveOrderParam, xpDisplayParam, opforReinforcementParam, enableOverHeatParam, enableAdvancedRespawnParam, respawnOnOtherPlayersParam, enableSelfRespawnTimerParam, enableModCheckerParam, officialPataCompanyServerParam, respawnCheatParam, opforFactionRandomizerParam, playerMarkerAllowedParam, addFOBOnObjectiveParam, enableDynamicSimulationParam, maxObjectivesGeneratedSettingParam, enableBluforFOBParam, enableSoloCrewTankParam, enableOpforWeaponShopParam, enableOpforBMShopParam, enableChallengeModParam, vehicleLockedDefaultParam, enableGPSJammerOnMapParam, displayGPSJammerOnMapParam, fastTravelParam, ACETryFixUnconsciousParam, maxCivKilledParam, WeatherSettingParam, TimeMultiplierParam, warReporterOnHQParam, gunsOnlyParam, hostileCivCanCallReinforcementParam, talkToCivParam, objectivePerLocationParam, enableDestroyerFOBParam, enableBotRadioParam, enableFlatBluforBaseParam, defenseAnnounceWavesParam, defenseIncreaseDifficultyParam, defenseNumberWavesParam, defenseTimeWavesParam, rewardModeParam, bluforVehicleAvalaibleSpawnInitParam, forceTentFOBParam, enableCivilianOnCityParam, defenseRespawnBetweenWaveParam, defenseRewardBetweenWaveParam, allowSmallLocationsParam, addAmbientOpforLocParam, ambientOpforNumberOfGroupsParam, enableFurnitureParam, linkXPWithTokenParam, playerCounterSectorControlParam];
+baseParamsToManage = [
+	enableExperienceSaveParam, 
+	enableRTBMissionParam, 
+	enableQTEParam, 
+	typeRTBMissionParam, 
+	missionAreaSizeParam, 
+	civiliansOnObjectivesParam, 
+	sideRelationParam, 
+	enableAmbiantWarParam, 
+	enableAmbiantArtilleryParam, 
+	enableObjectiveExactLocationParam, 
+	enablePersistentParam, 
+	enableRegularIncomeParam, 
+	disableZoomParam, 
+	enableAutoDifficultyBalanceParam, 
+	civJoinableFactionParam, 
+	enableFurnitureParam, 
+	enableLoadoutRestrictionParam, 
+	enableAccessoriesRestrictionParam, 
+	enableOpforVehicleParam, 
+	enableSurrenderUnitParam, 
+	enableHaloParam, 
+	enableMassiveHaloParam, 
+	timeOfDayParam, 
+	civSuicideBomberParam, 
+	civSuicideBomberProbabilityParam, 
+	endlessMissionParam, 
+	enableOpforMortarParam, 
+	enableReAirDropAdvFOBParam, 
+	randomizeObjectiveOrderParam, 
+	xpDisplayParam, 
+	opforReinforcementParam, 
+	enableOverHeatParam, 
+	enableAdvancedRespawnParam, 
+	respawnOnOtherPlayersParam, 
+	enableSelfRespawnTimerParam, 
+	enableModCheckerParam, 
+	officialPataCompanyServerParam, 
+	respawnCheatParam, 
+	opforFactionRandomizerParam, 
+	playerMarkerAllowedParam, 
+	addFOBOnObjectiveParam, 
+	enableDynamicSimulationParam, 
+	maxObjectivesGeneratedSettingParam, 
+	enableBluforFOBParam, 
+	enableSoloCrewTankParam, 
+	enableOpforWeaponShopParam, 
+	enableOpforBMShopParam, 
+	enableChallengeModParam, 
+	vehicleLockedDefaultParam, 
+	enableGPSJammerOnMapParam, 
+	displayGPSJammerOnMapParam, 
+	fastTravelParam, 
+	ACETryFixUnconsciousParam, 
+	maxCivKilledParam, 
+	WeatherSettingParam, 
+	TimeMultiplierParam, 
+	warReporterOnHQParam, 
+	gunsOnlyParam, 
+	hostileCivCanCallReinforcementParam, 
+	talkToCivParam, 
+	objectivePerLocationParam, 
+	enableDestroyerFOBParam, 
+	enableBotRadioParam, 
+	enableFlatBluforBaseParam, 
+	defenseAnnounceWavesParam, 
+	defenseIncreaseDifficultyParam, 
+	defenseNumberWavesParam, 
+	defenseTimeWavesParam, 
+	rewardModeParam, 
+	bluforVehicleAvalaibleSpawnInitParam, 
+	forceTentFOBParam, 
+	enableCivilianOnCityParam, 
+	defenseRespawnBetweenWaveParam, 
+	defenseRewardBetweenWaveParam, 
+	allowSmallLocationsParam, 
+	addAmbientOpforLocParam, 
+	ambientOpforNumberOfGroupsParam, 
+	enableFurnitureParam, 
+	linkXPWithTokenParam, 
+	playerCounterSectorControlParam
+];
 
 //Make one list by dedicated menu
-baseGameParamToManage = [enableExperienceSaveParam, linkXPWithTokenParam, enableQTEParam, sideRelationParam, enableAmbiantWarParam, enableAmbiantArtilleryParam, enablePersistentParam, enableRegularIncomeParam, disableZoomParam, enableLoadoutRestrictionParam, enableAccessoriesRestrictionParam, enableOpforWeaponShopParam, enableOpforBMShopParam, enableChallengeModParam, rewardModeParam, enableReAirDropAdvFOBParam, xpDisplayParam, enableOverHeatParam, enableAdvancedRespawnParam, enableDynamicSimulationParam, enableSelfRespawnTimerParam, officialPataCompanyServerParam, respawnOnOtherPlayersParam, enableModCheckerParam, respawnCheatParam, playerMarkerAllowedParam, playerCounterSectorControlParam, enableSoloCrewTankParam, vehicleLockedDefaultParam, enableGPSJammerOnMapParam, displayGPSJammerOnMapParam, fastTravelParam, ACETryFixUnconsciousParam, gunsOnlyParam, enableBotRadioParam];
+baseGameParamToManage = [
+	//Experience
+	gameExperienceTitle,
+	enableExperienceSaveParam, 
+	linkXPWithTokenParam, 
+	xpDisplayParam, 
+	enableChallengeModParam, 
+	rewardModeParam, 
 
-baseOpforParamToManage = [civiliansOnObjectivesParam, enableAutoDifficultyBalanceParam, enableOpforVehicleParam, addAmbientOpforLocParam,ambientOpforNumberOfGroupsParam, enableSurrenderUnitParam, civSuicideBomberParam, civSuicideBomberProbabilityParam, enableOpforMortarParam, opforReinforcementParam, addFOBOnObjectiveParam, opforFactionRandomizerParam, hostileCivCanCallReinforcementParam, enableDestroyerFOBParam];
+	//Shop related
+	gameShopTitle,
+	enableOpforWeaponShopParam, 
+	enableOpforBMShopParam, 
 
-baseMissionParamToManage = [WeatherSettingParam, TimeMultiplierParam, enableHaloParam, enableMassiveHaloParam, enableBluforFOBParam, enableFlatBluforBaseParam, timeOfDayParam, allowSmallLocationsParam, randomizeObjectiveOrderParam, objectivePerLocationParam, maxObjectivesGeneratedSettingParam, bluforVehicleAvalaibleSpawnInitParam, enableRTBMissionParam, typeRTBMissionParam, missionAreaSizeParam, enableObjectiveExactLocationParam, civJoinableFactionParam, endlessMissionParam, maxCivKilledParam, warReporterOnHQParam, talkToCivParam, defenseNumberWavesParam, defenseIncreaseDifficultyParam, defenseAnnounceWavesParam, defenseTimeWavesParam, defenseRespawnBetweenWaveParam, defenseRewardBetweenWaveParam, forceTentFOBParam, enableCivilianOnCityParam];
+	//Gameplay mutator
+	gameGameplayTitle,
+	sideRelationParam, 
+	enableQTEParam, 
+	enableOverHeatParam,
+
+	//Performance 
+	gamePerformanceTitle,
+	enableDynamicSimulationParam, 
+
+
+	//Ambient 
+	gameAmbientTitle,
+	enableRegularIncomeParam, 
+	enableLoadoutRestrictionParam, 
+	enableAccessoriesRestrictionParam, 
+
+
+	//QoL
+	gameQoLTitle,
+	fastTravelParam, 
+	enableSoloCrewTankParam, 
+	respawnOnOtherPlayersParam, 
+	playerMarkerAllowedParam, 
+	playerCounterSectorControlParam, 
+	enableSelfRespawnTimerParam, 
+	enableReAirDropAdvFOBParam, 
+	enableAdvancedRespawnParam, 
+
+
+	//Event
+	gameEventTitle,
+	gunsOnlyParam, 
+	officialPataCompanyServerParam, 
+	enableAmbiantWarParam, 
+	enableAmbiantArtilleryParam,
+	enableGPSJammerOnMapParam, 
+	displayGPSJammerOnMapParam, 
+
+	//Specific fix
+	gameFixTitle,
+	enableModCheckerParam, 
+	enableBotRadioParam,
+	ACETryFixUnconsciousParam,
+	respawnCheatParam,
+
+	//Misc
+	gameMiscTitle,
+	vehicleLockedDefaultParam, 
+
+	//Experimental 
+	gameExpTitle,
+	disableZoomParam, 
+	enablePersistentParam
+
+];
+
+baseOpforParamToManage = [
+
+	//Opfor population
+	opforPopulationTitle, 
+	addAmbientOpforLocParam,
+	ambientOpforNumberOfGroupsParam, 
+	opforReinforcementParam, 
+	enableOpforVehicleParam, 
+	enableOpforMortarParam, 
+	enableDestroyerFOBParam,
+	addFOBOnObjectiveParam, 
+
+	//Civilian
+	opforCivilianTitle,
+	civiliansOnObjectivesParam, 
+	hostileCivCanCallReinforcementParam, 
+	civSuicideBomberParam, 
+	civSuicideBomberProbabilityParam, 
+
+	//Opfor automatic behavior
+	opforBehaviorTitle,
+	enableSurrenderUnitParam, 
+	opforFactionRandomizerParam, 
+	enableAutoDifficultyBalanceParam
+];
+
+baseMissionParamToManage = [
+	//Time and weather
+	missionWeatherTitle,
+	WeatherSettingParam, 
+	TimeMultiplierParam, 
+	timeOfDayParam, 
+
+	//Features
+	missionFeaturesTitle,
+	enableHaloParam, 
+	enableMassiveHaloParam, 
+	enableBluforFOBParam, 
+	enableFlatBluforBaseParam, 
+	bluforVehicleAvalaibleSpawnInitParam, 
+	forceTentFOBParam, 
+
+	//objectives
+	missionObjectivesTitle,
+	allowSmallLocationsParam, 
+	randomizeObjectiveOrderParam, 
+	objectivePerLocationParam, 
+	maxObjectivesGeneratedSettingParam, 
+	enableRTBMissionParam, 
+	enableObjectiveExactLocationParam, 
+	typeRTBMissionParam, 
+	missionAreaSizeParam, 
+
+	//Defense objective
+	missionDefenseTitle,
+	defenseNumberWavesParam, 
+	defenseIncreaseDifficultyParam, 
+	defenseAnnounceWavesParam, 
+	defenseTimeWavesParam, 
+	defenseRespawnBetweenWaveParam, 
+	defenseRewardBetweenWaveParam,
+
+	//Civilian
+	missionCivilianTitle,
+	civJoinableFactionParam, 
+	maxCivKilledParam, 
+	enableCivilianOnCityParam,
+	talkToCivParam, 
+
+
+	//Event 
+	missionEventTitle,
+	warReporterOnHQParam, 
+
+
+
+	//Experimental
+	missionExpTitle,
+	endlessMissionParam
+];
