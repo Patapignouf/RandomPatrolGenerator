@@ -935,11 +935,15 @@ if (missionNameSpace getVariable ["addAmbientOpforLoc", 1] == 1) then
 							"this",
 							'
 								//Create enemy units
-								_currentRandomGroup = selectRandom EnemyWaveLevel_6;
-								_currentGroup = [_currentRandomGroup, getPos thisTrigger, east, "DefenseInfantry"] call doGenerateEnemyGroup;
+								_numberOfExpectedEnemyGroup = missionNameSpace getVariable ["ambientOpforNumberOfGroups", 1];
+								for [{_i = 0}, {_i < _numberOfExpectedEnemyGroup}, {_i = _i + 1}] do
+								{ 
+									_currentRandomGroup = selectRandom EnemyWaveLevel_6;
+									_currentGroup = [_currentRandomGroup, getPos thisTrigger, east, "DefenseInfantry"] call doGenerateEnemyGroup;
 
-								//Spawn group
-								[_currentGroup, getPos (leader _currentGroup), 200, false] call doGarrison;
+									//Spawn group
+									[_currentGroup, getPos (leader _currentGroup), 200, false] call doGarrison;
+								};
 
 								//Create supply 
 								_tempPosition = [getPos thisTrigger, 200] call BIS_fnc_nearestRoad;
