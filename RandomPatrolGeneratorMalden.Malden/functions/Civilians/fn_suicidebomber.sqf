@@ -144,7 +144,7 @@ _civilian addEventHandler ["Killed", {
 					} else 
 					{
 						//Very difficult defuse
-						_isCallable = [8,5] call doQTE;
+						_isCallable = [10,5] call doQTE;
 					};
 				};
 
