@@ -316,14 +316,16 @@ publicvariable "TPFlag1";
 							_supportName = getText (configFile >> "CfgWeapons" >> _supportClass >> "displayName");
 							_weaponIcon = getText (configFile >> "CfgWeapons" >> _supportClass >> "picture");
 
+							//Add challenge animation
+							_readyToReplace = [_filteredPrimaryWeaponAvailableList, _supportClass] call fnc_weaponWheel;
+
 							//Replace weapon
-							//Old function
-							// _caller removeWeapon (primaryWeapon _caller);
-							// _caller addWeapon _supportClass;
-							// _caller selectWeapon _supportClass;
+							if (_readyToReplace) then 
+							{
+								_readyToReplace = [_caller, _supportClass] call replacePrimaryWeapon;
+							};
 
-							[_caller, _supportClass] call replacePrimaryWeapon; //updated function
-
+							//Add challenge result text
 							[[parseText format ["<t size='1.5'>Challenge play with <br/> %2<br/><img image='%1' size='5'/><br/><br/> <br/>Double XP earned %3</t><br/><br/><t size='1.2'></t>", _weaponIcon, _supportName, ""], "intel"], 'engine\hintManagement\addCustomHint.sqf'] remoteExec ['BIS_fnc_execVM', player]; 
 
 							//Display challenge to other players
