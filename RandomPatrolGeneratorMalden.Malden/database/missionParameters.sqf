@@ -1061,6 +1061,9 @@ linkXPWithTokenParam =
 	"linkXPWithToken",
 	"Recommended enabled"
 ];
+//Empty 
+emptyTitle = [""];
+
 
 //Game related 
 gameExperienceTitle = ["Experience system"];
@@ -1286,7 +1289,9 @@ baseMissionParamToManage = [
 	enableBluforFOBParam, 
 	enableFlatBluforBaseParam, 
 	bluforVehicleAvalaibleSpawnInitParam, 
-	forceTentFOBParam, 
+	forceTentFOBParam,
+	emptyTitle,
+
 
 	//objectives
 	missionObjectivesTitle,
