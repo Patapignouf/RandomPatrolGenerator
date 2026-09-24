@@ -261,16 +261,32 @@ doUpdateRank = {
 	params ["_experienceBonus", "_experienceType", ["_experienceCustomParam", ""]];
 
 	//Check if player has accepted a challenge
-	if (player getVariable ["RPG_hasClickChallenge", false]) then 
+	if (player getVariable ["RPG_hasClickChallengeWeapon", false]) then 
 	{
 		//Check if player has the challegend weapon
 		if ((player getVariable ["RPG_ChallengeWeapon", ""]) == (primaryWeapon player)) then 
 		{
+			_expMultiplier = 2;
+			if (player getVariable ["RPG_hasClickChallengeOptics", false]) then 
+			{
+				if (([player, player getVariable ["RPG_ChallengeOptics", ""]] call hasOpticEquipped)) then 
+				{
+					_expMultiplier = 3;
+				} else 
+				{
+					_expMultiplier = 1/3;
+				};
+			} else 
+			{
+				_expMultiplier = 2;
+			};
+
 			//If experience is positive and is not related to objective apply bonus 2x
 			if ((0<_experienceBonus) && (_experienceType != "RPG_ranking_objective_complete")) then 
 			{
-				_experienceBonus = 2*_experienceBonus;
+				_experienceBonus = round (_expMultiplier*_experienceBonus);
 			};
+			
 		} else 
 		{
 			if ((0<_experienceBonus) && (_experienceType != "RPG_ranking_objective_complete")) then 

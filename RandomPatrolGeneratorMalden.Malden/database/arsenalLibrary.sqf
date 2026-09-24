@@ -430,9 +430,9 @@ getVirtualUniform = {
 
 
 getVirtualAttachement = {
-	currentPlayer = _this select 0;
-	currentFaction = _this select 1;
-	currentPlayerClass = currentPlayer getVariable "role";
+	params ["_currentPlayer","_currentFaction", ["_getCoreAttachement", true]];
+
+	_currentPlayerClass = _currentPlayer getVariable "role";
 	virtualAttachementList = [];
 
 	_unlockedStuff = [];
@@ -443,24 +443,30 @@ getVirtualAttachement = {
 		_unlockedStuff = [_currentFaction] call getPlayerFactionUnlockedWeapons;
 	};
 
-	switch (currentPlayerClass) do
+	switch (_currentPlayerClass) do
 	{
 		case c_marksman;
 		case c_sniper:		
 			{
-				virtualAttachementList = virtualAttachementList + (attachmentShortList_db select {_x select 1  == currentFaction} select 0 select 0);
+				if (_getCoreAttachement) then 
+				{
+					virtualAttachementList = virtualAttachementList + (attachmentShortList_db select {_x select 1  == currentFaction} select 0 select 0);
+				};
 				virtualAttachementList = virtualAttachementList + (attachmentLongList_db select {_x select 1  == currentFaction} select 0 select 0);
 
 				if (missionNameSpace getVariable ["enableOpforWeaponShop",1] >= 1) then 
 				{
-					virtualAttachementList = virtualAttachementList +([_currentFaction, "shortAccessories", _unlockedStuff] call getPlayerFactionUnlockedWeaponForCategoryWithUnlockedInput);
+					if (_getCoreAttachement) then 
+					{
+						virtualAttachementList = virtualAttachementList +([_currentFaction, "shortAccessories", _unlockedStuff] call getPlayerFactionUnlockedWeaponForCategoryWithUnlockedInput);
+					};
 					virtualAttachementList = virtualAttachementList +([_currentFaction, "longAccessories", _unlockedStuff] call getPlayerFactionUnlockedWeaponForCategoryWithUnlockedInput);
 				};
 			};		
 		default 
 			{ 
 				//Default attachment list
-				virtualAttachementList = virtualAttachementList + (attachmentShortList_db select {_x select 1  == currentFaction} select 0 select 0); 
+				virtualAttachementList = virtualAttachementList + (attachmentShortList_db select {_x select 1  == currentFaction} select 0 select 0);
 
 				if (missionNameSpace getVariable ["enableOpforWeaponShop",1] >= 1) then 
 				{
@@ -506,6 +512,80 @@ getDroneBackPack = {
 	//diag_log format ["Player %1 with role %2 has access to items %3", name currentPlayer, currentPlayerClass, virtualBackpackList ];
 	_virtualDroneBackpackList
 };
+
+//Get only compatible optics with current weapon
+getOpticsCompatible = {
+	params ["_weapon", "_optics"];
+
+	_filteredOpticsList = _optics select {[_x] call isOptic};
+	_filteredOpticsListCompatibleWithWeapon = _filteredOpticsList select {[_weapon, _x] call isOpticCompatible};
+
+	_filteredOpticsListCompatibleWithWeapon
+};
+
+//Return true if item is optic
+isOptic = {
+	params ["_itemToTest"];
+	_itemTypeInfo = _itemToTest call BIS_fnc_itemType; 
+    _subCategory = _itemTypeInfo select 1;
+
+	_subCategory == "AccessorySights"
+};
+
+//Return true if optic is compatible with the weapon
+isOpticCompatible = {
+    params ["_weapon", "_optic"];
+
+    // 1. Get ALL compatible attachments for the weapon's optic slot ("CowsSlot")
+    private _compatibleOptics = compatibleItems [_weapon, "CowsSlot"];
+
+    // 2. Check if our optic classname is present in that list
+    (toLower _optic) in (_compatibleOptics apply {toLower _x}) // Returns true or false
+};
+
+//Equip unit with optic
+equipOptic = {
+    params ["_unit", "_opticClass"];
+
+    // 1. Check if weapon exists
+    private _currentWeapon = primaryWeapon _unit;
+    if (_currentWeapon == "") exitWith {
+        hint "DEBUG: No primary weapon in hands!";
+        false
+    };
+
+    // 2. Remove any existing optic first to clear the slot
+    private _currentItems = primaryWeaponItems _unit;
+    if (count _currentItems > 0) then {
+        private _oldOptic = _currentItems select 0;
+        if (_oldOptic != "") then {
+            _unit removePrimaryWeaponItem _oldOptic;
+        };
+    };
+
+    // 3. Force add the new optic
+    _unit addPrimaryWeaponItem _opticClass;
+    
+    // 4. Visual confirmation
+    //hint format ["DEBUG:\nWeapon: %1\nOptic tried: %2", _currentWeapon, _opticClass];
+    true
+};
+
+
+hasOpticEquipped = {
+    params ["_unit", "_opticClass"];
+
+    // 1. Get ALL items currently on the primary weapon
+    // Returns: [muzzle, rail, optic, bipod]
+    private _equippedItems = primaryWeaponItems _unit;
+
+    // 2. Safely check if the optic classname is anywhere inside that list
+    // We convert everything to lowercase to prevent case-sensitivity bugs
+    private _cleanedList = _equippedItems apply { toLower _x };
+    
+    (toLower _opticClass) in _cleanedList // Returns true or false
+};
+
 
 getVirtualMagazine = {
 	currentPlayer = _this select 0;

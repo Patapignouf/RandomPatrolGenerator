@@ -286,15 +286,15 @@ publicvariable "TPFlag1";
 			[[_botHQ], 
 			{
 				params ["_botHQ"]; 
-				_botHQ addAction [format ["<img size='2' image='\a3\ui_f\data\IGUI\Cfg\holdactions\holdAction_requestleadership_ca.paa'/><t size='1'>%1</t>", "Get challenge (XP Bonus)"],{
+				_botHQ addAction [format ["<img size='2' image='\a3\ui_f\data\IGUI\Cfg\holdactions\holdAction_requestleadership_ca.paa'/><t size='1'>%1</t>", "Get challenge weapon (XP Bonus)"],{
 					//Define parameters
 					params ["_object","_caller","_ID","_avalaibleVehicle"];
 
-					_hasClickChallenge = _caller getVariable ["RPG_hasClickChallenge", false];
+					_hasClickChallenge = _caller getVariable ["RPG_hasClickChallengeWeapon", false];
 					
 					if (!_hasClickChallenge) then 
 					{
-						_caller setVariable ["RPG_hasClickChallenge", true, true]; //Comment for debug
+						_caller setVariable ["RPG_hasClickChallengeWeapon", true, true]; //Comment for debug
 						_currentFaction = indFaction;
 						if (side _caller == blufor) then 
 						{
@@ -346,6 +346,73 @@ publicvariable "TPFlag1";
 					},[],0,true,false,"","((_target distance _this <7) && (_this getVariable ['isReporter', false] == false))"];
 				}
 			] remoteExec ["spawn", 0, true]; 
+
+			[[_botHQ], 
+			{
+				params ["_botHQ"]; 
+				_botHQ addAction [format ["<img size='2' image='\a3\ui_f\data\IGUI\Cfg\holdactions\holdAction_requestleadership_ca.paa'/><t size='1'>%1</t>", "Get challenge optic (XP Bonus)"],{
+					//Define parameters
+					params ["_object","_caller","_ID","_avalaibleVehicle"];
+
+					_hasClickChallenge = _caller getVariable ["RPG_hasClickChallengeOptics", false];
+					
+					if (!_hasClickChallenge) then 
+					{
+						_caller setVariable ["RPG_hasClickChallengeOptics", true, true]; //Comment for debug
+						_currentFaction = indFaction;
+						if (side _caller == blufor) then 
+						{
+							_currentFaction = bluFaction;
+						};
+						
+						//Get all weapon unlocked for the player
+						_attachementAvailableList = [_caller, _currentFaction, false] call getVirtualAttachement;
+						_filteredAttachementAvailableList = [_caller getVariable ["RPG_ChallengeWeapon", ""], _attachementAvailableList] call getOpticsCompatible; //Filter primary weapon
+
+						if (count _filteredAttachementAvailableList != 0) then 
+						{
+							_supportClass = selectRandom _filteredAttachementAvailableList;
+
+							//Save challenge weapon
+							_caller setVariable ["RPG_ChallengeOptics", _supportClass, true];
+
+							//Display challenge
+							_supportName = getText (configFile >> "CfgWeapons" >> _supportClass >> "displayName");
+							_weaponIcon = getText (configFile >> "CfgWeapons" >> _supportClass >> "picture");
+
+							//Add challenge animation
+							_readyToReplace = [_filteredAttachementAvailableList, _supportClass] call fnc_weaponWheel;
+
+							//Replace weapon
+							if (_readyToReplace) then 
+							{
+								_readyToReplace = [_caller, _supportClass] call equipOptic;
+							};
+
+							//Add challenge result text
+							[[parseText format ["<t size='1.5'>Challenge play with <br/> %2<br/><img image='%1' size='5'/><br/><br/> <br/>Double XP earned %3</t><br/><br/><t size='1.2'></t>", _weaponIcon, _supportName, ""], "intel"], 'engine\hintManagement\addCustomHint.sqf'] remoteExec ['BIS_fnc_execVM', player]; 
+
+							//Display challenge to other players
+							[format ["%1 has a challenge with %2", name _caller, _supportName]] remoteExec ["systemChat", 0, true];
+						} else 
+						{
+							systemChat "No optics available";
+						};
+						
+					} else 
+					{
+						_weaponChallenge = _caller getVariable ["RPG_ChallengeOptics", ""];
+						_supportName = getText (configFile >> "CfgWeapons" >> _weaponChallenge >> "displayName");
+
+						systemChat format ["Challenge already underway with %1", _supportName];
+					};
+
+					},[],0,true,false,"","((_target distance _this <7) && (_this getVariable ['isReporter', false] == false) && (_this getVariable ['RPG_hasClickChallengeWeapon', false]))"];
+				}
+			] remoteExec ["spawn", 0, true]; 
+
+
+			
 		};
 
 		if ((missionNameSpace getVariable "warReporterOnHQ") == 1) then 
