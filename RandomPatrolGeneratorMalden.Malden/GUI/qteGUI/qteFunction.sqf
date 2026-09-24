@@ -117,7 +117,7 @@ doQTE = {
 
 		if (_key in _currentExpectedKeys) then {
 			// Correct input sound (Volume: 2, Pitch: 1.0)
-			playSound3D ["A3\Sounds_F\sfx\blip1.wss", player, false, getPosASL player, 2, 1.0];
+			playSound3D ["A3\Sounds_F\sfx\blip1.wss", player, false, getPosASL player, 2, 1.0 ,3];
 
 			qte_currentIndex = qte_currentIndex + 1;
 			if (qte_currentIndex >= count qte_sequence) then {
@@ -125,7 +125,7 @@ doQTE = {
 			};
 		} else {
 			// Wrong input sound immediately (Deep, loud error buzz - Volume: 4, Pitch: 0.4)
-			playSound3D ["A3\Sounds_F\sfx\blip1.wss", player, false, getPosASL player, 4, 0.4];
+			playSound3D ["A3\Sounds_F\sfx\blip1.wss", player, false, getPosASL player, 4, 0.4, 3];
 
 			qte_wrongIndex = qte_currentIndex;
 			qte_failed = true;
