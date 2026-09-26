@@ -158,7 +158,7 @@ _civilian addEventHandler ["Killed", {
 					[1, ["The vest has been defused", "PLAIN", 0.5]] remoteExec ["cutText", _caller];
 
 					// Reward the defuse
-					[{[5, "RPG_ied_defuse"] call doUpdateRank}] remoteExec ["call", _caller];
+					[{[5, "RPG_ranking_repair"] call doUpdateRank}] remoteExec ["call", _caller];
 
 				} else {
 					// Explode the vest

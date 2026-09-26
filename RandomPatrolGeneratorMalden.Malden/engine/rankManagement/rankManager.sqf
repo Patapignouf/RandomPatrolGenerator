@@ -30,7 +30,6 @@ if (_isFirstStart) then
 					"RPG_ranking_suppress",
 					"RPG_ranking_heal",
 					"RPG_ranking_repair",
-					"RPG_ied_defuse",
 					"RPG_ranking_intel_collect",
 					"RPG_ranking_objective_complete"
 					];
