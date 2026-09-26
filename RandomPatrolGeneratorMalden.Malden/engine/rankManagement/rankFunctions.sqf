@@ -103,14 +103,14 @@ adjustRank = {
 
 
 addExperience = {
-	params ["_experience", "_experienceType", ["_experienceCustomParam", ""]];
+	params ["_experience", "_experienceToRegister", "_experienceType", ["_experienceCustomParam", ""]];
 
 	//Unit current experience
 	_unitExperience = profileNamespace getVariable ["RPG_ranking", 0];
 
 	//Track custom experience type
 	_currentXPtoTrack = player getVariable [_experienceType, 0];
-	player setVariable [_experienceType, _currentXPtoTrack + _experience, true];
+	player setVariable [_experienceType, _currentXPtoTrack + _experienceToRegister, true];
 
 	//Save rank
 	[_experience + _unitExperience] call saveRank;
@@ -203,7 +203,6 @@ getDisplayableCurrentXPPerCat = {
 						["RPG_ranking_suppress","suppress"],
 						["RPG_ranking_heal","heal"],
 						["RPG_ranking_repair","repair"],
-						["RPG_ied_defuse","IED defuse"],
 						["RPG_ranking_intel_collect","intel collect"],
 						["RPG_ranking_objective_complete","objective complete"]
 					];
@@ -260,6 +259,9 @@ increasePrestige = {
 doUpdateRank = {
 	params ["_experienceBonus", "_experienceType", ["_experienceCustomParam", ""]];
 
+	//Save experience before XP multiplier
+	_baseExperience = _experienceBonus;
+
 	//Check if player has accepted a challenge
 	if (player getVariable ["RPG_hasClickChallengeWeapon", false]) then 
 	{
@@ -300,7 +302,7 @@ doUpdateRank = {
 	if (typeName _experienceBonus == "SCALAR") then 
 	{
 		//add experience
-		[_experienceBonus, _experienceType, _experienceCustomParam] call addExperience;
+		[_experienceBonus, _baseExperience, _experienceType, _experienceCustomParam] call addExperience;
 
 		//adjustrank
 		[player, false] call adjustRank;
@@ -320,7 +322,8 @@ doUpdateRankWithPenalty = {
 	_potentialExperienceLose = floor (-_currentUnitExperience*_losePercentage/100);
 
 	//add experience
-	[_potentialExperienceLose min _experienceMalus, "RPG_ranking_player_death"] call addExperience;
+	_XPToSave = _potentialExperienceLose min _experienceMalus;
+	[_XPToSave, _XPToSave, "RPG_ranking_player_death"] call addExperience;
 
 	//adjustrank
 	[player, false] call adjustRank;
@@ -359,7 +362,8 @@ doGetScoreName = {
 		{
 			_scoreName = localize "STR_RPG_SCORE_REPAIR";
 		};
-		case "RPG_ied_defuse":
+		//Obsolete, it is now grouped with repair and named SUPPORT
+		case "RPG_ied_defuse": 
 		{
 			_scoreName = localize "STR_RPG_SCORE_IED_DEFUSE";
 		};
