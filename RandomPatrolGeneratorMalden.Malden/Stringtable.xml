@@ -1468,15 +1468,15 @@
         <Japanese>治療</Japanese>
     </Key>
     <Key ID="STR_RPG_SCORE_REPAIR">
-        <Original>Repair</Original>
-        <English>Repair</English>
-        <French>Réparation</French>
-        <Spanish>Reparar</Spanish>
-        <German>Reparieren</German>
-        <Italian>Riparare</Italian>
-        <Russian>Ремонт</Russian>
-        <Chinese>修理</Chinese>
-        <Japanese>修理</Japanese>
+        <Original>Support</Original>
+        <English>Support</English>
+        <French>Support</French>
+        <Spanish>Soporte</Spanish>
+        <German>Unterstützung</German>
+        <Italian>Supporto</Italian>
+        <Russian>Поддержка</Russian>
+        <Chinese>支援</Chinese>
+        <Japanese>支援</Japanese>
     </Key>
     <Key ID="STR_RPG_SCORE_IED_DEFUSE">
         <Original>IED Defuse</Original>

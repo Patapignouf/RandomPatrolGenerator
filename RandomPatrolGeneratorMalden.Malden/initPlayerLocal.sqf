@@ -12,6 +12,8 @@ setPlayerRespawnTime 99999999; //Init respawn time
 #include "engine\searchLocation.sqf"
 #include "engine\hintManagement\customDialog.sqf"
 #include "GUI\scoreBoardGUI\scoreFunctions.sqf"
+#include "GUI\qteGUI\qteFunction.sqf"
+
 
 forceBluforSetup = "ForceBluforSetup" call BIS_fnc_getParamValue;
 
@@ -891,7 +893,7 @@ _KilledEH = player addEventHandler ["Killed", {
 
 
 			if (_distance<100 || _distance>5000) then {_distance = nil};
-			[[_distance], {params ["_distance"]; [1, "RPG_ranking_infantry_kill", _distance] call doUpdateRank}] remoteExec ["spawn", _instigator]; 
+			[[_distance], {params ["_distance"]; [1, "RPG_ranking_infantry_kill", _distance] call doUpdateRank;}] remoteExec ["spawn", _instigator]; 
 
 		} else 
 		{

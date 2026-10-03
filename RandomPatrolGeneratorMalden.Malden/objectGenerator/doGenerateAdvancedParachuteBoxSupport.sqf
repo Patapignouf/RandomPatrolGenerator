@@ -1,5 +1,14 @@
 params ["_position", "_caller", "_itemsList"];
 
+
+//Check if the action has been callable
+private _isCallable = true;
+if (missionNameSpace getVariable ["enableQTE", 0] == 1) then 
+{
+	_isCallable = [8,6] call doQTE;
+};
+if (!_isCallable) exitWith {}; // action failed
+
 //Check if the player is allowed to shoot
 _advancedAirDropSupportCounter = missionNamespace getVariable ["advancedAirDropSupportCounter", 0];
 if (_advancedAirDropSupportCounter > 0) then 

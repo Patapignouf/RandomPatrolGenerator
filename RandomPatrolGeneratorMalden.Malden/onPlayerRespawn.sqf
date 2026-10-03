@@ -228,7 +228,7 @@ _KilledEH = player addEventHandler ["Killed", {
 			}] remoteExec ["spawn", _instigator]; 
 
 			if (_distance<100 || _distance>5000) then {_distance = nil};
-			[[_distance], {params ["_distance"]; [1, "RPG_ranking_infantry_kill", _distance] call doUpdateRank}] remoteExec ["spawn", _instigator]; 
+			[[_distance], {params ["_distance"]; [1, "RPG_ranking_infantry_kill", _distance] call doUpdateRank;}] remoteExec ["spawn", _instigator]; 
 		} else 
 		{
 			[[_unit, _instigator], {params ["_unit", "_instigator"]; ["STR_RPG_HC_NAME", "STR_RPG_HC_TEAMKILL", name _unit, name _instigator] call doDialog}] remoteExec ["spawn", side _instigator]; 

@@ -44,7 +44,7 @@ adjustRole = {
 		{
 			_cfgRole = "engineer";
 		};
-		if (["_arifleman", _cfgName] call BIS_fnc_inString || ["_HMG", _cfgName] call BIS_fnc_inString || ["_LMG", _cfgName] call BIS_fnc_inString || ["_RMG", _cfgName] call BIS_fnc_inString || ["_auto_rifleman", _cfgName] call BIS_fnc_inString || ["_RA", _cfgName] call BIS_fnc_inString || ["_Automatic", _cfgName] call BIS_fnc_inString) then 
+		if (["_arifleman", _cfgName] call BIS_fnc_inString || ["_HMG", _cfgName] call BIS_fnc_inString || ["_LMG", _cfgName] call BIS_fnc_inString || ["_RMG", _cfgName] call BIS_fnc_inString || ["_auto_rifleman", _cfgName] call BIS_fnc_inString || ["_RA_", _cfgName] call BIS_fnc_inString || ["_Automatic", _cfgName] call BIS_fnc_inString) then 
 		{
 			_cfgRole = "autorifleman";
 		};
@@ -233,7 +233,7 @@ getBasicUnitsGroup = {
 	params ["_faction", "_unitType"];
 
 	//Get faction loadout
-	_currentFactionName = format ["loadout%1", _faction];
+	_currentFactionName = format ["loadout%1", opFaction];
 	_currentStuffFaction = 	missionNamespace getVariable [_currentFactionName, []];
 	
 	//Start building groups

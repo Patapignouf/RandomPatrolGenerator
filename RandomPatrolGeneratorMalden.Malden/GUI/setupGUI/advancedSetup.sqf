@@ -37,73 +37,88 @@ _RcsTitleDialog ctrlCommit 0;
 _yPosition = 0.10;
 
 {
-	_paramsList = _x#0;
-	_paramsName = _x#1;
-	_paramsDefaultValue = _x#2;
-	_paramsSettingName = _x#3;
-
-
-	//Add helper management
-	_hasHelper = count _x == 5;
-	_helperWording = "";
-
-	if (_hasHelper) then 
+	if (count _x >1) then 
 	{
-		_helperWording = _x#4;
-	};
+		_paramsList = _x#0;
+		_paramsName = _x#1;
+		_paramsDefaultValue = _x#2;
+		_paramsSettingName = _x#3;
 
-	//Create dropdownlist title on the left side
-	_RcsBodyLeftDialog = _display ctrlCreate ["RscStructuredText", -1];
-	_RcsBodyLeftDialog ctrlSetStructuredText  (parseText _paramsName);
-	_RcsBodyLeftDialog ctrlSetPosition[-0.07, _yPosition, 0.5, 0.07 ];
-	_RcsBodyLeftDialog ctrlSetTextColor [1, 1, 1, 1];
-	//_RcsBodyLeftDialog ctrlSetBackgroundColor [0,0,0,0.8];
-	_RcsBodyLeftDialog ctrlCommit 0;
- 
-	//Create dropdownlist next to the param title on the right side
-	_dropdown = _display ctrlCreate ["RscCombo", 100];
-	_dropdown ctrlSetPosition [0.42, _yPosition, 0.4, 0.04];
-	_dropdown ctrlCommit 0;
 
-	//Populate dropdownlist with params
-	{
-		_item = _dropdown lbAdd _x#1;
-		_dropdown lbSetData [_item, format ["%1", _x#0]];
-	} forEach _paramsList;
+		//Add helper management
+		_hasHelper = count _x == 5;
+		_helperWording = "";
 
-	//Set default value
-	_saveSetting = profileNameSpace getVariable [_paramsSettingName, _paramsDefaultValue];
-	_dropdown lbSetCurSel (_paramsList apply {_x#0} find _saveSetting);
-	_dropdown setVariable ["dataTitle", _paramsName];
-	missionNamespace setVariable [_paramsSettingName, _saveSetting, true];
+		if (_hasHelper) then 
+		{
+			_helperWording = _x#4;
+		};
 
-	//Change setting value dynamically
-	_dropdown ctrlAddEventHandler ["LBSelChanged",
-	{
-		params ["_control", "_selectedIndex"];
-		_label = _control getVariable "dataTitle";
-		_selectedSetting = _control lbData (lbCurSel _control);
-
-		//Select specific player
-		_diffusionParamName = (paramsToManageNow select {_x#1 == _label})#0#3;
-		//hint format ["%2 : %1 : %3", _selectedSetting, _selectedIndex, _diffusionParamName];
-
-		missionNamespace setVariable [_diffusionParamName, parseNumber _selectedSetting, true];
-		profileNameSpace setVariable [_diffusionParamName, parseNumber _selectedSetting];
-		saveProfileNamespace;
-	}];
-
-	//Display right helper
-	if (_hasHelper) then 
-	{
-		_RcsBodyRightDialog = _display ctrlCreate ["RscStructuredText", -1];
-		_RcsBodyRightDialog ctrlSetStructuredText  (parseText _helperWording);
-		_RcsBodyRightDialog ctrlSetPosition[0.85, _yPosition, 0.5, 0.07 ];
-		_RcsBodyRightDialog ctrlSetTextColor [1, 1, 1, 0.7];
+		//Create dropdownlist title on the left side
+		_RcsBodyLeftDialog = _display ctrlCreate ["RscStructuredText", -1];
+		_RcsBodyLeftDialog ctrlSetStructuredText  (parseText _paramsName);
+		_RcsBodyLeftDialog ctrlSetPosition[-0.07, _yPosition, 0.5, 0.07 ];
+		_RcsBodyLeftDialog ctrlSetTextColor [1, 1, 1, 1];
 		//_RcsBodyLeftDialog ctrlSetBackgroundColor [0,0,0,0.8];
+		_RcsBodyLeftDialog ctrlCommit 0;
+	
+		//Create dropdownlist next to the param title on the right side
+		_dropdown = _display ctrlCreate ["RscCombo", 100];
+		_dropdown ctrlSetPosition [0.42, _yPosition, 0.4, 0.04];
+		_dropdown ctrlCommit 0;
 
-		_RcsBodyRightDialog ctrlCommit 0;
+		//Populate dropdownlist with params
+		{
+			_item = _dropdown lbAdd _x#1;
+			_dropdown lbSetData [_item, format ["%1", _x#0]];
+		} forEach _paramsList;
+
+		//Set default value
+		_saveSetting = profileNameSpace getVariable [_paramsSettingName, _paramsDefaultValue];
+		_dropdown lbSetCurSel (_paramsList apply {_x#0} find _saveSetting);
+		_dropdown setVariable ["dataTitle", _paramsName];
+		missionNamespace setVariable [_paramsSettingName, _saveSetting, true];
+
+		//Change setting value dynamically
+		_dropdown ctrlAddEventHandler ["LBSelChanged",
+		{
+			params ["_control", "_selectedIndex"];
+			_label = _control getVariable "dataTitle";
+			_selectedSetting = _control lbData (lbCurSel _control);
+
+			//Select specific player
+			_diffusionParamName = (paramsToManageNow select {_x#1 == _label})#0#3;
+			//hint format ["%2 : %1 : %3", _selectedSetting, _selectedIndex, _diffusionParamName];
+
+			missionNamespace setVariable [_diffusionParamName, parseNumber _selectedSetting, true];
+			profileNameSpace setVariable [_diffusionParamName, parseNumber _selectedSetting];
+			saveProfileNamespace;
+		}];
+
+		//Display right helper
+		if (_hasHelper) then 
+		{
+			_RcsBodyRightDialog = _display ctrlCreate ["RscStructuredText", -1];
+			_RcsBodyRightDialog ctrlSetStructuredText  (parseText _helperWording);
+			_RcsBodyRightDialog ctrlSetPosition[0.85, _yPosition, 0.5, 0.07 ];
+			_RcsBodyRightDialog ctrlSetTextColor [1, 1, 1, 0.7];
+			//_RcsBodyLeftDialog ctrlSetBackgroundColor [0,0,0,0.8];
+
+			_RcsBodyRightDialog ctrlCommit 0;
+		};
+	} else 
+	{
+		_paramsName = _x#0;
+
+		//Create dropdownlist title on the left side
+		_RcsBodyLeftDialog = _display ctrlCreate ["RscStructuredText", -1];
+		_RcsBodyLeftDialog ctrlSetStructuredText  (parseText _paramsName);
+		_RcsBodyLeftDialog ctrlSetPosition[-0.07, _yPosition, 0.5, 0.07 ];
+		_RcsBodyLeftDialog ctrlSetTextColor [1, 0.6, 0, 1];
+		//_RcsBodyLeftDialog ctrlSetBackgroundColor [0,0,0,0.8];
+		_RcsBodyLeftDialog ctrlCommit 0;
 	};
+	
 
 
 

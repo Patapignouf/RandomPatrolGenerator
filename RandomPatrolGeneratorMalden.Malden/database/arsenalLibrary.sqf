@@ -430,9 +430,9 @@ getVirtualUniform = {
 
 
 getVirtualAttachement = {
-	currentPlayer = _this select 0;
-	currentFaction = _this select 1;
-	currentPlayerClass = currentPlayer getVariable "role";
+	params ["_currentPlayer","_currentFaction", ["_getCoreAttachement", true]];
+
+	_currentPlayerClass = _currentPlayer getVariable "role";
 	virtualAttachementList = [];
 
 	_unlockedStuff = [];
@@ -443,24 +443,30 @@ getVirtualAttachement = {
 		_unlockedStuff = [_currentFaction] call getPlayerFactionUnlockedWeapons;
 	};
 
-	switch (currentPlayerClass) do
+	switch (_currentPlayerClass) do
 	{
 		case c_marksman;
 		case c_sniper:		
 			{
-				virtualAttachementList = virtualAttachementList + (attachmentShortList_db select {_x select 1  == currentFaction} select 0 select 0);
+				if (_getCoreAttachement) then 
+				{
+					virtualAttachementList = virtualAttachementList + (attachmentShortList_db select {_x select 1  == currentFaction} select 0 select 0);
+				};
 				virtualAttachementList = virtualAttachementList + (attachmentLongList_db select {_x select 1  == currentFaction} select 0 select 0);
 
 				if (missionNameSpace getVariable ["enableOpforWeaponShop",1] >= 1) then 
 				{
-					virtualAttachementList = virtualAttachementList +([_currentFaction, "shortAccessories", _unlockedStuff] call getPlayerFactionUnlockedWeaponForCategoryWithUnlockedInput);
+					if (_getCoreAttachement) then 
+					{
+						virtualAttachementList = virtualAttachementList +([_currentFaction, "shortAccessories", _unlockedStuff] call getPlayerFactionUnlockedWeaponForCategoryWithUnlockedInput);
+					};
 					virtualAttachementList = virtualAttachementList +([_currentFaction, "longAccessories", _unlockedStuff] call getPlayerFactionUnlockedWeaponForCategoryWithUnlockedInput);
 				};
 			};		
 		default 
 			{ 
 				//Default attachment list
-				virtualAttachementList = virtualAttachementList + (attachmentShortList_db select {_x select 1  == currentFaction} select 0 select 0); 
+				virtualAttachementList = virtualAttachementList + (attachmentShortList_db select {_x select 1  == currentFaction} select 0 select 0);
 
 				if (missionNameSpace getVariable ["enableOpforWeaponShop",1] >= 1) then 
 				{
@@ -507,6 +513,80 @@ getDroneBackPack = {
 	_virtualDroneBackpackList
 };
 
+//Get only compatible optics with current weapon
+getOpticsCompatible = {
+	params ["_weapon", "_optics"];
+
+	_filteredOpticsList = _optics select {[_x] call isOptic};
+	_filteredOpticsListCompatibleWithWeapon = _filteredOpticsList select {[_weapon, _x] call isOpticCompatible};
+
+	_filteredOpticsListCompatibleWithWeapon
+};
+
+//Return true if item is optic
+isOptic = {
+	params ["_itemToTest"];
+	_itemTypeInfo = _itemToTest call BIS_fnc_itemType; 
+    _subCategory = _itemTypeInfo select 1;
+
+	_subCategory == "AccessorySights"
+};
+
+//Return true if optic is compatible with the weapon
+isOpticCompatible = {
+    params ["_weapon", "_optic"];
+
+    // 1. Get ALL compatible attachments for the weapon's optic slot ("CowsSlot")
+    private _compatibleOptics = compatibleItems [_weapon, "CowsSlot"];
+
+    // 2. Check if our optic classname is present in that list
+    (toLower _optic) in (_compatibleOptics apply {toLower _x}) // Returns true or false
+};
+
+//Equip unit with optic
+equipOptic = {
+    params ["_unit", "_opticClass"];
+
+    // 1. Check if weapon exists
+    private _currentWeapon = primaryWeapon _unit;
+    if (_currentWeapon == "") exitWith {
+        hint "DEBUG: No primary weapon in hands!";
+        false
+    };
+
+    // 2. Remove any existing optic first to clear the slot
+    private _currentItems = primaryWeaponItems _unit;
+    if (count _currentItems > 0) then {
+        private _oldOptic = _currentItems select 0;
+        if (_oldOptic != "") then {
+            _unit removePrimaryWeaponItem _oldOptic;
+        };
+    };
+
+    // 3. Force add the new optic
+    _unit addPrimaryWeaponItem _opticClass;
+    
+    // 4. Visual confirmation
+    //hint format ["DEBUG:\nWeapon: %1\nOptic tried: %2", _currentWeapon, _opticClass];
+    true
+};
+
+
+hasOpticEquipped = {
+    params ["_unit", "_opticClass"];
+
+    // 1. Get ALL items currently on the primary weapon
+    // Returns: [muzzle, rail, optic, bipod]
+    private _equippedItems = primaryWeaponItems _unit;
+
+    // 2. Safely check if the optic classname is anywhere inside that list
+    // We convert everything to lowercase to prevent case-sensitivity bugs
+    private _cleanedList = _equippedItems apply { toLower _x };
+    
+    (toLower _opticClass) in _cleanedList // Returns true or false
+};
+
+
 getVirtualMagazine = {
 	currentPlayer = _this select 0;
 	currentFaction = _this select 1;
@@ -550,15 +630,15 @@ getVirtualMagazine = {
 				{
 					//Add default weapon magazine except large magazine
 					//Add explosive bullet to exception
-					_listOfLargeMagazineText = ["60Rnd", "75Rnd", "75rnd", "100Rnd", "150Rnd", "200Rnd", "_Mod0", "_60_TSX", "556_60_"]; //
 					_currentWeaponMagazineList = [_x] call getCompatibleMagazines; //Update magazine function
 					if (count _currentWeaponMagazineList != 0) then 
 					{
 						_currentWeapon = _x;
 						{
-							if ((virtualMagazineList) findIf {_currentWeapon == (_x)} == -1) then 
+							//Check if magazine is with less than 50 rounds
+							if (getNumber (configFile >> "CfgMagazines" >> _x >> "count") < 51) then 
 							{
-								if (!([_x, _listOfLargeMagazineText] call isElementOfArrayInString) && !([_x] call isBannedItem)) then 
+								if (!([_x] call isBannedItem)) then 
 								{
 									virtualMagazineList pushBackUnique _x;
 								};
@@ -567,7 +647,7 @@ getVirtualMagazine = {
 					};
 				} foreach currentWeaponList;
 			};
-	};
+		};
 
 		//In addition add basic smokes and grenades
 		virtualMagazineList = virtualMagazineList + basicAmmunitions; 
@@ -756,6 +836,224 @@ replacePrimaryWeapon = {
 		reload _unit;
 	};
 };
+
+fnc_weaponWheel = {
+  params [
+        ["_weaponList", [], [[]]],
+        ["_chosenWeapon", "", [""]]
+    ];
+
+    // --- Basic validation ---------------------------------------------------
+    if (count _weaponList < 2) exitWith {
+        diag_log "fnc_weaponWheel: need at least two weapons in the list.";
+        false
+    };
+    if !(_chosenWeapon in _weaponList) exitWith {
+        diag_log "fnc_weaponWheel: the chosen weapon must be part of the weapon list.";
+        false
+    };
+
+    // --- Run the animation asynchronously ------------------------------------
+    // The whole GUI/animation logic runs in its own spawned thread. The outer
+    // function then waits for that thread to fully complete before doing
+    // anything else, which is what allows it to "return a value only once
+    // the animation is finished".
+    private _handle = [_weaponList, _chosenWeapon] spawn {
+        params ["_weapons", "_chosen"];
+        disableSerialization;
+
+        // >>> Change this to any sound file you have (wav / ogg / wss). <<<
+        // playSound3D can play a raw file path directly, no CfgSounds entry needed.
+        private _confirmSoundFile = "a3\sounds_f\sfx\click.wss";
+
+        // --- 1. Open the structured-text display (always display 46) --------
+        // cutText/cutRsc always create/reuse the engine's built-in "title"
+        // display, whose IDD is 46. An empty "PLAIN" title draws nothing by
+        // itself, it just gives us that display to build our own controls on.
+        private _layer = "weaponWheelLayer" call BIS_fnc_rscLayer;
+        _layer cutText ["", "PLAIN"];
+        private _display = findDisplay 46;
+
+        if (isNull _display) exitWith {
+            diag_log "fnc_weaponWheel: could not find display 46.";
+        };
+
+        // --- 2. GUI grid units (keeps circles round on any screen ratio) ---
+        private _gridW = 0.025 * safezoneW; // horizontal unit
+        private _gridH = 0.025 * safezoneH; // vertical unit
+
+        private _centerX = safezoneX + safezoneW / 2;
+        private _centerY = safezoneY + safezoneH / 2;
+
+        private _radius   = 9;   // distance of the weapon icons from the center (grid units)
+        private _iconSize = 3.2; // width/height of a single weapon icon (grid units)
+
+        // --- 3. Dark background so the wheel stands out --------------------
+        private _bg = _display ctrlCreate ["RscText", -1];
+        _bg ctrlSetPosition [safezoneX, safezoneY, safezoneW, safezoneH];
+        _bg ctrlSetBackgroundColor [0, 0, 0, 0];
+        _bg ctrlCommit 0;
+
+        // --- 4. Fixed pointer at the top of the wheel (indicates the winner)
+        private _pointer = _display ctrlCreate ["RscText", -1];
+        private _pointerSize = 1.4;
+        _pointer ctrlSetPosition [
+            _centerX - (_pointerSize * _gridW / 2),
+            _centerY - ((_radius + 2.2) * _gridH),
+            _pointerSize * _gridW,
+            _pointerSize * _gridH
+        ];
+        _pointer ctrlSetText "▼";
+        _pointer ctrlSetTextColor [1, 0.85, 0, 1];
+        _pointer ctrlCommit 0;
+
+        // --- 5. Create one picture control per weapon -----------------------
+        private _n = count _weapons;
+        private _angleStep = 360 / _n;
+        private _controls = [];
+
+        {
+            private _weaponClass = _x;
+
+            // Fetch the weapon's inventory picture from CfgWeapons.
+            private _picture = getText (configFile >> "CfgWeapons" >> _weaponClass >> "picture");
+            if (_picture == "") then {
+                // Fallback icon if the class has no "picture" entry.
+                _picture = "\A3\ui_f\data\GUI\Cfg\Ranks\unknown_ca.paa";
+            };
+
+            // Fetch the weapon's display name to show it below the picture.
+            private _displayName = getText (configFile >> "CfgWeapons" >> _weaponClass >> "displayName");
+            if (_displayName == "") then { _displayName = _weaponClass; }; // fallback to classname
+
+            private _ctrlBg = _display ctrlCreate ["RscText", -1];
+            _ctrlBg ctrlSetBackgroundColor [0.1, 0.1, 0.1, 0.85];
+            _ctrlBg ctrlCommit 0;
+
+            private _ctrlPic = _display ctrlCreate ["RscPicture", -1];
+            _ctrlPic ctrlSetText _picture;
+            _ctrlPic ctrlCommit 0;
+
+            // Text label placed below the icon, showing the weapon's name.
+            private _ctrlName = _display ctrlCreate ["RscText", -1];
+            _ctrlName ctrlSetBackgroundColor [0.1, 0.1, 0.1, 0.85];
+            _ctrlName ctrlSetText _displayName;
+            _ctrlName ctrlSetTextColor [1, 1, 1, 1];
+            _ctrlName ctrlSetFont "PuristaSemibold";
+            _ctrlName ctrlSetFontHeight (0.8 * _gridH); // scaled, readable text
+            _ctrlName ctrlCommit 0;
+
+            _controls pushBack [_ctrlBg, _ctrlPic, _weaponClass, _ctrlName];
+        } forEach _weapons;
+
+        // --- 6. Helper: place every icon according to the wheel's rotation --
+        private _nameHeight = 1.1; // height reserved for the name label, below the icon (grid units)
+
+        private _fnc_updateWheel = {
+            params ["_rotation"];
+            {
+                _x params ["_ctrlBg", "_ctrlPic", "_weaponClass", "_ctrlName"];
+                private _index = _forEachIndex;
+
+                // Angle of this weapon on the wheel (0 = top, clockwise).
+                private _angle = (_index * _angleStep) + _rotation;
+
+                private _posX = _centerX + (_radius * _gridW * sin _angle) - (_iconSize * _gridW / 2);
+                private _posY = _centerY - (_radius * _gridH * cos _angle) - (_iconSize * _gridH / 2);
+
+                _ctrlBg  ctrlSetPosition [_posX, _posY, _iconSize * _gridW, _iconSize * _gridH];
+                _ctrlPic ctrlSetPosition [
+                    _posX + 0.15 * _gridW,
+                    _posY + 0.15 * _gridH,
+                    _iconSize * _gridW - 0.3 * _gridW,
+                    _iconSize * _gridH - 0.3 * _gridH
+                ];
+                // Name label: same width as the icon, placed right below it.
+                _ctrlName ctrlSetPosition [
+                    _posX,
+                    _posY + (_iconSize * _gridH),
+                    _iconSize * _gridW,
+                    _nameHeight * _gridH
+                ];
+                _ctrlBg   ctrlCommit 0;
+                _ctrlPic  ctrlCommit 0;
+                _ctrlName ctrlCommit 0;
+            } forEach _controls;
+        };
+
+        // --- 7. Compute the final rotation so the chosen weapon lands under
+        //         the fixed pointer (angle 0 / top of the wheel) -------------
+        private _chosenIndex = _weapons find _chosen;
+        private _baseAngle   = _chosenIndex * _angleStep;
+
+        // Extra full spins purely for visual effect.
+        // Lowered from 6 to 3: fewer full turns before landing, so the wheel
+        // feels noticeably slower overall.
+        private _extraSpins = 2;
+
+        // Rotation needed so that (baseAngle + rotation) mod 360 == 0
+        private _alignRotation = (360 - (_baseAngle % 360)) % 360;
+        private _totalRotation = (_extraSpins * 360) + _alignRotation;
+
+        // --- 8. Animate the spin with an ease-out curve (fast -> slow) ------
+        // Duration increased from 5 to 9 seconds: combined with fewer spins,
+        // this makes the whole rotation noticeably slower and easier to follow.
+        private _duration  = 12; // seconds
+        private _startTime = time;
+        private _progress  = 0;
+
+        while { _progress < 1 } do {
+            _progress = (time - _startTime) / _duration;
+            _progress = _progress min 1;
+
+            // Cubic ease-out: starts fast, slows down smoothly at the end.
+            private _eased = 1 - ((1 - _progress) ^ 3);
+            private _currentRotation = _totalRotation * _eased;
+
+            [_currentRotation] call _fnc_updateWheel;
+
+            sleep 0.02; // ~50 fps
+        };
+
+        // Snap to the exact final position.
+        [_totalRotation] call _fnc_updateWheel;
+
+        // --- 9. Highlight the winning weapon --------------------------------
+        {
+            _x params ["_ctrlBg", "_ctrlPic", "_weaponClass", "_ctrlName"];
+            if (_weaponClass == _chosen) then {
+                _ctrlBg ctrlSetBackgroundColor [1, 0.85, 0, 1];   // golden highlight
+                _ctrlName ctrlSetBackgroundColor [1, 0.85, 0, 1]; // highlight the name too
+                _ctrlName ctrlSetTextColor [0, 0, 0, 1];          // dark text on gold background
+            };
+        } forEach _controls;
+
+        // --- 10. Play the confirmation sound (direct file, no CfgSounds) ----
+        playSound3D [_confirmSoundFile, objNull, false, getPosASL player, 1, 1, 20];
+
+        // --- 11. Keep the result on screen for a moment, then clean up -------
+        sleep 3;
+        {
+            _x params ["_ctrlBg", "_ctrlPic", "_weaponClass", "_ctrlName"];
+            ctrlDelete _ctrlBg;
+            ctrlDelete _ctrlPic;
+            ctrlDelete _ctrlName;
+        } forEach _controls;
+        ctrlDelete _bg;
+        ctrlDelete _pointer;
+        _layer cutFadeOut 1;
+        sleep 1;
+        // End of the spawned thread: the "waitUntil {scriptDone _handle}"
+        // below will unblock exactly at this point.
+    };
+
+    // --- Block until the animation thread above has fully completed --------
+    waitUntil { scriptDone _handle };
+
+    // --- Only now does the function actually return its value --------------
+	true
+};
+
 
 setupArsenalToItem = {
 	//InitParam
@@ -1856,7 +2154,7 @@ reduceCookOff =
 isBannedItem = {
 	params ["_itemToAnalyse"];
 	_result = false;
-	_bannedItemList = ["rhsusf_mag_10Rnd_STD_50BMG_mk211"];
+	_bannedItemList = ["rhsusf_mag_10Rnd_STD_50BMG_mk211", "MSS_10rnd_50BMG_BLK_MK211_Mod0_AXELR", "MSS_10rnd_50BMG_FDE_MK211_Mod0_AXELR", "MSS_10rnd_50BMG_OD_MK211_Mod0_AXELR"];
 
 	_result = _bannedItemList findIf { _x == _itemToAnalyse } > -1;
 

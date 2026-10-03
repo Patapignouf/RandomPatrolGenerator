@@ -1,5 +1,13 @@
 params ["_position", "_caller"];
 
+//Check if the action has been callable
+private _isCallable = true;
+if (missionNameSpace getVariable ["enableQTE", 0] == 1) then 
+{
+	_isCallable = [6,5] call doQTE;
+};
+if (!_isCallable) exitWith {}; // action failed
+
 //Check if the player is allowed to shoot
 _artlillerySupportCounter = missionNamespace getVariable ["artlillerySupportCounter", 0];
 if (_artlillerySupportCounter > 0) then 
