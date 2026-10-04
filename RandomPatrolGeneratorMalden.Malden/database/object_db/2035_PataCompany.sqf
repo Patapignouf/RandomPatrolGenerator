@@ -19,7 +19,8 @@ bluforUnarmedVehicle_2035_PataCompany = [
 	"Atlas_B_L_Truck_01_covered_F",
 	"Aegis_C_Offroad_01_covered_F_Tanoa",
 	"Aegis_C_Offroad_01_F_Tanoa",
-	"B_A_LSV_01_light_F"
+	"B_A_LSV_01_light_F",
+	"Atlas_B_L_MRAP_03_F"
 ];
 
 bluforArmedVehicle_2035_PataCompany = [
@@ -34,7 +35,9 @@ bluforStaticWeapon_2035_PataCompany =
 
 //Armored vehicle avalaible for blufor : Ex light tank
 bluforArmoredVehicle_2035_PataCompany = [
-	selectRandom ["Atlas_B_L_AFV_Wheeled_01_cannon_F", "B_APC_Wheeled_01_cannon_v2_F"]
+	selectRandom ["Atlas_B_L_AFV_Wheeled_01_cannon_F", "B_APC_Wheeled_01_cannon_v2_F"],
+	//selectRandom ["B_W_MBT_01_TUSK_F", "B_A_APC_tracked_03_cannon_v2_wdl_F"],
+	selectRandom ["Atlas_B_H_APC_Wheeled_02_hmg_lxWS", "Atlas_B_H_APC_Wheeled_02_unarmed_lxWS"]
 ];
 
 bluforUnarmedVehicleChopper_2035_PataCompany = [
