@@ -48,7 +48,30 @@ switch (_mode) do
 		if (enableArmoredVehicle) then 
 		{
 			{
-				_price = 700;
+				//Adjust vehicle price depending of type of armored vehicle
+				_armoredVehicleType = [_x] call getArmoredType;
+				_armoredPrice = 700;
+				switch (_armoredVehicleType) do
+				{
+					case "APC":
+					{
+						_armoredPrice = 500;
+					};
+					case "Tank Destroyer":
+					{
+						_armoredPrice = 700;
+					};
+					case "Tank":
+					{
+						_armoredPrice = 900;
+					};
+					default
+					{
+						_armoredPrice = 700; // Default armored price
+					};
+				};
+
+				_price = _armoredPrice;
 				_vehicleName = getText (configFile >> "cfgVehicles" >> _x >> "displayName");
 				_vehiclePicture = getText (configFile >> "cfgVehicles" >> _x >> "picture");
 				_ind = _lnbEntries lnbAddRow ["", _vehicleName, "Armored vehicle", str _price];

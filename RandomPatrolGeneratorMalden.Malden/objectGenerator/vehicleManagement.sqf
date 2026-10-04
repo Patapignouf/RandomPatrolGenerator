@@ -265,6 +265,61 @@ doAddKeys = {
 };
 
 
+getArmoredType = {
+	params ["_className"];
+
+	// Check if the config class exists
+	if (isNull (configFile >> "CfgVehicles" >> _className)) exitWith { "Invalid Class" };
+
+	private _config = configFile >> "CfgVehicles" >> _className;
+	private _simulation = toLower getText (_config >> "simulation");
+	private _editorSubcat = toLower getText (_config >> "editorSubcategory");
+	private _displayName = toLower getText (_config >> "displayName");
+	private _transportSoldier = getNumber (_config >> "transportSoldier");
+	private _lowerClass = toLower _className;
+
+	private _result = "Unknown";
+
+	// 1. Detection of APCs (Armored Personnel Carriers / VTT)
+	if (_transportSoldier > 0 || {_editorSubcat find "apc" >= 0} || {_lowerClass find "apc" >= 0} || {_displayName find "apc" >= 0}) then {
+		// Exclude heavy tanks or tank destroyers that might have extra passenger seats
+		if !(_lowerClass find "mbt" >= 0 || _lowerClass find "rhino" >= 0 || _editorSubcat find "antitank" >= 0) then {
+			_result = "APC";
+		};
+	};
+
+	// 2. Detection of Tank Destroyers (MGS / AT)
+	if (_result == "Unknown") then {
+		if (
+			(_editorSubcat find "antitank" >= 0) || 
+			(_editorSubcat find "mgs" >= 0) || 
+			(_lowerClass find "rhino" >= 0) || 
+			(_lowerClass find "at" >= 0 && _simulation in ["tank", "car"]) ||
+			(_displayName find "tank destroyer" >= 0) ||
+			(_displayName find "mgs" >= 0)
+		) then {
+			_result = "Tank Destroyer";
+		};
+	};
+
+	// 3. Detection of Tanks (Main Battle Tanks / MBT)
+	if (_result == "Unknown") then {
+		if (
+			(_simulation == "tank") || 
+			(_editorSubcat find "tanks" >= 0) || 
+			(_lowerClass find "mbt" >= 0) || 
+			(_lowerClass find "tank" >= 0) ||
+			(_displayName find "mbt" >= 0) ||
+			(_displayName find "tank" >= 0)
+		) then {
+			_result = "Tank";
+		};
+	};
+
+	_result;
+};
+
+
 
 spawnVehicleOnAicraft = {
 	params ["_objectToSpawnClass", "_position"];
