@@ -976,7 +976,11 @@ if (missionNameSpace getVariable ["addAmbientOpforLoc", 1] == 1) then
 											// Action successfull code
 											params ["_object","_caller","_ID","_param"];
 
+											//Add credit reward for all the team
 											[500] call doIncrementVehicleSpawnCounter;
+
+											//Add personal reward to player
+											[] call shopRelatedReward;
 
 											deleteVehicle _object;
 										}, 
