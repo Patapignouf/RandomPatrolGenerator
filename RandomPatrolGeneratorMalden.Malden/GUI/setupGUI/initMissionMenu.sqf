@@ -23,6 +23,7 @@ private _comboBoxIronman = _mainDisplay displayCtrl 6110;
 private _comboBoxStartIntel = _mainDisplay displayCtrl 6112;
 private _comboBoxIASkill = _mainDisplay displayCtrl 6113;
 private _comboBoxRespawnParam = _mainDisplay displayCtrl 6114;
+private _btnNextRespawnParam = _mainDisplay displayCtrl 6200;
 private _btnGameSetup = _mainDisplay displayCtrl 6201;
 private _btnOpforSetup = _mainDisplay displayCtrl 6202;
 private _btnMissionSetup = _mainDisplay displayCtrl 6203;
@@ -31,6 +32,9 @@ normalClose = false;
 
 //Specify all GUI content 
 //Populate faction comboBox
+
+//Give focus to next button
+ctrlSetFocus _btnNextRespawnParam;
 
 //Setup Blufor and independent Factions
 {
