@@ -179,7 +179,7 @@ doGenerateVehicleForFOB =
 			// Action successfull code
 			params ["_object","_caller","_ID","_objectParams","_progress","_maxProgress"];
 			
-			[[_object], "engine\doFlipVehicle.sqf"] remoteExec ['BIS_fnc_execVM', 0];
+			[[_object], "engine\doFlipVehicle.sqf"] remoteExec ['BIS_fnc_execVM', 2];
 
 		}, 
 		{
@@ -301,7 +301,7 @@ spawnVehicleOnAicraft = {
 			// Action successfull code
 			params ["_object","_caller","_ID","_objectParams","_progress","_maxProgress"];
 			
-			[[_object], "engine\doFlipVehicle.sqf"] remoteExec ['BIS_fnc_execVM', 0];
+			[[_object], "engine\doFlipVehicle.sqf"] remoteExec ['BIS_fnc_execVM', 2];
 
 		}, 
 		{
