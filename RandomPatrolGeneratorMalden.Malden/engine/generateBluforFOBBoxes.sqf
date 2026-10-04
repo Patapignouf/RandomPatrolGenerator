@@ -9,7 +9,7 @@ publicvariable "TPFlag1";
 
 
 //Wait for Blufor FOB generation
-sleep 5;
+sleep 10;
 
 //Init VA
 VA2 = createVehicle ["B_CargoNet_01_ammo_F", [_initBlueforLocation, 1, 10, 3, 0, 20, 0, [], [_initBlueforLocation,_initBlueforLocation]] call BIS_fnc_findSafePos, [], 0, "NONE"];
@@ -247,7 +247,7 @@ publicvariable "TPFlag1";
 				params ["_object","_caller","_ID","_avalaibleVehicle"];
 
 				[[], 'GUI\botteamGUI\botteamGUI.sqf'] remoteExec ['BIS_fnc_execVM', _caller];
-				},[],3,true,false,"","(_target distance _this <7) && (_this getVariable 'role' == 'leader')"];
+				},[],5,true,false,"","(_target distance _this <7) && (_this getVariable 'role' == 'leader')"];
 			}
 		] remoteExec ["spawn", blufor, true]; 
 
@@ -260,7 +260,7 @@ publicvariable "TPFlag1";
 				params ["_object","_caller","_ID","_avalaibleVehicle"];
 
 				[[_caller], "GUI\teamManagementGUI\teamManagementGUI.sqf"] remoteExec ['BIS_fnc_execVM', _caller];
-			},[],3,true,false,"","(_target distance _this <7)"];
+			},[],6,true,false,"","(_target distance _this <7)"];
 			}
 		] remoteExec ["spawn", blufor, true]; 
 
@@ -343,7 +343,7 @@ publicvariable "TPFlag1";
 						systemChat format ["Challenge already underway with %1", _supportName];
 					};
 
-					},[],0,true,false,"","((_target distance _this <7) && (_this getVariable ['isReporter', false] == false))"];
+					},[],3,true,false,"","((_target distance _this <7) && (_this getVariable ['isReporter', false] == false))"];
 				}
 			] remoteExec ["spawn", 0, true]; 
 
@@ -407,11 +407,42 @@ publicvariable "TPFlag1";
 						systemChat format ["Challenge already underway with %1", _supportName];
 					};
 
-					},[],0,true,false,"","((_target distance _this <7) && (_this getVariable ['isReporter', false] == false) && (_this getVariable ['RPG_hasClickChallengeWeapon', false]))"];
+					},[],2,true,false,"","((_target distance _this < 7) && (_this getVariable ['isReporter', false] == false) && (_this getVariable ['RPG_hasClickChallengeWeapon', false]))"];
 				}
 			] remoteExec ["spawn", 0, true]; 
 
+		[[_botHQ], 
+			{
+				params ["_botHQ"]; 
+				_botHQ addAction [format ["<img size='2' image='\a3\ui_f\data\IGUI\Cfg\holdactions\holdAction_passleadership_ca.paa'/><t size='1'>%1</t>", "Reset challenge weapon (75 credits)"],{
+					//Define parameters
+					params ["_object","_caller","_ID","_avalaibleVehicle"];
 
+					_hasClickChallenge = _caller getVariable ["RPG_hasClickChallengeWeapon", false];
+					_unlockCredit = profileNamespace getVariable ["RPG_UnlockCreditV2", 0];
+					
+					if (_hasClickChallenge && ( 75 <= _unlockCredit)) then 
+					{
+						//Reduce credit
+						profileNamespace setVariable ["RPG_UnlockCreditV2", _unlockCredit-75];
+
+						//Reset challenge
+						_caller setVariable ["RPG_hasClickChallengeWeapon", false, true]; //Comment for debug
+						_caller setVariable ["RPG_hasClickChallengeOptics", false, true]; //Comment for debug
+						_caller setVariable ["RPG_ChallengeOptics", "", true];
+						_caller setVariable ["RPG_ChallengeWeapon", "", true];
+						
+						//Inform player
+						['Challenge reset !',0,0.7,2,0] spawn bis_fnc_dynamictext;
+
+					} else 
+					{
+						systemChat format ["No challenge already underway or not enough credit"];
+					};
+
+					},[],1,true,false,"","((_target distance _this <7) && (_this getVariable ['isReporter', false] == false) && (_this getVariable ['RPG_hasClickChallengeWeapon', false]))"];
+				}
+			] remoteExec ["spawn", 0, true]; 
 			
 		};
 
