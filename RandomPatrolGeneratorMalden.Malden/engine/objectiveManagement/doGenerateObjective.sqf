@@ -195,7 +195,7 @@ generateObjective =
    
 
 generateObjectives = {
-	params ["_avalaibleTypeOfObjList","_possibleObjectivePositions", "_numberOfObjPerPosition"];
+	params ["_avalaibleTypeOfObjList","_possibleObjectivePositions", "_numberOfObjPerPosition", ["_controlObjectiveLimit", true]];
 
 	//Log objective generation
 	diag_log format ["RPG_generateObjectives : _avalaibleTypeOfObjList = %1, _possibleObjectivePositions = %2, _numberOfObjPerPosition = %3", _avalaibleTypeOfObjList, _possibleObjectivePositions, _numberOfObjPerPosition];
@@ -207,7 +207,7 @@ generateObjectives = {
 
 	for [{_indexObj = 0}, {_indexObj < _numberOfObjPerPosition}, {_indexObj = _indexObj + 1}] do
 	{
-		if (maxObjectivesGeneratedSetting != count MissionObjectives) then 
+		if ((maxObjectivesGeneratedSetting != count MissionObjectives) || (!_controlObjectiveLimit)) then 
 		{
 			//Generate mission
 			_possibleObjectivePositionResult = [_avalaibleTypeOfObjList, _possibleObjectivePositions, _mustGenerateShop] call generateObjective;

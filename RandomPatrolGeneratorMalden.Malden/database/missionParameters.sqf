@@ -462,6 +462,19 @@ for "_i" from 1 to 100 do {
     _percentages pushBack [_i, format ["%1 objectives needed", _i]];
 };
 
+campaignExtendedParam = 
+[
+	[	
+		[0, "Normal (default)"],
+		[1, "Extended"]
+	],	
+	"Campaign type",
+	0,
+	"campaignExtended",
+	"Extended to ask for missions"
+];
+
+
 maxObjectivesGeneratedSettingParam = 
 [
 	_percentages,
@@ -1138,6 +1151,7 @@ baseParamsToManage = [
 	addFOBOnObjectiveParam, 
 	enableDynamicSimulationParam, 
 	maxObjectivesGeneratedSettingParam, 
+	campaignExtendedParam,
 	enableBluforFOBParam, 
 	enableSoloCrewTankParam, 
 	enableOpforWeaponShopParam, 
@@ -1299,6 +1313,7 @@ baseMissionParamToManage = [
 	randomizeObjectiveOrderParam, 
 	objectivePerLocationParam, 
 	maxObjectivesGeneratedSettingParam, 
+	campaignExtendedParam,
 	enableRTBMissionParam, 
 	enableObjectiveExactLocationParam, 
 	typeRTBMissionParam, 

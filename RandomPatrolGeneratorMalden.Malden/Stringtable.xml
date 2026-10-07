@@ -2362,6 +2362,17 @@
         <Chinese>打开支援商店</Chinese>
         <Japanese>支援ショップを開く</Japanese>
     </Key>
+    <Key ID="STR_ACTIONS_ASK_MISSION">
+        <Original>Request a mission</Original>
+        <English>Request a mission</English>
+        <French>Demander une mission</French>
+        <Spanish>Pedir una misión</Spanish>
+        <German>Mission anfordern</German>
+        <Italian>Richiedi una missione</Italian>
+        <Russian>Запросить миссию</Russian>
+        <Chinese>请求任务</Chinese>
+        <Japanese>ミッションを要請する</Japanese>
+    </Key>
     <Key ID="STR_ACTIONS_OPEN_FAST_TRAVEL">
         <Original>Fast travel</Original>
         <English>Fast travel</English>
@@ -2893,6 +2904,17 @@
         <Russian>В моде RPG вы можете выполнять побочные задания, такие как захват FOB, захват эсминца, кража припасов и многое другое. Эти побочные задачи дают различные награды, такие как кредиты, опыт или жетоны.</Russian>
         <Chinese>在 RPG 模组中，您可以完成支线任务，例如占领前哨基地（FOB）、占领驱逐舰、偷取物资等。这些支线任务会提供各种奖励，例如信用点、经验或代币。</Chinese>
         <Japanese>RPGモードでは、FOBの占領、駆逐艦の捕獲、物資の脱取などのサイドクエストを完了できます。これらのサブタスクを達成すると、クレジット、経験値、トークンなどのさまざまな報酬を獲得できます。</Japanese>
+    </Key>
+    <Key ID="STR_DIARY_EXTENDED_CAMPAIGN">
+        <Original>In extended campaign mode, the squad leader must add missions via the support menu or directly at the tent. Each mission is generated at a random location and can be marked as the campaign's final mission before triggering extraction.</Original>
+        <English>In extended campaign mode, the squad leader must add missions via the support menu or directly at the tent. Each mission is generated at a random location and can be marked as the campaign's final mission before triggering extraction.</English>
+        <French>Dans le mode de campagne étendue, le chef doit ajouter des missions via le menu de support ou directement sur la tente. Chaque mission est générée sur une localisation aléatoire et peut être notée comme la dernière de la campagne avant de déclencher l'extraction.</French>
+        <Spanish>En el modo de campaña extendida, el líder de escuadra debe añadir misiones a través del menú de apoyo o directamente en la tienda. Cada misión se genera en una ubicación aleatoria y se puede marcar como la última de la campaña antes de activar la extracción.</Spanish>
+        <German>Im erweiterten Kampagnenmodus muss der Gruppenführer Missionen über das Unterstützungsmenü oder direkt am Zelt hinzufügen. Jede Mission wird an einem zufälligen Ort generiert und kann als letzte Mission der Kampagne markiert werden, bevor die Evakuierung ausgelöst wird.</German>
+        <Italian>Nella modalità campagna estesa, il caposquadra deve aggiungere missioni tramite il menu di supporto o direttamente alla tenda. Ogni missione viene generata in una posizione casuale e può essere contrassegnata come l'ultima della campagna prima di attivare l'estrazione.</Italian>
+        <Russian>В режиме расширенной кампании командир отряда должен добавлять миссии через меню поддержки или непосредственно у палатки. Каждая миссия генерируется в случайном месте и может быть отмечена как последняя миссия кампании перед вызовом эвакуации.</Russian>
+        <Chinese>在延长战役模式下，小队长必须通过支援菜单或直接在帐篷处添加任务。每个任务都会在随机位置生成，并可在触发撤离前标记为战役的最后一个任务。</Chinese>
+        <Japanese>拡張キャンペーンモードでは、分隊长は支援メニューまたはテントで直接ミッションを追加する必要があります。各ミッションはランダムな位置に生成され、撤収を開始する前にキャンペーンの最終ミッションとして設定することができます。</Japanese>
     </Key>
     <Key ID="STR_DIARY_TOKENS">
         <Original>In the RPG mod, you can earn tokens by completing missions. These tokens allow you to unlock gear to diversify your loadout. You can also buy or sell this specific equipment on the black market.</Original>

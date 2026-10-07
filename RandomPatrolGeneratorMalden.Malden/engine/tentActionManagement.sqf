@@ -122,6 +122,21 @@ if (missionNameSpace getVariable ["enableAdvancedRespawn", 1] == 1) then
 						};
 					},_x,3,true,false,"","(_this getVariable 'role' == 'leader') && (_target distance _this <5) && (_target getVariable [str (group _this), false])"];
 
+
+					if ((missionNameSpace getVariable ["campaignExtended",0] == 1) && (missionNamespace getVariable "enableCampaignMode")) then 
+					{
+						//Add mission generator
+						_createTent addAction [format ["<img size='2' image='\a3\ui_f\data\IGUI\Cfg\holdactions\holdAction_search_ca.paa'/><t size='1'>%1</t>", localize "STR_ACTIONS_ASK_MISSION"],{
+								//Define parameters
+								params ["_object","_caller","_ID","_avalaibleVehicle"];
+
+								_objectivesAvailable = [["Random", "random"]] + (avalaibleTypeOfObjectives apply {[_x#1,_x#0]});
+
+								_objectivesAvailable call fnc_selectMissionGui;
+
+						},_x,0,true,false,"","(_target distance _this <5) && ((_this getVariable 'role' == 'leader') || (_this getVariable ['isAdmin', false]))"];
+					};
+
 					//Create action to authorize tent disassembly
 					[
 						_createTent, 

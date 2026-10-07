@@ -13,6 +13,7 @@ setPlayerRespawnTime 99999999; //Init respawn time
 #include "engine\hintManagement\customDialog.sqf"
 #include "GUI\scoreBoardGUI\scoreFunctions.sqf"
 #include "GUI\qteGUI\qteFunction.sqf"
+#include "GUI\missionGUI\missionSetupGUI.sqf"
 
 
 forceBluforSetup = "ForceBluforSetup" call BIS_fnc_getParamValue;
@@ -774,6 +775,23 @@ if (side player == blufor) then
 			[[true], 'GUI\supportGUI\supportGUI.sqf'] remoteExec ['BIS_fnc_execVM', _caller];
 	},_x,3,true,false,"","_target distance _this <5"];
 
+	//Ask for mission
+	if ((missionNameSpace getVariable ["campaignExtended",0] == 1) && (missionNamespace getVariable "enableCampaignMode")) then 
+	{
+		//Add action on map object
+		TPFlag1 addAction [format ["<img size='2' image='\a3\ui_f\data\IGUI\Cfg\holdactions\holdAction_search_ca.paa'/><t size='1'>%1</t>", localize "STR_ACTIONS_ASK_MISSION"],{
+				//Define parameters
+				params ["_object","_caller","_ID","_avalaibleVehicle"];
+
+				_objectivesAvailable = [["Random", "random"]] + (avalaibleTypeOfObjectives apply {[_x#1,_x#0]});
+
+				_objectivesAvailable call fnc_selectMissionGui;
+
+		},_x,3,true,false,"","(_target distance _this <5) && ((_this getVariable 'role' == 'leader') || (_this getVariable ['isAdmin', false]))"];
+
+		//Advice players
+		player createDiaryRecord ["RPG", ["RPG Campaign",localize "STR_DIARY_EXTENDED_CAMPAIGN"]];
+	};
 
 	//Add fast travel 
 	if (missionNameSpace getVariable ["fastTravel", 0] == 1) then

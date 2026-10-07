@@ -11,6 +11,7 @@
 #include "GUI\scoreBoardGUI\scoreFunctions.sqf"
 #include "database\factionParameters.sqf"
 #include "GUI\mapIndicatorGUI\triggerDisplay.sqf"
+#include "GUI\missionGUI\missionSetupGUI.sqf"
 
 //Init base mission parameters 
 enableInitAttack = "EnableInitAttack" call BIS_fnc_getParamValue;
@@ -383,42 +384,46 @@ if (!enableCampaignMode) then
 	missionNameSpace setVariable ["maxObjectivesGeneratedSetting", _minNumberOfMission, true];
 };
 
-for [{_counterOfMission = 0}, {_counterOfMission < _minNumberOfMission}, {_counterOfMission = _counterOfMission + 1}] do //Peut être optimisé
+//Generate default objectives
+if ((!enableCampaignMode) || ((enableCampaignMode) && (missionNameSpace getVariable ["campaignExtended",0] == 0))) then 
 {
-	//Randomize objective locations or not
-	switch (NeedToRandomizePOI) do
+	for [{_counterOfMission = 0}, {_counterOfMission < _minNumberOfMission}, {_counterOfMission = _counterOfMission + 1}] do //Peut être optimisé
 	{
-		//Classic order
-		case 0:
+		//Randomize objective locations or not
+		switch (NeedToRandomizePOI) do
 		{
-			[avalaibleTypeOfObj, [PossibleObjectivePosition#0], _numberOfObjectivePerLocation] call generateObjectives;
-			PossibleObjectivePosition = PossibleObjectivePosition - [PossibleObjectivePosition#0];
-		};
-		//Random order
-		case 1:
-		{
-			_selectedRandomObjective = selectRandom PossibleObjectivePosition;
-			[avalaibleTypeOfObj, [_selectedRandomObjective], _numberOfObjectivePerLocation] call generateObjectives;
-			PossibleObjectivePosition = PossibleObjectivePosition - [_selectedRandomObjective];
-		};
-		//Closest objective
-		case 2:
-		{
-			//Check if it's the first objective to be generated
-			if (count MissionObjectives == 0 ) then 
-			{	
-				//Case where this is the first objective
-				//Generate objective at first position
+			//Classic order
+			case 0:
+			{
 				[avalaibleTypeOfObj, [PossibleObjectivePosition#0], _numberOfObjectivePerLocation] call generateObjectives;
 				PossibleObjectivePosition = PossibleObjectivePosition - [PossibleObjectivePosition#0];
-			} else 
+			};
+			//Random order
+			case 1:
 			{
-				//Else generate at the closest position location
-				if (count PossibleObjectivePosition != 0) then 
+				_selectedRandomObjective = selectRandom PossibleObjectivePosition;
+				[avalaibleTypeOfObj, [_selectedRandomObjective], _numberOfObjectivePerLocation] call generateObjectives;
+				PossibleObjectivePosition = PossibleObjectivePosition - [_selectedRandomObjective];
+			};
+			//Closest objective
+			case 2:
+			{
+				//Check if it's the first objective to be generated
+				if (count MissionObjectives == 0 ) then 
+				{	
+					//Case where this is the first objective
+					//Generate objective at first position
+					[avalaibleTypeOfObj, [PossibleObjectivePosition#0], _numberOfObjectivePerLocation] call generateObjectives;
+					PossibleObjectivePosition = PossibleObjectivePosition - [PossibleObjectivePosition#0];
+				} else 
 				{
-					_selectedPosition = [(MissionObjectives#-1)#3, PossibleObjectivePosition] call getClosest;
-					[avalaibleTypeOfObj, [_selectedPosition], _numberOfObjectivePerLocation] call generateObjectives;
-					PossibleObjectivePosition = PossibleObjectivePosition - [_selectedPosition];
+					//Else generate at the closest position location
+					if (count PossibleObjectivePosition != 0) then 
+					{
+						_selectedPosition = [(MissionObjectives#-1)#3, PossibleObjectivePosition] call getClosest;
+						[avalaibleTypeOfObj, [_selectedPosition], _numberOfObjectivePerLocation] call generateObjectives;
+						PossibleObjectivePosition = PossibleObjectivePosition - [_selectedPosition];
+					};
 				};
 			};
 		};
@@ -1182,7 +1187,7 @@ switch (startIntel) do
 			//reveal objective for ind
 			if (_mainPlayerSide == independent) then 
 			{
-					for [{_i = 0}, {_i < (missionLength*maxObjectivesGeneratedSetting)}, {_i = _i + 1}] do //Peut être optimisé
+				for [{_i = 0}, {_i < (missionLength*maxObjectivesGeneratedSetting)}, {_i = _i + 1}] do //Peut être optimisé
 				{
 					[objNull, [], _mainPlayerSide] execVM 'engine\objectiveManagement\revealObjective.sqf';
 				};
@@ -1424,7 +1429,7 @@ if (enableCampaignMode) then
 
 
 	//Loop until maximum number of possible objective are generated
-	while {sleep 10; (!_maxObjectivesGenerated)} do 
+	while {sleep 10; ((!_maxObjectivesGenerated)&&(missionNameSpace getVariable ["campaignExtended",0] == 0))} do 
 	{
 		//Is an objective been completed ?
 		if (_objectiveCompletedCounter == floor ((count ((missionNamespace getVariable ["completedObjectives",[]]) + (missionNamespace getVariable ["missionFailedObjectives",[]])))/_numberOfObjectivePerLocation)) then 
@@ -1465,44 +1470,48 @@ if (enableCampaignMode) then
 			};
 
 			//Randomize objective locations or not
-			switch (NeedToRandomizePOI) do
+			if (missionNameSpace getVariable ["campaignExtended",0] == 0) then 
 			{
-				//Classic order
-				case 0:
+				switch (NeedToRandomizePOI) do
 				{
-					[avalaibleTypeOfObj, [PossibleObjectivePosition#0], _numberOfObjectivePerLocation] call generateObjectives;
-					PossibleObjectivePosition = PossibleObjectivePosition - [PossibleObjectivePosition#0];
-				};
-				//Random order
-				case 1:
-				{
-					_selectedRandomObjective = selectRandom PossibleObjectivePosition;
-					[avalaibleTypeOfObj, [_selectedRandomObjective], _numberOfObjectivePerLocation] call generateObjectives;
-					PossibleObjectivePosition = PossibleObjectivePosition - [_selectedRandomObjective];
-				};
-				//Closest objective
-				case 2:
-				{
-					//Check if it's the first objective to be generated
-					if (count MissionObjectives == 0 ) then 
-					{	
-						//Case where this is the first objective
-						//Generate objective at first position
-						_randomSelectedObjective = selectRandom PossibleObjectivePosition;
-						[avalaibleTypeOfObj, [_randomSelectedObjective], _numberOfObjectivePerLocation] call generateObjectives;
-						PossibleObjectivePosition = PossibleObjectivePosition - [_randomSelectedObjective];
-					} else 
+					//Classic order
+					case 0:
 					{
-						//Else generate at the closest position location
-						if (count PossibleObjectivePosition != 0) then 
+						[avalaibleTypeOfObj, [PossibleObjectivePosition#0], _numberOfObjectivePerLocation] call generateObjectives;
+						PossibleObjectivePosition = PossibleObjectivePosition - [PossibleObjectivePosition#0];
+					};
+					//Random order
+					case 1:
+					{
+						_selectedRandomObjective = selectRandom PossibleObjectivePosition;
+						[avalaibleTypeOfObj, [_selectedRandomObjective], _numberOfObjectivePerLocation] call generateObjectives;
+						PossibleObjectivePosition = PossibleObjectivePosition - [_selectedRandomObjective];
+					};
+					//Closest objective
+					case 2:
+					{
+						//Check if it's the first objective to be generated
+						if (count MissionObjectives == 0 ) then 
+						{	
+							//Case where this is the first objective
+							//Generate objective at first position
+							_randomSelectedObjective = selectRandom PossibleObjectivePosition;
+							[avalaibleTypeOfObj, [_randomSelectedObjective], _numberOfObjectivePerLocation] call generateObjectives;
+							PossibleObjectivePosition = PossibleObjectivePosition - [_randomSelectedObjective];
+						} else 
 						{
-							_selectedPosition = [(MissionObjectives#-1)#3, PossibleObjectivePosition] call getClosest;
-							[avalaibleTypeOfObj, [_selectedPosition], _numberOfObjectivePerLocation] call generateObjectives;
-							PossibleObjectivePosition = PossibleObjectivePosition - [_selectedPosition];
+							//Else generate at the closest position location
+							if (count PossibleObjectivePosition != 0) then 
+							{
+								_selectedPosition = [(MissionObjectives#-1)#3, PossibleObjectivePosition] call getClosest;
+								[avalaibleTypeOfObj, [_selectedPosition], _numberOfObjectivePerLocation] call generateObjectives;
+								PossibleObjectivePosition = PossibleObjectivePosition - [_selectedPosition];
+							};
 						};
 					};
 				};
 			};
+
 
 			//Generate opfor FOB in campaign mode
 			if (random 100<25) then {
