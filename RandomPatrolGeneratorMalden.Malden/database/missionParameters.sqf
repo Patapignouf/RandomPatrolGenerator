@@ -347,6 +347,19 @@ enableAccessoriesRestrictionParam =
 	"Recommended enabled"
 ];
 
+showScoreOnMissionCompleteParam = 
+[
+	[	
+		[0, "Disable"],
+		[1, "Enable (default)"]
+	],
+	"Mission progression recap",
+	1,
+	"showScoreOnMissionComplete",
+	"Show recap on mission's end"
+];
+
+
 enableQTEParam = 
 [
 	[	
@@ -1188,7 +1201,8 @@ baseParamsToManage = [
 	ambientOpforNumberOfGroupsParam, 
 	enableFurnitureParam, 
 	linkXPWithTokenParam, 
-	playerCounterSectorControlParam
+	playerCounterSectorControlParam,
+	showScoreOnMissionCompleteParam
 ];
 
 //Make one list by dedicated menu
@@ -1234,6 +1248,7 @@ baseGameParamToManage = [
 	enableSelfRespawnTimerParam, 
 	enableReAirDropAdvFOBParam, 
 	enableAdvancedRespawnParam, 
+	showScoreOnMissionCompleteParam,
 
 
 	//Event
