@@ -44,3 +44,17 @@ if ([objectiveID] call BIS_fnc_taskExists) then
 	sleep 5;
 	[objectiveID,"SUCCEEDED"] call BIS_fnc_taskSetState;
 };
+
+
+//Show score complete to every players
+if (missionNameSpace getVariable ["showScoreOnMissionComplete", 1] == 1) then 
+{
+	[[_objective], 
+	{
+		params ["_objective"];
+		
+		//systemChat format ["_objective : %1", _objective];
+		[_objective] call quickDisplayCompleteScore;
+
+	}] remoteExec ["spawn", 0]; 
+};

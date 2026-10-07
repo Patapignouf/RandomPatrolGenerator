@@ -214,6 +214,195 @@ getDisplayableCurrentXPPerCat = {
 	_structuredStringXP
 };
 
+quickDisplayCompleteScore = {
+	params ["_objective"];
+	
+	_structuredXP = [];
+	
+	//Basic xp keys/values
+	_basicXPToGather = 
+	[
+		["RPG_ranking_infantry_kill","infantry kill"],
+		["RPG_ranking_vehicle_kill","vehicle kill"],
+		["deathNumber","death"],
+		["RPG_ranking_suppress","suppress"],
+		["RPG_ranking_heal","heal"],
+		["RPG_ranking_repair","repair"],
+		["RPG_ranking_intel_collect","intel collect"],
+		["RPG_ranking_objective_complete","objective complete"]
+	];
+	
+	{
+		//Get old XP from previous mission and calculate the difference
+		_oldXPName = format ["%1_Old", _x#0];
+		_oldXP = player getVariable [_oldXPName, 0];
+		_newXP = player getVariable [_x#0, 0];
+		_deltaXP = _newXP - _oldXP;
+		
+		//Store difference
+		_structuredXP pushBackUnique [_x#1, _deltaXP];
+
+		//Save new XP 
+		player setVariable [_oldXPName, _newXP];
+	}	foreach _basicXPToGather;
+	
+	reverse _structuredXP;
+
+	[_structuredXP, 5, format ["%1", _objective#1 ], count _structuredXP] call quickDisplayScore;
+};
+
+quickDisplayScore = {
+	params [
+        ["_scores", [], [[]]],
+        ["_duration", 8, [0]],
+        ["_title", "SCOREBOARD", [""]],
+        ["_maxEntries", 8, [0]]
+    ];
+
+    // Nothing to display on a dedicated server / headless client
+    if (!hasInterface) exitWith { false };
+
+    // Main game display, needed to create the controls dynamically
+    private _display = findDisplay 46;
+    if (isNull _display) exitWith { false };
+
+    // Keep only well-formed entries: ["string", number]
+    private _entries = _scores select {
+        _x isEqualType []
+        && { count _x >= 2 }
+        && { (_x select 0) isEqualType "" }
+        && { (_x select 1) isEqualType 0 }
+    };
+    if (_entries isEqualTo []) exitWith { false };
+
+    // Sort by score (highest first) and limit the number of rows
+    _entries = [_entries, [], { _x select 1 }, "DESCEND"] call BIS_fnc_sortBy;
+    if (count _entries > _maxEntries) then { _entries resize _maxEntries };
+
+    // Remove any panel that is still on screen
+    {
+        ctrlDelete _x;
+    } forEach (uiNamespace getVariable ["SCR_scoreRecap_ctrls", []]);
+
+    // Unique id so an older timer never deletes a newer panel
+    private _id = (uiNamespace getVariable ["SCR_scoreRecap_id", 0]) + 1;
+    uiNamespace setVariable ["SCR_scoreRecap_id", _id];
+
+    // ------------------------------------------------------------------
+    // Layout (tweak these values to change the look)
+    // ------------------------------------------------------------------
+    private _width   = 0.20 * safeZoneW;   // Panel width
+    private _rowH    = 0.035 * safeZoneH;  // Height of one score row
+    private _titleH  = 0.05 * safeZoneH;   // Height of the title area
+    private _padding = 0.008;              // Inner padding
+    private _margin  = 0.015;              // Distance from the right screen edge
+    private _nameW   = _width * 0.65;      // Width of the name column
+
+    private _rows   = count _entries;
+    private _height = _titleH + (_rowH * _rows) + (_padding * 2);
+
+    private _posX = safeZoneX + safeZoneW - _width - _margin;
+    private _posY = safeZoneY + (safeZoneH - _height) / 2;
+
+    // Horizontal distance used for the slide in / slide out animation
+    private _slide = _width + _margin + 0.02;
+
+    // ------------------------------------------------------------------
+    // Build structured texts
+    // ------------------------------------------------------------------
+    private _playerName = name player;
+    private _namesParts  = [];
+    private _scoresParts = [];
+
+    {
+        _x params ["_scoreName", "_scoreValue"];
+
+        // Highlight the local player's line
+        private _color = ["#FFFFFF", "#FFD966"] select (_scoreName isEqualTo _playerName);
+
+        _namesParts append [
+            (text format ["%1. %2", _forEachIndex + 1, _scoreName]) setAttributes ["color", _color, "size", "0.9"],
+            lineBreak
+        ];
+        _scoresParts append [
+            (text str _scoreValue) setAttributes ["color", _color, "size", "0.9", "align", "right"],
+            lineBreak
+        ];
+    } forEach _entries;
+
+    private _titleText = (text _title) setAttributes ["color", "#FFD966", "size", "1.1", "align", "center", "font", "PuristaBold"];
+
+    // ------------------------------------------------------------------
+    // Create controls: [class, [x, y, w, h]]
+    // ------------------------------------------------------------------
+    private _targets = [
+        [_posX,                    _posY,                              _width,                  _height],  // Background
+        [_posX,                    _posY + _padding,                   _width,                  _titleH],  // Title
+        [_posX + _padding,         _posY + _padding + _titleH,         _nameW,                  _rowH * _rows],  // Names
+        [_posX + _nameW,           _posY + _padding + _titleH,         _width - _nameW - _padding, _rowH * _rows]   // Scores
+    ];
+    private _classes = ["RscText", "RscStructuredText", "RscStructuredText", "RscStructuredText"];
+
+    private _ctrls = [];
+    {
+        private _ctrl = _display ctrlCreate [_classes select _forEachIndex, -1];
+
+        // Start hidden, off-screen on the right
+        private _start = +_x;
+        _start set [0, (_start select 0) + _slide];
+        _ctrl ctrlSetPosition _start;
+        _ctrl ctrlSetFade 1;
+        _ctrl ctrlCommit 0;
+
+        _ctrls pushBack _ctrl;
+    } forEach _targets;
+
+    (_ctrls select 0) ctrlSetBackgroundColor [0, 0, 0, 0.6];
+    (_ctrls select 1) ctrlSetStructuredText composeText [_titleText];
+    (_ctrls select 2) ctrlSetStructuredText composeText _namesParts;
+    (_ctrls select 3) ctrlSetStructuredText composeText _scoresParts;
+
+    uiNamespace setVariable ["SCR_scoreRecap_ctrls", _ctrls];
+
+    // Slide in + fade in
+    {
+        _x ctrlSetPosition (_targets select _forEachIndex);
+        _x ctrlSetFade 0;
+        _x ctrlCommit 0.35;
+    } forEach _ctrls;
+
+    // ------------------------------------------------------------------
+    // Auto-hide after the given duration
+    // ------------------------------------------------------------------
+    [_ctrls, _targets, _id, _duration, _slide] spawn {
+        params ["_ctrls", "_targets", "_id", "_duration", "_slide"];
+
+        uiSleep _duration;
+
+        // A newer panel replaced this one: do nothing
+        if ((uiNamespace getVariable ["SCR_scoreRecap_id", 0]) != _id) exitWith {};
+
+        // Slide out + fade out
+        {
+            private _end = +(_targets select _forEachIndex);
+            _end set [0, (_end select 0) + _slide];
+            _x ctrlSetPosition _end;
+            _x ctrlSetFade 1;
+            _x ctrlCommit 0.35;
+        } forEach _ctrls;
+
+        uiSleep 0.4;
+
+        // Delete controls only if no newer panel appeared meanwhile
+        if ((uiNamespace getVariable ["SCR_scoreRecap_id", 0]) == _id) then {
+            { ctrlDelete _x } forEach _ctrls;
+            uiNamespace setVariable ["SCR_scoreRecap_ctrls", []];
+        };
+    };
+
+    true
+};
+
 getPlayerRankCompleteName = {
 	params ["_player"];
 	_currentPlayerCompleteRankName = ([_player] call getPlayerRank);
