@@ -303,8 +303,11 @@ if (!isDedicated) then {
     //systemChat format ["RPG_Marker_isASL%1", _selectedSpawn#0];
     if (player getVariable [format ["RPG_Marker_isASL%1", _selectedSpawn#0], false]) then 
     {
-        player setPosATL (_selectedSpawn#2);
-        //systemChat "setPosATL";
+        _ATLPos = _selectedSpawn#2;
+        _ATLPos set [0, _ATLPos#0+selectRandom [-1, 1]];
+        _ATLPos set [1, _ATLPos#1+selectRandom [-1, 1]];
+        player setPosATL (_ATLPos);
+        //systemChat "_ATLPos";
     } else 
     {
         player setPos ([_selectedSpawn#2, 1, 30, 1, 0, 30, 0, [], [_selectedSpawn#2, _selectedSpawn#2]] call BIS_fnc_findSafePos);
