@@ -344,6 +344,7 @@ if (typeName PossibleObjectivePosition != "ARRAY") then
 
 AllPossibleObjectivePosition = PossibleObjectivePosition;
 publicVariable "AllPossibleObjectivePosition";
+publicVariable "avalaibleTypeOfObjectives";
 
 for [{_i = 0}, {_i <= 2}, {_i = _i + 1}] do //Peut être optimisé
 {
