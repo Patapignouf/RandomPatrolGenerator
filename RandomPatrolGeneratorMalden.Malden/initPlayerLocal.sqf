@@ -14,6 +14,7 @@ setPlayerRespawnTime 99999999; //Init respawn time
 #include "GUI\scoreBoardGUI\scoreFunctions.sqf"
 #include "GUI\qteGUI\qteFunction.sqf"
 #include "GUI\missionGUI\missionSetupGUI.sqf"
+call compile preprocessFileLineNumbers "engine\challengeSystem.sqf";
 
 
 forceBluforSetup = "ForceBluforSetup" call BIS_fnc_getParamValue;

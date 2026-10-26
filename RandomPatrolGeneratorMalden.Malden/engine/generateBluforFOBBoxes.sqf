@@ -350,6 +350,31 @@ publicvariable "TPFlag1";
 			[[_botHQ], 
 			{
 				params ["_botHQ"]; 
+				_botHQ addAction [format ["<img size='2' image='\a3\ui_f\data\IGUI\Cfg\holdactions\holdAction_requestleadership_ca.paa'/><t size='1'>%1</t>", "Get challenge side task (XP Bonus)"],{
+					//Define parameters
+					params ["_object","_caller","_ID","_avalaibleVehicle"];
+
+					_hasClickChallenge = _caller getVariable ["RPG_hasClickChallengeTask", false];
+					
+					if (!_hasClickChallenge) then 
+					{
+						//Get a challenge
+						[] call SCR_fnc_challenge_openBoard;
+
+						//RPG_hasClickChallengeTask
+					} else 
+					{
+						systemChat "You already have a challenge ongoing";
+					};
+
+					},[],2.5,true,false,"","((_target distance _this <7) && (_this getVariable ['isReporter', false] == false))"];
+				}
+			] remoteExec ["spawn", 0, true]; 
+
+
+			[[_botHQ], 
+			{
+				params ["_botHQ"]; 
 				_botHQ addAction [format ["<img size='2' image='\a3\ui_f\data\IGUI\Cfg\holdactions\holdAction_requestleadership_ca.paa'/><t size='1'>%1</t>", "Get challenge optic (XP Bonus)"],{
 					//Define parameters
 					params ["_object","_caller","_ID","_avalaibleVehicle"];
