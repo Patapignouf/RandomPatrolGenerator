@@ -1,21 +1,32 @@
-/*
-    File: fn_selectMissionGui.sqf
-    Author: Assistant
-    Description: Opens a fully interactive GUI to select a value and a Yes/No choice, then triggers a custom process.
-    
-    Parameter(s):
-        0: ARRAY - List of pairs: [["Label 1", "value1"], ["Label 2", "value2"], ...]
-        
-    Example:
-        [
-            ["Mission Alpha", "m_alpha"], 
-            ["Mission Bravo", "m_bravo"], 
-            ["Mission Charlie", "m_charlie"]
-        ] call fnc_selectMissionGui;
-*/
+    /*
+        Function : MISSION_fnc_selectMission
+        File     : fn_selectMission.sqf
+
+        Description:
+            Displays a dynamically created GUI (no config needed in description.ext) that lets
+            the player:
+            - select one value among a list of [label, value] pairs,
+            - answer "Is this the last mission?" (Yes/No, default = "No"),
+            - answer "Select the location manually on the map?" (Yes/No, default = "No").
+            Validating the dialog launches a process (to be defined in the marked block).
+            If the player chose to select the location manually, the map opens and the
+            player left-clicks the wanted position before the process is launched.
+
+        Parameter (_this):
+            ARRAY - List of [label (STRING), value (ANY)] pairs
+            Example: [["Mission 1", "m01"], ["Mission 2", "m02"], ["Mission 3", "m03"]]
+
+        Return:
+            DISPLAY - The created display (displayNull on error)
+
+        Usage:
+            MISSION_fnc_selectMission = compile preprocessFileLineNumbers "fn_selectMission.sqf";
+            [["Mission 1", "m01"], ["Mission 2", "m02"]] call MISSION_fnc_selectMission;
+    */
+
 
 fnc_selectMissionGui = {
-    
+
     if (!hasInterface) exitWith { displayNull };
 
     // The whole argument is the list of [label, value] pairs
@@ -33,11 +44,20 @@ fnc_selectMissionGui = {
     if (isNull _display) exitWith { displayNull };
 
     private _w = 0.5;
-    private _h = 0.6;
+    private _h = 0.65;
     private _posX = safezoneX + (safezoneW - _w) / 2;
     private _posY = safezoneY + (safezoneH - _h) / 2;
     private _pad = 0.02;
     private _ctrlH = 0.04;
+    private _labelW = (_w - 2 * _pad) * 0.65;
+    private _comboW = (_w - 2 * _pad) * 0.3;
+    private _comboX = _posX + _pad + (_w - 2 * _pad) * 0.7;
+
+    // Vertical layout (computed from the bottom up)
+    private _buttonsY = _posY + _h - _ctrlH - _pad;
+    private _mapQuestionY = _buttonsY - _ctrlH - _pad;
+    private _lastQuestionY = _mapQuestionY - _ctrlH - 0.01;
+    private _listH = _lastQuestionY - _pad - (_posY + _pad);
 
     // Background
     private _background = _display ctrlCreate ["RscText", -1];
@@ -54,7 +74,7 @@ fnc_selectMissionGui = {
 
     // Value list
     private _list = _display ctrlCreate ["RscListBox", -1];
-    _list ctrlSetPosition [_posX + _pad, _posY + _pad, _w - 2 * _pad, _h - 5 * _ctrlH - 4 * _pad];
+    _list ctrlSetPosition [_posX + _pad, _posY + _pad, _w - 2 * _pad, _listH];
     _list ctrlSetBackgroundColor [0.1, 0.1, 0.1, 1];
     _list ctrlCommit 0;
 
@@ -67,22 +87,32 @@ fnc_selectMissionGui = {
     _list lbSetCurSel 0;
 
     // "Last mission?" question
-    private _questionY = _posY + _h - 3 * _ctrlH - 2 * _pad;
+    private _lastQuestion = _display ctrlCreate ["RscText", -1];
+    _lastQuestion ctrlSetPosition [_posX + _pad, _lastQuestionY, _labelW, _ctrlH];
+    _lastQuestion ctrlSetText "Is this the last mission?";
+    _lastQuestion ctrlCommit 0;
 
-    private _question = _display ctrlCreate ["RscText", -1];
-    _question ctrlSetPosition [_posX + _pad, _questionY, (_w - 2 * _pad) * 0.65, _ctrlH];
-    _question ctrlSetText "Is this the last mission?";
-    _question ctrlCommit 0;
+    private _lastCombo = _display ctrlCreate ["RscCombo", -1];
+    _lastCombo ctrlSetPosition [_comboX, _lastQuestionY, _comboW, _ctrlH];
+    _lastCombo ctrlCommit 0;
+    _lastCombo lbAdd "No";  // index 0 = default value
+    _lastCombo lbAdd "Yes"; // index 1
+    _lastCombo lbSetCurSel 0;
 
-    private _combo = _display ctrlCreate ["RscCombo", -1];
-    _combo ctrlSetPosition [_posX + _pad + (_w - 2 * _pad) * 0.7, _questionY, (_w - 2 * _pad) * 0.3, _ctrlH];
-    _combo ctrlCommit 0;
-    _combo lbAdd "No";  // index 0 = default value
-    _combo lbAdd "Yes"; // index 1
-    _combo lbSetCurSel 0;
+    // "Select the location on the map?" question
+    private _mapQuestion = _display ctrlCreate ["RscText", -1];
+    _mapQuestion ctrlSetPosition [_posX + _pad, _mapQuestionY, _labelW, _ctrlH];
+    _mapQuestion ctrlSetText "Select the location on the map?";
+    _mapQuestion ctrlCommit 0;
+
+    private _mapCombo = _display ctrlCreate ["RscCombo", -1];
+    _mapCombo ctrlSetPosition [_comboX, _mapQuestionY, _comboW, _ctrlH];
+    _mapCombo ctrlCommit 0;
+    _mapCombo lbAdd "No";  // index 0 = default value
+    _mapCombo lbAdd "Yes"; // index 1
+    _mapCombo lbSetCurSel 0;
 
     // Buttons
-    private _buttonsY = _posY + _h - _ctrlH - _pad;
     private _buttonW = (_w - 3 * _pad) / 2;
 
     private _buttonOk = _display ctrlCreate ["RscButton", -1];
@@ -98,7 +128,8 @@ fnc_selectMissionGui = {
     // Data needed by the event handlers
     _display setVariable ["MISSION_items", _items];
     _display setVariable ["MISSION_list", _list];
-    _display setVariable ["MISSION_combo", _combo];
+    _display setVariable ["MISSION_lastCombo", _lastCombo];
+    _display setVariable ["MISSION_mapCombo", _mapCombo];
 
     // ---------------------------------------------------------------------------
     // "Cancel" button
@@ -117,84 +148,139 @@ fnc_selectMissionGui = {
         private _display = ctrlParent _control;
         private _items = _display getVariable ["MISSION_items", []];
         private _list = _display getVariable "MISSION_list";
-        private _combo = _display getVariable "MISSION_combo";
+        private _lastCombo = _display getVariable "MISSION_lastCombo";
+        private _mapCombo = _display getVariable "MISSION_mapCombo";
 
         private _selected = lbCurSel _list;
         if (_selected < 0) exitWith { hint "Please select a value."; };
 
         private _itemIndex = _list lbValue _selected;
         private _value = (_items select _itemIndex) select 1;
-        private _isLastMission = (lbCurSel _combo) == 1; // true = "Yes", false = "No" (default)
+        private _isLastMission = (lbCurSel _lastCombo) == 1; // true = "Yes", false = "No" (default)
+        private _selectOnMap = (lbCurSel _mapCombo) == 1;    // true = "Yes", false = "No" (default)
 
         _display closeDisplay 1;
 
-        // =======================================================================
-        // PROCESS TO BE DEFINED
-        // -----------------------------------------------------------------------
-        // _value         : value linked to the selected label
-        // _isLastMission : true if the player answered "Yes"
-        // =======================================================================
-        [_value, _isLastMission] spawn {
-            params ["_value", "_isLastMission"];
+        [_value, _isLastMission, _selectOnMap] spawn {
+            params ["_value", "_isLastMission", "_selectOnMap"];
+
+            // Position chosen manually on the map ([] if the player did not ask for it)
+            private _position = [];
+
+            if (_selectOnMap) then {
+                // Reset any previous result, then open the map and wait for a left click
+                missionNamespace setVariable ["MISSION_mapClickPos", nil];
+
+                openMap [true, false];
+                hint "Left-click on the map to choose the location.\nClose the map to cancel.";
+
+                private _ehId = addMissionEventHandler ["MapSingleClick", {
+                    params ["_units", "_pos", "_alt", "_shift"];
+                    missionNamespace setVariable ["MISSION_mapClickPos", _pos];
+                }];
+
+                waitUntil {
+                    sleep 0.1;
+                    !visibleMap || { !isNil { missionNamespace getVariable "MISSION_mapClickPos" } }
+                };
+
+                removeMissionEventHandler ["MapSingleClick", _ehId];
+
+                _position = missionNamespace getVariable ["MISSION_mapClickPos", []];
+                missionNamespace setVariable ["MISSION_mapClickPos", nil];
+
+                openMap [false, false];
+                hint "";
+            };
+
+            // Map closed without clicking: the whole operation is cancelled
+            if (_selectOnMap && { _position isEqualTo [] }) exitWith {
+                hint "Location selection cancelled.";
+            };
+
+            // =======================================================================
+            // PROCESS TO BE DEFINED
+            // -----------------------------------------------------------------------
+            // _value         : value linked to the selected label
+            // _isLastMission : true if the player answered "Yes" to "last mission?"
+            // _position      : [x, y, z] chosen on the map, or [] if "No" was selected
+            // =======================================================================
 
             // TODO: replace this block with the wanted process
-            systemChat format ["Selected value: %1 | Last mission: %2", _value, _isLastMission];
+            systemChat format [
+                "Selected value: %1 | Last mission: %2 | Position: %3",
+                _value, _isLastMission, _position
+            ];
 
-            //Spawn mission on server side
-            [[_value, _isLastMission], 
-                {
-                    params ["_objectiveType", "_isLastMission"];
+            [_value, _isLastMission, _position] spawn {
+                params ["_value", "_isLastMission", "_position"];
 
-                    _objectiveTypeArray = [_objectiveType];
+                // TODO: replace this block with the wanted process
+                systemChat format ["Selected value: %1 | Last mission: %2", _value, _isLastMission];
 
-                    if (_objectiveType == "random") then 
+                //Spawn mission on server side
+                [[_value, _isLastMission, _position], 
                     {
-                        _objectiveTypeArray = (avalaibleTypeOfObjectives apply {_x#0});
-                    };
+                        params ["_objectiveType", "_isLastMission", "_position"];
 
-                    //Get objective location
-                    _locations = missionNameSpace getVariable ["RPG_missionLocationsCampaignExtended", [] call getAllBigLocationsWithBuildings];
-                    _selectedLocation = (selectRandom _locations);
-                    _selectedPosLocation = getPos _selectedLocation;
-                    missionNameSpace setVariable ["RPG_missionLocationsCampaignExtended", _locations-[_selectedLocation], true];
-                    _numberOfObjectivePerLocation = missionNameSpace getVariable ["objectivePerLocation", 1];
+                        _objectiveTypeArray = [_objectiveType];
 
-                    //Generate objective
-                    [_objectiveTypeArray, [_selectedPosLocation], _numberOfObjectivePerLocation, false] call generateObjectives;
-
-                    //Reveal objective
-                    if (missionNamespace getVariable ["startIntel", 2] == 2) then 
-                    {
-					    [objNull, [], blufor] execVM 'engine\objectiveManagement\revealObjective.sqf';
-                    };
-
-                    //End mission after the generated one
-                    if (_isLastMission) then 
-                    {
-                        _missionFailedObjectives = missionNamespace getVariable ["missionFailedObjectives",[]];
-                        _completedObjectives = missionNamespace getVariable ["completedObjectives",[]];
-                        _maxObjectivesGeneratedSetting = missionNamespace getVariable ["maxObjectivesGeneratedSetting",[]];
-                        _totalOldObjectives = count _missionFailedObjectives+ count _completedObjectives;
-                        _missingObjective = _maxObjectivesGeneratedSetting - _totalOldObjectives;
-                        
-                        //If there is at least one objective needed
-                        if (0 < (_missingObjective-1)) then 
+                        if (_objectiveType == "random") then 
                         {
-                            //Add fake mission until it misses only one
-                            for "_i" from 1 to (_missingObjective-1) do 
-                            {
-                                _missionFailedObjectives pushBack [""];
-                            }; 
-
-                            //Add fake missions to namespace
-                            missionNamespace setVariable ["missionFailedObjectives",_missionFailedObjectives, true];
+                            _objectiveTypeArray = (avalaibleTypeOfObjectives apply {_x#0});
                         };
-                    };
-                }
-            ] remoteExec ["spawn", 2]; 
 
+                        _selectedPosLocation = [];
+                        if (count _position == 3) then 
+                        {
+                            _selectedPosLocation = _position;
+                        } else 
+                        {
+                            //Get objective location
+                            _locations = missionNameSpace getVariable ["RPG_missionLocationsCampaignExtended", [] call getAllBigLocationsWithBuildings];
+                            _selectedLocation = (selectRandom _locations);
+                            _selectedPosLocation = getPos _selectedLocation;
+                            missionNameSpace setVariable ["RPG_missionLocationsCampaignExtended", _locations-[_selectedLocation], true];
+                        };
+
+                        //Generate objective
+                        _numberOfObjectivePerLocation = missionNameSpace getVariable ["objectivePerLocation", 1];
+                        [_objectiveTypeArray, [_selectedPosLocation], _numberOfObjectivePerLocation, false] call generateObjectives;
+
+                        //Reveal objective
+                        if (missionNamespace getVariable ["startIntel", 2] == 2) then 
+                        {
+                            [objNull, [], blufor] execVM 'engine\objectiveManagement\revealObjective.sqf';
+                        };
+
+                        //End mission after the generated one
+                        if (_isLastMission) then 
+                        {
+                            _missionFailedObjectives = missionNamespace getVariable ["missionFailedObjectives",[]];
+                            _completedObjectives = missionNamespace getVariable ["completedObjectives",[]];
+                            _maxObjectivesGeneratedSetting = missionNamespace getVariable ["maxObjectivesGeneratedSetting",[]];
+                            _totalOldObjectives = count _missionFailedObjectives+ count _completedObjectives;
+                            _missingObjective = _maxObjectivesGeneratedSetting - _totalOldObjectives;
+                            
+                            //If there is at least one objective needed
+                            if (0 < (_missingObjective-1)) then 
+                            {
+                                //Add fake mission until it misses only one
+                                for "_i" from 1 to (_missingObjective-1) do 
+                                {
+                                    _missionFailedObjectives pushBack [""];
+                                }; 
+
+                                //Add fake missions to namespace
+                                missionNamespace setVariable ["missionFailedObjectives",_missionFailedObjectives, true];
+                            };
+                        };
+                    }
+                ] remoteExec ["spawn", 2]; 
+            };
         };
     }];
 
     _display
+
 };
