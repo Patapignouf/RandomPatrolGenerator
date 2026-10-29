@@ -42,6 +42,12 @@ if (missionNameSpace getVariable ["enableOpforWeaponShop",1] == 1) then
 	paramsToManageNow pushBack ["Text", localize "STR_GUI_BASE_TOKEN", format ["%1", profileNameSpace getVariable ["RPG_UnlockCreditV2", 0]], {	}];
 };
 
+//Add side task panel in RPG menu
+if ((missionNameSpace getVariable "enableChallengeMod") == 1) then 
+{
+	paramsToManageNow pushBack ["Text", "Current Side Task", format ["%1 : %2", player getVariable ["RPG_SideTaskType", "No task"], player getVariable ["RPG_SideTaskStatus", "None"]], {	}];
+};
+
 
 //Display current task
 _currentTask = player call BIS_fnc_taskCurrent;

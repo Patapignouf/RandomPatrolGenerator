@@ -145,10 +145,13 @@ SCR_fnc_challenge_updateHud = {
         parseText _message
     } else {
         SCR_challenge_current params ["_id", "_title", "_desc", "_type", "_goal"];
+        private _updatedText = [_type, SCR_challenge_progress, _goal] call SCR_fnc_challenge_formatProgress;
+        player setVariable ["RPG_SideTaskStatus", _updatedText];
+        player setVariable ["RPG_SideTaskType", _type];
         parseText format [
             "<t size='0.8' color='#FFD966'>CHALLENGE</t><br/><t size='0.9'>%1</t><br/><t size='0.9' color='#9FE2BF'>%2</t>",
             _title,
-            [_type, SCR_challenge_progress, _goal] call SCR_fnc_challenge_formatProgress
+            _updatedText
         ]
     };
 
