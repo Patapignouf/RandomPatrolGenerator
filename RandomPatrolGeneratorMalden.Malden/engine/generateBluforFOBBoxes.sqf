@@ -354,18 +354,7 @@ publicvariable "TPFlag1";
 					//Define parameters
 					params ["_object","_caller","_ID","_avalaibleVehicle"];
 
-					_hasClickChallenge = _caller getVariable ["RPG_hasClickChallengeTask", false];
-					
-					if (!_hasClickChallenge) then 
-					{
-						//Get a challenge
-						[] call SCR_fnc_challenge_openBoard;
-
-						//RPG_hasClickChallengeTask
-					} else 
-					{
-						systemChat "You already have a challenge ongoing";
-					};
+					[] call SCR_fnc_challenge_openBoard;
 
 					},[],2.5,true,false,"","((_target distance _this <7) && (_this getVariable ['isReporter', false] == false))"];
 				}

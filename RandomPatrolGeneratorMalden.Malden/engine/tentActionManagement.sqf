@@ -122,6 +122,22 @@ if (missionNameSpace getVariable ["enableAdvancedRespawn", 1] == 1) then
 						};
 					},_x,3,true,false,"","(_this getVariable 'role' == 'leader') && (_target distance _this <5) && (_target getVariable [str (group _this), false])"];
 
+					//Add side tasks to tent
+					if ((missionNameSpace getVariable "enableChallengeMod") == 1) then 
+					{
+						[[_createTent], 
+						{
+							params ["_createTent"]; 
+							_createTent addAction [format ["<img size='2' image='\a3\ui_f\data\IGUI\Cfg\holdactions\holdAction_requestleadership_ca.paa'/><t size='1'>%1</t>", "Get challenge side task (XP Bonus)"],{
+								//Define parameters
+								params ["_object","_caller","_ID","_avalaibleVehicle"];
+
+								[] call SCR_fnc_challenge_openBoard;
+
+								},[],2.5,true,false,"","((_target distance _this <7) && (_this getVariable ['isReporter', false] == false))"];
+							}
+						] remoteExec ["spawn", 0, true]; 
+					};
 
 					if ((missionNameSpace getVariable ["campaignExtended",0] == 1) && (missionNamespace getVariable "enableCampaignMode")) then 
 					{
