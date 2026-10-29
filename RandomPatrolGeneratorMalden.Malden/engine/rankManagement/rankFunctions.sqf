@@ -156,36 +156,52 @@ displayCurrentRank = {
 };
 
 getDisplayableCurrentRank = {
-	params ["_unit"];
+    params ["_unit"];
 
-	//Unit current experience
-	_unitExperience = profileNamespace getVariable ["RPG_ranking", 0];
+    private _xp = profileNamespace getVariable ["RPG_ranking", 0];
 
-	//init rank next objective
-	_unitFloorRank = [];
-	if (_unitExperience <0) then 
-	{
-		_unitFloorRank = rankList#0;
-	} else 
-	{
-		_unitFloorRank = (rankList select {_x#1 <= _unitExperience}) #-1;
-	};
-	
-	_unitNextRankList = (rankList select {_x#1 > _unitExperience});
-	
-	if (count _unitNextRankList == 0) then 
-	{
-		_unitNextRankList = [rankList#-1];
-	};
+    // Current rank and next rank threshold
+    private _reached = rankList select {_x#1 <= _xp};
+    private _floorXp = if (_reached isEqualTo []) then {rankList#0#1} else {(_reached#-1)#1};
+    private _next    = rankList select {_x#1 > _xp};
+    private _isMax   = _next isEqualTo [];
+    private _nextXp  = if (_isMax) then {_floorXp} else {(_next#0)#1};
 
-	//Get next rank informations
-	_unitNextRank = _unitNextRankList#0;
-	_unitExperienceNextFloor = _unitNextRank#1;
+    // Progression WITHIN the current rank (0 to 1)
+    private _ratio = if (_isMax) then {1} else {
+        (((_xp - _floorXp) / (_nextXp - _floorXp)) max 0) min 1
+    };
+    private _percent = round (_ratio * 100);
 
-	//Get rank informations
-	_rankTexture = [_unit, "texture"] call BIS_fnc_rankParams;
-	_rankName = [_unit] call getPlayerRankCompleteName;
-	format ["<img image='%1' size='3'/><br/><br/><t size='1.5'>Your current rank is %2</t><br/><br/><t size='1.2'>Experience to the next rank  %3/%4</t>", _rankTexture, _rankName, _unitExperience, _unitExperienceNextFloor];
+    // Progress bar
+    private _segments = 10;
+    private _filled   = round (_ratio * _segments);
+    private _bar = "";
+    for "_i" from 1 to _segments do {
+        private _col = if (_i <= _filled) then {"0.2,0.8,0.3,1"} else {"0.25,0.25,0.25,0.8"};
+        _bar = _bar + format ["<img image='#(argb,8,8,3)color(%1)' size='0.8'/>", _col];
+    };
+
+    // Rank info
+    private _rankTexture = [_unit, "texture"] call BIS_fnc_rankParams;
+    private _rankName    = [_unit] call getPlayerRankCompleteName;
+
+    private _xpText = if (_isMax) then {
+        format ["%1 XP  -  <t color='#ffd700'>Maximum rank!</t>", _xp]
+    } else {
+        format ["%1 / %2 XP  (<t color='#7fdc8f'>%3%%</t>)", _xp, _nextXp, _percent]
+    };
+
+    format [
+        "<t align='center'>
+            <img image='%1' size='3.5'/><br/>
+            <t size='1.6' color='#ffd700' shadow='2'>%2</t><br/>
+            <t size='0.9' color='#aaaaaa'>CURRENT RANK</t><br/><br/>
+            %3<br/>
+            <t size='1'>%4</t>
+        </t>",
+        _rankTexture, _rankName, _bar, _xpText
+    ]
 };
 
 getDisplayableCurrentXPPerCat = {
