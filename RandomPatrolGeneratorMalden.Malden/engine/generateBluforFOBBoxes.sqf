@@ -439,17 +439,17 @@ publicvariable "TPFlag1";
 		[[_botHQ], 
 			{
 				params ["_botHQ"]; 
-				_botHQ addAction [format ["<img size='2' image='\a3\ui_f\data\IGUI\Cfg\holdactions\holdAction_passleadership_ca.paa'/><t size='1'>%1</t>", "Reset challenge weapon (75 credits)"],{
+				_botHQ addAction [format ["<img size='2' image='\a3\ui_f\data\IGUI\Cfg\holdactions\holdAction_passleadership_ca.paa'/><t size='1'>%1</t>", "Reset challenge weapon (150 credits)"],{
 					//Define parameters
 					params ["_object","_caller","_ID","_avalaibleVehicle"];
 
 					_hasClickChallenge = _caller getVariable ["RPG_hasClickChallengeWeapon", false];
 					_unlockCredit = profileNamespace getVariable ["RPG_UnlockCreditV2", 0];
 					
-					if (_hasClickChallenge && ( 75 <= _unlockCredit)) then 
+					if (_hasClickChallenge && ( 150 <= _unlockCredit)) then 
 					{
 						//Reduce credit
-						profileNamespace setVariable ["RPG_UnlockCreditV2", _unlockCredit-75];
+						profileNamespace setVariable ["RPG_UnlockCreditV2", _unlockCredit-150];
 
 						//Reset challenge
 						_caller setVariable ["RPG_hasClickChallengeWeapon", false, true]; //Comment for debug
