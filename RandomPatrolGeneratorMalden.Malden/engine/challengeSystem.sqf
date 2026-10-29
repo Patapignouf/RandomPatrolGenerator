@@ -73,17 +73,25 @@ SCR_challenge_pool = [
     // --- Tier 1: EASY ---
     ["warmUp",       "Warm-Up",         "Eliminate 5 enemy soldiers.",                                  "kills",       5,    0,  1],
     ["pathfinder",   "Pathfinder",      "Travel 3 km on foot. Vehicles do not count.",                  "distance",    3000, 0,  1],
+    ["buddyUp",       "Buddy System",       "Stay within 30 m of a teammate for 5 minutes.",            "stayClose",  300,  [30, 1], 1],
 
     // --- Tier 2: MEDIUM ---
     ["sharpshooter", "Sharpshooter",    "Eliminate 5 enemy soldiers from 100 m or more.",               "killFar",     5,    100, 2],
     ["closeQuarters","Close Quarters",  "Eliminate 4 enemy soldiers from 20 m or less.",                "killNear",    4,    20, 2],
     ["survivor",     "Survivor",        "Stay alive for 15 minutes. Time spent dead does not count.",   "survive",     900,  0,  2],
     ["veteran",      "Veteran",         "Eliminate 12 enemy soldiers.",                                 "kills",       12,   0,  2],
+    ["stickTogether", "Stick Together",     "Stay within 25 m of at least 2 teammates for 5 minutes.",           "stayClose",  300,  [25, 2], 2],
+    ["huntingParty",  "Hunting Party",      "Eliminate 6 enemy soldiers while a teammate is within 30 m.",       "teamKills",  6,    [30, 1], 2],
+    ["inFormation",   "In Formation",       "Travel 2 km on foot while staying within 25 m of a teammate.",      "teamMove",   2000, [25, 1], 2],
+
 
     // --- Tier 3: HARD ---
     ["vehicleHunter","Vehicle Hunter",  "Destroy 2 enemy vehicles.",                                    "vehicleKill", 2,    0,  3],
     ["killingSpree", "Killing Spree",   "Eliminate 3 enemy soldiers within 15 seconds.",                "streak",      3,    15, 3],
-    ["rampage",      "Rampage",         "Eliminate 6 enemy soldiers within 60 seconds.",                "streak",      6,    60, 3]
+    ["rampage",      "Rampage",         "Eliminate 6 enemy soldiers within 60 seconds.",                "streak",      6,    60, 3],
+    ["wolfPack",      "Wolf Pack",          "Your group eliminates 20 enemy soldiers together.",                 "groupKills", 20,   0,       3],
+    ["brothers",      "Band of Brothers",   "Stay within 20 m of at least 2 teammates for 10 minutes.",          "stayClose",  600,  [20, 2], 3],
+    ["assault",       "Coordinated Assault","Eliminate 10 enemy soldiers while 2 teammates are within 40 m.",    "teamKills",  10,   [40, 2], 3]
 ];
 
 // ----------------------------------------------------------------------------
@@ -95,10 +103,12 @@ SCR_fnc_challenge_formatProgress = {
     params ["_type", "_progress", "_goal"];
 
     switch (_type) do {
-        case "distance": {
+        case "distance";
+        case "teamMove": {
             format ["%1 / %2 m", round _progress, _goal]
         };
-        case "survive": {
+        case "survive";
+        case "stayClose": {
             format [
                 "%1 / %2",
                 [round _progress, "MM:SS"] call BIS_fnc_secondsToString,
@@ -244,9 +254,27 @@ SCR_fnc_challenge_accept = {
     SCR_challenge_current  = _definition;
     SCR_challenge_progress = 0;
     SCR_challenge_streak   = [];
+    SCR_challenge_offers   = [];
 
     systemChat format ["[Challenge] Accepted: %1. There is no turning back!", _definition select 1];
     [""] call SCR_fnc_challenge_updateHud;
+};
+
+// Count player alive around
+// Params: 0: NUMBER - rayon en mètres
+// Returns: NUMBER
+SCR_fnc_challenge_countMates = {
+    params [["_radius", 30]];
+
+    private _all = (units group player) + allPlayers;
+    _all = _all arrayIntersect _all; // supprime les doublons
+
+    count (_all select {
+        !(_x isEqualTo player)
+        && {alive _x}
+        && {side group _x isEqualTo side group player}
+        && {_x distance player <= _radius}
+    })
 };
 
 // ----------------------------------------------------------------------------
@@ -258,12 +286,16 @@ SCR_fnc_challenge_onKill = {
 
     if (SCR_challenge_current isEqualTo []) exitWith {};
 
-    // The real shooter is the instigator when available
+    // Le vrai tireur est l'instigateur quand il est disponible
     private _shooter = if (isNull _instigator) then { _killer } else { _instigator };
-    if !(_shooter isEqualTo player) exitWith {};
+    if (isNull _shooter) exitWith {};
     if (_victim isEqualTo player) exitWith {};
 
-    // Only enemies count
+    private _byPlayer = _shooter isEqualTo player;
+    private _byGroup  = _shooter in (units group player); // inclut le joueur
+    if !(_byGroup) exitWith {};
+
+    // Seuls les ennemis comptent
     private _victimSide = [_victim] call BIS_fnc_objectSide;
     if !(((side group player) getFriend _victimSide) < 0.6) exitWith {};
 
@@ -277,25 +309,36 @@ SCR_fnc_challenge_onKill = {
 
     switch (_type) do {
         case "kills": {
-            if (_isInfantry) then { [SCR_challenge_progress + 1] call SCR_fnc_challenge_setProgress };
+            if (_byPlayer && _isInfantry) then { [SCR_challenge_progress + 1] call SCR_fnc_challenge_setProgress };
         };
         case "killFar": {
-            if (_isInfantry && {_distance >= _parameter}) then { [SCR_challenge_progress + 1] call SCR_fnc_challenge_setProgress };
+            if (_byPlayer && _isInfantry && {_distance >= _parameter}) then { [SCR_challenge_progress + 1] call SCR_fnc_challenge_setProgress };
         };
         case "killNear": {
-            if (_isInfantry && {_distance <= _parameter}) then { [SCR_challenge_progress + 1] call SCR_fnc_challenge_setProgress };
+            if (_byPlayer && _isInfantry && {_distance <= _parameter}) then { [SCR_challenge_progress + 1] call SCR_fnc_challenge_setProgress };
         };
         case "vehicleKill": {
-            if (_isVehicle) then { [SCR_challenge_progress + 1] call SCR_fnc_challenge_setProgress };
+            if (_byPlayer && _isVehicle) then { [SCR_challenge_progress + 1] call SCR_fnc_challenge_setProgress };
         };
         case "streak": {
-            if (_isInfantry) then {
-                // Keep only the kills that happened inside the time window
+            if (_byPlayer && _isInfantry) then {
                 private _now = time;
                 SCR_challenge_streak pushBack _now;
                 SCR_challenge_streak = SCR_challenge_streak select { (_now - _x) <= _parameter };
                 [count SCR_challenge_streak] call SCR_fnc_challenge_setProgress;
             };
+        };
+        case "teamKills": {
+            if (_byPlayer && _isInfantry) then {
+                _parameter params ["_radius", "_minMates"];
+                if (([_radius] call SCR_fnc_challenge_countMates) >= _minMates) then {
+                    [SCR_challenge_progress + 1] call SCR_fnc_challenge_setProgress;
+                };
+            };
+        };
+        case "groupKills": {
+            // Le kill de n'importe quel membre du groupe compte
+            if (_isInfantry) then { [SCR_challenge_progress + 1] call SCR_fnc_challenge_setProgress };
         };
     };
 };
@@ -317,9 +360,11 @@ SCR_fnc_challenge_openBoard = {
     if (isNull _parent) exitWith {};
 
     // Pick one random challenge per tier
-    SCR_challenge_offers = [1, 2, 3] apply {
-        private _tier = _x;
-        selectRandom (SCR_challenge_pool select { (_x select 6) == _tier })
+    if (SCR_challenge_offers isEqualTo []) then {
+        SCR_challenge_offers = [1, 2, 3] apply {
+            private _tier = _x;
+            selectRandom (SCR_challenge_pool select { (_x select 6) == _tier })
+        };
     };
 
     // Create the display (the mouse cursor is shown automatically)
@@ -458,17 +503,32 @@ addMissionEventHandler ["EntityRespawned", {
         if (SCR_challenge_current isEqualTo [] || {!alive player}) then {
             _lastPos = [];
         } else {
-            switch (SCR_challenge_current select 3) do {
+            private _type      = SCR_challenge_current select 3;
+            private _parameter = SCR_challenge_current select 5;
+
+            switch (_type) do {
                 case "survive": {
                     [SCR_challenge_progress + 1] call SCR_fnc_challenge_setProgress;
                 };
-                case "distance": {
-                    // Only distance travelled on foot counts
-                    if (vehicle player isEqualTo player) then {
+                case "stayClose": {
+                    _parameter params ["_radius", "_minMates"];
+                    if (([_radius] call SCR_fnc_challenge_countMates) >= _minMates) then {
+                        [SCR_challenge_progress + 1] call SCR_fnc_challenge_setProgress;
+                    };
+                };
+                case "distance";
+                case "teamMove": {
+                    // Uniquement à pied, et groupé pour "teamMove"
+                    private _ok = vehicle player isEqualTo player;
+                    if (_ok && {_type isEqualTo "teamMove"}) then {
+                        _parameter params ["_radius", "_minMates"];
+                        _ok = ([_radius] call SCR_fnc_challenge_countMates) >= _minMates;
+                    };
+
+                    if (_ok) then {
                         private _pos = getPosATL player;
                         if !(_lastPos isEqualTo []) then {
                             private _delta = _lastPos distance2D _pos;
-                            // Ignore teleports / respawns
                             if (_delta < 20) then {
                                 [SCR_challenge_progress + _delta] call SCR_fnc_challenge_setProgress;
                             };
