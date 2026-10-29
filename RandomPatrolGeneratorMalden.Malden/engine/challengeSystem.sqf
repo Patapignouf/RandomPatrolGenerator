@@ -73,16 +73,16 @@ SCR_challenge_pool = [
     // --- Tier 1: EASY ---
     ["warmUp",       "Warm-Up",         "Eliminate 5 enemy soldiers.",                                  "kills",       5,    0,  1],
     ["pathfinder",   "Pathfinder",      "Travel 3 km on foot. Vehicles do not count.",                  "distance",    3000, 0,  1],
-    ["buddyUp",       "Buddy System",       "Stay within 30 m of a teammate for 5 minutes.",            "stayClose",  300,  [30, 1], 1],
+    ["buddyUp",       "Buddy System",   "Stay within 30 m of a teammate for 8 minutes.",                "stayClose",  480,  [30, 1], 1],
 
     // --- Tier 2: MEDIUM ---
     ["sharpshooter", "Sharpshooter",    "Eliminate 5 enemy soldiers from 100 m or more.",               "killFar",     5,    100, 2],
-    ["closeQuarters","Close Quarters",  "Eliminate 4 enemy soldiers from 20 m or less.",                "killNear",    4,    20, 2],
+    ["closeQuarters","Close Quarters",  "Eliminate 6 enemy soldiers from 20 m or less.",                "killNear",    6,    20, 2],
     ["survivor",     "Survivor",        "Stay alive for 15 minutes. Time spent dead does not count.",   "survive",     900,  0,  2],
     ["veteran",      "Veteran",         "Eliminate 12 enemy soldiers.",                                 "kills",       12,   0,  2],
-    ["stickTogether", "Stick Together",     "Stay within 25 m of at least 2 teammates for 5 minutes.",           "stayClose",  300,  [25, 2], 2],
-    ["huntingParty",  "Hunting Party",      "Eliminate 6 enemy soldiers while a teammate is within 30 m.",       "teamKills",  6,    [30, 1], 2],
-    ["inFormation",   "In Formation",       "Travel 2 km on foot while staying within 25 m of a teammate.",      "teamMove",   2000, [25, 1], 2],
+    ["stickTogether", "Stick Together", "Stay within 25 m of at least 2 teammates for 10 minutes.",     "stayClose",  600,  [25, 2], 2],
+    ["huntingParty",  "Hunting Party",  "Eliminate 6 enemy soldiers while a teammate is within 30 m.",  "teamKills",  6,    [30, 1], 2],
+    ["inFormation",   "In Formation",   "Travel 3 km on foot while staying within 25 m of a teammate.", "teamMove",   3000, [25, 1], 2],
 
 
     // --- Tier 3: HARD ---
@@ -90,7 +90,7 @@ SCR_challenge_pool = [
     ["killingSpree", "Killing Spree",   "Eliminate 3 enemy soldiers within 15 seconds.",                "streak",      3,    15, 3],
     ["rampage",      "Rampage",         "Eliminate 6 enemy soldiers within 60 seconds.",                "streak",      6,    60, 3],
     ["wolfPack",      "Wolf Pack",          "Your group eliminates 20 enemy soldiers together.",                 "groupKills", 20,   0,       3],
-    ["brothers",      "Band of Brothers",   "Stay within 20 m of at least 2 teammates for 10 minutes.",          "stayClose",  600,  [20, 2], 3],
+    ["brothers",      "Band of Brothers",   "Stay within 20 m of at least 2 teammates for 15 minutes.",          "stayClose",  900,  [20, 2], 3],
     ["assault",       "Coordinated Assault","Eliminate 10 enemy soldiers while 2 teammates are within 40 m.",    "teamKills",  10,   [40, 2], 3]
 ];
 
