@@ -107,9 +107,15 @@ doQTE = {
 		};
 	};
 
+	//Define a starting time before calling QTE
+	qte_startTimeReal = time;
+
 	// Keydown event handler
 	private _eh = _display displayAddEventHandler ["KeyDown", {
 		params ["_display", "_key", "_code", "_shift", "_ctrl", "_alt"];
+
+		//Add 0.25 sec safe time
+		if ((time - qte_startTimeReal) < 0.25) exitWith { false; };
 
 		if (qte_success || qte_failed) exitWith { false; };
 
