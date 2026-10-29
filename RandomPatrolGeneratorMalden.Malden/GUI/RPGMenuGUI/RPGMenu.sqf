@@ -44,8 +44,13 @@ if (missionNameSpace getVariable ["enableOpforWeaponShop",1] == 1) then
 
 //Add side task panel in RPG menu
 if ((missionNameSpace getVariable "enableChallengeMod") == 1) then 
-{
-	paramsToManageNow pushBack ["Text", "Current Side Task", format ["%1 : %2", player getVariable ["RPG_SideTaskType", "No task"], player getVariable ["RPG_SideTaskStatus", "None"]], {	}];
+{	
+	_type = "No task";
+	if (player getVariable ["RPG_SideTaskType", ""] != "") then 
+	{
+		_type = SCR_challenge_current#1;
+	};
+	paramsToManageNow pushBack ["Text", "Current Side Task", format ["%1 : %2", _type, player getVariable ["RPG_SideTaskStatus", "None"]], {	}];
 };
 
 
