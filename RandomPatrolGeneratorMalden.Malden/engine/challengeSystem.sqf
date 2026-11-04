@@ -38,6 +38,23 @@ SCR_challenge_initDone = true;
 SCR_challenge_autoPrompt      = true;  // Automatically ask the player once after joining
 SCR_challenge_autoPromptDelay = 15;    // Seconds to wait before the automatic prompt
 SCR_challenge_crateLifetime   = 600;   // Seconds before a reward crate is deleted
+SCR_challenge_teamTypes = [
+    "stayClose",
+    "teamKills",
+    "teamMove", 
+    "groupKills",
+    "healMates", 
+    "protectKills", 
+    "vehicleTeam", 
+    "holdArea", 
+    "noLoss", 
+    "groupStreak"
+];
+
+
+// Test if ACE medical has been enabled
+SCR_challenge_hasACE = isClass (configFile >> "CfgPatches" >> "ace_medical_treatment")
+    || {isClass (configFile >> "CfgPatches" >> "ace_medical")};
 
 // ----------------------------------------------------------------------------
 // State (do not edit)
@@ -46,6 +63,9 @@ SCR_challenge_current  = [];  // Active challenge definition, [] if none
 SCR_challenge_progress = 0;   // Progress of the active challenge
 SCR_challenge_streak   = [];  // Timestamps of recent kills (used by "streak" challenges)
 SCR_challenge_offers   = [];  // The three challenges currently offered by the board
+SCR_challenge_anchor = [];   // Position force challenge "holdArea"
+// Anti-abus : un même blessé ne compte qu'une fois toutes les 60 s
+SCR_challenge_healCooldowns = createHashMap;
 
 // ----------------------------------------------------------------------------
 // Tier data: [label, RGBA colour, reward name]
@@ -68,12 +88,22 @@ SCR_challenge_tierData = [
 //   "streak"      - Get <goal> kills within <parameter> seconds
 //   "distance"    - Travel <goal> metres on foot
 //   "survive"     - Stay alive for <goal> seconds (time spent dead is not counted)
+//   "stayClose"    - Stay <goal> seconds near teammates. parameter = [radius, minMates, (optional) minDistance]
+//   "healMates"    - Heal <goal> injured teammates
+//   "protectKills" - Kill <goal> infantry within [radius] of at least [minMates] teammates
+//   "vehicleTeam"  - Travel <goal> metres in a vehicle with <parameter> teammates aboard
+//   "holdArea"     - Stay <goal> seconds in the same spot with [radius, minMates]; leaving resets
+//   "noLoss"       - Kill <goal> infantry with the group; progress resets if a group member dies
+//   "groupStreak"  - Group gets <goal> kills within <parameter> seconds
 // ----------------------------------------------------------------------------
 SCR_challenge_pool = [
     // --- Tier 1: EASY ---
     ["warmUp",       "Warm-Up",         "Eliminate 5 enemy soldiers.",                                  "kills",       5,    0,  1],
     ["pathfinder",   "Pathfinder",      "Travel 3 km on foot. Vehicles do not count.",                  "distance",    3000, 0,  1],
     ["buddyUp",       "Buddy System",   "Stay within 30 m of a teammate for 8 minutes.",                "stayClose",  480,  [30, 1], 1],
+    ["fieldMedic",    "Field Medic",         "Heal 5 injured teammates.",                    "healMates",   5,    0,        1],
+    ["spacing",       "Tactical Spacing",    "Stay 10 to 40 m from a teammate for 8 minutes. Do not bunch up.",   "stayClose",   480,  [40, 1, 10], 1],
+
 
     // --- Tier 2: MEDIUM ---
     ["sharpshooter", "Sharpshooter",    "Eliminate 5 enemy soldiers from 100 m or more.",               "killFar",     5,    100, 2],
@@ -83,6 +113,11 @@ SCR_challenge_pool = [
     ["stickTogether", "Stick Together", "Stay within 25 m of at least 2 teammates for 10 minutes.",     "stayClose",  600,  [25, 2], 2],
     ["huntingParty",  "Hunting Party",  "Eliminate 6 enemy soldiers while a teammate is within 30 m.",  "teamKills",  6,    [30, 1], 2],
     ["inFormation",   "In Formation",   "Travel 3 km on foot while staying within 25 m of a teammate.", "teamMove",   3000, [25, 1], 2],
+    ["guardian",      "Guardian Angel",      "Eliminate 5 enemies within 30 m of a teammate.",                    "protectKills", 5,   [30, 1],  2],
+    ["shuttle",       "Shared Ride",         "Travel 3 km in a vehicle with at least 2 teammates on board.",      "vehicleTeam", 3000, 2,        2],
+    ["combatMedic",   "Combat Medic",        "Heal 10 injured teammates.",                               "healMates",   10,    0,        2],
+    ["holdLine",      "Hold the Line",       "Stay put with 2 teammates within 30 m for 5 minutes. Leaving resets progress.", "holdArea", 300, [30, 2], 2],
+
 
 
     // --- Tier 3: HARD ---
@@ -91,7 +126,11 @@ SCR_challenge_pool = [
     ["rampage",      "Rampage",         "Eliminate 6 enemy soldiers within 60 seconds.",                "streak",      6,    60, 3],
     ["wolfPack",      "Wolf Pack",          "Your group eliminates 20 enemy soldiers together.",                 "groupKills", 20,   0,       3],
     ["brothers",      "Band of Brothers",   "Stay within 20 m of at least 2 teammates for 15 minutes.",          "stayClose",  900,  [20, 2], 3],
-    ["assault",       "Coordinated Assault","Eliminate 10 enemy soldiers while 2 teammates are within 40 m.",    "teamKills",  10,   [40, 2], 3]
+    ["assault",       "Coordinated Assault","Eliminate 10 enemy soldiers while 2 teammates are within 40 m.",    "teamKills",  10,   [40, 2], 3],
+    ["flawless",      "Flawless Squad",      "Your group eliminates 12 enemies without losing a single member.",  "noLoss",      12,   0,        3],
+    ["syncStrike",    "Synchronised Strike", "Your group eliminates 5 enemies within 20 seconds.",                "groupStreak", 5,    20,       3],
+    ["ultraMedic",    "Ultra Medic",        "Heal 20 injured teammates.",                               "healMates",   20,    0,        3],
+    ["lastStand",     "Last Stand",          "Stay put with 3 teammates within 25 m for 10 minutes. Leaving resets progress.", "holdArea", 600, [25, 3], 3]
 ];
 
 // ----------------------------------------------------------------------------
@@ -104,11 +143,13 @@ SCR_fnc_challenge_formatProgress = {
 
     switch (_type) do {
         case "distance";
-        case "teamMove": {
+        case "teamMove";
+        case "vehicleTeam": {
             format ["%1 / %2 m", round _progress, _goal]
         };
         case "survive";
-        case "stayClose": {
+        case "stayClose";
+        case "holdArea": {
             format [
                 "%1 / %2",
                 [round _progress, "MM:SS"] call BIS_fnc_secondsToString,
@@ -119,6 +160,76 @@ SCR_fnc_challenge_formatProgress = {
             format ["%1 / %2", floor _progress, _goal]
         };
     }
+};
+
+// Soins reconnus comme "soins" côté ACE (pansements, médicaments, réanimation, perfusions, etc.)
+SCR_challenge_aceTreatments = [
+    "ACE_fieldDressing",
+    "ACE_packingBandage",
+    "ACE_elasticBandage",
+    "ACE_quikclot",
+    "ACE_splint",
+    "ACE_epinephrine",
+    "ACE_tourniquet",
+    "ACE_bloodIV_250",
+    "ACE_bloodIV_500",
+    "ACE_bloodIV"
+];
+
+// Valide un soin et fait progresser le défi (côté soigneur)
+// Params: 0: OBJECT - blessé
+SCR_fnc_challenge_registerHeal = {
+    params ["_injured"];
+
+    if (SCR_challenge_current isEqualTo []) exitWith {};
+    if !((SCR_challenge_current select 3) isEqualTo "healMates") exitWith {};
+
+    private _key  = netId _injured;
+    private _last = SCR_challenge_healCooldowns getOrDefault [_key, -1000];
+    if (time - _last < 60) exitWith {};
+
+    SCR_challenge_healCooldowns set [_key, time];
+    [SCR_challenge_progress + 1] call SCR_fnc_challenge_setProgress;
+};
+
+// --- Mode vanilla : appelée chez le soigneur via remoteExecCall ---
+SCR_fnc_challenge_onMateHealed = {
+    params [["_injured", objNull]];
+    [_injured] call SCR_fnc_challenge_registerHeal;
+};
+
+SCR_fnc_challenge_addHealHandler = {
+    params ["_unit"];
+
+    // Avec ACE, HandleHeal n'est pas utilisé : on ne l'ajoute pas
+    if (SCR_challenge_hasACE) exitWith {};
+
+    _unit addEventHandler ["HandleHeal", {
+        params ["_injured", "_healer"];
+
+        if (!(_healer isEqualTo _injured) && {isPlayer _healer} && {damage _injured > 0.05}) then {
+            [_injured] remoteExecCall ["SCR_fnc_challenge_onMateHealed", _healer];
+        };
+        false
+    }];
+};
+
+// --- Mode ACE : event local sur la machine du soigneur ---
+SCR_fnc_challenge_initACE = {
+    if (!SCR_challenge_hasACE) exitWith {};
+
+    ["ace_treatmentSucceded", {
+		params ["_caller", "_target", "_selectionName", "_className", "_itemUser", "_usedItem"];
+        // systemChat format ["tested : %1 currently", _usedItem];
+
+        if (_target isEqualTo _caller) exitWith {};            // pas d'auto-soin
+        if !(isPlayer _target) exitWith {};                   // seulement des joueurs
+        if !(side group _target isEqualTo side group _caller) exitWith {};
+        if !(_usedItem in SCR_challenge_aceTreatments) exitWith {};
+        // systemChat format ["tested : %1 success", _usedItem];
+
+        [_target] call SCR_fnc_challenge_registerHeal;
+    }] call CBA_fnc_addEventHandler;
 };
 
 // ----------------------------------------------------------------------------
@@ -264,16 +375,17 @@ SCR_fnc_challenge_accept = {
 // Params: 0: NUMBER - rayon en mètres
 // Returns: NUMBER
 SCR_fnc_challenge_countMates = {
-    params [["_radius", 30]];
+    params [["_radius", 30], ["_minDist", 0], ["_center", player]];
 
     private _all = (units group player) + allPlayers;
-    _all = _all arrayIntersect _all; // supprime les doublons
+    _all = _all arrayIntersect _all;
 
     count (_all select {
         !(_x isEqualTo player)
         && {alive _x}
         && {side group _x isEqualTo side group player}
-        && {_x distance player <= _radius}
+        && {_x distance _center <= _radius}
+        && {_x distance player >= _minDist}
     })
 };
 
@@ -285,6 +397,13 @@ SCR_fnc_challenge_onKill = {
     params ["_victim", "_killer", "_instigator"];
 
     if (SCR_challenge_current isEqualTo []) exitWith {};
+
+    // Un membre du groupe meurt : le défi "noLoss" repart de zéro
+    if ((SCR_challenge_current select 3) isEqualTo "noLoss" && {(group _victim) isEqualTo (group player)}) exitWith {
+        SCR_challenge_progress = 0;
+        [""] call SCR_fnc_challenge_updateHud;
+        systemChat "[Challenge] A teammate has fallen... progress reset.";
+    };
 
     // Le vrai tireur est l'instigateur quand il est disponible
     private _shooter = if (isNull _instigator) then { _killer } else { _instigator };
@@ -319,6 +438,26 @@ SCR_fnc_challenge_onKill = {
         };
         case "vehicleKill": {
             if (_byPlayer && _isVehicle) then { [SCR_challenge_progress + 1] call SCR_fnc_challenge_setProgress };
+        };
+        case "protectKills": {
+            // Le kill compte si l'ennemi était proche d'un ou plusieurs coéquipiers
+            if (_byPlayer && _isInfantry) then {
+                _parameter params ["_radius", "_minMates"];
+                if (([_radius, 0, _victim] call SCR_fnc_challenge_countMates) >= _minMates) then {
+                    [SCR_challenge_progress + 1] call SCR_fnc_challenge_setProgress;
+                };
+            };
+        };
+        case "noLoss": {
+            if (_isInfantry) then { [SCR_challenge_progress + 1] call SCR_fnc_challenge_setProgress };
+        };
+        case "groupStreak": {
+            if (_isInfantry) then {
+                private _now = time;
+                SCR_challenge_streak pushBack _now;
+                SCR_challenge_streak = SCR_challenge_streak select { (_now - _x) <= _parameter };
+                [count SCR_challenge_streak] call SCR_fnc_challenge_setProgress;
+            };
         };
         case "streak": {
             if (_byPlayer && _isInfantry) then {
@@ -361,9 +500,16 @@ SCR_fnc_challenge_openBoard = {
 
     // Pick one random challenge per tier
     if (SCR_challenge_offers isEqualTo []) then {
+        private _teamTier = selectRandom [1, 2, 3];
+
         SCR_challenge_offers = [1, 2, 3] apply {
             private _tier = _x;
-            selectRandom (SCR_challenge_pool select { (_x select 6) == _tier })
+            private _list = SCR_challenge_pool select { (_x select 6) == _tier };
+
+            if (_tier == _teamTier) then {
+                _list = _list select { (_x select 3) in SCR_challenge_teamTypes };
+            };
+            selectRandom _list
         };
     };
 
@@ -473,9 +619,15 @@ addMissionEventHandler ["EntityKilled", {
 addMissionEventHandler ["EntityRespawned", {
     params ["_newEntity"];
     if (_newEntity isEqualTo player) then {
-        [_newEntity] call SCR_fnc_challenge_addAction;
+//        [_newEntity] call SCR_fnc_challenge_addAction;
+        [_newEntity] call SCR_fnc_challenge_addHealHandler;
     };
 }];
+
+[] spawn {
+    waitUntil { !isNull player };
+    [player] call SCR_fnc_challenge_addHealHandler;           // <-- nouveau
+};
 
 // Add the action to the initial unit and optionally prompt the player once
 // [] spawn {
@@ -502,6 +654,7 @@ addMissionEventHandler ["EntityRespawned", {
 
         if (SCR_challenge_current isEqualTo [] || {!alive player}) then {
             _lastPos = [];
+            SCR_challenge_anchor = [];
         } else {
             private _type      = SCR_challenge_current select 3;
             private _parameter = SCR_challenge_current select 5;
@@ -510,26 +663,63 @@ addMissionEventHandler ["EntityRespawned", {
                 case "survive": {
                     [SCR_challenge_progress + 1] call SCR_fnc_challenge_setProgress;
                 };
+
                 case "stayClose": {
-                    _parameter params ["_radius", "_minMates"];
-                    if (([_radius] call SCR_fnc_challenge_countMates) >= _minMates) then {
+                    _parameter params ["_radius", "_minMates", ["_minDist", 0]];
+                    if (([_radius, _minDist] call SCR_fnc_challenge_countMates) >= _minMates) then {
                         [SCR_challenge_progress + 1] call SCR_fnc_challenge_setProgress;
                     };
                 };
+
+                case "holdArea": {
+                    _parameter params ["_radius", "_minMates"];
+                    private _mates = [_radius] call SCR_fnc_challenge_countMates;
+
+                    if (SCR_challenge_anchor isEqualTo []) then {
+                        // La zone est fixée dès que l'équipe est réunie
+                        if (_mates >= _minMates) then { SCR_challenge_anchor = getPosATL player };
+                    } else {
+                        if (player distance2D SCR_challenge_anchor > _radius) then {
+                            // Le joueur a quitté la zone : on recommence
+                            SCR_challenge_anchor = [];
+                            SCR_challenge_progress = 0;
+                            [""] call SCR_fnc_challenge_updateHud;
+                        } else {
+                            if (_mates >= _minMates) then {
+                                [SCR_challenge_progress + 1] call SCR_fnc_challenge_setProgress;
+                            };
+                        };
+                    };
+                };
+
                 case "distance";
-                case "teamMove": {
-                    // Uniquement à pied, et groupé pour "teamMove"
-                    private _ok = vehicle player isEqualTo player;
-                    if (_ok && {_type isEqualTo "teamMove"}) then {
-                        _parameter params ["_radius", "_minMates"];
-                        _ok = ([_radius] call SCR_fnc_challenge_countMates) >= _minMates;
+                case "teamMove";
+                case "vehicleTeam": {
+                    private _veh   = vehicle player;
+                    private _onFoot = _veh isEqualTo player;
+                    private _ok    = false;
+                    private _max   = 20;
+
+                    switch (_type) do {
+                        case "distance": { _ok = _onFoot };
+                        case "teamMove": {
+                            _parameter params ["_radius", "_minMates"];
+                            _ok = _onFoot && {([_radius] call SCR_fnc_challenge_countMates) >= _minMates};
+                        };
+                        case "vehicleTeam": {
+                            _max = 100; // les véhicules vont vite
+                            private _crew = (crew _veh) select {
+                                !(_x isEqualTo player) && {alive _x} && {side group _x isEqualTo side group player}
+                            };
+                            _ok = !_onFoot && {count _crew >= _parameter};
+                        };
                     };
 
                     if (_ok) then {
-                        private _pos = getPosATL player;
+                        private _pos = getPosATL _veh;
                         if !(_lastPos isEqualTo []) then {
                             private _delta = _lastPos distance2D _pos;
-                            if (_delta < 20) then {
+                            if (_delta < _max) then {
                                 [SCR_challenge_progress + _delta] call SCR_fnc_challenge_setProgress;
                             };
                         };
