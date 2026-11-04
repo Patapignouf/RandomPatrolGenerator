@@ -5,13 +5,13 @@
 _display = (findDisplay 46) createDisplay "RscDisplayEmpty";
 
 _backGround = _display ctrlCreate[ "ctrlStaticPicture", -1 ];
-_backGround ctrlSetPosition[ 0, 0, 0.75, 0.75 ];
+_backGround ctrlSetPosition[ 0, 0, 0.80, 0.75 ];
 _backGround ctrlSetText "#(argb,8,8,3)color(0.35,0.35,0.35,1)";
 _backGround ctrlCommit 0;
 
 _RcsTitleDialog = _display ctrlCreate ["RscText", -1];
 _RcsTitleDialog ctrlSetText (format ["Rank manager for %1", name player]);
-_RcsTitleDialog ctrlSetPosition[ 0, 0, 0.75, 0.04 ];
+_RcsTitleDialog ctrlSetPosition[ 0, 0, 0.80, 0.04 ];
 _RcsTitleDialog ctrlSetBackgroundColor [0.8,0.5,0,1];
 _RcsTitleDialog ctrlSetTextColor [1, 1, 1, 1];
 _RcsTitleDialog ctrlCommit 0;
