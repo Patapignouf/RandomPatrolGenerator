@@ -253,6 +253,13 @@ fnc_selectMissionGui = {
                             [objNull, [], blufor] execVM 'engine\objectiveManagement\revealObjective.sqf';
                         };
 
+                        //50% chance spawn FOB
+                        if (random 100 < 50) then 
+                        {
+                            //Generate opfor FOB in campaign mode
+                            [] call doGenerateFOBOrDestroyer;                       
+                        };
+
                         //End mission after the generated one
                         if (_isLastMission) then 
                         {

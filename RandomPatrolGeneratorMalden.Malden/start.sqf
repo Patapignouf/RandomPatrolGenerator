@@ -7,6 +7,7 @@
 #include "engine\modManager.sqf"
 #include "GUI\botteamGUI\botteamFunctions.sqf"
 #include "enemyManagement\behaviorEngine\unitsBehaviorFunctions.sqf"
+#include "enemyManagement\generationEngine\opforFunction.sqf"
 #include "engine\hintManagement\customDialog.sqf"
 #include "GUI\scoreBoardGUI\scoreFunctions.sqf"
 #include "database\factionParameters.sqf"
@@ -1430,141 +1431,115 @@ if (enableCampaignMode) then
 
 
 	//Loop until maximum number of possible objective are generated
-	while {sleep 10; ((!_maxObjectivesGenerated)&&(missionNameSpace getVariable ["campaignExtended",0] == 0))} do 
+	if (missionNameSpace getVariable ["campaignExtended",0] == 0) then 
 	{
-		//Is an objective been completed ?
-		if (_objectiveCompletedCounter == floor ((count ((missionNamespace getVariable ["completedObjectives",[]]) + (missionNamespace getVariable ["missionFailedObjectives",[]])))/_numberOfObjectivePerLocation)) then 
+		while {sleep 10; (!_maxObjectivesGenerated)} do 
 		{
-			//Do nothing
-			sleep 30;
-
-		} else 
-		{
-			//Randomize opforFaction if needed
-			if (missionNameSpace getVariable "opforFactionRandomizer" == 1) then 
+			//Is an objective been completed ?
+			if (_objectiveCompletedCounter == floor ((count ((missionNamespace getVariable ["completedObjectives",[]]) + (missionNamespace getVariable ["missionFailedObjectives",[]])))/_numberOfObjectivePerLocation)) then 
 			{
-				opFaction = selectRandom (factionInfos select {_x#4 && !(["air", _x#1] call BIS_fnc_inString) && !(["usaf", _x#1] call BIS_fnc_inString) && !(["_usn", _x#1] call BIS_fnc_inString) && !(["_AA", _x#1] call BIS_fnc_inString)})#1;
-				missionNamespace setVariable ["opforFaction", opFaction, true];
-				checkFinishOpforFaction = false;
+				//Do nothing
+				sleep 30;
 
-				_execFaction = [] execVM 'database\object_db\factionAutomaticExtractor.sqf';
-				waitUntil {isNull _execFaction};
-				waitUntil {checkFinishFaction};
-
-				[opFaction] call parseOpforFaction;
-				waitUntil {checkFinishOpforFaction};
-
-				//Wait initEnvironnement
-				_handleEnvironmentInitialization2 = [] execVM 'initEnvironment.sqf'; 
-				waitUntil {isNull _handleEnvironmentInitialization2};
-				waitUntil {checkfinish};
-
-				baseEnemyMortarGroup = baseEnemyMortarGroup_db select {_x select 1  == opFaction} select 0 select 0;
-				baseEnemyVehicleGroup = baseEnemyVehicleGroup_db select {_x select 1  == opFaction} select 0 select 0;
-				baseEnemyTurretGroup = ((baseEnemyTurretGroup_db select {_x#1  == opFaction})#0)#0;
-				baseEnemyLightArmoredVehicleGroup = baseEnemyLightArmoredVehicleGroup_db select {_x select 1  == opFaction} select 0 select 0;
-				baseEnemyHeavyArmoredVehicleGroup = baseEnemyHeavyArmoredVehicleGroup_db select {_x select 1  == opFaction} select 0 select 0;
-				baseEnemyUnarmedChopperGroup = baseEnemyUnarmedChopperGroup_db select {_x select 1  == opFaction} select 0 select 0;
-				baseEnemyArmedChopperGroup = baseEnemyArmedChopperGroup_db select {_x select 1  == opFaction} select 0 select 0;
-				baseFixedWingGroup = baseFixedWingGroup_db select {_x select 1  == opFaction} select 0 select 0;
-				baseEnemyFixedWingTransport = enemyFixedWingTransport_db select {_x select 1  == opFaction} select 0 select 0;
-			};
-
-			//Randomize objective locations or not
-			if (missionNameSpace getVariable ["campaignExtended",0] == 0) then 
+			} else 
 			{
-				switch (NeedToRandomizePOI) do
+				//Randomize opforFaction if needed
+				if (missionNameSpace getVariable "opforFactionRandomizer" == 1) then 
 				{
-					//Classic order
-					case 0:
+					opFaction = selectRandom (factionInfos select {_x#4 && !(["air", _x#1] call BIS_fnc_inString) && !(["usaf", _x#1] call BIS_fnc_inString) && !(["_usn", _x#1] call BIS_fnc_inString) && !(["_AA", _x#1] call BIS_fnc_inString)})#1;
+					missionNamespace setVariable ["opforFaction", opFaction, true];
+					checkFinishOpforFaction = false;
+
+					_execFaction = [] execVM 'database\object_db\factionAutomaticExtractor.sqf';
+					waitUntil {isNull _execFaction};
+					waitUntil {checkFinishFaction};
+
+					[opFaction] call parseOpforFaction;
+					waitUntil {checkFinishOpforFaction};
+
+					//Wait initEnvironnement
+					_handleEnvironmentInitialization2 = [] execVM 'initEnvironment.sqf'; 
+					waitUntil {isNull _handleEnvironmentInitialization2};
+					waitUntil {checkfinish};
+
+					baseEnemyMortarGroup = baseEnemyMortarGroup_db select {_x select 1  == opFaction} select 0 select 0;
+					baseEnemyVehicleGroup = baseEnemyVehicleGroup_db select {_x select 1  == opFaction} select 0 select 0;
+					baseEnemyTurretGroup = ((baseEnemyTurretGroup_db select {_x#1  == opFaction})#0)#0;
+					baseEnemyLightArmoredVehicleGroup = baseEnemyLightArmoredVehicleGroup_db select {_x select 1  == opFaction} select 0 select 0;
+					baseEnemyHeavyArmoredVehicleGroup = baseEnemyHeavyArmoredVehicleGroup_db select {_x select 1  == opFaction} select 0 select 0;
+					baseEnemyUnarmedChopperGroup = baseEnemyUnarmedChopperGroup_db select {_x select 1  == opFaction} select 0 select 0;
+					baseEnemyArmedChopperGroup = baseEnemyArmedChopperGroup_db select {_x select 1  == opFaction} select 0 select 0;
+					baseFixedWingGroup = baseFixedWingGroup_db select {_x select 1  == opFaction} select 0 select 0;
+					baseEnemyFixedWingTransport = enemyFixedWingTransport_db select {_x select 1  == opFaction} select 0 select 0;
+				};
+
+				//Randomize objective locations or not
+				if (missionNameSpace getVariable ["campaignExtended",0] == 0) then 
+				{
+					switch (NeedToRandomizePOI) do
 					{
-						[avalaibleTypeOfObj, [PossibleObjectivePosition#0], _numberOfObjectivePerLocation] call generateObjectives;
-						PossibleObjectivePosition = PossibleObjectivePosition - [PossibleObjectivePosition#0];
-					};
-					//Random order
-					case 1:
-					{
-						_selectedRandomObjective = selectRandom PossibleObjectivePosition;
-						[avalaibleTypeOfObj, [_selectedRandomObjective], _numberOfObjectivePerLocation] call generateObjectives;
-						PossibleObjectivePosition = PossibleObjectivePosition - [_selectedRandomObjective];
-					};
-					//Closest objective
-					case 2:
-					{
-						//Check if it's the first objective to be generated
-						if (count MissionObjectives == 0 ) then 
-						{	
-							//Case where this is the first objective
-							//Generate objective at first position
-							_randomSelectedObjective = selectRandom PossibleObjectivePosition;
-							[avalaibleTypeOfObj, [_randomSelectedObjective], _numberOfObjectivePerLocation] call generateObjectives;
-							PossibleObjectivePosition = PossibleObjectivePosition - [_randomSelectedObjective];
-						} else 
+						//Classic order
+						case 0:
 						{
-							//Else generate at the closest position location
-							if (count PossibleObjectivePosition != 0) then 
+							[avalaibleTypeOfObj, [PossibleObjectivePosition#0], _numberOfObjectivePerLocation] call generateObjectives;
+							PossibleObjectivePosition = PossibleObjectivePosition - [PossibleObjectivePosition#0];
+						};
+						//Random order
+						case 1:
+						{
+							_selectedRandomObjective = selectRandom PossibleObjectivePosition;
+							[avalaibleTypeOfObj, [_selectedRandomObjective], _numberOfObjectivePerLocation] call generateObjectives;
+							PossibleObjectivePosition = PossibleObjectivePosition - [_selectedRandomObjective];
+						};
+						//Closest objective
+						case 2:
+						{
+							//Check if it's the first objective to be generated
+							if (count MissionObjectives == 0 ) then 
+							{	
+								//Case where this is the first objective
+								//Generate objective at first position
+								_randomSelectedObjective = selectRandom PossibleObjectivePosition;
+								[avalaibleTypeOfObj, [_randomSelectedObjective], _numberOfObjectivePerLocation] call generateObjectives;
+								PossibleObjectivePosition = PossibleObjectivePosition - [_randomSelectedObjective];
+							} else 
 							{
-								_selectedPosition = [(MissionObjectives#-1)#3, PossibleObjectivePosition] call getClosest;
-								[avalaibleTypeOfObj, [_selectedPosition], _numberOfObjectivePerLocation] call generateObjectives;
-								PossibleObjectivePosition = PossibleObjectivePosition - [_selectedPosition];
+								//Else generate at the closest position location
+								if (count PossibleObjectivePosition != 0) then 
+								{
+									_selectedPosition = [(MissionObjectives#-1)#3, PossibleObjectivePosition] call getClosest;
+									[avalaibleTypeOfObj, [_selectedPosition], _numberOfObjectivePerLocation] call generateObjectives;
+									PossibleObjectivePosition = PossibleObjectivePosition - [_selectedPosition];
+								};
 							};
 						};
 					};
 				};
-			};
 
 
-			//Generate opfor FOB in campaign mode
-			if (random 100<25) then {
-
-				//50% chance to generate destroyer or FOB
-				if (random 100 <50) then 
-				{
-					_destroyerProb = 100;
-					if (missionNameSpace getVariable ["enableDestroyerFOB", 1] == 1) then 
-					{
-						_destroyerProb = 50; 
-					};
-					if (missionNameSpace getVariable ["enableDestroyerFOB", 1] == 2) then 
-					{
-						_destroyerProb = 0; 
-					};
-
-					if (random 100 < (0+_destroyerProb)) then 
-					{
-						[] execVM 'enemyManagement\generationEngine\generateOpforFOB.sqf';
-
-					} else 
-					{
-						//Add opfor destroyer
-						_resultSearchLoc =  [] call searchLocationWithWaterDepth;
-						if (_resultSearchLoc#1) then 
-						{
-							_pos = _resultSearchLoc#0;
-							if (400 < initBlueforLocation distance _pos) then //Spawn at least at 400m from blufor
-							{
-								[_pos] execVM 'enemyManagement\generationEngine\generateDestroyer.sqf';
-							};
-						};
-					};	
+				//Generate opfor FOB in campaign mode
+				//25% Chance
+				if (random 100<25) then {
+					[] call doGenerateFOBOrDestroyer;
 				};
-			};
 
-			//Reveal objective to the player
-			if (startIntel == 2) then 
-			{
-				for [{_i = 0}, {_i < maxObjectivesGeneratedSetting}, {_i = _i + 1}] do //Peut être optimisé
+				//Reveal objective to the player
+				if (startIntel == 2) then 
 				{
-					[objNull, [], _mainPlayerSide] execVM 'engine\objectiveManagement\revealObjective.sqf';
+					for [{_i = 0}, {_i < maxObjectivesGeneratedSetting}, {_i = _i + 1}] do //Peut être optimisé
+					{
+						[objNull, [], _mainPlayerSide] execVM 'engine\objectiveManagement\revealObjective.sqf';
+					};
 				};
+
+				//Update objective complete counter
+				_objectiveCompletedCounter = floor ((count ((missionNamespace getVariable ["completedObjectives",[]]) + (missionNamespace getVariable ["missionFailedObjectives",[]])))/_numberOfObjectivePerLocation);
 			};
 
-			//Update objective complete counter
-			_objectiveCompletedCounter = floor ((count ((missionNamespace getVariable ["completedObjectives",[]]) + (missionNamespace getVariable ["missionFailedObjectives",[]])))/_numberOfObjectivePerLocation);
+
+			//Check if there is always avalaible position for new objective
+			_maxObjectivesGenerated = ((count PossibleObjectivePosition) == 0) || (maxObjectivesGeneratedSetting == count MissionObjectives);
 		};
-
-
-		//Check if there is always avalaible position for new objective
-		_maxObjectivesGenerated = ((count PossibleObjectivePosition) == 0) || (maxObjectivesGeneratedSetting == count MissionObjectives);
 	};
+
 };
