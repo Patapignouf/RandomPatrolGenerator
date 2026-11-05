@@ -163,17 +163,18 @@ SCR_fnc_challenge_formatProgress = {
 };
 
 // Soins reconnus comme "soins" côté ACE (pansements, médicaments, réanimation, perfusions, etc.)
+//Count only bandage
 SCR_challenge_aceTreatments = [
     "ACE_fieldDressing",
     "ACE_packingBandage",
     "ACE_elasticBandage",
     "ACE_quikclot",
-    "ACE_splint",
-    "ACE_epinephrine",
-    "ACE_tourniquet",
-    "ACE_bloodIV_250",
-    "ACE_bloodIV_500",
-    "ACE_bloodIV"
+    "ACE_splint"
+    // "ACE_epinephrine",
+    // "ACE_tourniquet",
+    // "ACE_bloodIV_250",
+    // "ACE_bloodIV_500",
+    // "ACE_bloodIV"
 ];
 
 // Valide un soin et fait progresser le défi (côté soigneur)
