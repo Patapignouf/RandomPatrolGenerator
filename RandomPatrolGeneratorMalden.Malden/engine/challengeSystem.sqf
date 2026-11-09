@@ -215,6 +215,36 @@ SCR_fnc_challenge_addHealHandler = {
     }];
 };
 
+//Reset side task on respawn
+SCR_fnc_challenge_addRespawnHandler = {
+    params ["_unit"];
+
+    // Avec ACE, HandleHeal n'est pas utilisé : on ne l'ajoute pas
+    //if (SCR_challenge_hasACE) exitWith {};
+
+    private _respawnEH = _unit addEventHandler ["Respawn",{ 
+        params ["_unit", "_corpse"];
+
+        //Reset side task
+        //_unit = player;
+        private _hasChallenge = false;
+        if (count SCR_challenge_current != 0) then 
+        {
+            SCR_challenge_current = [];
+            _unit setVariable ["RPG_SideTaskType", ""];
+            _hasChallenge = true;
+        };
+
+        //Inform player 
+        if (_hasChallenge) then 
+        {
+			[[format ["Your side task has been reset due to respawn"], "intel"], 'engine\hintManagement\addCustomHint.sqf'] remoteExec ['BIS_fnc_execVM', _unit];
+        };
+    }];
+};
+
+
+
 // --- Mode ACE : event local sur la machine du soigneur ---
 SCR_fnc_challenge_initACE = {
     if (!SCR_challenge_hasACE) exitWith {};
@@ -541,7 +571,7 @@ SCR_fnc_challenge_openBoard = {
     // Question
     private _questionCtrl = _display ctrlCreate ["RscStructuredText", -1];
     _questionCtrl ctrlSetPosition [_x0 + _pad, _y0 + 0.075 * safeZoneH, _innerW, 0.08 * safeZoneH];
-    _questionCtrl ctrlSetStructuredText parseText "<t align='center'>Would you like to take on a challenge?</t><br/><t align='center' size='0.85' color='#FF9999'>Choose carefully: once accepted, you must complete it.</t>";
+    _questionCtrl ctrlSetStructuredText parseText "<t align='center'>Would you like to take on a challenge?</t><br/><t align='center' size='0.85' color='#FF9999'>Choose carefully: once accepted, you must complete it. Dying will cancel the task.</t>";
     _questionCtrl ctrlCommit 0;
 
     // One card per offered challenge: a button (title) and a text (description + reward)
@@ -628,6 +658,7 @@ addMissionEventHandler ["EntityRespawned", {
 [] spawn {
     waitUntil { !isNull player };
     [player] call SCR_fnc_challenge_addHealHandler;           // <-- nouveau
+    [player] call SCR_fnc_challenge_addRespawnHandler;
 };
 
 // Add the action to the initial unit and optionally prompt the player once
