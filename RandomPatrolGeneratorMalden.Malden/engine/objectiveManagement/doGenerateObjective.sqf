@@ -1036,6 +1036,9 @@ generateObjectiveObject =
 					{
 						//Add penalty
 						[{[-50,3] call doUpdateRankWithPenalty}] remoteExec ["call", _instigator];
+
+						//Inform other players
+						[[_instigator], {params ["_instigator"]; ["STR_RPG_HC_NAME", "STR_RPG_HC_VIPKILL", name _instigator] call doDialog}] remoteExec ["spawn", side _instigator]; 
 					};
 
 					//Manage objective
