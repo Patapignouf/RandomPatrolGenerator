@@ -255,6 +255,7 @@ SCR_fnc_challenge_initACE = {
 
         if (_target isEqualTo _caller) exitWith {};            // pas d'auto-soin
         if !(isPlayer _target) exitWith {};                   // seulement des joueurs
+        if !(isPlayer _caller) exitWith {};                   // seulement des joueurs
         if !(side group _target isEqualTo side group _caller) exitWith {};
         if !(_usedItem in SCR_challenge_aceTreatments) exitWith {};
         // systemChat format ["tested : %1 success", _usedItem];
@@ -652,12 +653,14 @@ addMissionEventHandler ["EntityRespawned", {
     if (_newEntity isEqualTo player) then {
 //        [_newEntity] call SCR_fnc_challenge_addAction;
         [_newEntity] call SCR_fnc_challenge_addHealHandler;
-    };
+        [_newEntity] call SCR_fnc_challenge_initACE;   //Ace handler
+    }; 
 }];
 
 [] spawn {
     waitUntil { !isNull player };
-    [player] call SCR_fnc_challenge_addHealHandler;           // <-- nouveau
+    [player] call SCR_fnc_challenge_addHealHandler; //Standard handler 
+    [player] call SCR_fnc_challenge_initACE;   //Ace handler
     [player] call SCR_fnc_challenge_addRespawnHandler;
 };
 
