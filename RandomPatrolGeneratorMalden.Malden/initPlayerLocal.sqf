@@ -444,6 +444,7 @@ if !(isClass (configFile >> "CfgPatches" >> "ace_medical")) then
 //Init player respawn ticket
 [player, -1, true] call BIS_fnc_respawnTickets;
 
+
 //Corpse manager
 _respawnEH = player addEventHandler ["Respawn",{ 
 	params ["_unit", "_corpse"];
@@ -839,6 +840,11 @@ if (isClass (configFile >> "CfgPatches" >> "ace_medical")) then
 	[player] call BIS_fnc_disableRevive;
 };
 
+//Init accuracy manager 
+if (missionNameSpace getVariable ["enableAccuracyTrack", 1] == 1) then 
+{	
+	execVM "engine\accuracyManager.sqf";
+};
 
 
 //Generate civilian dialogs

@@ -48,7 +48,7 @@ if ((missionNameSpace getVariable "enableChallengeMod") == 1) then
 	_type = "No task";
 	if (player getVariable ["RPG_SideTaskType", ""] != "") then 
 	{
-		_type = SCR_challenge_current#1;
+		_type = [(SCR_challenge_current)] call SCR_fnc_challenge_getTitle;
 	};
 	paramsToManageNow pushBack ["Text", "Current Side Task", format ["%1 : %2", _type, player getVariable ["RPG_SideTaskStatus", "None"]], {	}];
 };
@@ -140,6 +140,16 @@ if (_currentTask != "") then
 {
  	_currentTaskName = "Nothing assigned";
 	_currentTaskDirectionText = "Unknown";
+};
+
+
+//Add side task panel in RPG menu
+if (missionNameSpace getVariable ["enableAccuracyTrack", 1] == 1) then 
+{	
+	private _type = "No stats";
+	private _acc = player getVariable ["RPG_Accuracy", 0];
+
+	paramsToManageNow pushBack ["Text", "Accuracy", format ["%1 %%",  _acc], {	}];
 };
 
 	

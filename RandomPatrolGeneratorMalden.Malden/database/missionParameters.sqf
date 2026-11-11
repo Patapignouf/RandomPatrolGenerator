@@ -720,6 +720,19 @@ enableChallengeModParam =
 	"Arcade only"
 ];
 
+enableAccuracyTrackParam = 
+[
+	[	
+		[0, "Disable"],
+		[1, "Enable (default)"]
+	],
+	"Enable accuracy tracking",
+	1,
+	"enableAccuracyTrack",
+	"Arcade only"
+];
+
+
 vehicleLockedDefaultParam = 
 [
 	[	
@@ -1202,7 +1215,8 @@ baseParamsToManage = [
 	enableFurnitureParam, 
 	linkXPWithTokenParam, 
 	playerCounterSectorControlParam,
-	showScoreOnMissionCompleteParam
+	showScoreOnMissionCompleteParam,
+	enableAccuracyTrackParam
 ];
 
 //Make one list by dedicated menu
@@ -1213,6 +1227,7 @@ baseGameParamToManage = [
 	linkXPWithTokenParam, 
 	xpDisplayParam, 
 	enableChallengeModParam, 
+	enableAccuracyTrackParam,
 	rewardModeParam, 
 
 	//Shop related
