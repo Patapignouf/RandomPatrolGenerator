@@ -2961,4 +2961,825 @@
         <Japanese>独立勢力または市民の拠点を支援してください。部隊に割り当てられたタスクを完了してミッションを終了させます。</Japanese>
     </Key>
 </Container>
+<Package name="Challenges">
+         <!-- ============ Interface ============ -->
+         <Key ID="STR_RPG_Challenge_Hud_Title">
+             <English>CHALLENGE</English>
+             <French>DÉFI</French>
+             <Spanish>RETO</Spanish>
+             <German> HERAUSFORDERUNG</German>
+             <Italian>SFIDA</Italian>
+             <Russian>ИСПЫТАНИЕ</Russian>
+             <Chinese>挑战</Chinese>
+             <Japanese>チャレンジ</Japanese>
+         </Key>
+         <Key ID="STR_RPG_Challenge_Hud_Complete">
+             <English>CHALLENGE COMPLETE</English>
+             <French>DÉFI RÉUSSI</French>
+             <Spanish>RETO COMPLETADO</Spanish>
+             <German>HERAUSFORDERUNG ABGESCHLOSSEN</German>
+             <Italian>SFIDA COMPLETATA</Italian>
+             <Russian>ИСПЫТАНИЕ ЗАВЕРШЕНО</Russian>
+             <Chinese>挑战完成</Chinese>
+             <Japanese>チャレンジ完了</Japanese>
+         </Key>
+         <Key ID="STR_RPG_Challenge_Hud_Failed">
+             <English>CHALLENGE FAILED</English>
+             <French>DÉFI ÉCHOUÉ</French>
+             <Spanish>RETO FALLIDO</Spanish>
+             <German>HERAUSFORDERUNG FEHLGESCHLAGEN</German>
+             <Italian>SFIDA FALLITA</Italian>
+             <Russian>ИСПЫТАНИЕ ПРОВАЛЕНО</Russian>
+             <Chinese>挑战失败</Chinese>
+             <Japanese>チャレンジ失敗</Japanese>
+         </Key>
+         <Key ID="STR_RPG_Challenge_Board_Title">
+             <English>CHALLENGE BOARD</English>
+             <French>TABLEAU DES DÉFIS</French>
+             <Spanish>TABLERO DE RETOS</Spanish>
+             <German>HERAUSFORDERUNGSTAFEL</German>
+             <Italian>TABELLA DELLE SFIDE</Italian>
+             <Russian>ДОСКА ИСПЫТАНИЙ</Russian>
+             <Chinese>挑战板</Chinese>
+             <Japanese>チャレンジボード</Japanese>
+         </Key>
+         <Key ID="STR_RPG_Challenge_Board_Question">
+             <English>Would you like to take on a challenge?</English>
+             <French>Souhaitez-vous relever un défi ?</French>
+             <Spanish>¿Te gustaría aceptar un reto?</Spanish>
+             <German>Möchtest du eine Herausforderung annehmen?</German>
+             <Italian>Vuoi accettare una sfida?</Italian>
+             <Russian>Хотите принять испытание?</Russian>
+             <Chinese>你想接受一个挑战吗？</Chinese>
+             <Japanese>チャレンジを引き受けますか？</Japanese>
+         </Key>
+         <Key ID="STR_RPG_Challenge_Board_Warning">
+             <English>Choose carefully: once accepted, you must complete it. Dying will cancel the task.</English>
+             <French>Choisissez bien : une fois accepté, vous devez le terminer. Mourir annulera la tâche.</French>
+             <Spanish>Elige con cuidado: una vez aceptado, debes completarlo. Morir cancelará la tarea.</Spanish>
+             <German>Wähle bedacht: Einmal angenommen, musst du sie abschließen. Sterben bricht die Aufgabe ab.</German>
+             <Italian>Scegli con attenzione: una volta accettata, devi completarla. Morire annullerà l'incarico.</Italian>
+             <Russian>Выбирайте осторожно: приняв испытание, вы должны завершить его. Смерть отменит задание.</Russian>
+             <Chinese>仔细选择：一旦接受，必须完成。死亡将取消任务。</Chinese>
+             <Japanese>慎重に選んでください：一度引き受けたら完了しなければなりません。死亡するとタスクがキャンセルされます。</Japanese>
+         </Key>
+         <Key ID="STR_RPG_Challenge_Board_Decline">
+             <English>No thanks</English>
+             <French>Non merci</French>
+             <Spanish>No gracias</Spanish>
+             <German>Nein danke</German>
+             <Italian>No grazie</Italian>
+             <Russian>Нет, спасибо</Russian>
+             <Chinese>不用了，谢谢</Chinese>
+             <Japanese>結構です</Japanese>
+         </Key>
+         <Key ID="STR_RPG_Challenge_Action">
+             <English>Request a challenge</English>
+             <French>Demander un défi</French>
+             <Spanish>Solicitar un reto</Spanish>
+             <German>Herausforderung anfordern</German>
+             <Italian>Richiedi una sfida</Italian>
+             <Russian>Запросить испытание</Russian>
+             <Chinese>请求挑战</Chinese>
+             <Japanese>チャレンジを要請する</Japanese>
+         </Key>
+         <Key ID="STR_RPG_Challenge_Reward">
+             <English>Reward: %1</English>
+             <French>Récompense : %1</French>
+             <Spanish>Recompensa: %1</Spanish>
+             <German>Belohnung: %1</German>
+             <Italian>Ricompensa: %1</Italian>
+             <Russian>Награда: %1</Russian>
+             <Chinese>奖励：%1</Chinese>
+             <Japanese>報酬：%1</Japanese>
+         </Key>
+         <Key ID="STR_RPG_Challenge_Reward_XP">
+             <English>%1 XP</English>
+             <French>%1 XP</French>
+             <Spanish>%1 EXP</Spanish>
+             <German>%1 EP</German>
+             <Italian>%1 XP</Italian>
+             <Russian>%1 ОП</Russian>
+             <Chinese>%1 经验值</Chinese>
+             <Japanese>%1 XP</Japanese>
+         </Key>
+  
+         <!-- ============ Paliers ============ -->
+         <Key ID="STR_RPG_Challenge_Tier_Easy">
+             <English>EASY</English>
+             <French>FACILE</French>
+             <Spanish>FÁCIL</Spanish>
+             <German>LEICHT</German>
+             <Italian>FACILE</Italian>
+             <Russian>ЛЕГКО</Russian>
+             <Chinese>简单</Chinese>
+             <Japanese>簡単</Japanese>
+         </Key>
+         <Key ID="STR_RPG_Challenge_Tier_Medium">
+             <English>MEDIUM</English>
+             <French>MOYEN</French>
+             <Spanish>MEDIO</Spanish>
+             <German>MITTEL</German>
+             <Italian>MEDIO</Italian>
+             <Russian>СРЕДНЕ</Russian>
+             <Chinese>中等</Chinese>
+             <Japanese>普通</Japanese>
+         </Key>
+         <Key ID="STR_RPG_Challenge_Tier_Hard">
+             <English>HARD</English>
+             <French>DIFFICILE</French>
+             <Spanish>DIFÍCIL</Spanish>
+             <German>SCHWER</German>
+             <Italian>DIFFICILE</Italian>
+             <Russian>СЛОЖНО</Russian>
+             <Chinese>困难</Chinese>
+             <Japanese>難しい</Japanese>
+         </Key>
+  
+         <!-- ============ Messages ============ -->
+         <Key ID="STR_RPG_Challenge_Msg_Accepted">
+             <English>[Challenge] Accepted: %1. There is no turning back!</English>
+             <French>[Défi] Accepté : %1. Il n'y a pas de retour en arrière !</French>
+             <Spanish>[Reto] Aceptado: %1. ¡No hay vuelta atrás!</Spanish>
+             <German>[Herausforderung] Angenommen: %1. Es gibt kein Zurück mehr!</German>
+             <Italian>[Sfida] Accettata: %1. Non si può più tornare indietro!</Italian>
+             <Russian>[Испытание] Принято: %1. Пути назад нет!</Russian>
+             <Chinese>[挑战] 已接受：%1。没有回头路了！</Chinese>
+             <Japanese>[チャレンジ] 受理されました：%1。引き返すことはできません！</Japanese>
+         </Key>
+         <Key ID="STR_RPG_Challenge_Msg_Active">
+             <English>[Challenge] You already have an active challenge: %1.</English>
+             <French>[Défi] Vous avez déjà un défi en cours : %1.</French>
+             <Spanish>[Reto] Ya tienes un reto activo: %1.</Spanish>
+             <German>[Herausforderung] Du hast bereits eine aktive Herausforderung: %1.</German>
+             <Italian>[Sfida] Hai già una sfida attiva: %1.</Italian>
+             <Russian>[Испытание] У вас уже есть активное испытание: %1.</Russian>
+             <Chinese>[挑战] 你已经有一个进行中的挑战：%1。</Chinese>
+             <Japanese>[チャレンジ] すでに進行中のチャレンジがあります：%1。</Japanese>
+         </Key>
+         <Key ID="STR_RPG_Challenge_Msg_MateFallen">
+             <English>[Challenge] A teammate has fallen... progress reset.</English>
+             <French>[Défi] Un coéquipier est tombé... progression réinitialisée.</French>
+             <Spanish>[Reto] Un compañero ha caído... progreso restablecido.</Spanish>
+             <German>[Herausforderung] Ein Kamerad ist gefallen... Fortschritt zurückgesetzt.</German>
+             <Italian>[Sfida] Un compagno è caduto... progresso reimpostato.</Italian>
+             <Russian>[Испытание] Товарищ по команде пал... прогресс сброшен.</Russian>
+             <Chinese>[挑战] 队友倒下了……进度已重置。</Chinese>
+             <Japanese>[チャレンジ] チームメイトが倒れました…進捗がリセットされました。</Japanese>
+         </Key>
+         <Key ID="STR_RPG_Challenge_Msg_Respawn">
+             <English>Your side task has been reset due to respawn</English>
+             <French>Votre tâche secondaire a été réinitialisée suite à votre réapparition</French>
+             <Spanish>Tu tarea secundaria se ha restablecido debido a la reaparición</Spanish>
+             <German>Deine Nebenaufgabe wurde aufgrund eines Respawns zurückgesetzt</German>
+             <Italian>La tua missione secondaria è stata reimpostata a causa del rientro</Italian>
+             <Russian>Ваше побочное задание было сброшено из-за возрождения</Russian>
+             <Chinese>您的支线任务由于重生而已重置</Chinese>
+             <Japanese>リスポーンしたため、サブタスクがリセットされました</Japanese>
+         </Key>
+         <Key ID="STR_RPG_Challenge_Msg_AccuracyFailed">
+             <English>[Challenge] Accuracy too low: %1 (required: %2).</English>
+             <French>[Défi] Précision insuffisante : %1 (requis : %2).</French>
+             <Spanish>[Reto] Precisión demasiado baja: %1 (requerida: %2).</Spanish>
+             <German>[Herausforderung] Genauigkeit zu niedrig: %1 (erforderlich: %2).</German>
+             <Italian>[Sfida] Precisione troppo bassa: %1 (richiesta: %2).</Italian>
+             <Russian>[Испытание] Точность слишком низкая: %1 (требуется: %2).</Russian>
+             <Chinese>[挑战] 精度太低：%1（要求：%2）。</Chinese>
+             <Japanese>[チャレンジ] 精度が低すぎます：%1（必要値：%2）。</Japanese>
+         </Key>
+  
+         <!-- ============ Progression ============ -->
+         <Key ID="STR_RPG_Challenge_Progress_Meters">
+             <English>%1 / %2 m</English>
+             <French>%1 / %2 m</French>
+             <Spanish>%1 / %2 m</Spanish>
+             <German>%1 / %2 m</German>
+             <Italian>%1 / %2 m</Italian>
+             <Russian>%1 / %2 м</Russian>
+             <Chinese>%1 / %2米</Chinese>
+             <Japanese>%1 / %2 m</Japanese>
+         </Key>
+         <Key ID="STR_RPG_Challenge_Progress_Accuracy">
+             <English>%1 / %2 - Accuracy: %3 (goal: %4)</English>
+             <French>%1 / %2 - Précision : %3 (objectif : %4)</French>
+             <Spanish>%1 / %2 - Precisión: %3 (objetivo: %4)</Spanish>
+             <German>%1 / %2 - Genauigkeit: %3 (Ziel: %4)</German>
+             <Italian>%1 / %2 - Precisione: %3 (obiettivo: %4)</Italian>
+             <Russian>%1 / %2 - Точность: %3 (цель: %4)</Russian>
+             <Chinese>%1 / %2 - 精度：%3（目标：%4）</Chinese>
+             <Japanese>%1 / %2 - 精度：%3 (目標：%4)</Japanese>
+         </Key>
+  
+         <!-- ============ Défis : EASY ============ -->
+         <Key ID="STR_RPG_Challenge_T_warmUp">
+             <English>Warm-Up</English>
+             <French>Échauffement</French>
+             <Spanish>Calentamiento</Spanish>
+             <German>Aufwärmen</German>
+             <Italian>Riscaldamento</Italian>
+             <Russian>Разминка</Russian>
+             <Chinese>热身</Chinese>
+             <Japanese>ウォーミングアップ</Japanese>
+         </Key>
+         <Key ID="STR_RPG_Challenge_D_warmUp">
+             <English>Eliminate %1 enemy soldiers.</English>
+             <French>Éliminez %1 soldats ennemis.</French>
+             <Spanish>Elimina a %1 soldados enemigos.</Spanish>
+             <German>Eliminiere %1 feindliche Soldaten.</German>
+             <Italian>Elimina %1 soldati nemici.</Italian>
+             <Russian>Уничтожьте %1 вражеских солдат.</Russian>
+             <Chinese>消灭 %1 名敌方士兵。</Chinese>
+             <Japanese>敵兵 %1 名を排除する。</Japanese>
+         </Key>
+  
+         <Key ID="STR_RPG_Challenge_T_pathfinder">
+             <English>Pathfinder</English>
+             <French>Éclaireur</French>
+             <Spanish>Explorador</Spanish>
+             <German>Pfadfinder</German>
+             <Italian>Esploratore</Italian>
+             <Russian>Следопыт</Russian>
+             <Chinese>探路者</Chinese>
+             <Japanese>パスファインダー</Japanese>
+         </Key>
+         <Key ID="STR_RPG_Challenge_D_pathfinder">
+             <English>Travel %1 km on foot. Vehicles do not count.</English>
+             <French>Parcourez %1 km à pied. Les véhicules ne comptent pas.</French>
+             <Spanish>Recorre %1 km a pie. Los vehículos no cuentan.</Spanish>
+             <German>Reise %1 km zu Fuß. Fahrzeuge zählen nicht.</German>
+             <Italian>Viaggia per %1 km a piedi. I veicoli non contano.</Italian>
+             <Russian>Пройдите %1 км пешком. Транспорт не учитывается.</Russian>
+             <Chinese>步行行进 %1 公里。载具不计入内。</Chinese>
+             <Japanese>徒歩で %1 km移動する。車両はカウントされません。</Japanese>
+         </Key>
+  
+         <Key ID="STR_RPG_Challenge_T_buddyUp">
+             <English>Buddy System</English>
+             <French>Système de binôme</French>
+             <Spanish>Sistema de binomios</Spanish>
+             <German>Kameradensystem</German>
+             <Italian>Sistema di squadra</Italian>
+             <Russian>Система напарников</Russian>
+             <Chinese>搭档系统</Chinese>
+             <Japanese>バディシステム</Japanese>
+         </Key>
+         <Key ID="STR_RPG_Challenge_D_buddyUp">
+             <English>Stay within %1 m of a teammate for %2 minutes.</English>
+             <French>Restez à moins de %1 m d'un coéquipier pendant %2 minutes.</French>
+             <Spanish>Mantente a menos de %1 m de un compañero durante %2 minutos.</Spanish>
+             <German>Bleibe %2 Minuten lang im Umkreis von %1 m von einem Kameraden.</German>
+             <Italian>Rimani entro %1 m da un compagno di squadra per %2 minuti.</Italian>
+             <Russian>Держитесь в пределах %1 м от товарища по команде в течение %2 минут.</Russian>
+             <Chinese>在 %2 分钟内保持距离队友 %1 米以内。</Chinese>
+             <Japanese>%2 分間、チームメイトから %1 m以内に留まる。</Japanese>
+         </Key>
+  
+         <Key ID="STR_RPG_Challenge_T_fieldMedic">
+             <English>Field Medic</English>
+             <French>Infirmier de terrain</French>
+             <Spanish>Médico de campaña</Spanish>
+             <German>Feldmediziner</German>
+             <Italian>Medico da campo</Italian>
+             <Russian>Полевой медик</Russian>
+             <Chinese>战地医疗兵</Chinese>
+             <Japanese>フィールド medic</Japanese>
+         </Key>
+         <Key ID="STR_RPG_Challenge_D_fieldMedic">
+             <English>Heal %1 injured teammates.</English>
+             <French>Soignez %1 coéquipiers blessés.</French>
+             <Spanish> Cura a %1 compañeros heridos.</Spanish>
+             <German>Heile %1 verletzte Kameraden.</German>
+             <Italian> Cura %1 compagni di squadra feriti.</Italian>
+             <Russian>Вылечите %1 раненых товарищей по команде.</Russian>
+             <Chinese>治疗 %1 名受伤的队友。</Chinese>
+             <Japanese>負傷したチームメイト %1 名を治療する。</Japanese>
+         </Key>
+  
+         <Key ID="STR_RPG_Challenge_T_spacing">
+             <English>Tactical Spacing</English>
+             <French>Espacement tactique</French>
+             <Spanish>Espaciado táctico</Spanish>
+             <German>Taktischer Abstand</German>
+             <Italian>Distancing tattico</Italian>
+             <Russian>Тактическая расстановка</Russian>
+             <Chinese>战术间距</Chinese>
+             <Japanese>タクティカルスペーシング</Japanese>
+         </Key>
+         <Key ID="STR_RPG_Challenge_D_spacing">
+             <English>Stay %1 to %2 m from a teammate for %3 minutes. Do not bunch up.</English>
+             <French>Restez entre %1 et %2 m d'un coéquipier pendant %3 minutes. Ne vous agglutinez pas.</French>
+             <Spanish>Mantente a entre %1 y %2 m de un compañero durante %3 minutos. No os amontonez.</Spanish>
+             <German>Bleibe %3 Minuten lang %1 bis %2 m von einem Kameraden entfernt. Nicht zusammenklumpen.</German>
+             <Italian>Rimani a una distanza compresa tra %1 e %2 m da un compagno di squadra per %3 minuti. Non ammassatevi.</Italian>
+             <Russian>Держитесь на расстоянии от %1 до %2 м от товарища по команде в течение %3 минут. Не скучкуйтесь.</Russian>
+             <Chinese>在 %3 分钟内与队友保持 %1 到 %2 米的距离。不要挤在一起。</Chinese>
+             <Japanese>%3 分間、チームメイトから %1 ～ %2 m離れて行動する。密集しないこと。</Japanese>
+         </Key>
+  
+         <Key ID="STR_RPG_Challenge_T_steadyAim">
+             <English>Steady Aim</English>
+             <French>Visée stable</French>
+             <Spanish>Pulso firme</Spanish>
+             <German>Ruhige Hand</German>
+             <Italian>Mira ferma</Italian>
+             <Russian>Твердая рука</Russian>
+             <Chinese>稳定瞄准</Chinese>
+             <Japanese>ステディエイム</Japanese>
+         </Key>
+         <Key ID="STR_RPG_Challenge_D_steadyAim">
+             <English>Play for %2 minutes, then reach an accuracy of at least %1. Checked at the end.</English>
+             <French>Jouez pendant %2 minutes, puis atteignez une précision d'au moins %1. Vérifié à la fin.</French>
+             <Spanish>Juega durante %2 minutos y luego alcanza una precisión de al menos %1. Se comprueba al final.</Spanish>
+             <German>Spiele %2 Minuten lang und erreiche dann eine Genauigkeit von mindestens %1. Wird am Ende überprüft.</German>
+             <Italian>Gioca per %2 minuti, quindi raggiungi una precisione di almeno %1. Controllato alla fine.</Italian>
+             <Russian>Играйте в течение %2 минут, затем достигните точности не менее %1. Проверяется в конце.</Russian>
+             <Chinese>游玩 %2 分钟，然后达到至少 %1 的精度。在结束时检查。</Chinese>
+             <Japanese>%2 分間プレイし、その後少なくとも %1 の精度を達成する。終了時にチェックされます。</Japanese>
+         </Key>
+  
+         <!-- ============ Défis : MEDIUM ============ -->
+         <Key ID="STR_RPG_Challenge_T_sharpshooter">
+             <English>Sharpshooter</English>
+             <French>Tireur d'élite</French>
+             <Spanish>Tirador experto</Spanish>
+             <German>Scharfschütze</German>
+             <Italian>Tiratore scelto</Italian>
+             <Russian>Меткий стрелок</Russian>
+             <Chinese>神枪手</Chinese>
+             <Japanese>シャープシューター</Japanese>
+         </Key>
+         <Key ID="STR_RPG_Challenge_D_sharpshooter">
+             <English>Eliminate %1 enemy soldiers from %2 m or more.</English>
+             <French>Éliminez %1 soldats ennemis à %2 m ou plus.</French>
+             <Spanish>Elimina a %1 soldados enemigos desde %2 m o más.</Spanish>
+             <German>Eliminiere %1 feindliche Soldaten aus %2 m oder mehr Entfernung.</German>
+             <Italian>Elimina %1 soldati nemici da %2 m o più.</Italian>
+             <Russian>Уничтожьте %1 вражеских солдат с расстояния %2 м или более.</Russian>
+             <Chinese>从 %2 米或更远的地方消灭 %1 名敌方士兵。</Chinese>
+             <Japanese>%2 m以上の距離から敵兵 %1 名を排除する。</Japanese>
+         </Key>
+  
+         <Key ID="STR_RPG_Challenge_T_closeQuarters">
+             <English>Close Quarters</English>
+             <French>Combat rapproché</French>
+             <Spanish>Combate cercano</Spanish>
+             <German>Nahkampf</German>
+             <Italian>Combattimento ravvicinato</Italian>
+             <Russian>Ближний бой</Russian>
+             <Chinese>近距离作战</Chinese>
+             <Japanese>近接戦闘</Japanese>
+         </Key>
+         <Key ID="STR_RPG_Challenge_D_closeQuarters">
+             <English>Eliminate %1 enemy soldiers from %2 m or less.</English>
+             <French>Éliminez %1 soldats ennemis à %2 m ou moins.</French>
+             <Spanish>Elimina a %1 soldados enemigos desde %2 m o menos.</Spanish>
+             <German>Eliminiere %1 feindliche Soldaten aus %2 m oder weniger Entfernung.</German>
+             <Italian>Elimina %1 soldati nemici da %2 m o meno.</Italian>
+             <Russian>Уничтожьте %1 вражеских солдат с расстояния %2 м или менее.</Russian>
+             <Chinese>在 %2 米或更近的距离内消灭 %1 名敌方士兵。</Chinese>
+             <Japanese>%2 m以下の距離から敵兵 %1 名を排除する。</Japanese>
+         </Key>
+  
+         <Key ID="STR_RPG_Challenge_T_survivor">
+             <English>Survivor</English>
+             <French>Survivant</French>
+             <Spanish>Superviviente</Spanish>
+             <German>Überlebender</German>
+             <Italian>Sopravvissuto</Italian>
+             <Russian>Выживший</Russian>
+             <Chinese>幸存者</Chinese>
+             <Japanese>サバイバー</Japanese>
+         </Key>
+         <Key ID="STR_RPG_Challenge_D_survivor">
+             <English>Stay alive for %1 minutes. Time spent dead does not count.</English>
+             <French>Restez en vie pendant %1 minutes. Le temps passé mort ne compte pas.</French>
+             <Spanish>Mantente con vida durante %1 minutos. El tiempo muerto no cuenta.</Spanish>
+             <German>Bleibe %1 Minuten lang am Leben. Die tot verbrachte Zeit zählt nicht.</German>
+             <Italian>Rimani in vita per %1 minuti. Il tempo trascorso da morto non conta.</Italian>
+             <Russian>Оставайтесь в живых в течение %1 минут. Время в состоянии смерти не учитывается.</Russian>
+             <Chinese>保持存活 %1 分钟。死亡所花费的时间不计算在内。</Chinese>
+             <Japanese>%1 分間生存する。死亡していた時間はカウントされません。</Japanese>
+         </Key>
+  
+         <Key ID="STR_RPG_Challenge_T_veteran">
+             <English>Veteran</English>
+             <French>Vétéran</French>
+             <Spanish>Veterano</Spanish>
+             <German>Veteran</German>
+             <Italian>Veterano</Italian>
+             <Russian>Ветеран</Russian>
+             <Chinese>老兵</Chinese>
+             <Japanese>ベテラン</Japanese>
+         </Key>
+         <Key ID="STR_RPG_Challenge_D_veteran">
+             <English>Eliminate %1 enemy soldiers.</English>
+             <French>Éliminez %1 soldats ennemis.</French>
+             <Spanish>Elimina a %1 soldados enemigos.</Spanish>
+             <German>Eliminiere %1 feindliche Soldaten.</German>
+             <Italian>Elimina %1 soldati nemici.</Italian>
+             <Russian>Уничтожьте %1 вражеских солдат.</Russian>
+             <Chinese>消灭 %1 名敌方士兵。</Chinese>
+             <Japanese>敵兵 %1 名を排除する。</Japanese>
+         </Key>
+  
+         <Key ID="STR_RPG_Challenge_T_stickTogether">
+             <English>Stick Together</English>
+             <French>Serrez les rangs</French>
+             <Spanish>Mantenerse unidos</Spanish>
+             <German>Zusammenhalten</German>
+             <Italian>Restare uniti</Italian>
+             <Russian>Держаться вместе</Russian>
+             <Chinese>抱团</Chinese>
+             <Japanese>固まって行動する</Japanese>
+         </Key>
+         <Key ID="STR_RPG_Challenge_D_stickTogether">
+             <English>Stay within %2 m of at least %1 teammates for %3 minutes.</English>
+             <French>Restez à moins de %2 m d'au moins %1 coéquipiers pendant %3 minutes.</French>
+             <Spanish>Mantente a menos de %2 m de al menos %1 compañeros durante %3 minutes.</Spanish>
+             <German>Bleibe %3 Minuten lang im Umkreis von %2 m von mindestens %1 Kameraden.</German>
+             <Italian>Rimani entro %2 m da almeno %1 compagni di squadra per %3 minuti.</Italian>
+             <Russian>Держитесь в пределах %2 м как минимум от %1 товарищей по команде в течение %3 минут.</Russian>
+             <Chinese>在 %3 分钟内保持距离至少 %1 名队友 %2 米以内。</Chinese>
+             <Japanese>%3 分間、少なくとも %1 名のチームメイトから %2 m以内に留まる。</Japanese>
+         </Key>
+  
+         <Key ID="STR_RPG_Challenge_T_huntingParty">
+             <English>Hunting Party</English>
+             <French>Partie de chasse</French>
+             <Spanish>Partida de caza</Spanish>
+             <German>Jagdgesellschaft</German>
+             <Italian>Gruppo di caccia</Italian>
+             <Russian>Охотничья партия</Russian>
+             <Chinese>狩猎小队</Chinese>
+             <Japanese>狩猟パーティー</Japanese>
+         </Key>
+         <Key ID="STR_RPG_Challenge_D_huntingParty">
+             <English>Eliminate %1 enemy soldiers while a teammate is within %2 m.</English>
+             <French>Éliminez %1 soldats ennemis alors qu'un coéquipier est à moins de %2 m.</French>
+             <Spanish>Elimina a %1 soldados enemigos mientras un compañero esté a menos de %2 m.</Spanish>
+             <German>Eliminiere %1 feindliche Soldaten, während sich ein Kamerad im Umkreis von %2 m befindet.</German>
+             <Italian>Elimina %1 soldati nemici mentre un compagno di squadra si trova entro %2 m.</Italian>
+             <Russian>Уничтожьте %1 вражеских солдат, пока товарищ по команде находится в пределах %2 м.</Russian>
+             <Chinese>在队友位于 %2 米以内时，消灭 %1 名敌方士兵。</Chinese>
+             <Japanese>チームメイトが %2 m以内にいる状態で、敵兵 %1 名を排除する。</Japanese>
+         </Key>
+  
+         <Key ID="STR_RPG_Challenge_T_inFormation">
+             <English>In Formation</English>
+             <French>En formation</French>
+             <Spanish>En formación</Spanish>
+             <German>In Formation</German>
+             <Italian>In formazione</Italian>
+             <Russian>В строю</Russian>
+             <Chinese>整队前进</Chinese>
+             <Japanese>隊列を組んで</Japanese>
+         </Key>
+         <Key ID="STR_RPG_Challenge_D_inFormation">
+             <English>Travel %1 km on foot while staying within %2 m of a teammate.</English>
+             <French>Parcourez %1 km à pied en restant à moins de %2 m d'un coéquipier.</French>
+             <Spanish>Recorre %1 km a pie mientras te mantienes a menos de %2 m de un compañero.</Spanish>
+             <German>Reise %1 km zu Fuß und bleibe dabei im Umkreis von %2 m von einem Kameraden.</German>
+             <Italian>Viaggia per %1 km a piedi rimanendo entro %2 m da un compagno di squadra.</Italian>
+             <Russian>Пройдите %1 км пешком, оставаясь в пределах %2 м от товарища по команде.</Russian>
+             <Chinese>步行行进 %1 公里，同时保持在距离队友 %2 米以内。</Chinese>
+             <Japanese>チームメイトから %2 m以内に留まりながら、徒歩で %1 km移動する。</Japanese>
+         </Key>
+  
+         <Key ID="STR_RPG_Challenge_T_guardian">
+             <English>Guardian Angel</English>
+             <French>Ange gardien</French>
+             <Spanish>Ángel de la guarda</Spanish>
+             <German>Schutzengel</German>
+             <Italian>Angelo custode</Italian>
+             <Russian>Ангел-хранитель</Russian>
+             <Chinese>守护天使</Chinese>
+             <Japanese>守護天使</Japanese>
+         </Key>
+         <Key ID="STR_RPG_Challenge_D_guardian">
+             <English>Eliminate %1 enemies within %2 m of a teammate.</English>
+             <French>Éliminez %1 ennemis à moins de %2 m d'un coéquipier.</French>
+             <Spanish>Elimina a %1 enemigos a menos de %2 m de un compañero.</Spanish>
+             <German>Eliminiere %1 Feinde im Umkreis von %2 m von einem Kameraden.</German>
+             <Italian>Elimina %1 nemici entro %2 m da un compagno di squadra.</Italian>
+             <Russian>Уничтожьте %1 врагов в пределах %2 м от товарища по команде.</Russian>
+             <Chinese>在队友 %2 米范围内消灭 %1 名敌人。</Chinese>
+             <Japanese>チームメイトから %2 m以内の敵 %1 名を排除する。</Japanese>
+         </Key>
+  
+         <Key ID="STR_RPG_Challenge_T_shuttle">
+             <English>Shared Ride</English>
+             <French>Trajet partagé</French>
+             <Spanish>Viaje compartido</Spanish>
+             <German>Mitfahrgelegenheit</German>
+             <Italian>Passaggio condiviso</Italian>
+             <Russian>Попутчики</Russian>
+             <Chinese>搭乘便车</Chinese>
+             <Japanese>相乗り</Japanese>
+         </Key>
+         <Key ID="STR_RPG_Challenge_D_shuttle">
+             <English>Travel %1 km in a vehicle with at least %2 teammates on board.</English>
+             <French>Parcourez %1 km en véhicule avec au moins %2 coéquipiers à bord.</French>
+             <Spanish>Recorre %1 km en un vehículo con al menos %2 compañeros a bordo.</Spanish>
+             <German>Reise %1 km in einem Fahrzeug mit mindestens %2 Kameraden an Bord.</German>
+             <Italian>Viaggia per %1 km in un veicolo con almeno %2 compagni di squadra a bordo.</Italian>
+             <Russian>Проедьте %1 км на транспортном средстве, на борту которого находится не менее %2 товарищей по команде.</Russian>
+             <Chinese>乘坐载具行进 %1 公里，车上至少有 %2 名队友。</Chinese>
+             <Japanese>少なくとも %2 名のチームメイトが同乗している状態で、車両で %1 km移動する。</Japanese>
+         </Key>
+  
+         <Key ID="STR_RPG_Challenge_T_combatMedic">
+             <English>Combat Medic</English>
+             <French>Médecin de combat</French>
+             <Spanish>Sanitario de combate</Spanish>
+             <German>Sanitäter</German>
+             <Italian>Medico da combattimento</Italian>
+             <Russian>Боевой медик</Russian>
+             <Chinese>战斗医疗兵</Chinese>
+             <Japanese>コンバットメディック</Japanese>
+         </Key>
+         <Key ID="STR_RPG_Challenge_D_combatMedic">
+             <English>Heal %1 injured teammates.</English>
+             <French>Soignez %1 coéquipiers blessés.</French>
+             <Spanish>Cura a %1 compañeros heridos.</Spanish>
+             <German>Heile %1 verletzte Kameraden.</German>
+             <Italian>Cura %1 compagni di squadra feriti.</Italian>
+             <Russian>Вылечите %1 раненых товарищей по команде.</Russian>
+             <Chinese>治疗 %1 名受伤的队友。</Chinese>
+             <Japanese>負傷したチームメイト %1 名を治療する。</Japanese>
+         </Key>
+  
+         <Key ID="STR_RPG_Challenge_T_holdLine">
+             <English>Hold the Line</English>
+             <French>Tenir la ligne</French>
+             <Spanish>Mantener la posición</Spanish>
+             <German>Die Stellung halten</German>
+             <Italian>Tenere la posizione</Italian>
+             <Russian>Удерживать рубеж</坚守阵地>
+             <Chinese>坚守阵地</Chinese>
+             <Japanese>防衛線を維持する</Japanese>
+         </Key>
+         <Key ID="STR_RPG_Challenge_D_holdLine">
+             <English>Stay put with %1 teammates within %2 m for %3 minutes. Leaving resets progress.</English>
+             <French>Restez en place avec %1 coéquipiers à moins de %2 m pendant %3 minutes. Quitter la zone réinitialise la progression.</French>
+             <Spanish>Mantente firme con %1 compañeros a menos de %2 m durante %3 minutos. Salir restablece el progreso.</Spanish>
+             <German>Bleibe mit %1 Kameraden im Umkreis von %2 m für %3 Minuten an Ort und Stelle. Das Verlassen setzt den Fortschritt zurück.</German>
+             <Italian>Rimani fermo con %1 compagni di squadra entro %2 m per %3 minuti. Allontanarsi azzera i progressi.</Italian>
+             <Russian>Оставайтесь на месте с %1 товарищами по команде в пределах %2 м в течение %3 минут. Уход сбрасывает прогресс.</Russian>
+             <Chinese>与 %1 名队友保持在 %2 米范围内并坚守原地 %3 分钟。离开会重置进度。</Chinese>
+             <Japanese>%3 分間、チームメイト %1 名と共に %2 m以内に留まり続けること。エリアを離れると進捗がリセットされます。</Japanese>
+         </Key>
+  
+         <Key ID="STR_RPG_Challenge_T_marksman">
+             <English>Marksman</English>
+             <French>Tireur précis</French>
+             <Spanish>Tirador selecto</Spanish>
+             <German>Treffsicherer</German>
+             <Italian>Tiratore scelto</Italian>
+             <Russian>Меткий стрелок</Russian>
+             <Chinese>神射手</Chinese>
+             <Japanese>マークスマン</Japanese>
+         </Key>
+         <Key ID="STR_RPG_Challenge_D_marksman">
+             <English>Play for %2 minutes, then reach an accuracy of at least %1. Checked at the end.</English>
+             <French>Jouez pendant %2 minutes, puis atteignez une précision d'au moins %1. Vérifié à la fin.</French>
+             <Spanish>Juega durante %2 minutos y luego alcanza una precisión de al menos %1. Se comprueba al final.</Spanish>
+             <German>Spiele %2 Minuten lang und erreiche dann eine Genauigkeit von mindestens %1. Wird am Ende überprüft.</German>
+             <Italian>Gioca per %2 minuti, quindi raggiungi una precisione di almeno %1. Controllato alla fine.</Italian>
+             <Russian>Играйте в течение %2 минут, затем достигните точности не менее %1. Проверяется в конце.</Russian>
+             <Chinese>游玩 %2 分钟，然后达到至少 %1 的精度。在结束时检查。</Chinese>
+             <Japanese>%2 分間プレイし、その後少なくとも %1 の精度を達成する。終了時にチェックされます。</Japanese>
+         </Key>
+  
+         <!-- ============ Défis : HARD ============ -->
+         <Key ID="STR_RPG_Challenge_T_vehicleHunter">
+             <English>Vehicle Hunter</English>
+             <French>Chasseur de véhicules</French>
+             <Spanish>Cazador de vehículos</Spanish>
+             <German>Fahrzeugjäger</German>
+             <Italian>Cacciatore di veicoli</Italian>
+             <Russian>Охотник на технику</Russian>
+             <Chinese>载具猎手</Chinese>
+             <Japanese>ビークルハンター</Japanese>
+         </Key>
+         <Key ID="STR_RPG_Challenge_D_vehicleHunter">
+             <English>Destroy %1 enemy vehicles.</English>
+             <French>Détruisez %1 véhicules ennemis.</French>
+             <Spanish>Destruye %1 vehículos enemigos.</Spanish>
+             <German>Zerstöre %1 feindliche Fahrzeuge.</German>
+             <Italian>Distruggi %1 veicoli nemici.</Italian>
+             <Russian>Уничтожьте %1 вражеских машин.</Russian>
+             <Chinese>摧毁 %1 辆敌方载具。</Chinese>
+             <Japanese>敵車両 %1 台を破壊する。</Japanese>
+         </Key>
+  
+         <Key ID="STR_RPG_Challenge_T_killingSpree">
+             <English>Killing Spree</English>
+             <French>Série meurtrière</French>
+             <Spanish>Racha de bajas</Spanish>
+             <German>Tötungsserie</German>
+             <Italian>Furia omicida</Italian>
+             <Russian>Серия убийств</Russian>
+             <Chinese>疯狂杀戮</Chinese>
+             <Japanese>キリングスリー</Japanese>
+         </Key>
+         <Key ID="STR_RPG_Challenge_D_killingSpree">
+             <English>Eliminate %1 enemy soldiers within %2 seconds.</English>
+             <French>Éliminez %1 soldats ennemis en %2 secondes.</French>
+             <Spanish>Elimina a %1 soldados enemigos en %2 segundos.</Spanish>
+             <German>Eliminiere %1 feindliche Soldaten innerhalb von %2 Sekunden.</German>
+             <Italian>Elimina %1 soldati nemici entro %2 secondi.</Italian>
+             <Russian>Уничтожьте %1 вражеских солдат за %2 секунд.</Russian>
+             <Chinese>在 %2 秒内消灭 %1 名敌方士兵。</Chinese>
+             <Japanese>%2 秒以内に敵兵 %1 名を排除する。</Japanese>
+         </Key>
+  
+         <Key ID="STR_RPG_Challenge_T_rampage">
+             <English>Rampage</English>
+             <French>Déchaînement</French>
+             <Spanish>Masacre</Spanish>
+             <German>Amoklauf</German>
+             <Italian>Rampage</Italian>
+             <Russian>Буйство</Russian>
+             <Chinese>暴走</Chinese>
+             <Japanese>ランページ</Japanese>
+         </Key>
+         <Key ID="STR_RPG_Challenge_D_rampage">
+             <English>Eliminate %1 enemy soldiers within %2 seconds.</English>
+             <French>Éliminez %1 soldats ennemis en %2 secondes.</French>
+             <Spanish>Elimina a %1 soldados enemigos en %2 segundos.</Spanish>
+             <German>Eliminiere %1 feindliche Soldaten innerhalb von %2 Sekunden.</German>
+             <Italian>Elimina %1 soldati nemici entro %2 secondi.</Italian>
+             <Russian>Уничтожьте %1 вражеских солдат за %2 секунд.</Russian>
+             <Chinese>在 %2 秒内消灭 %1 名敌方士兵。</Chinese>
+             <Japanese>%2 秒以内に敵兵 %1 名を排除する。</Japanese>
+         </Key>
+  
+         <Key ID="STR_RPG_Challenge_T_wolfPack">
+             <English>Wolf Pack</English>
+             <French>Meute de loups</French>
+             <Spanish>Manada de lobos</Spanish>
+             <German>Wolfsrudel</German>
+             <Italian>Branco di lupi</Italian>
+             <Russian>Волчья стая</Russian>
+             <Chinese>狼群</Chinese>
+             <Japanese>ウルフパック</Japanese>
+         </Key>
+         <Key ID="STR_RPG_Challenge_D_wolfPack">
+             <English>Your group eliminates %1 enemy soldiers together.</English>
+             <French>Votre groupe élimine %1 soldats ennemis ensemble.</French>
+             <Spanish>Tu grupo elimina a %1 soldados enemigos juntos.</Spanish>
+             <German>Deine Gruppe eliminiert gemeinsam %1 feindliche Soldaten.</German>
+             <Italian>Il tuo gruppo elimina insieme %1 soldati nemici.</Italian>
+             <Russian>Ваша группа вместе уничтожает %1 вражеских солдат.</Russian>
+             <Chinese>你的小队共同消灭 %1 名敌方士兵。</Chinese>
+             <Japanese>グループ全体で敵兵 %1 名を排除する。</Japanese>
+         </Key>
+  
+         <Key ID="STR_RPG_Challenge_T_brothers">
+             <English>Band of Brothers</English>
+             <French>Frères d'armes</French>
+             <Spanish>Hermanos de sangre</Spanish>
+             <German>Band of Brothers</German>
+             <Italian>Banda di fratelli</Italian>
+             <Russian>Братья по оружию</Russian>
+             <Chinese>兄弟连</Chinese>
+             <Japanese>バンド・オブ・ブラザーズ</Japanese>
+         </Key>
+         <Key ID="STR_RPG_Challenge_D_brothers">
+             <English>Stay within %2 m of at least %1 teammates for %3 minutes.</English>
+             <French>Restez à moins de %2 m d'au moins %1 coéquipiers pendant %3 minutes.</French>
+             <Spanish>Mantente a menos de %2 m de al menos %1 compañeros durante %3 minutos.</Spanish>
+             <German>Bleibe %3 Minuten lang im Umkreis von %2 m von mindestens %1 Kameraden.</German>
+             <Italian>Rimani entro %2 m da almeno %1 compagni di squadra per %3 minuti.</Italian>
+             <Russian>Держитесь в пределах %2 м как минимум от %1 товарищей по команде в течение %3 минут.</Russian>
+             <Chinese>在 %3 分钟内保持距离至少 %1 名队友 %2 米以内。</Chinese>
+             <Japanese>%3 分間、少なくとも %1 名のチームメイトから %2 m以内に留まる。</Japanese>
+         </Key>
+  
+         <Key ID="STR_RPG_Challenge_T_assault">
+             <English>Coordinated Assault</English>
+             <French>Assaut coordonné</French>
+             <Spanish>Asalto coordinado</Spanish>
+             <German>Koordinierter Angriff</German>
+             <Italian>Assalto coordinato</Italian>
+             <Russian>Координированный штурм</Russian>
+             <Chinese>协同突击</Chinese>
+             <Japanese>コーディネーテッド・アサルト</Japanese>
+         </Key>
+         <Key ID="STR_RPG_Challenge_D_assault">
+             <English>Eliminate %1 enemy soldiers while %2 teammates are within %3 m.</English>
+             <French>Éliminez %1 soldats ennemis alors que %2 coéquipiers sont à moins de %3 m.</French>
+             <Spanish>Elimina a %1 soldados enemigos mientras %2 compañeros estén a menos de %3 m.</Spanish>
+             <German>Eliminiere %1 feindliche Soldaten, während sich %2 Kameraden im Umkreis von %3 m befinden.</German>
+             <Italian>Elimina %1 soldati nemici mentre %2 compagni di squadra si trovano entro %3 m.</Italian>
+             <Russian>Уничтожьте %1 вражеских солдат, пока %2 товарища по команде находятся в пределах %3 м.</Russian>
+             <Chinese>在有 %2 名队友处于 %3 米以内时，消灭 %1 名敌方士兵。</Chinese>
+             <Japanese>%2 名のチームメイトが %3 m以内にいる状態で、敵兵 %1 名を排除する。</Japanese>
+         </Key>
+  
+         <Key ID="STR_RPG_Challenge_T_flawless">
+             <English>Flawless Squad</English>
+             <French>Escouade parfaite</French>
+             <Spanish>Escuadrón perfecto</Spanish>
+             <German>Makelloser Trupp</German>
+             <Italian>Squadra perfetta</Italian>
+             <Russian>Безупречный отряд</Russian>
+             <Chinese>完美小队</Chinese>
+             <Japanese>フローレス・スクワッド</Japanese>
+         </Key>
+         <Key ID="STR_RPG_Challenge_D_flawless">
+             <English>Your group eliminates %1 enemies without losing a single member.</English>
+             <French>Votre groupe élimine %1 ennemis sans perdre un seul membre.</French>
+             <Spanish>Tu grupo elimina a %1 enemigos sin perder a un solo miembro.</Spanish>
+             <German>Deine Gruppe eliminiert %1 Feinde, ohne ein einziges Mitglied zu verlieren.</German>
+             <Italian>Il tuo gruppo elimina %1 nemici senza perdere un solo membro.</Italian>
+             <Russian>Ваша группа уничтожает %1 врагов, не потеряв ни одного участника.</Russian>
+             <Chinese>你的小队在没有损失任何成员的情况下消灭 %1 名敌人。</Chinese>
+             <Japanese>一人も失うことなく、グループで敵 %1 名を排除する。</Japanese>
+         </Key>
+  
+         <Key ID="STR_RPG_Challenge_T_syncStrike">
+             <English>Synchronised Strike</English>
+             <French>Frappe synchronisée</French>
+             <Spanish>Ataque sincronizado</Spanish>
+             <German>Synchronisierter Schlag</German>
+             <Italian>Attacco sincronizzato</Italian>
+             <Russian>Синхронный удар</Russian>
+             <Chinese>同步打击</Chinese>
+             <Japanese>シンクロナイズド・ストライク</Japanese>
+         </Key>
+         <Key ID="STR_RPG_Challenge_D_syncStrike">
+             <English>Your group eliminates %1 enemies within %2 seconds.</English>
+             <French>Votre groupe élimine %1 ennemis en %2 secondes.</French>
+             <Spanish>Tu grupo elimina a %1 enemigos en %2 segundos.</Spanish>
+             <German>Deine Gruppe eliminiert %1 Feinde innerhalb von %2 Sekunden.</German>
+             <Italian>Il tuo gruppo elimina %1 nemici entro %2 secondi.</Italian>
+             <Russian>Ваша группа уничтожает %1 врагов за %2 секунд.</Russian>
+             <Chinese>你的小队在 %2 秒内消灭 %1 名敌人。</Chinese>
+             <Japanese>グループで %2 秒以内に敵 %1 名を排除する。</Japanese>
+         </Key>
+  
+         <Key ID="STR_RPG_Challenge_T_ultraMedic">
+             <English>Ultra Medic</English>
+             <French>Ultra médecin</French>
+             <Spanish>Ultra médico</Spanish>
+             <German>Ultra-Sanitäter</German>
+             <Italian>Ultra medico</Italian>
+             <Russian>Ультрамедик</Russian>
+             <Chinese>超级医疗兵</Chinese>
+             <Japanese>ウルトラメディック</Japanese>
+         </Key>
+         <Key ID="STR_RPG_Challenge_D_ultraMedic">
+             <English>Heal %1 injured teammates.</English>
+             <French>Soignez %1 coéquipiers blessés.</French>
+             <Spanish>Cura a %1 compañeros heridos.</Spanish>
+             <German>Heile %1 verletzte Kameraden.</German>
+             <Italian>Cura %1 compagni di squadra feriti.</Italian>
+             <Russian>Вылечите %1 раненых товарищей по команде.</Russian>
+             <Chinese>治疗 %1 名受伤的队友。</Chinese>
+             <Japanese>負傷したチームメイト %1 名を治療する。</Japanese>
+         </Key>
+  
+         <Key ID="STR_RPG_Challenge_T_lastStand">
+             <English>Last Stand</English>
+             <French>Dernier rempart</French>
+             <Spanish>Última resistencia</Spanish>
+             <German>Letztes Gefecht</German>
+             <Italian>Ultima difesa</Italian>
+             <Russian>Последний рубеж</Russian>
+             <Chinese>背水一战</Chinese>
+             <Japanese>ラストスタンド</Japanese>
+         </Key>
+         <Key ID="STR_RPG_Challenge_D_lastStand">
+             <English>Stay put with %1 teammates within %2 m for %3 minutes. Leaving resets progress.</English>
+             <French>Restez en place avec %1 coéquipiers à moins de %2 m pendant %3 minutes. Quitter la zone réinitialise la progression.</French>
+             <Spanish>Mantente firme con %1 compañeros a menos de %2 m durante %3 minutos. Salir restablece el progreso.</Spanish>
+             <German>Bleibe mit %1 Kameraden im Umkreis von %2 m für %3 Minuten an Ort und Stelle. Das Verlassen setzt den Fortschritt zurück.</German>
+             <Italian>Rimani fermo con %1 compagni di squadra entro %2 m per %3 minuti. Allontanarsi azzera i progressi.</Italian>
+             <Russian>Оставайтесь на месте с %1 товарищами по команде в пределах %2 м в течение %3 минут. Уход сбрасывает прогресс.</Russian>
+             <Chinese>与 %1 名队友保持在 %2 米范围内并坚守原地 %3 分钟。离开会重置进度。</Chinese>
+             <Japanese>%3 分間、チームメイト %1 名と共に %2 m以内に留まり続けること。エリアを離れると進捗がリセットされます。</Japanese>
+         </Key>
+  
+         <Key ID="STR_RPG_Challenge_T_deadEye">
+             <English>Dead Eye</English>
+             <French>Tireur infaillible</French>
+             <Spanish>Ojo de águila</Spanish>
+             <German>Adlerauge</German>
+             <Italian>Occhio di falco</Italian>
+             <Russian>Меткий глаз</Russian>
+             <Chinese>鹰眼</Chinese>
+             <Japanese>デッドアイ</Japanese>
+         </Key>
+         <Key ID="STR_RPG_Challenge_D_deadEye">
+             <English>Play for %2 minutes, then reach an accuracy of at least %1. Checked at the end.</English>
+             <French>Jouez pendant %2 minutes, puis atteignez une précision d'au moins %1. Vérifié à la fin.</French>
+             <Spanish>Juega durante %2 minutos y luego alcanza una precisión de al menos %1. Se comprueba al final.</Spanish>
+             <German>Spiele %2 Minuten lang und erreiche dann eine Genauigkeit von mindestens %1. Wird am Ende überprüft.</German>
+             <Italian>Gioca per %2 minuti, quindi raggiungi una precisione di almeno %1. Controllato alla fine.</Italian>
+             <Russian>Играйте в течение %2 минут, затем достигните точности не менее %1. Проверяется в конце.</Russian>
+             <Chinese>游玩 %2 分钟，然后达到至少 %1 的精度。在结束时检查。</Chinese>
+             <Japanese>%2 分間プレイし、その後少なくとも %1 の精度を達成する。終了時にチェックされます。</Japanese>
+         </Key>
+     </Package>
 </Project>

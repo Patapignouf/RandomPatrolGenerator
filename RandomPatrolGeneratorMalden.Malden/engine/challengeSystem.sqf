@@ -8,8 +8,7 @@
           from a pool, through a very simple dialog.
         - Once a challenge is picked, the player is committed to it until it is completed.
         - Progress is displayed on a small HUD on the left of the screen.
-        - Completing a challenge triggers an internal reward function which spawns a
-          supply crate (marked with green smoke) in front of the player and heals them.
+        - Completing a challenge gives XP through doUpdateRank.
 
     Setup:
         Run this file once on every client (e.g. from initPlayerLocal.sqf):
@@ -20,7 +19,11 @@
             [] call SCR_fnc_challenge_openBoard;
 
     Notes:
-        - No description.ext / config entries are required (UI is created dynamically).
+        - All texts come from stringtable.xml (keys start with STR_RPG_Challenge_).
+          Title/description keys are built from the challenge id:
+              STR_RPG_Challenge_T_<id>  and  STR_RPG_Challenge_D_<id>
+        - Accuracy challenges are only offered when
+              missionNamespace getVariable ["enableAccuracyTrack", 1] == 1
         - Progress is stored client-side in memory only (it is lost if the player disconnects).
         - Everything is prefixed with SCR_ to avoid name clashes.
 */
@@ -38,19 +41,19 @@ SCR_challenge_initDone = true;
 SCR_challenge_autoPrompt      = true;  // Automatically ask the player once after joining
 SCR_challenge_autoPromptDelay = 15;    // Seconds to wait before the automatic prompt
 SCR_challenge_crateLifetime   = 600;   // Seconds before a reward crate is deleted
+SCR_challenge_accuracyIsFraction = false; // true if RPG_Accuracy is 0..1 instead of 0..100
 SCR_challenge_teamTypes = [
     "stayClose",
     "teamKills",
-    "teamMove", 
+    "teamMove",
     "groupKills",
-    "healMates", 
-    "protectKills", 
-    "vehicleTeam", 
-    "holdArea", 
-    "noLoss", 
+    "healMates",
+    "protectKills",
+    "vehicleTeam",
+    "holdArea",
+    "noLoss",
     "groupStreak"
 ];
-
 
 // Test if ACE medical has been enabled
 SCR_challenge_hasACE = isClass (configFile >> "CfgPatches" >> "ace_medical_treatment")
@@ -63,31 +66,33 @@ SCR_challenge_current  = [];  // Active challenge definition, [] if none
 SCR_challenge_progress = 0;   // Progress of the active challenge
 SCR_challenge_streak   = [];  // Timestamps of recent kills (used by "streak" challenges)
 SCR_challenge_offers   = [];  // The three challenges currently offered by the board
-SCR_challenge_anchor = [];   // Position force challenge "holdArea"
+SCR_challenge_anchor   = [];  // Reference position for "holdArea" challenges
 // Anti-abus : un même blessé ne compte qu'une fois toutes les 60 s
 SCR_challenge_healCooldowns = createHashMap;
 
 // ----------------------------------------------------------------------------
-// Tier data: [label, RGBA colour, reward name]
+// Tier data: [label stringtable key, RGBA colour, XP reward]
 // ----------------------------------------------------------------------------
 SCR_challenge_tierData = [
-    ["EASY",   [0.49, 0.99, 0.00, 1], "25 XP"],
-    ["MEDIUM", [1.00, 0.65, 0.00, 1], "50 XP"],
-    ["HARD",   [1.00, 0.30, 0.30, 1], "100 XP"]
+    ["STR_RPG_Challenge_Tier_Easy",   [0.49, 0.99, 0.00, 1], 25],
+    ["STR_RPG_Challenge_Tier_Medium", [1.00, 0.65, 0.00, 1], 50],
+    ["STR_RPG_Challenge_Tier_Hard",   [1.00, 0.30, 0.30, 1], 100]
 ];
 
 // ----------------------------------------------------------------------------
-// Challenge pool
-// Format: [id, title, description, type, goal, parameter, tier]
+// Challenge definitions (compact)
+// Format: [id, type, goal, parameter, tier, descriptionArgs]
+//
+// descriptionArgs are injected in STR_RPG_Challenge_D_<id> (%1, %2, %3...)
 //
 // Types:
-//   "kills"       - Kill <goal> enemy infantry
-//   "killFar"     - Kill <goal> enemy infantry from <parameter> m or more
-//   "killNear"    - Kill <goal> enemy infantry from <parameter> m or less
-//   "vehicleKill" - Destroy <goal> enemy vehicles
-//   "streak"      - Get <goal> kills within <parameter> seconds
-//   "distance"    - Travel <goal> metres on foot
-//   "survive"     - Stay alive for <goal> seconds (time spent dead is not counted)
+//   "kills"        - Kill <goal> enemy infantry
+//   "killFar"      - Kill <goal> enemy infantry from <parameter> m or more
+//   "killNear"     - Kill <goal> enemy infantry from <parameter> m or less
+//   "vehicleKill"  - Destroy <goal> enemy vehicles
+//   "streak"       - Get <goal> kills within <parameter> seconds
+//   "distance"     - Travel <goal> metres on foot
+//   "survive"      - Stay alive for <goal> seconds (time spent dead is not counted)
 //   "stayClose"    - Stay <goal> seconds near teammates. parameter = [radius, minMates, (optional) minDistance]
 //   "healMates"    - Heal <goal> injured teammates
 //   "protectKills" - Kill <goal> infantry within [radius] of at least [minMates] teammates
@@ -95,57 +100,108 @@ SCR_challenge_tierData = [
 //   "holdArea"     - Stay <goal> seconds in the same spot with [radius, minMates]; leaving resets
 //   "noLoss"       - Kill <goal> infantry with the group; progress resets if a group member dies
 //   "groupStreak"  - Group gets <goal> kills within <parameter> seconds
+//   "teamKills"    - Kill <goal> infantry with at least [minMates] teammates within [radius]
+//   "teamMove"     - Travel <goal> metres on foot with [minMates] teammates within [radius]
+//   "groupKills"   - Group kills <goal> infantry
+//   "accuracy"     - Play <goal> seconds, then accuracy (RPG_Accuracy) must be >= <parameter> %
+//                    (only offered when enableAccuracyTrack == 1)
 // ----------------------------------------------------------------------------
-SCR_challenge_pool = [
+SCR_challenge_poolDef = [
     // --- Tier 1: EASY ---
-    ["warmUp",       "Warm-Up",         "Eliminate 5 enemy soldiers.",                                  "kills",       5,    0,  1],
-    ["pathfinder",   "Pathfinder",      "Travel 3 km on foot. Vehicles do not count.",                  "distance",    3000, 0,  1],
-    ["buddyUp",       "Buddy System",   "Stay within 30 m of a teammate for 8 minutes.",                "stayClose",  480,  [30, 1], 1],
-    ["fieldMedic",    "Field Medic",         "Heal 5 injured teammates.",                    "healMates",   5,    0,        1],
-    ["spacing",       "Tactical Spacing",    "Stay 10 to 40 m from a teammate for 8 minutes. Do not bunch up.",   "stayClose",   480,  [40, 1, 10], 1],
-
+    ["warmUp",        "kills",        5,    0,          1, [5]],
+    ["pathfinder",    "distance",     3000, 0,          1, [3]],
+    ["buddyUp",       "stayClose",    480,  [30, 1],    1, [30, 8]],
+    ["fieldMedic",    "healMates",    5,    0,          1, [5]],
+    ["spacing",       "stayClose",    480,  [40, 1, 10],1, [10, 40, 8]],
+    ["steadyAim",     "accuracy",     1800, 50,         1, ["50%", 30]],
 
     // --- Tier 2: MEDIUM ---
-    ["sharpshooter", "Sharpshooter",    "Eliminate 5 enemy soldiers from 100 m or more.",               "killFar",     5,    100, 2],
-    ["closeQuarters","Close Quarters",  "Eliminate 6 enemy soldiers from 20 m or less.",                "killNear",    6,    20, 2],
-    ["survivor",     "Survivor",        "Stay alive for 15 minutes. Time spent dead does not count.",   "survive",     900,  0,  2],
-    ["veteran",      "Veteran",         "Eliminate 12 enemy soldiers.",                                 "kills",       12,   0,  2],
-    ["stickTogether", "Stick Together", "Stay within 25 m of at least 2 teammates for 10 minutes.",     "stayClose",  600,  [25, 2], 2],
-    ["huntingParty",  "Hunting Party",  "Eliminate 6 enemy soldiers while a teammate is within 30 m.",  "teamKills",  6,    [30, 1], 2],
-    ["inFormation",   "In Formation",   "Travel 3 km on foot while staying within 25 m of a teammate.", "teamMove",   3000, [25, 1], 2],
-    ["guardian",      "Guardian Angel",      "Eliminate 5 enemies within 30 m of a teammate.",                    "protectKills", 5,   [30, 1],  2],
-    ["shuttle",       "Shared Ride",         "Travel 3 km in a vehicle with at least 2 teammates on board.",      "vehicleTeam", 3000, 2,        2],
-    ["combatMedic",   "Combat Medic",        "Heal 10 injured teammates.",                               "healMates",   10,    0,        2],
-    ["holdLine",      "Hold the Line",       "Stay put with 2 teammates within 30 m for 5 minutes. Leaving resets progress.", "holdArea", 300, [30, 2], 2],
-
-
+    ["sharpshooter",  "killFar",      5,    100,        2, [5, 100]],
+    ["closeQuarters", "killNear",     6,    20,         2, [6, 20]],
+    ["survivor",      "survive",      900,  0,          2, [15]],
+    ["veteran",       "kills",        12,   0,          2, [12]],
+    ["stickTogether", "stayClose",    600,  [25, 2],    2, [2, 25, 10]],
+    ["huntingParty",  "teamKills",    6,    [30, 1],    2, [6, 30]],
+    ["inFormation",   "teamMove",     3000, [25, 1],    2, [3, 25]],
+    ["guardian",      "protectKills", 5,    [30, 1],    2, [5, 30]],
+    ["shuttle",       "vehicleTeam",  3000, 2,          2, [3, 2]],
+    ["combatMedic",   "healMates",    10,   0,          2, [10]],
+    ["holdLine",      "holdArea",     300,  [30, 2],    2, [2, 30, 5]],
+    ["marksman",      "accuracy",     1800, 75,         2, ["75%", 30]],
 
     // --- Tier 3: HARD ---
-    ["vehicleHunter","Vehicle Hunter",  "Destroy 2 enemy vehicles.",                                    "vehicleKill", 2,    0,  3],
-    ["killingSpree", "Killing Spree",   "Eliminate 3 enemy soldiers within 15 seconds.",                "streak",      3,    15, 3],
-    ["rampage",      "Rampage",         "Eliminate 6 enemy soldiers within 60 seconds.",                "streak",      6,    60, 3],
-    ["wolfPack",      "Wolf Pack",          "Your group eliminates 20 enemy soldiers together.",                 "groupKills", 20,   0,       3],
-    ["brothers",      "Band of Brothers",   "Stay within 20 m of at least 2 teammates for 15 minutes.",          "stayClose",  900,  [20, 2], 3],
-    ["assault",       "Coordinated Assault","Eliminate 10 enemy soldiers while 2 teammates are within 40 m.",    "teamKills",  10,   [40, 2], 3],
-    ["flawless",      "Flawless Squad",      "Your group eliminates 12 enemies without losing a single member.",  "noLoss",      12,   0,        3],
-    ["syncStrike",    "Synchronised Strike", "Your group eliminates 5 enemies within 20 seconds.",                "groupStreak", 5,    20,       3],
-    ["ultraMedic",    "Ultra Medic",        "Heal 20 injured teammates.",                               "healMates",   20,    0,        3],
-    ["lastStand",     "Last Stand",          "Stay put with 3 teammates within 25 m for 10 minutes. Leaving resets progress.", "holdArea", 600, [25, 3], 3]
+    ["vehicleHunter", "vehicleKill",  2,    0,          3, [2]],
+    ["killingSpree",  "streak",       3,    15,         3, [3, 15]],
+    ["rampage",       "streak",       6,    60,         3, [6, 60]],
+    ["wolfPack",      "groupKills",   20,   0,          3, [20]],
+    ["brothers",      "stayClose",    900,  [20, 2],    3, [2, 20, 15]],
+    ["assault",       "teamKills",    10,   [40, 2],    3, [10, 2, 40]],
+    ["flawless",      "noLoss",       12,   0,          3, [12]],
+    ["syncStrike",    "groupStreak",  5,    20,         3, [5, 20]],
+    ["ultraMedic",    "healMates",    20,   0,          3, [20]],
+    ["lastStand",     "holdArea",     600,  [25, 3],    3, [3, 25, 10]],
+    ["deadEye",       "accuracy",     1800, 90,         3, ["90%", 30]]
 ];
+
+// Final pool, same layout as before:
+// [id, titleKey, descKey, type, goal, parameter, tier, descArgs]
+SCR_challenge_pool = SCR_challenge_poolDef apply {
+    _x params ["_id", "_type", "_goal", "_parameter", "_tier", "_args"];
+    [
+        _id,
+        format ["STR_RPG_Challenge_T_%1", _id],
+        format ["STR_RPG_Challenge_D_%1", _id],
+        _type, _goal, _parameter, _tier, _args
+    ]
+};
+
+// ----------------------------------------------------------------------------
+// Helpers: localized title / description of a challenge definition
+// ----------------------------------------------------------------------------
+SCR_fnc_challenge_getTitle = {
+    params ["_definition"];
+    localize (_definition select 1)
+};
+
+SCR_fnc_challenge_getDesc = {
+    params ["_definition"];
+    format ([localize (_definition select 2)] + (_definition select 7))
+};
+
+// ----------------------------------------------------------------------------
+// Accuracy helpers
+// ----------------------------------------------------------------------------
+// Is the accuracy computation engine available?
+SCR_fnc_challenge_accuracyEnabled = {
+    (missionNamespace getVariable ["enableAccuracyTrack", 1]) == 1
+};
+
+// Current accuracy of the player, in percent (0..100)
+SCR_fnc_challenge_getAccuracy = {
+    private _value = player getVariable ["RPG_Accuracy", 0];
+    if (SCR_challenge_accuracyIsFraction) then { _value = _value * 100 };
+    _value
+};
+
+// Challenges that can currently be offered (accuracy ones need the tracking engine)
+SCR_fnc_challenge_getAvailablePool = {
+    private _enabled = call SCR_fnc_challenge_accuracyEnabled;
+    SCR_challenge_pool select { _enabled || {!((_x select 3) isEqualTo "accuracy")} }
+};
 
 // ----------------------------------------------------------------------------
 // Helper: format a progress value for display
-// Params: 0: STRING - challenge type, 1: NUMBER - progress, 2: NUMBER - goal
+// Params: 0: STRING - challenge type, 1: NUMBER - progress, 2: NUMBER - goal, 3: ANY - parameter
 // Returns: STRING
 // ----------------------------------------------------------------------------
 SCR_fnc_challenge_formatProgress = {
-    params ["_type", "_progress", "_goal"];
+    params ["_type", "_progress", "_goal", ["_parameter", 0]];
 
     switch (_type) do {
         case "distance";
         case "teamMove";
         case "vehicleTeam": {
-            format ["%1 / %2 m", round _progress, _goal]
+            format [localize "STR_RPG_Challenge_Progress_Meters", round _progress, _goal]
         };
         case "survive";
         case "stayClose";
@@ -156,14 +212,23 @@ SCR_fnc_challenge_formatProgress = {
                 [_goal, "MM:SS"] call BIS_fnc_secondsToString
             ]
         };
+        case "accuracy": {
+            format [
+                localize "STR_RPG_Challenge_Progress_Accuracy",
+                [round _progress, "MM:SS"] call BIS_fnc_secondsToString,
+                [_goal, "MM:SS"] call BIS_fnc_secondsToString,
+                (str round (call SCR_fnc_challenge_getAccuracy)) + "%",
+                (str _parameter) + "%"
+            ]
+        };
         default {
             format ["%1 / %2", floor _progress, _goal]
         };
     }
 };
 
-// Soins reconnus comme "soins" côté ACE (pansements, médicaments, réanimation, perfusions, etc.)
-//Count only bandage
+// Soins reconnus comme "soins" côté ACE
+// Count only bandage
 SCR_challenge_aceTreatments = [
     "ACE_fieldDressing",
     "ACE_packingBandage",
@@ -215,50 +280,48 @@ SCR_fnc_challenge_addHealHandler = {
     }];
 };
 
-//Reset side task on respawn
+// Reset side task on respawn
 SCR_fnc_challenge_addRespawnHandler = {
     params ["_unit"];
 
-    // Avec ACE, HandleHeal n'est pas utilisé : on ne l'ajoute pas
-    //if (SCR_challenge_hasACE) exitWith {};
-
-    private _respawnEH = _unit addEventHandler ["Respawn",{ 
+    private _respawnEH = _unit addEventHandler ["Respawn", {
         params ["_unit", "_corpse"];
 
-        //Reset side task
-        //_unit = player;
         private _hasChallenge = false;
-        if (count SCR_challenge_current != 0) then 
+        if (count SCR_challenge_current != 0) then
         {
-            SCR_challenge_current = [];
+            SCR_challenge_current  = [];
+            SCR_challenge_progress = 0;
+            SCR_challenge_streak   = [];
+            SCR_challenge_anchor   = [];
             _unit setVariable ["RPG_SideTaskType", ""];
             _hasChallenge = true;
         };
 
-        //Inform player 
-        if (_hasChallenge) then 
+        // Inform player
+        if (_hasChallenge) then
         {
-			[[format ["Your side task has been reset due to respawn"], "intel"], 'engine\hintManagement\addCustomHint.sqf'] remoteExec ['BIS_fnc_execVM', _unit];
+            [[localize "STR_RPG_Challenge_Msg_Respawn", "intel"], 'engine\hintManagement\addCustomHint.sqf'] remoteExec ['BIS_fnc_execVM', _unit];
         };
     }];
 };
-
-
 
 // --- Mode ACE : event local sur la machine du soigneur ---
 SCR_fnc_challenge_initACE = {
     if (!SCR_challenge_hasACE) exitWith {};
 
+    // Le handler CBA est global au client : on ne l'enregistre qu'une fois (pas à chaque respawn)
+    if (!isNil "SCR_challenge_aceInitDone") exitWith {};
+    SCR_challenge_aceInitDone = true;
+
     ["ace_treatmentSucceded", {
-		params ["_caller", "_target", "_selectionName", "_className", "_itemUser", "_usedItem"];
-        // systemChat format ["tested : %1 currently", _usedItem];
+        params ["_caller", "_target", "_selectionName", "_className", "_itemUser", "_usedItem"];
 
         if (_target isEqualTo _caller) exitWith {};            // pas d'auto-soin
-        if !(isPlayer _target) exitWith {};                   // seulement des joueurs
-        if !(isPlayer _caller) exitWith {};                   // seulement des joueurs
+        if !(isPlayer _target) exitWith {};                    // seulement des joueurs
+        if !(isPlayer _caller) exitWith {};                    // seulement des joueurs
         if !(side group _target isEqualTo side group _caller) exitWith {};
         if !(_usedItem in SCR_challenge_aceTreatments) exitWith {};
-        // systemChat format ["tested : %1 success", _usedItem];
 
         [_target] call SCR_fnc_challenge_registerHeal;
     }] call CBA_fnc_addEventHandler;
@@ -282,7 +345,7 @@ SCR_fnc_challenge_updateHud = {
             safeZoneX + 0.01,
             safeZoneY + 0.28 * safeZoneH,
             0.15 * safeZoneW,
-            0.09 * safeZoneH
+            0.11 * safeZoneH
         ];
         _ctrl ctrlSetBackgroundColor [0, 0, 0, 0.55];
         _ctrl ctrlCommit 0;
@@ -297,13 +360,14 @@ SCR_fnc_challenge_updateHud = {
     private _text = if !(_message isEqualTo "") then {
         parseText _message
     } else {
-        SCR_challenge_current params ["_id", "_title", "_desc", "_type", "_goal"];
-        private _updatedText = [_type, SCR_challenge_progress, _goal] call SCR_fnc_challenge_formatProgress;
+        SCR_challenge_current params ["_id", "_titleKey", "_descKey", "_type", "_goal", "_parameter"];
+        private _updatedText = [_type, SCR_challenge_progress, _goal, _parameter] call SCR_fnc_challenge_formatProgress;
         player setVariable ["RPG_SideTaskStatus", _updatedText];
         player setVariable ["RPG_SideTaskType", _type];
         parseText format [
-            "<t size='0.8' color='#FFD966'>CHALLENGE</t><br/><t size='0.9'>%1</t><br/><t size='0.9' color='#9FE2BF'>%2</t>",
-            _title,
+            "<t size='0.8' color='#FFD966'>%1</t><br/><t size='0.9'>%2</t><br/><t size='0.9' color='#9FE2BF'>%3</t>",
+            localize "STR_RPG_Challenge_Hud_Title",
+            localize _titleKey,
             _updatedText
         ]
     };
@@ -311,8 +375,8 @@ SCR_fnc_challenge_updateHud = {
     _ctrl ctrlSetStructuredText _text;
     _ctrl ctrlShow true;
 
-    //Display ctrl only 2 seconds
-    [_ctrl] spawn 
+    // Display ctrl only 3 seconds
+    [_ctrl] spawn
     {
         params ["_ctrl"];
         sleep 3;
@@ -321,16 +385,16 @@ SCR_fnc_challenge_updateHud = {
 };
 
 // ----------------------------------------------------------------------------
-// Internal reward function: spawns a supply crate near the player and heals them.
-// The content of the crate depends on the challenge tier.
+// Internal reward function: gives XP depending on the challenge tier.
 // Params: 0: NUMBER - tier (1 = easy, 2 = medium, 3 = hard)
 // ----------------------------------------------------------------------------
 SCR_fnc_challenge_giveReward = {
     params [["_tier", 1, [0]]];
 
     private _index = (_tier - 1) max 0 min 2;
+    private _xp    = (SCR_challenge_tierData select _index) select 2;
 
-    [[25, 50, 100] select _index, "RPG_ranking_objective_complete"] call doUpdateRank;
+    [_xp, "RPG_ranking_objective_complete"] call doUpdateRank;
 };
 
 // ----------------------------------------------------------------------------
@@ -346,12 +410,62 @@ SCR_fnc_challenge_setProgress = {
     SCR_challenge_progress = _value min _goal;
 
     if (SCR_challenge_progress >= _goal) exitWith {
-        [] call SCR_fnc_challenge_complete;
+        // Accuracy challenges: the timer is over, the result decides
+        if ((SCR_challenge_current select 3) isEqualTo "accuracy") then {
+            [] call SCR_fnc_challenge_resolveAccuracy;
+        } else {
+            [] call SCR_fnc_challenge_complete;
+        };
     };
 
     [""] call SCR_fnc_challenge_updateHud;
 };
 
+// ----------------------------------------------------------------------------
+// Accuracy challenge: end of the timer, check the accuracy reached
+// ----------------------------------------------------------------------------
+SCR_fnc_challenge_resolveAccuracy = {
+    if (SCR_challenge_current isEqualTo []) exitWith {};
+
+    private _required = SCR_challenge_current select 5;
+    private _accuracy = call SCR_fnc_challenge_getAccuracy;
+
+    if (_accuracy >= _required) then {
+        [] call SCR_fnc_challenge_complete;
+    } else {
+        [format [
+            localize "STR_RPG_Challenge_Msg_AccuracyFailed",
+            (str round _accuracy) + "%",
+            (str _required) + "%"
+        ]] call SCR_fnc_challenge_fail;
+    };
+};
+
+// ----------------------------------------------------------------------------
+// Fails the active challenge (no reward, the player is free again)
+// Params: 0: STRING - reason displayed to the player
+// ----------------------------------------------------------------------------
+SCR_fnc_challenge_fail = {
+    params [["_reason", ""]];
+
+    if (SCR_challenge_current isEqualTo []) exitWith {};
+
+    private _title = [SCR_challenge_current] call SCR_fnc_challenge_getTitle;
+
+    SCR_challenge_current  = [];
+    SCR_challenge_progress = 0;
+    SCR_challenge_streak   = [];
+    SCR_challenge_anchor   = [];
+
+    [format [
+        "<t size='0.8' color='#FF6666'>%1</t><br/><t size='0.9'>%2</t><br/><t size='0.8'>%3</t>",
+        localize "STR_RPG_Challenge_Hud_Failed",
+        _title,
+        _reason
+    ]] call SCR_fnc_challenge_updateHud;
+
+    systemChat _reason;
+};
 
 // ----------------------------------------------------------------------------
 // Completes the active challenge and gives the reward
@@ -359,18 +473,20 @@ SCR_fnc_challenge_setProgress = {
 SCR_fnc_challenge_complete = {
     if (SCR_challenge_current isEqualTo []) exitWith {};
 
-    private _title = SCR_challenge_current select 1;
+    private _title = [SCR_challenge_current] call SCR_fnc_challenge_getTitle;
     private _tier  = SCR_challenge_current select 6;
 
     // Free the player: they may request a new challenge afterwards
     SCR_challenge_current  = [];
     SCR_challenge_progress = 0;
     SCR_challenge_streak   = [];
+    SCR_challenge_anchor   = [];
 
     [_tier] call SCR_fnc_challenge_giveReward;
 
     [format [
-        "<t size='0.8' color='#7CFC00'>CHALLENGE COMPLETE</t><br/><t size='0.9'>%1</t>",
+        "<t size='0.8' color='#7CFC00'>%1</t><br/><t size='0.9'>%2</t>",
+        localize "STR_RPG_Challenge_Hud_Complete",
         _title
     ]] call SCR_fnc_challenge_updateHud;
 
@@ -382,7 +498,6 @@ SCR_fnc_challenge_complete = {
         };
     };
 };
-
 
 // ----------------------------------------------------------------------------
 // Accepts a challenge: the player is now committed to it
@@ -397,14 +512,15 @@ SCR_fnc_challenge_accept = {
     SCR_challenge_current  = _definition;
     SCR_challenge_progress = 0;
     SCR_challenge_streak   = [];
+    SCR_challenge_anchor   = [];
     SCR_challenge_offers   = [];
 
-    systemChat format ["[Challenge] Accepted: %1. There is no turning back!", _definition select 1];
+    systemChat format [localize "STR_RPG_Challenge_Msg_Accepted", [_definition] call SCR_fnc_challenge_getTitle];
     [""] call SCR_fnc_challenge_updateHud;
 };
 
 // Count player alive around
-// Params: 0: NUMBER - rayon en mètres
+// Params: 0: NUMBER - radius (m), 1: NUMBER - min distance from player, 2: OBJECT/ARRAY - centre
 // Returns: NUMBER
 SCR_fnc_challenge_countMates = {
     params [["_radius", 30], ["_minDist", 0], ["_center", player]];
@@ -434,7 +550,7 @@ SCR_fnc_challenge_onKill = {
     if ((SCR_challenge_current select 3) isEqualTo "noLoss" && {(group _victim) isEqualTo (group player)}) exitWith {
         SCR_challenge_progress = 0;
         [""] call SCR_fnc_challenge_updateHud;
-        systemChat "[Challenge] A teammate has fallen... progress reset.";
+        systemChat localize "STR_RPG_Challenge_Msg_MateFallen";
     };
 
     // Le vrai tireur est l'instigateur quand il est disponible
@@ -456,7 +572,7 @@ SCR_fnc_challenge_onKill = {
     };
     private _distance = player distance _victim;
 
-    SCR_challenge_current params ["_id", "_title", "_desc", "_type", "_goal", "_parameter"];
+    SCR_challenge_current params ["_id", "_titleKey", "_descKey", "_type", "_goal", "_parameter"];
 
     switch (_type) do {
         case "kills": {
@@ -524,22 +640,36 @@ SCR_fnc_challenge_openBoard = {
 
     // A challenge is already active
     if !(SCR_challenge_current isEqualTo []) exitWith {
-        systemChat format ["[Challenge] You already have an active challenge: %1.", SCR_challenge_current select 1];
+        systemChat format [
+            localize "STR_RPG_Challenge_Msg_Active",
+            [SCR_challenge_current] call SCR_fnc_challenge_getTitle
+        ];
     };
 
     private _parent = findDisplay 46;
     if (isNull _parent) exitWith {};
 
-    // Pick one random challenge per tier
+    // Pending offers containing an accuracy challenge are dropped if tracking got disabled
+    if (
+        !(SCR_challenge_offers isEqualTo [])
+        && {!(call SCR_fnc_challenge_accuracyEnabled)}
+        && {(SCR_challenge_offers findIf { (_x select 3) isEqualTo "accuracy" }) >= 0}
+    ) then {
+        SCR_challenge_offers = [];
+    };
+
+    // Pick one random challenge per tier (only if no offers are pending)
     if (SCR_challenge_offers isEqualTo []) then {
-        private _teamTier = selectRandom [1, 2, 3];
+        private _available = call SCR_fnc_challenge_getAvailablePool;
+        private _teamTier  = selectRandom [1, 2, 3];
 
         SCR_challenge_offers = [1, 2, 3] apply {
             private _tier = _x;
-            private _list = SCR_challenge_pool select { (_x select 6) == _tier };
+            private _list = _available select { (_x select 6) == _tier };
 
             if (_tier == _teamTier) then {
-                _list = _list select { (_x select 3) in SCR_challenge_teamTypes };
+                private _teamList = _list select { (_x select 3) in SCR_challenge_teamTypes };
+                if !(_teamList isEqualTo []) then { _list = _teamList };
             };
             selectRandom _list
         };
@@ -566,26 +696,37 @@ SCR_fnc_challenge_openBoard = {
     // Title
     private _titleCtrl = _display ctrlCreate ["RscStructuredText", -1];
     _titleCtrl ctrlSetPosition [_x0 + _pad, _y0 + 0.01 * safeZoneH, _innerW, 0.06 * safeZoneH];
-    _titleCtrl ctrlSetStructuredText parseText "<t align='center' size='1.4' color='#FFD966'>CHALLENGE BOARD</t>";
+    _titleCtrl ctrlSetStructuredText parseText format [
+        "<t align='center' size='1.4' color='#FFD966'>%1</t>",
+        localize "STR_RPG_Challenge_Board_Title"
+    ];
     _titleCtrl ctrlCommit 0;
 
     // Question
     private _questionCtrl = _display ctrlCreate ["RscStructuredText", -1];
     _questionCtrl ctrlSetPosition [_x0 + _pad, _y0 + 0.075 * safeZoneH, _innerW, 0.08 * safeZoneH];
-    _questionCtrl ctrlSetStructuredText parseText "<t align='center'>Would you like to take on a challenge?</t><br/><t align='center' size='0.85' color='#FF9999'>Choose carefully: once accepted, you must complete it. Dying will cancel the task.</t>";
+    _questionCtrl ctrlSetStructuredText parseText format [
+        "<t align='center'>%1</t><br/><t align='center' size='0.85' color='#FF9999'>%2</t>",
+        localize "STR_RPG_Challenge_Board_Question",
+        localize "STR_RPG_Challenge_Board_Warning"
+    ];
     _questionCtrl ctrlCommit 0;
 
     // One card per offered challenge: a button (title) and a text (description + reward)
     {
         private _definition = _x;
-        _definition params ["_id", "_title", "_desc", "_type", "_goal", "_parameter", "_tier"];
-        (SCR_challenge_tierData select (_tier - 1)) params ["_tierLabel", "_tierColor", "_rewardName"];
+        _definition params ["_id", "_titleKey", "_descKey", "_type", "_goal", "_parameter", "_tier"];
+        (SCR_challenge_tierData select (_tier - 1)) params ["_tierLabelKey", "_tierColor", "_xp"];
+
+        private _title     = localize _titleKey;
+        private _desc      = [_definition] call SCR_fnc_challenge_getDesc;
+        private _rewardTxt = format [localize "STR_RPG_Challenge_Reward_XP", _xp];
 
         private _cardY = _y0 + (0.17 + _forEachIndex * 0.155) * safeZoneH;
 
         private _button = _display ctrlCreate ["RscButton", -1];
         _button ctrlSetPosition [_x0 + _pad, _cardY, _innerW, 0.06 * safeZoneH];
-        _button ctrlSetText format ["[%1]  %2", _tierLabel, _title];
+        _button ctrlSetText format ["[%1]  %2", localize _tierLabelKey, _title];
         _button ctrlSetTextColor _tierColor;
         _button setVariable ["SCR_offerIndex", _forEachIndex];
         _button ctrlAddEventHandler ["ButtonClick", {
@@ -601,9 +742,9 @@ SCR_fnc_challenge_openBoard = {
         private _descCtrl = _display ctrlCreate ["RscStructuredText", -1];
         _descCtrl ctrlSetPosition [_x0 + _pad, _cardY + 0.062 * safeZoneH, _innerW, 0.075 * safeZoneH];
         _descCtrl ctrlSetStructuredText parseText format [
-            "<t size='0.85' color='#CCCCCC'>%1</t><br/><t size='0.85' color='#9FE2BF'>Reward: %2</t>",
+            "<t size='0.85' color='#CCCCCC'>%1</t><br/><t size='0.85' color='#9FE2BF'>%2</t>",
             _desc,
-            _rewardName
+            format [localize "STR_RPG_Challenge_Reward", _rewardTxt]
         ];
         _descCtrl ctrlCommit 0;
     } forEach SCR_challenge_offers;
@@ -611,7 +752,7 @@ SCR_fnc_challenge_openBoard = {
     // Decline button
     private _decline = _display ctrlCreate ["RscButton", -1];
     _decline ctrlSetPosition [_x0 + _pad, _y0 + 0.645 * safeZoneH, _innerW, 0.05 * safeZoneH];
-    _decline ctrlSetText "No thanks";
+    _decline ctrlSetText (localize "STR_RPG_Challenge_Board_Decline");
     _decline ctrlAddEventHandler ["ButtonClick", {
         params ["_ctrl"];
         (ctrlParent _ctrl) closeDisplay 2;
@@ -627,7 +768,7 @@ SCR_fnc_challenge_addAction = {
     params ["_unit"];
 
     _unit addAction [
-        "<t color='#FFD966'>Request a challenge</t>",
+        format ["<t color='#FFD966'>%1</t>", localize "STR_RPG_Challenge_Action"],
         { [] call SCR_fnc_challenge_openBoard },
         [],
         0.5,
@@ -647,20 +788,20 @@ addMissionEventHandler ["EntityKilled", {
     _this call SCR_fnc_challenge_onKill;
 }];
 
-// Re-add the action when the player respawns (a new unit is created)
+// Re-add the handlers when the player respawns (a new unit is created)
 addMissionEventHandler ["EntityRespawned", {
     params ["_newEntity"];
     if (_newEntity isEqualTo player) then {
 //        [_newEntity] call SCR_fnc_challenge_addAction;
         [_newEntity] call SCR_fnc_challenge_addHealHandler;
-        [_newEntity] call SCR_fnc_challenge_initACE;   //Ace handler
-    }; 
+        [_newEntity] call SCR_fnc_challenge_initACE;   // Ace handler (registered once)
+    };
 }];
 
 [] spawn {
     waitUntil { !isNull player };
-    [player] call SCR_fnc_challenge_addHealHandler; //Standard handler 
-    [player] call SCR_fnc_challenge_initACE;   //Ace handler
+    [player] call SCR_fnc_challenge_addHealHandler; // Standard handler
+    [player] call SCR_fnc_challenge_initACE;        // Ace handler
     [player] call SCR_fnc_challenge_addRespawnHandler;
 };
 
@@ -699,6 +840,11 @@ addMissionEventHandler ["EntityRespawned", {
                     [SCR_challenge_progress + 1] call SCR_fnc_challenge_setProgress;
                 };
 
+                case "accuracy": {
+                    // 30 minutes timer: the accuracy is checked when it reaches the goal
+                    [SCR_challenge_progress + 1] call SCR_fnc_challenge_setProgress;
+                };
+
                 case "stayClose": {
                     _parameter params ["_radius", "_minMates", ["_minDist", 0]];
                     if (([_radius, _minDist] call SCR_fnc_challenge_countMates) >= _minMates) then {
@@ -730,10 +876,10 @@ addMissionEventHandler ["EntityRespawned", {
                 case "distance";
                 case "teamMove";
                 case "vehicleTeam": {
-                    private _veh   = vehicle player;
+                    private _veh    = vehicle player;
                     private _onFoot = _veh isEqualTo player;
-                    private _ok    = false;
-                    private _max   = 20;
+                    private _ok     = false;
+                    private _max    = 20;
 
                     switch (_type) do {
                         case "distance": { _ok = _onFoot };
