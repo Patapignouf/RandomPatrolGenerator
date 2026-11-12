@@ -1353,7 +1353,30 @@ switch (missionNameSpace getVariable ["WeatherSetting", 2]) do
 //Setup time multipler 
 [[missionNameSpace getVariable ["TimeMultiplierVar", 1]], 'engine\timeMultiplierManager.sqf'] remoteExec ['BIS_fnc_execVM', 0];
 
+//Add handler to manage disconnected players
+addMissionEventHandler ["HandleDisconnect", {
+    // Extract parameters passed by the event handler
+    params ["_unit", "_id", "_uid", "_name"];
 
+    // Example 1: Write a log entry to the server RPT log file
+    diag_log text format ["[DISCONNECT] Player '%1' (UID: %2) left the mission.", _name, _uid];
+
+    // Example 2: Broadcast a message to all remaining players
+    [
+        west, 
+        format ["'%1' has left the battlefield.", _name]
+    ] remoteExec ["globalChat", 0];
+
+    // Example 3: Save inventory or player state here
+    // Note: The '_unit' object is still accessible at this point before deletion
+	// Handle here scoreboard for disconnected players
+
+    // Return false to allow the engine to handle standard unit cleanup
+    false
+}];
+
+
+//Setup difficulty management
 //Setup difficulty management
 if (enableAutoDifficultyBalance==1) then 
 {
