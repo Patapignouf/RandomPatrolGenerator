@@ -207,16 +207,16 @@ fnc_selectMissionGui = {
             // =======================================================================
 
             // TODO: replace this block with the wanted process
-            systemChat format [
-                "Selected value: %1 | Last mission: %2 | Position: %3",
-                _value, _isLastMission, _position
-            ];
+            // systemChat format [
+            //     "Selected value: %1 | Last mission: %2 | Position: %3",
+            //     _value, _isLastMission, _position
+            // ];
 
             [_value, _isLastMission, _position] spawn {
                 params ["_value", "_isLastMission", "_position"];
 
                 // TODO: replace this block with the wanted process
-                systemChat format ["Selected value: %1 | Last mission: %2", _value, _isLastMission];
+                //systemChat format ["Selected value: %1 | Last mission: %2", _value, _isLastMission];
 
                 //Spawn mission on server side
                 [[_value, _isLastMission, _position], 
