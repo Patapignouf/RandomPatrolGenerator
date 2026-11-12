@@ -42,6 +42,7 @@ SCR_challenge_autoPrompt      = true;  // Automatically ask the player once afte
 SCR_challenge_autoPromptDelay = 15;    // Seconds to wait before the automatic prompt
 SCR_challenge_crateLifetime   = 600;   // Seconds before a reward crate is deleted
 SCR_challenge_accuracyIsFraction = false; // true if RPG_Accuracy is 0..1 instead of 0..100
+SCR_challenge_minBaseDistance = 200;  // Distance minimale (m) à "initBlueforLocation" pour que les défis progressent
 SCR_challenge_teamTypes = [
     "stayClose",
     "teamKills",
@@ -69,6 +70,7 @@ SCR_challenge_offers   = [];  // The three challenges currently offered by the b
 SCR_challenge_anchor   = [];  // Reference position for "holdArea" challenges
 // Anti-abus : un même blessé ne compte qu'une fois toutes les 60 s
 SCR_challenge_healCooldowns = createHashMap;
+SCR_challenge_lastBlockedMsg = -100;  // Anti-spam du message "progression en pause"
 
 // ----------------------------------------------------------------------------
 // Tier data: [label stringtable key, RGBA colour, XP reward]
@@ -110,37 +112,37 @@ SCR_challenge_poolDef = [
     // --- Tier 1: EASY ---
     ["warmUp",        "kills",        5,    0,          1, [5]],
     ["pathfinder",    "distance",     3000, 0,          1, [3]],
-    ["buddyUp",       "stayClose",    480,  [30, 1],    1, [30, 8]],
+    ["buddyUp",       "stayClose",    1800,  [30, 1],    1, [30, 8]],
     ["fieldMedic",    "healMates",    5,    0,          1, [5]],
-    ["spacing",       "stayClose",    480,  [40, 1, 10],1, [10, 40, 8]],
-    ["steadyAim",     "accuracy",     1800, 50,         1, ["50%", 30]],
+    ["spacing",       "stayClose",    1800,  [40, 1, 10],1, [10, 40, 8]],
+    ["steadyAim",     "accuracy",     1800, 40,         1, ["50%", 30]],
 
     // --- Tier 2: MEDIUM ---
     ["sharpshooter",  "killFar",      5,    100,        2, [5, 100]],
     ["closeQuarters", "killNear",     6,    20,         2, [6, 20]],
     ["survivor",      "survive",      900,  0,          2, [15]],
     ["veteran",       "kills",        12,   0,          2, [12]],
-    ["stickTogether", "stayClose",    600,  [25, 2],    2, [2, 25, 10]],
+    ["stickTogether", "stayClose",    1800,  [25, 2],    2, [2, 25, 10]],
     ["huntingParty",  "teamKills",    6,    [30, 1],    2, [6, 30]],
     ["inFormation",   "teamMove",     3000, [25, 1],    2, [3, 25]],
     ["guardian",      "protectKills", 5,    [30, 1],    2, [5, 30]],
     ["shuttle",       "vehicleTeam",  3000, 2,          2, [3, 2]],
     ["combatMedic",   "healMates",    10,   0,          2, [10]],
     ["holdLine",      "holdArea",     300,  [30, 2],    2, [2, 30, 5]],
-    ["marksman",      "accuracy",     1800, 75,         2, ["75%", 30]],
+    ["marksman",      "accuracy",     1800, 60,         2, ["75%", 30]],
 
     // --- Tier 3: HARD ---
     ["vehicleHunter", "vehicleKill",  2,    0,          3, [2]],
     ["killingSpree",  "streak",       3,    15,         3, [3, 15]],
     ["rampage",       "streak",       6,    60,         3, [6, 60]],
     ["wolfPack",      "groupKills",   20,   0,          3, [20]],
-    ["brothers",      "stayClose",    900,  [20, 2],    3, [2, 20, 15]],
+    ["brothers",      "stayClose",    2700,  [20, 2],    3, [2, 20, 15]],
     ["assault",       "teamKills",    10,   [40, 2],    3, [10, 2, 40]],
     ["flawless",      "noLoss",       12,   0,          3, [12]],
     ["syncStrike",    "groupStreak",  5,    20,         3, [5, 20]],
     ["ultraMedic",    "healMates",    20,   0,          3, [20]],
     ["lastStand",     "holdArea",     600,  [25, 3],    3, [3, 25, 10]],
-    ["deadEye",       "accuracy",     1800, 90,         3, ["90%", 30]]
+    ["deadEye",       "accuracy",     1800, 80,         3, ["90%", 30]]
 ];
 
 // Final pool, same layout as before:
@@ -242,6 +244,42 @@ SCR_challenge_aceTreatments = [
     // "ACE_bloodIV"
 ];
 
+// Position de la base (initBlueforLocation) : accepte une position, un objet ou un marqueur
+// Returns: ARRAY - position, ou [] si la variable n'est pas (encore) définie
+SCR_fnc_challenge_getBasePos = {
+    private _loc = missionNamespace getVariable ["initBlueforLocation", []];
+
+    switch (typeName _loc) do {
+        case "ARRAY":  { if (count _loc >= 2) then { _loc } else { [] } };
+        case "OBJECT": { if (isNull _loc) then { [] } else { getPosATL _loc } };
+        case "STRING": { if (_loc isEqualTo "") then { [] } else { getMarkerPos _loc } };
+        default { [] };
+    }
+};
+
+// Le joueur est-il assez loin de la base pour que les défis progressent ?
+// Si la variable n'existe pas, il n'y a aucune restriction.
+SCR_fnc_challenge_canProgress = {
+    private _base = call SCR_fnc_challenge_getBasePos;
+    if (_base isEqualTo []) exitWith { true };
+
+    (player distance2D _base) >= SCR_challenge_minBaseDistance
+};
+
+// Prévient le joueur (au plus toutes les 10 s) que sa progression est en pause
+SCR_fnc_challenge_notifyBlocked = {
+    if (time - SCR_challenge_lastBlockedMsg < 10) exitWith {};
+    SCR_challenge_lastBlockedMsg = time;
+
+    [format [
+        "<t size='0.8' color='#FFD966'>%1</t><br/><t size='0.85' color='#FF9999'>%2</t>",
+        localize "STR_RPG_Challenge_Hud_Title",
+        format [localize "STR_RPG_Challenge_Hud_Paused", SCR_challenge_minBaseDistance]
+    ]] call SCR_fnc_challenge_updateHud;
+};
+
+
+
 // Valide un soin et fait progresser le défi (côté soigneur)
 // Params: 0: OBJECT - blessé
 SCR_fnc_challenge_registerHeal = {
@@ -249,6 +287,7 @@ SCR_fnc_challenge_registerHeal = {
 
     if (SCR_challenge_current isEqualTo []) exitWith {};
     if !((SCR_challenge_current select 3) isEqualTo "healMates") exitWith {};
+    if !(call SCR_fnc_challenge_canProgress) exitWith { call SCR_fnc_challenge_notifyBlocked };   // <-- nouveau
 
     private _key  = netId _injured;
     private _last = SCR_challenge_healCooldowns getOrDefault [_key, -1000];
@@ -406,6 +445,10 @@ SCR_fnc_challenge_setProgress = {
 
     if (SCR_challenge_current isEqualTo []) exitWith {};
 
+    // Trop près de la base : la progression est ignorée
+    if !(call SCR_fnc_challenge_canProgress) exitWith { call SCR_fnc_challenge_notifyBlocked };
+
+
     private _goal = SCR_challenge_current select 4;
     SCR_challenge_progress = _value min _goal;
 
@@ -545,6 +588,10 @@ SCR_fnc_challenge_onKill = {
     params ["_victim", "_killer", "_instigator"];
 
     if (SCR_challenge_current isEqualTo []) exitWith {};
+
+    // Le vrai tireur est l'instigateur quand il est disponible
+    if !(call SCR_fnc_challenge_canProgress) exitWith {};   // <-- nouveau
+    private _shooter = if (isNull _instigator) then { _killer } else { _instigator };
 
     // Un membre du groupe meurt : le défi "noLoss" repart de zéro
     if ((SCR_challenge_current select 3) isEqualTo "noLoss" && {(group _victim) isEqualTo (group player)}) exitWith {

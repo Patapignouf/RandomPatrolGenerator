@@ -3781,5 +3781,15 @@
              <Chinese>游玩 %2 分钟，然后达到至少 %1 的精度。在结束时检查。</Chinese>
              <Japanese>%2 分間プレイし、その後少なくとも %1 の精度を達成する。終了時にチェックされます。</Japanese>
          </Key>
+         <Key ID="STR_RPG_Challenge_Hud_Paused">
+            <English>Progress paused: move at least %1 m away from the base.</English>
+            <French>Progression en pause : éloignez-vous d'au moins %1 m de la base.</French>
+            <Spanish>Progreso en pausa: aléjate al menos %1 m de la base.</Spanish>
+            <German>Fortschritt pausiert: Entferne dich mindestens %1 m von der Basis.</German>
+            <Italian>Progresso in pausa: allontanati di almeno %1 m dalla base.</Italian>
+            <Russian>Прогресс приостановлен: отойдите от базы как минимум на %1 м.</Russian>
+            <Chinese>进度已暂停：请距离基地至少 %1 米外。</Chinese>
+            <Japanese>進捗が一時停止しました：ベースから少なくとも %1 m離れてください。</Japanese>
+        </Key>
      </Package>
 </Project>
