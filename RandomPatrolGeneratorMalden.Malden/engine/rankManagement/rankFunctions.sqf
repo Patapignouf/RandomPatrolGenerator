@@ -441,6 +441,7 @@ increasePrestige = {
 	if (([player] call getPlayerRank) == "Colonel") then 
 	{
 		//Reset experience
+		player setVariable ["startingXP", 0, true]; //Reset starting XP for current mission
 		[0] call saveRank;
 		[player, true] call adjustRank;
 
