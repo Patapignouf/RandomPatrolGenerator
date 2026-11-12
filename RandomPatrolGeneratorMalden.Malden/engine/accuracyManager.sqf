@@ -14,7 +14,7 @@
 if (!hasInterface) exitWith {};
 
 // ---------------- Configuration ----------------
-ACC_ONLY_HOSTILE = false;   // true = count impacts on enemies only ; false = any target (unit/vehicle)
+ACC_ONLY_HOSTILE = true;   // true = count impacts on enemies only ; false = any target (unit/vehicle)
 ACC_DEBUG = false; 
 // -----------------------------------------------
 
@@ -22,6 +22,9 @@ waitUntil {!isNull player && {!isNull findDisplay 46}};
 
 ACC_shots = 0;
 ACC_hits  = 0;
+SHT_friendly = 0;
+SHT_friendlyCycleCounter = 0;
+
 
 // // --- Interface (right side of the screen) ---
 // ACC_ctrl = findDisplay 46 ctrlCreate ["RscStructuredText", -1];
@@ -50,6 +53,9 @@ ACC_fnc_update = {
 ACC_fnc_reset = {
     ACC_shots = 0;
     ACC_hits  = 0;
+    SHT_friendly = 0;
+    SHT_friendlyCycleCounter = 0;
+
     call ACC_fnc_update;
 };
 
@@ -75,7 +81,25 @@ ACC_fnc_attach = {
             if (_proj getVariable ["ACC_done", false]) exitWith {};
             if (isNull _target || {_target isEqualTo _shooter}) exitWith {};
             if (!(_target isKindOf "AllVehicles") || {!alive _target}) exitWith {};
-            if (ACC_ONLY_HOSTILE && {(side group _target) getFriend (side group _shooter) >= 0.6}) exitWith {};
+            if (ACC_ONLY_HOSTILE && {(side group _target) getFriend (side group _shooter) >= 0.6}) exitWith {
+
+                SHT_friendly = SHT_friendly + 1;
+                SHT_friendlyCycleCounter = SHT_friendlyCycleCounter + 1;
+
+                //Add penalty to shooter
+                if (isPlayer _target) then 
+                {
+                    //Lose 1% with a minimum of -1 XP by shooting friendly
+                    [{[-1,1] call doUpdateRankWithPenalty}] remoteExec ["call", _shooter];
+                };
+
+                //Inform other players
+                if ( 10 < SHT_friendlyCycleCounter) then 
+                {
+                    [[format ["%1 shoots on his friends more than %2 times this"], name _shooter, SHT_friendly], 'engine\hintManagement\addCustomHint.sqf'] remoteExec ['BIS_fnc_execVM', side _shooter];
+                    SHT_friendlyCycleCounter = 0;
+                };
+            };
 
             _proj setVariable ["ACC_done", true];
             ACC_hits = ACC_hits + 1;
