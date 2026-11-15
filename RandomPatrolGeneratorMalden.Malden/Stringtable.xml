@@ -3013,16 +3013,26 @@
              <Chinese>你想接受一个挑战吗？</Chinese>
              <Japanese>チャレンジを引き受けますか？</Japanese>
          </Key>
-         <Key ID="STR_RPG_Challenge_Board_Warning">
-             <English>Choose carefully: once accepted, you must complete it. Dying will cancel the task.</English>
-             <French>Choisissez bien : une fois accepté, vous devez le terminer. Mourir annulera la tâche.</French>
-             <Spanish>Elige con cuidado: una vez aceptado, debes completarlo. Morir cancelará la tarea.</Spanish>
-             <German>Wähle bedacht: Einmal angenommen, musst du sie abschließen. Sterben bricht die Aufgabe ab.</German>
-             <Italian>Scegli con attenzione: una volta accettata, devi completarla. Morire annullerà l'incarico.</Italian>
-             <Russian>Выбирайте осторожно: приняв испытание, вы должны завершить его. Смерть отменит задание.</Russian>
-             <Chinese>仔细选择：一旦接受，必须完成。死亡将取消任务。</Chinese>
-             <Japanese>慎重に選んでください：一度引き受けたら完了しなければなりません。死亡するとタスクがキャンセルされます。</Japanese>
-         </Key>
+        <Key ID="STR_RPG_Challenge_Board_Warning">
+                <English>Choose carefully: once accepted, you must complete it. Dying cancels the task and costs you XP.</English>
+                <French>Choisissez bien : une fois accepté, vous devez le terminer. Mourir annule la tâche et vous fait perdre de l'XP.</French>
+                <Spanish>Elige con cuidado: una vez aceptado, debes completarlo. Morir cancela la tarea y te cuesta XP.</Spanish>
+                <German>Wähle bedacht: Einmal angenommen, musst du sie abschließen. Sterben bricht die Aufgabe ab und kostet dich XP.</German>
+                <Italian>Scegli con attenzione: una volta accettata, devi completarla. Morire annulla l'incarico e ti costa XP.</Italian>
+                <Russian>Выбирайте осторожно: приняв испытание, вы должны завершить его. Смерть отменяет задание и стоит вам опыта.</Russian>
+                <Chinese>仔细选择：一旦接受，必须完成。死亡将取消任务并扣除您的经验值。</Chinese>
+                <Japanese>慎重に選んでください：一度引き受けたら完了しなければなりません。死亡するとタスクがキャンセルされ、XPが消費されます。</Japanese>
+        </Key>
+        <Key ID="STR_RPG_Challenge_Msg_DeathPenalty">
+            <English>[Challenge] You died: %1 has been cancelled. Penalty: -%2 XP.</English>
+            <French>[Défi] Vous êtes mort : %1 est annulé. Malus : -%2 XP.</French>
+            <Spanish>[Reto] Has muerto: %1 ha sido cancelado. Penalización: -%2 XP.</Spanish>
+            <German>[Herausforderung] Du bist gestorben: %1 wurde abgebrochen. Strafe: -%2 XP.</German>
+            <Italian>[Sfida] Sei morto: %1 è stata annullata. Penalità: -%2 XP.</Italian>
+            <Russian>[Испытание] Вы погибли: %1 отменено. Штраф: -%2 ОП.</Russian>
+            <Chinese>[挑战] 你死了：%1 已被取消。惩罚：-%2 经验值。</Chinese>
+            <Japanese>[チャレンジ] 死亡しました：%1 がキャンセルされました。ペナルティ：-%2 XP。</Japanese>
+        </Key>
          <Key ID="STR_RPG_Challenge_Board_Decline">
              <English>No thanks</English>
              <French>Non merci</French>
