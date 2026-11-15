@@ -325,14 +325,35 @@ rewardRandomItem = {
 //Increase personal token counter or unlock random stuff from OPFOR or Black market 
 //Test [] call shopRelatedReward;
 shopRelatedReward = {
+	params [["_forced", false], ["_forcedType", ""]];
 
 	//Check if shop/token reward has been enabled
 	if (missionNameSpace getVariable ["enableOpforWeaponShop", 2] != 0) then 
 	{
 		_rewardMode = missionNameSpace getVariable ["rewardMode", 2];
+		_expectedReward = "";
 
-		//Reward Token
-		if (_rewardMode == 0 || (_rewardMode == 2 && (profileNameSpace getVariable ["RPG_rewardMode", "Token"] == "Token"))) then 
+		//Find type of reward
+		if (!_forced) then 
+		{
+			//Reward Token
+			if (_rewardMode == 0 || (_rewardMode == 2 && (profileNameSpace getVariable ["RPG_rewardMode", "Token"] == "Token"))) then 
+			{
+				_expectedReward = "Token";
+			};
+
+			//Reward random stuff
+			if (_rewardMode == 1 || (_rewardMode == 2 && (profileNameSpace getVariable ["RPG_rewardMode", "Token"] == "Instant"))) then 
+			{
+				_expectedReward = "Instant";
+			};
+		} else 
+		{
+			_expectedReward = _forcedType;
+		};
+
+		//Give reward to player
+		if (_expectedReward == "Token") then 
 		{
 			//Get current token number
 			_baseTokenReward = 100;
@@ -340,10 +361,7 @@ shopRelatedReward = {
 			profileNameSpace setVariable [basePlayerCreditName, _unblockCredit+_baseTokenReward];
 
 			["scorePos",["Token", format ["+%1", _baseTokenReward], format ["Total tokens : %1", _unblockCredit+_baseTokenReward]]] call bis_fnc_showNotification;
-		};
-
-		//Reward random stuff
-		if (_rewardMode == 1 || (_rewardMode == 2 && (profileNameSpace getVariable ["RPG_rewardMode", "Token"] == "Instant"))) then 
+		} else 
 		{
 			[] call rewardRandomItem;
 		};
