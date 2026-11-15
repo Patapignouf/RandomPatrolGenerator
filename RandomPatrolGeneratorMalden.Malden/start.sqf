@@ -950,8 +950,13 @@ if (missionNameSpace getVariable ["addAmbientOpforLoc", 1] == 1) then
 									_currentGroup = [_currentRandomGroup, getPos thisTrigger, east, "DefenseInfantry"] call doGenerateEnemyGroup;
 
 									//Spawn group
-									[_currentGroup, getPos (leader _currentGroup), 200, false] call doGarrison;
+									[_currentGroup, getPos (leader _currentGroup), selectRandom [100, 150, 200], false] call doGarrison;
 								};
+
+								//Fortify position 
+								_tempBaseGroup = selectRandom EnemyWaveLevel_6;
+								_outpostUnits = [_tempBaseGroup, getPos thisTrigger, east, "DefenseInfantry"] call doGenerateEnemyGroup;
+								[getPos thisTrigger, _outpostUnits, 200] call generateFortifyArea;
 
 								//Create supply 
 								_tempPosition = [getPos thisTrigger, 200] call BIS_fnc_nearestRoad;

@@ -14,6 +14,15 @@ if (_tempAvailablePosition distance _thisAvailablePosition < 200) then
 	_thisAvailablePosition = _tempAvailablePosition;
 };
 
+//Randomize fortifications with 50% chance
+if (random 100 < 50) then 
+{
+	//Fortify position 
+	_tempBaseGroup = selectRandom _basicEnemyGroups;
+	_outpostUnits = [_tempBaseGroup, _thisAvailablePosition, east, "DefenseInfantry"] call doGenerateEnemyGroup;
+	[_thisAvailablePosition, _outpostUnits, selectRandom [100, 150, 200]] call generateFortifyArea;
+};
+
 //Generate enemy infantry on AO
 diag_log format ["Infantry generation start on AO %1",_thisAvailablePosition];
 _baseRadius = 60;
