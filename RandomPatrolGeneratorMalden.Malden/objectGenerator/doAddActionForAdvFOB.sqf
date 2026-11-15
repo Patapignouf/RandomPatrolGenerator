@@ -27,6 +27,7 @@ params ["_deployableFOBItem", "_deployableFOBMounted"];
 			//diag_log format ["FOB object : %1", _spawnFOBObjects];
 			{
 				_x setVariable ["isAdvancedFOB", true, true];
+				_x enableSimulationGlobal false;
 			} foreach _spawnFOBObjects;
 
 			

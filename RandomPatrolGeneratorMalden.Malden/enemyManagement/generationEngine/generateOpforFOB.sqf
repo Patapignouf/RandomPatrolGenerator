@@ -59,6 +59,13 @@ if (!([_OpforFobLocation] call isLocationOnMap)) then
 	
 	//Spawn FOB
 	_spawnFOBObjects = [_OpforFobLocation, (random 360), selectRandom avalaibleEnemyFOB] call BIS_fnc_ObjectsMapper;
+
+	//Increase FOB performance
+	{
+		_x enableSimulationGlobal false;
+	} foreach _spawnFOBObjects;
+
+
 	_OpforFobStandardOpforLocation = nearestObjects [_OpforFobLocation, ["Sign_Arrow_Large_F"], 100];
 	_OpforFobTurretOpforLocation = nearestObjects [_OpforFobLocation, ["Sign_Arrow_Large_Yellow_F"], 100];
 	diag_log format ["Display _OpforFobStandardOpforLocation : %1 ",_OpforFobStandardOpforLocation];

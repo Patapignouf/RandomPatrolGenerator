@@ -654,6 +654,7 @@ if !(_isOnWater) then
 				_x setVectorUp surfaceNormal position _x;
 				_groundPos = getPos _x;
 				_x setPos [_groundPos#0, _groundPos#1, 0];
+				_x enableSimulationGlobal false;
 			} foreach spawnFOBObjects;
 
 			initBlueforLocation = getPos (spawnFOBObjects select 0);
