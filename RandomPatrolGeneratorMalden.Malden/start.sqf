@@ -526,6 +526,9 @@ if ( count AvalaibleInitAttackPositions != 0 && (enableInitAttack == 1 || ((enab
 //Init perma harass on player
 [] spawn _generateHarass; 
 
+//Generate an enemy eventManager
+[] execVM 'enemyManagement\generationEngine\eventManager.sqf';
+
 //Init ambiant war 
 if (missionNameSpace getVariable ["enableAmbiantWar", 0] == 1) then 
 {

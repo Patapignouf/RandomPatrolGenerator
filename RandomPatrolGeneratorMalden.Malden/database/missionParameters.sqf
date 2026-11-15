@@ -1089,6 +1089,18 @@ enableFurnitureParam =
 	"Recommended on vanilla maps"
 ];
 
+enableEventSupplyDropParam = 
+[
+	[	
+		[0, "Disable"],
+		[1, "Enable (default)"]
+	],
+	"Enable Event supply drop",
+	1,
+	"enableEventSupplyDrop",
+	"Recommended as side objective"
+];
+
 linkXPWithTokenParam = 
 [
 	[	
@@ -1216,7 +1228,8 @@ baseParamsToManage = [
 	linkXPWithTokenParam, 
 	playerCounterSectorControlParam,
 	showScoreOnMissionCompleteParam,
-	enableAccuracyTrackParam
+	enableAccuracyTrackParam,
+	enableEventSupplyDropParam
 ];
 
 //Make one list by dedicated menu
@@ -1274,6 +1287,7 @@ baseGameParamToManage = [
 	enableAmbiantArtilleryParam,
 	enableGPSJammerOnMapParam, 
 	displayGPSJammerOnMapParam, 
+	enableEventSupplyDropParam,
 
 	//Specific fix
 	gameFixTitle,
