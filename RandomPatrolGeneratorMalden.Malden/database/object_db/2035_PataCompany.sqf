@@ -178,7 +178,11 @@ itemList_2035_PataCompany = [
 
 itemEngineerList_2035_PataCompany = [
 	"DemoCharge_Remote_Mag",
-	"Laserdesignator"
+	"Laserdesignator",
+	"ATMine_Range_Mag",
+	"ClaymoreDirectionalMine_Remote_Mag",
+	"APERSBoundingMine_Range_Mag",
+	"APERSMine_Range_Mag"
 ];
 	
 itemMedicList_2035_PataCompany = [
