@@ -68,7 +68,19 @@ _supplyCrate setVelocity [0, 0, 0];
 };
 
 // Red smoke on landing
-private _smokeShell = createVehicle ["SmokeShellRed", getPosATL _supplyCrate, [], 0, "CAN_COLLIDE"];
+[_supplyCrate] spawn {
+    params ["_crate"];
+
+    //Add smoke to crate
+	for [{_i = 0}, {_i < 3}, {_i = _i + 1}] do
+	{
+		_supplyLight = "Chemlight_red" createVehicle (position _crate);
+		_supplyLight attachTo [_crate, [0,0,0]];
+		_supplySmoke = "SmokeShellRed" createVehicle (position _crate);
+		_supplySmoke attachTo [_crate, [0,0,0]];
+		sleep 30;
+	};
+};
 
 private _cratePosition = getPosATL _supplyCrate;
 
