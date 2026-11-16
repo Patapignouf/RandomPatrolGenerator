@@ -35,6 +35,10 @@ private _supplyCrate = createVehicle [_crateClassName, _spawnPosition, [], 0, "C
 private _parachute   = createVehicle [_parachuteClassName, _spawnPosition, [], 0, "FLY"];
 _parachute setPosATL _spawnPosition;
 
+private _sideTaskID = format ["%1%2","_sideQuestSupply", random 10000];
+[[_sideTaskID,"SupplyDrop", _spawnPosition, _supplyCrate], "engine\objectiveManagement\doGenerateSideObjective.sqf"] remoteExec ['BIS_fnc_execVM', 2];
+
+
 // Make sure the crate is empty
 clearWeaponCargoGlobal _supplyCrate;
 clearMagazineCargoGlobal _supplyCrate;
@@ -71,26 +75,12 @@ private _cratePosition = getPosATL _supplyCrate;
 // ---------------------------------------------------------------------------
 // Side objective: map marker + task
 // ---------------------------------------------------------------------------
-private _objectiveMarkerName = format ["supplyDropMarker_%1", _taskId];
-private _objectiveMarker = createMarker [_objectiveMarkerName, _cratePosition];
-_objectiveMarker setMarkerType "mil_objective";
-_objectiveMarker setMarkerColor "ColorRed";
-_objectiveMarker setMarkerText "Supply drop";
+// private _objectiveMarkerName = format ["supplyDropMarker_%1", _taskId];
+// private _objectiveMarker = createMarker [_objectiveMarkerName, _cratePosition];
+// _objectiveMarker setMarkerType "mil_objective";
+// _objectiveMarker setMarkerColor "ColorRed";
+// _objectiveMarker setMarkerText "Supply drop";
 
-[
-    true,
-    _taskId,
-    [
-        "A supply crate has been dropped. Secure it and take its content before the enemy does. You have 30 minutes.",
-        "Secure the supply drop",
-        _objectiveMarkerName
-    ],
-    _cratePosition,
-    "CREATED",
-    1,
-    true,
-    "box"
-] call BIS_fnc_taskCreate;
 
 // ---------------------------------------------------------------------------
 // Hold action (10 seconds) available for every player, including JIP.
@@ -187,9 +177,13 @@ private _objectiveResult = "TIMEOUT"; // LOOTED, CAPTURED or TIMEOUT
 
 while { time < _objectiveDeadline } do {
     sleep 1;
+    
+    //Define status name 
+    private _taskIDStatusName = format ["%1%2", _sideTaskID, "_status"];
 
     if (_supplyCrate getVariable ["crateLooted", false]) exitWith {
         _objectiveResult = "LOOTED";
+        missionNameSpace setVariable [_taskIDStatusName, "LOOTED", true];
     };
 
     if (
@@ -197,22 +191,15 @@ while { time < _objectiveDeadline } do {
         { (units _enemyGroup) findIf { alive _x && {_x distance2D _supplyCrate < _enemyCaptureDistance} } != -1 }
     ) exitWith {
         _objectiveResult = "CAPTURED";
+        missionNameSpace setVariable [_taskIDStatusName, "CAPTURED", true];
     };
 };
 
-// ---------------------------------------------------------------------------
-// Cleanup
-// ---------------------------------------------------------------------------
-switch (_objectiveResult) do {
-    case "LOOTED":   { [_taskId, "SUCCEEDED", true] call BIS_fnc_taskSetState; };
-    case "CAPTURED": { [_taskId, "FAILED", true] call BIS_fnc_taskSetState; };
-    default          { [_taskId, "CANCELED", true] call BIS_fnc_taskSetState; };
-};
 
-deleteMarker _objectiveMarker;
+//deleteMarker _objectiveMarker;
 deleteVehicle _supplyCrate;   // Also removes the JIP hold action
 if (!isNull _smokeShell) then { deleteVehicle _smokeShell };
 
 // Let players read the task result, then remove the task
 sleep 10;
-[_taskId, true] call BIS_fnc_deleteTask;
+//[_taskId, true] call BIS_fnc_deleteTask;

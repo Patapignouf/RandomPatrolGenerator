@@ -19,7 +19,39 @@ if ((_objectiveID call BIS_fnc_taskState ) != "SUCCEEDED" && !(missionNameSpace 
 
 	switch (_objectiveType) do
 	{
+		case "SupplyDrop":
+		{
+			_currentObjectiveTitle = "STR_RPG_OBJ_SPLY_DROP";
+			_currentObjectiveDescription = ["STR_RPG_OBJ_SPLY_DROP_TEXT", mapGridPosition _objectiveLocation];
+
+			//Objective score management
+			[_objectiveID] spawn {
+				params ["_objectiveID"];
+
+				//Get side task name
+				private _taskIDStatusName = format ["%1%2", _objectiveID, "_status"];
+
+				//Wait box to be captured or looted
+				waitUntil {missionNameSpace getVariable [_taskIDStatusName, ""] != ""};
+
+				//Get status
+				_status = missionNameSpace getVariable [_taskIDStatusName, ""];
+
+				if (_status == "LOOTED") then 
+				{
+						//Success
+					[_objectiveID, "SUCCEEDED"] call BIS_fnc_taskSetState;
+					missionNameSpace setVariable [format ["RPG_%1", _objectiveID], true, true];
+					[{[25, "RPG_ranking_objective_complete"] call doUpdateRank}] remoteExec ["call", 0];	
+				} else 
+				{
+					//Failed
+					[_objectiveID, "FAILED"] call BIS_fnc_taskSetState;
+					missionNameSpace setVariable [format ["RPG_%1", _objectiveID], true, true];
+				};
 		
+			};
+		};
 		case "AttackFOB":
 		{
 			_currentObjectiveTitle = "STR_RPG_OBJ_ATK_FOB";

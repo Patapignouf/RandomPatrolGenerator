@@ -579,6 +579,28 @@
                 <Chinese>你必须控制位于%1的敌方前进作战基地。</Chinese>
                 <Japanese>位置%1のオプフォーFOBを制御しなければなりません。</Japanese>
             </Key>
+            <Key ID="STR_RPG_OBJ_SPLY_DROP">
+                <Original>Steal the enemy supply crate</Original>
+                <English>Steal the enemy supply crate</English>
+                <French>Voler la caisse de ravitaillement ennemie</French>
+                <Spanish>Robar la caja de suministros enemiga</Spanish>
+                <German>Stehle die feindliche Nachschubkiste</German>
+                <Italian>Ruba la cassa di rifornimenti nemica</Italian>
+                <Russian>Украсть вражеский ящик с припасами</Russian>
+                <Chinese>偷取敌人补给箱</Chinese>
+                <Japanese>敵の物資箱を奪う</Japanese>
+            </Key>
+            <Key ID="STR_RPG_OBJ_SPLY_DROP_TEXT">
+                <Original>You must steal the enemy supply crate at %1, but be careful as they will try to recover it as well.</Original>
+                <English>You must steal the enemy supply crate at %1, but be careful as they will try to recover it as well.</English>
+                <French>Vous devez voler la caisse de ravitaillement ennemie en %1, mais attention ils essaieront de la récupérer également.</French>
+                <Spanish>Debes robar la caja de suministros enemiga en %1, pero ten cuidado ya que también intentarán recuperarla.</Spanish>
+                <German>Du musst die feindliche Nachschubkiste bei %1 stehlen, aber pass auf, da sie versuchen werden, sie ebenfalls zurückzuholen.</German>
+                <Italian>Devi rubare la cassa di rifornimenti nemica a %1, ma attenzione perché cercheranno di recuperarla a loro volta.</Italian>
+                <Russian>Вы должны украсть вражеский ящик с припасами в %1, но будьте осторожны, так как они тоже попытаются его вернуть.</Russian>
+                <Chinese>你必须在 %1 偷取敌人的补给箱，但要小心，因为他们也会试图夺回它。</Chinese>
+                <Japanese>%1 で敵の物資箱を奪う必要がありますが、敵も回収しようとするので注意してください。</Japanese>
+            </Key>
             <Key ID="STR_RPG_OBJ_ATK_DESTROYER">
                 <Original>Attack Opfor Destroyer</Original>
                 <English>Attack Opfor Destroyer</English>

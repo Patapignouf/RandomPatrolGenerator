@@ -1367,7 +1367,7 @@ switchToRole = {
 
 	//Manage player's role
 	//Check if the role is existing and avalaible
-	if ([_caller, _role] call checkRoleAvalaibility && (count (((loadout_db select {_x # 1 == _faction}) # 0 # 0) select {_x#0 == _role}) != 0)) then
+	if ((_caller getVariable ["RPG_CanSwitchRole", true]) && [_caller, _role] call checkRoleAvalaibility && (count (((loadout_db select {_x # 1 == _faction}) # 0 # 0) select {_x#0 == _role}) != 0)) then
 	{
 		//Player is allowed to change role
 		_caller setVariable ["role", _role, true];
