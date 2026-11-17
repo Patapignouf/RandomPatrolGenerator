@@ -205,6 +205,11 @@ while { time < _objectiveDeadline } do {
         _objectiveResult = "CAPTURED";
         missionNameSpace setVariable [_taskIDStatusName, "CAPTURED", true];
     };
+
+    //Add timeout status to failed side objective
+    if (_objectiveResult == "TIMEOUT") exitWith {
+        missionNameSpace setVariable [_taskIDStatusName, "TIMEOUT", true];
+    };
 };
 
 
