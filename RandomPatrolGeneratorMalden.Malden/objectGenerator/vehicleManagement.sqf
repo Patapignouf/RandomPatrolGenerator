@@ -36,12 +36,8 @@ doGenerateVehicleForFOB =
 			case (_vehicleClass isKindOf "Car"): {
 					_kind = "Car";
 					_spawnAttempts = 0;
-					_vehicleGoodPosition = _thisPosition findEmptyPosition [_thisMinRadius, _thisMaxRadius,_vehicleClass];
-					while {(isNil "_vehicleGoodPosition" || count _vehicleGoodPosition==0) && _spawnAttempts <10} do 
-					{
-						_vehicleGoodPosition = _thisPosition findEmptyPosition [_thisMinRadius, _thisMaxRadius,_vehicleClass];
-						_spawnAttempts = _spawnAttempts +1;
-					};
+					_vehicleGoodPosition = [_thisPosition, _thisMinRadius, _thisMaxRadius,_vehicleClass] call doFindSpawnPos ;
+
 					if (!isNil "_vehicleGoodPosition" && count _vehicleGoodPosition>0) then 
 					{
 						diag_log format ["Position to spawn vehicle is not Nil %1",_vehicleGoodPosition];
@@ -319,6 +315,29 @@ getArmoredType = {
 	_result;
 };
 
+
+doFindSpawnPos = {
+	params ["_center", "_minR", "_maxR", "_class", ["_tries", 40]];
+	private _result = [];
+
+	for "_i" from 1 to _tries do {
+		if (_result isEqualTo []) then {
+			// Random candidate point within the annulus (ring)
+			private _candidate = _center getPos [_minR + random (_maxR - _minR), random 360];
+
+			if (!surfaceIsWater _candidate) then {
+				// Local, small search around the candidate
+				private _p = _candidate findEmptyPosition [0, 15, _class];
+				if (count _p > 0) then {
+					// Check the slope (0.3 ≈ 17°) based on vehicle size
+					private _flat = _p isFlatEmpty [-1, -1, 0.3, (sizeOf _class) / 2, 0, false, objNull];
+					if (count _flat > 0) then { _result = _p; };
+				};
+			};
+		};
+	};
+	_result
+};
 
 
 spawnVehicleOnAicraft = {
