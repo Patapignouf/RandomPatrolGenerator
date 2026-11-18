@@ -19,12 +19,16 @@ bluforUnarmedVehicle_2035_PataCompany = [
 	"Atlas_B_L_Truck_01_covered_F",
 	"Aegis_C_Offroad_01_covered_F_Tanoa",
 	"Aegis_C_Offroad_01_F_Tanoa",
+	"Atlas_B_L_Truck_01_transport_F",
+	"Atlas_B_L_Truck_01_ammo_F",
+	"Atlas_B_L_Truck_01_Repair_F",
 	"B_A_LSV_01_light_F",
 	"Atlas_B_L_MRAP_03_F"
 ];
 
 bluforArmedVehicle_2035_PataCompany = [
-	"B_A_LSV_01_armed_F", "B_G_Offroad_01_armed_F"
+	"B_A_LSV_01_armed_F",
+	"B_G_Offroad_01_armed_F"
 ];
 
 
@@ -41,7 +45,7 @@ bluforArmoredVehicle_2035_PataCompany = [
 ];
 
 bluforUnarmedVehicleChopper_2035_PataCompany = [
-	selectRandom ["B_A_Heli_light_03_unarmed_F", "B_Heli_Light_01_F"],
+	selectRandom ["B_A_Heli_light_03_unarmed_F", "B_Heli_Light_01_F", "B_ION_Heli_Light_02_unarmed_lxWS"],
 	selectRandom ["Aegis_B_A_Heli_Transport_02_F", "B_Heli_Transport_03_unarmed_F"]
 ];
 
@@ -80,9 +84,14 @@ bluforBoat_2035_PataCompany = [
 bluforFixedWing_2035_PataCompany = [
 	"Atlas_B_A_Plane_Transport_01_infantry_F",
 	"Atlas_B_A_Plane_Transport_01_vehicle_F",
-	selectRandom ["Aegis_B_E_Plane_Fighter_04_F",
-			"B_T_Plane_CAS_01_dynamicLoadout_F",
-			"I_Plane_Fighter_03_dynamicLoadout_F"]
+	selectRandom 
+	[
+		"Aegis_B_E_Plane_Fighter_04_F",
+		"B_T_Plane_CAS_01_dynamicLoadout_F",
+		"I_Plane_Fighter_03_dynamicLoadout_F",
+		"B_ION_Heli_Light_02_unarmed_lxWS",
+		"B_W_VTOL_01_armed_F"
+	]
 ];
 
 //Vehicule able to do HQ features (Loadout management and more)
@@ -165,6 +174,7 @@ attachmentLongList_2035_PataCompany	= [
 ////////////////////////
 itemList_2035_PataCompany = [
 	"Binocular",
+	"ACE_Altimeter",
 	"JAM_NV_Gloves_Wool_blk",
 	"ACE_EntrenchingTool",
 	"ACE_RangeTable_82mm",
