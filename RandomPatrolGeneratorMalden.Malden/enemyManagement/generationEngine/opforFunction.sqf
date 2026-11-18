@@ -346,7 +346,115 @@ generateFortifyArea = {
 		_group setBehaviour "AWARE";
 		_group setCombatMode "RED";
 		_group enableDynamicSimulation true;
+		(units _group) apply { _objects pushBack _x }; //Add units to objects returned
+
 	};
 
 	_objects
+};
+
+
+spawnOccupiedCity = {
+    params ["_trg"];
+
+    // Déjà actif ? On sort. Verrou "busy" pour éviter les chevauchements.
+    if (_trg getVariable ["spawned", false]) exitWith {};
+    _trg setVariable ["spawned", true];
+    _trg setVariable ["busy", true];
+
+    private _pos      = getPos _trg;
+    private _groups   = [];
+    private _objects  = [];
+    private _cleared  = _trg getVariable ["cleared", false];
+
+    if (!_cleared) then {
+        // Garnison
+        private _nb = missionNamespace getVariable ["ambientOpforNumberOfGroups", 1];
+        for "_i" from 1 to _nb do {
+            private _grp = [selectRandom EnemyWaveLevel_6, _pos, east, "DefenseInfantry"] call doGenerateEnemyGroup;
+            private _groupAfterGarrison = [_grp, getPos leader _grp, selectRandom [100, 150, 200], false] call doGarrison;
+
+			//Add groups generated (garrison and patrol to saved groups)
+			if (count _groupAfterGarrison != 0) then 
+			{
+				_groupAfterGarrison apply {_groups pushBackUnique _x}; 
+			};
+        };
+
+        // Fortification
+        private _outpost = [selectRandom EnemyWaveLevel_6, _pos, east, "DefenseInfantry"] call doGenerateEnemyGroup;
+        _groups pushBack _outpost;
+
+        private _before = [_pos, _outpost, 200] call generateFortifyArea;
+        _objects append _before;
+    };
+
+    // Caisse de ravitaillement (sauf si déjà volée)
+    if (!(_trg getVariable ["supplyTaken", false])) then {
+        private _road = [_pos, 200] call BIS_fnc_nearestRoad;
+        if (!isNull _road) then {
+            private _box = createVehicle ["Land_PaperBox_open_full_F", getPos _road, [], 0, "NONE"];
+            clearWeaponCargoGlobal _box;
+            clearMagazineCargoGlobal _box;
+            clearItemCargoGlobal _box;
+            clearBackpackCargoGlobal _box;
+
+            [
+                _box,
+                localize "STR_STEAL_SUPPLY",
+                "\a3\data_f_destroyer\data\UI\IGUI\Cfg\holdactions\holdAction_unloadVehicle_ca.paa",
+                "\a3\data_f_destroyer\data\UI\IGUI\Cfg\holdactions\holdAction_unloadVehicle_ca.paa",
+                "(_this distance _target < 3)",
+                "true",
+                { params ["_target", "_caller"]; _caller playMoveNow "AinvPknlMstpSnonWnonDnon_medic_1"; },
+                {},
+                {
+                    params ["_object", "_caller"];
+                    [500] call doIncrementVehicleSpawnCounter;
+                    [] call shopRelatedReward;
+                    deleteVehicle _object;
+                },
+                {},
+                [], 5, 1000, false, false
+            ] remoteExec ["BIS_fnc_holdActionAdd", 0, _box]; // JIP lié à l'objet
+
+            _trg setVariable ["box", _box];
+        };
+    };
+
+    _trg setVariable ["groups", _groups];
+    _trg setVariable ["objects", _objects];
+    _trg setVariable ["busy", false];
+};
+
+
+despawnOccupiedCity = {
+    params ["_trg"];
+
+    if (!(_trg getVariable ["spawned", false])) exitWith {};
+    waitUntil { !(_trg getVariable ["busy", false]) };
+
+    private _groups  = _trg getVariable ["groups", []];
+    private _objects = _trg getVariable ["objects", []];
+    private _box     = _trg getVariable ["box", objNull];
+
+    // Zone nettoyée par les joueurs ? On ne la fera pas revenir.
+    private _alive = 0;
+    { _alive = _alive + ({ alive _x } count units _x) } forEach _groups;
+    if (count _groups > 0 && { _alive == 0 }) then { _trg setVariable ["cleared", true] };
+
+    // Caisse déjà volée (objet supprimé) ? Elle ne reviendra pas.
+    if (isNull _box && { !isNil { _trg getVariable "box" } }) then {
+        _trg setVariable ["supplyTaken", true];
+    };
+
+    // Suppression
+    { { deleteVehicle _x } forEach (units _x); deleteGroup _x } forEach _groups;
+    { { deleteVehicle _x } forEach (crew _x); deleteVehicle _x } forEach _objects;
+    if (!isNull _box) then { deleteVehicle _box };
+
+    _trg setVariable ["groups", []];
+    _trg setVariable ["objects", []];
+    _trg setVariable ["box", nil];
+    _trg setVariable ["spawned", false];
 };

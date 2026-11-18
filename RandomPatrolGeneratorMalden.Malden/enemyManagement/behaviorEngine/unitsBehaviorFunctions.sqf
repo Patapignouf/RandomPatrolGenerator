@@ -21,13 +21,17 @@ doGarrison = {
 params ["_thisGroup", "_position", "_distance","_allowCamp"];
 	diag_log format ["doGarrison : %1 on position %2", _thisGroup, _position];
 
+	private _groupsReturn = [];
+
 	//Test if lambs IA Mod is enabled on the server
 	if (isClass (configFile >> "CfgPatches" >> "lambs_danger")) then 
 	{
 		if (!isNull _thisGroup) then
 		{
 			//Randomly place IA group in garrison or camp
+			private _savedGroup = (units _thisGroup);
 			[_thisGroup, _position, _distance, [], true, false, -2, true] call lambs_wp_fnc_taskGarrison;
+			(_savedGroup) apply { _groupsReturn pushBackUnique (group _x)};
 		};
 	} else 
 	{
@@ -46,15 +50,17 @@ params ["_thisGroup", "_position", "_distance","_allowCamp"];
 		//Make a group of 3 units to patrolling
 		if (count _units >3 && round (random 3) != 0  ) then 
 		{
-			_tempGroupPatrol = createGroup (side (_units#0));
+			private _tempGroupPatrol = createGroup (side (_units#0));
 			[_units#0] joinSilent _tempGroupPatrol;
 			[_units#1] joinSilent _tempGroupPatrol;
 			[_units#2] joinSilent _tempGroupPatrol;
 			[_tempGroupPatrol, getPos (_units#0), (50 + random 50)] call doPatrol;
+			_groupsReturn pushBack _tempGroupPatrol;
 		};
 
 		//Get the group without the first three guys
 		_units = units _thisGroup; 
+		_groupsReturn pushBack _thisGroup;
 
 		//if (count _units > count _allPositions) then {_units resize (count _allPositions);};
 		{
@@ -87,6 +93,7 @@ params ["_thisGroup", "_position", "_distance","_allowCamp"];
 			};
 		} foreach _units; 
 	};
+	_groupsReturn
 };
 
 doPatrol = {

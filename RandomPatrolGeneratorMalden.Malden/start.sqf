@@ -939,84 +939,28 @@ if (missionNameSpace getVariable ["addAmbientOpforLoc", 1] == 1) then
 					
 					if ((initBlueforLocation distance _currentLocPos > 1000) && (initCityLocation distance _currentLocPos > 1000)) then 
 					{
-						_trgLocation = createTrigger ["EmptyDetector", _currentLocPos];
-						_trgLocation setTriggerArea [1000, 1000, 0, true];
-						_trgLocation setTriggerActivation ["ANYPLAYER", "PRESENT", true];
-						_trgLocation setTriggerStatements [
+						// Trigger de spawn : 1000 m, répétable
+						private _trgSpawn = createTrigger ["EmptyDetector", _currentLocPos, false];
+						_trgSpawn setTriggerArea [1000, 1000, 0, false];
+						_trgSpawn setTriggerActivation ["ANYPLAYER", "PRESENT", true];
+						_trgSpawn setTriggerStatements [
 							"this",
-							'
-								//Create enemy units
-								_numberOfExpectedEnemyGroup = missionNameSpace getVariable ["ambientOpforNumberOfGroups", 1];
-								for [{_i = 0}, {_i < _numberOfExpectedEnemyGroup}, {_i = _i + 1}] do
-								{ 
-									_currentRandomGroup = selectRandom EnemyWaveLevel_6;
-									_currentGroup = [_currentRandomGroup, getPos thisTrigger, east, "DefenseInfantry"] call doGenerateEnemyGroup;
-
-									//Spawn group
-									[_currentGroup, getPos (leader _currentGroup), selectRandom [100, 150, 200], false] call doGarrison;
-								};
-
-								//Fortify position 
-								_tempBaseGroup = selectRandom EnemyWaveLevel_6;
-								_outpostUnits = [_tempBaseGroup, getPos thisTrigger, east, "DefenseInfantry"] call doGenerateEnemyGroup;
-								[getPos thisTrigger, _outpostUnits, 200] call generateFortifyArea;
-
-								//Create supply 
-								_tempPosition = [getPos thisTrigger, 200] call BIS_fnc_nearestRoad;
-								if (!(isNull _tempPosition)) then 
-								{
-									_boxObject = createVehicle ["Land_PaperBox_open_full_F", _tempPosition, [], 0, "NONE"];
-
-									clearWeaponCargoGlobal _boxObject;
-									clearMagazineCargoGlobal _boxObject;
-									clearItemCargoGlobal _boxObject;
-									clearBackpackCargoGlobal _boxObject;
-
-									//Add action to steal supply and give 500 credits to players
-									[
-										_boxObject, 
-										localize "STR_STEAL_SUPPLY", 
-										"\a3\data_f_destroyer\data\UI\IGUI\Cfg\holdactions\holdAction_unloadVehicle_ca.paa", 
-										"\a3\data_f_destroyer\data\UI\IGUI\Cfg\holdactions\holdAction_unloadVehicle_ca.paa", 
-										"(_this distance _target < 3)",
-										"true", 
-										{
-											// Action start code
-											params ["_target", "_caller", "_actionId", "_arguments"];
-											_caller playMoveNow "AinvPknlMstpSnonWnonDnon_medic_1";
-										}, 
-										{
-											// Action on going code
-										},  
-										{
-											// Action successfull code
-											params ["_object","_caller","_ID","_param"];
-
-											//Add credit reward for all the team
-											[500] call doIncrementVehicleSpawnCounter;
-
-											//Add personal reward to player
-											[] call shopRelatedReward;
-
-											deleteVehicle _object;
-										}, 
-										{
-											// Action failed code
-										}, 
-										[],  
-										5,
-										1000, 
-										false,
-										false
-									] remoteExec ["BIS_fnc_holdActionAdd", 0, true];
-
-								};
-
-								deleteVehicle thisTrigger;
-							',
-							"" //Maybe add clean code here
+							"[thisTrigger] spawn spawnOccupiedCity;",
+							""
 						];
 
+						// Trigger de despawn : 3000 m, agit à la désactivation
+						private _trgDespawn = createTrigger ["EmptyDetector", _currentLocPos, false];
+						_trgDespawn setTriggerArea [3000, 3000, 0, false];
+						_trgDespawn setTriggerActivation ["ANYPLAYER", "PRESENT", true];
+						_trgDespawn setVariable ["owner", _trgSpawn];
+						_trgDespawn setTriggerStatements [
+							"this",
+							"",
+							"[thisTrigger getVariable 'owner'] spawn despawnOccupiedCity;"
+						];
+
+						//Debug only
 						// _name = text _x;
 						// _pos = getPos _x;
 						// createMarkerLocal [_name, _pos];
