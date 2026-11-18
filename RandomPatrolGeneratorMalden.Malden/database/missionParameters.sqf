@@ -237,8 +237,8 @@ enableObjectiveExactLocationParam =
 [
 	[	
 		[0, "None (default)"],
-		[1, "Near (WIP)"],
-		[2, "Exact"]
+		[1, "Near (Arcade)"],
+		[2, "Exact (Arcade)"]
 	],
 	"Objective location markers",
 	0,
