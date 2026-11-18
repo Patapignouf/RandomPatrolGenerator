@@ -319,7 +319,7 @@ getItembyWarEra = {
 		//Actual Warfare
 		case 3:
 		{	
-			_itemList = ["ACE_NVG_Wide_Black_WP", "ACE_NVG_Wide_WP","ACE_NVG_Wide_Green_WP", "ACE_Sandbag_empty","ItemGPS", "ACE_DAGR", "ACE_microDAGR","B_UavTerminal","ACE_EntrenchingTool","ACE_WaterBottle","ACE_CableTie","ACE_MapTools","ItemCompass","ItemMap","ItemWatch","ACE_RangeTable_82mm","Binocular","ACE_SpraypaintRed","ACE_EarPlugs"];
+			_itemList = ["ACE_NVG_Wide_Black_WP", "ACE_NVG_Wide_WP","ACE_NVG_Wide_Green_WP", "ACE_NVG_Wide_Black", "ACE_NVG_Wide","ACE_NVG_Wide_Green", "ACE_Sandbag_empty","ItemGPS", "ACE_DAGR", "ACE_microDAGR","B_UavTerminal","ACE_EntrenchingTool","ACE_WaterBottle","ACE_CableTie","ACE_MapTools","ItemCompass","ItemMap","ItemWatch","ACE_RangeTable_82mm","Binocular","ACE_SpraypaintRed","ACE_EarPlugs"];
 			if (isClass (configFile >> "CfgPatches" >> "task_force_radio")) then {
 				_defaultRadios = ((factionDefaultRadios_db select {_x#1  == _currentFaction})#0)#0;
 
@@ -338,7 +338,7 @@ getItembyWarEra = {
 		//Future Warfare
 		case 4:
 		{
-			_itemList = ["ACE_NVG_Wide_Black_WP", "ACE_NVG_Wide_WP","ACE_NVG_Wide_Green_WP", "ACE_Sandbag_empty","ItemGPS","ACE_DAGR", "ACE_microDAGR","B_UavTerminal","ACE_EntrenchingTool","ACE_WaterBottle","ACE_CableTie","ACE_MapTools","ItemCompass","ItemMap","ItemWatch","ACE_RangeTable_82mm","Binocular","ACE_SpraypaintRed","ACE_EarPlugs"];
+			_itemList = ["ACE_NVG_Wide_Black_WP", "ACE_NVG_Wide_WP","ACE_NVG_Wide_Green_WP", "ACE_NVG_Wide_Black", "ACE_NVG_Wide","ACE_NVG_Wide_Green", "ACE_Sandbag_empty","ItemGPS","ACE_DAGR", "ACE_microDAGR","B_UavTerminal","ACE_EntrenchingTool","ACE_WaterBottle","ACE_CableTie","ACE_MapTools","ItemCompass","ItemMap","ItemWatch","ACE_RangeTable_82mm","Binocular","ACE_SpraypaintRed","ACE_EarPlugs"];
 			if (isClass (configFile >> "CfgPatches" >> "task_force_radio")) then {
 				_defaultRadios = ((factionDefaultRadios_db select {_x#1  == _currentFaction})#0)#0;
 
