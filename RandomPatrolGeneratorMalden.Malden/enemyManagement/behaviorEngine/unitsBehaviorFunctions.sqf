@@ -267,3 +267,98 @@ drawIAPositionOnMap = {
 		};
 	};
 };
+
+
+/*
+    opfor_simulation_trigger.sqf
+    Disables simulation for OPFOR units located INSIDE the trigger area
+    as long as no player is present in that zone. Units outside the zone
+    are never affected.
+
+    Parameters:
+        0 : position / object / marker name (center)
+        1 : (optional) radius in meters -> default 3000
+        2 : (optional) side concerned   -> default east
+
+    Example (init.sqf):
+        [getMarkerPos "zone_opfor"] execVM "opfor_simulation_trigger.sqf";
+*/
+createOptimizationTrigger = {
+
+	if (!isServer) exitWith {};
+
+	params [
+		["_center", [0, 0, 0]],
+		["_radius", 3000],
+		["_side", east]
+	];
+
+	_center = _center call BIS_fnc_position;
+
+	//systemChat format ["Trigger : %1 ON", _center];
+
+	OPFOR_SIM_side = _side;
+	OPFOR_frozen = [];   // Objects frozen by this script (to properly re-enable them)
+
+	OPFOR_fnc_setSim = {
+		params ["_enable", "_trg"];
+
+		if (_enable) then {
+			// Player in the area: re-enable only what was frozen
+			{
+				if (!isNull _x) then { _x enableSimulationGlobal true; };
+			} forEach OPFOR_frozen;
+			OPFOR_frozen = [];
+			// systemChat "Enable";
+		} else {
+			// Empty area: spatial pre-selection of living entities within the radius
+			// (infantry + vehicles), then filter by side only
+			private _radius = (triggerArea _trg) select 0;
+			private _candidates = (getPosATL _trg) nearEntities [
+				[
+				 "CAManBase",
+				//  "LandVehicle",
+				 "Air", 
+				 "Ship"
+				 ],
+				_radius
+			];
+			
+			// systemChat format ["Trigger : %1 radius", _radius];
+
+			// Disable vehicle
+			{
+				// side of a vehicle = camp of its crew; ignore crews with a player
+				if (side _x == OPFOR_SIM_side && {crew _x findIf { isPlayer _x } == -1}) then {
+					if (simulationEnabled _x) then {
+						_x enableSimulationGlobal false;
+						OPFOR_frozen pushBackUnique _x;
+						//systemChat format ["Trigger : %1 disable", name _x];
+					};
+				};
+			} forEach _candidates;
+		};
+	};
+
+	// Server-only trigger (false = non-global)
+	private _trg = createTrigger ["EmptyDetector", _center, false];
+	_trg setTriggerArea [_radius, _radius, 0, false];             // circular area
+	_trg setTriggerActivation ["ANYPLAYER", "PRESENT", true];     // repeatable
+	_trg setTriggerInterval 5;                                    // check every 5 s
+	_trg setTriggerStatements [
+		"this",
+		"[true, thisTrigger] call OPFOR_fnc_setSim",    // player entered -> simulation ON
+		"[false, thisTrigger] call OPFOR_fnc_setSim"    // empty area     -> simulation OFF
+	];
+
+	// _name = "optimizerTrigger";
+	// _pos = getPos _trg;
+	// createMarkerLocal [_name, _pos];
+	// _name setMarkerTypeLocal  "selector_selectedMission";
+	// _name setMarkerTextLocal  _name;
+
+	// Initial state: freeze OPFOR in the area if no player is there at startup
+	waitUntil { time > 0 };
+	sleep 1;
+	if (!triggerActivated _trg) then { [false, _trg] call OPFOR_fnc_setSim; };
+};

@@ -26,7 +26,18 @@ _vehicleFromGroup = vehicle (leader _vehicleTransportGroup);
 
 [_vehicleFromGroup] call addVehicleXPSetup;
 
-
+//Prepare group cleaning
+if (count units _currentEnemyGroup != 0) then 
+{
+	(units _currentEnemyGroup) apply {
+		[_x] spawn 
+		{
+			params ["_thisUnit"];
+			sleep 3600;
+			deleteVehicle _thisUnit;
+		};
+	};
+};
 
 //enable groups
 _vehicleTransportGroup enableDynamicSimulation false;

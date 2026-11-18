@@ -280,6 +280,7 @@ if (warEra != 0) then
 
 
 //Spawn enemies
+[_pos] call createOptimizationTrigger; //Add trigger to enable and disable AI
 _groupAssociatedToDestroyer = [];
 _opforGroup1 = [opFaction, "BASIC"] call getBasicUnitsGroup;
 _opforGroup2 = [opFaction, "AT"] call getBasicUnitsGroup;

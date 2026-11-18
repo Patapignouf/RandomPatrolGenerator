@@ -463,7 +463,7 @@ if (missionNameSpace getVariable ["enableCivilianOnCity",1] == 1) then
 	civsGroup = [];
 	for [{_i = 0}, {_i <= 2}, {_i = _i + 1}] do
 	{ 
-		currentCivGroup = [civilian_big_group, ((initCityLocation) findEmptyPosition [5, 60]), civilian, "Civilian"] call doGenerateEnemyGroup;
+		currentCivGroup = [civilian_big_group, ((initCityLocation) findEmptyPosition [5, 100]), civilian, "Civilian"] call doGenerateEnemyGroup;
 		civsGroup pushBack currentCivGroup;
 		diag_log format ["Generation of civilian group : %1 on position %2 has been completed", currentCivGroup, initCityLocation];
 	};
@@ -472,6 +472,9 @@ if (missionNameSpace getVariable ["enableCivilianOnCity",1] == 1) then
 	{
 		[_x, getPos (leader _x), 80, true] call doGarrison;
 	} foreach civsGroup;
+
+	//Enable and disable units without players around
+	[initCityLocation, 1000, civilian] call createOptimizationTrigger;
 };
 
 
