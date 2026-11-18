@@ -146,7 +146,7 @@ generateFortifyArea = {
 		if (isNull _u) exitWith {};
 		_u setPos _p;
 		_u setDir _dir;
-		_u setUnitPos "MIDDLE";
+		_u setUnitPos selectRandom ["UP","UP","MIDDLE"];
 		_u disableAI "PATH";
 		// setDir alone is often overwritten by AI: we also force looking outward
 		_u doWatch ((_p getPos [100, _dir]) vectorAdd [0, 0, 1.5]);
@@ -334,7 +334,7 @@ generateFortifyArea = {
 			if (isNull _u) exitWith {};
 			_u setPos ((_bpos select _k) select 1);
 			_u setDir (_pos getDir _b);
-			_u setUnitPos "MIDDLE";
+			_u setUnitPos selectRandom ["UP","UP","MIDDLE"];
 			_u disableAI "PATH";
 		};
 	} forEach _sorted;
