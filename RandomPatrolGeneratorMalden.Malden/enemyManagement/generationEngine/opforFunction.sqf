@@ -448,6 +448,20 @@ despawnOccupiedCity = {
         _trg setVariable ["supplyTaken", true];
     };
 
+	private _fortifiedZone = missionNamespace getVariable ["fortifyTown_zones", []];
+	if (count _fortifiedZone != 0) then 
+	{
+		{
+			//Remove fortified zone
+			if ((getPos _trg) distance (_x#0) < 100) then 
+			 {
+				//systemChat format ["Fortified area %1 removed", getPos _trg];
+				_fortifiedZone = _fortifiedZone - [_x];
+			 };
+		} foreach _fortifiedZone;
+		missionNamespace setVariable ["fortifyTown_zones", _fortifiedZone];
+	};
+
     // Suppression
     { { deleteVehicle _x } forEach (units _x); deleteGroup _x } forEach _groups;
     { { deleteVehicle _x } forEach (crew _x); deleteVehicle _x } forEach _objects;
