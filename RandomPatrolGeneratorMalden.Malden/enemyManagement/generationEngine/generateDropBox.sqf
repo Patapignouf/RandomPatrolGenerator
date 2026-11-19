@@ -186,12 +186,13 @@ _holdWaypoint setWaypointType "SAD";
 // ---------------------------------------------------------------------------
 private _objectiveDeadline = time + _objectiveTimeLimit;
 private _objectiveResult = "TIMEOUT"; // LOOTED, CAPTURED or TIMEOUT
+private _taskIDStatusName = format ["%1%2", _sideTaskID, "_status"];
+
 
 while { time < _objectiveDeadline } do {
     sleep 1;
     
     //Define status name 
-    private _taskIDStatusName = format ["%1%2", _sideTaskID, "_status"];
 
     if (_supplyCrate getVariable ["crateLooted", false]) exitWith {
         _objectiveResult = "LOOTED";
@@ -205,13 +206,12 @@ while { time < _objectiveDeadline } do {
         _objectiveResult = "CAPTURED";
         missionNameSpace setVariable [_taskIDStatusName, "CAPTURED", true];
     };
-
-    //Add timeout status to failed side objective
-    if (_objectiveResult == "TIMEOUT") exitWith {
-        missionNameSpace setVariable [_taskIDStatusName, "TIMEOUT", true];
-    };
 };
 
+//Add timeout status to failed side objective
+if (_objectiveResult == "TIMEOUT") exitWith {
+    missionNameSpace setVariable [_taskIDStatusName, "TIMEOUT", true];
+};
 
 //deleteMarker _objectiveMarker;
 deleteVehicle _supplyCrate;   // Also removes the JIP hold action
