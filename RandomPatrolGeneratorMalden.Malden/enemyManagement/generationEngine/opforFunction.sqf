@@ -472,3 +472,164 @@ despawnOccupiedCity = {
     _trg setVariable ["box", nil];
     _trg setVariable ["spawned", false];
 };
+
+
+
+// ============================================================
+//  Auto-grouping of isolated units + unlock + attack order
+//  Place in initServer.sqf (server only)
+// ============================================================
+doManageAggressiveMonsters = {
+
+	if (!isServer) exitWith {};
+
+	// --- Settings ---
+	private _interval = 30;    // seconds between each check
+	private _maxSize  = 10;    // maximum group size
+	private _maxDist  = 1500;  // max distance to the nearest player to receive the attack order
+
+	[_interval, _maxSize, _maxDist] spawn {
+		params ["_interval", "_maxSize", "_maxDist"];
+
+		// Moves all units of a group into a new OPFOR group, keeping its waypoints
+		private _fnc_convertToEast = {
+			params ["_oldGrp"];
+
+			private _units = units _oldGrp select {alive _x};
+			private _newGrp = createGroup [east, true];
+			
+			(_units) apply {_x enableSimulationGlobal true; _x addRating (rating _x)};
+
+			_units joinSilent _newGrp;
+
+
+			// Copy waypoints (index 0 is the automatic start waypoint, skip it)
+			private _wps = waypoints _oldGrp;
+			for "_i" from 1 to (count _wps - 1) do {
+				private _wp  = _wps select _i;
+				private _new = _newGrp addWaypoint [waypointPosition _wp, 0];
+				_new setWaypointType (waypointType _wp);
+				_new setWaypointBehaviour (waypointBehaviour _wp);
+				_new setWaypointCombatMode (waypointCombatMode _wp);
+				_new setWaypointSpeed (waypointSpeed _wp);
+				_new setWaypointFormation (waypointFormation _wp);
+				_new setWaypointTimeout (waypointTimeout _wp);
+				_new setWaypointCompletionRadius (waypointCompletionRadius _wp);
+				private _statements = waypointStatements _wp;
+				if (count _statements == 2) then {
+					_new setWaypointStatements _statements;
+				};
+			};
+
+			// Remove the old (now empty) group
+			if (count units _oldGrp == 0) then {deleteGroup _oldGrp};
+
+			_newGrp
+		};
+
+		// Unlocks a unit (works for local and remote units)
+		private _fnc_unlockUnit = {
+			params ["_unit"];
+
+			if (local _unit) then {
+				_unit enableAI "PATH";
+				_unit doFollow (leader _unit);
+				_unit setUnitPos "AUTO";
+			} else {
+				// Unit is local to another machine (e.g. headless client)
+				[_unit, "PATH"] remoteExec ["enableAI", _unit];
+				[_unit, leader _unit] remoteExec ["doFollow", _unit];
+				[_unit, "AUTO"] remoteExec ["setUnitPos", _unit];
+			};
+		};
+
+		while {true} do {
+			sleep _interval;
+
+			// Safety check: doAttack must exist
+			if (isNil "doAttack") then {
+				diag_log "[AutoGroup] ERROR: function doAttack is not defined.";
+				continue;
+			};
+
+			// Alive human players (headless clients excluded)
+			private _players = (allPlayers - entities "HeadlessClient_F") select {alive _x};
+
+			// AI groups that are neither BLUFOR nor civilian (no player inside, not empty)
+			private _groups = allGroups select {
+				private _alive = units _x select {alive _x};
+				(count _alive > 0)
+				&& {!(side _x in [west, civilian, sideLogic, sideEmpty, sideUnknown])}
+				&& {({isPlayer _x} count _alive) == 0}
+			};
+
+			{
+				private _grp = _x;
+				if (isNull _grp) then {continue};
+
+				// ---------- 0) Make sure the group is OPFOR ----------
+				if (side _grp != east) then {
+					_grp = [_grp] call _fnc_convertToEast;
+				};
+
+				private _members = units _grp select {alive _x};
+				if (count _members == 0) then {continue};
+
+				// ---------- 1) Merge isolated units ----------
+				if (count _members == 1) then {
+					private _unit = _members select 0;
+
+					// Candidates: other isolated AI units (any side except BLUFOR/civilian)
+					private _candidates = allUnits select {
+						alive _x
+						&& {!isPlayer _x}
+						&& {_x != _unit}
+						&& {!(side group _x in [west, civilian, sideLogic, sideEmpty, sideUnknown])}
+						&& {count (units group _x select {alive _x}) == 1}
+					};
+
+					// Sort by distance, closest first
+					_candidates = [_candidates, [], {_unit distance _x}, "ASCEND"] call BIS_fnc_sortBy;
+
+					// Take at most (_maxSize - 1) units
+					private _toJoin = _candidates select [0, _maxSize - 1];
+
+					if (count _toJoin > 0) then {
+						private _oldGroups = _toJoin apply {group _x};
+						_toJoin joinSilent _grp;
+
+						// Clean up groups that became empty
+						{
+							if (!isNull _x && {count units _x == 0}) then {deleteGroup _x};
+						} forEach (_oldGroups arrayIntersect _oldGroups);
+					};
+				};
+
+				// ---------- 2) Unlock all units of the group ----------
+				{
+					[_x] call _fnc_unlockUnit;
+				} forEach (units _grp select {alive _x});
+
+				// ---------- 3) Attack order ----------
+				// A group already has a mission if it has more than the start waypoint
+				if (count (waypoints _grp) > 1) then {continue};
+
+				if (count _players == 0) then {continue};
+
+				private _leader = leader _grp;
+				if (isNull _leader) then {continue};
+
+				// Nearest player
+				private _sorted  = [_players, [], {_leader distance _x}, "ASCEND"] call BIS_fnc_sortBy;
+				private _nearest = _sorted select 0;
+
+				// Too far: no mission
+				if (_leader distance _nearest > _maxDist) then {continue};
+
+				[_grp, getPosATL _nearest] call doAttack;
+				(units _grp) apply {_x enableSimulationGlobal true; _x addRating (rating _x)};
+
+			} forEach _groups;
+		};
+	};
+};

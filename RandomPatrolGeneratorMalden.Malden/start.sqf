@@ -474,7 +474,7 @@ if (missionNameSpace getVariable ["enableCivilianOnCity",1] == 1) then
 	} foreach civsGroup;
 
 	//Enable and disable units without players around
-	[initCityLocation, 1000, civilian] call createOptimizationTrigger;
+	[initCityLocation, 1500, civilian] call createOptimizationTrigger;
 };
 
 
@@ -974,7 +974,12 @@ if (missionNameSpace getVariable ["addAmbientOpforLoc", 1] == 1) then
 			} foreach _allLoc;
 		};
 	};
+};
 
+//Manage aggressive monsters
+if (missionNameSpace getVariable ["enableAggressiveMonsters", 0] == 1) then 
+{
+	[] call doManageAggressiveMonsters;
 };
 
 //Generate patrol 

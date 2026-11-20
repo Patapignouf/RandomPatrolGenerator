@@ -246,6 +246,19 @@ enableObjectiveExactLocationParam =
 	"None for immersion"
 ];
 
+enableAggressiveMonstersParam = 
+[
+	[	
+		[0, "None (default)"],
+		[1, "Near (Arcade)"]
+	],
+	"Enable monsters aggressive behaviour",
+	0,
+	"enableAggressiveMonsters",
+	"None for immersion"
+];
+
+
 enableRegularIncomeParam = 
 [
 	[	
@@ -1229,7 +1242,8 @@ baseParamsToManage = [
 	playerCounterSectorControlParam,
 	showScoreOnMissionCompleteParam,
 	enableAccuracyTrackParam,
-	enableEventSupplyDropParam
+	enableEventSupplyDropParam,
+	enableAggressiveMonstersParam
 ];
 
 //Make one list by dedicated menu
@@ -1330,7 +1344,8 @@ baseOpforParamToManage = [
 	opforBehaviorTitle,
 	enableSurrenderUnitParam, 
 	opforFactionRandomizerParam, 
-	enableAutoDifficultyBalanceParam
+	enableAutoDifficultyBalanceParam,
+	enableAggressiveMonstersParam
 ];
 
 baseMissionParamToManage = [
