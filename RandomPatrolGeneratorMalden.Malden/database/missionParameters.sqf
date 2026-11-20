@@ -1065,6 +1065,7 @@ bluforVehicleAvalaibleSpawnInitParam =
 [
 	[	
 		[0, "0 credit"],
+		[100, "100 credits (one tent)"],
 		[500, "500 credits (default)"],
 		[1000, "1000 credits"],
 		[2000, "2000 credits"],
