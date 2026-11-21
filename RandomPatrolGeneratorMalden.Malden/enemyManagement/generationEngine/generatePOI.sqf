@@ -73,21 +73,25 @@ if (random 100 <50) then
 			{
 				_selectedTurret = selectRandom _thisAvailableOpforTurret;
 
-				_currentEnemyCars = [[_selectedTurret#0], _safeVehicleSpawn, east, "Turret"] call doGenerateEnemyGroup;
+				private _turrentSpawned = [_thisAvailablePosition, _selectedTurret] call generateTurretBunker;
 
-				_thisUnit = (units _currentEnemyCars)#0;
 
-				if (_selectedTurret#1 != "NOTHING") then 
-				{
-					_spawnFOBObjects = [_safeVehicleSpawn, random 360, selectRandom avalaibleTurretBunker] call BIS_fnc_ObjectsMapper;
-					_OpforFobStandardOpforLocation = nearestObjects [_safeVehicleSpawn, ["Sign_Arrow_Large_F"], 100];
-					_turretPos = _OpforFobStandardOpforLocation#0;
 
-					// _thisUnit setPosATL (getPosATL _turretPos);
-					// _thisUnit setDir (getDir _turretPos);
+				// _currentEnemyCars = [[_selectedTurret#0], _safeVehicleSpawn, east, "Turret"] call doGenerateEnemyGroup;
+
+				// _thisUnit = (units _currentEnemyCars)#0;
+
+				// if (_selectedTurret#1 != "NOTHING") then 
+				// {
+				// 	_spawnFOBObjects = [_safeVehicleSpawn, random 360, selectRandom avalaibleTurretBunker] call BIS_fnc_ObjectsMapper;
+				// 	_OpforFobStandardOpforLocation = nearestObjects [_safeVehicleSpawn, ["Sign_Arrow_Large_F"], 100];
+				// 	_turretPos = _OpforFobStandardOpforLocation#0;
+
+				// 	// _thisUnit setPosATL (getPosATL _turretPos);
+				// 	// _thisUnit setDir (getDir _turretPos);
 				
-					deleteVehicle _turretPos;
-				};
+				// 	deleteVehicle _turretPos;
+				// };
 
 			};
 		};
