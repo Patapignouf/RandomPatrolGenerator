@@ -361,3 +361,9 @@ if (!_isMainObj) then
 		};
 	};
 };
+
+//Spawn destroyer missile manager
+[_pos] call destroyerBalisticMissileManager;
+
+
+

@@ -1348,3 +1348,218 @@ generateTurretBunker = {
 
     _grp
 };
+
+
+/*
+    doBalisticMissile
+
+    Launches a ballistic missile from a launch position (e.g. a ship's position)
+    toward a target position. The impact point is randomized within a given
+    radius around the target.
+
+    Setup (init.sqf, run on the server):
+        call compile preprocessFileLineNumbers "doBalisticMissile.sqf";
+
+    Usage:
+        [getPosATL navire, getMarkerPos "target"] call doBalisticMissile;
+
+    Parameters:
+        0 : ARRAY  - launch position [x,y,z] (ship position)
+        1 : ARRAY  - target position [x,y,z]
+        2 : NUMBER - max dispersion around the target in meters (default 100)
+        3 : NUMBER - apogee height above the straight line in meters (default 5000)
+        4 : NUMBER - flight duration in seconds (default 45)
+        5 : STRING - visual missile class (default "ammo_Missile_Cruise_01")
+        6 : STRING - warhead class exploding on impact (default "Bo_GBU12_LGB")
+
+    Returns:
+        SCRIPT handle of the flight script, or scriptNull if not executed.
+*/
+
+doBalisticMissile = {
+    // Only the server runs the missile
+    if (!isServer) exitWith { scriptNull };
+
+    params [
+        ["_shipPos",      [0,0,0],                  [[]]],
+        ["_targetPos",    [0,0,0],                  [[]]],
+        ["_spread",       100,                      [0]],
+        ["_apogee",       5000,                     [0]],
+        ["_flightTime",   45,                       [0]],
+        ["_missileClass", "ammo_Missile_Cruise_01", [""]],
+        ["_warheadClass", "Bo_GBU12_LGB",           [""]]
+    ];
+
+    // Abort if one of the positions is invalid
+    if (_shipPos isEqualTo [0,0,0] || {_targetPos isEqualTo [0,0,0]}) exitWith {
+        systemChat "doBalisticMissile: invalid launch or target position.";
+        scriptNull
+    };
+
+    // Random distance, square root gives a uniform distribution inside the disc
+    private _distance = _spread * sqrt (random 1);
+
+    // Random direction around the target
+    private _angle = random 360;
+
+    // Final impact position on the ground (AGL)
+    private _impactPos = _targetPos getPos [_distance, _angle];
+    _impactPos set [2, 0];
+
+    // Launch position in ASL, 10 m above the given position to clear the deck
+    private _startASL = (AGLToASL _shipPos) vectorAdd [0, 0, 10];
+
+    // Impact position in ASL
+    private _impactASL = AGLToASL _impactPos;
+
+    // Notify the players of the predicted impact grid
+    systemChat format ["Missile launched. Predicted impact at %1 (+/- %2 m).", mapGridPosition _impactPos, _spread];
+
+    // Flight script
+    [_startASL, _impactASL, _impactPos, _apogee, _flightTime, _missileClass, _warheadClass] spawn {
+        params ["_startASL", "_impactASL", "_impactPos", "_apogee", "_flightTime", "_missileClass", "_warheadClass"];
+
+        // Helper creating the visual missile at a given ASL position
+        private _spawnMissile = {
+            params ["_class", "_pos"];
+
+            // Create the projectile far away then move it to the wanted position
+            private _missile = createVehicle [_class, [0,0,0], [], 0, "CAN_COLLIDE"];
+            _missile setPosASL _pos;
+            _missile
+        };
+
+        // Visual missile
+        private _missile = [_missileClass, _startASL] call _spawnMissile;
+
+        // Previous position, used to compute direction and speed
+        private _prevPos = _startASL;
+
+        // Launch time
+        private _startTime = time;
+
+        waitUntil {
+            // Flight progress between 0 and 1
+            private _t = ((time - _startTime) / _flightTime) min 1;
+
+            // Horizontal progress with smoothstep: vertical takeoff and vertical descent
+            private _p = _t * _t * (3 - 2 * _t);
+
+            // Current position: horizontal interpolation, linear base altitude plus parabolic arc
+            private _pos = [
+                (_startASL select 0) + ((_impactASL select 0) - (_startASL select 0)) * _p,
+                (_startASL select 1) + ((_impactASL select 1) - (_startASL select 1)) * _p,
+                (_startASL select 2) + ((_impactASL select 2) - (_startASL select 2)) * _t + _apogee * 4 * _t * (1 - _t)
+            ];
+
+            // Recreate the missile if the engine deleted it (ammo lifetime exceeded)
+            if (isNull _missile) then {
+                _missile = [_missileClass, _pos] call _spawnMissile;
+            };
+
+            // Direction of travel
+            private _dir = vectorNormalized (_pos vectorDiff _prevPos);
+
+            // Fallback direction on the very first frame
+            if (_dir isEqualTo [0,0,0]) then {
+                _dir = [0,0,1];
+            };
+
+            // Side vector used to build a valid "up" vector
+            private _side = _dir vectorCrossProduct [0,0,1];
+
+            // Up vector perpendicular to the direction (fallback when flying straight up or down)
+            private _up = if ((vectorMagnitude _side) < 0.001) then {
+                [0,1,0]
+            } else {
+                _side vectorCrossProduct _dir
+            };
+
+            // Move and orient the missile
+            _missile setPosASL _pos;
+            _missile setVectorDirAndUp [_dir, _up];
+
+            // Match velocity with the displacement so the trail and sound look right
+            _missile setVelocity (_dir vectorMultiply ((_pos distance _prevPos) / (diag_deltaTime max 0.001)));
+
+            // Remember the position for the next frame
+            _prevPos = _pos;
+
+            // Stop when the flight is over
+            _t >= 1
+        };
+
+        // Remove the visual missile
+        if (!isNull _missile) then {
+            deleteVehicle _missile;
+        };
+
+        // Warhead spawned just above the ground, falling fast so it explodes immediately
+        private _warhead = createVehicle [_warheadClass, [_impactPos select 0, _impactPos select 1, 2], [], 0, "CAN_COLLIDE"];
+        _warhead setVelocity [0, 0, -100];
+
+        // Extra explosion for the visual effect
+        createVehicle ["HelicopterExploBig", [_impactPos select 0, _impactPos select 1, 0], [], 0, "CAN_COLLIDE"];
+    }
+};
+
+
+destroyerBalisticMissileManager = {
+	if (!isServer) exitWith {};
+	params [
+		["_center", [0,0,0], [[], objNull, ""]],
+		["_enemySide", EAST, [WEST]]
+	];
+
+	private _centerPos = switch (typeName _center) do {
+		case "OBJECT": { getPosATL _center };
+		case "STRING": { getMarkerPos _center };
+		default { _center };
+	};
+
+	if (_centerPos isEqualTo [0,0,0]) exitWith { 
+		diag_log "ERROR: Invalid center position passed to checkZoneDynamic.sqf"; 
+	};
+
+	// Create local server-only trigger
+	private _radius = 100;
+	private _trigger = createTrigger ["EmptyDetector", _centerPos, false];
+	_trigger setTriggerArea [_radius, _radius, 0, false];
+	_trigger setTriggerActivation ["NONE", "PRESENT", false];
+
+	private _checkInterval = 30;
+	private _keepRunning = true;
+
+	sleep 600;
+
+	// Monitoring loop controlled by explicit boolean flag
+	while {_keepRunning} do {
+		private _unitsInTrigger = allUnits inAreaArray _trigger;
+		private _enemyCount = { (side _x == _enemySide) && {alive _x} } count _unitsInTrigger;
+
+		if (_enemyCount < 3) then {
+			// Flag loop to stop immediately
+			_keepRunning = false;
+			[{["STR_RPG_HC_NAME", "RPG_DESTROYER_CLEAR", mapGridPosition initBlueforLocation] call doDialog}] remoteExec ["call", blufor];
+
+		} else {
+			private _playerCount = { (isPlayer _x) && {alive _x} } count _unitsInTrigger;
+
+			if (_playerCount == 0) then {
+				private _selectedLuckyPlayerPos = getPos (selectRandom (allPlayers select {side _x == blufor}));
+				[_centerPos, _selectedLuckyPlayerPos] call doBalisticMissile;
+				[{["STR_RPG_HC_NAME", "RPG_DESTROYER_MISSILE_INCO", mapGridPosition _selectedLuckyPlayerPos] call doDialog}] remoteExec ["call", blufor];
+
+				//systemChat format ["DEBUG: %1 enemies present, 0 players. Executing doAction...", _enemyCount];
+				
+				sleep 600 + (random 300);
+			};
+
+			// Only sleep if we are going to run another cycle
+			sleep _checkInterval;
+		};
+	};
+};
+
+
+

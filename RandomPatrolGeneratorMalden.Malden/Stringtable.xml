@@ -2350,6 +2350,29 @@
         <Japanese>ワイヤー：</Japanese>
     </Key>
 </Container>
+<Container name="RPG_DESTROYER_GENERAL">
+    <Key ID="RPG_DESTROYER_CLEAR">
+        <Original>The destroyer has been captured</Original>
+        <English>The destroyer has been captured</English>
+        <French>Le destroyer a été capturé</French>
+        <Spanish>El destructor ha sido capturado</Spanish>
+        <German>Der Zerstörer wurde erobert</German>
+        <Italian>Il cacciatorpediniere è stato catturato</Italian>
+        <Russian>Эсминец захвачен</Russian>
+        <Chinese>驱逐舰已被占领</Chinese>
+        <Japanese>駆逐艦が占領されました</Japanese>
+    </Key>
+    <Key ID="RPG_DESTROYER_MISSILE_INCO">
+        <Original>Warning, a destroyer has fired a missile toward coordinates %1</Original>
+        <English>Warning, a destroyer has fired a missile toward coordinates %1</English>
+        <French>Attention un destroyer a tiré un missile vers les coordonnées %1</French>
+        <Spanish>Atención, un destructor ha disparado un misil hacia las coordenadas %1</Spanish>
+        <German>Achtung, ein Zerstörer hat eine Rakete auf die Koordinaten %1 abgefeuert</German>
+        <Italian>Attenzione, un cacciatorpediniere ha lanciato un missile verso le coordinate %1</Italian>
+        <Russian>Внимание, эсминец выпустил ракету в направлении координат %1</Russian>
+        <Chinese>注意，一艘驱逐舰向坐标 %1 发射了一枚导弹</Chinese>
+        <Japanese>警告：駆逐艦が座標 %1 に向かってミサイルを発射しました</Japanese>
+    </Key>
 <Container name="ACTIONS">
     <Key ID="STR_ACTIONS_PLACE_TENT">
         <Original>Place reinforcement tent (100 credits)</Original>
