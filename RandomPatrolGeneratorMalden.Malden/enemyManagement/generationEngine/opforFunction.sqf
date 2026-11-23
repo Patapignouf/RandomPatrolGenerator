@@ -1559,6 +1559,9 @@ destroyerBalisticMissileManager = {
 			sleep _checkInterval;
 		};
 	};
+
+    //Clean trigger
+    deleteVehicle _trigger;
 };
 
 
