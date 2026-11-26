@@ -18,7 +18,7 @@ if (isServer) then
 	_trgBluforFOB = createTrigger ["EmptyDetector", initBlueforLocation];
 	_trgBluforFOB setTriggerArea [200, 200, 0, true];
 
-	while {sleep 60; (_missionNumber == (missionNamespace getVariable ["missionNumber", 0]))} do  
+	while {sleep 120; (_missionNumber == (missionNamespace getVariable ["missionNumber", 0]))} do  
 	{
 		//Redefine opfor reinforcement
 		_thisAvailableOpforGroup = [baseEnemyGroup,baseEnemyATGroup,baseEnemyDemoGroup];
@@ -59,14 +59,17 @@ if (isServer) then
 
 			if (!([positionToAttack, [0,0,0]] call BIS_fnc_areEqual)) then 
 			{
-				//Alert players
-				if (random 100>50) then 
+				//Alert players 25%
+				if (random 100>75) then 
 				{
 					[[positionToAttack], {params ["_positionToAttack"]; ["STR_RPG_HC_NAME", "STR_RPG_HC_ENEMY_REINFORCEMENT", mapGridPosition (_positionToAttack)] call doDialog}] remoteExec ["spawn", 0]; 
 				};
 				
 				//Chopper reinforcement 50%
-				[positionToAttack] call doGenerateHarassWithChopper;
+				if (count _thisAvailableOpforUnarmedChopperVehicle != 0 &&  random 100 < 50) then 
+				{
+					[positionToAttack] call doGenerateHarassWithChopper;
+				};
 
 
 				//Check if there is a player in a plane then generate enemy plane
@@ -74,7 +77,10 @@ if (isServer) then
 
 
 				//Attack chopper reinforcement 25%
-				[positionToAttack] call generateChopperHarass;
+				if (missionNamespace getVariable ["enableArmedAicraft", false] && (count _thisAvailableOpforArmedChopperVehicle != 0 &&  random 100 < 25)) then 
+    			{
+					[positionToAttack] call generateChopperHarass;
+				};
 
 				AvalaibleInitAttackPositions = [];
 				AvalaibleInitAttackPositions = [positionToAttack, 1200, 2000, _thisDifficulty] call getListOfPositionsAroundTarget;
@@ -94,17 +100,17 @@ if (isServer) then
 					//Few
 					case 0:
 					{
-						sleep (1800+round (random 600));
+						sleep (1800+round (random 1200));
 					};
 					//Normal
 					case 1:
 					{
-						sleep (1200+round (random 600));
+						sleep (1200+round (random 1200));
 					};
 					//Often
 					case 2:
 					{
-						sleep (600+round (random 600));
+						sleep (600+round (random 1200));
 					};
 					default
 					{

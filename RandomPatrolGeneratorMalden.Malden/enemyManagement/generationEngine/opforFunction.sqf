@@ -1707,13 +1707,8 @@ doGenerateHarassWithChopper = {
 
     _thisAvailableOpforUnarmedChopperVehicle = baseEnemyUnarmedChopperGroup ;
 
-
-    //Chopper reinforcement 50%
-    if (count _thisAvailableOpforUnarmedChopperVehicle != 0 &&  random 100 < 50) then 
-    {
-        //Generate enemy wave
-        [_thisAvailableOpforGroup#0, selectRandom _thisAvailableOpforUnarmedChopperVehicle, _positionToAttack] execVM 'enemyManagement\behaviorEngine\doVehicleReinforcement.sqf'; 
-    };
+    //Generate enemy wave
+    [_thisAvailableOpforGroup#0, selectRandom _thisAvailableOpforUnarmedChopperVehicle, _positionToAttack] execVM 'enemyManagement\behaviorEngine\doVehicleReinforcement.sqf'; 
 };
 
 generatePlaneHarass = {
@@ -1747,12 +1742,9 @@ generateChopperHarass = {
 
     _thisAvailableOpforArmedChopperVehicle = baseEnemyArmedChopperGroup;
 
-    //Attack chopper reinforcement 25%
-    if (missionNamespace getVariable ["enableArmedAicraft", false] && (count _thisAvailableOpforArmedChopperVehicle != 0 &&  random 100 < 25)) then 
-    {
-        //Generate enemy attack chopper wave
-        [selectRandom _thisAvailableOpforArmedChopperVehicle, _positionToAttack] execVM 'enemyManagement\behaviorEngine\doVehicleAttackOnPosition.sqf'; 
-    };
+    //Generate enemy attack chopper wave
+    [selectRandom _thisAvailableOpforArmedChopperVehicle, _positionToAttack] execVM 'enemyManagement\behaviorEngine\doVehicleAttackOnPosition.sqf'; 
+    
 };
 
 
