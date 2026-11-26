@@ -1,30 +1,48 @@
-#include "..\..\engine\searchLocation.sqf"
+params [["_centerOfAreaToCover", []]];
 
 waitUntil {!isNil"initBlueforLocation"};
 waitUntil {(!([initBlueforLocation, [0,0,0]] call BIS_fnc_areEqual))};
 
 //Generate Opfor small FOB
 //Protect player from nearby spawn
-_trgAOC = createTrigger ["EmptyDetector", initBlueforLocation];
+private _trgAOC = createTrigger ["EmptyDetector", initBlueforLocation];
 _trgAOC setTriggerArea [400, 400, 0, true];
 
 //Exclude map border from FOB generation
-_mapBorder = [
-	[-5000, call BIS_fnc_mapSize + 5000,0], [50, -5000,0], //left rectangle
-	[-5000, call BIS_fnc_mapSize + 5000,0], [call BIS_fnc_mapSize+5000, call BIS_fnc_mapSize,0], //Top rectangle
-	[call BIS_fnc_mapSize, call BIS_fnc_mapSize + 5000,0], [call BIS_fnc_mapSize  +5000, -5000,0], //Right rectangle
-	[-5000, 50,0], [call BIS_fnc_mapSize  +5000, -5000,0] //left rectangle
+private _mapSize = worldSize;
+
+private _mapBorder = [
+	[-5000, _mapSize + 5000,0], [50, -5000,0], //left rectangle
+	[-5000, _mapSize + 5000,0], [_mapSize+5000, _mapSize,0], //Top rectangle
+	[_mapSize, _mapSize + 5000,0], [_mapSize  +5000, -5000,0], //Right rectangle
+	[-5000, 50,0], [_mapSize  +5000, -5000,0] //left rectangle
 ];
 
 _mapBorder pushBack _trgAOC;
 
-_spawnAttempts = 0;
-_OpforFobLocation = [initCityLocation, 400, (aoSize+1500), 30, 0, 0.20, 0, [_mapBorder], [[0,0,0],[0,0,0]]] call BIS_fnc_findSafePos;
-while {([_OpforFobLocation] call isLocationOnMap) && _spawnAttempts <10} do 
+private _spawnAttempts = 0;
+
+private _OpforFobLocation = [];
+if (count _centerOfAreaToCover == 0) then 
 {
 	_OpforFobLocation = [initCityLocation, 400, (aoSize+1500), 30, 0, 0.20, 0, [_mapBorder], [[0,0,0],[0,0,0]]] call BIS_fnc_findSafePos;
-	_spawnAttempts = _spawnAttempts +1;
+	while {([_OpforFobLocation] call isLocationOnMap) && _spawnAttempts <10} do 
+	{
+		_OpforFobLocation = [initCityLocation, 400, (aoSize+1500), 30, 0, 0.20, 0, [_mapBorder], [[0,0,0],[0,0,0]]] call BIS_fnc_findSafePos;
+		_spawnAttempts = _spawnAttempts +1;
+	};
+} else 
+{
+	_OpforFobLocation = [_centerOfAreaToCover, 800, (aoSize+1500), 30, 0, 0.20, 0, [_mapBorder], [[0,0,0],[0,0,0]]] call BIS_fnc_findSafePos;
+	while {([_OpforFobLocation] call isLocationOnMap) && _spawnAttempts <10} do 
+	{
+		_OpforFobLocation = [_centerOfAreaToCover, 800, (aoSize+1500), 30, 0, 0.20, 0, [_mapBorder], [[0,0,0],[0,0,0]]] call BIS_fnc_findSafePos;
+		_spawnAttempts = _spawnAttempts +1;
+	};
 };
+
+
+
 if (!([_OpforFobLocation] call isLocationOnMap)) then
 {
 
@@ -143,6 +161,15 @@ if (!([_OpforFobLocation] call isLocationOnMap)) then
 		//50%
 		[_objectiveObject, 1] execVM 'engine\objectiveManagement\checkDefendArea.sqf';
 	};
+
+	//Save FOB on FOB tracker 
+	_missionFOBRegistry = missionNameSpace getVariable ["RPG_OPFORFobList",[]];
+	_missionFOBRegistry pushBackUnique _OpforFobLocation;
+	missionNameSpace setVariable ["RPG_OPFORFobList", _missionFOBRegistry];
+
+	//Increase reinforcement potential by 2
+	_numberOfFobReinforcement = missionNameSpace getVariable ["numberOfHarassAvailable", 0];
+	missionNameSpace setVariable ["numberOfHarassAvailable", _numberOfFobReinforcement+2, true];
 
 	if (random 100 < 50) then 
 	{

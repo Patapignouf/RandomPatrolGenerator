@@ -31,6 +31,76 @@ getRandomCenterLocations =
 	_LocList
 };
 
+searchNearestPlayer = {
+	params ["_searchPos"];
+
+	private _players = allPlayers select { alive _x };
+	if (_players isEqualTo []) exitWith { objNull };
+
+	private _nearestPlayer = _players#0;
+	private _minDist = _searchPos distance _nearestPlayer;
+
+	{
+		private _dist = _searchPos distance _x;
+		if (_dist < _minDist) then {
+			_minDist = _dist;
+			_nearestPlayer = _x;
+		};
+	} forEach _players;
+
+	_nearestPlayer
+};
+
+
+/*
+    Function: fnc_findClosestPlayerPoint
+    Description: Finds the closest (point, player) pair from a given list of points
+                 and all currently alive players.
+
+    Parameters:
+        0: ARRAY - List of points (positions [x, y, z] or objects)
+
+    Return Value:
+        ARRAY - [closestPoint, closestPlayer, distanceInMeters]
+                Returns [[], objNull, -1] if there are no points or no valid players.
+*/
+
+fnc_findClosestPlayerPoint = {
+    params [["_points", [], [[]]]];
+
+    // Filter valid players (alive)
+    private _players = allPlayers select { alive _x };
+
+    if (_points isEqualTo [] || { _players isEqualTo [] }) exitWith {
+        [[], objNull, -1]
+    };
+
+    private _bestPoint = [];
+    private _bestPlayer = objNull;
+    private _bestDistSqr = 1e39; // Large initial value
+
+    {
+        private _point = _x;
+        // Support both position arrays and objects (e.g., GameLogic, vehicles)
+        private _pointPos = if (_point isEqualType objNull) then { getPosATL _point } else { _point };
+
+        {
+            private _player = _x;
+            private _playerPos = getPosATL _player;
+            private _distSqr = _pointPos distanceSqr _playerPos;
+
+            if (_distSqr < _bestDistSqr) then {
+                _bestDistSqr = _distSqr;
+                _bestPoint = _point;
+                _bestPlayer = _player;
+            };
+        } forEach _players;
+    } forEach _points;
+
+    private _distance = sqrt _bestDistSqr;
+
+    [_bestPoint, _bestPlayer, _distance]
+};
 
 getAllBigLocationsWithBuildings = {
 	_tempAllLocations = [] call getRandomCenterLocations;
@@ -153,13 +223,15 @@ getListOfPositionsAroundTarget =
 	_maxDistance = _this select 2;
 	_numberOfPosition = _this select 3;
 	
-	AvalaiblePositions = [];
+	private _AvalaiblePositions = [];
 	
 	for [{_i = 0}, {_i < _numberOfPosition}, {_i = _i + 1}] do
 	{ 
-		AvalaiblePositions pushBack ([_targetPosition, (_minDistance), (_maxDistance), 8, 0, 0.30, 0, [], [[0,0,0],[0,0,0]]] call BIS_fnc_findSafePos);
+		private _tempPos = [_targetPosition, (_minDistance), (_maxDistance), 8, 0, 0.30, 0, [], [[0,0,0],[0,0,0]]] call BIS_fnc_findSafePos;
+		_tempPos pushBack 0;
+		_AvalaiblePositions pushBack (_tempPos);
 	};
-	AvalaiblePositions
+	_AvalaiblePositions
 };
 
 getPositionAroundTargetNoSafeZone = 
@@ -288,7 +360,7 @@ getDepthAtLocation = {
 searchLocationWithWaterDepth = {
 	params [["_numberOfAttempts", 3]];
 
-	_searchResult = [[], false];
+	private _searchResult = [[], false];
 
 	_positionCandidate = [nil, ["ground"]] call BIS_fnc_randomPos; // Ou une position fixe ex: [1200, 4500, 0]
 
@@ -310,42 +382,60 @@ searchLocationWithWaterDepth = {
 
 
 getEdgePoints = {
-	params [["_destination", [0,0,0], [[]], 3]];
-	
-	private _destX = _destination select 0;
-	private _destY = _destination select 1;
-	private _mapSize = worldSize;
-	
-	// Generate a random vector direction
-	private _angle = random 360;
-	private _cos = cos _angle;
-	private _sin = sin _angle;
+    params [
+        ["_destination", [0,0,0], [[]], [2,3]],   // accepte [x,y] et [x,y,z]
+        ["_minLength", 500, [0]]                  // longueur mini du segment (m)
+    ];
 
-	// Prevent division by zero
-	if (abs _cos < 1e-6) then { _cos = 1e-6; };
-	if (abs _sin < 1e-6) then { _sin = 1e-6; };
+    private _mapSize = worldSize;
 
-	private _edgePoints = [];
+    // Ramener la destination dans la carte
+    private _destX = ((_destination select 0) max 0) min _mapSize;
+    private _destY = ((_destination select 1) max 0) min _mapSize;
 
-	// Left Border (x = 0)
-	private _t = (0 - _destX) / _cos;
-	private _y = _destY + _t * _sin;
-	if (_y >= 0 && _y <= _mapSize) then { _edgePoints pushBackUnique [0, _y, 0]; };
+    private _result = [];
 
-	// Right Border (x = mapSize)
-	_t = (_mapSize - _destX) / _cos;
-	_y = _destY + _t * _sin;
-	if (_y >= 0 && _y <= _mapSize) then { _edgePoints pushBackUnique [_mapSize, _y, 0]; };
+    for "_i" from 1 to 20 do {
+        private _angle = random 360;
+        private _minLen = _minLength;
 
-	// Bottom Border (y = 0)
-	_t = (0 - _destY) / _sin;
-	private _x = _destX + _t * _cos;
-	if (_x >= 0 && _x <= _mapSize) then { _edgePoints pushBackUnique [_x, 0, 0]; };
+        // Dernier essai : direction vers le centre de la carte, sans longueur mini
+        if (_i == 20) then {
+            _angle = 90 - ([_destX, _destY] getDir [_mapSize / 2, _mapSize / 2]);
+            _minLen = 0;
+        };
 
-	// Top Border (y = mapSize)
-	_t = (_mapSize - _destY) / _sin;
-	_x = _destX + _t * _cos;
-	if (_x >= 0 && _x <= _mapSize) then { _edgePoints pushBackUnique [_x, _mapSize, 0]; };
+        private _dx = cos _angle;
+        private _dy = sin _angle;
 
-	_edgePoints select [0, 2]
+        // Éviter la division par zéro
+        if (abs _dx < 1e-6) then { _dx = 1e-6 };
+        if (abs _dy < 1e-6) then { _dy = 1e-6 };
+
+        // Intersections de la droite avec les bandes x∈[0,size] et y∈[0,size]
+        private _tx1 = (0 - _destX) / _dx;
+        private _tx2 = (_mapSize - _destX) / _dx;
+        private _ty1 = (0 - _destY) / _dy;
+        private _ty2 = (_mapSize - _destY) / _dy;
+
+        private _tMin = ((_tx1 min _tx2) max (_ty1 min _ty2));
+        private _tMax = ((_tx1 max _tx2) min (_ty1 max _ty2));
+
+        if ((_tMax - _tMin) >= _minLen) exitWith {
+            _result = [
+                [
+                    ((_destX + _tMin * _dx) max 0) min _mapSize,
+                    ((_destY + _tMin * _dy) max 0) min _mapSize,
+                    0
+                ],
+                [
+                    ((_destX + _tMax * _dx) max 0) min _mapSize,
+                    ((_destY + _tMax * _dy) max 0) min _mapSize,
+                    0
+                ]
+            ];
+        };
+    };
+
+    _result
 };

@@ -1,4 +1,10 @@
+generateFOB = compile preprocessFileLineNumbers "enemyManagement\generationEngine\generateOpforFOB.sqf";
+generateDestroyer = compile preprocessFileLineNumbers "enemyManagement\generationEngine\generateDestroyer.sqf";
+
+
 doGenerateFOBOrDestroyer = {
+    params [["_center", []]];
+
 	//50% chance to generate destroyer or FOB
 	if (random 100 <50) then 
 	{
@@ -14,7 +20,13 @@ doGenerateFOBOrDestroyer = {
 
 		if (random 100 < (0+_destroyerProb)) then 
 		{
-			[] execVM 'enemyManagement\generationEngine\generateOpforFOB.sqf';
+            //Deploy opfor FOB around objective or not (defined by center)
+            if (count _center == 0) then 
+            {
+			    [] call generateFOB;
+            } else {
+			    [_center] call generateFOB;
+            };
 
 		} else 
 		{
@@ -25,7 +37,7 @@ doGenerateFOBOrDestroyer = {
 				_pos = _resultSearchLoc#0;
 				if (400 < initBlueforLocation distance _pos) then //Spawn at least at 400m from blufor
 				{
-					[_pos] execVM 'enemyManagement\generationEngine\generateDestroyer.sqf';
+					[_pos] call generateDestroyer;
 				};
 			};
 		};	
@@ -1564,5 +1576,203 @@ destroyerBalisticMissileManager = {
     deleteVehicle _trigger;
 };
 
+doGenerateHarassWithVehicleFromFOB = {
+    params ["_positionToAttack", "_positionFrom"];
+    _thisAvailableOpforGroup = [baseEnemyGroup,baseEnemyATGroup,baseEnemyDemoGroup];
+    _thisAvailableOpforCars= baseEnemyVehicleGroup;
+    _thisAvailableOpforLightArmoredVehicle = baseEnemyLightArmoredVehicleGroup;
+    _thisAvailableOpforHeavyArmoredVehicle = baseEnemyHeavyArmoredVehicleGroup;
+    _enableArmoredVehicle = missionNamespace getVariable "enableArmoredVehicle";
+    _thisDifficulty = missionNamespace getVariable "missionDifficultyParam"; //Default medium
+
+    
+    //Define harass group 
+    _tempVehicleGroup = [];
+
+    if ((missionNameSpace getVariable ["enableOpforVehicle", 0]) < 3) then 
+    {
+        //Generate light vehicle 33% chance to spawn
+        if (count _thisAvailableOpforCars != 0 && random 100 < 33) then 
+        {
+            _tempVehicleGroup pushBack [selectRandom _thisAvailableOpforCars];
+        };
+
+        //Generate Light armored vehicle spawn chance 
+        if (count _thisAvailableOpforLightArmoredVehicle != 0 && _enableArmoredVehicle && random 100 < 30) then 
+        {
+            //Light armored vehicle spawn chance 20%
+            _tempVehicleGroup pushBack [selectRandom _thisAvailableOpforLightArmoredVehicle];
+        };
+
+        //Generate Light armored vehicle spawn chance
+        if (count _thisAvailableOpforHeavyArmoredVehicle != 0 && _enableArmoredVehicle && random 100 < 25) then 
+        {
+            //Heavy armored vehicle spawn chance 15%
+            _tempVehicleGroup pushBack [selectRandom _thisAvailableOpforHeavyArmoredVehicle];
+        };
+    } else 
+    {
+        //Force at least one vehicle to spawn
+        _tempVehicleGroup pushBack [selectRandom (_thisAvailableOpforCars+_thisAvailableOpforLightArmoredVehicle+_thisAvailableOpforHeavyArmoredVehicle)];
+    };
+
+    private _AvalaibleInitAttackPositions = [];
+    _AvalaibleInitAttackPositions = [_positionFrom, 80, 150, _thisDifficulty] call getListOfPositionsAroundTarget;
+
+    [_AvalaibleInitAttackPositions, _positionToAttack, _thisAvailableOpforGroup, _tempVehicleGroup, (floor (_thisDifficulty/4))+1] execVM 'enemyManagement\behaviorEngine\doAmbush.sqf'; 
+};
+
+doGenerateHarassWithVehicle = {
+    params ["_positionToAttack"];
+
+    _thisAvailableOpforGroup = [baseEnemyGroup,baseEnemyATGroup,baseEnemyDemoGroup];
+    _thisAvailableOpforCars= baseEnemyVehicleGroup;
+    _thisAvailableOpforLightArmoredVehicle = baseEnemyLightArmoredVehicleGroup;
+    _thisAvailableOpforHeavyArmoredVehicle = baseEnemyHeavyArmoredVehicleGroup;
+    _enableArmoredVehicle = missionNamespace getVariable "enableArmoredVehicle";
+    _thisDifficulty = missionNamespace getVariable "missionDifficultyParam"; //Default medium
+
+    
+    //Define harass group 
+    _tempVehicleGroup = [];
+
+    if ((missionNameSpace getVariable ["enableOpforVehicle", 0]) < 3) then 
+    {
+        //Generate light vehicle 33% chance to spawn
+        if (count _thisAvailableOpforCars != 0 && random 100 < 33) then 
+        {
+            _tempVehicleGroup pushBack [selectRandom _thisAvailableOpforCars];
+        };
+
+        //Generate Light armored vehicle spawn chance 
+        if (count _thisAvailableOpforLightArmoredVehicle != 0 && _enableArmoredVehicle && random 100 < 30) then 
+        {
+            //Light armored vehicle spawn chance 20%
+            _tempVehicleGroup pushBack [selectRandom _thisAvailableOpforLightArmoredVehicle];
+        };
+
+        //Generate Light armored vehicle spawn chance
+        if (count _thisAvailableOpforHeavyArmoredVehicle != 0 && _enableArmoredVehicle && random 100 < 25) then 
+        {
+            //Heavy armored vehicle spawn chance 15%
+            _tempVehicleGroup pushBack [selectRandom _thisAvailableOpforHeavyArmoredVehicle];
+        };
+    } else 
+    {
+        //Force at least one vehicle to spawn
+        _tempVehicleGroup pushBack [selectRandom (_thisAvailableOpforCars+_thisAvailableOpforLightArmoredVehicle+_thisAvailableOpforHeavyArmoredVehicle)];
+    };
+
+    private _AvalaibleInitAttackPositions = [];
+    _AvalaibleInitAttackPositions = [_positionToAttack, 1200, 2000, _thisDifficulty] call getListOfPositionsAroundTarget;
+
+    [_AvalaibleInitAttackPositions, _positionToAttack, _thisAvailableOpforGroup, _tempVehicleGroup, (floor (_thisDifficulty/4))+1] execVM 'enemyManagement\behaviorEngine\doAmbush.sqf'; 
+};
 
 
+
+doGenerateHarassWithChopperOrPlane =
+{
+    params ["_positionToAttack"];
+
+	private _thisDifficulty = missionNamespace getVariable "missionDifficultyParam"; //Default medium
+    private _thisAvailableOpforUnarmedChopperVehicle = baseEnemyUnarmedChopperGroup ;
+    private _thisAvailableOpforGroup = [baseEnemyGroup,baseEnemyATGroup,baseEnemyDemoGroup];
+    private _thisAvailableOpforFixedWingTransport = baseEnemyFixedWingTransport;
+
+    //Fix attacking position 
+    if (count _positionToAttack == 2) then 
+    {
+        _positionToAttack pushBack 0;
+    };
+
+    //Generate enemy wave
+    private _closedAvalaibleInitAttackPositions = [_positionToAttack, 300, 1000, _thisDifficulty] call getListOfPositionsAroundTarget;
+    //systemChat str _closedAvalaibleInitAttackPositions;
+    for [{_numberOfChopper = 0}, {_numberOfChopper < _thisDifficulty}, {_numberOfChopper = _numberOfChopper + 1}] do
+    {
+        [selectRandom _thisAvailableOpforGroup, selectRandom (_thisAvailableOpforUnarmedChopperVehicle+_thisAvailableOpforFixedWingTransport), selectRandom _closedAvalaibleInitAttackPositions] execVM 'enemyManagement\behaviorEngine\doParadrop.sqf'; 
+        sleep 1; //Avoid chopper crash
+    };
+
+    [_thisAvailableOpforGroup#0, selectRandom _thisAvailableOpforUnarmedChopperVehicle, _positionToAttack] execVM 'enemyManagement\behaviorEngine\doVehicleReinforcement.sqf'; 
+};
+
+
+
+doGenerateHarassWithChopper = {
+    params ["_positionToAttack"];
+
+    _thisAvailableOpforGroup = [baseEnemyGroup,baseEnemyATGroup,baseEnemyDemoGroup];
+
+    _thisAvailableOpforUnarmedChopperVehicle = baseEnemyUnarmedChopperGroup ;
+
+
+    //Chopper reinforcement 50%
+    if (count _thisAvailableOpforUnarmedChopperVehicle != 0 &&  random 100 < 50) then 
+    {
+        //Generate enemy wave
+        [_thisAvailableOpforGroup#0, selectRandom _thisAvailableOpforUnarmedChopperVehicle, _positionToAttack] execVM 'enemyManagement\behaviorEngine\doVehicleReinforcement.sqf'; 
+    };
+};
+
+generatePlaneHarass = {
+    params ["_positionToAttack"];
+
+    _thisAvailableOpforFixedWing = baseFixedWingGroup ;
+
+    //Check if there is a player in a plane
+    if (count (allPlayers select {(vehicle _x ) isKindOf "Plane"}) > 0) then 
+    {
+        //Plane reinforcement 75%
+        //Increase the probability of enemy air reinforcement when there are players in the air
+        if (missionNamespace getVariable ["enableArmedAicraft", false] && (count _thisAvailableOpforFixedWing != 0 &&  random 100 < 75)) then 
+        {
+            //Generate enemy wave
+            [selectRandom _thisAvailableOpforFixedWing, _positionToAttack] execVM 'enemyManagement\behaviorEngine\doVehicleAttackOnPosition.sqf'; 
+        };
+    } else 
+    {
+        //Plane reinforcement 25%
+        if (missionNamespace getVariable ["enableArmedAicraft", false] && (count _thisAvailableOpforFixedWing != 0 &&  random 100 < 25)) then 
+        {
+            //Generate enemy wave
+            [selectRandom _thisAvailableOpforFixedWing, _positionToAttack] execVM 'enemyManagement\behaviorEngine\doVehicleAttackOnPosition.sqf'; 
+        };
+    };
+};
+
+generateChopperHarass = {
+    params ["_positionToAttack"];
+
+    _thisAvailableOpforArmedChopperVehicle = baseEnemyArmedChopperGroup;
+
+    //Attack chopper reinforcement 25%
+    if (missionNamespace getVariable ["enableArmedAicraft", false] && (count _thisAvailableOpforArmedChopperVehicle != 0 &&  random 100 < 25)) then 
+    {
+        //Generate enemy attack chopper wave
+        [selectRandom _thisAvailableOpforArmedChopperVehicle, _positionToAttack] execVM 'enemyManagement\behaviorEngine\doVehicleAttackOnPosition.sqf'; 
+    };
+};
+
+
+checkOpforUnitInCombatAround = {
+    params [
+        ["_targetUnit", player, [objNull]],
+        ["_radius", 1000, [0]]
+    ];
+
+    if (isNull _targetUnit || {!alive _targetUnit}) exitWith { 0 };
+
+    private _originPos = getPosATL _targetUnit;
+    private _unitsInArea = allUnits inAreaArray [_originPos, _radius, _radius, 0, false];
+
+    private _combatCount = {
+        alive _x &&
+        {!isPlayer _x} &&
+        {side _x isEqualTo east} &&
+        {combatBehaviour _x isEqualTo "COMBAT"}
+    } count _unitsInArea;
+
+    _combatCount
+};

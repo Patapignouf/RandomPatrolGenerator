@@ -1,16 +1,16 @@
-#include "..\..\objectGenerator\vehicleXPManagement.sqf" 
-
-params ["_enemyGroup", "_transportVehicle", "_destinationPos"];
+params ["_enemyGroup", "_transportVehicle", "_destinationParadropPos"];
 
 
 //spawn enemyGroup
-_currentEnemyGroup = [_enemyGroup, [0,0], east, ""] call doGenerateEnemyGroup;
+private _currentEnemyGroup = [_enemyGroup, [0,0], east, ""] call doGenerateEnemyGroup;
 
 //spawn enemy vehicle
 //Setup final destination pos at the opposite of the init pos 
-_futurePos =[_destinationPos] call getEdgePoints;
-_initPos = _futurePos#0;
-_finalDestinationPos = _futurePos#1;
+private _futurePos = [_destinationParadropPos] call getEdgePoints;
+private _initPos = _futurePos#0;
+private _finalDestinationPos = _futurePos#1;
+
+//  systemChat str _destinationParadropPos;
 
 //_vehicleTransportGroup = [[_transportVehicle], [selectRandom [0,worldSize],selectRandom [0,worldSize],500], east, ""] call doGenerateEnemyGroup;
 //[baseEnemyGroup, selectRandom baseEnemyUnarmedChopperGroup, getPos player] execVM 'enemyManagement\behaviorEngine\doParadrop.sqf'; 
@@ -18,7 +18,7 @@ _finalDestinationPos = _futurePos#1;
 // _vehicleTransportGroup = [[_transportVehicle], [selectRandom [0-random 200,worldSize+ random 200],selectRandom [0- random 200,worldSize+ random 200]], east, ""] call doGenerateEnemyGroup;
 _vehicleTransportGroup = [[_transportVehicle], [_initPos#0, _initPos#1, 500], east, ""] call doGenerateEnemyGroup;
 
-_heli = vehicle (leader _vehicleTransportGroup);
+private _heli = vehicle (leader _vehicleTransportGroup);
 
 //Add Experience
 //Add eventhandler killed
@@ -51,7 +51,7 @@ _currentEnemyGroup enableDynamicSimulation false;
 forEach (units _currentEnemyGroup);
 
 //Go to landing pos
-wp1 = _vehicleTransportGroup addWaypoint [_destinationPos, 0];
+wp1 = _vehicleTransportGroup addWaypoint [_destinationParadropPos, 0];
 wp1 setwaypointtype"MOVE"; 
 wp1 setWaypointBehaviour "AWARE";
 wp1 setWaypointCombatMode "BLUE";
@@ -69,17 +69,20 @@ _heli flyInHeight [150, true];	// helicopter will hover at 150m altitude
 
 _vehicleTransportGroup setCurrentWaypoint wp1;
 
+// systemChat str (_destinationParadropPos);
 
-waitUntil {[(getPos _heli)#0,(getPos _heli)#1,0] distance _destinationPos < 400};
+sleep 3;
+
+waitUntil {[(getPos _heli)#0,(getPos _heli)#1,0] distance _destinationParadropPos < 400};
 
 //set second waypoint as active wp
 _vehicleTransportGroup setCurrentWaypoint wp2;
 
 
 //Do paradrop units
-[_currentEnemyGroup, _destinationPos] spawn 
+[_currentEnemyGroup, _destinationParadropPos] spawn 
 {
-	params ["_currentEnemyGroup", "_destinationPos"];
+	params ["_currentEnemyGroup", "_destinationParadropPos"];
 	{
 		_unit = _x;
 		sleep 0.1;
@@ -107,7 +110,7 @@ _vehicleTransportGroup setCurrentWaypoint wp2;
 
 	} forEach (units _currentEnemyGroup);
 
-	[_currentEnemyGroup, _destinationPos] call BIS_fnc_taskAttack;
+	[_currentEnemyGroup, _destinationParadropPos] call BIS_fnc_taskAttack;
 };
 
 

@@ -216,6 +216,10 @@ if (_thisFOBCheck) then
 	_OpforFOBCleared = missionNamespace getVariable ["OpforFOBCleared", 0];
 	missionNamespace setVariable ["OpforFOBCleared", _OpforFOBCleared+1, true];	
 
+	_missionFOBRegistry = missionNameSpace getVariable ["RPG_OPFORFobList",[]];
+	_missionFOBRegistry = _missionFOBRegistry - [getPos _thisTrigger];
+	missionNameSpace setVariable ["RPG_OPFORFobList", _missionFOBRegistry];
+
 	//Give 25 XP for FOB clearing
 	[{[25, "RPG_ranking_objective_complete"] call doUpdateRank}] remoteExec ["call", 0];
 

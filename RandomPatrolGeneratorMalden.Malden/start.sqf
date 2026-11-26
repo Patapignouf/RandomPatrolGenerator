@@ -13,6 +13,7 @@
 #include "database\factionParameters.sqf"
 #include "GUI\mapIndicatorGUI\triggerDisplay.sqf"
 #include "GUI\missionGUI\missionSetupGUI.sqf"
+#include "objectGenerator\vehicleXPManagement.sqf" 
 
 //Init base mission parameters 
 enableInitAttack = "EnableInitAttack" call BIS_fnc_getParamValue;
@@ -1460,20 +1461,22 @@ if (enableCampaignMode) then
 				//Randomize objective locations or not
 				if (missionNameSpace getVariable ["campaignExtended",0] == 0) then 
 				{
+					private _lastObjectiveLocation = [];
 					switch (NeedToRandomizePOI) do
 					{
 						//Classic order
 						case 0:
 						{
-							[avalaibleTypeOfObj, [PossibleObjectivePosition#0], _numberOfObjectivePerLocation] call generateObjectives;
-							PossibleObjectivePosition = PossibleObjectivePosition - [PossibleObjectivePosition#0];
+							_lastObjectiveLocation = PossibleObjectivePosition#0;
+							[avalaibleTypeOfObj, [_lastObjectiveLocation], _numberOfObjectivePerLocation] call generateObjectives;
+							PossibleObjectivePosition = PossibleObjectivePosition - [_lastObjectiveLocation];
 						};
 						//Random order
 						case 1:
 						{
-							_selectedRandomObjective = selectRandom PossibleObjectivePosition;
-							[avalaibleTypeOfObj, [_selectedRandomObjective], _numberOfObjectivePerLocation] call generateObjectives;
-							PossibleObjectivePosition = PossibleObjectivePosition - [_selectedRandomObjective];
+							_lastObjectiveLocation = selectRandom PossibleObjectivePosition;
+							[avalaibleTypeOfObj, [_lastObjectiveLocation], _numberOfObjectivePerLocation] call generateObjectives;
+							PossibleObjectivePosition = PossibleObjectivePosition - [_lastObjectiveLocation];
 						};
 						//Closest objective
 						case 2:
@@ -1483,28 +1486,28 @@ if (enableCampaignMode) then
 							{	
 								//Case where this is the first objective
 								//Generate objective at first position
-								_randomSelectedObjective = selectRandom PossibleObjectivePosition;
-								[avalaibleTypeOfObj, [_randomSelectedObjective], _numberOfObjectivePerLocation] call generateObjectives;
-								PossibleObjectivePosition = PossibleObjectivePosition - [_randomSelectedObjective];
+								_lastObjectiveLocation = selectRandom PossibleObjectivePosition;
+								[avalaibleTypeOfObj, [_lastObjectiveLocation], _numberOfObjectivePerLocation] call generateObjectives;
+								PossibleObjectivePosition = PossibleObjectivePosition - [_lastObjectiveLocation];
 							} else 
 							{
 								//Else generate at the closest position location
 								if (count PossibleObjectivePosition != 0) then 
 								{
-									_selectedPosition = [(MissionObjectives#-1)#3, PossibleObjectivePosition] call getClosest;
-									[avalaibleTypeOfObj, [_selectedPosition], _numberOfObjectivePerLocation] call generateObjectives;
-									PossibleObjectivePosition = PossibleObjectivePosition - [_selectedPosition];
+									_lastObjectiveLocation = [(MissionObjectives#-1)#3, PossibleObjectivePosition] call getClosest;
+									[avalaibleTypeOfObj, [_lastObjectiveLocation], _numberOfObjectivePerLocation] call generateObjectives;
+									PossibleObjectivePosition = PossibleObjectivePosition - [_lastObjectiveLocation];
 								};
 							};
 						};
 					};
-				};
 
+					//Generate opfor FOB in campaign mode
+					//25% Chance
+					if (random 100<25) then {
+						[] call doGenerateFOBOrDestroyer;
+					};
 
-				//Generate opfor FOB in campaign mode
-				//25% Chance
-				if (random 100<25) then {
-					[] call doGenerateFOBOrDestroyer;
 				};
 
 				//Reveal objective to the player

@@ -1,5 +1,3 @@
-#include "..\..\objectGenerator\vehicleXPManagement.sqf" 
-
 params ["_airAttackVehicleClass", "_destinationPos"];
 
 //spawn enemyGroup

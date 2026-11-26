@@ -855,6 +855,17 @@
                 <Chinese>敌方增援正前往%1，做好准备</Chinese>
                 <Japanese>オプフォーの増援が%1に向かっています。準備してください</Japanese>
             </Key>
+            <Key ID="STR_RPG_HC_ENEMY_REINFORCEMENT_FROM_FOB">
+                    <Original>A wave of enemy reinforcements is incoming from a FOB and heading toward coordinates %1</Original>
+                    <English>A wave of enemy reinforcements is incoming from a FOB and heading toward coordinates %1</English>
+                    <French>Une vague de renforts ennemis arrive d'une FOB et se dirige vers les coordonnées %1</French>
+                    <Spanish>Una oleada de refuerzos enemigos viene de una FOB y se dirige hacia las coordenadas %1</Spanish>
+                    <German>Eine Welle feindlicher Verstärkung kommt von einer FOB und bewegt sich in Richtung der Koordinaten %1</German>
+                    <Italian>Un'ondata di rinforzi nemici sta arrivando da una FOB e si dirige verso le coordinate %1</Italian>
+                    <Russian>Волна вражеского подкрепления идет с FOB и направляется к координатам %1</Russian>
+                    <Chinese>一股敌方增援部队正从前哨基地（FOB）赶来，并朝坐标 %1 前进</Chinese>
+                    <Japanese>FOBから敵の増援部隊が向かっており、座標 %1 へ向かっています</Japanese>
+            </Key>
             <Key ID="STR_RPG_HC_ENEMY_REINFORCEMENT_FOB">
                 <Original>An opfor reinforcement is coming to %1, be ready to defend the FOB</Original>
                 <English>An opfor reinforcement is coming to %1, be ready to defend the FOB</English>

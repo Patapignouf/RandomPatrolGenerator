@@ -1,6 +1,3 @@
-#include "..\..\objectGenerator\vehicleXPManagement.sqf" 
-#include "..\..\enemyManagement\behaviorEngine\unitsBehaviorFunctions.sqf"
-
 doGenerateEnemyGroup = 
 {
 	//Get parameters

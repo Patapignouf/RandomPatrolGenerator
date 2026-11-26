@@ -45,6 +45,10 @@ missionNameSpace setVariable ["AicraftCarrierBluforIndex", 0, true];
 missionNameSpace setVariable ["AicraftCarrierBluforSpawn", [], true];
 
 
+//Manage number of enemy reinforcement 
+missionNameSpace setVariable ["numberOfHarassAvailable", 0, true];
+
+
 
 //Spawn bloc to avoid player swimming
 _spawnBloc = createVehicle ["BlockConcrete_F", [worldSize,worldSize,0], [], 0, "NONE"];

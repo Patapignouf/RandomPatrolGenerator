@@ -78,6 +78,11 @@ if (_thisFOBCheck) then
 	_OpforFOBCleared = missionNamespace getVariable ["OpforFOBCleared", 0];
 	missionNamespace setVariable ["OpforFOBCleared", _OpforFOBCleared+1, true];	
 
+	//Save FOB on FOB tracker 
+	_missionFOBRegistry = missionNameSpace getVariable ["RPG_OPFORFobList",[]];
+	_missionFOBRegistry = _missionFOBRegistry - [getPos _thisTrigger];
+	missionNameSpace setVariable ["RPG_OPFORFobList", _missionFOBRegistry];
+
 	//Respawn players 
 	[[], "engine\respawnManagement\respawnManager.sqf"] remoteExec ['BIS_fnc_execVM', 0];
 

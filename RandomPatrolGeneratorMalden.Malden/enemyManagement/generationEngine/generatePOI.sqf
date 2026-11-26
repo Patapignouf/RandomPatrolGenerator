@@ -73,7 +73,8 @@ if (random 100 <50) then
 			{
 				_selectedTurret = selectRandom _thisAvailableOpforTurret;
 
-				private _turrentSpawned = [_thisAvailablePosition, _selectedTurret] call generateTurretBunker;
+				private _turrentSpawned = [_thisAvailablePosition, _selectedTurret#0] call generateTurretBunker;
+				 
 
 
 

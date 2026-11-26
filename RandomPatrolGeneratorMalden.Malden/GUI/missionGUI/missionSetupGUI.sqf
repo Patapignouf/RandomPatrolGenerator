@@ -254,10 +254,16 @@ fnc_selectMissionGui = {
                         };
 
                         //50% chance spawn FOB
-                        if (random 100 < 50) then 
+                        _spawnChance = 50;
+                        if (missionNameSpace getVariable ["numberOfHarassAvailable", 0] == 0) then 
+                        {
+                            //If there is no reinforcement available increase to to 75%
+                            _spawnChance = 75;
+                        };
+                        if (random 100 < _spawnChance) then 
                         {
                             //Generate opfor FOB in campaign mode
-                            [] call doGenerateFOBOrDestroyer;                       
+                            [_selectedPosLocation] call doGenerateFOBOrDestroyer;                       
                         };
 
                         //End mission after the generated one
